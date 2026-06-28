@@ -1,0 +1,634 @@
+{
+  "meta": {
+    "level": 4,
+    "list": 3,
+    "title": "Level 4 · List 3",
+    "updatedAt": "2026-06-28"
+  },
+  "words": [
+    {
+      "word": "swing",
+      "definitions": [
+        "v. 摆动"
+      ]
+    },
+    {
+      "word": "halt",
+      "definitions": [
+        "v. 停止"
+      ]
+    },
+    {
+      "word": "sting",
+      "definitions": [
+        "v. 刺",
+        "n. 昆虫叮咬"
+      ]
+    },
+    {
+      "word": "circular",
+      "definitions": [
+        "adj. 圆的"
+      ]
+    },
+    {
+      "word": "intellectual",
+      "definitions": [
+        "adj. 智力的",
+        "n. 知识分子"
+      ]
+    },
+    {
+      "word": "indicator",
+      "definitions": [
+        "n. 指示物"
+      ]
+    },
+    {
+      "word": "herb",
+      "definitions": [
+        "n. 草本植物"
+      ]
+    },
+    {
+      "word": "alliance",
+      "definitions": [
+        "n. 联合"
+      ]
+    },
+    {
+      "word": "intimate",
+      "definitions": [
+        "adj. 亲密的"
+      ]
+    },
+    {
+      "word": "bronze",
+      "definitions": [
+        "n. 青铜"
+      ]
+    },
+    {
+      "word": "exploit",
+      "definitions": [
+        "v. 开发，压榨"
+      ]
+    },
+    {
+      "word": "constructive",
+      "definitions": [
+        "adj. 有益的"
+      ]
+    },
+    {
+      "word": "submarine",
+      "definitions": [
+        "adj. 海底的"
+      ]
+    },
+    {
+      "word": "narrator",
+      "definitions": [
+        "n. 叙述者"
+      ]
+    },
+    {
+      "word": "equality",
+      "definitions": [
+        "n. 平等"
+      ]
+    },
+    {
+      "word": "proponent",
+      "definitions": [
+        "n. 倡导者"
+      ]
+    },
+    {
+      "word": "hop",
+      "definitions": [
+        "v. 跳跃"
+      ]
+    },
+    {
+      "word": "urbanization",
+      "definitions": [
+        "n. 城市化"
+      ]
+    },
+    {
+      "word": "campaign",
+      "definitions": [
+        "n. 运动",
+        "n. 战役"
+      ]
+    },
+    {
+      "word": "refute",
+      "definitions": [
+        "v. 驳斥"
+      ]
+    },
+    {
+      "word": "deforest",
+      "definitions": [
+        "v. 砍伐森林"
+      ]
+    },
+    {
+      "word": "sequence",
+      "definitions": [
+        "n. 顺序"
+      ]
+    },
+    {
+      "word": "habitual",
+      "definitions": [
+        "adj. 习惯性的"
+      ]
+    },
+    {
+      "word": "physicist",
+      "definitions": [
+        "n. 物理学家"
+      ]
+    },
+    {
+      "word": "stroke",
+      "definitions": [
+        "n. 一击",
+        "n. 笔触",
+        "v. 轻抚"
+      ]
+    },
+    {
+      "word": "medieval",
+      "definitions": [
+        "adj. 中世纪的"
+      ]
+    },
+    {
+      "word": "pasture",
+      "definitions": [
+        "n. 牧场"
+      ]
+    },
+    {
+      "word": "realism",
+      "definitions": [
+        "n. 真实性",
+        "n. 现实主义"
+      ]
+    },
+    {
+      "word": "comment",
+      "definitions": [
+        "n. 评论"
+      ]
+    },
+    {
+      "word": "soar",
+      "definitions": [
+        "v. 猛增",
+        "v. 翱翔"
+      ]
+    },
+    {
+      "word": "elaborate",
+      "definitions": [
+        "adj. 复杂的",
+        "v. 详细说明"
+      ]
+    },
+    {
+      "word": "fuse",
+      "definitions": [
+        "v. 使……混合",
+        "n. 保险丝"
+      ]
+    },
+    {
+      "word": "amphibian",
+      "definitions": [
+        "n. 两栖动物"
+      ]
+    },
+    {
+      "word": "nasty",
+      "definitions": [
+        "adj. 令人难受的"
+      ]
+    },
+    {
+      "word": "respectable",
+      "definitions": [
+        "adj. 体面的"
+      ]
+    },
+    {
+      "word": "observance",
+      "definitions": [
+        "n. 遵守"
+      ]
+    },
+    {
+      "word": "worship",
+      "definitions": [
+        "v. 崇拜"
+      ]
+    },
+    {
+      "word": "electrify",
+      "definitions": [
+        "v. 使……电气化",
+        "v. 使……激动"
+      ]
+    },
+    {
+      "word": "mythology",
+      "definitions": [
+        "n. 神话"
+      ]
+    },
+    {
+      "word": "deviate",
+      "definitions": [
+        "v. 偏离"
+      ]
+    },
+    {
+      "word": "peer",
+      "definitions": [
+        "n. 同等地位的人，同龄人",
+        "v. 仔细看"
+      ]
+    },
+    {
+      "word": "recreational",
+      "definitions": [
+        "adj. 娱乐的"
+      ]
+    },
+    {
+      "word": "shed",
+      "definitions": [
+        "v. 流"
+      ]
+    },
+    {
+      "word": "applicable",
+      "definitions": [
+        "adj. 适用的"
+      ]
+    },
+    {
+      "word": "desirability",
+      "definitions": [
+        "n. 值得渴望"
+      ]
+    },
+    {
+      "word": "colonize",
+      "definitions": [
+        "v. 殖民",
+        "v. (植物或动物)移生，移植"
+      ]
+    },
+    {
+      "word": "ongoing",
+      "definitions": [
+        "adj. 连续的"
+      ]
+    },
+    {
+      "word": "bizarre",
+      "definitions": [
+        "adj. 古怪的"
+      ]
+    },
+    {
+      "word": "comprehend",
+      "definitions": [
+        "v. 理解"
+      ]
+    },
+    {
+      "word": "reliant",
+      "definitions": [
+        "adj. 依赖的"
+      ]
+    },
+    {
+      "word": "sensible",
+      "definitions": [
+        "adj. 意识到的",
+        "adj. 明智的"
+      ]
+    },
+    {
+      "word": "sway",
+      "definitions": [
+        "v. 摇晃"
+      ]
+    },
+    {
+      "word": "revolutionize",
+      "definitions": [
+        "v. 变革"
+      ]
+    },
+    {
+      "word": "vaporize",
+      "definitions": [
+        "v. 使……蒸发"
+      ]
+    },
+    {
+      "word": "liberate",
+      "definitions": [
+        "v. 释放"
+      ]
+    },
+    {
+      "word": "specialist",
+      "definitions": [
+        "n. 专家"
+      ]
+    },
+    {
+      "word": "spice",
+      "definitions": [
+        "n. 香料"
+      ]
+    },
+    {
+      "word": "evolve",
+      "definitions": [
+        "v. 演化"
+      ]
+    },
+    {
+      "word": "tend",
+      "definitions": [
+        "v. 趋向",
+        "v. 照料"
+      ]
+    },
+    {
+      "word": "recount",
+      "definitions": [
+        "v. 详细叙述"
+      ]
+    },
+    {
+      "word": "thesis",
+      "definitions": [
+        "n. 论点",
+        "n. 论文"
+      ]
+    },
+    {
+      "word": "capacity",
+      "definitions": [
+        "n. 能力",
+        "n. 容量"
+      ]
+    },
+    {
+      "word": "erosion",
+      "definitions": [
+        "n. 侵蚀"
+      ]
+    },
+    {
+      "word": "diplomacy",
+      "definitions": [
+        "n. 外交"
+      ]
+    },
+    {
+      "word": "symbolism",
+      "definitions": [
+        "n. 象征意义"
+      ]
+    },
+    {
+      "word": "suppose",
+      "definitions": [
+        "v. 设想"
+      ]
+    },
+    {
+      "word": "divert",
+      "definitions": [
+        "v. 使偏离"
+      ]
+    },
+    {
+      "word": "rotate",
+      "definitions": [
+        "v. 转动"
+      ]
+    },
+    {
+      "word": "commodity",
+      "definitions": [
+        "n. 商品"
+      ]
+    },
+    {
+      "word": "exaggerate",
+      "definitions": [
+        "v. 夸大"
+      ]
+    },
+    {
+      "word": "intrude",
+      "definitions": [
+        "v. 闯入"
+      ]
+    },
+    {
+      "word": "advantageous",
+      "definitions": [
+        "adj. 有利的"
+      ]
+    },
+    {
+      "word": "proportion",
+      "definitions": [
+        "n. 部分"
+      ]
+    },
+    {
+      "word": "celebrity",
+      "definitions": [
+        "n. 名人"
+      ]
+    },
+    {
+      "word": "fleshy",
+      "definitions": [
+        "adj. 多肉的"
+      ]
+    },
+    {
+      "word": "switch",
+      "definitions": [
+        "v. 转变",
+        "n. 开关按钮"
+      ]
+    },
+    {
+      "word": "multiply",
+      "definitions": [
+        "v. 成倍增长",
+        "v. 繁殖"
+      ]
+    },
+    {
+      "word": "seep",
+      "definitions": [
+        "v. 渗出"
+      ]
+    },
+    {
+      "word": "rival",
+      "definitions": [
+        "adj. 对抗的",
+        "n. 对手"
+      ]
+    },
+    {
+      "word": "budget",
+      "definitions": [
+        "n. 预算",
+        "adj. 便宜的"
+      ]
+    },
+    {
+      "word": "outbreak",
+      "definitions": [
+        "n. 爆发"
+      ]
+    },
+    {
+      "word": "interval",
+      "definitions": [
+        "n. 间隔"
+      ]
+    },
+    {
+      "word": "boiler",
+      "definitions": [
+        "n. 锅炉"
+      ]
+    },
+    {
+      "word": "acquire",
+      "definitions": [
+        "v. 获得"
+      ]
+    },
+    {
+      "word": "prospect",
+      "definitions": [
+        "n. 希望"
+      ]
+    },
+    {
+      "word": "opportunist",
+      "definitions": [
+        "n. 机会主义者"
+      ]
+    },
+    {
+      "word": "statue",
+      "definitions": [
+        "n. 雕像"
+      ]
+    },
+    {
+      "word": "withdrawal",
+      "definitions": [
+        "n. 取回"
+      ]
+    },
+    {
+      "word": "enduring",
+      "definitions": [
+        "adj. 持续的"
+      ]
+    },
+    {
+      "word": "burial",
+      "definitions": [
+        "n. 埋葬"
+      ]
+    },
+    {
+      "word": "miner",
+      "definitions": [
+        "n. 矿工"
+      ]
+    },
+    {
+      "word": "arouse",
+      "definitions": [
+        "v. 引起"
+      ]
+    },
+    {
+      "word": "adhere",
+      "definitions": [
+        "v. 粘附",
+        "v. 遵守"
+      ]
+    },
+    {
+      "word": "subjective",
+      "definitions": [
+        "adj. 主观的"
+      ]
+    },
+    {
+      "word": "stool",
+      "definitions": [
+        "n. 凳子",
+        "n. 厕所"
+      ]
+    },
+    {
+      "word": "discourage",
+      "definitions": [
+        "v. 劝阻"
+      ]
+    },
+    {
+      "word": "expel",
+      "definitions": [
+        "v. 驱逐"
+      ]
+    },
+    {
+      "word": "persevere",
+      "definitions": [
+        "v. 坚持不懈"
+      ]
+    },
+    {
+      "word": "variable",
+      "definitions": [
+        "n. 变量",
+        "adj. 变化无常的"
+      ]
+    },
+    {
+      "word": "implement",
+      "definitions": [
+        "n. 工具",
+        "v. 实施"
+      ]
+    }
+  ]
+}

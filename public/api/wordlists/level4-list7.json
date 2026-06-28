@@ -1,0 +1,616 @@
+{
+  "meta": {
+    "level": 4,
+    "list": 7,
+    "title": "Level 4 · List 7",
+    "updatedAt": "2026-06-28"
+  },
+  "words": [
+    {
+      "word": "persistent",
+      "definitions": [
+        "adj. 坚持不懈的"
+      ]
+    },
+    {
+      "word": "relay",
+      "definitions": [
+        "v. 转播"
+      ]
+    },
+    {
+      "word": "boast",
+      "definitions": [
+        "v. 吹嘘"
+      ]
+    },
+    {
+      "word": "requisite",
+      "definitions": [
+        "adj. 必要的",
+        "n. (物品)"
+      ]
+    },
+    {
+      "word": "attach",
+      "definitions": [
+        "v. 附属"
+      ]
+    },
+    {
+      "word": "dose",
+      "definitions": [
+        "n. 一次的剂量"
+      ]
+    },
+    {
+      "word": "pump",
+      "definitions": [
+        "n. 泵",
+        "v. 用泵输送"
+      ]
+    },
+    {
+      "word": "mystify",
+      "definitions": [
+        "v. 使困惑"
+      ]
+    },
+    {
+      "word": "restraint",
+      "definitions": [
+        "n. 限制"
+      ]
+    },
+    {
+      "word": "temporal",
+      "definitions": [
+        "adj. 时间的",
+        "adj. 短暂的"
+      ]
+    },
+    {
+      "word": "exceedingly",
+      "definitions": [
+        "adv. 非常"
+      ]
+    },
+    {
+      "word": "pollutant",
+      "definitions": [
+        "n. 污染物"
+      ]
+    },
+    {
+      "word": "degrade",
+      "definitions": [
+        "v. 恶化"
+      ]
+    },
+    {
+      "word": "impose",
+      "definitions": [
+        "v. 强制实行"
+      ]
+    },
+    {
+      "word": "radiant",
+      "definitions": [
+        "adj. 灿烂的",
+        "adj. 辐射的"
+      ]
+    },
+    {
+      "word": "troop",
+      "definitions": [
+        "n. 部队"
+      ]
+    },
+    {
+      "word": "exterior",
+      "definitions": [
+        "adj. 外部的"
+      ]
+    },
+    {
+      "word": "rhythm",
+      "definitions": [
+        "n. 节奏"
+      ]
+    },
+    {
+      "word": "habitat",
+      "definitions": [
+        "n. 栖息地"
+      ]
+    },
+    {
+      "word": "conclusive",
+      "definitions": [
+        "adj. 确定的"
+      ]
+    },
+    {
+      "word": "lava",
+      "definitions": [
+        "n. 熔岩"
+      ]
+    },
+    {
+      "word": "meteor",
+      "definitions": [
+        "n. 流星"
+      ]
+    },
+    {
+      "word": "priest",
+      "definitions": [
+        "n. 牧师"
+      ]
+    },
+    {
+      "word": "cane",
+      "definitions": [
+        "n. 茎"
+      ]
+    },
+    {
+      "word": "ridicule",
+      "definitions": [
+        "v. 嘲弄"
+      ]
+    },
+    {
+      "word": "overheat",
+      "definitions": [
+        "v. 使……过热"
+      ]
+    },
+    {
+      "word": "mount",
+      "definitions": [
+        "v. 增加",
+        "n. 山",
+        "v. 固定"
+      ]
+    },
+    {
+      "word": "compact",
+      "definitions": [
+        "adj. 紧密的",
+        "adj. 简洁的"
+      ]
+    },
+    {
+      "word": "protest",
+      "definitions": [
+        "v. 抗议"
+      ]
+    },
+    {
+      "word": "compass",
+      "definitions": [
+        "n. 指南针"
+      ]
+    },
+    {
+      "word": "remarkable",
+      "definitions": [
+        "adj. 卓越的"
+      ]
+    },
+    {
+      "word": "deliberate",
+      "definitions": [
+        "adj. 故意的"
+      ]
+    },
+    {
+      "word": "proficient",
+      "definitions": [
+        "adj. 熟练的"
+      ]
+    },
+    {
+      "word": "analytical",
+      "definitions": [
+        "adj. 分析的"
+      ]
+    },
+    {
+      "word": "contend",
+      "definitions": [
+        "v. 斗争",
+        "v. 主张"
+      ]
+    },
+    {
+      "word": "recruit",
+      "definitions": [
+        "v. 征募",
+        "v. 招聘"
+      ]
+    },
+    {
+      "word": "clip",
+      "definitions": [
+        "v. 修剪",
+        "v. 夹住"
+      ]
+    },
+    {
+      "word": "visibility",
+      "definitions": [
+        "n. 能见度"
+      ]
+    },
+    {
+      "word": "passageway",
+      "definitions": [
+        "n. 过道"
+      ]
+    },
+    {
+      "word": "sponsor",
+      "definitions": [
+        "v. 赞助"
+      ]
+    },
+    {
+      "word": "dependable",
+      "definitions": [
+        "adj. 可信赖的"
+      ]
+    },
+    {
+      "word": "embryo",
+      "definitions": [
+        "n. 胚胎"
+      ]
+    },
+    {
+      "word": "stabilize",
+      "definitions": [
+        "v. (使)稳定"
+      ]
+    },
+    {
+      "word": "ivory",
+      "definitions": [
+        "n. 象牙",
+        "adj. 象牙色的"
+      ]
+    },
+    {
+      "word": "adaptable",
+      "definitions": [
+        "adj. 可适应的"
+      ]
+    },
+    {
+      "word": "inequality",
+      "definitions": [
+        "n. 不平等，不均等"
+      ]
+    },
+    {
+      "word": "companion",
+      "definitions": [
+        "n. 朋友"
+      ]
+    },
+    {
+      "word": "documentation",
+      "definitions": [
+        "n. 记录"
+      ]
+    },
+    {
+      "word": "resume",
+      "definitions": [
+        "v. 重新开始"
+      ]
+    },
+    {
+      "word": "spur",
+      "definitions": [
+        "n. 刺激",
+        "n. 马刺"
+      ]
+    },
+    {
+      "word": "genuine",
+      "definitions": [
+        "adj. 真的"
+      ]
+    },
+    {
+      "word": "regulate",
+      "definitions": [
+        "v. 调节",
+        "v. 控制"
+      ]
+    },
+    {
+      "word": "wane",
+      "definitions": [
+        "v. 衰落"
+      ]
+    },
+    {
+      "word": "superiority",
+      "definitions": [
+        "n. 优越"
+      ]
+    },
+    {
+      "word": "predecessor",
+      "definitions": [
+        "n. 前任"
+      ]
+    },
+    {
+      "word": "dye",
+      "definitions": [
+        "v. 给……染色",
+        "n. 染料"
+      ]
+    },
+    {
+      "word": "parasite",
+      "definitions": [
+        "n. 寄生虫"
+      ]
+    },
+    {
+      "word": "diverge",
+      "definitions": [
+        "v. 相异"
+      ]
+    },
+    {
+      "word": "coral",
+      "definitions": [
+        "n. 珊瑚"
+      ]
+    },
+    {
+      "word": "typify",
+      "definitions": [
+        "v. 体现"
+      ]
+    },
+    {
+      "word": "accommodate",
+      "definitions": [
+        "v. 提供住宿",
+        "v. 适应"
+      ]
+    },
+    {
+      "word": "elementary",
+      "definitions": [
+        "adj. 简单的"
+      ]
+    },
+    {
+      "word": "vertebrate",
+      "definitions": [
+        "n. 脊椎动物"
+      ]
+    },
+    {
+      "word": "breed",
+      "definitions": [
+        "v. 繁殖",
+        "n. 品种"
+      ]
+    },
+    {
+      "word": "sediment",
+      "definitions": [
+        "n. 沉淀物"
+      ]
+    },
+    {
+      "word": "fragile",
+      "definitions": [
+        "adj. 易碎的，脆弱的"
+      ]
+    },
+    {
+      "word": "mechanically",
+      "definitions": [
+        "adv. 机械地"
+      ]
+    },
+    {
+      "word": "accuse",
+      "definitions": [
+        "v. 控告"
+      ]
+    },
+    {
+      "word": "overshadow",
+      "definitions": [
+        "v. 给……蒙上阴影",
+        "v. 使……黯然失色"
+      ]
+    },
+    {
+      "word": "lettuce",
+      "definitions": [
+        "n. 生菜"
+      ]
+    },
+    {
+      "word": "declaration",
+      "definitions": [
+        "n. 宣布"
+      ]
+    },
+    {
+      "word": "detection",
+      "definitions": [
+        "n. 发现"
+      ]
+    },
+    {
+      "word": "thorough",
+      "definitions": [
+        "adj. 彻底的"
+      ]
+    },
+    {
+      "word": "correlate",
+      "definitions": [
+        "v. 相关"
+      ]
+    },
+    {
+      "word": "alloy",
+      "definitions": [
+        "n. 合金"
+      ]
+    },
+    {
+      "word": "peculiarity",
+      "definitions": [
+        "n. 特性"
+      ]
+    },
+    {
+      "word": "outlook",
+      "definitions": [
+        "n. 观点"
+      ]
+    },
+    {
+      "word": "aggressive",
+      "definitions": [
+        "adj. 侵略性的"
+      ]
+    },
+    {
+      "word": "emphasis",
+      "definitions": [
+        "n. 重要性"
+      ]
+    },
+    {
+      "word": "associate",
+      "definitions": [
+        "v. 联系"
+      ]
+    },
+    {
+      "word": "saint",
+      "definitions": [
+        "n. 圣徒"
+      ]
+    },
+    {
+      "word": "appeal",
+      "definitions": [
+        "v. 恳求",
+        "v. 吸引"
+      ]
+    },
+    {
+      "word": "cottage",
+      "definitions": [
+        "n. 小屋"
+      ]
+    },
+    {
+      "word": "layout",
+      "definitions": [
+        "n. 布局"
+      ]
+    },
+    {
+      "word": "obstacle",
+      "definitions": [
+        "n. 障碍"
+      ]
+    },
+    {
+      "word": "exclude",
+      "definitions": [
+        "v. 排除"
+      ]
+    },
+    {
+      "word": "inactivity",
+      "definitions": [
+        "n. 无活动"
+      ]
+    },
+    {
+      "word": "guardian",
+      "definitions": [
+        "n. 保卫者"
+      ]
+    },
+    {
+      "word": "refine",
+      "definitions": [
+        "v. 提炼"
+      ]
+    },
+    {
+      "word": "catalog",
+      "definitions": [
+        "n. 目录"
+      ]
+    },
+    {
+      "word": "linguistic",
+      "definitions": [
+        "adj. 语言的"
+      ]
+    },
+    {
+      "word": "motivation",
+      "definitions": [
+        "n. 动机"
+      ]
+    },
+    {
+      "word": "evaporate",
+      "definitions": [
+        "v. 蒸发"
+      ]
+    },
+    {
+      "word": "bang",
+      "definitions": [
+        "v. 猛击"
+      ]
+    },
+    {
+      "word": "nestle",
+      "definitions": [
+        "v. 依偎"
+      ]
+    },
+    {
+      "word": "guesswork",
+      "definitions": [
+        "n. 猜测"
+      ]
+    },
+    {
+      "word": "depict",
+      "definitions": [
+        "v. 描绘"
+      ]
+    },
+    {
+      "word": "astronomy",
+      "definitions": [
+        "n. 天文学"
+      ]
+    }
+  ]
+}

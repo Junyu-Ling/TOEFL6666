@@ -1,0 +1,638 @@
+{
+  "meta": {
+    "level": 4,
+    "list": 2,
+    "title": "Level 4 · List 2",
+    "updatedAt": "2026-06-28"
+  },
+  "words": [
+    {
+      "word": "specialize",
+      "definitions": [
+        "v. 专门研究"
+      ]
+    },
+    {
+      "word": "stain",
+      "definitions": [
+        "v. 染色",
+        "n. 污点"
+      ]
+    },
+    {
+      "word": "magnetic",
+      "definitions": [
+        "adj. 有磁性的"
+      ]
+    },
+    {
+      "word": "trail",
+      "definitions": [
+        "n. 痕迹",
+        "v. 追踪"
+      ]
+    },
+    {
+      "word": "administration",
+      "definitions": [
+        "n. 管理"
+      ]
+    },
+    {
+      "word": "electron",
+      "definitions": [
+        "n. 电子"
+      ]
+    },
+    {
+      "word": "distinguish",
+      "definitions": [
+        "v. 区分"
+      ]
+    },
+    {
+      "word": "approach",
+      "definitions": [
+        "v. 靠近",
+        "v. 处理",
+        "n. 方法"
+      ]
+    },
+    {
+      "word": "editorial",
+      "definitions": [
+        "adj. 编辑的",
+        "n. 社论"
+      ]
+    },
+    {
+      "word": "overflow",
+      "definitions": [
+        "v. 溢出",
+        "v. 充满"
+      ]
+    },
+    {
+      "word": "rear",
+      "definitions": [
+        "v. 提高",
+        "n. 后部"
+      ]
+    },
+    {
+      "word": "discern",
+      "definitions": [
+        "v. 辨别"
+      ]
+    },
+    {
+      "word": "pillar",
+      "definitions": [
+        "n. 柱子"
+      ]
+    },
+    {
+      "word": "glaciation",
+      "definitions": [
+        "n. 冰川覆盖"
+      ]
+    },
+    {
+      "word": "adaptive",
+      "definitions": [
+        "adj. 改变的"
+      ]
+    },
+    {
+      "word": "crustal",
+      "definitions": [
+        "adj. 地壳的"
+      ]
+    },
+    {
+      "word": "occasionally",
+      "definitions": [
+        "adv. 偶尔"
+      ]
+    },
+    {
+      "word": "combat",
+      "definitions": [
+        "n. 战斗"
+      ]
+    },
+    {
+      "word": "demonstration",
+      "definitions": [
+        "n. 表明",
+        "n. 游行抗议"
+      ]
+    },
+    {
+      "word": "overhear",
+      "definitions": [
+        "v. 无意中听到"
+      ]
+    },
+    {
+      "word": "instill",
+      "definitions": [
+        "v. 逐渐形成"
+      ]
+    },
+    {
+      "word": "interconnect",
+      "definitions": [
+        "v. 相互连接"
+      ]
+    },
+    {
+      "word": "absorption",
+      "definitions": [
+        "n. 吸收"
+      ]
+    },
+    {
+      "word": "inadequacy",
+      "definitions": [
+        "n. 短缺"
+      ]
+    },
+    {
+      "word": "numb",
+      "definitions": [
+        "adj. 麻木的",
+        "v. 使麻木"
+      ]
+    },
+    {
+      "word": "wrestle",
+      "definitions": [
+        "v. 扭打"
+      ]
+    },
+    {
+      "word": "namely",
+      "definitions": [
+        "adv. 即"
+      ]
+    },
+    {
+      "word": "violate",
+      "definitions": [
+        "v. 违反"
+      ]
+    },
+    {
+      "word": "uppermost",
+      "definitions": [
+        "adj. 最高的"
+      ]
+    },
+    {
+      "word": "supposedly",
+      "definitions": [
+        "adv. 据说"
+      ]
+    },
+    {
+      "word": "classic",
+      "definitions": [
+        "adj. 典型的",
+        "adj. 经典的"
+      ]
+    },
+    {
+      "word": "galaxy",
+      "definitions": [
+        "n. 星系，银河系",
+        "n. 一群人"
+      ]
+    },
+    {
+      "word": "boundary",
+      "definitions": [
+        "n. 边界"
+      ]
+    },
+    {
+      "word": "erupt",
+      "definitions": [
+        "v. 爆发"
+      ]
+    },
+    {
+      "word": "drawback",
+      "definitions": [
+        "n. 缺陷"
+      ]
+    },
+    {
+      "word": "hatch",
+      "definitions": [
+        "v. 孵"
+      ]
+    },
+    {
+      "word": "adolescence",
+      "definitions": [
+        "n. 青春期"
+      ]
+    },
+    {
+      "word": "resort",
+      "definitions": [
+        "v. 诉诸于",
+        "n. 度假胜地",
+        "n. 招数"
+      ]
+    },
+    {
+      "word": "vigorous",
+      "definitions": [
+        "adj. 有力的"
+      ]
+    },
+    {
+      "word": "crush",
+      "definitions": [
+        "v. 压碎",
+        "n. 迷恋"
+      ]
+    },
+    {
+      "word": "villa",
+      "definitions": [
+        "n. 乡间庄园"
+      ]
+    },
+    {
+      "word": "supreme",
+      "definitions": [
+        "adj. 卓越的"
+      ]
+    },
+    {
+      "word": "gem",
+      "definitions": [
+        "n. 宝石"
+      ]
+    },
+    {
+      "word": "contrary",
+      "definitions": [
+        "adj. 相反的"
+      ]
+    },
+    {
+      "word": "portrait",
+      "definitions": [
+        "n. 肖像"
+      ]
+    },
+    {
+      "word": "consciousness",
+      "definitions": [
+        "n. 意识"
+      ]
+    },
+    {
+      "word": "uncover",
+      "definitions": [
+        "v. 揭露"
+      ]
+    },
+    {
+      "word": "interactive",
+      "definitions": [
+        "adj. 相互作用的"
+      ]
+    },
+    {
+      "word": "mercury",
+      "definitions": [
+        "n. 水银",
+        "n. 水星"
+      ]
+    },
+    {
+      "word": "parallel",
+      "definitions": [
+        "adj. 平行的"
+      ]
+    },
+    {
+      "word": "mercy",
+      "definitions": [
+        "n. 仁慈"
+      ]
+    },
+    {
+      "word": "plot",
+      "definitions": [
+        "n. 情节",
+        "n. 阴谋",
+        "v. 谋划"
+      ]
+    },
+    {
+      "word": "distinctly",
+      "definitions": [
+        "adv. 清楚地"
+      ]
+    },
+    {
+      "word": "primitive",
+      "definitions": [
+        "adj. 原始的"
+      ]
+    },
+    {
+      "word": "literally",
+      "definitions": [
+        "adv. 确确实实地"
+      ]
+    },
+    {
+      "word": "progressive",
+      "definitions": [
+        "adj. 逐步的",
+        "adj. 前进的"
+      ]
+    },
+    {
+      "word": "tidal",
+      "definitions": [
+        "adj. 潮汐的"
+      ]
+    },
+    {
+      "word": "occupant",
+      "definitions": [
+        "n. 居住者"
+      ]
+    },
+    {
+      "word": "compromise",
+      "definitions": [
+        "n. 妥协",
+        "v. 危及"
+      ]
+    },
+    {
+      "word": "overgrow",
+      "definitions": [
+        "v. 过度生长"
+      ]
+    },
+    {
+      "word": "obligation",
+      "definitions": [
+        "n. 义务"
+      ]
+    },
+    {
+      "word": "delicate",
+      "definitions": [
+        "adj. 精美的",
+        "adj. 易碎的"
+      ]
+    },
+    {
+      "word": "knit",
+      "definitions": [
+        "v. 编织"
+      ]
+    },
+    {
+      "word": "choir",
+      "definitions": [
+        "n. 唱诗班"
+      ]
+    },
+    {
+      "word": "geothermal",
+      "definitions": [
+        "adj. 地热的"
+      ]
+    },
+    {
+      "word": "smash",
+      "definitions": [
+        "v. 击碎"
+      ]
+    },
+    {
+      "word": "meantime",
+      "definitions": [
+        "n. 其间"
+      ]
+    },
+    {
+      "word": "reference",
+      "definitions": [
+        "n. 提及",
+        "n. 参考"
+      ]
+    },
+    {
+      "word": "hub",
+      "definitions": [
+        "n. 中心"
+      ]
+    },
+    {
+      "word": "reckon",
+      "definitions": [
+        "v. 估计",
+        "v. 期望"
+      ]
+    },
+    {
+      "word": "undo",
+      "definitions": [
+        "v. 消除"
+      ]
+    },
+    {
+      "word": "circulate",
+      "definitions": [
+        "v. 传播"
+      ]
+    },
+    {
+      "word": "trial",
+      "definitions": [
+        "n. 试验",
+        "n. 审判"
+      ]
+    },
+    {
+      "word": "cement",
+      "definitions": [
+        "n. 水泥",
+        "v. 接合"
+      ]
+    },
+    {
+      "word": "distinction",
+      "definitions": [
+        "n. 差别",
+        "n. 卓越"
+      ]
+    },
+    {
+      "word": "archaeologist",
+      "definitions": [
+        "n. 考古学家"
+      ]
+    },
+    {
+      "word": "flee",
+      "definitions": [
+        "v. 逃离"
+      ]
+    },
+    {
+      "word": "subtropical",
+      "definitions": [
+        "adj. 亚热带的"
+      ]
+    },
+    {
+      "word": "stab",
+      "definitions": [
+        "v. 刺"
+      ]
+    },
+    {
+      "word": "colonial",
+      "definitions": [
+        "adj. 殖民地的"
+      ]
+    },
+    {
+      "word": "posture",
+      "definitions": [
+        "n. 姿势"
+      ]
+    },
+    {
+      "word": "pierce",
+      "definitions": [
+        "v. 穿透"
+      ]
+    },
+    {
+      "word": "scribe",
+      "definitions": [
+        "n. 抄写员",
+        "v. 登记"
+      ]
+    },
+    {
+      "word": "penetrate",
+      "definitions": [
+        "v. 穿透"
+      ]
+    },
+    {
+      "word": "margin",
+      "definitions": [
+        "n. 边缘",
+        "n. 幅度"
+      ]
+    },
+    {
+      "word": "residence",
+      "definitions": [
+        "n. 住处"
+      ]
+    },
+    {
+      "word": "dissolution",
+      "definitions": [
+        "n. 解除"
+      ]
+    },
+    {
+      "word": "candid",
+      "definitions": [
+        "adj. 率直的"
+      ]
+    },
+    {
+      "word": "criterion",
+      "definitions": [
+        "n. 准则"
+      ]
+    },
+    {
+      "word": "carnival",
+      "definitions": [
+        "n. 狂欢节"
+      ]
+    },
+    {
+      "word": "scatter",
+      "definitions": [
+        "v. 分散"
+      ]
+    },
+    {
+      "word": "asset",
+      "definitions": [
+        "n. 优势",
+        "n. 资产"
+      ]
+    },
+    {
+      "word": "clockwise",
+      "definitions": [
+        "adj. 顺时针的"
+      ]
+    },
+    {
+      "word": "component",
+      "definitions": [
+        "n. 组成"
+      ]
+    },
+    {
+      "word": "submerge",
+      "definitions": [
+        "v. 淹没"
+      ]
+    },
+    {
+      "word": "pressing",
+      "definitions": [
+        "adj. 迫切的"
+      ]
+    },
+    {
+      "word": "undergo",
+      "definitions": [
+        "v. 经历"
+      ]
+    },
+    {
+      "word": "substitute",
+      "definitions": [
+        "n. 替代"
+      ]
+    },
+    {
+      "word": "exterminate",
+      "definitions": [
+        "v. 消灭"
+      ]
+    },
+    {
+      "word": "instance",
+      "definitions": [
+        "n. 情况"
+      ]
+    }
+  ]
+}

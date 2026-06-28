@@ -1,0 +1,638 @@
+{
+  "meta": {
+    "level": 4,
+    "list": 1,
+    "title": "Level 4 · List 1",
+    "updatedAt": "2026-06-28"
+  },
+  "words": [
+    {
+      "word": "motion",
+      "definitions": [
+        "n. 运动，移动",
+        "n. 提议"
+      ]
+    },
+    {
+      "word": "constitute",
+      "definitions": [
+        "v. 组成，建立"
+      ]
+    },
+    {
+      "word": "organic",
+      "definitions": [
+        "adj. 有机的",
+        "adj. 自然发生的"
+      ]
+    },
+    {
+      "word": "restrict",
+      "definitions": [
+        "v. 限制"
+      ]
+    },
+    {
+      "word": "handout",
+      "definitions": [
+        "n. 捐赠",
+        "n. 课程讲义"
+      ]
+    },
+    {
+      "word": "dwell",
+      "definitions": [
+        "v. 居住",
+        "v. 沉湎于"
+      ]
+    },
+    {
+      "word": "responsive",
+      "definitions": [
+        "adj. 反应灵敏的"
+      ]
+    },
+    {
+      "word": "intensify",
+      "definitions": [
+        "v. 加强"
+      ]
+    },
+    {
+      "word": "insure",
+      "definitions": [
+        "v. 采取预防措施，投保"
+      ]
+    },
+    {
+      "word": "redistribute",
+      "definitions": [
+        "v. 重新分配"
+      ]
+    },
+    {
+      "word": "debatable",
+      "definitions": [
+        "adj. 有争议的"
+      ]
+    },
+    {
+      "word": "ingredient",
+      "definitions": [
+        "n. 要素",
+        "n. (食物)配料"
+      ]
+    },
+    {
+      "word": "abound",
+      "definitions": [
+        "v. 充满"
+      ]
+    },
+    {
+      "word": "edible",
+      "definitions": [
+        "adj. 可食用的"
+      ]
+    },
+    {
+      "word": "friction",
+      "definitions": [
+        "n. 摩擦，摩擦力",
+        "n. 矛盾"
+      ]
+    },
+    {
+      "word": "muscular",
+      "definitions": [
+        "adj. 肌肉的"
+      ]
+    },
+    {
+      "word": "consultant",
+      "definitions": [
+        "n. 顾问"
+      ]
+    },
+    {
+      "word": "donation",
+      "definitions": [
+        "n. 捐赠"
+      ]
+    },
+    {
+      "word": "trigger",
+      "definitions": [
+        "v. 引发",
+        "n. 扳机"
+      ]
+    },
+    {
+      "word": "unfold",
+      "definitions": [
+        "v. 展开(open)",
+        "v. 展开(develop)"
+      ]
+    },
+    {
+      "word": "breakdown",
+      "definitions": [
+        "n. 故障",
+        "n. 分解表",
+        "n. 情绪崩溃"
+      ]
+    },
+    {
+      "word": "suspend",
+      "definitions": [
+        "v. 悬挂",
+        "v. 暂停"
+      ]
+    },
+    {
+      "word": "canal",
+      "definitions": [
+        "n. 运河，沟渠"
+      ]
+    },
+    {
+      "word": "circumstance",
+      "definitions": [
+        "n. 情况"
+      ]
+    },
+    {
+      "word": "descend",
+      "definitions": [
+        "v. 起源",
+        "v. 下降"
+      ]
+    },
+    {
+      "word": "punctuation",
+      "definitions": [
+        "n. 标点"
+      ]
+    },
+    {
+      "word": "compose",
+      "definitions": [
+        "v. 组成",
+        "v. 创作"
+      ]
+    },
+    {
+      "word": "rally",
+      "definitions": [
+        "n. 集会",
+        "v. 反弹"
+      ]
+    },
+    {
+      "word": "conquest",
+      "definitions": [
+        "n. 征服"
+      ]
+    },
+    {
+      "word": "inaccessible",
+      "definitions": [
+        "adj. 难以到达的"
+      ]
+    },
+    {
+      "word": "coastline",
+      "definitions": [
+        "n. 海岸线"
+      ]
+    },
+    {
+      "word": "stake",
+      "definitions": [
+        "v. 界定",
+        "n. 桩",
+        "n. 危险"
+      ]
+    },
+    {
+      "word": "foster",
+      "definitions": [
+        "v. 培养",
+        "adj. 寄养的"
+      ]
+    },
+    {
+      "word": "opponent",
+      "definitions": [
+        "n. 对手"
+      ]
+    },
+    {
+      "word": "cord",
+      "definitions": [
+        "n. 线，绳"
+      ]
+    },
+    {
+      "word": "alert",
+      "definitions": [
+        "adj. 机敏的",
+        "n. 警告"
+      ]
+    },
+    {
+      "word": "vital",
+      "definitions": [
+        "adj. 极其重要的"
+      ]
+    },
+    {
+      "word": "strategy",
+      "definitions": [
+        "n. 策略"
+      ]
+    },
+    {
+      "word": "screening",
+      "definitions": [
+        "n. 放映",
+        "n. 筛选"
+      ]
+    },
+    {
+      "word": "bulb",
+      "definitions": [
+        "n. 电灯泡"
+      ]
+    },
+    {
+      "word": "comparatively",
+      "definitions": [
+        "adv. 相对地"
+      ]
+    },
+    {
+      "word": "constant",
+      "definitions": [
+        "adj. 稳定的",
+        "n. 常数"
+      ]
+    },
+    {
+      "word": "crude",
+      "definitions": [
+        "adj. 粗糙的"
+      ]
+    },
+    {
+      "word": "forefront",
+      "definitions": [
+        "n. 最前列"
+      ]
+    },
+    {
+      "word": "steer",
+      "definitions": [
+        "v. 带领"
+      ]
+    },
+    {
+      "word": "cactus",
+      "definitions": [
+        "n. 仙人掌"
+      ]
+    },
+    {
+      "word": "episode",
+      "definitions": [
+        "n. 事件"
+      ]
+    },
+    {
+      "word": "possession",
+      "definitions": [
+        "n. 拥有"
+      ]
+    },
+    {
+      "word": "seal",
+      "definitions": [
+        "n. 海豹",
+        "v. 密封",
+        "n. 印章"
+      ]
+    },
+    {
+      "word": "authentic",
+      "definitions": [
+        "adj. 真实的",
+        "adj. 可信的"
+      ]
+    },
+    {
+      "word": "portable",
+      "definitions": [
+        "adj. 便于携带的"
+      ]
+    },
+    {
+      "word": "heroine",
+      "definitions": [
+        "n. 女主角"
+      ]
+    },
+    {
+      "word": "exceed",
+      "definitions": [
+        "v. 超过"
+      ]
+    },
+    {
+      "word": "continental",
+      "definitions": [
+        "adj. 大陆的"
+      ]
+    },
+    {
+      "word": "petal",
+      "definitions": [
+        "n. 花瓣"
+      ]
+    },
+    {
+      "word": "collective",
+      "definitions": [
+        "adj. 集体的"
+      ]
+    },
+    {
+      "word": "vitality",
+      "definitions": [
+        "n. 活力"
+      ]
+    },
+    {
+      "word": "runaway",
+      "definitions": [
+        "adj. 发展迅猛的",
+        "n. 逃亡"
+      ]
+    },
+    {
+      "word": "applaud",
+      "definitions": [
+        "v. 鼓掌",
+        "v. 赞扬"
+      ]
+    },
+    {
+      "word": "substantial",
+      "definitions": [
+        "adj. 重要的，大量的",
+        "adj. 实质的"
+      ]
+    },
+    {
+      "word": "precisely",
+      "definitions": [
+        "adv. 精确地"
+      ]
+    },
+    {
+      "word": "immeasurably",
+      "definitions": [
+        "adv. 无法计量地"
+      ]
+    },
+    {
+      "word": "validity",
+      "definitions": [
+        "n. 正确"
+      ]
+    },
+    {
+      "word": "extract",
+      "definitions": [
+        "v. 取出"
+      ]
+    },
+    {
+      "word": "overland",
+      "definitions": [
+        "adj. 经由陆路的",
+        "adv. 经由陆路地"
+      ]
+    },
+    {
+      "word": "genre",
+      "definitions": [
+        "n. 种类"
+      ]
+    },
+    {
+      "word": "frontier",
+      "definitions": [
+        "n. 边界"
+      ]
+    },
+    {
+      "word": "secrete",
+      "definitions": [
+        "v. 分泌"
+      ]
+    },
+    {
+      "word": "ancestry",
+      "definitions": [
+        "n. 祖先"
+      ]
+    },
+    {
+      "word": "bid",
+      "definitions": [
+        "v. 出价"
+      ]
+    },
+    {
+      "word": "radiation",
+      "definitions": [
+        "n. 辐射"
+      ]
+    },
+    {
+      "word": "empire",
+      "definitions": [
+        "n. 帝国"
+      ]
+    },
+    {
+      "word": "unaltered",
+      "definitions": [
+        "adj. 未改变的"
+      ]
+    },
+    {
+      "word": "prosper",
+      "definitions": [
+        "v. 繁荣"
+      ]
+    },
+    {
+      "word": "objective",
+      "definitions": [
+        "adj. 客观的",
+        "n. 目标"
+      ]
+    },
+    {
+      "word": "glimpse",
+      "definitions": [
+        "n. 一瞥"
+      ]
+    },
+    {
+      "word": "steep",
+      "definitions": [
+        "adj. 急剧的",
+        "v. 浸泡"
+      ]
+    },
+    {
+      "word": "establishment",
+      "definitions": [
+        "n. 创立"
+      ]
+    },
+    {
+      "word": "deposit",
+      "definitions": [
+        "v. 沉积",
+        "n. 存款，押金"
+      ]
+    },
+    {
+      "word": "constraint",
+      "definitions": [
+        "n. 限制"
+      ]
+    },
+    {
+      "word": "blossom",
+      "definitions": [
+        "v. 兴旺"
+      ]
+    },
+    {
+      "word": "commitment",
+      "definitions": [
+        "n. 承诺",
+        "n. 责任感"
+      ]
+    },
+    {
+      "word": "creep",
+      "definitions": [
+        "v. 逐渐发展",
+        "v. 匍匐，爬行"
+      ]
+    },
+    {
+      "word": "resolution",
+      "definitions": [
+        "n. 坚定",
+        "n. 解决"
+      ]
+    },
+    {
+      "word": "replant",
+      "definitions": [
+        "v. 新栽"
+      ]
+    },
+    {
+      "word": "oval",
+      "definitions": [
+        "adj. 椭圆形的"
+      ]
+    },
+    {
+      "word": "rot",
+      "definitions": [
+        "v. 腐烂"
+      ]
+    },
+    {
+      "word": "crucial",
+      "definitions": [
+        "adj. 关键的"
+      ]
+    },
+    {
+      "word": "elemental",
+      "definitions": [
+        "adj. 基本的"
+      ]
+    },
+    {
+      "word": "restore",
+      "definitions": [
+        "v. 恢复"
+      ]
+    },
+    {
+      "word": "civic",
+      "definitions": [
+        "adj. 城市的"
+      ]
+    },
+    {
+      "word": "bloom",
+      "definitions": [
+        "v. 开花",
+        "v. 繁荣"
+      ]
+    },
+    {
+      "word": "cue",
+      "definitions": [
+        "n. 暗示"
+      ]
+    },
+    {
+      "word": "defect",
+      "definitions": [
+        "n. 缺陷"
+      ]
+    },
+    {
+      "word": "unforeseen",
+      "definitions": [
+        "adj. 未预料到的"
+      ]
+    },
+    {
+      "word": "inhale",
+      "definitions": [
+        "v. 吸入"
+      ]
+    },
+    {
+      "word": "tolerance",
+      "definitions": [
+        "n. 宽容"
+      ]
+    },
+    {
+      "word": "theorize",
+      "definitions": [
+        "v. 从理论上说明"
+      ]
+    },
+    {
+      "word": "initiate",
+      "definitions": [
+        "v. 开始"
+      ]
+    }
+  ]
+}

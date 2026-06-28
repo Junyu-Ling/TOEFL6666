@@ -1,0 +1,633 @@
+{
+  "meta": {
+    "level": 4,
+    "list": 4,
+    "title": "Level 4 · List 4",
+    "updatedAt": "2026-06-28"
+  },
+  "words": [
+    {
+      "word": "hasten",
+      "definitions": [
+        "v. 加快"
+      ]
+    },
+    {
+      "word": "presence",
+      "definitions": [
+        "n. 存在"
+      ]
+    },
+    {
+      "word": "delta",
+      "definitions": [
+        "n. 三角洲"
+      ]
+    },
+    {
+      "word": "grave",
+      "definitions": [
+        "adj. 严重的",
+        "n. 墓"
+      ]
+    },
+    {
+      "word": "emit",
+      "definitions": [
+        "v. 散发"
+      ]
+    },
+    {
+      "word": "protocol",
+      "definitions": [
+        "n. 礼仪",
+        "n. 协议，方案"
+      ]
+    },
+    {
+      "word": "glare",
+      "definitions": [
+        "v. 发强光",
+        "v. 瞪"
+      ]
+    },
+    {
+      "word": "innovative",
+      "definitions": [
+        "adj. 有创意的"
+      ]
+    },
+    {
+      "word": "pinpoint",
+      "definitions": [
+        "adj. 精确的",
+        "v. 精确定位"
+      ]
+    },
+    {
+      "word": "inorganic",
+      "definitions": [
+        "adj. 无机的"
+      ]
+    },
+    {
+      "word": "disorganized",
+      "definitions": [
+        "adj. 混乱的"
+      ]
+    },
+    {
+      "word": "champion",
+      "definitions": [
+        "v. 支持",
+        "n. 倡导者",
+        "n. 冠军"
+      ]
+    },
+    {
+      "word": "shepherd",
+      "definitions": [
+        "n. 牧羊人",
+        "v. 引领"
+      ]
+    },
+    {
+      "word": "dam",
+      "definitions": [
+        "n. 大坝",
+        "v. 阻碍"
+      ]
+    },
+    {
+      "word": "barely",
+      "definitions": [
+        "adv. 仅仅"
+      ]
+    },
+    {
+      "word": "characteristic",
+      "definitions": [
+        "adj. 独特的",
+        "n. 特性"
+      ]
+    },
+    {
+      "word": "receptor",
+      "definitions": [
+        "n. 感受器"
+      ]
+    },
+    {
+      "word": "ward",
+      "definitions": [
+        "n. 选区",
+        "v. 守卫"
+      ]
+    },
+    {
+      "word": "scrape",
+      "definitions": [
+        "v. 刮"
+      ]
+    },
+    {
+      "word": "trivial",
+      "definitions": [
+        "adj. 不重要的"
+      ]
+    },
+    {
+      "word": "complexity",
+      "definitions": [
+        "n. 复杂"
+      ]
+    },
+    {
+      "word": "alternate",
+      "definitions": [
+        "adj. 交替的"
+      ]
+    },
+    {
+      "word": "furnish",
+      "definitions": [
+        "v. 提供",
+        "v. 装饰"
+      ]
+    },
+    {
+      "word": "profound",
+      "definitions": [
+        "adj. 巨大的",
+        "adj. 深刻的"
+      ]
+    },
+    {
+      "word": "underestimate",
+      "definitions": [
+        "v. 低估"
+      ]
+    },
+    {
+      "word": "transaction",
+      "definitions": [
+        "n. 交易"
+      ]
+    },
+    {
+      "word": "literary",
+      "definitions": [
+        "adj. 文学的"
+      ]
+    },
+    {
+      "word": "infancy",
+      "definitions": [
+        "n. 婴儿期"
+      ]
+    },
+    {
+      "word": "implicit",
+      "definitions": [
+        "adj. 含蓄的"
+      ]
+    },
+    {
+      "word": "blacken",
+      "definitions": [
+        "v. (使)变黑",
+        "v. 诋毁"
+      ]
+    },
+    {
+      "word": "mist",
+      "definitions": [
+        "n. 雾"
+      ]
+    },
+    {
+      "word": "inappropriate",
+      "definitions": [
+        "adj. 不合适的"
+      ]
+    },
+    {
+      "word": "trunk",
+      "definitions": [
+        "n. 树干，躯干"
+      ]
+    },
+    {
+      "word": "continuation",
+      "definitions": [
+        "n. 持续"
+      ]
+    },
+    {
+      "word": "selective",
+      "definitions": [
+        "adj. 选择的"
+      ]
+    },
+    {
+      "word": "internal",
+      "definitions": [
+        "adj. 里面的"
+      ]
+    },
+    {
+      "word": "optical",
+      "definitions": [
+        "adj. 视觉的",
+        "adj. 光学的"
+      ]
+    },
+    {
+      "word": "soak",
+      "definitions": [
+        "v. 浸泡",
+        "v. 专心致志"
+      ]
+    },
+    {
+      "word": "resent",
+      "definitions": [
+        "v. 憎恨"
+      ]
+    },
+    {
+      "word": "deliberation",
+      "definitions": [
+        "n. 细想"
+      ]
+    },
+    {
+      "word": "colonist",
+      "definitions": [
+        "n. 殖民地定居者"
+      ]
+    },
+    {
+      "word": "constrict",
+      "definitions": [
+        "v. 缩小"
+      ]
+    },
+    {
+      "word": "index",
+      "definitions": [
+        "n. 索引"
+      ]
+    },
+    {
+      "word": "provoke",
+      "definitions": [
+        "v. 引起"
+      ]
+    },
+    {
+      "word": "displace",
+      "definitions": [
+        "v. 取代"
+      ]
+    },
+    {
+      "word": "consecutive",
+      "definitions": [
+        "adj. 连续的"
+      ]
+    },
+    {
+      "word": "parameter",
+      "definitions": [
+        "n. 界限",
+        "n. 参数"
+      ]
+    },
+    {
+      "word": "genetically",
+      "definitions": [
+        "adv. 从遗传学角度"
+      ]
+    },
+    {
+      "word": "coexistence",
+      "definitions": [
+        "n. 共存"
+      ]
+    },
+    {
+      "word": "diminish",
+      "definitions": [
+        "v. 减小"
+      ]
+    },
+    {
+      "word": "burst",
+      "definitions": [
+        "v. 破裂"
+      ]
+    },
+    {
+      "word": "fanciful",
+      "definitions": [
+        "adj. 空想的"
+      ]
+    },
+    {
+      "word": "freight",
+      "definitions": [
+        "n. 货物"
+      ]
+    },
+    {
+      "word": "oblige",
+      "definitions": [
+        "v. 强迫"
+      ]
+    },
+    {
+      "word": "bare",
+      "definitions": [
+        "adj. 裸露的"
+      ]
+    },
+    {
+      "word": "cubic",
+      "definitions": [
+        "adj. 立方形的"
+      ]
+    },
+    {
+      "word": "prompt",
+      "definitions": [
+        "v. 导致",
+        "adj. 及时的"
+      ]
+    },
+    {
+      "word": "workload",
+      "definitions": [
+        "n. 工作量"
+      ]
+    },
+    {
+      "word": "weave",
+      "definitions": [
+        "v. 织"
+      ]
+    },
+    {
+      "word": "relevance",
+      "definitions": [
+        "n. 相关"
+      ]
+    },
+    {
+      "word": "analysis",
+      "definitions": [
+        "n. 分析"
+      ]
+    },
+    {
+      "word": "vibrate",
+      "definitions": [
+        "v. 震动"
+      ]
+    },
+    {
+      "word": "disastrous",
+      "definitions": [
+        "adj. 灾难的"
+      ]
+    },
+    {
+      "word": "conservation",
+      "definitions": [
+        "n. 保护"
+      ]
+    },
+    {
+      "word": "condense",
+      "definitions": [
+        "v. 使浓缩"
+      ]
+    },
+    {
+      "word": "replacement",
+      "definitions": [
+        "n. 替代品"
+      ]
+    },
+    {
+      "word": "moisture",
+      "definitions": [
+        "n. 水汽"
+      ]
+    },
+    {
+      "word": "disorderly",
+      "definitions": [
+        "adj. 混乱的"
+      ]
+    },
+    {
+      "word": "tribal",
+      "definitions": [
+        "adj. 部落的"
+      ]
+    },
+    {
+      "word": "durable",
+      "definitions": [
+        "adj. 耐用的"
+      ]
+    },
+    {
+      "word": "venture",
+      "definitions": [
+        "v. 冒险"
+      ]
+    },
+    {
+      "word": "depression",
+      "definitions": [
+        "n. 坑",
+        "n. 抑郁",
+        "n. 经济大萧条"
+      ]
+    },
+    {
+      "word": "solidify",
+      "definitions": [
+        "v. 凝结",
+        "v. 团结，加固"
+      ]
+    },
+    {
+      "word": "utility",
+      "definitions": [
+        "n. 实用"
+      ]
+    },
+    {
+      "word": "accord",
+      "definitions": [
+        "n. 一致"
+      ]
+    },
+    {
+      "word": "dual",
+      "definitions": [
+        "adj. 双重的"
+      ]
+    },
+    {
+      "word": "outermost",
+      "definitions": [
+        "adj. 最外面的"
+      ]
+    },
+    {
+      "word": "sparse",
+      "definitions": [
+        "adj. 稀疏的"
+      ]
+    },
+    {
+      "word": "basin",
+      "definitions": [
+        "n. 盆地"
+      ]
+    },
+    {
+      "word": "arid",
+      "definitions": [
+        "adj. 干旱的"
+      ]
+    },
+    {
+      "word": "chant",
+      "definitions": [
+        "v. 吟唱"
+      ]
+    },
+    {
+      "word": "distrust",
+      "definitions": [
+        "n. 不信任"
+      ]
+    },
+    {
+      "word": "bore",
+      "definitions": [
+        "v. 钻孔",
+        "v. 使厌烦"
+      ]
+    },
+    {
+      "word": "citation",
+      "definitions": [
+        "n. 引述"
+      ]
+    },
+    {
+      "word": "accessibility",
+      "definitions": [
+        "n. 容易到达"
+      ]
+    },
+    {
+      "word": "commentary",
+      "definitions": [
+        "n. 评论"
+      ]
+    },
+    {
+      "word": "enterprise",
+      "definitions": [
+        "n. 事业",
+        "n. 企业"
+      ]
+    },
+    {
+      "word": "perceive",
+      "definitions": [
+        "v. 察觉，感知"
+      ]
+    },
+    {
+      "word": "unbiased",
+      "definitions": [
+        "adj. 无偏见的"
+      ]
+    },
+    {
+      "word": "questionable",
+      "definitions": [
+        "adj. 可疑的"
+      ]
+    },
+    {
+      "word": "competitive",
+      "definitions": [
+        "adj. 竞争的"
+      ]
+    },
+    {
+      "word": "omit",
+      "definitions": [
+        "v. 漏掉"
+      ]
+    },
+    {
+      "word": "ethic",
+      "definitions": [
+        "n. 道德准则"
+      ]
+    },
+    {
+      "word": "resemblance",
+      "definitions": [
+        "n. 相似"
+      ]
+    },
+    {
+      "word": "skeptical",
+      "definitions": [
+        "adj. 怀疑的"
+      ]
+    },
+    {
+      "word": "magnify",
+      "definitions": [
+        "v. 放大"
+      ]
+    },
+    {
+      "word": "swamp",
+      "definitions": [
+        "n. 沼泽"
+      ]
+    },
+    {
+      "word": "category",
+      "definitions": [
+        "n. 种类"
+      ]
+    },
+    {
+      "word": "cloak",
+      "definitions": [
+        "v. 覆盖",
+        "n. 长袍"
+      ]
+    },
+    {
+      "word": "rage",
+      "definitions": [
+        "n. 大怒"
+      ]
+    }
+  ]
+}

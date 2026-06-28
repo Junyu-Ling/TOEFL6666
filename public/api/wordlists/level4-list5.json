@@ -1,0 +1,624 @@
+{
+  "meta": {
+    "level": 4,
+    "list": 5,
+    "title": "Level 4 · List 5",
+    "updatedAt": "2026-06-28"
+  },
+  "words": [
+    {
+      "word": "presidency",
+      "definitions": [
+        "n. 总统的任期"
+      ]
+    },
+    {
+      "word": "fume",
+      "definitions": [
+        "n. (气味强烈的)烟、气"
+      ]
+    },
+    {
+      "word": "receptionist",
+      "definitions": [
+        "n. 接待员"
+      ]
+    },
+    {
+      "word": "viable",
+      "definitions": [
+        "adj. 能存活的",
+        "adj. 可行的"
+      ]
+    },
+    {
+      "word": "domesticate",
+      "definitions": [
+        "v. 驯化"
+      ]
+    },
+    {
+      "word": "enormous",
+      "definitions": [
+        "adj. 庞大的"
+      ]
+    },
+    {
+      "word": "lessen",
+      "definitions": [
+        "v. 减轻"
+      ]
+    },
+    {
+      "word": "meteoric",
+      "definitions": [
+        "adj. 流星的"
+      ]
+    },
+    {
+      "word": "chandelier",
+      "definitions": [
+        "n. 水晶吊灯"
+      ]
+    },
+    {
+      "word": "attest",
+      "definitions": [
+        "v. 证明"
+      ]
+    },
+    {
+      "word": "nourish",
+      "definitions": [
+        "v. 养育"
+      ]
+    },
+    {
+      "word": "modification",
+      "definitions": [
+        "n. 修改"
+      ]
+    },
+    {
+      "word": "ware",
+      "definitions": [
+        "n. 陶器"
+      ]
+    },
+    {
+      "word": "ally",
+      "definitions": [
+        "v. 结盟"
+      ]
+    },
+    {
+      "word": "municipal",
+      "definitions": [
+        "adj. 市政的"
+      ]
+    },
+    {
+      "word": "prayer",
+      "definitions": [
+        "n. 祈求"
+      ]
+    },
+    {
+      "word": "enclose",
+      "definitions": [
+        "v. 围绕"
+      ]
+    },
+    {
+      "word": "ambassador",
+      "definitions": [
+        "n. 大使"
+      ]
+    },
+    {
+      "word": "extinct",
+      "definitions": [
+        "adj. 灭绝的"
+      ]
+    },
+    {
+      "word": "fertile",
+      "definitions": [
+        "adj. 肥沃的"
+      ]
+    },
+    {
+      "word": "subtle",
+      "definitions": [
+        "adj. 微妙的"
+      ]
+    },
+    {
+      "word": "recital",
+      "definitions": [
+        "n. 叙述"
+      ]
+    },
+    {
+      "word": "readjust",
+      "definitions": [
+        "v. 重新调整"
+      ]
+    },
+    {
+      "word": "barrel",
+      "definitions": [
+        "n. 桶"
+      ]
+    },
+    {
+      "word": "mobility",
+      "definitions": [
+        "n. 便携性"
+      ]
+    },
+    {
+      "word": "outnumber",
+      "definitions": [
+        "v. 在数量上超过"
+      ]
+    },
+    {
+      "word": "beaver",
+      "definitions": [
+        "n. 河狸"
+      ]
+    },
+    {
+      "word": "necessitate",
+      "definitions": [
+        "v. 使成为必要"
+      ]
+    },
+    {
+      "word": "impurity",
+      "definitions": [
+        "n. 杂质"
+      ]
+    },
+    {
+      "word": "nominate",
+      "definitions": [
+        "v. 提名",
+        "v. 任命"
+      ]
+    },
+    {
+      "word": "shelve",
+      "definitions": [
+        "v. 倾斜"
+      ]
+    },
+    {
+      "word": "dawn",
+      "definitions": [
+        "n. 黎明"
+      ]
+    },
+    {
+      "word": "removal",
+      "definitions": [
+        "n. 移除"
+      ]
+    },
+    {
+      "word": "variation",
+      "definitions": [
+        "n. 变化"
+      ]
+    },
+    {
+      "word": "unrest",
+      "definitions": [
+        "n. 动乱"
+      ]
+    },
+    {
+      "word": "acidic",
+      "definitions": [
+        "adj. 酸性的"
+      ]
+    },
+    {
+      "word": "abolish",
+      "definitions": [
+        "v. 废除"
+      ]
+    },
+    {
+      "word": "council",
+      "definitions": [
+        "n. 议会"
+      ]
+    },
+    {
+      "word": "accessory",
+      "definitions": [
+        "n. 附件"
+      ]
+    },
+    {
+      "word": "disposal",
+      "definitions": [
+        "n. 处理"
+      ]
+    },
+    {
+      "word": "evolutionary",
+      "definitions": [
+        "adj. 进化的"
+      ]
+    },
+    {
+      "word": "offspring",
+      "definitions": [
+        "n. 幼仔，子女"
+      ]
+    },
+    {
+      "word": "flush",
+      "definitions": [
+        "v. 冲刷",
+        "v. 脸红"
+      ]
+    },
+    {
+      "word": "particle",
+      "definitions": [
+        "n. 颗粒"
+      ]
+    },
+    {
+      "word": "correction",
+      "definitions": [
+        "n. 改正"
+      ]
+    },
+    {
+      "word": "chaotic",
+      "definitions": [
+        "adj. 混乱的"
+      ]
+    },
+    {
+      "word": "imagery",
+      "definitions": [
+        "n. 图像",
+        "n. 意象"
+      ]
+    },
+    {
+      "word": "waterproof",
+      "definitions": [
+        "adj. 防水的"
+      ]
+    },
+    {
+      "word": "overhead",
+      "definitions": [
+        "adv. 在空中",
+        "n. 企业管理费用"
+      ]
+    },
+    {
+      "word": "exceptional",
+      "definitions": [
+        "adj. 不同寻常的"
+      ]
+    },
+    {
+      "word": "prevalent",
+      "definitions": [
+        "adj. 流行的"
+      ]
+    },
+    {
+      "word": "aggression",
+      "definitions": [
+        "n. 攻击"
+      ]
+    },
+    {
+      "word": "tactic",
+      "definitions": [
+        "n. 策略"
+      ]
+    },
+    {
+      "word": "robin",
+      "definitions": [
+        "n. 知更鸟"
+      ]
+    },
+    {
+      "word": "sphere",
+      "definitions": [
+        "n. 领域",
+        "n. 球形"
+      ]
+    },
+    {
+      "word": "toxin",
+      "definitions": [
+        "n. 毒素"
+      ]
+    },
+    {
+      "word": "luxurious",
+      "definitions": [
+        "adj. 豪华的"
+      ]
+    },
+    {
+      "word": "sustain",
+      "definitions": [
+        "v. 维持"
+      ]
+    },
+    {
+      "word": "distort",
+      "definitions": [
+        "v. 扭曲"
+      ]
+    },
+    {
+      "word": "uplift",
+      "definitions": [
+        "v. 振奋",
+        "v. 抬起"
+      ]
+    },
+    {
+      "word": "supervise",
+      "definitions": [
+        "v. 管理"
+      ]
+    },
+    {
+      "word": "peel",
+      "definitions": [
+        "v. 剥皮"
+      ]
+    },
+    {
+      "word": "strip",
+      "definitions": [
+        "v. 除去"
+      ]
+    },
+    {
+      "word": "radical",
+      "definitions": [
+        "adj. 根本的",
+        "adj. 极端的"
+      ]
+    },
+    {
+      "word": "authorize",
+      "definitions": [
+        "v. 授权"
+      ]
+    },
+    {
+      "word": "transmit",
+      "definitions": [
+        "v. 传播"
+      ]
+    },
+    {
+      "word": "potent",
+      "definitions": [
+        "adj. 强有力的"
+      ]
+    },
+    {
+      "word": "elite",
+      "definitions": [
+        "n. 精英"
+      ]
+    },
+    {
+      "word": "restate",
+      "definitions": [
+        "v. 重述"
+      ]
+    },
+    {
+      "word": "discharge",
+      "definitions": [
+        "v. 释放"
+      ]
+    },
+    {
+      "word": "constituent",
+      "definitions": [
+        "n. 成分"
+      ]
+    },
+    {
+      "word": "symbolize",
+      "definitions": [
+        "v. 象征"
+      ]
+    },
+    {
+      "word": "confine",
+      "definitions": [
+        "v. 限制"
+      ]
+    },
+    {
+      "word": "squirrel",
+      "definitions": [
+        "n. 松鼠"
+      ]
+    },
+    {
+      "word": "receptive",
+      "definitions": [
+        "adj. 乐于接受的"
+      ]
+    },
+    {
+      "word": "pedestrian",
+      "definitions": [
+        "n. 行人"
+      ]
+    },
+    {
+      "word": "carnivore",
+      "definitions": [
+        "n. 食肉动物"
+      ]
+    },
+    {
+      "word": "vessel",
+      "definitions": [
+        "n. 容器",
+        "n. 船"
+      ]
+    },
+    {
+      "word": "atomic",
+      "definitions": [
+        "adj. 原子的"
+      ]
+    },
+    {
+      "word": "exacting",
+      "definitions": [
+        "adj. 严格要求的"
+      ]
+    },
+    {
+      "word": "deceit",
+      "definitions": [
+        "n. 欺诈"
+      ]
+    },
+    {
+      "word": "abrupt",
+      "definitions": [
+        "adj. 突然的"
+      ]
+    },
+    {
+      "word": "emerge",
+      "definitions": [
+        "v. 出现"
+      ]
+    },
+    {
+      "word": "collision",
+      "definitions": [
+        "n. 碰撞",
+        "n. 冲突"
+      ]
+    },
+    {
+      "word": "forked",
+      "definitions": [
+        "adj. 分叉的"
+      ]
+    },
+    {
+      "word": "humid",
+      "definitions": [
+        "adj. 湿热的"
+      ]
+    },
+    {
+      "word": "packet",
+      "definitions": [
+        "n. 小件包裹"
+      ]
+    },
+    {
+      "word": "comic",
+      "definitions": [
+        "adj. 喜剧的"
+      ]
+    },
+    {
+      "word": "register",
+      "definitions": [
+        "v. 登记"
+      ]
+    },
+    {
+      "word": "severely",
+      "definitions": [
+        "adv. 严重地"
+      ]
+    },
+    {
+      "word": "partial",
+      "definitions": [
+        "adj. 部分的",
+        "adj. 偏袒的"
+      ]
+    },
+    {
+      "word": "scenario",
+      "definitions": [
+        "n. 情况",
+        "n. 剧情"
+      ]
+    },
+    {
+      "word": "immense",
+      "definitions": [
+        "adj. 巨大的"
+      ]
+    },
+    {
+      "word": "dampen",
+      "definitions": [
+        "v. 使潮湿",
+        "v. 使沮丧"
+      ]
+    },
+    {
+      "word": "comet",
+      "definitions": [
+        "n. 彗星"
+      ]
+    },
+    {
+      "word": "testify",
+      "definitions": [
+        "v. 证实"
+      ]
+    },
+    {
+      "word": "void",
+      "definitions": [
+        "adj. 空的",
+        "adj. 无效的"
+      ]
+    },
+    {
+      "word": "overlook",
+      "definitions": [
+        "v. 忽略"
+      ]
+    },
+    {
+      "word": "temporary",
+      "definitions": [
+        "adj. 临时的"
+      ]
+    },
+    {
+      "word": "compel",
+      "definitions": [
+        "v. 强迫"
+      ]
+    }
+  ]
+}

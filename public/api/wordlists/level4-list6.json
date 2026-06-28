@@ -1,0 +1,636 @@
+{
+  "meta": {
+    "level": 4,
+    "list": 6,
+    "title": "Level 4 · List 6",
+    "updatedAt": "2026-06-28"
+  },
+  "words": [
+    {
+      "word": "analyst",
+      "definitions": [
+        "n. 分析员"
+      ]
+    },
+    {
+      "word": "dehydrate",
+      "definitions": [
+        "v. 脱水"
+      ]
+    },
+    {
+      "word": "populous",
+      "definitions": [
+        "adj. 人口众多的"
+      ]
+    },
+    {
+      "word": "spectacular",
+      "definitions": [
+        "adj. 引人注目的"
+      ]
+    },
+    {
+      "word": "dispense",
+      "definitions": [
+        "v. 分发"
+      ]
+    },
+    {
+      "word": "crash",
+      "definitions": [
+        "v. 碰撞"
+      ]
+    },
+    {
+      "word": "expire",
+      "definitions": [
+        "v. 到期"
+      ]
+    },
+    {
+      "word": "miraculous",
+      "definitions": [
+        "adj. 奇迹般的"
+      ]
+    },
+    {
+      "word": "ritual",
+      "definitions": [
+        "n. 仪式"
+      ]
+    },
+    {
+      "word": "subsequent",
+      "definitions": [
+        "adj. 随后的"
+      ]
+    },
+    {
+      "word": "synonym",
+      "definitions": [
+        "n. 同义词"
+      ]
+    },
+    {
+      "word": "chorus",
+      "definitions": [
+        "n. 合唱队"
+      ]
+    },
+    {
+      "word": "efficiency",
+      "definitions": [
+        "n. 效率"
+      ]
+    },
+    {
+      "word": "blur",
+      "definitions": [
+        "v. 模糊"
+      ]
+    },
+    {
+      "word": "core",
+      "definitions": [
+        "n. 核心"
+      ]
+    },
+    {
+      "word": "scroll",
+      "definitions": [
+        "n. 卷轴"
+      ]
+    },
+    {
+      "word": "energize",
+      "definitions": [
+        "v. 使……活跃"
+      ]
+    },
+    {
+      "word": "dump",
+      "definitions": [
+        "n. 垃圾场",
+        "v. 倾倒",
+        "v. 抛弃"
+      ]
+    },
+    {
+      "word": "clan",
+      "definitions": [
+        "n. 宗族"
+      ]
+    },
+    {
+      "word": "rebound",
+      "definitions": [
+        "v. 反弹"
+      ]
+    },
+    {
+      "word": "scent",
+      "definitions": [
+        "n. 气味"
+      ]
+    },
+    {
+      "word": "portray",
+      "definitions": [
+        "v. 描绘"
+      ]
+    },
+    {
+      "word": "appropriate",
+      "definitions": [
+        "adj. 合适的",
+        "v. 侵占"
+      ]
+    },
+    {
+      "word": "patch",
+      "definitions": [
+        "n. 小片土地",
+        "n. 补丁"
+      ]
+    },
+    {
+      "word": "reflection",
+      "definitions": [
+        "n. 深思",
+        "n. 反射",
+        "n. 倒影"
+      ]
+    },
+    {
+      "word": "discontent",
+      "definitions": [
+        "n. 不满"
+      ]
+    },
+    {
+      "word": "infrastructure",
+      "definitions": [
+        "n. 基础设施"
+      ]
+    },
+    {
+      "word": "recipient",
+      "definitions": [
+        "n. 接受者"
+      ]
+    },
+    {
+      "word": "contest",
+      "definitions": [
+        "n. 比赛"
+      ]
+    },
+    {
+      "word": "locality",
+      "definitions": [
+        "n. 地区"
+      ]
+    },
+    {
+      "word": "arch",
+      "definitions": [
+        "n. 拱形，拱门"
+      ]
+    },
+    {
+      "word": "oppose",
+      "definitions": [
+        "v. 反对"
+      ]
+    },
+    {
+      "word": "feature",
+      "definitions": [
+        "n. 特征",
+        "v. 作主要角色"
+      ]
+    },
+    {
+      "word": "instrumental",
+      "definitions": [
+        "adj. 起重要作用的",
+        "adj. 器乐的"
+      ]
+    },
+    {
+      "word": "lean",
+      "definitions": [
+        "v. 倾斜",
+        "adj. 瘦的"
+      ]
+    },
+    {
+      "word": "cohesive",
+      "definitions": [
+        "adj. 统一的"
+      ]
+    },
+    {
+      "word": "echo",
+      "definitions": [
+        "n. 回声",
+        "v. 与……相似"
+      ]
+    },
+    {
+      "word": "oxidize",
+      "definitions": [
+        "v. 氧化"
+      ]
+    },
+    {
+      "word": "acid",
+      "definitions": [
+        "n. 酸",
+        "adj. 酸的"
+      ]
+    },
+    {
+      "word": "blink",
+      "definitions": [
+        "v. 闪烁",
+        "v. 眨眼"
+      ]
+    },
+    {
+      "word": "periodical",
+      "definitions": [
+        "adj. 周期性的"
+      ]
+    },
+    {
+      "word": "fuss",
+      "definitions": [
+        "n. 争吵，大惊小怪"
+      ]
+    },
+    {
+      "word": "navigable",
+      "definitions": [
+        "adj. 可通航的"
+      ]
+    },
+    {
+      "word": "static",
+      "definitions": [
+        "adj. 静止的"
+      ]
+    },
+    {
+      "word": "liberal",
+      "definitions": [
+        "adj. 自由的"
+      ]
+    },
+    {
+      "word": "square",
+      "definitions": [
+        "n. 正方形",
+        "n. 广场",
+        "n. 平方"
+      ]
+    },
+    {
+      "word": "citizenry",
+      "definitions": [
+        "n. 全体市民"
+      ]
+    },
+    {
+      "word": "competence",
+      "definitions": [
+        "n. 能力"
+      ]
+    },
+    {
+      "word": "aware",
+      "definitions": [
+        "adj. 意识到的"
+      ]
+    },
+    {
+      "word": "compress",
+      "definitions": [
+        "v. 压缩"
+      ]
+    },
+    {
+      "word": "populate",
+      "definitions": [
+        "v. 居住于"
+      ]
+    },
+    {
+      "word": "artifact",
+      "definitions": [
+        "n. 人工制品"
+      ]
+    },
+    {
+      "word": "dizziness",
+      "definitions": [
+        "n. 眩晕"
+      ]
+    },
+    {
+      "word": "identical",
+      "definitions": [
+        "adj. 相同的"
+      ]
+    },
+    {
+      "word": "timber",
+      "definitions": [
+        "n. 木材"
+      ]
+    },
+    {
+      "word": "rough",
+      "definitions": [
+        "adj. 粗糙的"
+      ]
+    },
+    {
+      "word": "abstraction",
+      "definitions": [
+        "n. 抽象概念",
+        "n. 提取"
+      ]
+    },
+    {
+      "word": "principal",
+      "definitions": [
+        "adj. 最重要的",
+        "n. 校长"
+      ]
+    },
+    {
+      "word": "corridor",
+      "definitions": [
+        "n. 走廊"
+      ]
+    },
+    {
+      "word": "aspiration",
+      "definitions": [
+        "n. 渴望"
+      ]
+    },
+    {
+      "word": "shun",
+      "definitions": [
+        "v. 避开"
+      ]
+    },
+    {
+      "word": "multiplication",
+      "definitions": [
+        "n. 成倍增长"
+      ]
+    },
+    {
+      "word": "governance",
+      "definitions": [
+        "n. 统治"
+      ]
+    },
+    {
+      "word": "carbonate",
+      "definitions": [
+        "n. 碳酸盐"
+      ]
+    },
+    {
+      "word": "illuminate",
+      "definitions": [
+        "v. 阐明",
+        "v. 照亮"
+      ]
+    },
+    {
+      "word": "vegetation",
+      "definitions": [
+        "n. 植被"
+      ]
+    },
+    {
+      "word": "diplomat",
+      "definitions": [
+        "n. 外交官"
+      ]
+    },
+    {
+      "word": "turbulence",
+      "definitions": [
+        "n. 动荡"
+      ]
+    },
+    {
+      "word": "backbone",
+      "definitions": [
+        "n. 脊柱",
+        "n. 关键部分"
+      ]
+    },
+    {
+      "word": "unintentional",
+      "definitions": [
+        "adj. 无意的"
+      ]
+    },
+    {
+      "word": "conceptual",
+      "definitions": [
+        "adj. 概念的"
+      ]
+    },
+    {
+      "word": "collapse",
+      "definitions": [
+        "v. 倒塌"
+      ]
+    },
+    {
+      "word": "cast",
+      "definitions": [
+        "v. 扔，抛",
+        "v. 浇铸"
+      ]
+    },
+    {
+      "word": "expose",
+      "definitions": [
+        "v. 揭露"
+      ]
+    },
+    {
+      "word": "prehistoric",
+      "definitions": [
+        "adj. 史前的"
+      ]
+    },
+    {
+      "word": "distract",
+      "definitions": [
+        "v. 使分心"
+      ]
+    },
+    {
+      "word": "cultivate",
+      "definitions": [
+        "v. 耕作",
+        "v. 培养"
+      ]
+    },
+    {
+      "word": "spiral",
+      "definitions": [
+        "adj. 螺旋形的"
+      ]
+    },
+    {
+      "word": "dinosaur",
+      "definitions": [
+        "n. 恐龙"
+      ]
+    },
+    {
+      "word": "underlie",
+      "definitions": [
+        "v. 位于……之下",
+        "v. 构成……的基础"
+      ]
+    },
+    {
+      "word": "sensation",
+      "definitions": [
+        "n. 感觉，知觉"
+      ]
+    },
+    {
+      "word": "accompany",
+      "definitions": [
+        "v. 陪伴",
+        "v. 伴随"
+      ]
+    },
+    {
+      "word": "intake",
+      "definitions": [
+        "n. 摄取量"
+      ]
+    },
+    {
+      "word": "bud",
+      "definitions": [
+        "n. 芽",
+        "v. 发芽"
+      ]
+    },
+    {
+      "word": "successive",
+      "definitions": [
+        "adj. 连续的"
+      ]
+    },
+    {
+      "word": "bundle",
+      "definitions": [
+        "n. 捆"
+      ]
+    },
+    {
+      "word": "mortgage",
+      "definitions": [
+        "n. 抵押"
+      ]
+    },
+    {
+      "word": "inference",
+      "definitions": [
+        "n. 推断"
+      ]
+    },
+    {
+      "word": "irrigate",
+      "definitions": [
+        "v. 灌溉"
+      ]
+    },
+    {
+      "word": "exotic",
+      "definitions": [
+        "adj. 来自异国的"
+      ]
+    },
+    {
+      "word": "row",
+      "definitions": [
+        "n. 一排",
+        "v. 划"
+      ]
+    },
+    {
+      "word": "strongman",
+      "definitions": [
+        "n. 铁腕人物"
+      ]
+    },
+    {
+      "word": "oxide",
+      "definitions": [
+        "n. 氧化物"
+      ]
+    },
+    {
+      "word": "indefensible",
+      "definitions": [
+        "adj. 站不住脚的"
+      ]
+    },
+    {
+      "word": "neutralize",
+      "definitions": [
+        "v. 抵消",
+        "v. 中和"
+      ]
+    },
+    {
+      "word": "eject",
+      "definitions": [
+        "v. 喷射"
+      ]
+    },
+    {
+      "word": "devise",
+      "definitions": [
+        "v. 设计，发明"
+      ]
+    },
+    {
+      "word": "theoretical",
+      "definitions": [
+        "adj. 假设的",
+        "adj. 理论的"
+      ]
+    },
+    {
+      "word": "complicate",
+      "definitions": [
+        "v. 使复杂"
+      ]
+    },
+    {
+      "word": "specific",
+      "definitions": [
+        "adj. 特定的"
+      ]
+    }
+  ]
+}
