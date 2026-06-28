@@ -66,7 +66,9 @@ export default function StreakPanel({ open, onClose, streak, onStreakChange }) {
         <header className="streak-panel__header">
           <div>
             <h2>学习日历</h2>
-            <p className="streak-panel__subtitle">每天打开应用点亮火苗 · 点击日期标记考试（可多场）</p>
+            <p className="streak-panel__subtitle">
+              每天打开应用点亮火苗 · 点击日期标记考试 · 本地保存，关闭浏览器不丢失
+            </p>
           </div>
           <button type="button" className="settings-panel__close" onClick={onClose} aria-label="关闭">
             ×

@@ -73,12 +73,17 @@ function createExamId(type, dateKey) {
   return `${type}-${dateKey}-${Date.now().toString(36)}`;
 }
 
+function stableExamId(entry, index) {
+  if (entry.id) return entry.id;
+  return `${entry.type}-${entry.dateKey}-${index}`;
+}
+
 export function normalizeExamMarks(examMarks) {
   if (Array.isArray(examMarks)) {
     return examMarks
       .filter((entry) => entry?.dateKey && EXAM_TYPES[entry.type])
-      .map((entry) => ({
-        id: entry.id || createExamId(entry.type, entry.dateKey),
+      .map((entry, index) => ({
+        id: stableExamId(entry, index),
         type: entry.type,
         dateKey: entry.dateKey,
       }))
@@ -98,19 +103,45 @@ export function normalizeExamMarks(examMarks) {
   return [];
 }
 
+let memoryStreakCache = null;
+
+function serializeStreak(data) {
+  return {
+    loginDates: Array.isArray(data.loginDates) ? [...data.loginDates].sort() : [],
+    longestStreak: data.longestStreak ?? 0,
+    examMarks: normalizeExamMarks(data.examMarks),
+  };
+}
+
+function writeStreakRaw(data) {
+  const payload = serializeStreak(data);
+  memoryStreakCache = payload;
+  try {
+    localStorage.setItem(STREAK_KEY, JSON.stringify(payload));
+  } catch {
+    // localStorage unavailable (private mode / quota) — keep in-memory for session
+  }
+  return payload;
+}
+
 function readStreakRaw() {
   try {
     const raw = localStorage.getItem(STREAK_KEY);
-    if (!raw) return { ...DEFAULT_STREAK, loginDates: [], examMarks: [] };
-    const data = { ...DEFAULT_STREAK, ...JSON.parse(raw) };
-    return {
-      loginDates: Array.isArray(data.loginDates) ? [...data.loginDates].sort() : [],
-      longestStreak: data.longestStreak ?? 0,
-      examMarks: normalizeExamMarks(data.examMarks),
-    };
+    if (raw) {
+      const data = { ...DEFAULT_STREAK, ...JSON.parse(raw) };
+      return writeStreakRaw(data);
+    }
   } catch {
-    return { ...DEFAULT_STREAK, loginDates: [], examMarks: [] };
+    // fall through to memory / default
   }
+
+  if (memoryStreakCache) {
+    return serializeStreak(memoryStreakCache);
+  }
+
+  const empty = { ...DEFAULT_STREAK, loginDates: [], examMarks: [] };
+  memoryStreakCache = serializeStreak(empty);
+  return memoryStreakCache;
 }
 
 function buildStreakSnapshot(data) {
@@ -132,15 +163,12 @@ export function loadStreak() {
   return buildStreakSnapshot(readStreakRaw());
 }
 
+export function refreshStreak() {
+  return loadStreak();
+}
+
 export function saveStreak(data) {
-  localStorage.setItem(
-    STREAK_KEY,
-    JSON.stringify({
-      loginDates: data.loginDates,
-      longestStreak: data.longestStreak,
-      examMarks: normalizeExamMarks(data.examMarks),
-    })
-  );
+  writeStreakRaw(data);
 }
 
 export function addExamMark(type, dateKey) {
@@ -203,9 +231,9 @@ export function recordVisit() {
   const longestStreak = Math.max(raw.longestStreak ?? 0, currentStreak);
 
   const next = {
-    ...raw,
     loginDates,
     longestStreak,
+    examMarks: raw.examMarks,
   };
   saveStreak(next);
 

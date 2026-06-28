@@ -7,7 +7,7 @@ import SettingsPanel from "./components/SettingsPanel";
 import VocabAssistant from "./components/VocabAssistant";
 import StreakPanel from "./components/StreakPanel";
 import VocabLoadingScreen from "./components/VocabLoadingScreen";
-import { recordVisit } from "./services/streak";
+import { recordVisit, refreshStreak } from "./services/streak";
 import { useMicrophone } from "./hooks/useMicrophone";
 import { fetchWordList, fetchWordListManifest } from "./services/wordlist";
 import {
@@ -56,6 +56,32 @@ export default function App() {
   const [shuffleSeed, setShuffleSeed] = useState(() => Date.now());
   const [streakData, setStreakData] = useState(() => recordVisit());
   const [streakOpen, setStreakOpen] = useState(false);
+
+  useEffect(() => {
+    function syncStreak() {
+      setStreakData(recordVisit());
+    }
+
+    function handleStorage(event) {
+      if (event.key === "toefl666_streak") {
+        setStreakData(refreshStreak());
+      }
+    }
+
+    function handleVisibility() {
+      if (document.visibilityState === "visible") syncStreak();
+    }
+
+    window.addEventListener("focus", syncStreak);
+    document.addEventListener("visibilitychange", handleVisibility);
+    window.addEventListener("storage", handleStorage);
+
+    return () => {
+      window.removeEventListener("focus", syncStreak);
+      document.removeEventListener("visibilitychange", handleVisibility);
+      window.removeEventListener("storage", handleStorage);
+    };
+  }, []);
 
   const applyList = useCallback((listId, words, meta, index) => {
     setListMeta(meta);
