@@ -9,6 +9,8 @@ export default function SettingsPanel() {
     setTheme,
     setSystemVoiceURI,
     setAutoReadOnNewWord,
+    setAutoAdvanceAfterFlip,
+    setAutoAdvanceDelaySec,
   } = useSettings();
 
   if (!settingsOpen) return null;
@@ -59,6 +61,33 @@ export default function SettingsPanel() {
               <span className="toggle-switch__track" aria-hidden="true" />
             </span>
           </label>
+          <label className="settings-toggle-row settings-toggle-row--spaced">
+            <span className="settings-toggle-row__text">
+              <strong>翻面后自动下一个</strong>
+              <small>查看背面释义或批改结果后，按设定时间自动切到下一词</small>
+            </span>
+            <span className="toggle-switch">
+              <input
+                type="checkbox"
+                checked={settings.autoAdvanceAfterFlip}
+                onChange={(e) => setAutoAdvanceAfterFlip(e.target.checked)}
+              />
+              <span className="toggle-switch__track" aria-hidden="true" />
+            </span>
+          </label>
+          {settings.autoAdvanceAfterFlip && (
+            <label className="settings-field settings-field--spaced">
+              <span>翻面后停留时间（0–60 秒）</span>
+              <input
+                type="number"
+                min={0}
+                max={60}
+                step={1}
+                value={settings.autoAdvanceDelaySec}
+                onChange={(e) => setAutoAdvanceDelaySec(e.target.value)}
+              />
+            </label>
+          )}
         </section>
 
         <section className="settings-section">

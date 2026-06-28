@@ -38,6 +38,7 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
   const loadingRef = useRef(false);
   const flippedRef = useRef(false);
   const backModeRef = useRef(null);
+  const submitAnswerRef = useRef(null);
 
   useEffect(() => {
     answerRef.current = userAnswer;
@@ -112,6 +113,10 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
     [wordData, onResult, stopDictation, focusCard]
   );
 
+  useEffect(() => {
+    submitAnswerRef.current = submitAnswer;
+  }, [submitAnswer]);
+
   const handleManualMark = useCallback(
     (isCorrect) => {
       onResult?.(wordData, {
@@ -127,7 +132,12 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
     clearTimeout(silenceTimerRef.current);
     silenceTimerRef.current = setTimeout(() => {
       stopDictation();
-      inputRef.current?.focus();
+      const text = answerRef.current.trim();
+      if (text && !loadingRef.current && !flippedRef.current) {
+        submitAnswerRef.current?.(text);
+      } else {
+        inputRef.current?.focus();
+      }
     }, SILENCE_STOP_MS);
   }, [stopDictation]);
 
@@ -199,6 +209,24 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
       stopDictation();
     };
   }, [wordData?.word, speakWord, stopDictation, settings.autoReadOnNewWord]);
+
+  useEffect(() => {
+    if (!flipped || !settings.autoAdvanceAfterFlip) return undefined;
+
+    const delayMs = Math.min(60, Math.max(0, settings.autoAdvanceDelaySec)) * 1000;
+    const timer = setTimeout(() => {
+      onNext?.();
+    }, delayMs);
+
+    return () => clearTimeout(timer);
+  }, [
+    flipped,
+    backMode,
+    settings.autoAdvanceAfterFlip,
+    settings.autoAdvanceDelaySec,
+    onNext,
+    wordData?.word,
+  ]);
 
   useEffect(() => {
     function isTypingInAnswerField() {
@@ -410,12 +438,12 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
               <>
                 <span className="flashcard__status flashcard__status--desktop">
                   {dictating
-                    ? "说完后停顿 2 秒自动停止，可修改再提交"
+                    ? "说完后停顿 2 秒自动提交批改"
                     : "输入框内：空格正常输入 · Enter 提交批改｜框外：空格翻面｜↑↓←→ 切换单词"}
                 </span>
                 <span className="flashcard__status flashcard__status--mobile">
                   {dictating
-                    ? "说完后停顿 2 秒自动停止"
+                    ? "说完后停顿 2 秒自动提交"
                     : "写好释义点「提交批改」，只看释义点「翻面」，用底部按钮切词"}
                 </span>
               </>

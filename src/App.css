@@ -1638,3 +1638,11 @@ body {
 .settings-toggle-row .toggle-switch {
   flex-shrink: 0;
 }
+
+.settings-toggle-row--spaced {
+  margin-top: 0.75rem;
+}
+
+.settings-field--spaced {
+  margin-top: 0.75rem;
+}

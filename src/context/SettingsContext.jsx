@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect, useCallback, useMemo } from "react";
-import { loadSettings, patchSettings } from "../services/settings";
+import { loadSettings, patchSettings, clampDelaySec } from "../services/settings";
 import { getSystemVoices, speakWord as speak } from "../utils/speech";
 
 const SettingsContext = createContext(null);
@@ -48,6 +48,16 @@ export function SettingsProvider({ children }) {
     [updateSettings]
   );
 
+  const setAutoAdvanceAfterFlip = useCallback(
+    (autoAdvanceAfterFlip) => updateSettings({ autoAdvanceAfterFlip }),
+    [updateSettings]
+  );
+
+  const setAutoAdvanceDelaySec = useCallback(
+    (autoAdvanceDelaySec) => updateSettings({ autoAdvanceDelaySec: clampDelaySec(autoAdvanceDelaySec) }),
+    [updateSettings]
+  );
+
   const speakWord = useCallback((word) => speak(word, settings), [settings]);
 
   const value = useMemo(
@@ -59,9 +69,21 @@ export function SettingsProvider({ children }) {
       setTheme,
       setSystemVoiceURI,
       setAutoReadOnNewWord,
+      setAutoAdvanceAfterFlip,
+      setAutoAdvanceDelaySec,
       speakWord,
     }),
-    [settings, systemVoices, settingsOpen, setTheme, setSystemVoiceURI, setAutoReadOnNewWord, speakWord]
+    [
+      settings,
+      systemVoices,
+      settingsOpen,
+      setTheme,
+      setSystemVoiceURI,
+      setAutoReadOnNewWord,
+      setAutoAdvanceAfterFlip,
+      setAutoAdvanceDelaySec,
+      speakWord,
+    ]
   );
 
   return <SettingsContext.Provider value={value}>{children}</SettingsContext.Provider>;
