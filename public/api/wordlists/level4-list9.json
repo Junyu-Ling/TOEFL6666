@@ -1,0 +1,610 @@
+{
+  "meta": {
+    "level": 4,
+    "list": 9,
+    "title": "Level 4 · List 9",
+    "updatedAt": "2026-06-28"
+  },
+  "words": [
+    {
+      "word": "compile",
+      "definitions": [
+        "v. 汇编"
+      ]
+    },
+    {
+      "word": "disharmony",
+      "definitions": [
+        "n. 不一致"
+      ]
+    },
+    {
+      "word": "thermal",
+      "definitions": [
+        "adj. 热的"
+      ]
+    },
+    {
+      "word": "comprehensive",
+      "definitions": [
+        "adj. 全面的"
+      ]
+    },
+    {
+      "word": "transplant",
+      "definitions": [
+        "v. 移植"
+      ]
+    },
+    {
+      "word": "craze",
+      "definitions": [
+        "n. 狂热"
+      ]
+    },
+    {
+      "word": "differentiate",
+      "definitions": [
+        "v. 区分"
+      ]
+    },
+    {
+      "word": "facial",
+      "definitions": [
+        "adj. 面部的",
+        "n. 美容"
+      ]
+    },
+    {
+      "word": "strive",
+      "definitions": [
+        "v. 力争"
+      ]
+    },
+    {
+      "word": "bounce",
+      "definitions": [
+        "v. 反弹"
+      ]
+    },
+    {
+      "word": "violet",
+      "definitions": [
+        "adj. 紫罗兰的",
+        "n. 紫罗兰"
+      ]
+    },
+    {
+      "word": "ratio",
+      "definitions": [
+        "n. 比例"
+      ]
+    },
+    {
+      "word": "acidity",
+      "definitions": [
+        "n. 酸性"
+      ]
+    },
+    {
+      "word": "entity",
+      "definitions": [
+        "n. 实体"
+      ]
+    },
+    {
+      "word": "ripe",
+      "definitions": [
+        "adj. 成熟的"
+      ]
+    },
+    {
+      "word": "diversification",
+      "definitions": [
+        "n. 多样化"
+      ]
+    },
+    {
+      "word": "envision",
+      "definitions": [
+        "v. 想象"
+      ]
+    },
+    {
+      "word": "loop",
+      "definitions": [
+        "n. 环形"
+      ]
+    },
+    {
+      "word": "landmark",
+      "definitions": [
+        "n. 里程碑"
+      ]
+    },
+    {
+      "word": "protectionist",
+      "definitions": [
+        "n. 贸易保护主义者"
+      ]
+    },
+    {
+      "word": "overtake",
+      "definitions": [
+        "v. 超过"
+      ]
+    },
+    {
+      "word": "virtue",
+      "definitions": [
+        "n. 美德",
+        "n. 优点"
+      ]
+    },
+    {
+      "word": "pitch",
+      "definitions": [
+        "n. 强度",
+        "n. 音调",
+        "n. 场地"
+      ]
+    },
+    {
+      "word": "reserve",
+      "definitions": [
+        "v. 保存"
+      ]
+    },
+    {
+      "word": "matrix",
+      "definitions": [
+        "n. 环境",
+        "n. 矩阵"
+      ]
+    },
+    {
+      "word": "versatile",
+      "definitions": [
+        "adj. 多用途的",
+        "adj. 多才多艺的"
+      ]
+    },
+    {
+      "word": "dominate",
+      "definitions": [
+        "v. 控制",
+        "v. 主导"
+      ]
+    },
+    {
+      "word": "scarce",
+      "definitions": [
+        "adj. 稀有的"
+      ]
+    },
+    {
+      "word": "starch",
+      "definitions": [
+        "n. 淀粉"
+      ]
+    },
+    {
+      "word": "convention",
+      "definitions": [
+        "n. 传统",
+        "n. 会议"
+      ]
+    },
+    {
+      "word": "deplete",
+      "definitions": [
+        "v. 消耗"
+      ]
+    },
+    {
+      "word": "coil",
+      "definitions": [
+        "v. 盘起"
+      ]
+    },
+    {
+      "word": "sponge",
+      "definitions": [
+        "n. 海绵"
+      ]
+    },
+    {
+      "word": "peck",
+      "definitions": [
+        "v. 啄"
+      ]
+    },
+    {
+      "word": "upright",
+      "definitions": [
+        "adj. 垂直的"
+      ]
+    },
+    {
+      "word": "marshland",
+      "definitions": [
+        "n. 沼泽地"
+      ]
+    },
+    {
+      "word": "drastic",
+      "definitions": [
+        "adj. 剧烈的"
+      ]
+    },
+    {
+      "word": "rip",
+      "definitions": [
+        "v. 撕破"
+      ]
+    },
+    {
+      "word": "landmass",
+      "definitions": [
+        "n. 陆地"
+      ]
+    },
+    {
+      "word": "counsel",
+      "definitions": [
+        "n. 劝告"
+      ]
+    },
+    {
+      "word": "distinct",
+      "definitions": [
+        "adj. 分开的"
+      ]
+    },
+    {
+      "word": "pollinate",
+      "definitions": [
+        "v. 给……授粉"
+      ]
+    },
+    {
+      "word": "speculate",
+      "definitions": [
+        "v. 猜测"
+      ]
+    },
+    {
+      "word": "fatal",
+      "definitions": [
+        "adj. 致命的"
+      ]
+    },
+    {
+      "word": "retreat",
+      "definitions": [
+        "v. 撤退"
+      ]
+    },
+    {
+      "word": "react",
+      "definitions": [
+        "v. 反应"
+      ]
+    },
+    {
+      "word": "metropolitan",
+      "definitions": [
+        "adj. 大都市的"
+      ]
+    },
+    {
+      "word": "representation",
+      "definitions": [
+        "n. 代表"
+      ]
+    },
+    {
+      "word": "hollow",
+      "definitions": [
+        "adj. 中空的"
+      ]
+    },
+    {
+      "word": "lap",
+      "definitions": [
+        "n. 大腿部"
+      ]
+    },
+    {
+      "word": "aspect",
+      "definitions": [
+        "n. 方面"
+      ]
+    },
+    {
+      "word": "interior",
+      "definitions": [
+        "n. 内部"
+      ]
+    },
+    {
+      "word": "consistent",
+      "definitions": [
+        "adj. 一致的"
+      ]
+    },
+    {
+      "word": "coherent",
+      "definitions": [
+        "adj. 连贯一致的"
+      ]
+    },
+    {
+      "word": "retain",
+      "definitions": [
+        "v. 保持"
+      ]
+    },
+    {
+      "word": "sector",
+      "definitions": [
+        "n. 部分",
+        "n. 行业"
+      ]
+    },
+    {
+      "word": "hamper",
+      "definitions": [
+        "v. 阻碍"
+      ]
+    },
+    {
+      "word": "impressive",
+      "definitions": [
+        "adj. 令人印象深刻的"
+      ]
+    },
+    {
+      "word": "interfere",
+      "definitions": [
+        "v. 干涉"
+      ]
+    },
+    {
+      "word": "accustom",
+      "definitions": [
+        "v. 习惯"
+      ]
+    },
+    {
+      "word": "recur",
+      "definitions": [
+        "v. 反复出现"
+      ]
+    },
+    {
+      "word": "bound",
+      "definitions": [
+        "adj. 限制的",
+        "adj. 一定的"
+      ]
+    },
+    {
+      "word": "anchor",
+      "definitions": [
+        "v. 使固定",
+        "n. 新闻主持人",
+        "n. 锚"
+      ]
+    },
+    {
+      "word": "inhibit",
+      "definitions": [
+        "v. 抑制"
+      ]
+    },
+    {
+      "word": "commission",
+      "definitions": [
+        "n. 委员会"
+      ]
+    },
+    {
+      "word": "watertight",
+      "definitions": [
+        "adj. 不漏水的"
+      ]
+    },
+    {
+      "word": "temperate",
+      "definitions": [
+        "adj. 气候温和的",
+        "adj. 有节制的"
+      ]
+    },
+    {
+      "word": "identifiable",
+      "definitions": [
+        "adj. 可辨别的"
+      ]
+    },
+    {
+      "word": "hardy",
+      "definitions": [
+        "adj. 强壮的"
+      ]
+    },
+    {
+      "word": "chunk",
+      "definitions": [
+        "n. 大块"
+      ]
+    },
+    {
+      "word": "lease",
+      "definitions": [
+        "v. 出租",
+        "n. 租约"
+      ]
+    },
+    {
+      "word": "rub",
+      "definitions": [
+        "v. 摩擦"
+      ]
+    },
+    {
+      "word": "spin",
+      "definitions": [
+        "v. 快速转动"
+      ]
+    },
+    {
+      "word": "verify",
+      "definitions": [
+        "v. 证实"
+      ]
+    },
+    {
+      "word": "aromatic",
+      "definitions": [
+        "adj. 芳香的"
+      ]
+    },
+    {
+      "word": "tap",
+      "definitions": [
+        "v. 汲取液体",
+        "v. 轻敲"
+      ]
+    },
+    {
+      "word": "vastly",
+      "definitions": [
+        "adv. 极大地"
+      ]
+    },
+    {
+      "word": "feat",
+      "definitions": [
+        "n. 功绩"
+      ]
+    },
+    {
+      "word": "Mediterranean",
+      "definitions": [
+        "adj. 地中海的"
+      ]
+    },
+    {
+      "word": "distinctive",
+      "definitions": [
+        "adj. 有特色的"
+      ]
+    },
+    {
+      "word": "frost",
+      "definitions": [
+        "n. 霜冻"
+      ]
+    },
+    {
+      "word": "extensive",
+      "definitions": [
+        "adj. 广泛的"
+      ]
+    },
+    {
+      "word": "feasible",
+      "definitions": [
+        "adj. 可行的"
+      ]
+    },
+    {
+      "word": "approximate",
+      "definitions": [
+        "adj. 大约的"
+      ]
+    },
+    {
+      "word": "swirl",
+      "definitions": [
+        "v. 旋转"
+      ]
+    },
+    {
+      "word": "rectangular",
+      "definitions": [
+        "adj. 长方形的"
+      ]
+    },
+    {
+      "word": "administer",
+      "definitions": [
+        "v. 管理"
+      ]
+    },
+    {
+      "word": "cushion",
+      "definitions": [
+        "v. 保护",
+        "n. 垫子"
+      ]
+    },
+    {
+      "word": "complement",
+      "definitions": [
+        "v. 补充"
+      ]
+    },
+    {
+      "word": "conductivity",
+      "definitions": [
+        "n. 传导性"
+      ]
+    },
+    {
+      "word": "steadily",
+      "definitions": [
+        "adv. 平稳地"
+      ]
+    },
+    {
+      "word": "wavelength",
+      "definitions": [
+        "n. 波长"
+      ]
+    },
+    {
+      "word": "odor",
+      "definitions": [
+        "n. 气味"
+      ]
+    },
+    {
+      "word": "privilege",
+      "definitions": [
+        "n. 特权"
+      ]
+    },
+    {
+      "word": "glacier",
+      "definitions": [
+        "n. 冰川"
+      ]
+    },
+    {
+      "word": "gut",
+      "definitions": [
+        "n. 内部",
+        "n. 勇气"
+      ]
+    },
+    {
+      "word": "negligible",
+      "definitions": [
+        "adj. 可忽略不计的"
+      ]
+    }
+  ]
+}

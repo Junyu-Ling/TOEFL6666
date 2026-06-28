@@ -1,0 +1,622 @@
+{
+  "meta": {
+    "level": 4,
+    "list": 8,
+    "title": "Level 4 · List 8",
+    "updatedAt": "2026-06-28"
+  },
+  "words": [
+    {
+      "word": "unequaled",
+      "definitions": [
+        "adj. 空前的"
+      ]
+    },
+    {
+      "word": "harshness",
+      "definitions": [
+        "n. 恶劣"
+      ]
+    },
+    {
+      "word": "fiber",
+      "definitions": [
+        "n. 纤维"
+      ]
+    },
+    {
+      "word": "immigrant",
+      "definitions": [
+        "n. 移民"
+      ]
+    },
+    {
+      "word": "immune",
+      "definitions": [
+        "adj. 免疫的"
+      ]
+    },
+    {
+      "word": "distress",
+      "definitions": [
+        "n. 痛苦"
+      ]
+    },
+    {
+      "word": "institution",
+      "definitions": [
+        "n. 设立"
+      ]
+    },
+    {
+      "word": "argumentative",
+      "definitions": [
+        "adj. 好争论的，议论文的"
+      ]
+    },
+    {
+      "word": "filter",
+      "definitions": [
+        "v. 过滤"
+      ]
+    },
+    {
+      "word": "renewable",
+      "definitions": [
+        "adj. 可再生的"
+      ]
+    },
+    {
+      "word": "nonetheless",
+      "definitions": [
+        "adv. 尽管如此"
+      ]
+    },
+    {
+      "word": "composer",
+      "definitions": [
+        "n. 作曲家"
+      ]
+    },
+    {
+      "word": "utilization",
+      "definitions": [
+        "n. 利用"
+      ]
+    },
+    {
+      "word": "stellar",
+      "definitions": [
+        "adj. 恒星的"
+      ]
+    },
+    {
+      "word": "enlist",
+      "definitions": [
+        "v. 入伍"
+      ]
+    },
+    {
+      "word": "stun",
+      "definitions": [
+        "v. 使震惊"
+      ]
+    },
+    {
+      "word": "formulate",
+      "definitions": [
+        "v. 构想"
+      ]
+    },
+    {
+      "word": "mute",
+      "definitions": [
+        "adj. 缄默的"
+      ]
+    },
+    {
+      "word": "intermediate",
+      "definitions": [
+        "adj. 中间的"
+      ]
+    },
+    {
+      "word": "plum",
+      "definitions": [
+        "n. 李子",
+        "adj. 称心如意的"
+      ]
+    },
+    {
+      "word": "wreck",
+      "definitions": [
+        "v. 毁坏",
+        "n. 沉船",
+        "n. 失事"
+      ]
+    },
+    {
+      "word": "sensory",
+      "definitions": [
+        "adj. 感觉的"
+      ]
+    },
+    {
+      "word": "irresistible",
+      "definitions": [
+        "adj. 不可抗拒的"
+      ]
+    },
+    {
+      "word": "showcase",
+      "definitions": [
+        "v. 展示"
+      ]
+    },
+    {
+      "word": "unobtainable",
+      "definitions": [
+        "adj. 得不到的"
+      ]
+    },
+    {
+      "word": "ration",
+      "definitions": [
+        "v. 定量供应"
+      ]
+    },
+    {
+      "word": "moderate",
+      "definitions": [
+        "adj. 温和的，节制的"
+      ]
+    },
+    {
+      "word": "peak",
+      "definitions": [
+        "n. 山顶，巅峰"
+      ]
+    },
+    {
+      "word": "hormone",
+      "definitions": [
+        "n. 激素"
+      ]
+    },
+    {
+      "word": "per capita",
+      "definitions": [
+        "adj. 人均"
+      ]
+    },
+    {
+      "word": "conversion",
+      "definitions": [
+        "n. 转化"
+      ]
+    },
+    {
+      "word": "miscalculate",
+      "definitions": [
+        "v. 算错"
+      ]
+    },
+    {
+      "word": "recurrence",
+      "definitions": [
+        "n. 再现"
+      ]
+    },
+    {
+      "word": "ironic",
+      "definitions": [
+        "adj. 讽刺的"
+      ]
+    },
+    {
+      "word": "progression",
+      "definitions": [
+        "n. 发展"
+      ]
+    },
+    {
+      "word": "mimic",
+      "definitions": [
+        "v. 模仿"
+      ]
+    },
+    {
+      "word": "hallmark",
+      "definitions": [
+        "n. 特点"
+      ]
+    },
+    {
+      "word": "forehead",
+      "definitions": [
+        "n. 前额"
+      ]
+    },
+    {
+      "word": "dictate",
+      "definitions": [
+        "v. 发号施令"
+      ]
+    },
+    {
+      "word": "endeavor",
+      "definitions": [
+        "n. 努力"
+      ]
+    },
+    {
+      "word": "longitude",
+      "definitions": [
+        "n. 经度"
+      ]
+    },
+    {
+      "word": "drama",
+      "definitions": [
+        "n. 戏剧"
+      ]
+    },
+    {
+      "word": "infect",
+      "definitions": [
+        "v. 传染"
+      ]
+    },
+    {
+      "word": "symptom",
+      "definitions": [
+        "n. 症状"
+      ]
+    },
+    {
+      "word": "ceremonial",
+      "definitions": [
+        "adj. 仪式的"
+      ]
+    },
+    {
+      "word": "latitude",
+      "definitions": [
+        "n. 纬度"
+      ]
+    },
+    {
+      "word": "sacred",
+      "definitions": [
+        "adj. 神圣的"
+      ]
+    },
+    {
+      "word": "chill",
+      "definitions": [
+        "adj. 寒冷的",
+        "n. 寒冷"
+      ]
+    },
+    {
+      "word": "taxation",
+      "definitions": [
+        "n. 征税"
+      ]
+    },
+    {
+      "word": "gross",
+      "definitions": [
+        "adj. 粗俗的"
+      ]
+    },
+    {
+      "word": "vibrant",
+      "definitions": [
+        "adj. 充满生机的"
+      ]
+    },
+    {
+      "word": "consequence",
+      "definitions": [
+        "n. 结果",
+        "n. 重要性"
+      ]
+    },
+    {
+      "word": "compensate",
+      "definitions": [
+        "v. 补偿"
+      ]
+    },
+    {
+      "word": "harmonious",
+      "definitions": [
+        "adj. 和谐的"
+      ]
+    },
+    {
+      "word": "plumb",
+      "definitions": [
+        "adj. 垂直的"
+      ]
+    },
+    {
+      "word": "stimulate",
+      "definitions": [
+        "v. 刺激"
+      ]
+    },
+    {
+      "word": "format",
+      "definitions": [
+        "n. 样式"
+      ]
+    },
+    {
+      "word": "practicality",
+      "definitions": [
+        "n. 可行性"
+      ]
+    },
+    {
+      "word": "hay",
+      "definitions": [
+        "n. 干草"
+      ]
+    },
+    {
+      "word": "spill",
+      "definitions": [
+        "v. 溢出"
+      ]
+    },
+    {
+      "word": "blast",
+      "definitions": [
+        "n. 爆炸"
+      ]
+    },
+    {
+      "word": "infinite",
+      "definitions": [
+        "adj. 无限的"
+      ]
+    },
+    {
+      "word": "inquire",
+      "definitions": [
+        "v. 询问"
+      ]
+    },
+    {
+      "word": "split",
+      "definitions": [
+        "v. 分开"
+      ]
+    },
+    {
+      "word": "merge",
+      "definitions": [
+        "v. 合并"
+      ]
+    },
+    {
+      "word": "abbreviate",
+      "definitions": [
+        "v. 缩短"
+      ]
+    },
+    {
+      "word": "vague",
+      "definitions": [
+        "adj. 模糊的"
+      ]
+    },
+    {
+      "word": "ditch",
+      "definitions": [
+        "v. 抛弃",
+        "n. 排水沟"
+      ]
+    },
+    {
+      "word": "respective",
+      "definitions": [
+        "adj. 各自的"
+      ]
+    },
+    {
+      "word": "roast",
+      "definitions": [
+        "v. 烤"
+      ]
+    },
+    {
+      "word": "tablet",
+      "definitions": [
+        "n. 写字板"
+      ]
+    },
+    {
+      "word": "adequate",
+      "definitions": [
+        "adj. 足够的"
+      ]
+    },
+    {
+      "word": "ray",
+      "definitions": [
+        "n. 光线"
+      ]
+    },
+    {
+      "word": "barren",
+      "definitions": [
+        "adj. 贫瘠的"
+      ]
+    },
+    {
+      "word": "disgust",
+      "definitions": [
+        "n. 厌恶"
+      ]
+    },
+    {
+      "word": "mythic",
+      "definitions": [
+        "adj. 神话的"
+      ]
+    },
+    {
+      "word": "shrinkage",
+      "definitions": [
+        "n. 缩水"
+      ]
+    },
+    {
+      "word": "pesticide",
+      "definitions": [
+        "n. 杀虫剂"
+      ]
+    },
+    {
+      "word": "oversee",
+      "definitions": [
+        "v. 监督"
+      ]
+    },
+    {
+      "word": "correspond",
+      "definitions": [
+        "v. 相符",
+        "v. 相当于",
+        "v. 通信"
+      ]
+    },
+    {
+      "word": "droplet",
+      "definitions": [
+        "n. 小滴"
+      ]
+    },
+    {
+      "word": "dissolve",
+      "definitions": [
+        "v. 溶解"
+      ]
+    },
+    {
+      "word": "rehearsal",
+      "definitions": [
+        "n. 排练",
+        "n. 复述"
+      ]
+    },
+    {
+      "word": "pore",
+      "definitions": [
+        "n. 孔"
+      ]
+    },
+    {
+      "word": "synthesis",
+      "definitions": [
+        "n. 合成"
+      ]
+    },
+    {
+      "word": "improbable",
+      "definitions": [
+        "adj. 不大可能发生的"
+      ]
+    },
+    {
+      "word": "reproduce",
+      "definitions": [
+        "v. 繁殖"
+      ]
+    },
+    {
+      "word": "irrelevant",
+      "definitions": [
+        "adj. 不相关的"
+      ]
+    },
+    {
+      "word": "catalyst",
+      "definitions": [
+        "n. 催化剂"
+      ]
+    },
+    {
+      "word": "transit",
+      "definitions": [
+        "n. 运输"
+      ]
+    },
+    {
+      "word": "rib",
+      "definitions": [
+        "n. 肋骨"
+      ]
+    },
+    {
+      "word": "spark",
+      "definitions": [
+        "v. 引发",
+        "v. 冒火花",
+        "n. 火花"
+      ]
+    },
+    {
+      "word": "merchant",
+      "definitions": [
+        "n. 商人"
+      ]
+    },
+    {
+      "word": "encircle",
+      "definitions": [
+        "v. 围绕"
+      ]
+    },
+    {
+      "word": "glow",
+      "definitions": [
+        "n. 光亮"
+      ]
+    },
+    {
+      "word": "chamber",
+      "definitions": [
+        "n. 洞穴",
+        "n. 房间"
+      ]
+    },
+    {
+      "word": "plow",
+      "definitions": [
+        "n. 犁"
+      ]
+    },
+    {
+      "word": "windmill",
+      "definitions": [
+        "n. 风车"
+      ]
+    },
+    {
+      "word": "ecologist",
+      "definitions": [
+        "n. 生态学家"
+      ]
+    },
+    {
+      "word": "asteroid",
+      "definitions": [
+        "n. 小行星"
+      ]
+    }
+  ]
+}
