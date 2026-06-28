@@ -181,9 +181,11 @@ export function getUpcomingExams(examMarks) {
     .sort((a, b) => a.daysLeft - b.daysLeft || a.dateKey.localeCompare(b.dateKey));
 }
 
-export function getNearestExamReminder(examMarks) {
+export function getNearestExamReminders(examMarks) {
   const upcoming = getUpcomingExams(examMarks).filter((exam) => exam.daysLeft >= 0);
-  return upcoming[0] ?? null;
+  return Object.keys(EXAM_TYPES)
+    .map((type) => upcoming.find((exam) => exam.type === type))
+    .filter(Boolean);
 }
 
 export function recordVisit() {

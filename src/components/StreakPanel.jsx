@@ -7,7 +7,7 @@ import {
   getMonthGrid,
   getNextMilestone,
   getExamsOnDate,
-  getNearestExamReminder,
+  getNearestExamReminders,
   getUpcomingExams,
   formatCountdown,
   addExamMark,
@@ -27,11 +27,11 @@ export default function StreakPanel({ open, onClose, streak, onStreakChange }) {
 
   const loginSet = useMemo(() => new Set(streak.loginDates ?? []), [streak.loginDates]);
   const examMarks = streak.examMarks ?? [];
-  const nearestExam = useMemo(() => getNearestExamReminder(examMarks), [examMarks]);
+  const examReminders = useMemo(() => getNearestExamReminders(examMarks), [examMarks]);
   const otherExamCount = useMemo(() => {
-    const all = getUpcomingExams(examMarks).filter((exam) => exam.daysLeft >= 0);
-    return Math.max(0, all.length - (nearestExam ? 1 : 0));
-  }, [examMarks, nearestExam]);
+    const reminderIds = new Set(examReminders.map((exam) => exam.id));
+    return getUpcomingExams(examMarks).filter((exam) => exam.daysLeft >= 0 && !reminderIds.has(exam.id)).length;
+  }, [examMarks, examReminders]);
   const monthCells = useMemo(
     () => getMonthGrid(viewMonth.year, viewMonth.month),
     [viewMonth.year, viewMonth.month]
@@ -97,21 +97,26 @@ export default function StreakPanel({ open, onClose, streak, onStreakChange }) {
           <p className="streak-panel__today-badge">今日已打卡 · 火苗已点亮</p>
         )}
 
-        {nearestExam && (
+        {examReminders.length > 0 && (
           <section className="streak-exams">
-            <h3>最近考试</h3>
-            <div
-              className={`streak-exam streak-exam--${nearestExam.type} ${nearestExam.daysLeft <= 7 ? "streak-exam--soon" : ""}`}
-            >
-              <span className="streak-exam__emoji">{nearestExam.emoji}</span>
-              <div className="streak-exam__body">
-                <strong>{nearestExam.label}考试</strong>
-                <span>{nearestExam.dateKey}</span>
-              </div>
-              <span className="streak-exam__countdown">{formatCountdown(nearestExam.dateKey)}</span>
-            </div>
+            <h3>考试提醒</h3>
+            <ul className="streak-exams__list">
+              {examReminders.map((exam) => (
+                <li
+                  key={exam.id}
+                  className={`streak-exam streak-exam--${exam.type} ${exam.daysLeft <= 7 ? "streak-exam--soon" : ""}`}
+                >
+                  <span className="streak-exam__emoji">{exam.emoji}</span>
+                  <div className="streak-exam__body">
+                    <strong>{exam.label}考试</strong>
+                    <span>{exam.dateKey}</span>
+                  </div>
+                  <span className="streak-exam__countdown">{formatCountdown(exam.dateKey)}</span>
+                </li>
+              ))}
+            </ul>
             {otherExamCount > 0 && (
-              <p className="streak-exams__more">另有 {otherExamCount} 场考试已标记 · 以最近一场为准</p>
+              <p className="streak-exams__more">另有 {otherExamCount} 场考试已标记</p>
             )}
           </section>
         )}
