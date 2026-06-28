@@ -201,6 +201,11 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
   }, [wordData?.word, speakWord, stopDictation, settings.autoReadOnNewWord]);
 
   useEffect(() => {
+    function isTypingInAnswerField() {
+      const active = document.activeElement;
+      return active === inputRef.current;
+    }
+
     function handleGlobalKeyDown(e) {
       if (loadingRef.current) return;
       if (e.metaKey || e.ctrlKey || e.altKey) return;
@@ -233,6 +238,7 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
       }
 
       if (e.key === " ") {
+        if (isTypingInAnswerField()) return;
         e.preventDefault();
         if (flippedRef.current) {
           flipBack();
@@ -405,10 +411,12 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
                 <span className="flashcard__status flashcard__status--desktop">
                   {dictating
                     ? "说完后停顿 2 秒自动停止，可修改再提交"
-                    : "空格/Enter 翻面 · 有释义时 Enter 批改 · ↑↓←→ 切换"}
+                    : "输入框内：空格正常输入 · Enter 提交批改｜框外：空格翻面｜↑↓←→ 切换单词"}
                 </span>
                 <span className="flashcard__status flashcard__status--mobile">
-                  {dictating ? "说完后停顿 2 秒自动停止" : "输入释义后可用下方按钮操作"}
+                  {dictating
+                    ? "说完后停顿 2 秒自动停止"
+                    : "写好释义点「提交批改」，只看释义点「翻面」，用底部按钮切词"}
                 </span>
               </>
             )}
