@@ -203,6 +203,58 @@ body {
   background: var(--accent-soft);
 }
 
+.navbar__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.navbar__streak {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  height: 40px;
+  padding: 0 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--text-muted);
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s, box-shadow 0.15s;
+}
+
+.navbar__streak:hover {
+  border-color: #f97316;
+  background: color-mix(in srgb, #f97316 10%, var(--surface));
+}
+
+.navbar__streak--active {
+  color: #ea580c;
+  border-color: color-mix(in srgb, #f97316 45%, var(--border));
+  background: color-mix(in srgb, #f97316 12%, var(--surface));
+  box-shadow: 0 0 0 3px color-mix(in srgb, #f97316 15%, transparent);
+}
+
+.navbar__streak-flame {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.navbar__streak-count {
+  min-width: 1ch;
+  text-align: center;
+}
+
+.word-item__wrong-count--past {
+  color: var(--text-muted);
+  background: var(--surface-muted);
+  border-color: var(--border);
+}
+
 /* ── Main ── */
 .main {
   flex: 1;
@@ -1235,6 +1287,23 @@ body {
     height: 44px;
   }
 
+  .navbar__streak {
+    height: 44px;
+    padding: 0 0.65rem;
+  }
+
+  .streak-panel {
+    width: 100vw;
+  }
+
+  .streak-panel__stats {
+    grid-template-columns: 1fr;
+  }
+
+  .streak-stat--primary {
+    justify-content: flex-start;
+  }
+
   .practice-toolbar {
     flex-direction: column;
     align-items: stretch;
@@ -1409,6 +1478,245 @@ body {
   background: var(--surface-hover);
   color: var(--text);
   border-color: var(--border-strong);
+}
+
+/* ── Streak / Calendar ── */
+.streak-panel {
+  width: min(420px, 100vw);
+  height: 100%;
+  background: var(--surface);
+  border-left: 1px solid var(--border);
+  padding: 1.25rem 1.25rem 2rem;
+  overflow-y: auto;
+  box-shadow: var(--shadow-lg);
+}
+
+.streak-panel__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.streak-panel__header h2 {
+  font-size: 1.125rem;
+  font-weight: 700;
+}
+
+.streak-panel__subtitle {
+  margin-top: 0.25rem;
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+
+.streak-panel__stats {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 0.625rem;
+  margin-bottom: 0.875rem;
+}
+
+.streak-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.75rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface-muted);
+}
+
+.streak-stat strong {
+  font-size: 1.25rem;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.streak-stat span {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.streak-stat--primary {
+  flex-direction: row;
+  align-items: center;
+  gap: 0.625rem;
+  border-color: color-mix(in srgb, #f97316 35%, var(--border));
+  background: color-mix(in srgb, #f97316 10%, var(--surface));
+}
+
+.streak-stat__emoji {
+  font-size: 1.75rem;
+  line-height: 1;
+}
+
+.streak-panel__today-badge {
+  margin: 0 0 0.75rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #ea580c;
+  background: color-mix(in srgb, #f97316 12%, var(--surface));
+  border: 1px solid color-mix(in srgb, #f97316 30%, var(--border));
+}
+
+.streak-panel__next {
+  margin: 0 0 1rem;
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+
+.streak-panel__next strong {
+  color: var(--accent);
+}
+
+.streak-calendar {
+  margin-bottom: 1.25rem;
+  padding: 0.875rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface-muted);
+}
+
+.streak-calendar__nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.streak-calendar__nav h3 {
+  font-size: 0.9375rem;
+  font-weight: 700;
+}
+
+.streak-calendar__weekdays,
+.streak-calendar__grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.35rem;
+}
+
+.streak-calendar__weekdays {
+  margin-bottom: 0.35rem;
+}
+
+.streak-calendar__weekdays span {
+  text-align: center;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.streak-day {
+  position: relative;
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.1rem;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background: var(--surface);
+  font-size: 0.75rem;
+  color: var(--text);
+}
+
+.streak-day--empty {
+  background: transparent;
+  border: none;
+}
+
+.streak-day--logged {
+  border-color: color-mix(in srgb, #f97316 35%, var(--border));
+  background: color-mix(in srgb, #f97316 8%, var(--surface));
+}
+
+.streak-day--today {
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 35%, transparent);
+}
+
+.streak-day--future {
+  opacity: 0.35;
+}
+
+.streak-day__num {
+  font-weight: 700;
+  line-height: 1;
+}
+
+.streak-day__flame {
+  font-size: 0.75rem;
+  line-height: 1;
+}
+
+.streak-milestones h3 {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.625rem;
+}
+
+.streak-milestones__list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.streak-milestone {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.625rem 0.75rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface-muted);
+  opacity: 0.55;
+}
+
+.streak-milestone--unlocked {
+  opacity: 1;
+  border-color: color-mix(in srgb, var(--accent) 35%, var(--border));
+  background: color-mix(in srgb, var(--accent) 8%, var(--surface));
+}
+
+.streak-milestone__emoji {
+  font-size: 1.25rem;
+}
+
+.streak-milestone__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  min-width: 0;
+}
+
+.streak-milestone__body strong {
+  font-size: 0.875rem;
+}
+
+.streak-milestone__body span {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.streak-milestone__days {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.streak-milestone--unlocked .streak-milestone__days {
+  color: var(--accent);
 }
 
 .settings-section {

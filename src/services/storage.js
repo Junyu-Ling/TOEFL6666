@@ -80,6 +80,14 @@ export function buildWordRecord(wordData, aiResult) {
   };
 }
 
+export function buildRecognizedRecord(wordData, aiResult, priorWrongCount) {
+  const record = buildWordRecord(wordData, aiResult);
+  if (typeof priorWrongCount === "number" && priorWrongCount > 0) {
+    record.wrongCount = priorWrongCount;
+  }
+  return record;
+}
+
 export function upsertWord(list, record) {
   const filtered = list.filter((item) => item.word !== record.word);
   return [...filtered, record];

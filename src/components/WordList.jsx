@@ -1,12 +1,19 @@
-function WordItem({ item, variant, onRemove, showWrongCount }) {
+function WordItem({ item, variant, onRemove, showWrongCount, wrongCountPast = false }) {
+  const wrongCount = item.wrongCount ?? 0;
+  const showBadge = showWrongCount && wrongCount > 0;
+
   return (
     <article className={`word-item word-item--${variant}`}>
       <div className="word-item__main">
         <div className="word-item__left">
           <div className="word-item__title-row">
             <h3 className="word-item__word">{item.word}</h3>
-            {showWrongCount && (item.wrongCount ?? 0) > 0 && (
-              <span className="word-item__wrong-count">错 {item.wrongCount} 次</span>
+            {showBadge && (
+              <span
+                className={`word-item__wrong-count ${wrongCountPast ? "word-item__wrong-count--past" : ""}`}
+              >
+                {wrongCountPast ? `曾错 ${wrongCount} 次` : `错 ${wrongCount} 次`}
+              </span>
             )}
           </div>
           <p className="word-item__defs">{item.definitions?.join(" · ")}</p>
@@ -39,6 +46,7 @@ export default function WordList({
   onClearAll,
   clearLabel = "清空",
   showWrongCount = false,
+  wrongCountPast = false,
 }) {
   return (
     <div className="word-list-view">
@@ -71,6 +79,7 @@ export default function WordList({
               variant={title.includes("不认识") ? "unknown" : "known"}
               onRemove={onRemoveWord}
               showWrongCount={showWrongCount}
+              wrongCountPast={wrongCountPast}
             />
           ))}
         </div>

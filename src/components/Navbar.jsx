@@ -6,8 +6,9 @@ const TABS = [
   { id: "recognized", label: "熟词本" },
 ];
 
-export default function Navbar({ activeTab, onTabChange, counts }) {
+export default function Navbar({ activeTab, onTabChange, counts, streak, onStreakClick }) {
   const { setSettingsOpen } = useSettings();
+  const loggedInToday = streak?.loggedInToday;
 
   return (
     <nav className="navbar">
@@ -34,16 +35,30 @@ export default function Navbar({ activeTab, onTabChange, counts }) {
         ))}
       </div>
 
-      <button
-        type="button"
-        className="navbar__settings"
-        onClick={() => setSettingsOpen(true)}
-        aria-label="打开设置"
-      >
-        <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
-          <path d="M12 8a4 4 0 100 8 4 4 0 000-8zm9.4 4a7.4 7.4 0 01-.1 1l2 1.5-2 3.5-2.3-.9a7.6 7.6 0 01-2.6 1.5l-.4 2.5H9.9l-.4-2.5a7.6 7.6 0 01-2.6-1.5l-2.3.9-2-3.5 2-1.5a7.4 7.4 0 010-2l-2-1.5 2-3.5 2.3.9a7.6 7.6 0 012.6-1.5l.4-2.5h4.2l.4 2.5a7.6 7.6 0 012.6 1.5l2.3-.9 2 3.5-2 1.5c.07.3.1.7.1 1z" />
-        </svg>
-      </button>
+      <div className="navbar__actions">
+        <button
+          type="button"
+          className={`navbar__streak ${loggedInToday ? "navbar__streak--active" : ""}`}
+          onClick={onStreakClick}
+          aria-label={`连续学习 ${streak?.currentStreak ?? 0} 天，打开学习日历`}
+        >
+          <span className="navbar__streak-flame" aria-hidden>
+            🔥
+          </span>
+          <span className="navbar__streak-count">{streak?.currentStreak ?? 0}</span>
+        </button>
+
+        <button
+          type="button"
+          className="navbar__settings"
+          onClick={() => setSettingsOpen(true)}
+          aria-label="打开设置"
+        >
+          <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+            <path d="M12 8a4 4 0 100 8 4 4 0 000-8zm9.4 4a7.4 7.4 0 01-.1 1l2 1.5-2 3.5-2.3-.9a7.6 7.6 0 01-2.6 1.5l-.4 2.5H9.9l-.4-2.5a7.6 7.6 0 01-2.6-1.5l-2.3.9-2-3.5 2-1.5a7.4 7.4 0 010-2l-2-1.5 2-3.5 2.3.9a7.6 7.6 0 012.6-1.5l.4-2.5h4.2l.4 2.5a7.6 7.6 0 012.6 1.5l2.3-.9 2 3.5-2 1.5c.07.3.1.7.1 1z" />
+          </svg>
+        </button>
+      </div>
     </nav>
   );
 }

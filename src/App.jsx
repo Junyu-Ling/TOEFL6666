@@ -5,6 +5,8 @@ import WordList from "./components/WordList";
 import MicPermissionPrompt from "./components/MicPermissionPrompt";
 import SettingsPanel from "./components/SettingsPanel";
 import VocabAssistant from "./components/VocabAssistant";
+import StreakPanel from "./components/StreakPanel";
+import { recordVisit } from "./services/streak";
 import { useMicrophone } from "./hooks/useMicrophone";
 import { fetchWordList, fetchWordListManifest } from "./services/wordlist";
 import {
@@ -17,6 +19,7 @@ import {
   getSavedIndex,
   patchListProgress,
   buildWordRecord,
+  buildRecognizedRecord,
   upsertWord,
   removeWord,
   shuffleArray,
@@ -50,6 +53,8 @@ export default function App() {
   const [isReviewMode, setIsReviewMode] = useState(false);
   const [reviewShuffle, setReviewShuffle] = useState(savedRef.current.reviewShuffle ?? false);
   const [shuffleSeed, setShuffleSeed] = useState(() => Date.now());
+  const [streakData, setStreakData] = useState(() => recordVisit());
+  const [streakOpen, setStreakOpen] = useState(false);
 
   const applyList = useCallback((listId, words, meta, index) => {
     setListMeta(meta);
@@ -147,29 +152,37 @@ export default function App() {
 
   const handleResult = useCallback(
     (wordData, aiResult) => {
-      const record = buildWordRecord(wordData, aiResult);
-
       if (aiResult.is_correct) {
-        setRecognized((prev) => {
-          const next = upsertWord(prev, record);
-          saveRecognized(next);
-          return next;
-        });
-        if (isReviewMode) {
-          setUnrecognized((prev) => {
-            const next = removeWord(prev, wordData.word);
-            saveUnrecognized(next);
+        setUnrecognized((prevUnrec) => {
+          const wrongEntry = prevUnrec.find((item) => item.word === wordData.word);
+          const priorWrongCount = wrongEntry?.wrongCount;
+
+          setRecognized((prevRec) => {
+            const existingRec = prevRec.find((item) => item.word === wordData.word);
+            const carryWrong =
+              priorWrongCount ?? (existingRec?.wrongCount && existingRec.wrongCount > 0 ? existingRec.wrongCount : undefined);
+            const record = buildRecognizedRecord(wordData, aiResult, carryWrong);
+            const next = upsertWord(prevRec, record);
+            saveRecognized(next);
             return next;
           });
-        }
+
+          if (isReviewMode) {
+            const next = removeWord(prevUnrec, wordData.word);
+            saveUnrecognized(next);
+            return next;
+          }
+          return prevUnrec;
+        });
       } else {
+        const record = buildWordRecord(wordData, aiResult);
         setUnrecognized((prev) => {
           const existing = prev.find((item) => item.word === wordData.word);
-          const record = {
-            ...buildWordRecord(wordData, aiResult),
+          const wrongRecord = {
+            ...record,
             wrongCount: (existing?.wrongCount ?? 0) + 1,
           };
-          const next = upsertWord(prev, record);
+          const next = upsertWord(prev, wrongRecord);
           saveUnrecognized(next);
           return next;
         });
@@ -327,6 +340,11 @@ export default function App() {
         activeTab={activeTab}
         onTabChange={handleTabChange}
         counts={{ recognized: recognized.length, unrecognized: unrecognized.length }}
+        streak={streakData}
+        onStreakClick={() => {
+          setStreakData(recordVisit());
+          setStreakOpen(true);
+        }}
       />
 
       {micPromptVisible && (
@@ -334,6 +352,12 @@ export default function App() {
       )}
 
       <SettingsPanel />
+
+      <StreakPanel
+        open={streakOpen}
+        onClose={() => setStreakOpen(false)}
+        streak={streakData}
+      />
 
       <main className="main">
         {activeTab === "practice" && (
@@ -455,12 +479,14 @@ export default function App() {
         {activeTab === "recognized" && (
           <WordList
             title="已认识的词"
-            subtitle={`${recognized.length} 个 · 本地保存，刷新不丢失`}
+            subtitle={`${recognized.length} 个 · 一次过的词不标注 · 曾错过的词会显示次数`}
             words={recognized}
             emptyText="还没有熟词，去卡片练习场开始吧！"
             onRemoveWord={handleRemoveRecognized}
             onClearAll={handleClearRecognized}
             clearLabel="清空熟词本"
+            showWrongCount
+            wrongCountPast
           />
         )}
       </main>
