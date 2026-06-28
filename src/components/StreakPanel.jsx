@@ -7,10 +7,11 @@ import {
   getMonthGrid,
   getNextMilestone,
   getExamsOnDate,
+  getNearestExamReminder,
   getUpcomingExams,
   formatCountdown,
-  setExamMark,
-  clearExamMark,
+  addExamMark,
+  removeExamMark,
 } from "../services/streak";
 
 const WEEKDAY_LABELS = ["日", "一", "二", "三", "四", "五", "六"];
@@ -25,8 +26,12 @@ export default function StreakPanel({ open, onClose, streak, onStreakChange }) {
   const [selectedDate, setSelectedDate] = useState(null);
 
   const loginSet = useMemo(() => new Set(streak.loginDates ?? []), [streak.loginDates]);
-  const examMarks = streak.examMarks ?? {};
-  const upcomingExams = useMemo(() => getUpcomingExams(examMarks), [examMarks]);
+  const examMarks = streak.examMarks ?? [];
+  const nearestExam = useMemo(() => getNearestExamReminder(examMarks), [examMarks]);
+  const otherExamCount = useMemo(() => {
+    const all = getUpcomingExams(examMarks).filter((exam) => exam.daysLeft >= 0);
+    return Math.max(0, all.length - (nearestExam ? 1 : 0));
+  }, [examMarks, nearestExam]);
   const monthCells = useMemo(
     () => getMonthGrid(viewMonth.year, viewMonth.month),
     [viewMonth.year, viewMonth.month]
@@ -46,13 +51,11 @@ export default function StreakPanel({ open, onClose, streak, onStreakChange }) {
 
   function handleMarkExam(type) {
     if (!selectedDate) return;
-    onStreakChange?.(setExamMark(type, selectedDate));
-    setSelectedDate(null);
+    onStreakChange?.(addExamMark(type, selectedDate));
   }
 
-  function handleClearExam(type) {
-    onStreakChange?.(clearExamMark(type));
-    setSelectedDate(null);
+  function handleRemoveExam(id) {
+    onStreakChange?.(removeExamMark(id));
   }
 
   if (!open) return null;
@@ -63,7 +66,7 @@ export default function StreakPanel({ open, onClose, streak, onStreakChange }) {
         <header className="streak-panel__header">
           <div>
             <h2>学习日历</h2>
-            <p className="streak-panel__subtitle">每天打开应用点亮火苗 · 点击日期标记考试</p>
+            <p className="streak-panel__subtitle">每天打开应用点亮火苗 · 点击日期标记考试（可多场）</p>
           </div>
           <button type="button" className="settings-panel__close" onClick={onClose} aria-label="关闭">
             ×
@@ -94,24 +97,22 @@ export default function StreakPanel({ open, onClose, streak, onStreakChange }) {
           <p className="streak-panel__today-badge">今日已打卡 · 火苗已点亮</p>
         )}
 
-        {upcomingExams.length > 0 && (
+        {nearestExam && (
           <section className="streak-exams">
-            <h3>考试提醒</h3>
-            <ul className="streak-exams__list">
-              {upcomingExams.map((exam) => (
-                <li
-                  key={exam.id}
-                  className={`streak-exam streak-exam--${exam.id} ${exam.daysLeft <= 7 ? "streak-exam--soon" : ""}`}
-                >
-                  <span className="streak-exam__emoji">{exam.emoji}</span>
-                  <div className="streak-exam__body">
-                    <strong>{exam.label}考试</strong>
-                    <span>{exam.dateKey}</span>
-                  </div>
-                  <span className="streak-exam__countdown">{formatCountdown(exam.dateKey)}</span>
-                </li>
-              ))}
-            </ul>
+            <h3>最近考试</h3>
+            <div
+              className={`streak-exam streak-exam--${nearestExam.type} ${nearestExam.daysLeft <= 7 ? "streak-exam--soon" : ""}`}
+            >
+              <span className="streak-exam__emoji">{nearestExam.emoji}</span>
+              <div className="streak-exam__body">
+                <strong>{nearestExam.label}考试</strong>
+                <span>{nearestExam.dateKey}</span>
+              </div>
+              <span className="streak-exam__countdown">{formatCountdown(nearestExam.dateKey)}</span>
+            </div>
+            {otherExamCount > 0 && (
+              <p className="streak-exams__more">另有 {otherExamCount} 场考试已标记 · 以最近一场为准</p>
+            )}
           </section>
         )}
 
@@ -152,6 +153,8 @@ export default function StreakPanel({ open, onClose, streak, onStreakChange }) {
               const isFuture = dateKey > today;
               const isSelected = dateKey === selectedDate;
               const dayNum = parseDateKey(dateKey).getDate();
+              const visibleExams = exams.slice(0, 2);
+              const hiddenCount = exams.length - visibleExams.length;
 
               return (
                 <button
@@ -179,11 +182,12 @@ export default function StreakPanel({ open, onClose, streak, onStreakChange }) {
                   <span className="streak-day__num">{dayNum}</span>
                   <span className="streak-day__marks">
                     {logged && <span className="streak-day__flame">🔥</span>}
-                    {exams.map((exam) => (
-                      <span key={exam.id} className={`streak-day__exam streak-day__exam--${exam.id}`}>
+                    {visibleExams.map((exam) => (
+                      <span key={exam.id} className={`streak-day__exam streak-day__exam--${exam.type}`}>
                         {exam.short}
                       </span>
                     ))}
+                    {hiddenCount > 0 && <span className="streak-day__more">+{hiddenCount}</span>}
                   </span>
                 </button>
               );
@@ -203,23 +207,27 @@ export default function StreakPanel({ open, onClose, streak, onStreakChange }) {
                     className={`btn btn--ghost btn--sm streak-mark-btn streak-mark-btn--${exam.id}`}
                     onClick={() => handleMarkExam(exam.id)}
                   >
-                    {exam.emoji} {exam.label}考试
+                    {exam.emoji} 添加{exam.label}考试
                   </button>
                 ))}
               </div>
               {selectedExams.length > 0 && (
-                <div className="streak-mark-menu__clear">
+                <ul className="streak-mark-menu__list">
                   {selectedExams.map((exam) => (
-                    <button
-                      key={exam.id}
-                      type="button"
-                      className="btn btn--ghost btn--sm"
-                      onClick={() => handleClearExam(exam.id)}
-                    >
-                      清除{exam.label}标记
-                    </button>
+                    <li key={exam.id} className="streak-mark-menu__item">
+                      <span>
+                        {exam.emoji} {exam.label}考试
+                      </span>
+                      <button
+                        type="button"
+                        className="btn btn--ghost btn--sm"
+                        onClick={() => handleRemoveExam(exam.id)}
+                      >
+                        移除
+                      </button>
+                    </li>
                   ))}
-                </div>
+                </ul>
               )}
             </div>
           )}

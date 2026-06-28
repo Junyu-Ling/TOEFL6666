@@ -6,6 +6,7 @@ import MicPermissionPrompt from "./components/MicPermissionPrompt";
 import SettingsPanel from "./components/SettingsPanel";
 import VocabAssistant from "./components/VocabAssistant";
 import StreakPanel from "./components/StreakPanel";
+import VocabLoadingScreen from "./components/VocabLoadingScreen";
 import { recordVisit } from "./services/streak";
 import { useMicrophone } from "./hooks/useMicrophone";
 import { fetchWordList, fetchWordListManifest } from "./services/wordlist";
@@ -312,10 +313,7 @@ export default function App() {
   if (wordsLoading) {
     return (
       <div className="app app--loading">
-        <div className="loading-screen">
-          <span className="spinner spinner--lg" />
-          <p>正在从云端加载词库…</p>
-        </div>
+        <VocabLoadingScreen />
       </div>
     );
   }

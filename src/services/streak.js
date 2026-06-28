@@ -14,12 +14,10 @@ export const EXAM_TYPES = {
   sat: { id: "sat", label: "SAT", short: "S", emoji: "📋" },
 };
 
-const DEFAULT_EXAM_MARKS = { toefl: null, sat: null };
-
 const DEFAULT_STREAK = {
   loginDates: [],
   longestStreak: 0,
-  examMarks: { ...DEFAULT_EXAM_MARKS },
+  examMarks: [],
 };
 
 export function toDateKey(date = new Date()) {
@@ -71,8 +69,48 @@ export function formatCountdown(dateKey) {
   return `已过 ${Math.abs(days)} 天`;
 }
 
-function normalizeExamMarks(examMarks) {
-  return { ...DEFAULT_EXAM_MARKS, ...(examMarks ?? {}) };
+function createExamId(type, dateKey) {
+  return `${type}-${dateKey}-${Date.now().toString(36)}`;
+}
+
+export function normalizeExamMarks(examMarks) {
+  if (Array.isArray(examMarks)) {
+    return examMarks
+      .filter((entry) => entry?.dateKey && EXAM_TYPES[entry.type])
+      .map((entry) => ({
+        id: entry.id || createExamId(entry.type, entry.dateKey),
+        type: entry.type,
+        dateKey: entry.dateKey,
+      }))
+      .sort((a, b) => a.dateKey.localeCompare(b.dateKey) || a.type.localeCompare(b.type));
+  }
+
+  if (examMarks && typeof examMarks === "object") {
+    return Object.entries(examMarks)
+      .filter(([type, dateKey]) => dateKey && EXAM_TYPES[type])
+      .map(([type, dateKey]) => ({
+        id: `${type}-${dateKey}`,
+        type,
+        dateKey,
+      }));
+  }
+
+  return [];
+}
+
+function readStreakRaw() {
+  try {
+    const raw = localStorage.getItem(STREAK_KEY);
+    if (!raw) return { ...DEFAULT_STREAK, loginDates: [], examMarks: [] };
+    const data = { ...DEFAULT_STREAK, ...JSON.parse(raw) };
+    return {
+      loginDates: Array.isArray(data.loginDates) ? [...data.loginDates].sort() : [],
+      longestStreak: data.longestStreak ?? 0,
+      examMarks: normalizeExamMarks(data.examMarks),
+    };
+  } catch {
+    return { ...DEFAULT_STREAK, loginDates: [], examMarks: [] };
+  }
 }
 
 function buildStreakSnapshot(data) {
@@ -91,14 +129,7 @@ function buildStreakSnapshot(data) {
 }
 
 export function loadStreak() {
-  try {
-    const raw = localStorage.getItem(STREAK_KEY);
-    if (!raw) return buildStreakSnapshot({ ...DEFAULT_STREAK, loginDates: [] });
-    const data = { ...DEFAULT_STREAK, ...JSON.parse(raw) };
-    return buildStreakSnapshot(data);
-  } catch {
-    return buildStreakSnapshot({ ...DEFAULT_STREAK, loginDates: [] });
-  }
+  return buildStreakSnapshot(readStreakRaw());
 }
 
 export function saveStreak(data) {
@@ -112,46 +143,53 @@ export function saveStreak(data) {
   );
 }
 
-export function setExamMark(type, dateKey) {
-  const data = loadStreak();
-  const examMarks = normalizeExamMarks(data.examMarks);
-  examMarks[type] = dateKey;
-  const next = { ...data, examMarks, longestStreak: data.longestStreak };
+export function addExamMark(type, dateKey) {
+  const raw = readStreakRaw();
+  const examMarks = [
+    ...normalizeExamMarks(raw.examMarks),
+    { id: createExamId(type, dateKey), type, dateKey },
+  ];
+  const next = { ...raw, examMarks };
   saveStreak(next);
   return buildStreakSnapshot(next);
 }
 
-export function clearExamMark(type) {
-  const data = loadStreak();
-  const examMarks = normalizeExamMarks(data.examMarks);
-  examMarks[type] = null;
-  const next = { ...data, examMarks, longestStreak: data.longestStreak };
+export function removeExamMark(id) {
+  const raw = readStreakRaw();
+  const examMarks = normalizeExamMarks(raw.examMarks).filter((entry) => entry.id !== id);
+  const next = { ...raw, examMarks };
   saveStreak(next);
   return buildStreakSnapshot(next);
 }
 
 export function getExamsOnDate(examMarks, dateKey) {
-  return Object.entries(normalizeExamMarks(examMarks))
-    .filter(([, value]) => value === dateKey)
-    .map(([type]) => EXAM_TYPES[type])
-    .filter(Boolean);
+  return normalizeExamMarks(examMarks)
+    .filter((entry) => entry.dateKey === dateKey)
+    .map((entry) => ({
+      ...EXAM_TYPES[entry.type],
+      ...entry,
+    }));
 }
 
 export function getUpcomingExams(examMarks) {
-  return Object.entries(normalizeExamMarks(examMarks))
-    .filter(([, dateKey]) => dateKey)
-    .map(([type, dateKey]) => ({
-      ...EXAM_TYPES[type],
-      dateKey,
-      daysLeft: daysUntil(dateKey),
+  return normalizeExamMarks(examMarks)
+    .map((entry) => ({
+      ...EXAM_TYPES[entry.type],
+      ...entry,
+      daysLeft: daysUntil(entry.dateKey),
     }))
-    .sort((a, b) => a.daysLeft - b.daysLeft);
+    .sort((a, b) => a.daysLeft - b.daysLeft || a.dateKey.localeCompare(b.dateKey));
+}
+
+export function getNearestExamReminder(examMarks) {
+  const upcoming = getUpcomingExams(examMarks).filter((exam) => exam.daysLeft >= 0);
+  return upcoming[0] ?? null;
 }
 
 export function recordVisit() {
-  const data = loadStreak();
+  const raw = readStreakRaw();
   const today = toDateKey();
-  const loginSet = new Set(data.loginDates);
+  const loginSet = new Set(raw.loginDates);
   const isNewToday = !loginSet.has(today);
 
   if (isNewToday) {
@@ -160,10 +198,10 @@ export function recordVisit() {
 
   const loginDates = [...loginSet].sort();
   const currentStreak = computeStreak(loginDates);
-  const longestStreak = Math.max(data.longestStreak ?? 0, currentStreak);
+  const longestStreak = Math.max(raw.longestStreak ?? 0, currentStreak);
 
   const next = {
-    ...data,
+    ...raw,
     loginDates,
     longestStreak,
   };

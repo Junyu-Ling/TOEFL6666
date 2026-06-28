@@ -877,6 +877,213 @@ body {
   background: var(--bg);
 }
 
+/* ── Vocab Loading Screen ── */
+.vocab-loader {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+.vocab-loader__bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 20%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 45%),
+    radial-gradient(circle at 80% 75%, color-mix(in srgb, #f97316 14%, transparent), transparent 40%),
+    radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--accent) 8%, transparent), transparent 60%);
+  animation: vocab-loader-glow 6s ease-in-out infinite alternate;
+}
+
+@keyframes vocab-loader-glow {
+  from { opacity: 0.75; transform: scale(1); }
+  to { opacity: 1; transform: scale(1.05); }
+}
+
+.vocab-loader__letters {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.vocab-loader__letter {
+  position: absolute;
+  bottom: -10%;
+  font-weight: 800;
+  color: color-mix(in srgb, var(--accent) 35%, transparent);
+  animation: vocab-letter-rise linear infinite;
+  opacity: 0;
+}
+
+@keyframes vocab-letter-rise {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0;
+  }
+  10% { opacity: 0.7; }
+  90% { opacity: 0.35; }
+  100% {
+    transform: translateY(-110vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.vocab-loader__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 2rem 1.5rem;
+  width: min(100%, 420px);
+}
+
+.vocab-loader__brand {
+  font-size: 1.125rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--accent);
+  margin: 0;
+}
+
+.vocab-loader__scene {
+  perspective: 900px;
+  width: min(100%, 280px);
+  height: 168px;
+}
+
+.vocab-loader__scene--flipped .vocab-loader__card {
+  transform: rotateY(180deg);
+  animation: none;
+}
+
+.vocab-loader__card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
+  animation: vocab-card-float 3.5s ease-in-out infinite;
+}
+
+@keyframes vocab-card-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.vocab-loader__face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1.5rem;
+  border-radius: 18px;
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--border));
+  background: color-mix(in srgb, var(--surface) 92%, var(--accent) 8%);
+  box-shadow:
+    0 18px 40px color-mix(in srgb, var(--accent) 15%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--accent) 10%, transparent);
+  backface-visibility: hidden;
+}
+
+.vocab-loader__face--back {
+  transform: rotateY(180deg);
+  background: color-mix(in srgb, var(--surface) 88%, #f97316 12%);
+  border-color: color-mix(in srgb, #f97316 35%, var(--border));
+}
+
+.vocab-loader__label {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.vocab-loader__face strong {
+  font-size: clamp(1.35rem, 5vw, 1.75rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  text-align: center;
+  color: var(--text);
+}
+
+.vocab-loader__orbit {
+  position: relative;
+  width: 220px;
+  height: 56px;
+}
+
+.vocab-loader__orbit-word {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  padding: 0.25rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 10%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--accent) 25%, var(--border));
+  white-space: nowrap;
+  animation: vocab-orbit 8s linear infinite;
+  animation-delay: calc(var(--i) * -2s);
+}
+
+@keyframes vocab-orbit {
+  from { transform: rotate(0deg) translateX(70px) rotate(0deg); }
+  to { transform: rotate(360deg) translateX(70px) rotate(-360deg); }
+}
+
+.vocab-loader__message {
+  margin: 0;
+  min-height: 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-align: center;
+  animation: vocab-message-pulse 2.2s ease-in-out infinite;
+}
+
+@keyframes vocab-message-pulse {
+  0%, 100% { opacity: 0.65; }
+  50% { opacity: 1; }
+}
+
+.vocab-loader__progress {
+  width: min(100%, 240px);
+  height: 4px;
+  border-radius: 999px;
+  background: var(--surface-muted);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.vocab-loader__progress-bar {
+  height: 100%;
+  width: 40%;
+  border-radius: inherit;
+  background: linear-gradient(
+    90deg,
+    var(--accent),
+    color-mix(in srgb, #f97316 80%, var(--accent)),
+    var(--accent)
+  );
+  animation: vocab-progress-slide 1.6s ease-in-out infinite;
+}
+
+@keyframes vocab-progress-slide {
+  0% { transform: translateX(-120%); }
+  100% { transform: translateX(320%); }
+}
+
 /* ── Back ── */
 .flashcard__badge {
   align-self: center;
@@ -1674,6 +1881,45 @@ body {
 
 .streak-exam--soon .streak-exam__countdown {
   color: #ea580c;
+}
+
+.streak-exams__more {
+  margin: 0.5rem 0 0;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.streak-mark-menu__list {
+  list-style: none;
+  margin: 0.625rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  border-top: 1px solid var(--border);
+  padding-top: 0.625rem;
+}
+
+.streak-mark-menu__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-size: 0.8125rem;
+}
+
+.streak-day__more {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0.875rem;
+  height: 0.875rem;
+  padding: 0 0.15rem;
+  border-radius: 4px;
+  font-size: 0.5rem;
+  font-weight: 800;
+  color: var(--text-muted);
+  background: var(--surface-muted);
 }
 
 .streak-panel__today-badge {
