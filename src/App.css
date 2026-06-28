@@ -987,6 +987,12 @@ body {
   color: var(--text);
 }
 
+.btn.btn--toggle-on {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
 .btn.btn--mark {
   width: 100%;
   font-size: 1rem;
@@ -1124,6 +1130,26 @@ body {
 .word-item__word {
   font-size: 1.0625rem;
   font-weight: 700;
+}
+
+.word-item__title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.word-item__wrong-count {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.125rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--wrong);
+  background: var(--wrong-bg);
+  border: 1px solid var(--wrong-border);
+  white-space: nowrap;
 }
 
 .word-item__defs {

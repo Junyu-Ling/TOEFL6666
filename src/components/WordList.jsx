@@ -1,9 +1,14 @@
-function WordItem({ item, variant, onRemove }) {
+function WordItem({ item, variant, onRemove, showWrongCount }) {
   return (
     <article className={`word-item word-item--${variant}`}>
       <div className="word-item__main">
         <div className="word-item__left">
-          <h3 className="word-item__word">{item.word}</h3>
+          <div className="word-item__title-row">
+            <h3 className="word-item__word">{item.word}</h3>
+            {showWrongCount && (item.wrongCount ?? 0) > 0 && (
+              <span className="word-item__wrong-count">错 {item.wrongCount} 次</span>
+            )}
+          </div>
           <p className="word-item__defs">{item.definitions?.join(" · ")}</p>
           {item.ai_feedback && <p className="word-item__feedback">{item.ai_feedback}</p>}
         </div>
@@ -33,6 +38,7 @@ export default function WordList({
   onRemoveWord,
   onClearAll,
   clearLabel = "清空",
+  showWrongCount = false,
 }) {
   return (
     <div className="word-list-view">
@@ -64,6 +70,7 @@ export default function WordList({
               item={item}
               variant={title.includes("不认识") ? "unknown" : "known"}
               onRemove={onRemoveWord}
+              showWrongCount={showWrongCount}
             />
           ))}
         </div>

@@ -8,6 +8,7 @@ const DEFAULT_PROGRESS = {
   activeListId: null,
   activeTab: "practice",
   isReviewMode: false,
+  reviewShuffle: false,
   listProgress: {},
 };
 
@@ -29,7 +30,11 @@ export function loadRecognized() {
 }
 
 export function loadUnrecognized() {
-  return readList(UNRECOGNIZED_KEY);
+  const list = readList(UNRECOGNIZED_KEY);
+  return list.map((item) => ({
+    ...item,
+    wrongCount: item.wrongCount ?? 1,
+  }));
 }
 
 export function saveRecognized(list) {
@@ -82,4 +87,31 @@ export function upsertWord(list, record) {
 
 export function removeWord(list, word) {
   return list.filter((item) => item.word !== word);
+}
+
+export function shuffleArray(items) {
+  const copy = [...items];
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
+}
+
+export function sortByWrongCount(items) {
+  return [...items].sort((a, b) => (b.wrongCount ?? 0) - (a.wrongCount ?? 0));
+}
+
+export function seededShuffle(items, seed) {
+  const copy = [...items];
+  let state = seed >>> 0;
+  const next = () => {
+    state = (state * 1664525 + 1013904223) >>> 0;
+    return state / 0x100000000;
+  };
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(next() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
 }
