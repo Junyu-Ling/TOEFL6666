@@ -1,0 +1,610 @@
+{
+  "meta": {
+    "level": 3,
+    "list": 6,
+    "title": "Level 3 · List 6",
+    "updatedAt": "2026-06-28"
+  },
+  "words": [
+    {
+      "word": "atmosphere",
+      "definitions": [
+        "n. 大气；氛围"
+      ]
+    },
+    {
+      "word": "originality",
+      "definitions": [
+        "n. 独创性"
+      ]
+    },
+    {
+      "word": "regulation",
+      "definitions": [
+        "n. 规定，管理"
+      ]
+    },
+    {
+      "word": "reinvent",
+      "definitions": [
+        "v. 彻底改变，重新定义"
+      ]
+    },
+    {
+      "word": "adventure",
+      "definitions": [
+        "n. 冒险活动"
+      ]
+    },
+    {
+      "word": "faint",
+      "definitions": [
+        "adj. 微弱的；v. 昏倒"
+      ]
+    },
+    {
+      "word": "faculty",
+      "definitions": [
+        "n. 全体教员；n. 才能；n. 官能"
+      ]
+    },
+    {
+      "word": "purity",
+      "definitions": [
+        "n. 纯净，纯洁"
+      ]
+    },
+    {
+      "word": "statistical",
+      "definitions": [
+        "adj. 统计的"
+      ]
+    },
+    {
+      "word": "kneel",
+      "definitions": [
+        "v. 跪下"
+      ]
+    },
+    {
+      "word": "utilize",
+      "definitions": [
+        "v. 利用"
+      ]
+    },
+    {
+      "word": "persuasive",
+      "definitions": [
+        "adj. 有说服力的"
+      ]
+    },
+    {
+      "word": "invade",
+      "definitions": [
+        "v. 入侵"
+      ]
+    },
+    {
+      "word": "ruin",
+      "definitions": [
+        "v. 破坏；n. 废墟"
+      ]
+    },
+    {
+      "word": "approve",
+      "definitions": [
+        "v. 赞成，批准"
+      ]
+    },
+    {
+      "word": "shallow",
+      "definitions": [
+        "adj. 浅的；adj. 肤浅的"
+      ]
+    },
+    {
+      "word": "dealer",
+      "definitions": [
+        "n. 经销商，交易人"
+      ]
+    },
+    {
+      "word": "poisonous",
+      "definitions": [
+        "adj. 有毒的"
+      ]
+    },
+    {
+      "word": "reliable",
+      "definitions": [
+        "adj. 可靠的"
+      ]
+    },
+    {
+      "word": "lengthen",
+      "definitions": [
+        "v. 延长"
+      ]
+    },
+    {
+      "word": "organism",
+      "definitions": [
+        "n. 有机体"
+      ]
+    },
+    {
+      "word": "unstable",
+      "definitions": [
+        "adj. 不稳定的"
+      ]
+    },
+    {
+      "word": "massive",
+      "definitions": [
+        "adj. 大规模的"
+      ]
+    },
+    {
+      "word": "imaginative",
+      "definitions": [
+        "adj. 富于想象力的"
+      ]
+    },
+    {
+      "word": "string",
+      "definitions": [
+        "n. 细绳，弦；n. 弦乐器；v. 给……上弦"
+      ]
+    },
+    {
+      "word": "myth",
+      "definitions": [
+        "n. 神话传说；n. (普遍的)错误观点"
+      ]
+    },
+    {
+      "word": "summary",
+      "definitions": [
+        "n. 总结"
+      ]
+    },
+    {
+      "word": "project",
+      "definitions": [
+        "n. (研究)项目；v. 投掷，投影；v. 预测"
+      ]
+    },
+    {
+      "word": "angular",
+      "definitions": [
+        "adj. 有尖角的"
+      ]
+    },
+    {
+      "word": "combine",
+      "definitions": [
+        "v. 使结合"
+      ]
+    },
+    {
+      "word": "reveal",
+      "definitions": [
+        "v. 披露，展现"
+      ]
+    },
+    {
+      "word": "fatty",
+      "definitions": [
+        "adj. 脂肪的，高脂的"
+      ]
+    },
+    {
+      "word": "preparedness",
+      "definitions": [
+        "n. 准备状态"
+      ]
+    },
+    {
+      "word": "plural",
+      "definitions": [
+        "adj. 复数的"
+      ]
+    },
+    {
+      "word": "attempt",
+      "definitions": [
+        "n. 企图"
+      ]
+    },
+    {
+      "word": "dare",
+      "definitions": [
+        "v. 敢"
+      ]
+    },
+    {
+      "word": "means",
+      "definitions": [
+        "n. 方法；n. 财富"
+      ]
+    },
+    {
+      "word": "wool",
+      "definitions": [
+        "n. 羊毛，绒线"
+      ]
+    },
+    {
+      "word": "reward",
+      "definitions": [
+        "n. 报答，酬劳"
+      ]
+    },
+    {
+      "word": "analyze",
+      "definitions": [
+        "v. 分析"
+      ]
+    },
+    {
+      "word": "vote",
+      "definitions": [
+        "v. 投票"
+      ]
+    },
+    {
+      "word": "walkway",
+      "definitions": [
+        "n. 走道"
+      ]
+    },
+    {
+      "word": "transfer",
+      "definitions": [
+        "v. 转移；v. 转让"
+      ]
+    },
+    {
+      "word": "noticeable",
+      "definitions": [
+        "adj. 明显的"
+      ]
+    },
+    {
+      "word": "fold",
+      "definitions": [
+        "n. 褶皱；v. 折叠"
+      ]
+    },
+    {
+      "word": "label",
+      "definitions": [
+        "n. 标签；v. 贴标签于；v. 归类"
+      ]
+    },
+    {
+      "word": "unexplored",
+      "definitions": [
+        "adj. 未经勘探的"
+      ]
+    },
+    {
+      "word": "mechanization",
+      "definitions": [
+        "n. 机械化"
+      ]
+    },
+    {
+      "word": "discount",
+      "definitions": [
+        "n. 折扣，贴现；v. 打折出售；v. 不予考虑"
+      ]
+    },
+    {
+      "word": "permission",
+      "definitions": [
+        "n. 许可"
+      ]
+    },
+    {
+      "word": "transform",
+      "definitions": [
+        "v. 改变"
+      ]
+    },
+    {
+      "word": "explosive",
+      "definitions": [
+        "n. 炸药；adj. 爆炸性的"
+      ]
+    },
+    {
+      "word": "systematic",
+      "definitions": [
+        "adj. 系统的"
+      ]
+    },
+    {
+      "word": "misfortune",
+      "definitions": [
+        "n. 厄运，不幸"
+      ]
+    },
+    {
+      "word": "engagement",
+      "definitions": [
+        "n. 订婚；n. 交战"
+      ]
+    },
+    {
+      "word": "mismatch",
+      "definitions": [
+        "n. 不匹配"
+      ]
+    },
+    {
+      "word": "conquer",
+      "definitions": [
+        "v. 征服，攻克"
+      ]
+    },
+    {
+      "word": "option",
+      "definitions": [
+        "n. 选择"
+      ]
+    },
+    {
+      "word": "skyscraper",
+      "definitions": [
+        "n. 摩天大楼"
+      ]
+    },
+    {
+      "word": "consume",
+      "definitions": [
+        "v. 吃，喝，消化；v. 消耗，消费"
+      ]
+    },
+    {
+      "word": "cap",
+      "definitions": [
+        "n. 帽子；n. 上限；n. (蘑菇的)上部"
+      ]
+    },
+    {
+      "word": "complex",
+      "definitions": [
+        "adj. 复杂的；n. 复合物；n. 建筑群"
+      ]
+    },
+    {
+      "word": "expressive",
+      "definitions": [
+        "adj. 表现情感或思想的"
+      ]
+    },
+    {
+      "word": "greet",
+      "definitions": [
+        "v. 招呼"
+      ]
+    },
+    {
+      "word": "inconvenient",
+      "definitions": [
+        "adj. 不方便的"
+      ]
+    },
+    {
+      "word": "puzzle",
+      "definitions": [
+        "n. 难题；v. 使……困惑"
+      ]
+    },
+    {
+      "word": "dense",
+      "definitions": [
+        "adj. 密度大的；adj. 浓密的"
+      ]
+    },
+    {
+      "word": "guidance",
+      "definitions": [
+        "n. 指导"
+      ]
+    },
+    {
+      "word": "unimproved",
+      "definitions": [
+        "adj. 未改善的"
+      ]
+    },
+    {
+      "word": "flexible",
+      "definitions": [
+        "adj. 灵活的"
+      ]
+    },
+    {
+      "word": "schedule",
+      "definitions": [
+        "v. 安排；n. 日程表"
+      ]
+    },
+    {
+      "word": "threaten",
+      "definitions": [
+        "v. 威胁"
+      ]
+    },
+    {
+      "word": "radiate",
+      "definitions": [
+        "v. 辐射；v. 散发"
+      ]
+    },
+    {
+      "word": "initially",
+      "definitions": [
+        "adv. 起初"
+      ]
+    },
+    {
+      "word": "logical",
+      "definitions": [
+        "adj. 逻辑的；adj. 合乎逻辑的"
+      ]
+    },
+    {
+      "word": "security",
+      "definitions": [
+        "n. 安全，安全措施；n. 保安部门；n. 证券"
+      ]
+    },
+    {
+      "word": "overcome",
+      "definitions": [
+        "v. 击败；v. 克服(困难)"
+      ]
+    },
+    {
+      "word": "probability",
+      "definitions": [
+        "n. 可能性；n. 概率"
+      ]
+    },
+    {
+      "word": "occurrence",
+      "definitions": [
+        "n. (事件的)发生"
+      ]
+    },
+    {
+      "word": "extent",
+      "definitions": [
+        "n. 程度"
+      ]
+    },
+    {
+      "word": "localize",
+      "definitions": [
+        "v. 确定……的地点；v. 使局部化，使本土化"
+      ]
+    },
+    {
+      "word": "trace",
+      "definitions": [
+        "n. 痕迹；v. 查出，追溯；v. 描摹"
+      ]
+    },
+    {
+      "word": "warrior",
+      "definitions": [
+        "n. 武士"
+      ]
+    },
+    {
+      "word": "tone",
+      "definitions": [
+        "n. 音调；n. 口气；v. (使事情)变得缓和"
+      ]
+    },
+    {
+      "word": "investor",
+      "definitions": [
+        "n. 投资者"
+      ]
+    },
+    {
+      "word": "inherit",
+      "definitions": [
+        "v. 继承；v. 遗传"
+      ]
+    },
+    {
+      "word": "division",
+      "definitions": [
+        "n. 分开，分配；n. 除法；n. 部门"
+      ]
+    },
+    {
+      "word": "confusing",
+      "definitions": [
+        "adj. 令人疑惑的"
+      ]
+    },
+    {
+      "word": "relativity",
+      "definitions": [
+        "n. 相对性"
+      ]
+    },
+    {
+      "word": "sketch",
+      "definitions": [
+        "v. 草拟；n. 草图，素描"
+      ]
+    },
+    {
+      "word": "scope",
+      "definitions": [
+        "n. 范围；n. 考量"
+      ]
+    },
+    {
+      "word": "permanent",
+      "definitions": [
+        "adj. 永恒不变的"
+      ]
+    },
+    {
+      "word": "measurement",
+      "definitions": [
+        "n. 尺寸，测量"
+      ]
+    },
+    {
+      "word": "focus",
+      "definitions": [
+        "v. 聚焦；n. 焦点；v. 集中(注意力)"
+      ]
+    },
+    {
+      "word": "debate",
+      "definitions": [
+        "n. 辩论"
+      ]
+    },
+    {
+      "word": "accessible",
+      "definitions": [
+        "adj. 易接近的，易获得的；adj. 可理解的"
+      ]
+    },
+    {
+      "word": "pretend",
+      "definitions": [
+        "v. 假装"
+      ]
+    },
+    {
+      "word": "examine",
+      "definitions": [
+        "v. 检查"
+      ]
+    },
+    {
+      "word": "pro",
+      "definitions": [
+        "n. 专业人员；n. 益处"
+      ]
+    },
+    {
+      "word": "historic",
+      "definitions": [
+        "adj. 历史性的"
+      ]
+    }
+  ]
+}

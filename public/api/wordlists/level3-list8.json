@@ -1,0 +1,610 @@
+{
+  "meta": {
+    "level": 3,
+    "list": 8,
+    "title": "Level 3 · List 8",
+    "updatedAt": "2026-06-28"
+  },
+  "words": [
+    {
+      "word": "labor",
+      "definitions": [
+        "n. 劳动；n. 劳工"
+      ]
+    },
+    {
+      "word": "comparative",
+      "definitions": [
+        "adj. 相对的；adj. 比较的"
+      ]
+    },
+    {
+      "word": "considerate",
+      "definitions": [
+        "adj. 体贴的"
+      ]
+    },
+    {
+      "word": "comical",
+      "definitions": [
+        "adj. 滑稽的"
+      ]
+    },
+    {
+      "word": "preservation",
+      "definitions": [
+        "n. 保存；n. 防腐"
+      ]
+    },
+    {
+      "word": "flatten",
+      "definitions": [
+        "v. 把……压平"
+      ]
+    },
+    {
+      "word": "concern",
+      "definitions": [
+        "n. 担心；v. 与……有关"
+      ]
+    },
+    {
+      "word": "modernization",
+      "definitions": [
+        "n. 现代化"
+      ]
+    },
+    {
+      "word": "nutrient",
+      "definitions": [
+        "n. 营养物"
+      ]
+    },
+    {
+      "word": "pave",
+      "definitions": [
+        "v. 铺"
+      ]
+    },
+    {
+      "word": "nest",
+      "definitions": [
+        "n. 窝；v. 筑巢"
+      ]
+    },
+    {
+      "word": "economical",
+      "definitions": [
+        "adj. 经济的，节省的"
+      ]
+    },
+    {
+      "word": "micro",
+      "definitions": [
+        "adj. 微观的"
+      ]
+    },
+    {
+      "word": "invisible",
+      "definitions": [
+        "adj. 看不见的"
+      ]
+    },
+    {
+      "word": "quantify",
+      "definitions": [
+        "v. 量化"
+      ]
+    },
+    {
+      "word": "defend",
+      "definitions": [
+        "v. 保卫；v. 为……辩解"
+      ]
+    },
+    {
+      "word": "donate",
+      "definitions": [
+        "v. 捐赠"
+      ]
+    },
+    {
+      "word": "outline",
+      "definitions": [
+        "n. 轮廓；v. 画轮廓，打草图；v. 概述"
+      ]
+    },
+    {
+      "word": "biographer",
+      "definitions": [
+        "n. 传记作者"
+      ]
+    },
+    {
+      "word": "command",
+      "definitions": [
+        "n. 命令"
+      ]
+    },
+    {
+      "word": "profile",
+      "definitions": [
+        "n. 侧面，形象；v. 简要介绍"
+      ]
+    },
+    {
+      "word": "harvest",
+      "definitions": [
+        "n. 收成；v. 收割"
+      ]
+    },
+    {
+      "word": "graceful",
+      "definitions": [
+        "adj. 优雅的"
+      ]
+    },
+    {
+      "word": "column",
+      "definitions": [
+        "n. 柱子；n. 专栏"
+      ]
+    },
+    {
+      "word": "regularize",
+      "definitions": [
+        "v. 使规范化"
+      ]
+    },
+    {
+      "word": "loner",
+      "definitions": [
+        "n. 独来独往的人"
+      ]
+    },
+    {
+      "word": "spoil",
+      "definitions": [
+        "v. 糟蹋；n. 战利品；v. 溺爱"
+      ]
+    },
+    {
+      "word": "significant",
+      "definitions": [
+        "adj. 重要的"
+      ]
+    },
+    {
+      "word": "concrete",
+      "definitions": [
+        "n. 混凝土；adj. 具体的，实在的"
+      ]
+    },
+    {
+      "word": "civilization",
+      "definitions": [
+        "n. 文明；n. 开化过程"
+      ]
+    },
+    {
+      "word": "incline",
+      "definitions": [
+        "v. 使倾向于；v. 弯，倾斜；n. 斜坡"
+      ]
+    },
+    {
+      "word": "extreme",
+      "definitions": [
+        "n. 极端；adj. 极端的"
+      ]
+    },
+    {
+      "word": "consideration",
+      "definitions": [
+        "n. 考虑；n. 考虑因素"
+      ]
+    },
+    {
+      "word": "considerable",
+      "definitions": [
+        "adj. 相当大的"
+      ]
+    },
+    {
+      "word": "concentrate",
+      "definitions": [
+        "v. 集中"
+      ]
+    },
+    {
+      "word": "object",
+      "definitions": [
+        "n. 物品，对象；v. 反对"
+      ]
+    },
+    {
+      "word": "scale",
+      "definitions": [
+        "n. 秤；n. 等级，规模，比例；v. 按比例调整大小"
+      ]
+    },
+    {
+      "word": "predictive",
+      "definitions": [
+        "adj. 预测性的"
+      ]
+    },
+    {
+      "word": "divorce",
+      "definitions": [
+        "n. 离婚；v. 分离"
+      ]
+    },
+    {
+      "word": "fiction",
+      "definitions": [
+        "n. 虚构文学"
+      ]
+    },
+    {
+      "word": "tissue",
+      "definitions": [
+        "n. 组织；n. 纸巾"
+      ]
+    },
+    {
+      "word": "wise",
+      "definitions": [
+        "adj. 明智的"
+      ]
+    },
+    {
+      "word": "headquarters",
+      "definitions": [
+        "n. 总部"
+      ]
+    },
+    {
+      "word": "comparison",
+      "definitions": [
+        "n. 比较"
+      ]
+    },
+    {
+      "word": "slip",
+      "definitions": [
+        "v. 滑脱；v. 轻巧地移动"
+      ]
+    },
+    {
+      "word": "sue",
+      "definitions": [
+        "v. 起诉"
+      ]
+    },
+    {
+      "word": "probable",
+      "definitions": [
+        "adj. 很可能的"
+      ]
+    },
+    {
+      "word": "redefine",
+      "definitions": [
+        "v. 重新定义"
+      ]
+    },
+    {
+      "word": "preference",
+      "definitions": [
+        "n. 偏爱"
+      ]
+    },
+    {
+      "word": "dependence",
+      "definitions": [
+        "n. 依靠；n. 成瘾"
+      ]
+    },
+    {
+      "word": "shipyard",
+      "definitions": [
+        "n. 造船厂"
+      ]
+    },
+    {
+      "word": "occupation",
+      "definitions": [
+        "n. 职业；n. 占据"
+      ]
+    },
+    {
+      "word": "expand",
+      "definitions": [
+        "v. 扩大"
+      ]
+    },
+    {
+      "word": "migrate",
+      "definitions": [
+        "v. 迁移"
+      ]
+    },
+    {
+      "word": "bother",
+      "definitions": [
+        "v. 打扰；v. (为做某事)承受麻烦"
+      ]
+    },
+    {
+      "word": "buildup",
+      "definitions": [
+        "n. 积累"
+      ]
+    },
+    {
+      "word": "settlement",
+      "definitions": [
+        "n. 定居点；n. 协议"
+      ]
+    },
+    {
+      "word": "simplicity",
+      "definitions": [
+        "n. 简单"
+      ]
+    },
+    {
+      "word": "critique",
+      "definitions": [
+        "n. 评论"
+      ]
+    },
+    {
+      "word": "intend",
+      "definitions": [
+        "v. 计划；v. 意指"
+      ]
+    },
+    {
+      "word": "consult",
+      "definitions": [
+        "v. 咨询"
+      ]
+    },
+    {
+      "word": "sort",
+      "definitions": [
+        "n. 类；v. 整理"
+      ]
+    },
+    {
+      "word": "harsh",
+      "definitions": [
+        "adj. 严苛的，尖锐的"
+      ]
+    },
+    {
+      "word": "construction",
+      "definitions": [
+        "n. 建造"
+      ]
+    },
+    {
+      "word": "stock",
+      "definitions": [
+        "n. 库存；n. 股票；adj. 标准的，普通的"
+      ]
+    },
+    {
+      "word": "reflect",
+      "definitions": [
+        "v. 反映；v. 反射；v. 深思"
+      ]
+    },
+    {
+      "word": "spot",
+      "definitions": [
+        "n. 点，污渍；v. 发现"
+      ]
+    },
+    {
+      "word": "disregard",
+      "definitions": [
+        "v. 不理会；n. 忽视"
+      ]
+    },
+    {
+      "word": "somewhat",
+      "definitions": [
+        "adv. 有点"
+      ]
+    },
+    {
+      "word": "prolong",
+      "definitions": [
+        "v. 延长"
+      ]
+    },
+    {
+      "word": "humanity",
+      "definitions": [
+        "n. 人性；n. 人类"
+      ]
+    },
+    {
+      "word": "magnet",
+      "definitions": [
+        "n. 磁铁；n. 有吸引力的东西或人"
+      ]
+    },
+    {
+      "word": "perform",
+      "definitions": [
+        "v. 表现，运行；v. 正式进行，施行(某事)"
+      ]
+    },
+    {
+      "word": "portion",
+      "definitions": [
+        "n. 一部分"
+      ]
+    },
+    {
+      "word": "grant",
+      "definitions": [
+        "v. 准予，授予；n. 拨款"
+      ]
+    },
+    {
+      "word": "mobile",
+      "definitions": [
+        "adj. 可移动的"
+      ]
+    },
+    {
+      "word": "survey",
+      "definitions": [
+        "n. 勘查；n. (数据)调查"
+      ]
+    },
+    {
+      "word": "imperfection",
+      "definitions": [
+        "n. 缺陷"
+      ]
+    },
+    {
+      "word": "mythical",
+      "definitions": [
+        "adj. 虚构的；adj. 神话的"
+      ]
+    },
+    {
+      "word": "series",
+      "definitions": [
+        "n. 一系列"
+      ]
+    },
+    {
+      "word": "theme",
+      "definitions": [
+        "n. 主题"
+      ]
+    },
+    {
+      "word": "restless",
+      "definitions": [
+        "adj. 躁动的"
+      ]
+    },
+    {
+      "word": "far-reaching",
+      "definitions": [
+        "adj. 影响面广的"
+      ]
+    },
+    {
+      "word": "routine",
+      "definitions": [
+        "n. 惯例；adj. 常规的"
+      ]
+    },
+    {
+      "word": "inhabitant",
+      "definitions": [
+        "n. 居民"
+      ]
+    },
+    {
+      "word": "detect",
+      "definitions": [
+        "v. 查明"
+      ]
+    },
+    {
+      "word": "drip",
+      "definitions": [
+        "v. 滴下；n. 液滴"
+      ]
+    },
+    {
+      "word": "prime",
+      "definitions": [
+        "adj. 首要的；adj. 最好的；n. 盛年"
+      ]
+    },
+    {
+      "word": "physiological",
+      "definitions": [
+        "adj. 生理上的"
+      ]
+    },
+    {
+      "word": "reunite",
+      "definitions": [
+        "v. (使……)再联合"
+      ]
+    },
+    {
+      "word": "manufacture",
+      "definitions": [
+        "v. (大量)生产"
+      ]
+    },
+    {
+      "word": "harbor",
+      "definitions": [
+        "n. 港湾；v. 藏匿"
+      ]
+    },
+    {
+      "word": "conceal",
+      "definitions": [
+        "v. 隐藏"
+      ]
+    },
+    {
+      "word": "fame",
+      "definitions": [
+        "n. 名声"
+      ]
+    },
+    {
+      "word": "reduction",
+      "definitions": [
+        "n. 减少"
+      ]
+    },
+    {
+      "word": "context",
+      "definitions": [
+        "n. 情境；n. 上下文"
+      ]
+    },
+    {
+      "word": "obtain",
+      "definitions": [
+        "v. 获得"
+      ]
+    },
+    {
+      "word": "rapid",
+      "definitions": [
+        "adj. 快速的"
+      ]
+    },
+    {
+      "word": "draft",
+      "definitions": [
+        "n. 打草稿；v. 征募；n. 气流"
+      ]
+    },
+    {
+      "word": "output",
+      "definitions": [
+        "n. 产量；n. 输出"
+      ]
+    }
+  ]
+}

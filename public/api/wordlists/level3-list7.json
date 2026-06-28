@@ -1,0 +1,610 @@
+{
+  "meta": {
+    "level": 3,
+    "list": 7,
+    "title": "Level 3 · List 7",
+    "updatedAt": "2026-06-28"
+  },
+  "words": [
+    {
+      "word": "redistribution",
+      "definitions": [
+        "n. 重新分配"
+      ]
+    },
+    {
+      "word": "supernatural",
+      "definitions": [
+        "adj. 超自然的"
+      ]
+    },
+    {
+      "word": "resistance",
+      "definitions": [
+        "n. 抵抗(力)"
+      ]
+    },
+    {
+      "word": "hemisphere",
+      "definitions": [
+        "n. 半球"
+      ]
+    },
+    {
+      "word": "coach",
+      "definitions": [
+        "v. 训练；n. 教练；n. 轿式马车，长途客车，经济舱"
+      ]
+    },
+    {
+      "word": "sole",
+      "definitions": [
+        "adj. 惟一的；n. 鞋底，脚底，底"
+      ]
+    },
+    {
+      "word": "rush",
+      "definitions": [
+        "v. 冲；n. 仓促行动"
+      ]
+    },
+    {
+      "word": "connect",
+      "definitions": [
+        "v. 连接"
+      ]
+    },
+    {
+      "word": "reluctant",
+      "definitions": [
+        "adj. 不情愿的"
+      ]
+    },
+    {
+      "word": "convince",
+      "definitions": [
+        "v. 说服，使……信服"
+      ]
+    },
+    {
+      "word": "emotion",
+      "definitions": [
+        "n. 情绪；n. 感性"
+      ]
+    },
+    {
+      "word": "athletics",
+      "definitions": [
+        "n. 田径运动"
+      ]
+    },
+    {
+      "word": "plug",
+      "definitions": [
+        "n. 插头，塞子；v. 塞住，插入插座"
+      ]
+    },
+    {
+      "word": "reorganize",
+      "definitions": [
+        "v. 重新组织"
+      ]
+    },
+    {
+      "word": "neat",
+      "definitions": [
+        "adj. 整齐的，巧妙的"
+      ]
+    },
+    {
+      "word": "astonish",
+      "definitions": [
+        "v. 使惊奇"
+      ]
+    },
+    {
+      "word": "spotlight",
+      "definitions": [
+        "n. 聚光灯；v. 用聚光灯照，突出"
+      ]
+    },
+    {
+      "word": "digestive",
+      "definitions": [
+        "adj. 助消化的"
+      ]
+    },
+    {
+      "word": "found",
+      "definitions": [
+        "v. 创立"
+      ]
+    },
+    {
+      "word": "reschedule",
+      "definitions": [
+        "v. 将……改期"
+      ]
+    },
+    {
+      "word": "imply",
+      "definitions": [
+        "v. 暗示"
+      ]
+    },
+    {
+      "word": "polish",
+      "definitions": [
+        "v. 擦亮；n. 波兰语，波兰人，波兰的；adj. 精湛"
+      ]
+    },
+    {
+      "word": "insignificant",
+      "definitions": [
+        "adj. 微不足道的"
+      ]
+    },
+    {
+      "word": "paste",
+      "definitions": [
+        "n. 面团，浆糊；v. 粘贴"
+      ]
+    },
+    {
+      "word": "favor",
+      "definitions": [
+        "v. 赞同，偏袒；n. 特殊照顾，好处；n. 善举"
+      ]
+    },
+    {
+      "word": "voyage",
+      "definitions": [
+        "n. 航行"
+      ]
+    },
+    {
+      "word": "biodiversity",
+      "definitions": [
+        "n. 生物多样性"
+      ]
+    },
+    {
+      "word": "examination",
+      "definitions": [
+        "n. 检查；n. 考试"
+      ]
+    },
+    {
+      "word": "urge",
+      "definitions": [
+        "v. 催促；n. 强烈的意愿"
+      ]
+    },
+    {
+      "word": "independent",
+      "definitions": [
+        "adj. 独立的"
+      ]
+    },
+    {
+      "word": "criticize",
+      "definitions": [
+        "v. 批评"
+      ]
+    },
+    {
+      "word": "divider",
+      "definitions": [
+        "n. 隔板"
+      ]
+    },
+    {
+      "word": "impression",
+      "definitions": [
+        "n. 印象；n. 滑稽模仿"
+      ]
+    },
+    {
+      "word": "inclusion",
+      "definitions": [
+        "n. 包括"
+      ]
+    },
+    {
+      "word": "thrive",
+      "definitions": [
+        "v. 茁壮成长"
+      ]
+    },
+    {
+      "word": "redirect",
+      "definitions": [
+        "v. 使……改变方向"
+      ]
+    },
+    {
+      "word": "definitely",
+      "definitions": [
+        "adv. 确实地"
+      ]
+    },
+    {
+      "word": "depress",
+      "definitions": [
+        "v. 使沮丧；v. 使萧条"
+      ]
+    },
+    {
+      "word": "discipline",
+      "definitions": [
+        "n. 纪律，惩罚；v. 训导，惩罚；n. 学科"
+      ]
+    },
+    {
+      "word": "curriculum",
+      "definitions": [
+        "n. 课程体系"
+      ]
+    },
+    {
+      "word": "botany",
+      "definitions": [
+        "n. 植物学"
+      ]
+    },
+    {
+      "word": "majority",
+      "definitions": [
+        "n. 大多数者"
+      ]
+    },
+    {
+      "word": "explode",
+      "definitions": [
+        "v. 爆炸"
+      ]
+    },
+    {
+      "word": "shuttle",
+      "definitions": [
+        "n. 往返运输；n. 太空穿梭机"
+      ]
+    },
+    {
+      "word": "bark",
+      "definitions": [
+        "v. 吠，咆哮；n. 树皮"
+      ]
+    },
+    {
+      "word": "medium",
+      "definitions": [
+        "n. 媒介；adj. 中等"
+      ]
+    },
+    {
+      "word": "illustrate",
+      "definitions": [
+        "v. 阐释；v. 插图"
+      ]
+    },
+    {
+      "word": "interrupt",
+      "definitions": [
+        "v. 打断"
+      ]
+    },
+    {
+      "word": "wipe",
+      "definitions": [
+        "v. 擦去"
+      ]
+    },
+    {
+      "word": "continuity",
+      "definitions": [
+        "n. 连续性"
+      ]
+    },
+    {
+      "word": "consist",
+      "definitions": [
+        "v. 由……组成"
+      ]
+    },
+    {
+      "word": "maintain",
+      "definitions": [
+        "v. 维持，供养；v. 坚称"
+      ]
+    },
+    {
+      "word": "refill",
+      "definitions": [
+        "v. 重新注满"
+      ]
+    },
+    {
+      "word": "cliff",
+      "definitions": [
+        "n. 悬崖"
+      ]
+    },
+    {
+      "word": "extraordinary",
+      "definitions": [
+        "adj. 非凡的"
+      ]
+    },
+    {
+      "word": "extra",
+      "definitions": [
+        "adj. 额外的，多余的；n. 额外的事物"
+      ]
+    },
+    {
+      "word": "minimize",
+      "definitions": [
+        "v. 将……减少到最低限度；v. 轻描淡写"
+      ]
+    },
+    {
+      "word": "connection",
+      "definitions": [
+        "n. 连接；n. 关系"
+      ]
+    },
+    {
+      "word": "faulty",
+      "definitions": [
+        "adj. 有缺陷的，错误的"
+      ]
+    },
+    {
+      "word": "heroic",
+      "definitions": [
+        "adj. 英勇的；adj. 与传说中的英雄有关的"
+      ]
+    },
+    {
+      "word": "cattle",
+      "definitions": [
+        "n. 牛"
+      ]
+    },
+    {
+      "word": "mass",
+      "definitions": [
+        "n. (物理中的)质量；n. 普通大众；adj. 大规模的"
+      ]
+    },
+    {
+      "word": "universal",
+      "definitions": [
+        "adj. 普遍的；adj. 宇宙的"
+      ]
+    },
+    {
+      "word": "inadequate",
+      "definitions": [
+        "adj. 不够的"
+      ]
+    },
+    {
+      "word": "destination",
+      "definitions": [
+        "n. 目的地"
+      ]
+    },
+    {
+      "word": "general",
+      "definitions": [
+        "adj. 普遍的，总的；n. 将官"
+      ]
+    },
+    {
+      "word": "realization",
+      "definitions": [
+        "n. 实现；n. 意识"
+      ]
+    },
+    {
+      "word": "impact",
+      "definitions": [
+        "n. 撞击；n. 影响"
+      ]
+    },
+    {
+      "word": "oven",
+      "definitions": [
+        "n. 烤箱"
+      ]
+    },
+    {
+      "word": "handy",
+      "definitions": [
+        "adj. 好用的"
+      ]
+    },
+    {
+      "word": "ecosystem",
+      "definitions": [
+        "n. 生态系统"
+      ]
+    },
+    {
+      "word": "participate",
+      "definitions": [
+        "v. 参与"
+      ]
+    },
+    {
+      "word": "laboratory",
+      "definitions": [
+        "n. 实验室"
+      ]
+    },
+    {
+      "word": "define",
+      "definitions": [
+        "v. 给……下定义"
+      ]
+    },
+    {
+      "word": "awareness",
+      "definitions": [
+        "n. 意识"
+      ]
+    },
+    {
+      "word": "nutritious",
+      "definitions": [
+        "adj. 有营养的"
+      ]
+    },
+    {
+      "word": "con",
+      "definitions": [
+        "n. 诈骗；n. 反对"
+      ]
+    },
+    {
+      "word": "mill",
+      "definitions": [
+        "n. 磨坊，厂"
+      ]
+    },
+    {
+      "word": "resource",
+      "definitions": [
+        "n. 资源"
+      ]
+    },
+    {
+      "word": "terrify",
+      "definitions": [
+        "v. 使恐惧"
+      ]
+    },
+    {
+      "word": "gathering",
+      "definitions": [
+        "n. 聚会；adj. 渐增的"
+      ]
+    },
+    {
+      "word": "acceptance",
+      "definitions": [
+        "n. 接受"
+      ]
+    },
+    {
+      "word": "unsupported",
+      "definitions": [
+        "adj. 无支援的"
+      ]
+    },
+    {
+      "word": "projector",
+      "definitions": [
+        "n. 幻灯机"
+      ]
+    },
+    {
+      "word": "overtime",
+      "definitions": [
+        "n. 加班时间，加时赛；v. 加班"
+      ]
+    },
+    {
+      "word": "appoint",
+      "definitions": [
+        "v. 任命"
+      ]
+    },
+    {
+      "word": "certify",
+      "definitions": [
+        "v. 证明"
+      ]
+    },
+    {
+      "word": "heighten",
+      "definitions": [
+        "v. 加高；v. 增强"
+      ]
+    },
+    {
+      "word": "indication",
+      "definitions": [
+        "n. 迹象"
+      ]
+    },
+    {
+      "word": "factual",
+      "definitions": [
+        "adj. 事实的"
+      ]
+    },
+    {
+      "word": "refer",
+      "definitions": [
+        "v. 表示，指代；v. 涉及；v. 参考"
+      ]
+    },
+    {
+      "word": "perfection",
+      "definitions": [
+        "n. 完美"
+      ]
+    },
+    {
+      "word": "experimental",
+      "definitions": [
+        "adj. 试验性的"
+      ]
+    },
+    {
+      "word": "charge",
+      "definitions": [
+        "n. (收取)费用；n. 指控；v. 主管"
+      ]
+    },
+    {
+      "word": "currency",
+      "definitions": [
+        "n. 货币"
+      ]
+    },
+    {
+      "word": "variety",
+      "definitions": [
+        "n. 各种各样"
+      ]
+    },
+    {
+      "word": "fate",
+      "definitions": [
+        "n. 命运"
+      ]
+    },
+    {
+      "word": "brief",
+      "definitions": [
+        "adj. 短暂的；adj. 简洁的"
+      ]
+    },
+    {
+      "word": "satellite",
+      "definitions": [
+        "n. (人造)卫星"
+      ]
+    },
+    {
+      "word": "civil",
+      "definitions": [
+        "adj. 公民的，民用的；adj. 文明的；adj. 民事的"
+      ]
+    }
+  ]
+}

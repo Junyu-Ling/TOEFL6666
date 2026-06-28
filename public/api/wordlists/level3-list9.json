@@ -1,0 +1,610 @@
+{
+  "meta": {
+    "level": 3,
+    "list": 9,
+    "title": "Level 3 · List 9",
+    "updatedAt": "2026-06-28"
+  },
+  "words": [
+    {
+      "word": "spectator",
+      "definitions": [
+        "n. 观众"
+      ]
+    },
+    {
+      "word": "corporation",
+      "definitions": [
+        "n. 大公司"
+      ]
+    },
+    {
+      "word": "democracy",
+      "definitions": [
+        "n. 民主"
+      ]
+    },
+    {
+      "word": "disrupt",
+      "definitions": [
+        "v. 打断"
+      ]
+    },
+    {
+      "word": "resident",
+      "definitions": [
+        "n. 居民；adj. 常住的"
+      ]
+    },
+    {
+      "word": "persuade",
+      "definitions": [
+        "v. 说服"
+      ]
+    },
+    {
+      "word": "ancestor",
+      "definitions": [
+        "n. 祖先"
+      ]
+    },
+    {
+      "word": "statistics",
+      "definitions": [
+        "n. 统计数字"
+      ]
+    },
+    {
+      "word": "coexist",
+      "definitions": [
+        "v. 共存"
+      ]
+    },
+    {
+      "word": "arise",
+      "definitions": [
+        "v. 发生，出现"
+      ]
+    },
+    {
+      "word": "session",
+      "definitions": [
+        "n. 会议；n. 学期，上课时间；n. 一段时间"
+      ]
+    },
+    {
+      "word": "totality",
+      "definitions": [
+        "n. 全体"
+      ]
+    },
+    {
+      "word": "conflict",
+      "definitions": [
+        "n. 冲突"
+      ]
+    },
+    {
+      "word": "productive",
+      "definitions": [
+        "adj. 高产的；adj. 富有成效的"
+      ]
+    },
+    {
+      "word": "illusion",
+      "definitions": [
+        "n. 幻觉"
+      ]
+    },
+    {
+      "word": "nutrition",
+      "definitions": [
+        "n. 营养(作用)"
+      ]
+    },
+    {
+      "word": "pot",
+      "definitions": [
+        "n. 锅，茶壶，罐"
+      ]
+    },
+    {
+      "word": "folk",
+      "definitions": [
+        "n. 人们；adj. 民间的"
+      ]
+    },
+    {
+      "word": "petroleum",
+      "definitions": [
+        "n. 石油"
+      ]
+    },
+    {
+      "word": "willingness",
+      "definitions": [
+        "n. 乐意"
+      ]
+    },
+    {
+      "word": "unify",
+      "definitions": [
+        "v. 统一"
+      ]
+    },
+    {
+      "word": "exhibit",
+      "definitions": [
+        "v. 展现"
+      ]
+    },
+    {
+      "word": "bold",
+      "definitions": [
+        "adj. 大胆的；adj. 醒目的；n. 粗体"
+      ]
+    },
+    {
+      "word": "unquestionable",
+      "definitions": [
+        "adj. 无疑的"
+      ]
+    },
+    {
+      "word": "host",
+      "definitions": [
+        "v. 主持；n. 主人；n. 宿主"
+      ]
+    },
+    {
+      "word": "agriculture",
+      "definitions": [
+        "n. 农业"
+      ]
+    },
+    {
+      "word": "roll",
+      "definitions": [
+        "v. 翻滚；n. 花名册"
+      ]
+    },
+    {
+      "word": "widespread",
+      "definitions": [
+        "adj. 广泛的"
+      ]
+    },
+    {
+      "word": "breadth",
+      "definitions": [
+        "n. 宽度，广度"
+      ]
+    },
+    {
+      "word": "partnership",
+      "definitions": [
+        "n. 合伙关系，合伙人身份"
+      ]
+    },
+    {
+      "word": "publicity",
+      "definitions": [
+        "n. 媒体关注度；n. 宣传"
+      ]
+    },
+    {
+      "word": "solely",
+      "definitions": [
+        "adv. 完全地"
+      ]
+    },
+    {
+      "word": "humble",
+      "definitions": [
+        "adj. 谦逊的；adj. 低下的；v. 羞辱，击败"
+      ]
+    },
+    {
+      "word": "diligently",
+      "definitions": [
+        "adv. 勤勉地"
+      ]
+    },
+    {
+      "word": "flame",
+      "definitions": [
+        "n. 火焰"
+      ]
+    },
+    {
+      "word": "unpredictable",
+      "definitions": [
+        "adj. 不可预测的"
+      ]
+    },
+    {
+      "word": "cope",
+      "definitions": [
+        "v. 应付"
+      ]
+    },
+    {
+      "word": "immigrate",
+      "definitions": [
+        "v. (从外部)移民"
+      ]
+    },
+    {
+      "word": "domestic",
+      "definitions": [
+        "adj. 国内的；adj. 家务的"
+      ]
+    },
+    {
+      "word": "monument",
+      "definitions": [
+        "n. 纪念碑，纪念物"
+      ]
+    },
+    {
+      "word": "profitable",
+      "definitions": [
+        "adj. 盈利的；adj. 富有成效的"
+      ]
+    },
+    {
+      "word": "luxury",
+      "definitions": [
+        "n. 奢侈，奢侈品"
+      ]
+    },
+    {
+      "word": "positive",
+      "definitions": [
+        "adj. 确定的；adj. 积极的；adj. 正的，阳性的"
+      ]
+    },
+    {
+      "word": "incoming",
+      "definitions": [
+        "adj. 将到的；adj. 刚收到的；adj. 新上任的"
+      ]
+    },
+    {
+      "word": "graphical",
+      "definitions": [
+        "adj. 图形的"
+      ]
+    },
+    {
+      "word": "imaginary",
+      "definitions": [
+        "adj. 虚构的"
+      ]
+    },
+    {
+      "word": "rate",
+      "definitions": [
+        "n. 速度，率；v. 给……评级"
+      ]
+    },
+    {
+      "word": "firmly",
+      "definitions": [
+        "adv. 牢牢地；adv. 坚决地"
+      ]
+    },
+    {
+      "word": "slice",
+      "definitions": [
+        "v. 把……切成薄片；n. 一片"
+      ]
+    },
+    {
+      "word": "navigate",
+      "definitions": [
+        "v. 航行，驾驶；v. 导航"
+      ]
+    },
+    {
+      "word": "temporary",
+      "definitions": [
+        "adj. 暂时的"
+      ]
+    },
+    {
+      "word": "restrain",
+      "definitions": [
+        "v. 抑制"
+      ]
+    },
+    {
+      "word": "comparable",
+      "definitions": [
+        "adj. 相似的；adj. 有可比性的"
+      ]
+    },
+    {
+      "word": "individualism",
+      "definitions": [
+        "n. 个人主义"
+      ]
+    },
+    {
+      "word": "rural",
+      "definitions": [
+        "adj. 农村的"
+      ]
+    },
+    {
+      "word": "tidy",
+      "definitions": [
+        "adj. 整洁的；v. 收拾"
+      ]
+    },
+    {
+      "word": "limitation",
+      "definitions": [
+        "n. 限制；n. 局限"
+      ]
+    },
+    {
+      "word": "fashionable",
+      "definitions": [
+        "adj. 时髦的"
+      ]
+    },
+    {
+      "word": "generate",
+      "definitions": [
+        "v. 产生"
+      ]
+    },
+    {
+      "word": "protective",
+      "definitions": [
+        "adj. 防护性的；adj. 有保护欲的"
+      ]
+    },
+    {
+      "word": "upstream",
+      "definitions": [
+        "adv. 往上游；adj. 在上游的"
+      ]
+    },
+    {
+      "word": "dramatic",
+      "definitions": [
+        "adj. 戏剧的；adj. 急剧的"
+      ]
+    },
+    {
+      "word": "supplier",
+      "definitions": [
+        "n. 供货商"
+      ]
+    },
+    {
+      "word": "geologist",
+      "definitions": [
+        "n. 地质学家"
+      ]
+    },
+    {
+      "word": "drought",
+      "definitions": [
+        "n. 旱灾"
+      ]
+    },
+    {
+      "word": "flyer",
+      "definitions": [
+        "n. 传单；n. 飞行员"
+      ]
+    },
+    {
+      "word": "elevate",
+      "definitions": [
+        "v. 抬高"
+      ]
+    },
+    {
+      "word": "instability",
+      "definitions": [
+        "n. 不稳定"
+      ]
+    },
+    {
+      "word": "fountain",
+      "definitions": [
+        "n. 喷泉"
+      ]
+    },
+    {
+      "word": "convenience",
+      "definitions": [
+        "n. 方便"
+      ]
+    },
+    {
+      "word": "embarrass",
+      "definitions": [
+        "v. 使尴尬"
+      ]
+    },
+    {
+      "word": "performance",
+      "definitions": [
+        "n. 表演；n. 执行；n. 性能"
+      ]
+    },
+    {
+      "word": "ridiculous",
+      "definitions": [
+        "adj. 可笑的"
+      ]
+    },
+    {
+      "word": "specialization",
+      "definitions": [
+        "n. 专业化"
+      ]
+    },
+    {
+      "word": "diversity",
+      "definitions": [
+        "n. 多样性，差异性"
+      ]
+    },
+    {
+      "word": "civilian",
+      "definitions": [
+        "n. 平民"
+      ]
+    },
+    {
+      "word": "imitate",
+      "definitions": [
+        "v. 模仿"
+      ]
+    },
+    {
+      "word": "philosopher",
+      "definitions": [
+        "n. 哲学家"
+      ]
+    },
+    {
+      "word": "innovate",
+      "definitions": [
+        "v. 革新"
+      ]
+    },
+    {
+      "word": "deprive",
+      "definitions": [
+        "v. 剥夺"
+      ]
+    },
+    {
+      "word": "workshop",
+      "definitions": [
+        "n. 车间；n. 研讨班"
+      ]
+    },
+    {
+      "word": "outweigh",
+      "definitions": [
+        "v. 比……重"
+      ]
+    },
+    {
+      "word": "welfare",
+      "definitions": [
+        "n. 福利(事业)；n. 幸福"
+      ]
+    },
+    {
+      "word": "hallway",
+      "definitions": [
+        "n. 走廊"
+      ]
+    },
+    {
+      "word": "frequency",
+      "definitions": [
+        "n. 频率"
+      ]
+    },
+    {
+      "word": "log",
+      "definitions": [
+        "n. 原木；v. 伐木；v. 记录"
+      ]
+    },
+    {
+      "word": "longevity",
+      "definitions": [
+        "n. 长寿"
+      ]
+    },
+    {
+      "word": "modest",
+      "definitions": [
+        "adj. 谦虚的；adj. 有节制的"
+      ]
+    },
+    {
+      "word": "notion",
+      "definitions": [
+        "n. 意见；n. 念头"
+      ]
+    },
+    {
+      "word": "breast",
+      "definitions": [
+        "n. 胸部"
+      ]
+    },
+    {
+      "word": "uneducated",
+      "definitions": [
+        "adj. 未受教育的"
+      ]
+    },
+    {
+      "word": "abstract",
+      "definitions": [
+        "adj. 抽象的；n. 摘要"
+      ]
+    },
+    {
+      "word": "financial",
+      "definitions": [
+        "adj. 财政的"
+      ]
+    },
+    {
+      "word": "advocate",
+      "definitions": [
+        "v. 拥护；n. 拥护者"
+      ]
+    },
+    {
+      "word": "grain",
+      "definitions": [
+        "n. 谷物；n. 小颗粒，小晶体"
+      ]
+    },
+    {
+      "word": "endure",
+      "definitions": [
+        "v. 忍受；v. 持续存在"
+      ]
+    },
+    {
+      "word": "enhance",
+      "definitions": [
+        "v. 增强"
+      ]
+    },
+    {
+      "word": "ambitious",
+      "definitions": [
+        "adj. 有志向的"
+      ]
+    },
+    {
+      "word": "notable",
+      "definitions": [
+        "adj. 值得注意的"
+      ]
+    },
+    {
+      "word": "observe",
+      "definitions": [
+        "v. 观察"
+      ]
+    }
+  ]
+}

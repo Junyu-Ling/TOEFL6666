@@ -1,0 +1,719 @@
+{
+  "meta": {
+    "level": 3,
+    "list": 10,
+    "title": "Level 3 · List 10",
+    "updatedAt": "2026-06-28"
+  },
+  "words": [
+    {
+      "word": "introductory",
+      "definitions": [
+        "adj. 引导的，序言的"
+      ]
+    },
+    {
+      "word": "forgetful",
+      "definitions": [
+        "adj. 疏忽的"
+      ]
+    },
+    {
+      "word": "automobile",
+      "definitions": [
+        "n. 汽车"
+      ]
+    },
+    {
+      "word": "effective",
+      "definitions": [
+        "adj. 有效的"
+      ]
+    },
+    {
+      "word": "detector",
+      "definitions": [
+        "n. 探测器"
+      ]
+    },
+    {
+      "word": "reliance",
+      "definitions": [
+        "n. 依赖"
+      ]
+    },
+    {
+      "word": "strictly",
+      "definitions": [
+        "adv. 严格地"
+      ]
+    },
+    {
+      "word": "lengthy",
+      "definitions": [
+        "adj. 漫长的"
+      ]
+    },
+    {
+      "word": "royal",
+      "definitions": [
+        "adj. 皇室的；n. 皇室成员"
+      ]
+    },
+    {
+      "word": "mere",
+      "definitions": [
+        "adj. 仅仅"
+      ]
+    },
+    {
+      "word": "address",
+      "definitions": [
+        "n. 讲话；v. 处理；n. 地址"
+      ]
+    },
+    {
+      "word": "elect",
+      "definitions": [
+        "v. 选举；adj. 精心挑选的"
+      ]
+    },
+    {
+      "word": "signature",
+      "definitions": [
+        "n. 签名；n. 鲜明特征"
+      ]
+    },
+    {
+      "word": "likelihood",
+      "definitions": [
+        "n. 可能性"
+      ]
+    },
+    {
+      "word": "mountainous",
+      "definitions": [
+        "adj. 多山的；adj. 巨大的"
+      ]
+    },
+    {
+      "word": "calendar",
+      "definitions": [
+        "n. 日历"
+      ]
+    },
+    {
+      "word": "joint",
+      "definitions": [
+        "n. 关节，接合处；adj. 联合的"
+      ]
+    },
+    {
+      "word": "justice",
+      "definitions": [
+        "n. 公正；n. 司法"
+      ]
+    },
+    {
+      "word": "publication",
+      "definitions": [
+        "n. 出版物"
+      ]
+    },
+    {
+      "word": "negative",
+      "definitions": [
+        "adj. 否定的，负面的；adj. 消极的；adj. 负的，阴性的"
+      ]
+    },
+    {
+      "word": "twinkle",
+      "definitions": [
+        "v. 闪烁"
+      ]
+    },
+    {
+      "word": "contract",
+      "definitions": [
+        "n. 合同；v. 收缩；v. 感染"
+      ]
+    },
+    {
+      "word": "restrictive",
+      "definitions": [
+        "adj. 限制性的"
+      ]
+    },
+    {
+      "word": "memorable",
+      "definitions": [
+        "adj. 难忘的"
+      ]
+    },
+    {
+      "word": "proof",
+      "definitions": [
+        "n. 证据，验证",
+        "suffix. (后缀)可以抵抗的"
+      ]
+    },
+    {
+      "word": "texture",
+      "definitions": [
+        "n. 质地"
+      ]
+    },
+    {
+      "word": "originate",
+      "definitions": [
+        "v. 起源；v. 创作"
+      ]
+    },
+    {
+      "word": "emigrate",
+      "definitions": [
+        "v. 移居国外"
+      ]
+    },
+    {
+      "word": "curve",
+      "definitions": [
+        "n. 曲线；v. 使……弯曲，沿曲线前进"
+      ]
+    },
+    {
+      "word": "investigate",
+      "definitions": [
+        "v. 研究调查"
+      ]
+    },
+    {
+      "word": "electronics",
+      "definitions": [
+        "n. 电子学，电子器件"
+      ]
+    },
+    {
+      "word": "defensive",
+      "definitions": [
+        "adj. 防御的；adj. 有戒心的"
+      ]
+    },
+    {
+      "word": "outstanding",
+      "definitions": [
+        "adj. 杰出的，突出的"
+      ]
+    },
+    {
+      "word": "precise",
+      "definitions": [
+        "adj. 准确的"
+      ]
+    },
+    {
+      "word": "practical",
+      "definitions": [
+        "adj. 实用的"
+      ]
+    },
+    {
+      "word": "status",
+      "definitions": [
+        "n. 状况；n. 地位"
+      ]
+    },
+    {
+      "word": "graduation",
+      "definitions": [
+        "n. 毕业；n. 毕业典礼"
+      ]
+    },
+    {
+      "word": "determination",
+      "definitions": [
+        "n. 决心"
+      ]
+    },
+    {
+      "word": "enroll",
+      "definitions": [
+        "v. 招生；v. 注册参加"
+      ]
+    },
+    {
+      "word": "legendary",
+      "definitions": [
+        "adj. 传说的；adj. 赫赫有名的"
+      ]
+    },
+    {
+      "word": "browse",
+      "definitions": [
+        "v. 浏览；v. (吃)嫩枝叶"
+      ]
+    },
+    {
+      "word": "slightly",
+      "definitions": [
+        "adv. 稍微"
+      ]
+    },
+    {
+      "word": "dimension",
+      "definitions": [
+        "n. 尺寸，面积；n. 维度；n. 方面"
+      ]
+    },
+    {
+      "word": "weed",
+      "definitions": [
+        "n. 野草；v. 除草"
+      ]
+    },
+    {
+      "word": "necessity",
+      "definitions": [
+        "n. 必需品；n. 必要"
+      ]
+    },
+    {
+      "word": "emergency",
+      "definitions": [
+        "n. 紧急情况"
+      ]
+    },
+    {
+      "word": "journalism",
+      "definitions": [
+        "n. 新闻业，新闻报道"
+      ]
+    },
+    {
+      "word": "steady",
+      "definitions": [
+        "adj. 稳定的"
+      ]
+    },
+    {
+      "word": "auditorium",
+      "definitions": [
+        "n. 礼堂"
+      ]
+    },
+    {
+      "word": "translate",
+      "definitions": [
+        "v. 翻译；v. 转换"
+      ]
+    },
+    {
+      "word": "unaware",
+      "definitions": [
+        "adj. 未意识到的"
+      ]
+    },
+    {
+      "word": "triumph",
+      "definitions": [
+        "n. 胜利"
+      ]
+    },
+    {
+      "word": "reform",
+      "definitions": [
+        "n. 改革"
+      ]
+    },
+    {
+      "word": "terminal",
+      "definitions": [
+        "n. 终点(站)；adj. 终端(的)；adj. 晚期的"
+      ]
+    },
+    {
+      "word": "calculate",
+      "definitions": [
+        "v. 计算"
+      ]
+    },
+    {
+      "word": "inspiration",
+      "definitions": [
+        "n. 灵感"
+      ]
+    },
+    {
+      "word": "interrelationship",
+      "definitions": [
+        "n. 相互关联"
+      ]
+    },
+    {
+      "word": "realm",
+      "definitions": [
+        "n. 领域"
+      ]
+    },
+    {
+      "word": "theory",
+      "definitions": [
+        "n. 学说，理论"
+      ]
+    },
+    {
+      "word": "herd",
+      "definitions": [
+        "n. 兽群；v. 放牧"
+      ]
+    },
+    {
+      "word": "dive",
+      "definitions": [
+        "v. 跳水，潜水；v. 俯冲"
+      ]
+    },
+    {
+      "word": "absorb",
+      "definitions": [
+        "v. 吸收"
+      ]
+    },
+    {
+      "word": "finance",
+      "definitions": [
+        "n. 财政；v. 为……提供资金"
+      ]
+    },
+    {
+      "word": "decoration",
+      "definitions": [
+        "n. 装饰"
+      ]
+    },
+    {
+      "word": "genius",
+      "definitions": [
+        "n. 天才"
+      ]
+    },
+    {
+      "word": "leak",
+      "definitions": [
+        "n. 裂缝；v. 渗漏；v. 泄露"
+      ]
+    },
+    {
+      "word": "annual",
+      "definitions": [
+        "adj. 年度的"
+      ]
+    },
+    {
+      "word": "uncommon",
+      "definitions": [
+        "adj. 不寻常的"
+      ]
+    },
+    {
+      "word": "superior",
+      "definitions": [
+        "adj. 高级的"
+      ]
+    },
+    {
+      "word": "resist",
+      "definitions": [
+        "v. 抗拒"
+      ]
+    },
+    {
+      "word": "fascinate",
+      "definitions": [
+        "v. 迷住"
+      ]
+    },
+    {
+      "word": "peek",
+      "definitions": [
+        "v. 偷看"
+      ]
+    },
+    {
+      "word": "covering",
+      "definitions": [
+        "n. 遮盖物"
+      ]
+    },
+    {
+      "word": "make-up",
+      "definitions": [
+        "n. 构成；n. 化妆"
+      ]
+    },
+    {
+      "word": "decline",
+      "definitions": [
+        "n. 下降；v. 恶化；v. 婉拒"
+      ]
+    },
+    {
+      "word": "intense",
+      "definitions": [
+        "adj. 剧烈的"
+      ]
+    },
+    {
+      "word": "military",
+      "definitions": [
+        "adj. 军队的；n. 军方"
+      ]
+    },
+    {
+      "word": "participant",
+      "definitions": [
+        "n. 参与者"
+      ]
+    },
+    {
+      "word": "fortune",
+      "definitions": [
+        "n. 运气，命运；n. 大笔财产"
+      ]
+    },
+    {
+      "word": "administer",
+      "definitions": [
+        "v. 管理"
+      ]
+    },
+    {
+      "word": "lighten",
+      "definitions": [
+        "v. 照亮；v. 变轻，缓和"
+      ]
+    },
+    {
+      "word": "route",
+      "definitions": [
+        "n. 路线；v. 按路线发送"
+      ]
+    },
+    {
+      "word": "genetic",
+      "definitions": [
+        "adj. 基因的"
+      ]
+    },
+    {
+      "word": "unity",
+      "definitions": [
+        "n. 统一的状态；n. 整体性"
+      ]
+    },
+    {
+      "word": "unite",
+      "definitions": [
+        "v. 联合"
+      ]
+    },
+    {
+      "word": "instantly",
+      "definitions": [
+        "adv. 立即"
+      ]
+    },
+    {
+      "word": "release",
+      "definitions": [
+        "v. 释放；n. 发行，声明"
+      ]
+    },
+    {
+      "word": "leaflet",
+      "definitions": [
+        "n. 传单"
+      ]
+    },
+    {
+      "word": "tolerate",
+      "definitions": [
+        "v. 容许，忍受"
+      ]
+    },
+    {
+      "word": "typical",
+      "definitions": [
+        "adj. 典型的"
+      ]
+    },
+    {
+      "word": "vapor",
+      "definitions": [
+        "n. 蒸汽；v. 蒸发"
+      ]
+    },
+    {
+      "word": "sink",
+      "definitions": [
+        "v. 下沉；v. 沦落"
+      ]
+    },
+    {
+      "word": "tie",
+      "definitions": [
+        "v. 捆，绑；n. 关联；n. 领带"
+      ]
+    },
+    {
+      "word": "craft",
+      "definitions": [
+        "n. 手艺；v. 熟练地制作；n. 船，飞船"
+      ]
+    },
+    {
+      "word": "channel",
+      "definitions": [
+        "n. 水渠；v. 引导；n. 电视频道"
+      ]
+    },
+    {
+      "word": "faith",
+      "definitions": [
+        "n. 信仰；n. 信任"
+      ]
+    },
+    {
+      "word": "diagram",
+      "definitions": [
+        "n. 示意图"
+      ]
+    },
+    {
+      "word": "relevant",
+      "definitions": [
+        "adj. 有关的，恰当的"
+      ]
+    },
+    {
+      "word": "disprove",
+      "definitions": [
+        "v. 证明……是虚假的"
+      ]
+    },
+    {
+      "word": "shade",
+      "definitions": [
+        "n. 色度，细微差别；n. 阴影；v. 遮挡"
+      ]
+    },
+    {
+      "word": "toxic",
+      "definitions": [
+        "adj. 有毒的"
+      ]
+    },
+    {
+      "word": "slope",
+      "definitions": [
+        "n. 斜坡；v. 使倾斜"
+      ]
+    },
+    {
+      "word": "association",
+      "definitions": [
+        "n. 协会；n. 关联"
+      ]
+    },
+    {
+      "word": "vision",
+      "definitions": [
+        "n. 视力；n. 眼力；n. 幻想"
+      ]
+    },
+    {
+      "word": "accomplish",
+      "definitions": [
+        "v. 成就"
+      ]
+    },
+    {
+      "word": "suffer",
+      "definitions": [
+        "v. 遭受；v. 受苦"
+      ]
+    },
+    {
+      "word": "priority",
+      "definitions": [
+        "n. 优先(的)"
+      ]
+    },
+    {
+      "word": "remainder",
+      "definitions": [
+        "n. 剩余物；n. 廉价出售"
+      ]
+    },
+    {
+      "word": "foresee",
+      "definitions": [
+        "v. 预见"
+      ]
+    },
+    {
+      "word": "revenue",
+      "definitions": [
+        "n. 收入"
+      ]
+    },
+    {
+      "word": "usage",
+      "definitions": [
+        "n. 习俗，用法；n. 习语"
+      ]
+    },
+    {
+      "word": "appreciate",
+      "definitions": [
+        "v. 感谢；v. 欣赏；v. 升值"
+      ]
+    },
+    {
+      "word": "embrace",
+      "definitions": [
+        "v. 拥抱；v. 欣然接受"
+      ]
+    },
+    {
+      "word": "severe",
+      "definitions": [
+        "adj. 严重的"
+      ]
+    },
+    {
+      "word": "summarize",
+      "definitions": [
+        "v. 总结"
+      ]
+    },
+    {
+      "word": "survival",
+      "definitions": [
+        "n. 生存"
+      ]
+    },
+    {
+      "word": "represent",
+      "definitions": [
+        "v. 代表；v. 相当于；v. 声称"
+      ]
+    },
+    {
+      "word": "ecology",
+      "definitions": [
+        "n. 生态学"
+      ]
+    }
+  ]
+}
