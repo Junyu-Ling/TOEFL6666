@@ -23,6 +23,31 @@ function stripOptionalPos(answer) {
   return answer.replace(/^[a-z./]+\.\s*/i, "").trim();
 }
 
+const PAREN_INNER = /[（(]([^）)]*)[）)]/g;
+const PAREN_SEGMENT = /[（(][^）)]*[）)]/g;
+
+/** 括号内为可选补充：保留括号内容 / 去掉整段括号，都算有效义项。 */
+function expandParentheticalVariants(text) {
+  const variants = new Set();
+  const base = normalizeForCompare(text);
+  if (base) variants.add(base);
+
+  const withContent = normalizeForCompare(text.replace(PAREN_INNER, "$1"));
+  if (withContent) variants.add(withContent);
+
+  const withoutParens = normalizeForCompare(text.replace(PAREN_SEGMENT, ""));
+  if (withoutParens) variants.add(withoutParens);
+
+  return variants;
+}
+
+function addMeaningVariants(variants, text) {
+  if (!text?.trim()) return;
+  for (const variant of expandParentheticalVariants(text)) {
+    if (variant) variants.add(variant);
+  }
+}
+
 function collectAllowedLatinTokens(definitions) {
   const allowed = new Set();
 
@@ -71,7 +96,8 @@ function matchesFullDefinitionLine(answer, definitions) {
 
 function getChineseMeaningVariants(definition) {
   const chinese = extractChinesePart(definition);
-  const variants = new Set([normalizeForCompare(chinese)]);
+  const variants = new Set();
+  addMeaningVariants(variants, chinese);
 
   // 「讲，为……作解说」这类逗号是句内停顿，不是并列义项
   if (/…|\.\.\./.test(chinese)) {
@@ -81,7 +107,7 @@ function getChineseMeaningVariants(definition) {
   const parts = chinese.split(/[,，、；]/).map((part) => part.trim()).filter(Boolean);
   if (parts.length > 1 && parts.every((part) => normalizeForCompare(part).length >= 2)) {
     for (const part of parts) {
-      variants.add(normalizeForCompare(part));
+      addMeaningVariants(variants, part);
     }
   }
 
@@ -102,10 +128,11 @@ function matchesChineseDefinition(answer, definitions) {
 /**
  * 用户只需中文释义即可。与任一条标准释义的中文部分完全一致，
  * 或命中同一条释义里用逗号分隔的任一义项时，本地判对，不调用 AI。
+ * 释义中括号内为可选补充，漏答括号内容仍算对。
  */
 export function matchesStandardMeaning(userAnswer, definitions) {
   const answer = userAnswer.trim();
-  if (!answer || answer.length < 2 || !definitions?.length) return false;
+  if (!answer || !definitions?.length) return false;
 
   if (hasUnexpectedLatin(answer, definitions)) return false;
   if (hasUnexpectedDigits(answer, definitions)) return false;
