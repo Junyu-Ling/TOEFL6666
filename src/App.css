@@ -213,9 +213,9 @@ body {
 .navbar__streak {
   display: inline-flex;
   align-items: center;
-  gap: 0.25rem;
+  gap: 0.4rem;
   height: 40px;
-  padding: 0 0.75rem;
+  padding: 0 0.875rem;
   border: 1px solid var(--border);
   border-radius: 10px;
   background: var(--surface);
@@ -242,11 +242,24 @@ body {
 .navbar__streak-flame {
   font-size: 1rem;
   line-height: 1;
+  margin-right: 0.125rem;
 }
 
 .navbar__streak-count {
   min-width: 1ch;
   text-align: center;
+  font-size: 0.9375rem;
+}
+
+.navbar__streak-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-left: 0.125rem;
+}
+
+.navbar__streak--active .navbar__streak-label {
+  color: color-mix(in srgb, #ea580c 75%, var(--text-muted));
 }
 
 .word-item__wrong-count--past {
@@ -1302,6 +1315,18 @@ body {
 
   .streak-stat--primary {
     justify-content: flex-start;
+    gap: 1.125rem;
+    padding: 1.125rem 1rem;
+  }
+
+  .streak-mark-menu__actions,
+  .streak-mark-menu__clear {
+    flex-direction: column;
+  }
+
+  .streak-mark-menu__actions .btn,
+  .streak-mark-menu__clear .btn {
+    width: 100%;
   }
 
   .practice-toolbar {
@@ -1512,16 +1537,16 @@ body {
 
 .streak-panel__stats {
   display: grid;
-  grid-template-columns: 1.4fr 1fr 1fr;
-  gap: 0.625rem;
-  margin-bottom: 0.875rem;
+  grid-template-columns: 1.5fr 1fr 1fr;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
 }
 
 .streak-stat {
   display: flex;
   flex-direction: column;
-  gap: 0.15rem;
-  padding: 0.75rem;
+  gap: 0.25rem;
+  padding: 0.875rem 0.75rem;
   border-radius: var(--radius-sm);
   border: 1px solid var(--border);
   background: var(--surface-muted);
@@ -1541,14 +1566,114 @@ body {
 .streak-stat--primary {
   flex-direction: row;
   align-items: center;
-  gap: 0.625rem;
+  gap: 1rem;
+  padding: 1rem 1.125rem;
   border-color: color-mix(in srgb, #f97316 35%, var(--border));
   background: color-mix(in srgb, #f97316 10%, var(--surface));
 }
 
 .streak-stat__emoji {
-  font-size: 1.75rem;
+  flex-shrink: 0;
+  font-size: 2rem;
   line-height: 1;
+}
+
+.streak-stat__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+.streak-stat__value {
+  font-size: 1.875rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.streak-stat__label {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.streak-exams {
+  margin-bottom: 1rem;
+}
+
+.streak-exams h3 {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.5rem;
+}
+
+.streak-exams__list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.streak-exam {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.75rem 0.875rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface-muted);
+}
+
+.streak-exam--toefl {
+  border-color: color-mix(in srgb, var(--accent) 35%, var(--border));
+}
+
+.streak-exam--sat {
+  border-color: color-mix(in srgb, #8b5cf6 35%, var(--border));
+}
+
+.streak-exam--soon {
+  box-shadow: 0 0 0 3px color-mix(in srgb, #f97316 12%, transparent);
+}
+
+.streak-exam__emoji {
+  font-size: 1.25rem;
+}
+
+.streak-exam__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  min-width: 0;
+}
+
+.streak-exam__body strong {
+  font-size: 0.875rem;
+}
+
+.streak-exam__body span {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.streak-exam__countdown {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+.streak-exam--sat .streak-exam__countdown {
+  color: #7c3aed;
+}
+
+.streak-exam--soon .streak-exam__countdown {
+  color: #ea580c;
 }
 
 .streak-panel__today-badge {
@@ -1597,7 +1722,7 @@ body {
 .streak-calendar__grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 0.35rem;
+  gap: 0.4rem;
 }
 
 .streak-calendar__weekdays {
@@ -1613,22 +1738,34 @@ body {
 
 .streak-day {
   position: relative;
-  aspect-ratio: 1;
+  min-height: 3rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.1rem;
+  gap: 0.2rem;
+  padding: 0.25rem 0.15rem;
   border-radius: 8px;
   border: 1px solid transparent;
   background: var(--surface);
   font-size: 0.75rem;
   color: var(--text);
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, box-shadow 0.15s;
+}
+
+.streak-day:hover:not(.streak-day--empty) {
+  border-color: var(--border-strong);
+  background: var(--surface-hover);
 }
 
 .streak-day--empty {
   background: transparent;
   border: none;
+  cursor: default;
+  min-height: 0;
+  padding: 0;
 }
 
 .streak-day--logged {
@@ -1636,12 +1773,21 @@ body {
   background: color-mix(in srgb, #f97316 8%, var(--surface));
 }
 
+.streak-day--exam {
+  border-color: color-mix(in srgb, var(--accent) 40%, var(--border));
+}
+
 .streak-day--today {
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 35%, transparent);
 }
 
+.streak-day--selected {
+  box-shadow: 0 0 0 2px color-mix(in srgb, #f97316 50%, transparent);
+  border-color: #f97316;
+}
+
 .streak-day--future {
-  opacity: 0.35;
+  opacity: 0.85;
 }
 
 .streak-day__num {
@@ -1649,9 +1795,85 @@ body {
   line-height: 1;
 }
 
+.streak-day__marks {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.15rem;
+  flex-wrap: wrap;
+  min-height: 0.875rem;
+}
+
 .streak-day__flame {
-  font-size: 0.75rem;
+  font-size: 0.6875rem;
   line-height: 1;
+}
+
+.streak-day__exam {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0.875rem;
+  height: 0.875rem;
+  padding: 0 0.2rem;
+  border-radius: 4px;
+  font-size: 0.5625rem;
+  font-weight: 800;
+  line-height: 1;
+  color: #fff;
+}
+
+.streak-day__exam--toefl {
+  background: var(--accent);
+}
+
+.streak-day__exam--sat {
+  background: #7c3aed;
+}
+
+.streak-mark-menu {
+  margin-top: 0.875rem;
+  padding: 0.875rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.streak-mark-menu__title {
+  margin: 0 0 0.625rem;
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+
+.streak-mark-menu__title strong {
+  color: var(--text);
+}
+
+.streak-mark-menu__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.streak-mark-menu__clear {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.625rem;
+  padding-top: 0.625rem;
+  border-top: 1px solid var(--border);
+}
+
+.streak-mark-btn--toefl.btn--ghost:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.streak-mark-btn--sat.btn--ghost:hover {
+  border-color: #7c3aed;
+  color: #7c3aed;
+  background: color-mix(in srgb, #7c3aed 12%, var(--surface));
 }
 
 .streak-milestones h3 {

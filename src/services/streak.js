@@ -9,9 +9,17 @@ export const STREAK_MILESTONES = [
   { days: 100, title: "百炼成钢", emoji: "👑", desc: "连续学习 100 天" },
 ];
 
+export const EXAM_TYPES = {
+  toefl: { id: "toefl", label: "托福", short: "托", emoji: "📝" },
+  sat: { id: "sat", label: "SAT", short: "S", emoji: "📋" },
+};
+
+const DEFAULT_EXAM_MARKS = { toefl: null, sat: null };
+
 const DEFAULT_STREAK = {
   loginDates: [],
   longestStreak: 0,
+  examMarks: { ...DEFAULT_EXAM_MARKS },
 };
 
 export function toDateKey(date = new Date()) {
@@ -50,22 +58,94 @@ export function computeStreak(loginDates) {
   return streak;
 }
 
+export function daysUntil(dateKey) {
+  const today = parseDateKey(toDateKey());
+  const target = parseDateKey(dateKey);
+  return Math.round((target - today) / 86400000);
+}
+
+export function formatCountdown(dateKey) {
+  const days = daysUntil(dateKey);
+  if (days > 0) return `还有 ${days} 天`;
+  if (days === 0) return "就是今天";
+  return `已过 ${Math.abs(days)} 天`;
+}
+
+function normalizeExamMarks(examMarks) {
+  return { ...DEFAULT_EXAM_MARKS, ...(examMarks ?? {}) };
+}
+
+function buildStreakSnapshot(data) {
+  const loginDates = Array.isArray(data.loginDates) ? [...data.loginDates].sort() : [];
+  const currentStreak = computeStreak(loginDates);
+  const today = toDateKey();
+
+  return {
+    loginDates,
+    currentStreak,
+    longestStreak: Math.max(data.longestStreak ?? 0, currentStreak),
+    totalDays: loginDates.length,
+    loggedInToday: loginDates.includes(today),
+    examMarks: normalizeExamMarks(data.examMarks),
+  };
+}
+
 export function loadStreak() {
   try {
     const raw = localStorage.getItem(STREAK_KEY);
-    if (!raw) return { ...DEFAULT_STREAK, loginDates: [] };
+    if (!raw) return buildStreakSnapshot({ ...DEFAULT_STREAK, loginDates: [] });
     const data = { ...DEFAULT_STREAK, ...JSON.parse(raw) };
-    return {
-      ...data,
-      loginDates: Array.isArray(data.loginDates) ? [...data.loginDates].sort() : [],
-    };
+    return buildStreakSnapshot(data);
   } catch {
-    return { ...DEFAULT_STREAK, loginDates: [] };
+    return buildStreakSnapshot({ ...DEFAULT_STREAK, loginDates: [] });
   }
 }
 
 export function saveStreak(data) {
-  localStorage.setItem(STREAK_KEY, JSON.stringify(data));
+  localStorage.setItem(
+    STREAK_KEY,
+    JSON.stringify({
+      loginDates: data.loginDates,
+      longestStreak: data.longestStreak,
+      examMarks: normalizeExamMarks(data.examMarks),
+    })
+  );
+}
+
+export function setExamMark(type, dateKey) {
+  const data = loadStreak();
+  const examMarks = normalizeExamMarks(data.examMarks);
+  examMarks[type] = dateKey;
+  const next = { ...data, examMarks, longestStreak: data.longestStreak };
+  saveStreak(next);
+  return buildStreakSnapshot(next);
+}
+
+export function clearExamMark(type) {
+  const data = loadStreak();
+  const examMarks = normalizeExamMarks(data.examMarks);
+  examMarks[type] = null;
+  const next = { ...data, examMarks, longestStreak: data.longestStreak };
+  saveStreak(next);
+  return buildStreakSnapshot(next);
+}
+
+export function getExamsOnDate(examMarks, dateKey) {
+  return Object.entries(normalizeExamMarks(examMarks))
+    .filter(([, value]) => value === dateKey)
+    .map(([type]) => EXAM_TYPES[type])
+    .filter(Boolean);
+}
+
+export function getUpcomingExams(examMarks) {
+  return Object.entries(normalizeExamMarks(examMarks))
+    .filter(([, dateKey]) => dateKey)
+    .map(([type, dateKey]) => ({
+      ...EXAM_TYPES[type],
+      dateKey,
+      daysLeft: daysUntil(dateKey),
+    }))
+    .sort((a, b) => a.daysLeft - b.daysLeft);
 }
 
 export function recordVisit() {
@@ -76,20 +156,21 @@ export function recordVisit() {
 
   if (isNewToday) {
     loginSet.add(today);
-    data.loginDates = [...loginSet].sort();
   }
 
-  const currentStreak = computeStreak(data.loginDates);
-  data.longestStreak = Math.max(data.longestStreak ?? 0, currentStreak);
+  const loginDates = [...loginSet].sort();
+  const currentStreak = computeStreak(loginDates);
+  const longestStreak = Math.max(data.longestStreak ?? 0, currentStreak);
 
-  saveStreak(data);
+  const next = {
+    ...data,
+    loginDates,
+    longestStreak,
+  };
+  saveStreak(next);
 
   return {
-    loginDates: data.loginDates,
-    currentStreak,
-    longestStreak: data.longestStreak,
-    totalDays: data.loginDates.length,
-    loggedInToday: true,
+    ...buildStreakSnapshot(next),
     isNewToday,
   };
 }

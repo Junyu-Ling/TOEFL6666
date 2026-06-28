@@ -357,6 +357,7 @@ export default function App() {
         open={streakOpen}
         onClose={() => setStreakOpen(false)}
         streak={streakData}
+        onStreakChange={setStreakData}
       />
 
       <main className="main">

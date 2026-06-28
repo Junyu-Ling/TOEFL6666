@@ -46,6 +46,7 @@ export default function Navbar({ activeTab, onTabChange, counts, streak, onStrea
             🔥
           </span>
           <span className="navbar__streak-count">{streak?.currentStreak ?? 0}</span>
+          <span className="navbar__streak-label">天</span>
         </button>
 
         <button
