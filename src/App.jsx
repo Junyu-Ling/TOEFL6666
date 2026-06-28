@@ -4,6 +4,7 @@ import FlashCard from "./components/FlashCard";
 import WordList from "./components/WordList";
 import MicPermissionPrompt from "./components/MicPermissionPrompt";
 import SettingsPanel from "./components/SettingsPanel";
+import VocabAssistant from "./components/VocabAssistant";
 import { useMicrophone } from "./hooks/useMicrophone";
 import { fetchWordList, fetchWordListManifest } from "./services/wordlist";
 import {
@@ -405,6 +406,8 @@ export default function App() {
           />
         )}
       </main>
+
+      <VocabAssistant currentWord={activeTab === "practice" ? currentWord : null} />
     </div>
   );
 }

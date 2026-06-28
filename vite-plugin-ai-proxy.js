@@ -1,5 +1,6 @@
 import { loadEnv } from "vite";
 import { evaluateWithDeepSeek } from "./server/ai-evaluate.js";
+import { chatWithDeepSeek } from "./server/ai-chat.js";
 
 function readBody(req) {
   return new Promise((resolve, reject) => {
@@ -18,20 +19,33 @@ function sendJson(res, status, payload) {
   res.end(JSON.stringify(payload));
 }
 
+function matchApiPath(url, path) {
+  return url === path || url?.startsWith(`${path}?`);
+}
+
 function createAiHandler(getConfig) {
   return async (req, res, next) => {
-    if (req.url !== "/api/ai/evaluate" && !req.url?.startsWith("/api/ai/evaluate?")) {
+    if (req.method !== "POST") {
       return next();
     }
 
-    if (req.method !== "POST") {
-      sendJson(res, 405, { error: "Method Not Allowed" });
-      return;
+    const isEvaluate = matchApiPath(req.url, "/api/ai/evaluate");
+    const isChat = matchApiPath(req.url, "/api/ai/chat");
+    if (!isEvaluate && !isChat) {
+      return next();
     }
 
     try {
       const body = JSON.parse(await readBody(req));
-      const result = await evaluateWithDeepSeek(body, getConfig());
+      const config = getConfig();
+
+      if (isEvaluate) {
+        const result = await evaluateWithDeepSeek(body, config);
+        sendJson(res, 200, result);
+        return;
+      }
+
+      const result = await chatWithDeepSeek(body, config);
       sendJson(res, 200, result);
     } catch (err) {
       sendJson(res, err.status || 500, { error: err.message || "服务器错误" });
