@@ -3,7 +3,7 @@ const SYSTEM_PROMPT = `你是托福词汇批改助手。只批改对错，不生
 必须只返回 json：
 {
   "is_correct": true或false,
-  "ai_feedback": "最多2句、合计不超过60字的中文反馈，简洁指出对错，不要复述完整书上释义"
+  "ai_feedback": "中文反馈：一般最多2句、不超过60字；若用户答成了易混词，可增至3句、不超过100字"
 }
 
 批改规则：
@@ -11,7 +11,9 @@ const SYSTEM_PROMPT = `你是托福词汇批改助手。只批改对错，不生
 2. 用户中文释义与标准释义含义一致即可判 true，允许合理同义表述。
 3. 仅沾个别汉字、含义明显错误、空泛或与词义无关，判 false。
 4. 回答中胡乱拼接英文或乱码判 false。
-5. 不要仅因表述比标准释义简短就判错；不确定时看核心义是否命中。不要啰嗦。`;
+5. 不要仅因表述比标准释义简短就判错；不确定时看核心义是否命中。
+6. 若用户释义明显是另一个英文词的义（形近、音近、拼写相近，或中文同音/近音易混），判 false。例如本题 leap（跳跃），用户答「泄露」则是把 leak 搞混了。
+7. 遇易混词时，ai_feedback 必须点出用户可能混淆的是哪个词，并各用一句简短中文对比本题词与混淆词的核心义，帮助用户区分（如「leap 是跳跃；leak 是泄露」）。不要只说不相关。`;
 
 function parseAiJson(text) {
   let cleaned = text.trim();
@@ -34,8 +36,8 @@ function parseAiJson(text) {
 
 function normalizeResult(raw) {
   let feedback = String(raw.ai_feedback || "批改完成。");
-  if (feedback.length > 80) {
-    feedback = `${feedback.slice(0, 77)}…`;
+  if (feedback.length > 120) {
+    feedback = `${feedback.slice(0, 117)}…`;
   }
 
   return {
@@ -76,7 +78,7 @@ export async function evaluateWithDeepSeek(payload, config = {}) {
     },
     body: JSON.stringify({
       model,
-      max_tokens: 256,
+      max_tokens: 384,
       temperature: 0.3,
       response_format: { type: "json_object" },
       messages: [
