@@ -243,6 +243,13 @@ body {
   color: var(--text);
 }
 
+.practice-toolbar__pickers {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
 .practice-toolbar__select {
   font-family: inherit;
   font-size: 0.8125rem;

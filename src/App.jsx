@@ -225,6 +225,47 @@ export default function App() {
     return Math.round(((currentIndex + 1) / practiceQueue.length) * 100);
   }, [currentIndex, practiceQueue.length]);
 
+  const listsByLevel = useMemo(() => {
+    const map = new Map();
+    for (const item of availableLists) {
+      const level = item.level ?? 0;
+      if (!map.has(level)) map.set(level, []);
+      map.get(level).push(item);
+    }
+    for (const lists of map.values()) {
+      lists.sort((a, b) => a.list - b.list);
+    }
+    return map;
+  }, [availableLists]);
+
+  const levelNumbers = useMemo(
+    () => [...listsByLevel.keys()].sort((a, b) => a - b),
+    [listsByLevel]
+  );
+
+  const activeLevel = useMemo(() => {
+    const current = availableLists.find((item) => item.id === activeListId);
+    return current?.level ?? levelNumbers[0] ?? null;
+  }, [availableLists, activeListId, levelNumbers]);
+
+  const listsInActiveLevel = useMemo(
+    () => (activeLevel != null ? listsByLevel.get(activeLevel) ?? [] : []),
+    [listsByLevel, activeLevel]
+  );
+
+  const handleLevelChange = useCallback(
+    (levelValue) => {
+      const level = Number(levelValue);
+      const lists = listsByLevel.get(level);
+      if (!lists?.length) return;
+
+      const current = availableLists.find((item) => item.id === activeListId);
+      const preferred = lists.find((item) => item.list === current?.list);
+      handleListChange(preferred?.id ?? lists[0].id);
+    },
+    [activeListId, availableLists, handleListChange, listsByLevel]
+  );
+
   if (wordsLoading) {
     return (
       <div className="app app--loading">
@@ -272,18 +313,37 @@ export default function App() {
                 <span className="practice-toolbar__title">
                   {isReviewMode ? "强化练习" : listMeta?.title ?? "单词练习"}
                 </span>
-                {!isReviewMode && availableLists.length > 1 && (
-                  <select
-                    className="practice-toolbar__select"
-                    value={activeListId ?? ""}
-                    onChange={(e) => handleListChange(e.target.value)}
-                  >
-                    {availableLists.map((item) => (
-                      <option key={item.id} value={item.id}>
-                        {item.title}
-                      </option>
-                    ))}
-                  </select>
+                {!isReviewMode && availableLists.length > 0 && (
+                  <div className="practice-toolbar__pickers">
+                    {levelNumbers.length > 1 && (
+                      <select
+                        className="practice-toolbar__select"
+                        value={activeLevel ?? ""}
+                        onChange={(e) => handleLevelChange(e.target.value)}
+                        aria-label="选择 Level"
+                      >
+                        {levelNumbers.map((level) => (
+                          <option key={level} value={level}>
+                            Level {level}
+                          </option>
+                        ))}
+                      </select>
+                    )}
+                    {listsInActiveLevel.length > 1 && (
+                      <select
+                        className="practice-toolbar__select"
+                        value={activeListId ?? ""}
+                        onChange={(e) => handleListChange(e.target.value)}
+                        aria-label="选择 List"
+                      >
+                        {listsInActiveLevel.map((item) => (
+                          <option key={item.id} value={item.id}>
+                            List {item.list}
+                          </option>
+                        ))}
+                      </select>
+                    )}
+                  </div>
                 )}
               </div>
               <div className="practice-toolbar__stats">
