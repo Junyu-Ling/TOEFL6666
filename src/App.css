@@ -1903,12 +1903,33 @@ body {
   background: var(--input-bg);
 }
 
-.vocab-assistant__input {
+.vocab-assistant__input-wrap {
+  position: relative;
   flex: 1;
+}
+
+.vocab-assistant__voice-btn {
+  right: 0.5rem;
+  bottom: 0.5rem;
+  width: 2.25rem;
+  height: 2.25rem;
+}
+
+.vocab-assistant__dictation-hint {
+  margin: 0 0.875rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.vocab-assistant__input {
+  width: 100%;
+  box-sizing: border-box;
   resize: none;
   min-height: 2.5rem;
   max-height: 6rem;
   padding: 0.55rem 0.65rem;
+  padding-right: calc(2.25rem + 0.85rem);
   border: 1px solid var(--border);
   border-radius: 10px;
   background: var(--surface);

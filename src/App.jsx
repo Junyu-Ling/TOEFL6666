@@ -407,7 +407,10 @@ export default function App() {
         )}
       </main>
 
-      <VocabAssistant currentWord={activeTab === "practice" ? currentWord : null} />
+      <VocabAssistant
+        currentWord={activeTab === "practice" ? currentWord : null}
+        micGranted={mic.isGranted}
+      />
     </div>
   );
 }

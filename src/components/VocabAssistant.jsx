@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { sendVocabChat } from "../services/aiChat";
+import { createDictationSession } from "../utils/speechRecognition";
 import {
   GENERAL_CHAT_KEY,
   getWordKey,
@@ -15,6 +16,8 @@ const WELCOME = {
   content: "你好，我是词汇助教。可以问我词义辨析、用法、近反义词等英语单词相关问题。",
   welcome: true,
 };
+
+const SILENCE_STOP_MS = 2000;
 
 function formatTimestamp(at) {
   if (!at) return "";
@@ -33,7 +36,7 @@ function createMessage(role, content) {
   return { role, content, at: Date.now() };
 }
 
-export default function VocabAssistant({ currentWord }) {
+export default function VocabAssistant({ currentWord, micGranted }) {
   const practiceWordKey = getWordKey(currentWord?.word);
   const [open, setOpen] = useState(false);
   const [view, setView] = useState("chat");
@@ -44,9 +47,15 @@ export default function VocabAssistant({ currentWord }) {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [dictating, setDictating] = useState(false);
+  const [dictationHint, setDictationHint] = useState("");
   const listRef = useRef(null);
   const inputRef = useRef(null);
   const skipSaveRef = useRef(false);
+  const dictationRef = useRef(null);
+  const silenceTimerRef = useRef(null);
+  const inputValueRef = useRef("");
+  const loadingRef = useRef(false);
 
   const historyItems = useMemo(() => searchChatHistory(historyQuery), [historyQuery, messages, view]);
 
@@ -58,8 +67,116 @@ export default function VocabAssistant({ currentWord }) {
     };
   }, [activeWordKey, storedDefinitions]);
 
+  const scrollToBottom = useCallback(() => {
+    const el = listRef.current;
+    if (el) el.scrollTop = el.scrollHeight;
+  }, []);
+
+  useEffect(() => {
+    inputValueRef.current = input;
+  }, [input]);
+
+  useEffect(() => {
+    loadingRef.current = loading;
+  }, [loading]);
+
+  const stopDictation = useCallback(() => {
+    clearTimeout(silenceTimerRef.current);
+    dictationRef.current?.stop();
+    dictationRef.current = null;
+    setDictating(false);
+    setDictationHint("");
+  }, []);
+
+  const handleSend = useCallback(
+    async (e, answerText) => {
+      e?.preventDefault?.();
+      const text = (answerText ?? inputValueRef.current).trim();
+      if (!text || loadingRef.current) return;
+
+      stopDictation();
+      const userMessage = createMessage("user", text);
+      const nextMessages = [...messages, userMessage];
+      setMessages(nextMessages);
+      setInput("");
+      inputValueRef.current = "";
+      setError(null);
+      setLoading(true);
+
+      try {
+        const { reply } = await sendVocabChat({
+          messages: nextMessages.filter((m) => (m.role === "user" || m.role === "assistant") && !m.welcome),
+          context: chatContext,
+        });
+        setMessages((prev) => [...prev, createMessage("assistant", reply)]);
+      } catch (err) {
+        setError(err.message || "发送失败，请稍后重试");
+      } finally {
+        setLoading(false);
+      }
+    },
+    [messages, chatContext, stopDictation]
+  );
+
+  const scheduleSilenceStop = useCallback(() => {
+    clearTimeout(silenceTimerRef.current);
+    silenceTimerRef.current = setTimeout(() => {
+      stopDictation();
+      const text = inputValueRef.current.trim();
+      if (text && !loadingRef.current) {
+        handleSend(undefined, text);
+      } else {
+        inputRef.current?.focus();
+      }
+    }, SILENCE_STOP_MS);
+  }, [stopDictation, handleSend]);
+
+  const startDictation = useCallback(() => {
+    if (!micGranted || loadingRef.current || dictating) return;
+
+    setError(null);
+    setDictationHint("正在聆听…");
+    setInput("");
+    inputValueRef.current = "";
+
+    const session = createDictationSession({
+      lang: "zh-CN",
+      onInterim: (text) => {
+        setInput(text);
+        inputValueRef.current = text;
+        setDictationHint(text);
+        scheduleSilenceStop();
+      },
+      onFinal: (text) => {
+        setInput(text);
+        inputValueRef.current = text;
+        setDictationHint("");
+        scheduleSilenceStop();
+      },
+      onError: (err) => {
+        if (err.message === "未检测到语音") {
+          scheduleSilenceStop();
+          return;
+        }
+        setError(err.message || "语音输入失败");
+        stopDictation();
+      },
+    });
+
+    if (!session) {
+      setError("当前浏览器不支持语音识别");
+      return;
+    }
+
+    dictationRef.current = session;
+    session.start();
+    setDictating(true);
+    scheduleSilenceStop();
+  }, [micGranted, dictating, scheduleSilenceStop, stopDictation]);
+
   const loadWordSession = useCallback((wordKey, definitions = []) => {
     skipSaveRef.current = true;
+    stopDictation();
     const entry = loadChatEntry(wordKey);
     setActiveWordKey(wordKey);
     setStoredDefinitions(definitions.length ? definitions : entry.definitions);
@@ -67,7 +184,7 @@ export default function VocabAssistant({ currentWord }) {
     setError(null);
     setInput("");
     setView("chat");
-  }, []);
+  }, [stopDictation]);
 
   useEffect(() => {
     const entry = loadChatEntry(practiceWordKey);
@@ -92,11 +209,6 @@ export default function VocabAssistant({ currentWord }) {
     saveChatEntry(activeWordKey, messages, definitions);
   }, [messages, activeWordKey, storedDefinitions, practiceWordKey, currentWord?.definitions]);
 
-  const scrollToBottom = useCallback(() => {
-    const el = listRef.current;
-    if (el) el.scrollTop = el.scrollHeight;
-  }, []);
-
   useEffect(() => {
     if (open && view === "chat") {
       scrollToBottom();
@@ -108,33 +220,14 @@ export default function VocabAssistant({ currentWord }) {
     if (view === "chat") scrollToBottom();
   }, [messages, loading, view, scrollToBottom]);
 
-  async function handleSend(e) {
-    e?.preventDefault();
-    const text = input.trim();
-    if (!text || loading) return;
-
-    const userMessage = createMessage("user", text);
-    const nextMessages = [...messages, userMessage];
-    setMessages(nextMessages);
-    setInput("");
-    setError(null);
-    setLoading(true);
-
-    try {
-      const { reply } = await sendVocabChat({
-        messages: nextMessages.filter((m) => (m.role === "user" || m.role === "assistant") && !m.welcome),
-        context: chatContext,
-      });
-      setMessages((prev) => [...prev, createMessage("assistant", reply)]);
-    } catch (err) {
-      setError(err.message || "发送失败，请稍后重试");
-    } finally {
-      setLoading(false);
-    }
-  }
+  useEffect(() => {
+    if (!open) stopDictation();
+    return () => stopDictation();
+  }, [open, stopDictation]);
 
   function handleClear() {
     if (!window.confirm(`确定清空「${displayWordKey(activeWordKey)}」的对话记录吗？`)) return;
+    stopDictation();
     clearChatEntry(activeWordKey);
     skipSaveRef.current = true;
     setMessages([WELCOME]);
@@ -248,26 +341,42 @@ export default function VocabAssistant({ currentWord }) {
 
               {error && <p className="vocab-assistant__error">{error}</p>}
 
+              {dictationHint && <p className="vocab-assistant__dictation-hint">{dictationHint}</p>}
+
               <form className="vocab-assistant__form" onSubmit={handleSend}>
-                <textarea
-                  ref={inputRef}
-                  className="vocab-assistant__input"
-                  rows={2}
-                  placeholder="问词义、用法、易混词…"
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" && !e.shiftKey) {
-                      e.preventDefault();
-                      handleSend();
-                    }
-                  }}
-                  disabled={loading}
-                />
+                <div className="vocab-assistant__input-wrap">
+                  <textarea
+                    ref={inputRef}
+                    className="vocab-assistant__input"
+                    rows={2}
+                    placeholder={micGranted ? "输入或语音提问…" : "问词义、用法、易混词…"}
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" && !e.shiftKey) {
+                        e.preventDefault();
+                        handleSend(e);
+                      }
+                    }}
+                    disabled={loading || dictating}
+                  />
+                  {micGranted && (
+                    <button
+                      type="button"
+                      className={`voice-btn voice-btn--dictate vocab-assistant__voice-btn ${dictating ? "voice-btn--active" : ""}`}
+                      onClick={startDictation}
+                      disabled={loading || dictating}
+                      title="语音输入"
+                      aria-label="语音输入"
+                    >
+                      <MicIcon />
+                    </button>
+                  )}
+                </div>
                 <button
                   type="submit"
                   className="btn btn--primary vocab-assistant__send"
-                  disabled={loading || !input.trim()}
+                  disabled={loading || dictating || !input.trim()}
                 >
                   发送
                 </button>
@@ -297,5 +406,13 @@ export default function VocabAssistant({ currentWord }) {
         )}
       </button>
     </div>
+  );
+}
+
+function MicIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
+      <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5-3c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z" />
+    </svg>
   );
 }
