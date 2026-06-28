@@ -1,0 +1,645 @@
+{
+  "meta": {
+    "level": 5,
+    "list": 5,
+    "title": "Level 5 · List 5",
+    "updatedAt": "2026-06-28"
+  },
+  "words": [
+    {
+      "word": "imperil",
+      "definitions": [
+        "v. 危及，危害"
+      ]
+    },
+    {
+      "word": "incite",
+      "definitions": [
+        "v. 煽动"
+      ]
+    },
+    {
+      "word": "discoloration",
+      "definitions": [
+        "n. 变色"
+      ]
+    },
+    {
+      "word": "discrete",
+      "definitions": [
+        "adj. 离散的，不连续的"
+      ]
+    },
+    {
+      "word": "alertness",
+      "definitions": [
+        "n. 警戒"
+      ]
+    },
+    {
+      "word": "ripple",
+      "definitions": [
+        "n. 涟漪",
+        "v. 传播"
+      ]
+    },
+    {
+      "word": "surveyor",
+      "definitions": [
+        "n. 测量员，检验员"
+      ]
+    },
+    {
+      "word": "turbulent",
+      "definitions": [
+        "adj. 动荡的",
+        "adj. (水流)湍急的"
+      ]
+    },
+    {
+      "word": "canvas",
+      "definitions": [
+        "n. 帆布"
+      ]
+    },
+    {
+      "word": "retrieval",
+      "definitions": [
+        "n. 找回，取回",
+        "n. 检索"
+      ]
+    },
+    {
+      "word": "snap",
+      "definitions": [
+        "v. 突然折断",
+        "v. 猛咬"
+      ]
+    },
+    {
+      "word": "subsidy",
+      "definitions": [
+        "n. 补贴金"
+      ]
+    },
+    {
+      "word": "aesthetic",
+      "definitions": [
+        "adj. 美学的"
+      ]
+    },
+    {
+      "word": "consensus",
+      "definitions": [
+        "n. 一致"
+      ]
+    },
+    {
+      "word": "dismiss",
+      "definitions": [
+        "v. 解散",
+        "v. 解雇，开除",
+        "v. 不予理会，不予考虑"
+      ]
+    },
+    {
+      "word": "symbiotic",
+      "definitions": [
+        "adj. [生态]共生的"
+      ]
+    },
+    {
+      "word": "scoop",
+      "definitions": [
+        "v. 用勺子挖取",
+        "n. 勺子"
+      ]
+    },
+    {
+      "word": "exertion",
+      "definitions": [
+        "n. 发挥，运用"
+      ]
+    },
+    {
+      "word": "proposition",
+      "definitions": [
+        "n. 主张，观点",
+        "n. 建议"
+      ]
+    },
+    {
+      "word": "linguist",
+      "definitions": [
+        "n. 语言学家，通晓数国语言的人"
+      ]
+    },
+    {
+      "word": "feedback",
+      "definitions": [
+        "n. 反馈"
+      ]
+    },
+    {
+      "word": "strata",
+      "definitions": [
+        "n. 层，岩层",
+        "n. (社会的)阶层"
+      ]
+    },
+    {
+      "word": "stray",
+      "definitions": [
+        "v. 走失",
+        "n. 走失者"
+      ]
+    },
+    {
+      "word": "ubiquitous",
+      "definitions": [
+        "adj. 普遍存在的"
+      ]
+    },
+    {
+      "word": "substantially",
+      "definitions": [
+        "adv. 很大程度地"
+      ]
+    },
+    {
+      "word": "surpass",
+      "definitions": [
+        "v. 超越，胜过"
+      ]
+    },
+    {
+      "word": "viper",
+      "definitions": [
+        "n. 蝰蛇，毒蛇"
+      ]
+    },
+    {
+      "word": "corrode",
+      "definitions": [
+        "v. 侵蚀，损害"
+      ]
+    },
+    {
+      "word": "rotary",
+      "definitions": [
+        "adj. 旋转的"
+      ]
+    },
+    {
+      "word": "align",
+      "definitions": [
+        "v. 使结盟",
+        "v. 排成一行"
+      ]
+    },
+    {
+      "word": "retraction",
+      "definitions": [
+        "n. 撤回，撤销"
+      ]
+    },
+    {
+      "word": "linen",
+      "definitions": [
+        "n. 亚麻布"
+      ]
+    },
+    {
+      "word": "canon",
+      "definitions": [
+        "n. 标准"
+      ]
+    },
+    {
+      "word": "amplify",
+      "definitions": [
+        "v. 放大，扩大",
+        "v. 详述"
+      ]
+    },
+    {
+      "word": "prolific",
+      "definitions": [
+        "adj. 多产的"
+      ]
+    },
+    {
+      "word": "catholic",
+      "definitions": [
+        "adj. 天主教的",
+        "adj. 广泛的"
+      ]
+    },
+    {
+      "word": "strait",
+      "definitions": [
+        "n. 海峡",
+        "n. 困境"
+      ]
+    },
+    {
+      "word": "microbial",
+      "definitions": [
+        "adj. 微生物的，细菌的"
+      ]
+    },
+    {
+      "word": "patriotic",
+      "definitions": [
+        "adj. 爱国的"
+      ]
+    },
+    {
+      "word": "pile",
+      "definitions": [
+        "n. 堆"
+      ]
+    },
+    {
+      "word": "allot",
+      "definitions": [
+        "v. 分配"
+      ]
+    },
+    {
+      "word": "emblem",
+      "definitions": [
+        "n. 象征，徽章"
+      ]
+    },
+    {
+      "word": "conventional",
+      "definitions": [
+        "adj. 符合习俗的，传统的"
+      ]
+    },
+    {
+      "word": "rigid",
+      "definitions": [
+        "adj. 僵硬的",
+        "adj. 严格的，死板的"
+      ]
+    },
+    {
+      "word": "secretion",
+      "definitions": [
+        "n. 分泌，分泌物"
+      ]
+    },
+    {
+      "word": "mitigate",
+      "definitions": [
+        "v. 缓解，减轻"
+      ]
+    },
+    {
+      "word": "merchandise",
+      "definitions": [
+        "n. 商品"
+      ]
+    },
+    {
+      "word": "adept",
+      "definitions": [
+        "adj. 熟练的",
+        "n. 能手"
+      ]
+    },
+    {
+      "word": "cavity",
+      "definitions": [
+        "n. 洞",
+        "n. (牙齿的)龋洞"
+      ]
+    },
+    {
+      "word": "flop",
+      "definitions": [
+        "v. 失败",
+        "v. 重重落下或移动"
+      ]
+    },
+    {
+      "word": "rite",
+      "definitions": [
+        "n. 传统仪式"
+      ]
+    },
+    {
+      "word": "rudimentary",
+      "definitions": [
+        "adj. 根本的，基本的"
+      ]
+    },
+    {
+      "word": "stalk",
+      "definitions": [
+        "n. (植物的)柄，梗",
+        "v. 跟踪"
+      ]
+    },
+    {
+      "word": "yarn",
+      "definitions": [
+        "n. 纱线"
+      ]
+    },
+    {
+      "word": "deposition",
+      "definitions": [
+        "n. 证词",
+        "n. 沉积物",
+        "n. 革职"
+      ]
+    },
+    {
+      "word": "asymmetrical",
+      "definitions": [
+        "adj. 不对称的"
+      ]
+    },
+    {
+      "word": "fetch",
+      "definitions": [
+        "v. 取回"
+      ]
+    },
+    {
+      "word": "fluidity",
+      "definitions": [
+        "n. 流动性"
+      ]
+    },
+    {
+      "word": "cabin",
+      "definitions": [
+        "n. 小屋",
+        "n. 客舱，船舱"
+      ]
+    },
+    {
+      "word": "thaw",
+      "definitions": [
+        "v. (冰雪等)融化"
+      ]
+    },
+    {
+      "word": "sovereign",
+      "definitions": [
+        "n. 君主",
+        "adj. 具有独立主权的"
+      ]
+    },
+    {
+      "word": "cosmopolitan",
+      "definitions": [
+        "adj. 世界性的"
+      ]
+    },
+    {
+      "word": "willow",
+      "definitions": [
+        "n. 柳树"
+      ]
+    },
+    {
+      "word": "tuck",
+      "definitions": [
+        "v. 塞入",
+        "n. (衣服等的)褶"
+      ]
+    },
+    {
+      "word": "jar",
+      "definitions": [
+        "n. 罐子"
+      ]
+    },
+    {
+      "word": "maze",
+      "definitions": [
+        "n. 迷宫",
+        "n. (事情等的)错综，复杂"
+      ]
+    },
+    {
+      "word": "feeble",
+      "definitions": [
+        "adj. 微弱的"
+      ]
+    },
+    {
+      "word": "recede",
+      "definitions": [
+        "v. 后退，撤回"
+      ]
+    },
+    {
+      "word": "enigma",
+      "definitions": [
+        "n. 谜"
+      ]
+    },
+    {
+      "word": "incentive",
+      "definitions": [
+        "n. 激励"
+      ]
+    },
+    {
+      "word": "embed",
+      "definitions": [
+        "v. 使嵌入，使插入",
+        "v. 使根深蒂固"
+      ]
+    },
+    {
+      "word": "maxim",
+      "definitions": [
+        "n. 格言"
+      ]
+    },
+    {
+      "word": "immaturity",
+      "definitions": [
+        "n. 不成熟"
+      ]
+    },
+    {
+      "word": "crust",
+      "definitions": [
+        "n. 地壳",
+        "n. 坚硬外皮"
+      ]
+    },
+    {
+      "word": "blade",
+      "definitions": [
+        "n. 刀锋",
+        "n. 叶片"
+      ]
+    },
+    {
+      "word": "warehouse",
+      "definitions": [
+        "n. 仓库"
+      ]
+    },
+    {
+      "word": "decimal",
+      "definitions": [
+        "n. 小数"
+      ]
+    },
+    {
+      "word": "ultraviolet",
+      "definitions": [
+        "adj. 紫外线的"
+      ]
+    },
+    {
+      "word": "legislation",
+      "definitions": [
+        "n. 立法，法律"
+      ]
+    },
+    {
+      "word": "defer",
+      "definitions": [
+        "v. 推迟，延期",
+        "v. 听从，遵从"
+      ]
+    },
+    {
+      "word": "hinder",
+      "definitions": [
+        "v. 阻碍"
+      ]
+    },
+    {
+      "word": "prosperous",
+      "definitions": [
+        "adj. 繁荣的"
+      ]
+    },
+    {
+      "word": "regiment",
+      "definitions": [
+        "n. 军团，大量"
+      ]
+    },
+    {
+      "word": "embody",
+      "definitions": [
+        "v. 体现，使具体化"
+      ]
+    },
+    {
+      "word": "hospitalize",
+      "definitions": [
+        "v. 就医，使住院"
+      ]
+    },
+    {
+      "word": "unsophisticated",
+      "definitions": [
+        "adj. 未经世故的",
+        "adj. 不精细的"
+      ]
+    },
+    {
+      "word": "germinate",
+      "definitions": [
+        "v. 使发芽，使生长"
+      ]
+    },
+    {
+      "word": "impersonate",
+      "definitions": [
+        "v. 扮演",
+        "v. 冒充"
+      ]
+    },
+    {
+      "word": "raft",
+      "definitions": [
+        "n. 木排，筏"
+      ]
+    },
+    {
+      "word": "glandular",
+      "definitions": [
+        "adj. 腺的，腺状的"
+      ]
+    },
+    {
+      "word": "monastery",
+      "definitions": [
+        "n. 修道院"
+      ]
+    },
+    {
+      "word": "sulfur",
+      "definitions": [
+        "n. 硫磺"
+      ]
+    },
+    {
+      "word": "yield",
+      "definitions": [
+        "n. 产量",
+        "v. 屈服，投降"
+      ]
+    },
+    {
+      "word": "vacuum",
+      "definitions": [
+        "n. 真空",
+        "n. 真空吸尘器"
+      ]
+    },
+    {
+      "word": "segment",
+      "definitions": [
+        "n. 部分"
+      ]
+    },
+    {
+      "word": "stack",
+      "definitions": [
+        "v. 堆叠，堆放",
+        "n. 堆"
+      ]
+    },
+    {
+      "word": "amnesia",
+      "definitions": [
+        "n. 健忘症"
+      ]
+    },
+    {
+      "word": "ritualize",
+      "definitions": [
+        "v. 使礼仪化"
+      ]
+    },
+    {
+      "word": "paradigm",
+      "definitions": [
+        "n. 范例"
+      ]
+    },
+    {
+      "word": "loom",
+      "definitions": [
+        "n. 织布机",
+        "v. (可怕的事)逐渐迫近，隐约显现"
+      ]
+    }
+  ]
+}

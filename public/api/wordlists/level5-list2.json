@@ -1,0 +1,651 @@
+{
+  "meta": {
+    "level": 5,
+    "list": 2,
+    "title": "Level 5 · List 2",
+    "updatedAt": "2026-06-28"
+  },
+  "words": [
+    {
+      "word": "mite",
+      "definitions": [
+        "n. 螨",
+        "n. 极小量"
+      ]
+    },
+    {
+      "word": "mammoth",
+      "definitions": [
+        "n. 猛犸象，庞然大物",
+        "adj. 巨大的"
+      ]
+    },
+    {
+      "word": "arduous",
+      "definitions": [
+        "adj. 费力的"
+      ]
+    },
+    {
+      "word": "vine",
+      "definitions": [
+        "n. 藤，葡萄藤"
+      ]
+    },
+    {
+      "word": "landfill",
+      "definitions": [
+        "n. 垃圾场"
+      ]
+    },
+    {
+      "word": "groom",
+      "definitions": [
+        "v. 打扮"
+      ]
+    },
+    {
+      "word": "delineate",
+      "definitions": [
+        "v. 描绘"
+      ]
+    },
+    {
+      "word": "harness",
+      "definitions": [
+        "v. 利用"
+      ]
+    },
+    {
+      "word": "replicate",
+      "definitions": [
+        "v. 复制，重做"
+      ]
+    },
+    {
+      "word": "alteration",
+      "definitions": [
+        "n. 修改"
+      ]
+    },
+    {
+      "word": "compound",
+      "definitions": [
+        "v. 合成",
+        "adj. 合成的",
+        "n. 复合词",
+        "n. 复合物"
+      ]
+    },
+    {
+      "word": "portraiture",
+      "definitions": [
+        "n. 肖像画，肖像画艺术"
+      ]
+    },
+    {
+      "word": "pension",
+      "definitions": [
+        "n. 养老金，抚恤金",
+        "v. 发养老金，发抚恤金"
+      ]
+    },
+    {
+      "word": "precision",
+      "definitions": [
+        "n. 精密，准确性"
+      ]
+    },
+    {
+      "word": "smother",
+      "definitions": [
+        "v. 使窒息",
+        "v. 抑制"
+      ]
+    },
+    {
+      "word": "revolve",
+      "definitions": [
+        "v. 旋转，围绕"
+      ]
+    },
+    {
+      "word": "allude",
+      "definitions": [
+        "v. 暗指"
+      ]
+    },
+    {
+      "word": "plateau",
+      "definitions": [
+        "n. 高原",
+        "n. 稳定阶段"
+      ]
+    },
+    {
+      "word": "salinity",
+      "definitions": [
+        "n. 盐度，盐分"
+      ]
+    },
+    {
+      "word": "plantation",
+      "definitions": [
+        "n. 种植园"
+      ]
+    },
+    {
+      "word": "infusion",
+      "definitions": [
+        "n. 注入"
+      ]
+    },
+    {
+      "word": "clog",
+      "definitions": [
+        "v. 阻塞"
+      ]
+    },
+    {
+      "word": "crescent",
+      "definitions": [
+        "n. 新月"
+      ]
+    },
+    {
+      "word": "indicative",
+      "definitions": [
+        "adj. 象征的，指示的"
+      ]
+    },
+    {
+      "word": "elaboration",
+      "definitions": [
+        "n. 详细阐述"
+      ]
+    },
+    {
+      "word": "formidable",
+      "definitions": [
+        "adj. 强大的",
+        "adj. 可怕的，令人敬畏的"
+      ]
+    },
+    {
+      "word": "chop",
+      "definitions": [
+        "v. 砍",
+        "v. 剁碎",
+        "n. 排骨"
+      ]
+    },
+    {
+      "word": "planetary",
+      "definitions": [
+        "adj. 行星的"
+      ]
+    },
+    {
+      "word": "subsequently",
+      "definitions": [
+        "adv. 随后"
+      ]
+    },
+    {
+      "word": "fidelity",
+      "definitions": [
+        "n. 忠诚",
+        "n. 保真度"
+      ]
+    },
+    {
+      "word": "fringe",
+      "definitions": [
+        "n. 边缘"
+      ]
+    },
+    {
+      "word": "infringe",
+      "definitions": [
+        "v. 侵犯",
+        "v. 违反"
+      ]
+    },
+    {
+      "word": "anatomy",
+      "definitions": [
+        "n. 解剖，解剖学"
+      ]
+    },
+    {
+      "word": "peninsula",
+      "definitions": [
+        "n. 半岛"
+      ]
+    },
+    {
+      "word": "conjunction",
+      "definitions": [
+        "n. 结合",
+        "n. [语]连接词"
+      ]
+    },
+    {
+      "word": "rust",
+      "definitions": [
+        "n. 锈",
+        "v. 生锈"
+      ]
+    },
+    {
+      "word": "erect",
+      "definitions": [
+        "v. 使竖立",
+        "v. 建造"
+      ]
+    },
+    {
+      "word": "democrat",
+      "definitions": [
+        "n. 民主党人"
+      ]
+    },
+    {
+      "word": "rye",
+      "definitions": [
+        "n. 黑麦，黑麦面包"
+      ]
+    },
+    {
+      "word": "meadow",
+      "definitions": [
+        "n. 草地"
+      ]
+    },
+    {
+      "word": "speck",
+      "definitions": [
+        "n. 污点，斑迹"
+      ]
+    },
+    {
+      "word": "perspective",
+      "definitions": [
+        "n. 观点，视角"
+      ]
+    },
+    {
+      "word": "arousal",
+      "definitions": [
+        "n. 觉醒"
+      ]
+    },
+    {
+      "word": "horn",
+      "definitions": [
+        "n. (牛、鹿等动物头上的)角",
+        "n. 喇叭"
+      ]
+    },
+    {
+      "word": "heap",
+      "definitions": [
+        "n. 堆"
+      ]
+    },
+    {
+      "word": "cosmic",
+      "definitions": [
+        "adj. 宇宙的",
+        "adj. 巨大的"
+      ]
+    },
+    {
+      "word": "substantiate",
+      "definitions": [
+        "v. 证实"
+      ]
+    },
+    {
+      "word": "adverse",
+      "definitions": [
+        "adj. 敌对的"
+      ]
+    },
+    {
+      "word": "inclination",
+      "definitions": [
+        "n. 倾向",
+        "n. 倾斜"
+      ]
+    },
+    {
+      "word": "assemble",
+      "definitions": [
+        "v. 集合",
+        "v. 装配"
+      ]
+    },
+    {
+      "word": "ambient",
+      "definitions": [
+        "adj. 周围的",
+        "n. 周围环境"
+      ]
+    },
+    {
+      "word": "prone",
+      "definitions": [
+        "adj. 有做某事的倾向",
+        "adj. 俯卧的"
+      ]
+    },
+    {
+      "word": "reptile",
+      "definitions": [
+        "n. 爬行动物"
+      ]
+    },
+    {
+      "word": "undisputed",
+      "definitions": [
+        "adj. 无可争辩的，无异议的"
+      ]
+    },
+    {
+      "word": "secular",
+      "definitions": [
+        "adj. 世俗的，非宗教的"
+      ]
+    },
+    {
+      "word": "divergence",
+      "definitions": [
+        "n. 分歧"
+      ]
+    },
+    {
+      "word": "forge",
+      "definitions": [
+        "v. 伪造",
+        "v. 前进",
+        "v. 铸造"
+      ]
+    },
+    {
+      "word": "endorse",
+      "definitions": [
+        "v. 认可，支持"
+      ]
+    },
+    {
+      "word": "kilowatt",
+      "definitions": [
+        "n. 千瓦"
+      ]
+    },
+    {
+      "word": "Cambrian",
+      "definitions": [
+        "n. 寒武纪"
+      ]
+    },
+    {
+      "word": "Muslim",
+      "definitions": [
+        "n. 穆斯林",
+        "adj. 穆斯林的"
+      ]
+    },
+    {
+      "word": "tyrant",
+      "definitions": [
+        "n. 暴君"
+      ]
+    },
+    {
+      "word": "decomposition",
+      "definitions": [
+        "n. 分解，腐烂，变质"
+      ]
+    },
+    {
+      "word": "oxidation",
+      "definitions": [
+        "n. 氧化"
+      ]
+    },
+    {
+      "word": "momentous",
+      "definitions": [
+        "adj. 重大的"
+      ]
+    },
+    {
+      "word": "impetus",
+      "definitions": [
+        "n. 动力"
+      ]
+    },
+    {
+      "word": "contemporary",
+      "definitions": [
+        "adj. 同时代的",
+        "adj. 当代的"
+      ]
+    },
+    {
+      "word": "presumably",
+      "definitions": [
+        "adv. 大概，可能"
+      ]
+    },
+    {
+      "word": "designation",
+      "definitions": [
+        "n. 指定",
+        "n. 名称"
+      ]
+    },
+    {
+      "word": "surplus",
+      "definitions": [
+        "n. 过剩",
+        "adj. 剩余的"
+      ]
+    },
+    {
+      "word": "validate",
+      "definitions": [
+        "v. 证实"
+      ]
+    },
+    {
+      "word": "phony",
+      "definitions": [
+        "adj. 假的，虚伪的",
+        "n. 骗子，赝品"
+      ]
+    },
+    {
+      "word": "requisition",
+      "definitions": [
+        "n. 征用",
+        "v. 征用"
+      ]
+    },
+    {
+      "word": "acknowledge",
+      "definitions": [
+        "v. 承认",
+        "v. 认可",
+        "v. 确认收到"
+      ]
+    },
+    {
+      "word": "encroach",
+      "definitions": [
+        "v. 蚕食，侵占"
+      ]
+    },
+    {
+      "word": "provision",
+      "definitions": [
+        "n. 提供"
+      ]
+    },
+    {
+      "word": "stark",
+      "definitions": [
+        "adj. 完全的",
+        "adj. 荒凉的，朴实无华的"
+      ]
+    },
+    {
+      "word": "lyrical",
+      "definitions": [
+        "adj. 诗意的，抒情的"
+      ]
+    },
+    {
+      "word": "chronological",
+      "definitions": [
+        "adj. 按年代顺序排列的"
+      ]
+    },
+    {
+      "word": "eradicate",
+      "definitions": [
+        "v. 根除，根绝"
+      ]
+    },
+    {
+      "word": "entice",
+      "definitions": [
+        "v. 诱使，怂恿"
+      ]
+    },
+    {
+      "word": "collaborate",
+      "definitions": [
+        "v. 合作",
+        "v. 勾结，通敌"
+      ]
+    },
+    {
+      "word": "octopus",
+      "definitions": [
+        "n. 章鱼"
+      ]
+    },
+    {
+      "word": "elimination",
+      "definitions": [
+        "n. 消除，淘汰"
+      ]
+    },
+    {
+      "word": "manuscript",
+      "definitions": [
+        "n. 手稿"
+      ]
+    },
+    {
+      "word": "cling",
+      "definitions": [
+        "v. 坚持",
+        "v. 紧贴，附着"
+      ]
+    },
+    {
+      "word": "bleach",
+      "definitions": [
+        "v. 使漂白",
+        "n. 漂白剂"
+      ]
+    },
+    {
+      "word": "motionless",
+      "definitions": [
+        "adj. 静止的"
+      ]
+    },
+    {
+      "word": "tilt",
+      "definitions": [
+        "v. 倾斜"
+      ]
+    },
+    {
+      "word": "obsolete",
+      "definitions": [
+        "adj. 过时的，被淘汰的"
+      ]
+    },
+    {
+      "word": "devour",
+      "definitions": [
+        "v. 吞食",
+        "v. 吸收"
+      ]
+    },
+    {
+      "word": "advent",
+      "definitions": [
+        "n. 到来，出现"
+      ]
+    },
+    {
+      "word": "regime",
+      "definitions": [
+        "n. 政权",
+        "n. 管理体制"
+      ]
+    },
+    {
+      "word": "adjoin",
+      "definitions": [
+        "v. 靠近"
+      ]
+    },
+    {
+      "word": "runoff",
+      "definitions": [
+        "n. 径流",
+        "n. 决胜赛"
+      ]
+    },
+    {
+      "word": "helium",
+      "definitions": [
+        "n. [化学]氦"
+      ]
+    },
+    {
+      "word": "racket",
+      "definitions": [
+        "n. 球拍",
+        "n. 喧闹"
+      ]
+    },
+    {
+      "word": "hyper",
+      "definitions": [
+        "adj. 异常活跃的"
+      ]
+    },
+    {
+      "word": "indefinite",
+      "definitions": [
+        "adj. 无限期的",
+        "adj. 不确定的"
+      ]
+    },
+    {
+      "word": "aerial",
+      "definitions": [
+        "adj. 空中的"
+      ]
+    }
+  ]
+}

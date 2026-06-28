@@ -1,0 +1,634 @@
+{
+  "meta": {
+    "level": 5,
+    "list": 3,
+    "title": "Level 5 · List 3",
+    "updatedAt": "2026-06-28"
+  },
+  "words": [
+    {
+      "word": "spout",
+      "definitions": [
+        "n. 喷口，(容器的)嘴",
+        "v. 喷出，涌出"
+      ]
+    },
+    {
+      "word": "parasitic",
+      "definitions": [
+        "adj. 寄生的"
+      ]
+    },
+    {
+      "word": "indigestion",
+      "definitions": [
+        "n. 消化不良"
+      ]
+    },
+    {
+      "word": "interim",
+      "definitions": [
+        "n. 过渡时期",
+        "adj. 暂时的"
+      ]
+    },
+    {
+      "word": "sophisticate",
+      "definitions": [
+        "v. 使变得世故",
+        "n. 久经世故的人"
+      ]
+    },
+    {
+      "word": "terrace",
+      "definitions": [
+        "n. 梯田",
+        "n. 露台",
+        "v. 呈阶梯状"
+      ]
+    },
+    {
+      "word": "slender",
+      "definitions": [
+        "adj. 细长的，苗条的"
+      ]
+    },
+    {
+      "word": "chore",
+      "definitions": [
+        "n. 家庭杂务",
+        "n. 讨厌的或累人的工作"
+      ]
+    },
+    {
+      "word": "stem",
+      "definitions": [
+        "n. 茎",
+        "v. 起源于",
+        "v. 阻止"
+      ]
+    },
+    {
+      "word": "escalate",
+      "definitions": [
+        "v. 加剧",
+        "v. 逐步增强，逐步升高"
+      ]
+    },
+    {
+      "word": "entangle",
+      "definitions": [
+        "v. 使纠缠",
+        "v. 卷入"
+      ]
+    },
+    {
+      "word": "detrimental",
+      "definitions": [
+        "adj. 不利的，有害的"
+      ]
+    },
+    {
+      "word": "afield",
+      "definitions": [
+        "adv. 去野外"
+      ]
+    },
+    {
+      "word": "grinding",
+      "definitions": [
+        "adj. 难以忍受的",
+        "adj. 刺耳的"
+      ]
+    },
+    {
+      "word": "resonate",
+      "definitions": [
+        "v. 回响",
+        "v. 引起共鸣",
+        "v. 共振"
+      ]
+    },
+    {
+      "word": "landslide",
+      "definitions": [
+        "n. 山崩",
+        "n. 压倒性的胜利"
+      ]
+    },
+    {
+      "word": "specify",
+      "definitions": [
+        "v. 指定，明确要求"
+      ]
+    },
+    {
+      "word": "insulate",
+      "definitions": [
+        "v. 绝缘，隔热"
+      ]
+    },
+    {
+      "word": "camouflage",
+      "definitions": [
+        "n. 伪装",
+        "v. 伪装，掩饰"
+      ]
+    },
+    {
+      "word": "grandiose",
+      "definitions": [
+        "adj. 宏伟的，堂皇的"
+      ]
+    },
+    {
+      "word": "cellular",
+      "definitions": [
+        "adj. 细胞的",
+        "n. 移动电话"
+      ]
+    },
+    {
+      "word": "fetus",
+      "definitions": [
+        "n. 胎儿，胎"
+      ]
+    },
+    {
+      "word": "standpoint",
+      "definitions": [
+        "n. 立场，观点"
+      ]
+    },
+    {
+      "word": "scrap",
+      "definitions": [
+        "n. 小块，碎片",
+        "n. 废料"
+      ]
+    },
+    {
+      "word": "interruption",
+      "definitions": [
+        "n. 中断，干扰"
+      ]
+    },
+    {
+      "word": "feudal",
+      "definitions": [
+        "adj. 封建制度的"
+      ]
+    },
+    {
+      "word": "alter",
+      "definitions": [
+        "v. 改变"
+      ]
+    },
+    {
+      "word": "nomadic",
+      "definitions": [
+        "adj. 游牧的"
+      ]
+    },
+    {
+      "word": "concurrent",
+      "definitions": [
+        "adj. 并发的"
+      ]
+    },
+    {
+      "word": "gear",
+      "definitions": [
+        "v. 使……适合",
+        "n. 齿轮，装置"
+      ]
+    },
+    {
+      "word": "waterfowl",
+      "definitions": [
+        "n. 水禽，水鸟"
+      ]
+    },
+    {
+      "word": "configuration",
+      "definitions": [
+        "n. 结构",
+        "n. 配置"
+      ]
+    },
+    {
+      "word": "stature",
+      "definitions": [
+        "n. 身高，身材",
+        "n. 名望"
+      ]
+    },
+    {
+      "word": "anecdotal",
+      "definitions": [
+        "adj. 轶事的"
+      ]
+    },
+    {
+      "word": "gauge",
+      "definitions": [
+        "v. 测量"
+      ]
+    },
+    {
+      "word": "cobble",
+      "definitions": [
+        "v. 修",
+        "n. 鹅卵石"
+      ]
+    },
+    {
+      "word": "mirage",
+      "definitions": [
+        "n. 海市蜃楼，幻想"
+      ]
+    },
+    {
+      "word": "decease",
+      "definitions": [
+        "n. 死亡",
+        "v. 死亡"
+      ]
+    },
+    {
+      "word": "psychologist",
+      "definitions": [
+        "n. 心理学家"
+      ]
+    },
+    {
+      "word": "mutate",
+      "definitions": [
+        "v. 改变",
+        "v. 基因突变"
+      ]
+    },
+    {
+      "word": "tile",
+      "definitions": [
+        "n. 瓷砖，瓦片"
+      ]
+    },
+    {
+      "word": "amass",
+      "definitions": [
+        "v. 累积"
+      ]
+    },
+    {
+      "word": "garment",
+      "definitions": [
+        "n. 衣服，服装"
+      ]
+    },
+    {
+      "word": "rhythmical",
+      "definitions": [
+        "adj. 有节奏的"
+      ]
+    },
+    {
+      "word": "flicker",
+      "definitions": [
+        "v. 闪烁，摇曳"
+      ]
+    },
+    {
+      "word": "ceramic",
+      "definitions": [
+        "n. 陶瓷"
+      ]
+    },
+    {
+      "word": "vein",
+      "definitions": [
+        "n. 血管，静脉",
+        "n. 叶脉，翅脉"
+      ]
+    },
+    {
+      "word": "ample",
+      "definitions": [
+        "adj. 丰富的",
+        "adj. 宽敞的"
+      ]
+    },
+    {
+      "word": "repress",
+      "definitions": [
+        "v. 抑制，镇压"
+      ]
+    },
+    {
+      "word": "coerce",
+      "definitions": [
+        "v. 强迫"
+      ]
+    },
+    {
+      "word": "phenomenon",
+      "definitions": [
+        "n. 现象",
+        "n. 奇迹"
+      ]
+    },
+    {
+      "word": "indispensable",
+      "definitions": [
+        "adj. 必不可少的"
+      ]
+    },
+    {
+      "word": "vent",
+      "definitions": [
+        "n. 通风孔",
+        "v. 发泄",
+        "n. 发泄"
+      ]
+    },
+    {
+      "word": "thorn",
+      "definitions": [
+        "n. 刺，荆棘"
+      ]
+    },
+    {
+      "word": "spawn",
+      "definitions": [
+        "n. (鱼、蛙等的)卵",
+        "v. 产卵",
+        "v. 大批涌现"
+      ]
+    },
+    {
+      "word": "saturate",
+      "definitions": [
+        "v. 浸透，使饱和"
+      ]
+    },
+    {
+      "word": "aquatic",
+      "definitions": [
+        "adj. 水生的"
+      ]
+    },
+    {
+      "word": "compaction",
+      "definitions": [
+        "n. 压紧"
+      ]
+    },
+    {
+      "word": "moist",
+      "definitions": [
+        "adj. 潮湿的"
+      ]
+    },
+    {
+      "word": "interstellar",
+      "definitions": [
+        "adj. 星际的"
+      ]
+    },
+    {
+      "word": "derive",
+      "definitions": [
+        "v. 源于",
+        "v. 获得"
+      ]
+    },
+    {
+      "word": "autobiography",
+      "definitions": [
+        "n. 自传"
+      ]
+    },
+    {
+      "word": "pluck",
+      "definitions": [
+        "v. 采摘，拔掉"
+      ]
+    },
+    {
+      "word": "overlap",
+      "definitions": [
+        "v. 重合",
+        "n. 重叠"
+      ]
+    },
+    {
+      "word": "rivalry",
+      "definitions": [
+        "n. 竞争，斗争"
+      ]
+    },
+    {
+      "word": "silt",
+      "definitions": [
+        "n. 泥沙"
+      ]
+    },
+    {
+      "word": "tar",
+      "definitions": [
+        "n. 沥青",
+        "n. (烟草中的)焦油"
+      ]
+    },
+    {
+      "word": "grind",
+      "definitions": [
+        "v. 磨碎",
+        "n. 苦工作"
+      ]
+    },
+    {
+      "word": "canoe",
+      "definitions": [
+        "n. 独木舟",
+        "v. 划独木舟"
+      ]
+    },
+    {
+      "word": "waterwheel",
+      "definitions": [
+        "n. 水车，水轮"
+      ]
+    },
+    {
+      "word": "assemblage",
+      "definitions": [
+        "n. 集合"
+      ]
+    },
+    {
+      "word": "mound",
+      "definitions": [
+        "n. 小山丘，土石堆"
+      ]
+    },
+    {
+      "word": "sibling",
+      "definitions": [
+        "n. 兄弟姐妹"
+      ]
+    },
+    {
+      "word": "auxiliary",
+      "definitions": [
+        "adj. 辅助的"
+      ]
+    },
+    {
+      "word": "transmission",
+      "definitions": [
+        "n. 传送，传播"
+      ]
+    },
+    {
+      "word": "maturation",
+      "definitions": [
+        "n. 成熟"
+      ]
+    },
+    {
+      "word": "furious",
+      "definitions": [
+        "adj. 狂怒的"
+      ]
+    },
+    {
+      "word": "elusive",
+      "definitions": [
+        "adj. 难懂的",
+        "adj. 易逃避的"
+      ]
+    },
+    {
+      "word": "obsession",
+      "definitions": [
+        "n. 执念"
+      ]
+    },
+    {
+      "word": "antecedent",
+      "definitions": [
+        "adj. 先前的",
+        "n. 前情",
+        "n. 祖先"
+      ]
+    },
+    {
+      "word": "furnace",
+      "definitions": [
+        "n. 火炉，熔炉"
+      ]
+    },
+    {
+      "word": "enigmatic",
+      "definitions": [
+        "adj. 神秘的"
+      ]
+    },
+    {
+      "word": "rigidity",
+      "definitions": [
+        "n. 僵硬",
+        "n. 严格，死板"
+      ]
+    },
+    {
+      "word": "manipulate",
+      "definitions": [
+        "v. 操作",
+        "v. 操纵，控制"
+      ]
+    },
+    {
+      "word": "obstruct",
+      "definitions": [
+        "v. 阻碍"
+      ]
+    },
+    {
+      "word": "fledge",
+      "definitions": [
+        "v. 长羽毛"
+      ]
+    },
+    {
+      "word": "perplex",
+      "definitions": [
+        "v. 使困惑"
+      ]
+    },
+    {
+      "word": "prosperity",
+      "definitions": [
+        "n. 繁荣"
+      ]
+    },
+    {
+      "word": "apprentice",
+      "definitions": [
+        "n. 学徒"
+      ]
+    },
+    {
+      "word": "greasy",
+      "definitions": [
+        "adj. 油腻的"
+      ]
+    },
+    {
+      "word": "bustle",
+      "definitions": [
+        "v. 喧闹，忙乱",
+        "n. 喧闹"
+      ]
+    },
+    {
+      "word": "authenticity",
+      "definitions": [
+        "n. 真实性"
+      ]
+    },
+    {
+      "word": "linear",
+      "definitions": [
+        "adj. 线性的，直线的"
+      ]
+    },
+    {
+      "word": "prior",
+      "definitions": [
+        "adj. 事先的",
+        "prep. 在……之前"
+      ]
+    },
+    {
+      "word": "unsuspecting",
+      "definitions": [
+        "adj. 不怀疑的"
+      ]
+    },
+    {
+      "word": "inscription",
+      "definitions": [
+        "n. 题词，铭文"
+      ]
+    },
+    {
+      "word": "dispersal",
+      "definitions": [
+        "n. 分散，传播"
+      ]
+    }
+  ]
+}

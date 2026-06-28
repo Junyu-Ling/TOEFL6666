@@ -1,0 +1,632 @@
+{
+  "meta": {
+    "level": 5,
+    "list": 4,
+    "title": "Level 5 · List 4",
+    "updatedAt": "2026-06-28"
+  },
+  "words": [
+    {
+      "word": "dynamic",
+      "definitions": [
+        "adj. 动态的",
+        "adj. 有活力的"
+      ]
+    },
+    {
+      "word": "velocity",
+      "definitions": [
+        "n. 速度"
+      ]
+    },
+    {
+      "word": "shimmer",
+      "definitions": [
+        "v. 闪烁",
+        "n. 微光"
+      ]
+    },
+    {
+      "word": "conflate",
+      "definitions": [
+        "v. 合并"
+      ]
+    },
+    {
+      "word": "surmise",
+      "definitions": [
+        "v. 猜测",
+        "n. 猜测"
+      ]
+    },
+    {
+      "word": "ribbon",
+      "definitions": [
+        "n. 缎带，丝带"
+      ]
+    },
+    {
+      "word": "unprecedented",
+      "definitions": [
+        "adj. 史无前例的"
+      ]
+    },
+    {
+      "word": "commemorate",
+      "definitions": [
+        "v. 庆祝，纪念"
+      ]
+    },
+    {
+      "word": "backtrack",
+      "definitions": [
+        "v. 由原路返回",
+        "v. 改变主意"
+      ]
+    },
+    {
+      "word": "mania",
+      "definitions": [
+        "n. 狂热"
+      ]
+    },
+    {
+      "word": "isle",
+      "definitions": [
+        "n. 岛"
+      ]
+    },
+    {
+      "word": "cathedral",
+      "definitions": [
+        "n. 大教堂"
+      ]
+    },
+    {
+      "word": "communal",
+      "definitions": [
+        "adj. 公共的"
+      ]
+    },
+    {
+      "word": "distill",
+      "definitions": [
+        "v. 蒸馏"
+      ]
+    },
+    {
+      "word": "induce",
+      "definitions": [
+        "v. 引起",
+        "v. 劝诱，促使"
+      ]
+    },
+    {
+      "word": "nitrate",
+      "definitions": [
+        "n. 硝酸盐"
+      ]
+    },
+    {
+      "word": "telltale",
+      "definitions": [
+        "adj. 暴露实情的"
+      ]
+    },
+    {
+      "word": "blemish",
+      "definitions": [
+        "n. 瑕疵，缺点",
+        "v. 玷污，损害"
+      ]
+    },
+    {
+      "word": "literacy",
+      "definitions": [
+        "n. 读写能力"
+      ]
+    },
+    {
+      "word": "mandarin",
+      "definitions": [
+        "n. 普通话",
+        "n. 官僚"
+      ]
+    },
+    {
+      "word": "silhouette",
+      "definitions": [
+        "n. 轮廓"
+      ]
+    },
+    {
+      "word": "symphony",
+      "definitions": [
+        "n. 交响乐"
+      ]
+    },
+    {
+      "word": "radioactive",
+      "definitions": [
+        "adj. 放射性的"
+      ]
+    },
+    {
+      "word": "entrepreneur",
+      "definitions": [
+        "n. 企业家"
+      ]
+    },
+    {
+      "word": "predetermine",
+      "definitions": [
+        "v. 预先决定"
+      ]
+    },
+    {
+      "word": "wagon",
+      "definitions": [
+        "n. 四轮马车"
+      ]
+    },
+    {
+      "word": "intermittent",
+      "definitions": [
+        "adj. 间歇的，断断续续的"
+      ]
+    },
+    {
+      "word": "gland",
+      "definitions": [
+        "n. 腺"
+      ]
+    },
+    {
+      "word": "respiration",
+      "definitions": [
+        "n. 呼吸"
+      ]
+    },
+    {
+      "word": "remediation",
+      "definitions": [
+        "n. 补救，矫正"
+      ]
+    },
+    {
+      "word": "paramount",
+      "definitions": [
+        "adj. 最重要的"
+      ]
+    },
+    {
+      "word": "beam",
+      "definitions": [
+        "n. 横梁",
+        "n. 光线",
+        "v. 绽放笑容"
+      ]
+    },
+    {
+      "word": "disproportionate",
+      "definitions": [
+        "adj. 不成比例的"
+      ]
+    },
+    {
+      "word": "incorporate",
+      "definitions": [
+        "v. 包含",
+        "v. 组成公司"
+      ]
+    },
+    {
+      "word": "horsepower",
+      "definitions": [
+        "n. 马力"
+      ]
+    },
+    {
+      "word": "carrier",
+      "definitions": [
+        "n. 运输公司",
+        "n. 电信运营商",
+        "n. 运送者"
+      ]
+    },
+    {
+      "word": "indigenous",
+      "definitions": [
+        "adj. 本土的"
+      ]
+    },
+    {
+      "word": "synthesize",
+      "definitions": [
+        "v. 合成"
+      ]
+    },
+    {
+      "word": "puff",
+      "definitions": [
+        "v. 喷出",
+        "n. 一阵(风或烟)"
+      ]
+    },
+    {
+      "word": "hind",
+      "definitions": [
+        "n. 雌鹿",
+        "adj. 后面的"
+      ]
+    },
+    {
+      "word": "charcoal",
+      "definitions": [
+        "n. 木炭"
+      ]
+    },
+    {
+      "word": "rigor",
+      "definitions": [
+        "n. 严格",
+        "n. 严密，严谨",
+        "n. 严酷"
+      ]
+    },
+    {
+      "word": "compositional",
+      "definitions": [
+        "adj. 组成的"
+      ]
+    },
+    {
+      "word": "molten",
+      "definitions": [
+        "adj. 熔化的"
+      ]
+    },
+    {
+      "word": "ornament",
+      "definitions": [
+        "n. 装饰品",
+        "v. 装饰"
+      ]
+    },
+    {
+      "word": "prominent",
+      "definitions": [
+        "adj. 杰出的，卓越的",
+        "adj. 突出的"
+      ]
+    },
+    {
+      "word": "tangle",
+      "definitions": [
+        "v. 缠结",
+        "n. 缠结"
+      ]
+    },
+    {
+      "word": "fragment",
+      "definitions": [
+        "n. 碎片"
+      ]
+    },
+    {
+      "word": "stiff",
+      "definitions": [
+        "adj. 硬的，僵硬的"
+      ]
+    },
+    {
+      "word": "gist",
+      "definitions": [
+        "n. 主旨，要点"
+      ]
+    },
+    {
+      "word": "dictator",
+      "definitions": [
+        "n. 独裁者"
+      ]
+    },
+    {
+      "word": "micronutrient",
+      "definitions": [
+        "n. 微量营养元素"
+      ]
+    },
+    {
+      "word": "unleash",
+      "definitions": [
+        "v. 解开，释放"
+      ]
+    },
+    {
+      "word": "gravel",
+      "definitions": [
+        "n. 碎石，砂砾"
+      ]
+    },
+    {
+      "word": "inventory",
+      "definitions": [
+        "n. 存货"
+      ]
+    },
+    {
+      "word": "velvet",
+      "definitions": [
+        "n. 天鹅绒"
+      ]
+    },
+    {
+      "word": "dispersion",
+      "definitions": [
+        "n. 散布"
+      ]
+    },
+    {
+      "word": "solitary",
+      "definitions": [
+        "adj. 孤独的"
+      ]
+    },
+    {
+      "word": "revitalize",
+      "definitions": [
+        "v. 使复苏"
+      ]
+    },
+    {
+      "word": "nucleus",
+      "definitions": [
+        "n. (原子或细胞)核"
+      ]
+    },
+    {
+      "word": "propel",
+      "definitions": [
+        "v. 推进"
+      ]
+    },
+    {
+      "word": "streak",
+      "definitions": [
+        "n. 条纹"
+      ]
+    },
+    {
+      "word": "sodium",
+      "definitions": [
+        "n. 钠"
+      ]
+    },
+    {
+      "word": "subterranean",
+      "definitions": [
+        "adj. 地下的"
+      ]
+    },
+    {
+      "word": "suppress",
+      "definitions": [
+        "v. 镇压，抑制"
+      ]
+    },
+    {
+      "word": "backdrop",
+      "definitions": [
+        "n. 背景"
+      ]
+    },
+    {
+      "word": "humanitarian",
+      "definitions": [
+        "adj. 人道主义的",
+        "n. 人道主义者，慈善家"
+      ]
+    },
+    {
+      "word": "savory",
+      "definitions": [
+        "adj. 可口的",
+        "adj. 咸味的，辛辣的",
+        "n. 香薄荷"
+      ]
+    },
+    {
+      "word": "inevitable",
+      "definitions": [
+        "adj. 必然的，不可避免的",
+        "n. 必然"
+      ]
+    },
+    {
+      "word": "deformity",
+      "definitions": [
+        "n. 畸形"
+      ]
+    },
+    {
+      "word": "chain",
+      "definitions": [
+        "n. 链",
+        "n. 一连串",
+        "n. 连锁"
+      ]
+    },
+    {
+      "word": "hail",
+      "definitions": [
+        "v. 致敬，招呼",
+        "n. 冰雹"
+      ]
+    },
+    {
+      "word": "dwindle",
+      "definitions": [
+        "v. 减少，变小"
+      ]
+    },
+    {
+      "word": "cache",
+      "definitions": [
+        "n. 贮存物，隐藏处"
+      ]
+    },
+    {
+      "word": "overt",
+      "definitions": [
+        "adj. 公开的，明显的"
+      ]
+    },
+    {
+      "word": "fusion",
+      "definitions": [
+        "n. 融合"
+      ]
+    },
+    {
+      "word": "antiquity",
+      "definitions": [
+        "n. 古物",
+        "n. 古代"
+      ]
+    },
+    {
+      "word": "entwine",
+      "definitions": [
+        "v. 缠住，盘绕"
+      ]
+    },
+    {
+      "word": "hectare",
+      "definitions": [
+        "n. 公顷"
+      ]
+    },
+    {
+      "word": "pictorial",
+      "definitions": [
+        "adj. 绘画的，图示的"
+      ]
+    },
+    {
+      "word": "scarcity",
+      "definitions": [
+        "n. 不足，缺乏"
+      ]
+    },
+    {
+      "word": "analogue",
+      "definitions": [
+        "n. 类似物"
+      ]
+    },
+    {
+      "word": "interference",
+      "definitions": [
+        "n. 干扰，妨碍"
+      ]
+    },
+    {
+      "word": "captive",
+      "definitions": [
+        "adj. 被迷住的",
+        "adj. 被俘虏的"
+      ]
+    },
+    {
+      "word": "perennial",
+      "definitions": [
+        "adj. 多年生的，四季不断的",
+        "adj. 长期存在的",
+        "n. 多年生植物"
+      ]
+    },
+    {
+      "word": "default",
+      "definitions": [
+        "v. 拖欠，不履行",
+        "n. 系统默认值"
+      ]
+    },
+    {
+      "word": "congestion",
+      "definitions": [
+        "n. 拥挤，拥塞"
+      ]
+    },
+    {
+      "word": "wrinkle",
+      "definitions": [
+        "n. 皱纹",
+        "v. 起皱纹"
+      ]
+    },
+    {
+      "word": "animate",
+      "definitions": [
+        "v. 使有生气",
+        "adj. 有生命的"
+      ]
+    },
+    {
+      "word": "destabilize",
+      "definitions": [
+        "v. 使动摇"
+      ]
+    },
+    {
+      "word": "frontal",
+      "definitions": [
+        "adj. 正面的，前面的"
+      ]
+    },
+    {
+      "word": "immobile",
+      "definitions": [
+        "adj. 不动的，不能动的"
+      ]
+    },
+    {
+      "word": "resemble",
+      "definitions": [
+        "v. 像"
+      ]
+    },
+    {
+      "word": "meticulous",
+      "definitions": [
+        "adj. 细致的，一丝不苟的"
+      ]
+    },
+    {
+      "word": "dehydration",
+      "definitions": [
+        "n. 脱水"
+      ]
+    },
+    {
+      "word": "gravitation",
+      "definitions": [
+        "n. 重力，万有引力"
+      ]
+    },
+    {
+      "word": "elliptical",
+      "definitions": [
+        "adj. 省略的，隐晦的",
+        "adj. 椭圆的"
+      ]
+    },
+    {
+      "word": "ridge",
+      "definitions": [
+        "n. 山脊，山脉"
+      ]
+    }
+  ]
+}

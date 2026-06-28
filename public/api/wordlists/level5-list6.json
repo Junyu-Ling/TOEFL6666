@@ -1,0 +1,606 @@
+{
+  "meta": {
+    "level": 5,
+    "list": 6,
+    "title": "Level 5 · List 6",
+    "updatedAt": "2026-06-28"
+  },
+  "words": [
+    {
+      "word": "stimulus",
+      "definitions": [
+        "n. 刺激",
+        "n. 动力"
+      ]
+    },
+    {
+      "word": "observatory",
+      "definitions": [
+        "n. 天文台"
+      ]
+    },
+    {
+      "word": "urbane",
+      "definitions": [
+        "adj. 彬彬有礼的"
+      ]
+    },
+    {
+      "word": "sprout",
+      "definitions": [
+        "v. 发芽"
+      ]
+    },
+    {
+      "word": "piracy",
+      "definitions": [
+        "n. 盗版，剽窃",
+        "n. 海盗行为"
+      ]
+    },
+    {
+      "word": "eclipse",
+      "definitions": [
+        "v. 使黯然失色",
+        "n. 日蚀，月蚀"
+      ]
+    },
+    {
+      "word": "overrule",
+      "definitions": [
+        "v. 否决"
+      ]
+    },
+    {
+      "word": "tonal",
+      "definitions": [
+        "adj. 色调的，音调的"
+      ]
+    },
+    {
+      "word": "dwarf",
+      "definitions": [
+        "n. 侏儒，矮子"
+      ]
+    },
+    {
+      "word": "senate",
+      "definitions": [
+        "n. 参议院"
+      ]
+    },
+    {
+      "word": "reciprocate",
+      "definitions": [
+        "v. 同等回应，回报"
+      ]
+    },
+    {
+      "word": "desolate",
+      "definitions": [
+        "adj. 荒凉的"
+      ]
+    },
+    {
+      "word": "reap",
+      "definitions": [
+        "v. 收割(庄稼)，收获"
+      ]
+    },
+    {
+      "word": "astound",
+      "definitions": [
+        "v. 使震惊"
+      ]
+    },
+    {
+      "word": "electromagnetic",
+      "definitions": [
+        "adj. 电磁的"
+      ]
+    },
+    {
+      "word": "lens",
+      "definitions": [
+        "n. 镜头",
+        "n. 隐形眼镜"
+      ]
+    },
+    {
+      "word": "flake",
+      "definitions": [
+        "n. 小薄片",
+        "v. 使……成薄片"
+      ]
+    },
+    {
+      "word": "patron",
+      "definitions": [
+        "n. 资助人",
+        "n. 主顾"
+      ]
+    },
+    {
+      "word": "deform",
+      "definitions": [
+        "v. 使变形"
+      ]
+    },
+    {
+      "word": "dynamism",
+      "definitions": [
+        "n. 推动力"
+      ]
+    },
+    {
+      "word": "compensation",
+      "definitions": [
+        "n. 补偿，报酬"
+      ]
+    },
+    {
+      "word": "convict",
+      "definitions": [
+        "v. 证明有罪",
+        "n. 罪犯"
+      ]
+    },
+    {
+      "word": "junction",
+      "definitions": [
+        "n. 汇合点"
+      ]
+    },
+    {
+      "word": "cramp",
+      "definitions": [
+        "n. 痉挛",
+        "v. 束缚，限制",
+        "adj. 难解的"
+      ]
+    },
+    {
+      "word": "impoverish",
+      "definitions": [
+        "v. 使贫穷，使枯竭"
+      ]
+    },
+    {
+      "word": "toad",
+      "definitions": [
+        "n. 蟾蜍"
+      ]
+    },
+    {
+      "word": "gigantic",
+      "definitions": [
+        "adj. 巨大的，庞大的"
+      ]
+    },
+    {
+      "word": "utter",
+      "definitions": [
+        "v. 发出(声音)，说",
+        "adj. 完全的，彻底的"
+      ]
+    },
+    {
+      "word": "monopoly",
+      "definitions": [
+        "n. 垄断"
+      ]
+    },
+    {
+      "word": "misconception",
+      "definitions": [
+        "n. 错误的观念"
+      ]
+    },
+    {
+      "word": "spectrum",
+      "definitions": [
+        "n. 光谱",
+        "n. 范围"
+      ]
+    },
+    {
+      "word": "altitude",
+      "definitions": [
+        "n. 高度"
+      ]
+    },
+    {
+      "word": "ancestral",
+      "definitions": [
+        "adj. 祖先的"
+      ]
+    },
+    {
+      "word": "grandeur",
+      "definitions": [
+        "n. 壮丽，庄严，宏伟"
+      ]
+    },
+    {
+      "word": "condensation",
+      "definitions": [
+        "n. 冷凝",
+        "n. 压缩"
+      ]
+    },
+    {
+      "word": "contaminate",
+      "definitions": [
+        "v. 污染"
+      ]
+    },
+    {
+      "word": "crow",
+      "definitions": [
+        "n. 乌鸦",
+        "v. 啼叫，自鸣得意"
+      ]
+    },
+    {
+      "word": "juror",
+      "definitions": [
+        "n. 陪审员"
+      ]
+    },
+    {
+      "word": "adrift",
+      "definitions": [
+        "adj. 漂浮着的",
+        "adj. 漂泊的"
+      ]
+    },
+    {
+      "word": "refinery",
+      "definitions": [
+        "n. 精炼厂"
+      ]
+    },
+    {
+      "word": "overwhelm",
+      "definitions": [
+        "v. 淹没",
+        "v. (强烈地影响而)使不知所措",
+        "v. 击败"
+      ]
+    },
+    {
+      "word": "bearing",
+      "definitions": [
+        "n. 举止",
+        "n. 关系",
+        "n. 方位"
+      ]
+    },
+    {
+      "word": "iridescent",
+      "definitions": [
+        "adj. 彩虹色的"
+      ]
+    },
+    {
+      "word": "compulsory",
+      "definitions": [
+        "adj. 义务的"
+      ]
+    },
+    {
+      "word": "appall",
+      "definitions": [
+        "v. 使胆寒"
+      ]
+    },
+    {
+      "word": "dialect",
+      "definitions": [
+        "n. 方言"
+      ]
+    },
+    {
+      "word": "oceanic",
+      "definitions": [
+        "adj. 海洋的"
+      ]
+    },
+    {
+      "word": "immerse",
+      "definitions": [
+        "v. 浸泡",
+        "v. 陷入"
+      ]
+    },
+    {
+      "word": "tether",
+      "definitions": [
+        "v. 拴住"
+      ]
+    },
+    {
+      "word": "infertile",
+      "definitions": [
+        "adj. 贫瘠的",
+        "adj. 不育的"
+      ]
+    },
+    {
+      "word": "trim",
+      "definitions": [
+        "v. 修剪",
+        "v. 装饰，镶边于"
+      ]
+    },
+    {
+      "word": "alpine",
+      "definitions": [
+        "adj. 阿尔卑斯山的，高山的"
+      ]
+    },
+    {
+      "word": "aristocrat",
+      "definitions": [
+        "n. 贵族"
+      ]
+    },
+    {
+      "word": "mow",
+      "definitions": [
+        "v. 割草"
+      ]
+    },
+    {
+      "word": "turbine",
+      "definitions": [
+        "n. 涡轮"
+      ]
+    },
+    {
+      "word": "utensil",
+      "definitions": [
+        "n. 器皿，用具"
+      ]
+    },
+    {
+      "word": "disclaimer",
+      "definitions": [
+        "n. 免责声明"
+      ]
+    },
+    {
+      "word": "cognitive",
+      "definitions": [
+        "adj. 认知的"
+      ]
+    },
+    {
+      "word": "metabolism",
+      "definitions": [
+        "n. 新陈代谢"
+      ]
+    },
+    {
+      "word": "ascribe",
+      "definitions": [
+        "v. 归因于"
+      ]
+    },
+    {
+      "word": "plummet",
+      "definitions": [
+        "v. 垂直落下，骤然下跌"
+      ]
+    },
+    {
+      "word": "phase",
+      "definitions": [
+        "n. 阶段"
+      ]
+    },
+    {
+      "word": "tyranny",
+      "definitions": [
+        "n. 专制暴政"
+      ]
+    },
+    {
+      "word": "pollen",
+      "definitions": [
+        "n. 花粉"
+      ]
+    },
+    {
+      "word": "excavate",
+      "definitions": [
+        "v. 挖掘，开凿"
+      ]
+    },
+    {
+      "word": "luminous",
+      "definitions": [
+        "adj. 发光的"
+      ]
+    },
+    {
+      "word": "cello",
+      "definitions": [
+        "n. 大提琴"
+      ]
+    },
+    {
+      "word": "crystallize",
+      "definitions": [
+        "v. 使结晶"
+      ]
+    },
+    {
+      "word": "entitle",
+      "definitions": [
+        "v. 称做……定名为",
+        "v. 使……有权利"
+      ]
+    },
+    {
+      "word": "malicious",
+      "definitions": [
+        "adj. 恶意的"
+      ]
+    },
+    {
+      "word": "exposed",
+      "definitions": [
+        "adj. 暴露的"
+      ]
+    },
+    {
+      "word": "proxy",
+      "definitions": [
+        "n. 代理权，代理人"
+      ]
+    },
+    {
+      "word": "spite",
+      "definitions": [
+        "n. 恶意"
+      ]
+    },
+    {
+      "word": "mutual",
+      "definitions": [
+        "adj. 相互的"
+      ]
+    },
+    {
+      "word": "bleak",
+      "definitions": [
+        "adj. 阴冷的，荒凉的",
+        "adj. 黯淡的，无希望的"
+      ]
+    },
+    {
+      "word": "ensue",
+      "definitions": [
+        "v. 跟着发生，接着发生"
+      ]
+    },
+    {
+      "word": "conserve",
+      "definitions": [
+        "v. 保存"
+      ]
+    },
+    {
+      "word": "contraction",
+      "definitions": [
+        "n. 收缩，紧缩",
+        "n. 缩写"
+      ]
+    },
+    {
+      "word": "woolen",
+      "definitions": [
+        "adj. 羊毛的"
+      ]
+    },
+    {
+      "word": "analogy",
+      "definitions": [
+        "n. 类比"
+      ]
+    },
+    {
+      "word": "driven",
+      "definitions": [
+        "adj. 发奋图强的"
+      ]
+    },
+    {
+      "word": "meteorite",
+      "definitions": [
+        "n. 陨星，陨石"
+      ]
+    },
+    {
+      "word": "anomaly",
+      "definitions": [
+        "n. 异常"
+      ]
+    },
+    {
+      "word": "microorganism",
+      "definitions": [
+        "n. 微生物"
+      ]
+    },
+    {
+      "word": "buffalo",
+      "definitions": [
+        "n. 水牛"
+      ]
+    },
+    {
+      "word": "conductance",
+      "definitions": [
+        "n. [电]电导，导率，电导系数"
+      ]
+    },
+    {
+      "word": "culprit",
+      "definitions": [
+        "n. 犯人，罪犯"
+      ]
+    },
+    {
+      "word": "predominant",
+      "definitions": [
+        "adj. 占主导地位的"
+      ]
+    },
+    {
+      "word": "vicinity",
+      "definitions": [
+        "n. 邻近，附近"
+      ]
+    },
+    {
+      "word": "culminate",
+      "definitions": [
+        "v. 达到顶点"
+      ]
+    },
+    {
+      "word": "dome",
+      "definitions": [
+        "n. 圆屋顶"
+      ]
+    },
+    {
+      "word": "carbohydrate",
+      "definitions": [
+        "n. 碳水化合物"
+      ]
+    },
+    {
+      "word": "assembly",
+      "definitions": [
+        "n. 集会",
+        "n. 装配"
+      ]
+    },
+    {
+      "word": "fluctuate",
+      "definitions": [
+        "v. 波动"
+      ]
+    },
+    {
+      "word": "plague",
+      "definitions": [
+        "n. 瘟疫",
+        "v. 折磨，使苦恼"
+      ]
+    }
+  ]
+}

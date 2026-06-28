@@ -1,0 +1,613 @@
+{
+  "meta": {
+    "level": 5,
+    "list": 1,
+    "title": "Level 5 · List 1",
+    "updatedAt": "2026-06-28"
+  },
+  "words": [
+    {
+      "word": "duplicate",
+      "definitions": [
+        "v. 复制，使加倍"
+      ]
+    },
+    {
+      "word": "reaper",
+      "definitions": [
+        "n. 收割机(者)"
+      ]
+    },
+    {
+      "word": "debug",
+      "definitions": [
+        "v. 除错"
+      ]
+    },
+    {
+      "word": "sap",
+      "definitions": [
+        "n. (植物的)汁液，精力",
+        "v. 消耗"
+      ]
+    },
+    {
+      "word": "displacement",
+      "definitions": [
+        "n. 取代",
+        "n. 逐出家园"
+      ]
+    },
+    {
+      "word": "inject",
+      "definitions": [
+        "v. 注射",
+        "v. 注入，增添"
+      ]
+    },
+    {
+      "word": "arbitrary",
+      "definitions": [
+        "adj. 任意的",
+        "adj. 武断的"
+      ]
+    },
+    {
+      "word": "simultaneous",
+      "definitions": [
+        "adj. 同时发生的"
+      ]
+    },
+    {
+      "word": "consulate",
+      "definitions": [
+        "n. 领事馆"
+      ]
+    },
+    {
+      "word": "Scandinavia",
+      "definitions": [
+        "n. 斯堪的纳维亚(北欧半岛)"
+      ]
+    },
+    {
+      "word": "norm",
+      "definitions": [
+        "n. 准则，标准"
+      ]
+    },
+    {
+      "word": "evoke",
+      "definitions": [
+        "v. 引起，唤起"
+      ]
+    },
+    {
+      "word": "glossary",
+      "definitions": [
+        "n. 术语(特殊用语)表",
+        "n. 专业词典"
+      ]
+    },
+    {
+      "word": "denominator",
+      "definitions": [
+        "n. 分母"
+      ]
+    },
+    {
+      "word": "precede",
+      "definitions": [
+        "v. 先于"
+      ]
+    },
+    {
+      "word": "verbal",
+      "definitions": [
+        "adj. 口头的"
+      ]
+    },
+    {
+      "word": "engrave",
+      "definitions": [
+        "v. 雕刻",
+        "v. 铭记"
+      ]
+    },
+    {
+      "word": "embellish",
+      "definitions": [
+        "v. 修饰，装饰"
+      ]
+    },
+    {
+      "word": "irreversible",
+      "definitions": [
+        "adj. 不可逆转的"
+      ]
+    },
+    {
+      "word": "reign",
+      "definitions": [
+        "v. 统治",
+        "n. 统治，支配"
+      ]
+    },
+    {
+      "word": "resonance",
+      "definitions": [
+        "n. 回声",
+        "n. 共鸣",
+        "n. 共振"
+      ]
+    },
+    {
+      "word": "anthropology",
+      "definitions": [
+        "n. 人类学"
+      ]
+    },
+    {
+      "word": "preceding",
+      "definitions": [
+        "adj. 前面的"
+      ]
+    },
+    {
+      "word": "soluble",
+      "definitions": [
+        "adj. 可溶解的，水溶性的"
+      ]
+    },
+    {
+      "word": "decipher",
+      "definitions": [
+        "v. 破译"
+      ]
+    },
+    {
+      "word": "clutch",
+      "definitions": [
+        "v. 抓住，紧握",
+        "n. 离合器"
+      ]
+    },
+    {
+      "word": "financier",
+      "definitions": [
+        "n. 金融家"
+      ]
+    },
+    {
+      "word": "flap",
+      "definitions": [
+        "v. 拍动"
+      ]
+    },
+    {
+      "word": "liquefy",
+      "definitions": [
+        "v. 液化"
+      ]
+    },
+    {
+      "word": "flora",
+      "definitions": [
+        "n. 植物群"
+      ]
+    },
+    {
+      "word": "flourish",
+      "definitions": [
+        "v. 茂盛",
+        "v. 繁荣，兴旺",
+        "v. 挥舞"
+      ]
+    },
+    {
+      "word": "crane",
+      "definitions": [
+        "n. 吊车，起重机",
+        "v. 伸着脖子看"
+      ]
+    },
+    {
+      "word": "colossal",
+      "definitions": [
+        "adj. 巨大的"
+      ]
+    },
+    {
+      "word": "thread",
+      "definitions": [
+        "n. 线",
+        "v. 穿过",
+        "n. 螺纹"
+      ]
+    },
+    {
+      "word": "credit",
+      "definitions": [
+        "n. 信用",
+        "n. 学分",
+        "v. 把……归给，归功于"
+      ]
+    },
+    {
+      "word": "topography",
+      "definitions": [
+        "n. 地势，地形学"
+      ]
+    },
+    {
+      "word": "frenzy",
+      "definitions": [
+        "n. 狂暴，狂怒"
+      ]
+    },
+    {
+      "word": "saline",
+      "definitions": [
+        "adj. 含盐的"
+      ]
+    },
+    {
+      "word": "specimen",
+      "definitions": [
+        "n. 标本，样本"
+      ]
+    },
+    {
+      "word": "ore",
+      "definitions": [
+        "n. 矿石"
+      ]
+    },
+    {
+      "word": "aquarium",
+      "definitions": [
+        "n. 水族馆"
+      ]
+    },
+    {
+      "word": "unearned",
+      "definitions": [
+        "adj. 不劳而获的"
+      ]
+    },
+    {
+      "word": "spontaneous",
+      "definitions": [
+        "adj. 自发的，自然的"
+      ]
+    },
+    {
+      "word": "bland",
+      "definitions": [
+        "adj. 乏味的",
+        "adj. 清淡的"
+      ]
+    },
+    {
+      "word": "sinkhole",
+      "definitions": [
+        "n. 落水洞"
+      ]
+    },
+    {
+      "word": "pyramid",
+      "definitions": [
+        "n. 金字塔"
+      ]
+    },
+    {
+      "word": "zenith",
+      "definitions": [
+        "n. 顶峰，顶点"
+      ]
+    },
+    {
+      "word": "erratic",
+      "definitions": [
+        "adj. 不稳定的，古怪的"
+      ]
+    },
+    {
+      "word": "gateway",
+      "definitions": [
+        "n. 门，通道"
+      ]
+    },
+    {
+      "word": "disperse",
+      "definitions": [
+        "v. 分散，使散开"
+      ]
+    },
+    {
+      "word": "premier",
+      "definitions": [
+        "n. 总理",
+        "adj. 最好的，首要的"
+      ]
+    },
+    {
+      "word": "outpost",
+      "definitions": [
+        "n. 边区村落",
+        "n. 前哨"
+      ]
+    },
+    {
+      "word": "dilemma",
+      "definitions": [
+        "n. 困境"
+      ]
+    },
+    {
+      "word": "influx",
+      "definitions": [
+        "n. 流入",
+        "n. 汇集"
+      ]
+    },
+    {
+      "word": "plume",
+      "definitions": [
+        "n. 大片羽毛",
+        "n. 岩浆柱"
+      ]
+    },
+    {
+      "word": "succession",
+      "definitions": [
+        "n. [生态]演替",
+        "n. 继任",
+        "n. 连续"
+      ]
+    },
+    {
+      "word": "vacate",
+      "definitions": [
+        "v. 空出，腾出(房间)"
+      ]
+    },
+    {
+      "word": "mosaic",
+      "definitions": [
+        "n. 马赛克"
+      ]
+    },
+    {
+      "word": "agitate",
+      "definitions": [
+        "v. 使……激动",
+        "v. 煽动"
+      ]
+    },
+    {
+      "word": "inconclusive",
+      "definitions": [
+        "adj. 无结果的",
+        "adj. 无说服力的"
+      ]
+    },
+    {
+      "word": "debris",
+      "definitions": [
+        "n. 碎片，残骸"
+      ]
+    },
+    {
+      "word": "ingenious",
+      "definitions": [
+        "adj. 聪明的，独创的"
+      ]
+    },
+    {
+      "word": "artisan",
+      "definitions": [
+        "n. 工匠"
+      ]
+    },
+    {
+      "word": "derivative",
+      "definitions": [
+        "n. 衍生物"
+      ]
+    },
+    {
+      "word": "deterioration",
+      "definitions": [
+        "n. 恶化"
+      ]
+    },
+    {
+      "word": "overemphasize",
+      "definitions": [
+        "v. 过分强调"
+      ]
+    },
+    {
+      "word": "Celsius",
+      "definitions": [
+        "n. 摄氏度"
+      ]
+    },
+    {
+      "word": "radiator",
+      "definitions": [
+        "n. 散热器",
+        "n. 暖气片"
+      ]
+    },
+    {
+      "word": "vertical",
+      "definitions": [
+        "adj. 垂直的"
+      ]
+    },
+    {
+      "word": "satire",
+      "definitions": [
+        "n. 讽刺"
+      ]
+    },
+    {
+      "word": "venom",
+      "definitions": [
+        "n. 毒液"
+      ]
+    },
+    {
+      "word": "elevation",
+      "definitions": [
+        "n. 海拔",
+        "n. 提高"
+      ]
+    },
+    {
+      "word": "superficially",
+      "definitions": [
+        "adv. 表面地，虚假地"
+      ]
+    },
+    {
+      "word": "converge",
+      "definitions": [
+        "v. 使汇聚"
+      ]
+    },
+    {
+      "word": "sift",
+      "definitions": [
+        "v. 筛(面粉)，筛选"
+      ]
+    },
+    {
+      "word": "volatile",
+      "definitions": [
+        "adj. 多变的",
+        "adj. 易挥发的"
+      ]
+    },
+    {
+      "word": "foul",
+      "definitions": [
+        "adj. 邪恶的，污秽的",
+        "v. 犯规"
+      ]
+    },
+    {
+      "word": "census",
+      "definitions": [
+        "n. 人口普查"
+      ]
+    },
+    {
+      "word": "designate",
+      "definitions": [
+        "v. 指定，指派",
+        "v. 把……定名为",
+        "v. 标出"
+      ]
+    },
+    {
+      "word": "valid",
+      "definitions": [
+        "adj. 有根据的",
+        "adj. 有效的"
+      ]
+    },
+    {
+      "word": "shroud",
+      "definitions": [
+        "v. 掩盖",
+        "n. 裹尸布"
+      ]
+    },
+    {
+      "word": "confederacy",
+      "definitions": [
+        "n. 联盟，联邦"
+      ]
+    },
+    {
+      "word": "maneuver",
+      "definitions": [
+        "v. 操控",
+        "n. 手段，策略",
+        "n. 军事演习"
+      ]
+    },
+    {
+      "word": "decompose",
+      "definitions": [
+        "v. 腐烂",
+        "v. 分解"
+      ]
+    },
+    {
+      "word": "growl",
+      "definitions": [
+        "v. 咆哮"
+      ]
+    },
+    {
+      "word": "alienate",
+      "definitions": [
+        "v. 使疏远，离间"
+      ]
+    },
+    {
+      "word": "undermine",
+      "definitions": [
+        "v. 逐渐破坏，削弱"
+      ]
+    },
+    {
+      "word": "deem",
+      "definitions": [
+        "v. 认为，视作"
+      ]
+    },
+    {
+      "word": "reciprocity",
+      "definitions": [
+        "n. 互惠"
+      ]
+    },
+    {
+      "word": "elicit",
+      "definitions": [
+        "v. 引出"
+      ]
+    },
+    {
+      "word": "pivotal",
+      "definitions": [
+        "adj. 关键的"
+      ]
+    },
+    {
+      "word": "mobilize",
+      "definitions": [
+        "v. 鼓动",
+        "v. 组织"
+      ]
+    },
+    {
+      "word": "sterile",
+      "definitions": [
+        "adj. 无菌的",
+        "adj. 不育的"
+      ]
+    },
+    {
+      "word": "exploitation",
+      "definitions": [
+        "n. 开发，开采"
+      ]
+    }
+  ]
+}
