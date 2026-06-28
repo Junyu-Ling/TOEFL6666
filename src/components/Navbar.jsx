@@ -12,7 +12,7 @@ export default function Navbar({ activeTab, onTabChange, counts }) {
   return (
     <nav className="navbar">
       <div className="navbar__brand">
-        <strong>TOEFL6·6·6·6</strong>
+        <strong>TOEFL 6·6·6·6</strong>
       </div>
 
       <div className="navbar__tabs">
