@@ -141,7 +141,17 @@ export default function VocabAssistant({ currentWord }) {
         aria-expanded={open}
         aria-label={open ? "关闭词汇 AI" : "打开词汇 AI"}
       >
-        {open ? "×" : "AI"}
+        {open ? (
+          "×"
+        ) : (
+          <img
+            src="/ai-assistant-icon.png"
+            alt=""
+            className="vocab-assistant__fab-icon"
+            width={52}
+            height={52}
+          />
+        )}
       </button>
     </div>
   );

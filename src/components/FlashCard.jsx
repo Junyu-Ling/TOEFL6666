@@ -253,13 +253,13 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
         }
       }
 
-      if (e.key === "ArrowUp" || e.key === "ArrowLeft") {
+      if (e.key === "ArrowUp") {
         e.preventDefault();
         onPrev?.();
         return;
       }
 
-      if (e.key === "ArrowDown" || e.key === "ArrowRight") {
+      if (e.key === "ArrowDown") {
         e.preventDefault();
         onNext?.();
         return;
@@ -439,7 +439,7 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
                 <span className="flashcard__status flashcard__status--desktop">
                   {dictating
                     ? "说完后停顿 2 秒自动提交批改"
-                    : "输入框内：空格正常输入 · Enter 提交批改｜框外：空格翻面｜↑↓←→ 切换单词"}
+                    : "输入框内：空格正常输入 · Enter 提交批改｜框外：空格翻面｜↑↓ 切换单词"}
                 </span>
                 <span className="flashcard__status flashcard__status--mobile">
                   {dictating
@@ -475,7 +475,7 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
               <button type="button" className="btn btn--primary flashcard__next" onClick={onNext}>
                 下一个
               </button>
-              <p className="flashcard__footer flashcard__footer--back">↓→ 下一个 · 空格翻回正面</p>
+              <p className="flashcard__footer flashcard__footer--back">↓ 下一个 · 空格翻回正面</p>
             </>
           )}
 
