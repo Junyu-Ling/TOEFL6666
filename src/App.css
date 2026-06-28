@@ -113,6 +113,24 @@ body {
   flex-direction: column;
 }
 
+.app-motto {
+  margin-top: auto;
+  padding: 1.125rem 1.5rem 1.5rem;
+  text-align: center;
+  border-top: 1px solid var(--border);
+  background: color-mix(in srgb, var(--surface) 55%, transparent);
+}
+
+.app-motto__text {
+  margin: 0;
+  max-width: 36rem;
+  margin-inline: auto;
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
 /* ── Navbar ── */
 .navbar {
   display: flex;

@@ -7,6 +7,7 @@ import SettingsPanel from "./components/SettingsPanel";
 import VocabAssistant from "./components/VocabAssistant";
 import StreakPanel from "./components/StreakPanel";
 import VocabLoadingScreen from "./components/VocabLoadingScreen";
+import MottoFooter from "./components/MottoFooter";
 import { recordVisit, refreshStreak } from "./services/streak";
 import { useMicrophone } from "./hooks/useMicrophone";
 import { fetchWordList, fetchWordListManifest } from "./services/wordlist";
@@ -521,6 +522,8 @@ export default function App() {
         currentWord={activeTab === "practice" ? currentWord : null}
         micGranted={mic.isGranted}
       />
+
+      <MottoFooter />
     </div>
   );
 }
