@@ -1,0 +1,626 @@
+{
+  "meta": {
+    "level": 3,
+    "list": 2,
+    "title": "Level 3 · List 2",
+    "updatedAt": "2026-06-27"
+  },
+  "words": [
+    {
+      "word": "amateur",
+      "definitions": [
+        "n. 业余的人",
+        "adj. 业余的，外行的"
+      ]
+    },
+    {
+      "word": "structural",
+      "definitions": [
+        "adj. 结构上的"
+      ]
+    },
+    {
+      "word": "unoccupied",
+      "definitions": [
+        "adj. 未被占用的"
+      ]
+    },
+    {
+      "word": "poster",
+      "definitions": [
+        "n. 海报"
+      ]
+    },
+    {
+      "word": "registration",
+      "definitions": [
+        "n. 注册"
+      ]
+    },
+    {
+      "word": "density",
+      "definitions": [
+        "n. 密度，密集度"
+      ]
+    },
+    {
+      "word": "finalize",
+      "definitions": [
+        "v. 最终确定"
+      ]
+    },
+    {
+      "word": "spread",
+      "definitions": [
+        "v. 展开",
+        "n. 传播"
+      ]
+    },
+    {
+      "word": "handicap",
+      "definitions": [
+        "n. 残障，障碍",
+        "v. 使残废，妨碍"
+      ]
+    },
+    {
+      "word": "tale",
+      "definitions": [
+        "n. 故事"
+      ]
+    },
+    {
+      "word": "species",
+      "definitions": [
+        "n. 物种"
+      ]
+    },
+    {
+      "word": "settler",
+      "definitions": [
+        "n. 移民，定居者"
+      ]
+    },
+    {
+      "word": "survivor",
+      "definitions": [
+        "n. 幸存者"
+      ]
+    },
+    {
+      "word": "doubtful",
+      "definitions": [
+        "adj. 不确定的"
+      ]
+    },
+    {
+      "word": "wide-ranging",
+      "definitions": [
+        "adj. 广泛的"
+      ]
+    },
+    {
+      "word": "marker",
+      "definitions": [
+        "n. 记号笔"
+      ]
+    },
+    {
+      "word": "tuition",
+      "definitions": [
+        "n. 学费"
+      ]
+    },
+    {
+      "word": "motive",
+      "definitions": [
+        "n. 动机",
+        "adj. 引起运动的"
+      ]
+    },
+    {
+      "word": "expense",
+      "definitions": [
+        "n. 费用，代价"
+      ]
+    },
+    {
+      "word": "exaggeration",
+      "definitions": [
+        "n. 夸大"
+      ]
+    },
+    {
+      "word": "presidential",
+      "definitions": [
+        "adj. 总统的"
+      ]
+    },
+    {
+      "word": "attitude",
+      "definitions": [
+        "n. 态度，傲慢/抵触"
+      ]
+    },
+    {
+      "word": "plentiful",
+      "definitions": [
+        "adj. 丰富的"
+      ]
+    },
+    {
+      "word": "insert",
+      "definitions": [
+        "v. 插入"
+      ]
+    },
+    {
+      "word": "exemplify",
+      "definitions": [
+        "v. 例证"
+      ]
+    },
+    {
+      "word": "target",
+      "definitions": [
+        "n. 靶子，目标",
+        "v. 把……作为目标，瞄准"
+      ]
+    },
+    {
+      "word": "loyal",
+      "definitions": [
+        "adj. 忠诚的，忠实的"
+      ]
+    },
+    {
+      "word": "expectation",
+      "definitions": [
+        "n. 预料，希望"
+      ]
+    },
+    {
+      "word": "ceremony",
+      "definitions": [
+        "n. 典礼，仪式"
+      ]
+    },
+    {
+      "word": "equation",
+      "definitions": [
+        "n. 方程"
+      ]
+    },
+    {
+      "word": "particular",
+      "definitions": [
+        "adj. 特指的/特别的，挑剔的",
+        "n. 细节"
+      ]
+    },
+    {
+      "word": "proceed",
+      "definitions": [
+        "v. 进行"
+      ]
+    },
+    {
+      "word": "instructive",
+      "definitions": [
+        "adj. 有教益的"
+      ]
+    },
+    {
+      "word": "redesign",
+      "definitions": [
+        "v. 重新设计"
+      ]
+    },
+    {
+      "word": "fade",
+      "definitions": [
+        "v./n. (使……)褪色"
+      ]
+    },
+    {
+      "word": "dependent",
+      "definitions": [
+        "adj. 依赖的"
+      ]
+    },
+    {
+      "word": "handle",
+      "definitions": [
+        "v. 用手碰，操作/处理",
+        "n. 把手"
+      ]
+    },
+    {
+      "word": "surround",
+      "definitions": [
+        "v. 环绕，包围"
+      ]
+    },
+    {
+      "word": "section",
+      "definitions": [
+        "n. 部分",
+        "v. 把……分成部分"
+      ]
+    },
+    {
+      "word": "herbivore",
+      "definitions": [
+        "n. 食草动物"
+      ]
+    },
+    {
+      "word": "sidewalk",
+      "definitions": [
+        "n. 人行道"
+      ]
+    },
+    {
+      "word": "infer",
+      "definitions": [
+        "v. 推断"
+      ]
+    },
+    {
+      "word": "institute",
+      "definitions": [
+        "n. 机构",
+        "v. 开始实行"
+      ]
+    },
+    {
+      "word": "apparent",
+      "definitions": [
+        "adj. 明显的"
+      ]
+    },
+    {
+      "word": "representative",
+      "definitions": [
+        "adj. 典型的/代表制的",
+        "n. 代表"
+      ]
+    },
+    {
+      "word": "announce",
+      "definitions": [
+        "v. 宣布"
+      ]
+    },
+    {
+      "word": "territory",
+      "definitions": [
+        "n. 领土，领域/范围"
+      ]
+    },
+    {
+      "word": "recapture",
+      "definitions": [
+        "v./n. 收复，使……再现"
+      ]
+    },
+    {
+      "word": "inferior",
+      "definitions": [
+        "adj. 较差的/下级的",
+        "n. 级别较低的人"
+      ]
+    },
+    {
+      "word": "enthusiasm",
+      "definitions": [
+        "n. 热情，激情"
+      ]
+    },
+    {
+      "word": "courtyard",
+      "definitions": [
+        "n. 庭院"
+      ]
+    },
+    {
+      "word": "ideally",
+      "definitions": [
+        "adv. 理想地"
+      ]
+    },
+    {
+      "word": "drainage",
+      "definitions": [
+        "n. 排水"
+      ]
+    },
+    {
+      "word": "geographic",
+      "definitions": [
+        "adj. 地理的"
+      ]
+    },
+    {
+      "word": "invest",
+      "definitions": [
+        "v. 投资，投入"
+      ]
+    },
+    {
+      "word": "property",
+      "definitions": [
+        "n. 财产，住宅"
+      ]
+    },
+    {
+      "word": "architect",
+      "definitions": [
+        "n. (建筑)设计师"
+      ]
+    },
+    {
+      "word": "psychological",
+      "definitions": [
+        "adj. 心理的，心理学的"
+      ]
+    },
+    {
+      "word": "shrub",
+      "definitions": [
+        "n. 灌木，灌木丛"
+      ]
+    },
+    {
+      "word": "marsh",
+      "definitions": [
+        "n. 沼泽"
+      ]
+    },
+    {
+      "word": "version",
+      "definitions": [
+        "n. 版本"
+      ]
+    },
+    {
+      "word": "involve",
+      "definitions": [
+        "v. 包括，涉及"
+      ]
+    },
+    {
+      "word": "technique",
+      "definitions": [
+        "n. 方法，技巧"
+      ]
+    },
+    {
+      "word": "conscious",
+      "definitions": [
+        "adj. 清醒的/有意识的，意识到的"
+      ]
+    },
+    {
+      "word": "behave",
+      "definitions": [
+        "v. 行为，表现"
+      ]
+    },
+    {
+      "word": "revise",
+      "definitions": [
+        "v. 校订，修改"
+      ]
+    },
+    {
+      "word": "digest",
+      "definitions": [
+        "v. 消化，理解",
+        "n. 文摘/摘要"
+      ]
+    },
+    {
+      "word": "fulfil",
+      "definitions": [
+        "v. 实现，满足/符合"
+      ]
+    },
+    {
+      "word": "deceive",
+      "definitions": [
+        "v. 欺骗"
+      ]
+    },
+    {
+      "word": "administrator",
+      "definitions": [
+        "n. 管理者"
+      ]
+    },
+    {
+      "word": "annoy",
+      "definitions": [
+        "v. 惹恼"
+      ]
+    },
+    {
+      "word": "characterize",
+      "definitions": [
+        "v. 描绘，是……的特征"
+      ]
+    },
+    {
+      "word": "recipe",
+      "definitions": [
+        "n. 食谱"
+      ]
+    },
+    {
+      "word": "realistic",
+      "definitions": [
+        "adj. 注重实际的，逼真的"
+      ]
+    },
+    {
+      "word": "sensitivity",
+      "definitions": [
+        "n. 敏感，善解人意"
+      ]
+    },
+    {
+      "word": "peasant",
+      "definitions": [
+        "n. 农民",
+        "adj. 农民的"
+      ]
+    },
+    {
+      "word": "publicize",
+      "definitions": [
+        "v. 发表，公布"
+      ]
+    },
+    {
+      "word": "poverty",
+      "definitions": [
+        "n. 贫穷，缺乏"
+      ]
+    },
+    {
+      "word": "popularize",
+      "definitions": [
+        "v. 使……受欢迎，使……通俗化"
+      ]
+    },
+    {
+      "word": "qualification",
+      "definitions": [
+        "n. 资格"
+      ]
+    },
+    {
+      "word": "slide",
+      "definitions": [
+        "v. 滑/滑动，下降",
+        "n. 幻灯片"
+      ]
+    },
+    {
+      "word": "intelligent",
+      "definitions": [
+        "adj. 有才智的"
+      ]
+    },
+    {
+      "word": "unreliable",
+      "definitions": [
+        "adj. 不可靠的"
+      ]
+    },
+    {
+      "word": "urban",
+      "definitions": [
+        "adj. 城市的"
+      ]
+    },
+    {
+      "word": "bond",
+      "definitions": [
+        "v./n. 结合",
+        "n. 债券"
+      ]
+    },
+    {
+      "word": "formula",
+      "definitions": [
+        "n. 公式，分子式，配方"
+      ]
+    },
+    {
+      "word": "customize",
+      "definitions": [
+        "v. 定做，定制"
+      ]
+    },
+    {
+      "word": "classify",
+      "definitions": [
+        "v. 把……分类"
+      ]
+    },
+    {
+      "word": "bravery",
+      "definitions": [
+        "n. 勇敢"
+      ]
+    },
+    {
+      "word": "irrigation",
+      "definitions": [
+        "n. 灌溉"
+      ]
+    },
+    {
+      "word": "abundant",
+      "definitions": [
+        "adj. 丰富的，大量的"
+      ]
+    },
+    {
+      "word": "impersonal",
+      "definitions": [
+        "adj. 客观的，不近人情的"
+      ]
+    },
+    {
+      "word": "nursery",
+      "definitions": [
+        "n. 育婴室"
+      ]
+    },
+    {
+      "word": "accelerate",
+      "definitions": [
+        "v. 加速"
+      ]
+    },
+    {
+      "word": "insight",
+      "definitions": [
+        "n. 洞察力"
+      ]
+    },
+    {
+      "word": "rare",
+      "definitions": [
+        "adj. 稀少的，罕见的"
+      ]
+    },
+    {
+      "word": "enlarge",
+      "definitions": [
+        "v. 扩大，放大"
+      ]
+    },
+    {
+      "word": "conclude",
+      "definitions": [
+        "v. 得出结论，结束"
+      ]
+    },
+    {
+      "word": "minor",
+      "definitions": [
+        "adj. 较小的/次要的，轻微的/不严重的",
+        "n. 辅修科目"
+      ]
+    },
+    {
+      "word": "engage",
+      "definitions": [
+        "v. 从事/参与，吸引，使参加"
+      ]
+    }
+  ]
+}

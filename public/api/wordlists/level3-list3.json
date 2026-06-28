@@ -1,0 +1,658 @@
+{
+  "meta": {
+    "level": 3,
+    "list": 3,
+    "title": "Level 3 · List 3",
+    "updatedAt": "2026-06-27"
+  },
+  "words": [
+    {
+      "word": "irregular",
+      "definitions": [
+        "adj. 不规则的",
+        "adj. 无规律的"
+      ]
+    },
+    {
+      "word": "neutral",
+      "definitions": [
+        "adj. 中性的",
+        "adj. 中立的",
+        "adj. 不鲜艳的"
+      ]
+    },
+    {
+      "word": "chart",
+      "definitions": [
+        "n. 图表"
+      ]
+    },
+    {
+      "word": "solar",
+      "definitions": [
+        "adj. 太阳的"
+      ]
+    },
+    {
+      "word": "volcano",
+      "definitions": [
+        "n. 火山"
+      ]
+    },
+    {
+      "word": "witness",
+      "definitions": [
+        "v. 目击，目睹",
+        "n. 证人"
+      ]
+    },
+    {
+      "word": "span",
+      "definitions": [
+        "n. 一段时间",
+        "n. 跨度"
+      ]
+    },
+    {
+      "word": "administration",
+      "definitions": [
+        "n. 管理",
+        "n. 行政"
+      ]
+    },
+    {
+      "word": "fancy",
+      "definitions": [
+        "v. 爱慕",
+        "n. 想象",
+        "adj. 奢华的，精选的"
+      ]
+    },
+    {
+      "word": "apply",
+      "definitions": [
+        "v. 申请",
+        "v. 适用",
+        "v. 应用"
+      ]
+    },
+    {
+      "word": "challenge",
+      "definitions": [
+        "v./n. 挑战"
+      ]
+    },
+    {
+      "word": "magnificent",
+      "definitions": [
+        "adj. 壮丽的"
+      ]
+    },
+    {
+      "word": "standardize",
+      "definitions": [
+        "v. 使标准化"
+      ]
+    },
+    {
+      "word": "serious",
+      "definitions": [
+        "adj. 严肃的",
+        "adj. 严重的"
+      ]
+    },
+    {
+      "word": "centralize",
+      "definitions": [
+        "v. 对……实行集权"
+      ]
+    },
+    {
+      "word": "committee",
+      "definitions": [
+        "n. 委员会"
+      ]
+    },
+    {
+      "word": "withdraw",
+      "definitions": [
+        "v. 撤销，取消",
+        "v. 提取",
+        "v. 撤退"
+      ]
+    },
+    {
+      "word": "collide",
+      "definitions": [
+        "v.（车等）碰撞",
+        "v.（意志等）冲突"
+      ]
+    },
+    {
+      "word": "incredible",
+      "definitions": [
+        "adj. 令人难以置信的",
+        "adj. 极好的"
+      ]
+    },
+    {
+      "word": "reintroduce",
+      "definitions": [
+        "v. 重新引入"
+      ]
+    },
+    {
+      "word": "complaint",
+      "definitions": [
+        "n. 抱怨，投诉"
+      ]
+    },
+    {
+      "word": "achievement",
+      "definitions": [
+        "n. 成就"
+      ]
+    },
+    {
+      "word": "residential",
+      "definitions": [
+        "adj. 住宅的"
+      ]
+    },
+    {
+      "word": "faraway",
+      "definitions": [
+        "adj. 遥远的"
+      ]
+    },
+    {
+      "word": "counter",
+      "definitions": [
+        "n. 柜台",
+        "pref. 反……的"
+      ]
+    },
+    {
+      "word": "application",
+      "definitions": [
+        "n. 申请",
+        "n. 实施",
+        "n. 手机应用"
+      ]
+    },
+    {
+      "word": "colony",
+      "definitions": [
+        "n. 殖民地",
+        "n.（鸟、蚁、蜜蜂等的）集团，群"
+      ]
+    },
+    {
+      "word": "multiple",
+      "definitions": [
+        "adj. 多个的，复合的"
+      ]
+    },
+    {
+      "word": "drift",
+      "definitions": [
+        "v. 漂流",
+        "v. 涣散"
+      ]
+    },
+    {
+      "word": "organ",
+      "definitions": [
+        "n. 管风琴",
+        "n. 器官"
+      ]
+    },
+    {
+      "word": "informant",
+      "definitions": [
+        "n. 提供消息的人"
+      ]
+    },
+    {
+      "word": "pose",
+      "definitions": [
+        "v. 摆姿势",
+        "v. 提出",
+        "n. 姿势，故作姿态"
+      ]
+    },
+    {
+      "word": "tunnel",
+      "definitions": [
+        "v./n.（挖）隧道"
+      ]
+    },
+    {
+      "word": "masterpiece",
+      "definitions": [
+        "n. 杰作，名著"
+      ]
+    },
+    {
+      "word": "exception",
+      "definitions": [
+        "n. 例外"
+      ]
+    },
+    {
+      "word": "quarter",
+      "definitions": [
+        "n. 四分之一",
+        "n.（复数）住处"
+      ]
+    },
+    {
+      "word": "curly",
+      "definitions": [
+        "adj. 卷曲的"
+      ]
+    },
+    {
+      "word": "qualify",
+      "definitions": [
+        "v. 使具有资格"
+      ]
+    },
+    {
+      "word": "emperor",
+      "definitions": [
+        "n. 皇帝"
+      ]
+    },
+    {
+      "word": "reliability",
+      "definitions": [
+        "n. 可靠性，准确性"
+      ]
+    },
+    {
+      "word": "orbit",
+      "definitions": [
+        "n. 轨道",
+        "v. 沿轨道运行",
+        "n. 势力范围"
+      ]
+    },
+    {
+      "word": "aid",
+      "definitions": [
+        "n./v. 援助"
+      ]
+    },
+    {
+      "word": "thoughtful",
+      "definitions": [
+        "adj. 体贴的",
+        "adj. 沉思的"
+      ]
+    },
+    {
+      "word": "cooperate",
+      "definitions": [
+        "v. 合作，配合"
+      ]
+    },
+    {
+      "word": "talented",
+      "definitions": [
+        "adj. 才华横溢的"
+      ]
+    },
+    {
+      "word": "coastal",
+      "definitions": [
+        "adj. 近海的"
+      ]
+    },
+    {
+      "word": "scheme",
+      "definitions": [
+        "n. 计划，方案",
+        "v. 设计（计划）"
+      ]
+    },
+    {
+      "word": "chief",
+      "definitions": [
+        "adj. 主要的",
+        "n. 首席，酋长"
+      ]
+    },
+    {
+      "word": "disaster",
+      "definitions": [
+        "n. 灾难",
+        "n. 极为糟糕的事"
+      ]
+    },
+    {
+      "word": "remark",
+      "definitions": [
+        "n./v. 评论，谈论"
+      ]
+    },
+    {
+      "word": "recognition",
+      "definitions": [
+        "n. 认识，识别",
+        "n. 认可，赞誉"
+      ]
+    },
+    {
+      "word": "community",
+      "definitions": [
+        "n. 团体，社区",
+        "n. 群落"
+      ]
+    },
+    {
+      "word": "compute",
+      "definitions": [
+        "v. 计算"
+      ]
+    },
+    {
+      "word": "interact",
+      "definitions": [
+        "v. 互相作用，互动"
+      ]
+    },
+    {
+      "word": "straighten",
+      "definitions": [
+        "v. 使变直",
+        "v. 改进，为……解除困惑"
+      ]
+    },
+    {
+      "word": "literature",
+      "definitions": [
+        "n. 文学"
+      ]
+    },
+    {
+      "word": "pant",
+      "definitions": [
+        "v./n. 气喘",
+        "v. 渴望",
+        "n. 裤子"
+      ]
+    },
+    {
+      "word": "thrill",
+      "definitions": [
+        "n. 震颤感，兴奋",
+        "v. 使……非常兴奋"
+      ]
+    },
+    {
+      "word": "technological",
+      "definitions": [
+        "adj. 科技的"
+      ]
+    },
+    {
+      "word": "warfare",
+      "definitions": [
+        "n. 战争，战争状态"
+      ]
+    },
+    {
+      "word": "sum",
+      "definitions": [
+        "n. 总和",
+        "v. 总结"
+      ]
+    },
+    {
+      "word": "employee",
+      "definitions": [
+        "n. 雇员"
+      ]
+    },
+    {
+      "word": "amuse",
+      "definitions": [
+        "v. 给……提供消遣"
+      ]
+    },
+    {
+      "word": "overseas",
+      "definitions": [
+        "adj./adv. 海外"
+      ]
+    },
+    {
+      "word": "bend",
+      "definitions": [
+        "v. 弄弯"
+      ]
+    },
+    {
+      "word": "automatic",
+      "definitions": [
+        "adj. 自动的",
+        "n. 自动枪"
+      ]
+    },
+    {
+      "word": "athlete",
+      "definitions": [
+        "n. 运动员"
+      ]
+    },
+    {
+      "word": "emerge",
+      "definitions": [
+        "v. 出现"
+      ]
+    },
+    {
+      "word": "coincide",
+      "definitions": [
+        "v. 与……相符",
+        "v. 与……同时发生"
+      ]
+    },
+    {
+      "word": "immediate",
+      "definitions": [
+        "adj. 立刻的",
+        "adj. 紧邻的"
+      ]
+    },
+    {
+      "word": "poke",
+      "definitions": [
+        "v. 戳，捅"
+      ]
+    },
+    {
+      "word": "crew",
+      "definitions": [
+        "n. 全体船员，全体工作人员"
+      ]
+    },
+    {
+      "word": "wrap",
+      "definitions": [
+        "v. 卷，缠（绕）"
+      ]
+    },
+    {
+      "word": "tropic",
+      "definitions": [
+        "n. 热带（地区）"
+      ]
+    },
+    {
+      "word": "presentation",
+      "definitions": [
+        "n. 呈现",
+        "n. 展示"
+      ]
+    },
+    {
+      "word": "operator",
+      "definitions": [
+        "n. 操作者，经营者"
+      ]
+    },
+    {
+      "word": "trend",
+      "definitions": [
+        "n. 倾向，趋势",
+        "v. 显示出趋势"
+      ]
+    },
+    {
+      "word": "warn",
+      "definitions": [
+        "v. 警告"
+      ]
+    },
+    {
+      "word": "commerce",
+      "definitions": [
+        "n. 商业"
+      ]
+    },
+    {
+      "word": "seek",
+      "definitions": [
+        "v. 寻找，请求"
+      ]
+    },
+    {
+      "word": "comedy",
+      "definitions": [
+        "n. 喜剧"
+      ]
+    },
+    {
+      "word": "hint",
+      "definitions": [
+        "n. 暗示，提示",
+        "v. 暗示"
+      ]
+    },
+    {
+      "word": "occupy",
+      "definitions": [
+        "v. 占领，占据"
+      ]
+    },
+    {
+      "word": "criticism",
+      "definitions": [
+        "n. 批评"
+      ]
+    },
+    {
+      "word": "assert",
+      "definitions": [
+        "v. 主张，断言"
+      ]
+    },
+    {
+      "word": "calorie",
+      "definitions": [
+        "n. 卡路里（热量单位）"
+      ]
+    },
+    {
+      "word": "shield",
+      "definitions": [
+        "v. 防护",
+        "n. 防御物"
+      ]
+    },
+    {
+      "word": "forum",
+      "definitions": [
+        "n. 论坛"
+      ]
+    },
+    {
+      "word": "alphabet",
+      "definitions": [
+        "n. 字母表"
+      ]
+    },
+    {
+      "word": "shellfish",
+      "definitions": [
+        "n. 水生有壳动物"
+      ]
+    },
+    {
+      "word": "harmony",
+      "definitions": [
+        "n. 和谐",
+        "n. 和声，和声学"
+      ]
+    },
+    {
+      "word": "determine",
+      "definitions": [
+        "v. 确定",
+        "v. 查明"
+      ]
+    },
+    {
+      "word": "fundamental",
+      "definitions": [
+        "adj. 基本的"
+      ]
+    },
+    {
+      "word": "access",
+      "definitions": [
+        "n. 入口"
+      ]
+    },
+    {
+      "word": "attain",
+      "definitions": [
+        "v. 达到，获得"
+      ]
+    },
+    {
+      "word": "technician",
+      "definitions": [
+        "n. 技师"
+      ]
+    },
+    {
+      "word": "deny",
+      "definitions": [
+        "v. 否认",
+        "v. 拒绝给予"
+      ]
+    },
+    {
+      "word": "efficient",
+      "definitions": [
+        "adj. 高效的"
+      ]
+    },
+    {
+      "word": "govern",
+      "definitions": [
+        "v. 治理，执政",
+        "v. 支配，决定"
+      ]
+    },
+    {
+      "word": "adaptation",
+      "definitions": [
+        "n. 适应性"
+      ]
+    }
+  ]
+}

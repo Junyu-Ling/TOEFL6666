@@ -1,0 +1,654 @@
+{
+  "meta": {
+    "level": 3,
+    "list": 4,
+    "title": "Level 3 · List 4",
+    "updatedAt": "2026-06-27"
+  },
+  "words": [
+    {
+      "word": "realist",
+      "definitions": [
+        "n. 务实的人"
+      ]
+    },
+    {
+      "word": "circulate",
+      "definitions": [
+        "v. 循环",
+        "v. 流通，传播"
+      ]
+    },
+    {
+      "word": "comprise",
+      "definitions": [
+        "v. 包含，包括"
+      ]
+    },
+    {
+      "word": "starve",
+      "definitions": [
+        "v. 饿死，挨饿"
+      ]
+    },
+    {
+      "word": "hide",
+      "definitions": [
+        "v. 藏匿",
+        "n. 兽皮"
+      ]
+    },
+    {
+      "word": "drag",
+      "definitions": [
+        "n./v. 拖，拉",
+        "n. 累赘"
+      ]
+    },
+    {
+      "word": "vivid",
+      "definitions": [
+        "adj. 生动的"
+      ]
+    },
+    {
+      "word": "quantity",
+      "definitions": [
+        "n. 量，额"
+      ]
+    },
+    {
+      "word": "unique",
+      "definitions": [
+        "adj. 独特的，唯一的"
+      ]
+    },
+    {
+      "word": "separately",
+      "definitions": [
+        "adv. 分别地"
+      ]
+    },
+    {
+      "word": "glance",
+      "definitions": [
+        "n./v. 一瞥"
+      ]
+    },
+    {
+      "word": "recycle",
+      "definitions": [
+        "n./v. 回收再利用"
+      ]
+    },
+    {
+      "word": "province",
+      "definitions": [
+        "n. 省，州"
+      ]
+    },
+    {
+      "word": "import",
+      "definitions": [
+        "v./n. 进口"
+      ]
+    },
+    {
+      "word": "operate",
+      "definitions": [
+        "v. 操纵（机器等）",
+        "v. 经营，管理",
+        "v. 起作用，产生影响"
+      ]
+    },
+    {
+      "word": "occasion",
+      "definitions": [
+        "n. 场合",
+        "n. 时机"
+      ]
+    },
+    {
+      "word": "check",
+      "definitions": [
+        "n./v. 检查",
+        "v. 查看，查询",
+        "n.（餐厅）账单"
+      ]
+    },
+    {
+      "word": "favorable",
+      "definitions": [
+        "adj. 肯定的",
+        "adj. 有利的"
+      ]
+    },
+    {
+      "word": "vast",
+      "definitions": [
+        "adj. 大规模的"
+      ]
+    },
+    {
+      "word": "inefficient",
+      "definitions": [
+        "adj. 效率低的",
+        "adj. 不能胜任的"
+      ]
+    },
+    {
+      "word": "measurable",
+      "definitions": [
+        "adj. 可计量的",
+        "adj. 显著的"
+      ]
+    },
+    {
+      "word": "pit",
+      "definitions": [
+        "n. 深渊，凹坑",
+        "v. 挑拨……展开竞争"
+      ]
+    },
+    {
+      "word": "occur",
+      "definitions": [
+        "v. 发生，出现",
+        "v. 被想到"
+      ]
+    },
+    {
+      "word": "glacial",
+      "definitions": [
+        "adj. 冰川的"
+      ]
+    },
+    {
+      "word": "chew",
+      "definitions": [
+        "v. 咀嚼"
+      ]
+    },
+    {
+      "word": "platform",
+      "definitions": [
+        "n. 舞台",
+        "n. 月台"
+      ]
+    },
+    {
+      "word": "advance",
+      "definitions": [
+        "v./n. 前进"
+      ]
+    },
+    {
+      "word": "submit",
+      "definitions": [
+        "v. 提交，委托",
+        "v. 投降"
+      ]
+    },
+    {
+      "word": "adopt",
+      "definitions": [
+        "v. 采用",
+        "v. 收养"
+      ]
+    },
+    {
+      "word": "highlight",
+      "definitions": [
+        "v. 强调",
+        "n. 强光部分"
+      ]
+    },
+    {
+      "word": "foodstuff",
+      "definitions": [
+        "n. 食品"
+      ]
+    },
+    {
+      "word": "zone",
+      "definitions": [
+        "n. 地带"
+      ]
+    },
+    {
+      "word": "lyric",
+      "definitions": [
+        "n. 歌词，抒情诗",
+        "adj. 抒情的"
+      ]
+    },
+    {
+      "word": "overall",
+      "definitions": [
+        "adj./adv. 全部的（地），总的（地）"
+      ]
+    },
+    {
+      "word": "adapt",
+      "definitions": [
+        "v. 使适应",
+        "v. 改编"
+      ]
+    },
+    {
+      "word": "columnist",
+      "definitions": [
+        "n. 专栏作家"
+      ]
+    },
+    {
+      "word": "misbehave",
+      "definitions": [
+        "v. 行为不端",
+        "v. 发生故障"
+      ]
+    },
+    {
+      "word": "shift",
+      "definitions": [
+        "n./v. 变化，变换"
+      ]
+    },
+    {
+      "word": "quote",
+      "definitions": [
+        "v. 引用",
+        "n. 引文"
+      ]
+    },
+    {
+      "word": "inhabit",
+      "definitions": [
+        "v. 栖息，居住"
+      ]
+    },
+    {
+      "word": "evolution",
+      "definitions": [
+        "n. 进化"
+      ]
+    },
+    {
+      "word": "immature",
+      "definitions": [
+        "adj. 不成熟的"
+      ]
+    },
+    {
+      "word": "distraction",
+      "definitions": [
+        "n. 分心的事物"
+      ]
+    },
+    {
+      "word": "absolute",
+      "definitions": [
+        "adj. 绝对的"
+      ]
+    },
+    {
+      "word": "Roman",
+      "definitions": [
+        "n. 罗马"
+      ]
+    },
+    {
+      "word": "undisturbed",
+      "definitions": [
+        "adj. 未受打扰的"
+      ]
+    },
+    {
+      "word": "mixture",
+      "definitions": [
+        "n. 混合",
+        "n. 混合物"
+      ]
+    },
+    {
+      "word": "greedy",
+      "definitions": [
+        "adj. 贪婪的"
+      ]
+    },
+    {
+      "word": "extend",
+      "definitions": [
+        "v. 延伸，扩展",
+        "v. 延期"
+      ]
+    },
+    {
+      "word": "investigator",
+      "definitions": [
+        "n. 调查者"
+      ]
+    },
+    {
+      "word": "distribute",
+      "definitions": [
+        "v. 分发，分销"
+      ]
+    },
+    {
+      "word": "generation",
+      "definitions": [
+        "n. 一代人"
+      ]
+    },
+    {
+      "word": "volcanic",
+      "definitions": [
+        "adj. 火山的",
+        "adj.（感情）易爆发的"
+      ]
+    },
+    {
+      "word": "academy",
+      "definitions": [
+        "n. 研究院"
+      ]
+    },
+    {
+      "word": "pulse",
+      "definitions": [
+        "n. 脉搏",
+        "n. 脉冲"
+      ]
+    },
+    {
+      "word": "reside",
+      "definitions": [
+        "v. 居住，留驻"
+      ]
+    },
+    {
+      "word": "standard",
+      "definitions": [
+        "n. 水平",
+        "adj. 标准的",
+        "n. 行为规范"
+      ]
+    },
+    {
+      "word": "initial",
+      "definitions": [
+        "adj. 初始的",
+        "n. 首字母"
+      ]
+    },
+    {
+      "word": "devil",
+      "definitions": [
+        "n. 恶魔"
+      ]
+    },
+    {
+      "word": "insufficient",
+      "definitions": [
+        "adj. 不足的"
+      ]
+    },
+    {
+      "word": "unused",
+      "definitions": [
+        "adj. 没有用过的"
+      ]
+    },
+    {
+      "word": "panel",
+      "definitions": [
+        "n. 面，板",
+        "n. 座谈小组"
+      ]
+    },
+    {
+      "word": "motivate",
+      "definitions": [
+        "v. 促动，调动……的积极性"
+      ]
+    },
+    {
+      "word": "ugly",
+      "definitions": [
+        "adj. 丑陋的"
+      ]
+    },
+    {
+      "word": "moral",
+      "definitions": [
+        "adj./n. 道德",
+        "adj. 合乎道德的"
+      ]
+    },
+    {
+      "word": "adore",
+      "definitions": [
+        "v. 喜爱"
+      ]
+    },
+    {
+      "word": "livestock",
+      "definitions": [
+        "n. 牲畜"
+      ]
+    },
+    {
+      "word": "mask",
+      "definitions": [
+        "n. 面罩",
+        "v. 用面具遮住",
+        "v. 掩盖"
+      ]
+    },
+    {
+      "word": "beetle",
+      "definitions": [
+        "n. 甲虫"
+      ]
+    },
+    {
+      "word": "relative",
+      "definitions": [
+        "adj. 相对而言的，相对的",
+        "n. 亲戚"
+      ]
+    },
+    {
+      "word": "summit",
+      "definitions": [
+        "n. 顶，顶点"
+      ]
+    },
+    {
+      "word": "device",
+      "definitions": [
+        "n. 装置",
+        "n. 手法，手段"
+      ]
+    },
+    {
+      "word": "profession",
+      "definitions": [
+        "n. 职业"
+      ]
+    },
+    {
+      "word": "tribe",
+      "definitions": [
+        "n. 部落，部族"
+      ]
+    },
+    {
+      "word": "preserve",
+      "definitions": [
+        "v. 保护"
+      ]
+    },
+    {
+      "word": "odd",
+      "definitions": [
+        "adj. 古怪的",
+        "adj. 单个的"
+      ]
+    },
+    {
+      "word": "execute",
+      "definitions": [
+        "v. 执行",
+        "v. 处死"
+      ]
+    },
+    {
+      "word": "swift",
+      "definitions": [
+        "adj. 迅速的"
+      ]
+    },
+    {
+      "word": "generalize",
+      "definitions": [
+        "v. 概括",
+        "v. 普及"
+      ]
+    },
+    {
+      "word": "resistant",
+      "definitions": [
+        "adj. 抵抗……的"
+      ]
+    },
+    {
+      "word": "violent",
+      "definitions": [
+        "adj. 猛烈的，狂暴的"
+      ]
+    },
+    {
+      "word": "capture",
+      "definitions": [
+        "n./v. 俘获，捕获"
+      ]
+    },
+    {
+      "word": "sensitive",
+      "definitions": [
+        "adj. 敏锐的",
+        "adj. 敏感的"
+      ]
+    },
+    {
+      "word": "stainless",
+      "definitions": [
+        "adj. 无污点的",
+        "adj. 不生锈的"
+      ]
+    },
+    {
+      "word": "gravity",
+      "definitions": [
+        "n. 引力",
+        "n. 严重性，后果"
+      ]
+    },
+    {
+      "word": "documentary",
+      "definitions": [
+        "n. 纪录片",
+        "adj. 纪实的，书面的"
+      ]
+    },
+    {
+      "word": "restriction",
+      "definitions": [
+        "n. 限制"
+      ]
+    },
+    {
+      "word": "absence",
+      "definitions": [
+        "n. 缺位"
+      ]
+    },
+    {
+      "word": "pattern",
+      "definitions": [
+        "n. 图案，式样",
+        "n. 规律"
+      ]
+    },
+    {
+      "word": "commercial",
+      "definitions": [
+        "adj. 商业的，营利性的",
+        "n. 广告"
+      ]
+    },
+    {
+      "word": "tough",
+      "definitions": [
+        "adj. 强韧的，不屈不挠的",
+        "adj. 艰难的"
+      ]
+    },
+    {
+      "word": "wound",
+      "definitions": [
+        "v. 受伤",
+        "n. 伤口",
+        "v. 使受伤"
+      ]
+    },
+    {
+      "word": "confront",
+      "definitions": [
+        "v. 直面，面对"
+      ]
+    },
+    {
+      "word": "retail",
+      "definitions": [
+        "v./n. 零售"
+      ]
+    },
+    {
+      "word": "demonstrate",
+      "definitions": [
+        "v. 示范操作",
+        "v. 证明，阐明",
+        "v. 游行示威"
+      ]
+    },
+    {
+      "word": "architecture",
+      "definitions": [
+        "n. 建筑学",
+        "n. 建筑物"
+      ]
+    },
+    {
+      "word": "unsatisfactory",
+      "definitions": [
+        "adj. 不令人满意的"
+      ]
+    },
+    {
+      "word": "scholar",
+      "definitions": [
+        "n. 学者"
+      ]
+    },
+    {
+      "word": "motor",
+      "definitions": [
+        "n. 电动车，汽车",
+        "v. 开车"
+      ]
+    }
+  ]
+}

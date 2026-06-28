@@ -1,0 +1,651 @@
+{
+  "meta": {
+    "level": 3,
+    "list": 5,
+    "title": "Level 3 · List 5",
+    "updatedAt": "2026-06-27"
+  },
+  "words": [
+    {
+      "word": "crack",
+      "definitions": [
+        "n. 裂缝",
+        "v. 砸开，使裂开",
+        "v. 使……精神崩溃"
+      ]
+    },
+    {
+      "word": "union",
+      "definitions": [
+        "n. 联合",
+        "n. 工会"
+      ]
+    },
+    {
+      "word": "modify",
+      "definitions": [
+        "v. 变更，修改"
+      ]
+    },
+    {
+      "word": "ghost",
+      "definitions": [
+        "n. 鬼魂"
+      ]
+    },
+    {
+      "word": "chase",
+      "definitions": [
+        "v. 追赶"
+      ]
+    },
+    {
+      "word": "predictable",
+      "definitions": [
+        "adj. 可预测的",
+        "adj. 墨守成规的"
+      ]
+    },
+    {
+      "word": "casual",
+      "definitions": [
+        "adj. 随便的，非正式的"
+      ]
+    },
+    {
+      "word": "adjustment",
+      "definitions": [
+        "n. 调整"
+      ]
+    },
+    {
+      "word": "melt",
+      "definitions": [
+        "v. 融化，变软"
+      ]
+    },
+    {
+      "word": "relocate",
+      "definitions": [
+        "v. 搬迁，迁移"
+      ]
+    },
+    {
+      "word": "sculpt",
+      "definitions": [
+        "v. 使……成形，雕塑"
+      ]
+    },
+    {
+      "word": "given",
+      "definitions": [
+        "adj. 给定的",
+        "prep. 鉴于，考虑到"
+      ]
+    },
+    {
+      "word": "reaction",
+      "definitions": [
+        "n. 反应"
+      ]
+    },
+    {
+      "word": "attendant",
+      "definitions": [
+        "n. 服务员，陪伴者"
+      ]
+    },
+    {
+      "word": "entire",
+      "definitions": [
+        "adj. 全部的"
+      ]
+    },
+    {
+      "word": "narrate",
+      "definitions": [
+        "v. 讲，为……作解说"
+      ]
+    },
+    {
+      "word": "mammal",
+      "definitions": [
+        "n. 哺乳动物"
+      ]
+    },
+    {
+      "word": "untouched",
+      "definitions": [
+        "adj. 未改变的，未受损的"
+      ]
+    },
+    {
+      "word": "interpret",
+      "definitions": [
+        "v. 解读",
+        "v. 翻译",
+        "v. 诠释"
+      ]
+    },
+    {
+      "word": "burn",
+      "definitions": [
+        "v. 燃烧",
+        "v. 烧毁"
+      ]
+    },
+    {
+      "word": "cell",
+      "definitions": [
+        "n. 细胞",
+        "n. 单人牢房"
+      ]
+    },
+    {
+      "word": "predict",
+      "definitions": [
+        "v. 预言，预告"
+      ]
+    },
+    {
+      "word": "liberty",
+      "definitions": [
+        "n. 自由"
+      ]
+    },
+    {
+      "word": "victimize",
+      "definitions": [
+        "v. 使受害"
+      ]
+    },
+    {
+      "word": "identify",
+      "definitions": [
+        "v. 鉴定，识别"
+      ]
+    },
+    {
+      "word": "enrich",
+      "definitions": [
+        "v. 充实，使……富裕"
+      ]
+    },
+    {
+      "word": "orchestra",
+      "definitions": [
+        "n. 管弦乐团，交响乐团"
+      ]
+    },
+    {
+      "word": "suck",
+      "definitions": [
+        "v. 吸食"
+      ]
+    },
+    {
+      "word": "basis",
+      "definitions": [
+        "n. 基础"
+      ]
+    },
+    {
+      "word": "guarantee",
+      "definitions": [
+        "v./n. 保证"
+      ]
+    },
+    {
+      "word": "molecule",
+      "definitions": [
+        "n. 分子"
+      ]
+    },
+    {
+      "word": "atmospheric",
+      "definitions": [
+        "adj. 大气的"
+      ]
+    },
+    {
+      "word": "skilled",
+      "definitions": [
+        "adj. 熟练的，技术性的"
+      ]
+    },
+    {
+      "word": "clue",
+      "definitions": [
+        "n. 线索"
+      ]
+    },
+    {
+      "word": "newborn",
+      "definitions": [
+        "adj. 新生的",
+        "n. 新生儿"
+      ]
+    },
+    {
+      "word": "vary",
+      "definitions": [
+        "v. （使）变化",
+        "v. （使）多样化"
+      ]
+    },
+    {
+      "word": "smooth",
+      "definitions": [
+        "adj. 平滑的，流畅的",
+        "v. 消除障碍"
+      ]
+    },
+    {
+      "word": "evident",
+      "definitions": [
+        "adj. 明显的"
+      ]
+    },
+    {
+      "word": "promising",
+      "definitions": [
+        "adj. 很有希望的"
+      ]
+    },
+    {
+      "word": "machinery",
+      "definitions": [
+        "n. 机器，机件"
+      ]
+    },
+    {
+      "word": "remote",
+      "definitions": [
+        "adj. 遥远的，偏僻的",
+        "adj. 很久以前（以后）"
+      ]
+    },
+    {
+      "word": "edition",
+      "definitions": [
+        "n. 版本"
+      ]
+    },
+    {
+      "word": "reconstruct",
+      "definitions": [
+        "v. 重建"
+      ]
+    },
+    {
+      "word": "mature",
+      "definitions": [
+        "adj. 成熟的",
+        "v. 成熟，使成熟"
+      ]
+    },
+    {
+      "word": "gene",
+      "definitions": [
+        "n. 基因"
+      ]
+    },
+    {
+      "word": "leisure",
+      "definitions": [
+        "n. 空闲，闲暇",
+        "adj. 空闲的"
+      ]
+    },
+    {
+      "word": "normal",
+      "definitions": [
+        "adj./adv. 通常，正常地"
+      ]
+    },
+    {
+      "word": "declare",
+      "definitions": [
+        "v. 表态"
+      ]
+    },
+    {
+      "word": "cure",
+      "definitions": [
+        "v. 治愈",
+        "n. 疗法"
+      ]
+    },
+    {
+      "word": "latter",
+      "definitions": [
+        "adj. 后者的",
+        "adj. 靠后的，后部的"
+      ]
+    },
+    {
+      "word": "tempt",
+      "definitions": [
+        "v. 引诱"
+      ]
+    },
+    {
+      "word": "renew",
+      "definitions": [
+        "v. 翻新",
+        "v. 恢复",
+        "v. 续延"
+      ]
+    },
+    {
+      "word": "stretch",
+      "definitions": [
+        "v. 伸展，伸出",
+        "v. 扩大，撑开"
+      ]
+    },
+    {
+      "word": "fossil",
+      "definitions": [
+        "n. 化石"
+      ]
+    },
+    {
+      "word": "promote",
+      "definitions": [
+        "v. 增进，提倡"
+      ]
+    },
+    {
+      "word": "leadership",
+      "definitions": [
+        "n. 领导职位，领导才能"
+      ]
+    },
+    {
+      "word": "minority",
+      "definitions": [
+        "n. 少数，少数民族"
+      ]
+    },
+    {
+      "word": "damp",
+      "definitions": [
+        "adj. 潮湿的",
+        "v. （使）潮湿"
+      ]
+    },
+    {
+      "word": "whereby",
+      "definitions": [
+        "adv. 凭此"
+      ]
+    },
+    {
+      "word": "implication",
+      "definitions": [
+        "n. 暗示",
+        "n. 可能的结果"
+      ]
+    },
+    {
+      "word": "convey",
+      "definitions": [
+        "v. 表达，传达",
+        "v. 运送"
+      ]
+    },
+    {
+      "word": "unavailable",
+      "definitions": [
+        "adj. 无法得到的",
+        "adj. 没空的"
+      ]
+    },
+    {
+      "word": "pursue",
+      "definitions": [
+        "v. 追赶，纠缠",
+        "v. 追求"
+      ]
+    },
+    {
+      "word": "critic",
+      "definitions": [
+        "n. 评论家，批评者"
+      ]
+    },
+    {
+      "word": "visible",
+      "definitions": [
+        "adj. 看得见的",
+        "adj. 明显的，引人注目的"
+      ]
+    },
+    {
+      "word": "tropical",
+      "definitions": [
+        "adj. 热带的，非常湿热的"
+      ]
+    },
+    {
+      "word": "establish",
+      "definitions": [
+        "v. 创立",
+        "v. 使受到认同"
+      ]
+    },
+    {
+      "word": "squeeze",
+      "definitions": [
+        "v. 挤，压"
+      ]
+    },
+    {
+      "word": "mislead",
+      "definitions": [
+        "v. 误导"
+      ]
+    },
+    {
+      "word": "chip",
+      "definitions": [
+        "n. （切下的）片",
+        "n. 芯片"
+      ]
+    },
+    {
+      "word": "seldom",
+      "definitions": [
+        "adv. 不常，很少"
+      ]
+    },
+    {
+      "word": "character",
+      "definitions": [
+        "n. 性格，特点",
+        "n. 角色"
+      ]
+    },
+    {
+      "word": "eventual",
+      "definitions": [
+        "adj. 最终的"
+      ]
+    },
+    {
+      "word": "explore",
+      "definitions": [
+        "v. 勘察，探索"
+      ]
+    },
+    {
+      "word": "unexpected",
+      "definitions": [
+        "adj. 出乎意料的",
+        "n. 意外的事情"
+      ]
+    },
+    {
+      "word": "propose",
+      "definitions": [
+        "v. 申请，提议",
+        "v. 求婚"
+      ]
+    },
+    {
+      "word": "viewpoint",
+      "definitions": [
+        "n. 观点",
+        "n. 观看位置"
+      ]
+    },
+    {
+      "word": "selection",
+      "definitions": [
+        "n. 挑选",
+        "n. 被选中者"
+      ]
+    },
+    {
+      "word": "confirm",
+      "definitions": [
+        "v. 证实"
+      ]
+    },
+    {
+      "word": "skirt",
+      "definitions": [
+        "n. 裙子，裙摆",
+        "v. 沿……的边缘走，回避",
+        "n. 边缘，外沿"
+      ]
+    },
+    {
+      "word": "drain",
+      "definitions": [
+        "n. 下水道",
+        "v. 排空……的水"
+      ]
+    },
+    {
+      "word": "criminal",
+      "definitions": [
+        "n. 罪犯",
+        "adj. 犯罪的，可耻的"
+      ]
+    },
+    {
+      "word": "departure",
+      "definitions": [
+        "n. 出发，启程"
+      ]
+    },
+    {
+      "word": "sizable",
+      "definitions": [
+        "adj. 大的"
+      ]
+    },
+    {
+      "word": "decorate",
+      "definitions": [
+        "v. 装饰"
+      ]
+    },
+    {
+      "word": "wrist",
+      "definitions": [
+        "n. 腕关节"
+      ]
+    },
+    {
+      "word": "theorist",
+      "definitions": [
+        "n. 理论家"
+      ]
+    },
+    {
+      "word": "install",
+      "definitions": [
+        "v. 放置，安装"
+      ]
+    },
+    {
+      "word": "coordinate",
+      "definitions": [
+        "n. 坐标",
+        "v. 协调"
+      ]
+    },
+    {
+      "word": "crisis",
+      "definitions": [
+        "n. 危机"
+      ]
+    },
+    {
+      "word": "whereas",
+      "definitions": [
+        "conj. 然而"
+      ]
+    },
+    {
+      "word": "secretary",
+      "definitions": [
+        "n. 秘书"
+      ]
+    },
+    {
+      "word": "reminder",
+      "definitions": [
+        "n. 提醒，唤起记忆的事物"
+      ]
+    },
+    {
+      "word": "outdated",
+      "definitions": [
+        "adj. 陈旧的"
+      ]
+    },
+    {
+      "word": "stable",
+      "definitions": [
+        "adj. 稳定的，稳重的"
+      ]
+    },
+    {
+      "word": "dean",
+      "definitions": [
+        "n. 院长",
+        "n. 主任牧师"
+      ]
+    },
+    {
+      "word": "pest",
+      "definitions": [
+        "n. 害兽，讨厌的人"
+      ]
+    },
+    {
+      "word": "offer",
+      "definitions": [
+        "v. 提出",
+        "v. 主动提供",
+        "n. 提议，出价"
+      ]
+    },
+    {
+      "word": "bury",
+      "definitions": [
+        "v. 掩埋"
+      ]
+    },
+    {
+      "word": "recognizable",
+      "definitions": [
+        "adj. 可认出的"
+      ]
+    }
+  ]
+}
