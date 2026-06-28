@@ -1,0 +1,640 @@
+{
+  "meta": {
+    "level": 5,
+    "list": 7,
+    "title": "Level 5 · List 7",
+    "updatedAt": "2026-06-28"
+  },
+  "words": [
+    {
+      "word": "perception",
+      "definitions": [
+        "n. 看法，洞察力",
+        "n. 感知，感觉"
+      ]
+    },
+    {
+      "word": "assortment",
+      "definitions": [
+        "n. 分类",
+        "n. 混合物"
+      ]
+    },
+    {
+      "word": "quiver",
+      "definitions": [
+        "v. 颤抖"
+      ]
+    },
+    {
+      "word": "adorn",
+      "definitions": [
+        "v. 装饰"
+      ]
+    },
+    {
+      "word": "impulse",
+      "definitions": [
+        "n. 冲动",
+        "n. 动力",
+        "n. 脉冲"
+      ]
+    },
+    {
+      "word": "downplay",
+      "definitions": [
+        "v. 不予重视，将……轻描淡写"
+      ]
+    },
+    {
+      "word": "digress",
+      "definitions": [
+        "v. 离题"
+      ]
+    },
+    {
+      "word": "bliss",
+      "definitions": [
+        "n. 极乐"
+      ]
+    },
+    {
+      "word": "solidarity",
+      "definitions": [
+        "n. 团结一致"
+      ]
+    },
+    {
+      "word": "locale",
+      "definitions": [
+        "n. 场所"
+      ]
+    },
+    {
+      "word": "herbicide",
+      "definitions": [
+        "n. 除草剂"
+      ]
+    },
+    {
+      "word": "equivalent",
+      "definitions": [
+        "adj. 等价的，相等的"
+      ]
+    },
+    {
+      "word": "utilitarian",
+      "definitions": [
+        "adj. 实用的"
+      ]
+    },
+    {
+      "word": "cape",
+      "definitions": [
+        "n. 海角",
+        "n. 披肩"
+      ]
+    },
+    {
+      "word": "heterogeneous",
+      "definitions": [
+        "adj. 成分混杂的"
+      ]
+    },
+    {
+      "word": "pristine",
+      "definitions": [
+        "adj. 原始的",
+        "adj. 崭新的"
+      ]
+    },
+    {
+      "word": "traverse",
+      "definitions": [
+        "v. 穿过"
+      ]
+    },
+    {
+      "word": "increment",
+      "definitions": [
+        "n. 增加"
+      ]
+    },
+    {
+      "word": "reinforce",
+      "definitions": [
+        "v. 加强，巩固"
+      ]
+    },
+    {
+      "word": "exportable",
+      "definitions": [
+        "adj. 可输出的，可出口的"
+      ]
+    },
+    {
+      "word": "retrieve",
+      "definitions": [
+        "v. 找回，取回",
+        "v. 检索"
+      ]
+    },
+    {
+      "word": "descendant",
+      "definitions": [
+        "n. 后裔，子孙"
+      ]
+    },
+    {
+      "word": "clergy",
+      "definitions": [
+        "n. 神职人员"
+      ]
+    },
+    {
+      "word": "democratic",
+      "definitions": [
+        "adj. 民主的"
+      ]
+    },
+    {
+      "word": "petrochemical",
+      "definitions": [
+        "n. 石油化工产品"
+      ]
+    },
+    {
+      "word": "encode",
+      "definitions": [
+        "v. 编码"
+      ]
+    },
+    {
+      "word": "proliferate",
+      "definitions": [
+        "v. 激增"
+      ]
+    },
+    {
+      "word": "replica",
+      "definitions": [
+        "n. 复制品"
+      ]
+    },
+    {
+      "word": "tame",
+      "definitions": [
+        "adj. 驯服的"
+      ]
+    },
+    {
+      "word": "flashy",
+      "definitions": [
+        "adj. 闪光的",
+        "adj. 俗丽的"
+      ]
+    },
+    {
+      "word": "vulnerable",
+      "definitions": [
+        "adj. 易受伤害的"
+      ]
+    },
+    {
+      "word": "onset",
+      "definitions": [
+        "n. 开始"
+      ]
+    },
+    {
+      "word": "reclamation",
+      "definitions": [
+        "n. 开垦",
+        "n. 收回"
+      ]
+    },
+    {
+      "word": "monetary",
+      "definitions": [
+        "adj. 货币的"
+      ]
+    },
+    {
+      "word": "fracture",
+      "definitions": [
+        "n. 破裂，折断，骨折"
+      ]
+    },
+    {
+      "word": "charged",
+      "definitions": [
+        "adj. 带电的",
+        "adj. 充满感情的"
+      ]
+    },
+    {
+      "word": "bead",
+      "definitions": [
+        "n. 珠子"
+      ]
+    },
+    {
+      "word": "melodious",
+      "definitions": [
+        "adj. 悦耳的"
+      ]
+    },
+    {
+      "word": "canyon",
+      "definitions": [
+        "n. 峡谷"
+      ]
+    },
+    {
+      "word": "successor",
+      "definitions": [
+        "n. 继承者"
+      ]
+    },
+    {
+      "word": "allusion",
+      "definitions": [
+        "n. 暗示"
+      ]
+    },
+    {
+      "word": "abnormality",
+      "definitions": [
+        "n. 异常"
+      ]
+    },
+    {
+      "word": "oversight",
+      "definitions": [
+        "n. 疏忽",
+        "n. 监督"
+      ]
+    },
+    {
+      "word": "prevail",
+      "definitions": [
+        "v. 盛行",
+        "v. 战胜"
+      ]
+    },
+    {
+      "word": "synchronize",
+      "definitions": [
+        "v. 同步"
+      ]
+    },
+    {
+      "word": "credential",
+      "definitions": [
+        "n. 证书，凭据"
+      ]
+    },
+    {
+      "word": "feasibility",
+      "definitions": [
+        "n. 可行性，可能性"
+      ]
+    },
+    {
+      "word": "sparsely",
+      "definitions": [
+        "adv. 稀疏地，贫乏地"
+      ]
+    },
+    {
+      "word": "reef",
+      "definitions": [
+        "n. 礁"
+      ]
+    },
+    {
+      "word": "barn",
+      "definitions": [
+        "n. 谷仓"
+      ]
+    },
+    {
+      "word": "alumnus",
+      "definitions": [
+        "n. 男毕业生"
+      ]
+    },
+    {
+      "word": "strike",
+      "definitions": [
+        "v. 罢工",
+        "v. 打击，袭击"
+      ]
+    },
+    {
+      "word": "subsist",
+      "definitions": [
+        "v. 维持生活"
+      ]
+    },
+    {
+      "word": "percussion",
+      "definitions": [
+        "n. 打击乐器",
+        "n. 碰撞，冲击"
+      ]
+    },
+    {
+      "word": "tributary",
+      "definitions": [
+        "n. 支流"
+      ]
+    },
+    {
+      "word": "moss",
+      "definitions": [
+        "n. 青苔"
+      ]
+    },
+    {
+      "word": "furry",
+      "definitions": [
+        "adj. 毛皮的"
+      ]
+    },
+    {
+      "word": "patent",
+      "definitions": [
+        "n. 专利",
+        "v. 获得专利"
+      ]
+    },
+    {
+      "word": "meteoroid",
+      "definitions": [
+        "n. 流星"
+      ]
+    },
+    {
+      "word": "fraction",
+      "definitions": [
+        "n. 部分",
+        "n. 分数"
+      ]
+    },
+    {
+      "word": "obscure",
+      "definitions": [
+        "v. 遮掩，隐藏",
+        "adj. 模糊的，复杂难懂的"
+      ]
+    },
+    {
+      "word": "dismantle",
+      "definitions": [
+        "v. 拆除"
+      ]
+    },
+    {
+      "word": "spine",
+      "definitions": [
+        "n. 脊柱",
+        "n. 刺毛"
+      ]
+    },
+    {
+      "word": "tentacle",
+      "definitions": [
+        "n. 触须，触角"
+      ]
+    },
+    {
+      "word": "limb",
+      "definitions": [
+        "n. 四肢",
+        "n. 树的主枝"
+      ]
+    },
+    {
+      "word": "hierarchy",
+      "definitions": [
+        "n. 等级制度"
+      ]
+    },
+    {
+      "word": "hydro",
+      "definitions": [
+        "n. 水力，水力发电"
+      ]
+    },
+    {
+      "word": "manifest",
+      "definitions": [
+        "adj. 明显的",
+        "v. 显现出"
+      ]
+    },
+    {
+      "word": "inertia",
+      "definitions": [
+        "n. 惰性，迟钝",
+        "n. (物理学)惯性"
+      ]
+    },
+    {
+      "word": "punctuate",
+      "definitions": [
+        "v. 不时打断"
+      ]
+    },
+    {
+      "word": "conviction",
+      "definitions": [
+        "n. 坚定的信仰",
+        "n. 定罪"
+      ]
+    },
+    {
+      "word": "suite",
+      "definitions": [
+        "n. 套房"
+      ]
+    },
+    {
+      "word": "adjacent",
+      "definitions": [
+        "adj. 邻近的"
+      ]
+    },
+    {
+      "word": "swarm",
+      "definitions": [
+        "n. 一大群",
+        "v. 蜂拥，挤满"
+      ]
+    },
+    {
+      "word": "resolve",
+      "definitions": [
+        "v. 解决",
+        "v. 下决心"
+      ]
+    },
+    {
+      "word": "abrasion",
+      "definitions": [
+        "n. 擦伤",
+        "n. 磨损"
+      ]
+    },
+    {
+      "word": "flagpole",
+      "definitions": [
+        "n. 旗竿"
+      ]
+    },
+    {
+      "word": "pebble",
+      "definitions": [
+        "n. 鹅卵石"
+      ]
+    },
+    {
+      "word": "limestone",
+      "definitions": [
+        "n. 石灰岩"
+      ]
+    },
+    {
+      "word": "textile",
+      "definitions": [
+        "n. 纺织品"
+      ]
+    },
+    {
+      "word": "opaque",
+      "definitions": [
+        "adj. 不透明的",
+        "adj. 晦涩难懂的"
+      ]
+    },
+    {
+      "word": "sect",
+      "definitions": [
+        "n. 宗派"
+      ]
+    },
+    {
+      "word": "uproot",
+      "definitions": [
+        "v. 连根拔起",
+        "v. 使……离开家园"
+      ]
+    },
+    {
+      "word": "lodging",
+      "definitions": [
+        "n. 寄宿处"
+      ]
+    },
+    {
+      "word": "diffuse",
+      "definitions": [
+        "v. 扩散"
+      ]
+    },
+    {
+      "word": "microscope",
+      "definitions": [
+        "n. 显微镜"
+      ]
+    },
+    {
+      "word": "conservative",
+      "definitions": [
+        "adj. 保守的",
+        "n. 保守派"
+      ]
+    },
+    {
+      "word": "substrate",
+      "definitions": [
+        "n. 基质"
+      ]
+    },
+    {
+      "word": "expedition",
+      "definitions": [
+        "n. 远征，探险队"
+      ]
+    },
+    {
+      "word": "entail",
+      "definitions": [
+        "v. 使需要，必需"
+      ]
+    },
+    {
+      "word": "withstand",
+      "definitions": [
+        "v. 承受住"
+      ]
+    },
+    {
+      "word": "scant",
+      "definitions": [
+        "adj. 不足的，缺乏的"
+      ]
+    },
+    {
+      "word": "plausible",
+      "definitions": [
+        "adj. 看似合理的"
+      ]
+    },
+    {
+      "word": "Christian",
+      "definitions": [
+        "n. 基督徒"
+      ]
+    },
+    {
+      "word": "carving",
+      "definitions": [
+        "n. 雕刻"
+      ]
+    },
+    {
+      "word": "sweep",
+      "definitions": [
+        "v. 打扫",
+        "v. 迅速移动",
+        "v. (风、海浪等)卷走"
+      ]
+    },
+    {
+      "word": "counterbalance",
+      "definitions": [
+        "v. 使平衡，抵消"
+      ]
+    },
+    {
+      "word": "explicit",
+      "definitions": [
+        "adj. 明确的，清楚的"
+      ]
+    },
+    {
+      "word": "photosynthesis",
+      "definitions": [
+        "n. 光合作用"
+      ]
+    },
+    {
+      "word": "outrigger",
+      "definitions": [
+        "n. 舷外支架"
+      ]
+    }
+  ]
+}

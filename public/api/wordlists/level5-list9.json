@@ -1,0 +1,639 @@
+{
+  "meta": {
+    "level": 5,
+    "list": 9,
+    "title": "Level 5 · List 9",
+    "updatedAt": "2026-06-28"
+  },
+  "words": [
+    {
+      "word": "cargo",
+      "definitions": [
+        "n. 货物，船货"
+      ]
+    },
+    {
+      "word": "reverse",
+      "definitions": [
+        "v. 反转，彻底改变"
+      ]
+    },
+    {
+      "word": "marvel",
+      "definitions": [
+        "n. 奇迹",
+        "v. 惊叹"
+      ]
+    },
+    {
+      "word": "integral",
+      "definitions": [
+        "adj. 构成整体所必须的",
+        "n. 积分"
+      ]
+    },
+    {
+      "word": "contention",
+      "definitions": [
+        "n. 争论"
+      ]
+    },
+    {
+      "word": "strain",
+      "definitions": [
+        "n. 品种，类型",
+        "v. 扭伤",
+        "n. 拉紧，拉力"
+      ]
+    },
+    {
+      "word": "vanish",
+      "definitions": [
+        "v. 突然消失"
+      ]
+    },
+    {
+      "word": "consistency",
+      "definitions": [
+        "n. 一致性"
+      ]
+    },
+    {
+      "word": "counterpart",
+      "definitions": [
+        "n. 对应的人或物"
+      ]
+    },
+    {
+      "word": "residue",
+      "definitions": [
+        "n. 剩余，残渣"
+      ]
+    },
+    {
+      "word": "subside",
+      "definitions": [
+        "v. 沉下去，陷下去",
+        "v. 平息，减弱"
+      ]
+    },
+    {
+      "word": "deception",
+      "definitions": [
+        "n. 欺骗"
+      ]
+    },
+    {
+      "word": "marble",
+      "definitions": [
+        "n. 大理石",
+        "n. 玻璃弹珠"
+      ]
+    },
+    {
+      "word": "craftspeople",
+      "definitions": [
+        "n. 手艺人，工匠"
+      ]
+    },
+    {
+      "word": "obligatory",
+      "definitions": [
+        "adj. 强制的，义务的"
+      ]
+    },
+    {
+      "word": "shrine",
+      "definitions": [
+        "n. 圣地"
+      ]
+    },
+    {
+      "word": "clam",
+      "definitions": [
+        "n. 蛤蜊"
+      ]
+    },
+    {
+      "word": "extermination",
+      "definitions": [
+        "n. 消灭，根绝"
+      ]
+    },
+    {
+      "word": "deteriorate",
+      "definitions": [
+        "v. 恶化"
+      ]
+    },
+    {
+      "word": "spatial",
+      "definitions": [
+        "adj. 空间的"
+      ]
+    },
+    {
+      "word": "permanence",
+      "definitions": [
+        "n. 持久，长久"
+      ]
+    },
+    {
+      "word": "regenerate",
+      "definitions": [
+        "v. 再生",
+        "v. 复兴"
+      ]
+    },
+    {
+      "word": "presume",
+      "definitions": [
+        "v. 推测，假定"
+      ]
+    },
+    {
+      "word": "analogous",
+      "definitions": [
+        "adj. 类似的"
+      ]
+    },
+    {
+      "word": "verdict",
+      "definitions": [
+        "n. 裁决，裁定"
+      ]
+    },
+    {
+      "word": "qualitatively",
+      "definitions": [
+        "adv. 从品质上讲"
+      ]
+    },
+    {
+      "word": "frigid",
+      "definitions": [
+        "adj. 寒冷的，严寒的"
+      ]
+    },
+    {
+      "word": "offset",
+      "definitions": [
+        "v. 抵消"
+      ]
+    },
+    {
+      "word": "illiterate",
+      "definitions": [
+        "adj. 不识字的",
+        "adj. 外行的，无知的",
+        "n. 文盲，无知的人"
+      ]
+    },
+    {
+      "word": "ruthless",
+      "definitions": [
+        "adj. 无情的，残忍的"
+      ]
+    },
+    {
+      "word": "eradication",
+      "definitions": [
+        "n. 消灭，根除"
+      ]
+    },
+    {
+      "word": "watt",
+      "definitions": [
+        "n. 瓦特"
+      ]
+    },
+    {
+      "word": "intrinsic",
+      "definitions": [
+        "adj. 本质的，必要的"
+      ]
+    },
+    {
+      "word": "provincial",
+      "definitions": [
+        "adj. 省的，地方性的",
+        "adj. 偏狭的"
+      ]
+    },
+    {
+      "word": "nibble",
+      "definitions": [
+        "v. 小口地吃",
+        "n. 一小口"
+      ]
+    },
+    {
+      "word": "marshy",
+      "definitions": [
+        "adj. 沼泽的，泥泞的"
+      ]
+    },
+    {
+      "word": "stingless",
+      "definitions": [
+        "adj. 无刺的"
+      ]
+    },
+    {
+      "word": "engender",
+      "definitions": [
+        "v. 使产生，造成"
+      ]
+    },
+    {
+      "word": "glaze",
+      "definitions": [
+        "v. 上釉于，变得光滑"
+      ]
+    },
+    {
+      "word": "enliven",
+      "definitions": [
+        "v. 使活泼，使生动"
+      ]
+    },
+    {
+      "word": "shatter",
+      "definitions": [
+        "v. 粉碎"
+      ]
+    },
+    {
+      "word": "horizontal",
+      "definitions": [
+        "adj. 水平的，地平线的",
+        "n. 水平线，水平位置",
+        "adj. 横向的，同一阶层的"
+      ]
+    },
+    {
+      "word": "sporadic",
+      "definitions": [
+        "adj. 零星的，偶发的"
+      ]
+    },
+    {
+      "word": "lethal",
+      "definitions": [
+        "adj. 致命的，危害大的"
+      ]
+    },
+    {
+      "word": "virtuoso",
+      "definitions": [
+        "n. 大师，行家"
+      ]
+    },
+    {
+      "word": "innate",
+      "definitions": [
+        "adj. 与生俱来的"
+      ]
+    },
+    {
+      "word": "hemispheric",
+      "definitions": [
+        "adj. 半球的"
+      ]
+    },
+    {
+      "word": "stratum",
+      "definitions": [
+        "n. 地层，社会阶层"
+      ]
+    },
+    {
+      "word": "intertwine",
+      "definitions": [
+        "v. 缠绕，缠结"
+      ]
+    },
+    {
+      "word": "drench",
+      "definitions": [
+        "v. 使湿透"
+      ]
+    },
+    {
+      "word": "descent",
+      "definitions": [
+        "n. 下降",
+        "n. 血统"
+      ]
+    },
+    {
+      "word": "intrigue",
+      "definitions": [
+        "v. 激起兴趣",
+        "v. 密谋",
+        "n. 阴谋"
+      ]
+    },
+    {
+      "word": "delegate",
+      "definitions": [
+        "n. 代表"
+      ]
+    },
+    {
+      "word": "stationary",
+      "definitions": [
+        "adj. 静止不动的"
+      ]
+    },
+    {
+      "word": "unravel",
+      "definitions": [
+        "v. 解开",
+        "v. 揭开"
+      ]
+    },
+    {
+      "word": "twig",
+      "definitions": [
+        "n. 细枝",
+        "v. 理解"
+      ]
+    },
+    {
+      "word": "paddle",
+      "definitions": [
+        "v. 划桨"
+      ]
+    },
+    {
+      "word": "incomprehensible",
+      "definitions": [
+        "adj. 不可理解的"
+      ]
+    },
+    {
+      "word": "scrupulous",
+      "definitions": [
+        "adj. 细心的，一丝不苟的"
+      ]
+    },
+    {
+      "word": "lag",
+      "definitions": [
+        "v. 落后",
+        "n. 间隔"
+      ]
+    },
+    {
+      "word": "linger",
+      "definitions": [
+        "v. 逗留，缓慢做"
+      ]
+    },
+    {
+      "word": "magnitude",
+      "definitions": [
+        "n. (大的)量，大小"
+      ]
+    },
+    {
+      "word": "league",
+      "definitions": [
+        "n. 联盟，联合，联赛"
+      ]
+    },
+    {
+      "word": "thermometer",
+      "definitions": [
+        "n. 温度计"
+      ]
+    },
+    {
+      "word": "perpendicular",
+      "definitions": [
+        "adj. 成直角的，直立的",
+        "n. 垂直线"
+      ]
+    },
+    {
+      "word": "acupuncture",
+      "definitions": [
+        "n. 针灸"
+      ]
+    },
+    {
+      "word": "outlet",
+      "definitions": [
+        "n. 出口，出路",
+        "n. 商店"
+      ]
+    },
+    {
+      "word": "quilt",
+      "definitions": [
+        "n. 被子，棉被"
+      ]
+    },
+    {
+      "word": "gaze",
+      "definitions": [
+        "v. 凝视"
+      ]
+    },
+    {
+      "word": "revision",
+      "definitions": [
+        "n. 修改",
+        "n. 修订本"
+      ]
+    },
+    {
+      "word": "biography",
+      "definitions": [
+        "n. 传记，传记文学"
+      ]
+    },
+    {
+      "word": "inflation",
+      "definitions": [
+        "n. 膨胀",
+        "n. [经]通货膨胀"
+      ]
+    },
+    {
+      "word": "renaissance",
+      "definitions": [
+        "n. 复兴",
+        "n. 文艺复兴"
+      ]
+    },
+    {
+      "word": "infection",
+      "definitions": [
+        "n. 感染，传染病"
+      ]
+    },
+    {
+      "word": "modem",
+      "definitions": [
+        "n. 调制解调器"
+      ]
+    },
+    {
+      "word": "fatigue",
+      "definitions": [
+        "n. 疲乏，劳累"
+      ]
+    },
+    {
+      "word": "capsule",
+      "definitions": [
+        "n. 胶囊",
+        "n. 航天舱"
+      ]
+    },
+    {
+      "word": "grid",
+      "definitions": [
+        "n. 格栅，网格",
+        "n. 电网系统"
+      ]
+    },
+    {
+      "word": "lumber",
+      "definitions": [
+        "v. 给某人负担或不便",
+        "v. 吃力缓慢地移动",
+        "n. 木材，木料"
+      ]
+    },
+    {
+      "word": "miracle",
+      "definitions": [
+        "n. 奇迹"
+      ]
+    },
+    {
+      "word": "remedy",
+      "definitions": [
+        "n. 治疗药物，改进措施",
+        "v. 纠正"
+      ]
+    },
+    {
+      "word": "defy",
+      "definitions": [
+        "v. 反抗"
+      ]
+    },
+    {
+      "word": "folklore",
+      "definitions": [
+        "n. 民俗学"
+      ]
+    },
+    {
+      "word": "heed",
+      "definitions": [
+        "v. 注意，留意"
+      ]
+    },
+    {
+      "word": "integrity",
+      "definitions": [
+        "n. 正直",
+        "n. 完整"
+      ]
+    },
+    {
+      "word": "lateral",
+      "definitions": [
+        "adj. 侧面的",
+        "adj. 横向的"
+      ]
+    },
+    {
+      "word": "extravagant",
+      "definitions": [
+        "adj. 挥霍的，昂贵的"
+      ]
+    },
+    {
+      "word": "inherent",
+      "definitions": [
+        "adj. 内在的，固有的"
+      ]
+    },
+    {
+      "word": "plagiarism",
+      "definitions": [
+        "n. 抄袭"
+      ]
+    },
+    {
+      "word": "acquisition",
+      "definitions": [
+        "n. 获得，获得物",
+        "n. 习得"
+      ]
+    },
+    {
+      "word": "encyclopedia",
+      "definitions": [
+        "n. 百科全书"
+      ]
+    },
+    {
+      "word": "physician",
+      "definitions": [
+        "n. 医生，内科医生"
+      ]
+    },
+    {
+      "word": "prototype",
+      "definitions": [
+        "n. 原型，样板"
+      ]
+    },
+    {
+      "word": "superficial",
+      "definitions": [
+        "adj. 表面的，肤浅的"
+      ]
+    },
+    {
+      "word": "agility",
+      "definitions": [
+        "n. 敏捷"
+      ]
+    },
+    {
+      "word": "bankrupt",
+      "definitions": [
+        "adj. 破产的，完全缺乏的",
+        "v. 使……破产"
+      ]
+    },
+    {
+      "word": "brew",
+      "definitions": [
+        "v. 酿制(啤酒)",
+        "v. 冲泡",
+        "v. 酝酿(事件)"
+      ]
+    },
+    {
+      "word": "deduce",
+      "definitions": [
+        "v. 推断"
+      ]
+    },
+    {
+      "word": "eternal",
+      "definitions": [
+        "adj. 永恒的"
+      ]
+    }
+  ]
+}
