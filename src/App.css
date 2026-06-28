@@ -1321,6 +1321,55 @@ body {
   margin-top: 0.25rem;
 }
 
+.word-list-view__toolbar {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.625rem;
+  flex-wrap: wrap;
+}
+
+.word-list-view__search {
+  flex: 1;
+  min-width: 10rem;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 0.875rem;
+}
+
+.word-list-view__search:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.word-list-view__sort {
+  padding: 0.55rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.word-list-view__sort:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.word-list-view__meta {
+  margin: 0 0 0.75rem;
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+
 .word-list-view__empty {
   text-align: center;
   padding: 4rem 2rem;
@@ -1653,6 +1702,15 @@ body {
   }
 
   .word-list-view__header-actions {
+    width: 100%;
+  }
+
+  .word-list-view__toolbar {
+    flex-direction: column;
+  }
+
+  .word-list-view__search,
+  .word-list-view__sort {
     width: 100%;
   }
 

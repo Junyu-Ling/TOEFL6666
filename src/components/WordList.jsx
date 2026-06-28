@@ -1,3 +1,40 @@
+import { useMemo, useState } from "react";
+
+const SORT_OPTIONS = [
+  { value: "default", label: "默认顺序" },
+  { value: "wrong-desc", label: "错误次数 ↓" },
+  { value: "wrong-asc", label: "错误次数 ↑" },
+  { value: "alpha-asc", label: "字母 A→Z" },
+  { value: "alpha-desc", label: "字母 Z→A" },
+];
+
+function sortWords(words, sortMode) {
+  const list = [...words];
+  switch (sortMode) {
+    case "wrong-desc":
+      return list.sort((a, b) => (b.wrongCount ?? 0) - (a.wrongCount ?? 0));
+    case "wrong-asc":
+      return list.sort((a, b) => (a.wrongCount ?? 0) - (b.wrongCount ?? 0));
+    case "alpha-asc":
+      return list.sort((a, b) => a.word.localeCompare(b.word, "en"));
+    case "alpha-desc":
+      return list.sort((a, b) => b.word.localeCompare(a.word, "en"));
+    default:
+      return list;
+  }
+}
+
+function filterWords(words, query) {
+  const q = query.trim().toLowerCase();
+  if (!q) return words;
+  return words.filter(
+    (item) =>
+      item.word.toLowerCase().includes(q) ||
+      item.definitions?.some((def) => def.toLowerCase().includes(q)) ||
+      item.ai_feedback?.toLowerCase().includes(q)
+  );
+}
+
 function WordItem({ item, variant, onRemove, showWrongCount, wrongCountPast = false }) {
   const wrongCount = item.wrongCount ?? 0;
   const showBadge = showWrongCount && wrongCount > 0;
@@ -47,7 +84,20 @@ export default function WordList({
   clearLabel = "清空",
   showWrongCount = false,
   wrongCountPast = false,
+  withToolbar = false,
 }) {
+  const [query, setQuery] = useState("");
+  const [sortMode, setSortMode] = useState("default");
+
+  const displayedWords = useMemo(() => {
+    const filtered = filterWords(words, query);
+    return sortWords(filtered, sortMode);
+  }, [words, query, sortMode]);
+
+  const isFiltering = query.trim().length > 0;
+  const showEmpty = words.length === 0;
+  const showNoResults = !showEmpty && displayedWords.length === 0;
+
   return (
     <div className="word-list-view">
       <header className="word-list-view__header">
@@ -65,14 +115,52 @@ export default function WordList({
         </div>
       </header>
 
-      {words.length === 0 ? (
+      {withToolbar && words.length > 0 && (
+        <div className="word-list-view__toolbar">
+          <input
+            className="word-list-view__search"
+            type="search"
+            placeholder="搜索单词或释义…"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            aria-label="搜索单词"
+          />
+          <select
+            className="word-list-view__sort"
+            value={sortMode}
+            onChange={(e) => setSortMode(e.target.value)}
+            aria-label="排序方式"
+          >
+            {SORT_OPTIONS.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
+
+      {withToolbar && words.length > 0 && (
+        <p className="word-list-view__meta">
+          {isFiltering || sortMode !== "default"
+            ? `显示 ${displayedWords.length} / ${words.length} 个`
+            : `共 ${words.length} 个`}
+        </p>
+      )}
+
+      {showEmpty ? (
         <div className="word-list-view__empty">
           <span className="empty-icon">📭</span>
           <p>{emptyText}</p>
         </div>
+      ) : showNoResults ? (
+        <div className="word-list-view__empty">
+          <span className="empty-icon">🔍</span>
+          <p>没有匹配的单词</p>
+        </div>
       ) : (
         <div className="word-list">
-          {words.map((item) => (
+          {displayedWords.map((item) => (
             <WordItem
               key={item.word}
               item={item}

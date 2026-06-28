@@ -504,7 +504,7 @@ export default function App() {
         {activeTab === "recognized" && (
           <WordList
             title="已认识的词"
-            subtitle={`${recognized.length} 个 · 一次过的词不标注 · 曾错过的词会显示次数`}
+            subtitle="一次过的词不标注 · 曾错过的词会显示次数 · 本地保存"
             words={recognized}
             emptyText="还没有熟词，去卡片练习场开始吧！"
             onRemoveWord={handleRemoveRecognized}
@@ -512,6 +512,7 @@ export default function App() {
             clearLabel="清空熟词本"
             showWrongCount
             wrongCountPast
+            withToolbar
           />
         )}
       </main>
