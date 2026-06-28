@@ -1675,21 +1675,6 @@ body {
   box-shadow: 0 8px 24px rgba(47, 128, 237, 0.35);
   transition: transform 0.15s, box-shadow 0.15s;
   overflow: hidden;
-  position: relative;
-}
-
-.vocab-assistant__fab:not(.vocab-assistant__fab--open)::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  opacity: 0;
-  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.55), transparent 55%);
-  pointer-events: none;
-}
-
-.vocab-assistant__fab:not(.vocab-assistant__fab--open):hover::after {
-  animation: vocab-assistant-shimmer 1.1s ease-in-out infinite;
 }
 
 .vocab-assistant__fab-icon {
@@ -1703,16 +1688,6 @@ body {
 .vocab-assistant__fab:hover {
   transform: translateY(-2px);
   box-shadow: 0 12px 30px rgba(47, 128, 237, 0.45);
-}
-
-@keyframes vocab-assistant-shimmer {
-  0%,
-  100% {
-    opacity: 0.15;
-  }
-  50% {
-    opacity: 0.85;
-  }
 }
 
 .vocab-assistant__fab--open {
