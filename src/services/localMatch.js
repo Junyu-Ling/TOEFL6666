@@ -69,18 +69,39 @@ function matchesFullDefinitionLine(answer, definitions) {
   return definitions.some((definition) => normalizeForCompare(definition) === normalizedAnswer);
 }
 
+function getChineseMeaningVariants(definition) {
+  const chinese = extractChinesePart(definition);
+  const variants = new Set([normalizeForCompare(chinese)]);
+
+  // 「讲，为……作解说」这类逗号是句内停顿，不是并列义项
+  if (/…|\.\.\./.test(chinese)) {
+    return [...variants];
+  }
+
+  const parts = chinese.split(/[,，、；]/).map((part) => part.trim()).filter(Boolean);
+  if (parts.length > 1 && parts.every((part) => normalizeForCompare(part).length >= 2)) {
+    for (const part of parts) {
+      variants.add(normalizeForCompare(part));
+    }
+  }
+
+  return [...variants];
+}
+
 function matchesChineseDefinition(answer, definitions) {
   const normalizedAnswer = normalizeForCompare(stripOptionalPos(answer));
   if (!normalizedAnswer) return false;
 
-  return definitions.some((definition) => {
-    const chinese = normalizeForCompare(extractChinesePart(definition));
-    return chinese && normalizedAnswer === chinese;
-  });
+  return definitions.some((definition) =>
+    getChineseMeaningVariants(definition).some(
+      (variant) => variant && normalizedAnswer === variant
+    )
+  );
 }
 
 /**
- * 用户只需中文释义即可。与任一条标准释义的中文部分完全一致时，本地判对，不调用 AI。
+ * 用户只需中文释义即可。与任一条标准释义的中文部分完全一致，
+ * 或命中同一条释义里用逗号分隔的任一义项时，本地判对，不调用 AI。
  */
 export function matchesStandardMeaning(userAnswer, definitions) {
   const answer = userAnswer.trim();
