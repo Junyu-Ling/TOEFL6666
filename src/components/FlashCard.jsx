@@ -234,9 +234,15 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
       return active === inputRef.current;
     }
 
+    function isInsideVocabAssistant() {
+      return Boolean(document.activeElement?.closest?.(".vocab-assistant"));
+    }
+
     function handleGlobalKeyDown(e) {
       if (loadingRef.current) return;
       if (e.metaKey || e.ctrlKey || e.altKey) return;
+
+      if (isInsideVocabAssistant()) return;
 
       if (flippedRef.current && backModeRef.current === "manual") {
         if (isMarkKnownKey(e)) {

@@ -1,4 +1,11 @@
+import { useState, useEffect } from "react";
 import { useSettings } from "../context/SettingsContext";
+
+function clampDelayInput(value) {
+  const n = Number(String(value).trim());
+  if (!Number.isFinite(n)) return null;
+  return Math.min(60, Math.max(0, Math.round(n)));
+}
 
 export default function SettingsPanel() {
   const {
@@ -12,6 +19,31 @@ export default function SettingsPanel() {
     setAutoAdvanceAfterFlip,
     setAutoAdvanceDelaySec,
   } = useSettings();
+
+  const [delayDraft, setDelayDraft] = useState(String(settings.autoAdvanceDelaySec));
+
+  useEffect(() => {
+    if (settingsOpen) {
+      setDelayDraft(String(settings.autoAdvanceDelaySec));
+    }
+  }, [settings.autoAdvanceDelaySec, settingsOpen]);
+
+  function commitDelayDraft() {
+    const trimmed = delayDraft.trim();
+    if (trimmed === "") {
+      setDelayDraft(String(settings.autoAdvanceDelaySec));
+      return;
+    }
+    const clamped = clampDelayInput(trimmed);
+    if (clamped == null) {
+      setDelayDraft(String(settings.autoAdvanceDelaySec));
+      return;
+    }
+    setDelayDraft(String(clamped));
+    if (clamped !== settings.autoAdvanceDelaySec) {
+      setAutoAdvanceDelaySec(clamped);
+    }
+  }
 
   if (!settingsOpen) return null;
 
@@ -79,12 +111,18 @@ export default function SettingsPanel() {
             <label className="settings-field settings-field--spaced">
               <span>翻面后停留时间（0–60 秒）</span>
               <input
-                type="number"
-                min={0}
-                max={60}
-                step={1}
-                value={settings.autoAdvanceDelaySec}
-                onChange={(e) => setAutoAdvanceDelaySec(e.target.value)}
+                type="text"
+                inputMode="numeric"
+                value={delayDraft}
+                onChange={(e) => setDelayDraft(e.target.value)}
+                onBlur={commitDelayDraft}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    commitDelayDraft();
+                    e.currentTarget.blur();
+                  }
+                }}
               />
             </label>
           )}
