@@ -7,11 +7,11 @@ const SYSTEM_PROMPT = `你是托福词汇批改助手。只批改对错，不生
 }
 
 批改规则：
-1. 用户必须真正理解词义；仅包含标准释义里的个别汉字、词性缺失、胡乱拼接英文/乱码，一律判 false。
-2. 标准释义带词性（如 n./v./adj.）时，用户只写中文释义、不写词性，通常判 false；除非用户用中文明确说对了词性（如「名词：密码」）。
-3. 用户回答比标准释义多出无关内容（如「密码asdfgh」）判 false。
-4. 抓住核心含义且表述清楚、词性无明显错误，可判 true。
-5. 不确定时偏严格，判 false。不要啰嗦。`;
+1. 用户只需输入中文释义，不要求写词性（n./v./adj. 等）；缺少词性不算错。
+2. 用户中文释义与标准释义含义一致即可判 true，允许合理同义表述。
+3. 仅沾个别汉字、含义明显错误、空泛或与词义无关，判 false。
+4. 回答中胡乱拼接英文或乱码判 false。
+5. 不要仅因表述比标准释义简短就判错；不确定时看核心义是否命中。不要啰嗦。`;
 
 function parseAiJson(text) {
   let cleaned = text.trim();
@@ -85,7 +85,7 @@ export async function evaluateWithDeepSeek(payload, config = {}) {
           role: "user",
           content: `单词：${word}
 标准释义：${(definitions || []).join("；")}
-用户的解释：${userAnswer.trim()}
+用户的解释（只需中文释义即可，不要求词性）：${userAnswer.trim()}
 
 请批改并返回 json。`,
         },

@@ -15,6 +15,14 @@ function extractPosParts(definition) {
     .filter(Boolean);
 }
 
+function extractChinesePart(definition) {
+  return definition.replace(/^[^.]+\.\s*/, "").trim();
+}
+
+function stripOptionalPos(answer) {
+  return answer.replace(/^[a-z./]+\.\s*/i, "").trim();
+}
+
 function collectAllowedLatinTokens(definitions) {
   const allowed = new Set();
 
@@ -41,7 +49,7 @@ function isAllowedLatinToken(token, allowed) {
   return [...allowed].some((part) => part.startsWith(token) || token.startsWith(part));
 }
 
-function hasUnexpectedLatin(answer, definitions) {
+export function hasUnexpectedLatin(answer, definitions) {
   const allowed = collectAllowedLatinTokens(definitions);
   return extractAnswerLatinTokens(answer).some((token) => !isAllowedLatinToken(token, allowed));
 }
@@ -54,16 +62,25 @@ function hasUnexpectedDigits(answer, definitions) {
   return answerDigits.some((digit) => !definitionDigits.includes(digit));
 }
 
-function isExactDefinitionMatch(answer, definitions) {
+function matchesFullDefinitionLine(answer, definitions) {
   const normalizedAnswer = normalizeForCompare(answer);
   if (!normalizedAnswer) return false;
 
   return definitions.some((definition) => normalizeForCompare(definition) === normalizedAnswer);
 }
 
+function matchesChineseDefinition(answer, definitions) {
+  const normalizedAnswer = normalizeForCompare(stripOptionalPos(answer));
+  if (!normalizedAnswer) return false;
+
+  return definitions.some((definition) => {
+    const chinese = normalizeForCompare(extractChinesePart(definition));
+    return chinese && normalizedAnswer === chinese;
+  });
+}
+
 /**
- * 仅在用户回答与某条标准释义（含词性标记）完全一致，且没有多余英文/数字杂质时，
- * 才跳过 AI。其余情况一律交给 AI 判定。
+ * 用户只需中文释义即可。与任一条标准释义的中文部分完全一致时，本地判对，不调用 AI。
  */
 export function matchesStandardMeaning(userAnswer, definitions) {
   const answer = userAnswer.trim();
@@ -72,13 +89,29 @@ export function matchesStandardMeaning(userAnswer, definitions) {
   if (hasUnexpectedLatin(answer, definitions)) return false;
   if (hasUnexpectedDigits(answer, definitions)) return false;
 
-  return isExactDefinitionMatch(answer, definitions);
+  return matchesFullDefinitionLine(answer, definitions) || matchesChineseDefinition(answer, definitions);
 }
 
-export function buildLocalCorrectResult(wordData) {
+/** 明显乱答（乱码/无关英文），本地直接判错，不调用 AI。 */
+export function isObviouslyWrong(userAnswer, definitions) {
+  const answer = userAnswer.trim();
+  if (!answer || !definitions?.length) return false;
+
+  return hasUnexpectedLatin(answer, definitions) || hasUnexpectedDigits(answer, definitions);
+}
+
+export function buildLocalCorrectResult() {
   return {
     is_correct: true,
     ai_feedback: "正确！",
+    matched_locally: true,
+  };
+}
+
+export function buildLocalWrongResult(message) {
+  return {
+    is_correct: false,
+    ai_feedback: message,
     matched_locally: true,
   };
 }
