@@ -7,6 +7,12 @@
     },
     "api/ai/chat.js": {
       "maxDuration": 30
+    },
+    "api/sync/push.js": {
+      "maxDuration": 15
+    },
+    "api/sync/pull.js": {
+      "maxDuration": 15
     }
   },
   "rewrites": [

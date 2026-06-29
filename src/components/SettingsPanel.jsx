@@ -1,6 +1,15 @@
 import { useState, useEffect, useMemo } from "react";
 import { useSettings } from "../context/SettingsContext";
 import { detectProvider } from "../shared/ai-providers";
+import {
+  exportLocalData,
+  formatPairingCode,
+  generatePairingCode,
+  getSyncSummary,
+  importLocalData,
+  normalizePairingCode,
+} from "../shared/sync";
+import { pullSyncPayload, pushSyncPayload } from "../services/syncApi";
 
 function clampDelayInput(value) {
   const n = Number(String(value).trim());
@@ -26,6 +35,13 @@ export default function SettingsPanel() {
 
   const [delayDraft, setDelayDraft] = useState(String(settings.autoAdvanceDelaySec));
   const [showApiKey, setShowApiKey] = useState(false);
+  const [syncCodeDraft, setSyncCodeDraft] = useState("");
+  const [uploadedCode, setUploadedCode] = useState("");
+  const [syncBusy, setSyncBusy] = useState(false);
+  const [syncMessage, setSyncMessage] = useState("");
+  const [syncError, setSyncError] = useState("");
+
+  const syncSummary = useMemo(() => getSyncSummary(), [settingsOpen]);
 
   const detectedProvider = useMemo(
     () => detectProvider(settings.aiApiKey),
@@ -35,6 +51,10 @@ export default function SettingsPanel() {
   useEffect(() => {
     if (settingsOpen) {
       setDelayDraft(String(settings.autoAdvanceDelaySec));
+      setSyncCodeDraft("");
+      setUploadedCode("");
+      setSyncMessage("");
+      setSyncError("");
     }
   }, [settings.autoAdvanceDelaySec, settingsOpen]);
 
@@ -57,6 +77,61 @@ export default function SettingsPanel() {
 
   function handleApiKeyChange(value) {
     updateAiApiSettings({ aiApiKey: value });
+  }
+
+  async function handleUploadSync() {
+    setSyncBusy(true);
+    setSyncError("");
+    setSyncMessage("");
+    try {
+      const customCode = normalizePairingCode(syncCodeDraft);
+      const result = await pushSyncPayload(exportLocalData(), customCode || undefined);
+      setUploadedCode(result.code);
+      const expires = new Date(result.expiresAt).toLocaleString("zh-CN");
+      setSyncMessage(
+        result.backend === "memory"
+          ? `已生成配对码（开发模式，仅本机有效）。有效期至 ${expires}`
+          : `已上传。配对码 7 天内有效，至 ${expires}`
+      );
+    } catch (err) {
+      setSyncError(err.message || "上传失败");
+    } finally {
+      setSyncBusy(false);
+    }
+  }
+
+  async function handlePullSync() {
+    const code = normalizePairingCode(syncCodeDraft);
+    if (code.length !== 8) {
+      setSyncError("请输入 8 位配对码");
+      return;
+    }
+    if (
+      !window.confirm(
+        "将用云端进度覆盖本机所有学习数据（API Key 会保留）。确定继续吗？"
+      )
+    ) {
+      return;
+    }
+
+    setSyncBusy(true);
+    setSyncError("");
+    setSyncMessage("");
+    try {
+      const result = await pullSyncPayload(code);
+      importLocalData(result.payload);
+      window.location.reload();
+    } catch (err) {
+      setSyncError(err.message || "拉取失败");
+      setSyncBusy(false);
+    }
+  }
+
+  function handleGenerateCodeOnly() {
+    setSyncCodeDraft(generatePairingCode());
+    setUploadedCode("");
+    setSyncMessage("已生成配对码，点击「上传本机进度」后才会生效");
+    setSyncError("");
   }
 
   if (!settingsOpen) return null;
@@ -218,6 +293,69 @@ export default function SettingsPanel() {
               )}
             </p>
           )}
+        </section>
+
+        <section className="settings-section">
+          <h3>进度同步</h3>
+          <p className="settings-hint">
+            用配对码在电脑与手机间同步学习进度（熟词本、生词本、列表进度、打卡、设置等）。
+            配对码相当于密码，请勿泄露。上传后 7 天内可在另一台设备输入配对码恢复。
+          </p>
+          <p className="settings-hint settings-hint--compact">
+            本机：熟词 {syncSummary.recognized} · 生词 {syncSummary.unrecognized}
+            {syncSummary.listCount > 0 ? ` · ${syncSummary.listCount} 个列表有进度` : ""}
+          </p>
+
+          <label className="settings-field">
+            <span>配对码</span>
+            <div className="settings-field-row settings-field-row--key">
+              <input
+                type="text"
+                value={syncCodeDraft}
+                onChange={(e) => setSyncCodeDraft(formatPairingCode(e.target.value))}
+                placeholder="留空自动生成，或输入自定义 8 位"
+                autoComplete="off"
+                spellCheck={false}
+                maxLength={9}
+              />
+              <button
+                type="button"
+                className="settings-action-btn"
+                onClick={handleGenerateCodeOnly}
+                disabled={syncBusy}
+              >
+                生成
+              </button>
+            </div>
+          </label>
+
+          {uploadedCode && (
+            <p className="settings-status settings-status--ok">
+              当前配对码：<span className="sync-code-badge">{uploadedCode}</span>
+            </p>
+          )}
+
+          <div className="settings-actions settings-actions--spaced">
+            <button
+              type="button"
+              className="settings-action-btn settings-action-btn--primary"
+              onClick={handleUploadSync}
+              disabled={syncBusy}
+            >
+              {syncBusy ? "处理中…" : "上传本机进度"}
+            </button>
+            <button
+              type="button"
+              className="settings-action-btn"
+              onClick={handlePullSync}
+              disabled={syncBusy}
+            >
+              从配对码恢复
+            </button>
+          </div>
+
+          {syncMessage && <p className="settings-status settings-status--ok">{syncMessage}</p>}
+          {syncError && <p className="settings-status settings-status--error">{syncError}</p>}
         </section>
 
         <section className="settings-section">
