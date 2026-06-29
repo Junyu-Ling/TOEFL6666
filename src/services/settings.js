@@ -9,6 +9,7 @@ const DEFAULT_SETTINGS = {
   autoAdvanceDelaySec: 3,
   aiApiKey: "",
   practiceStyle: "type",
+  answerSounds: true,
 };
 
 export function normalizePracticeStyle(value) {
@@ -35,6 +36,7 @@ export function loadSettings() {
       autoAdvanceDelaySec: clampDelaySec(parsed.autoAdvanceDelaySec),
       aiApiKey: typeof parsed.aiApiKey === "string" ? parsed.aiApiKey : "",
       practiceStyle: normalizePracticeStyle(parsed.practiceStyle),
+      answerSounds: parsed.answerSounds !== false,
     };
   } catch {
     return { ...DEFAULT_SETTINGS };

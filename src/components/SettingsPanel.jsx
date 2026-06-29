@@ -55,6 +55,7 @@ export default function SettingsPanel() {
     setAutoAdvanceAfterFlip,
     setAutoAdvanceDelaySec,
     setPracticeStyle,
+    setAnswerSounds,
     updateAiApiSettings,
   } = useSettings();
 
@@ -253,6 +254,19 @@ export default function SettingsPanel() {
                 </button>
               </div>
             </div>
+            <label className="settings-toggle-row">
+              <span className="settings-toggle-row__text">
+                <strong>答对 / 答错音效</strong>
+              </span>
+              <span className="toggle-switch">
+                <input
+                  type="checkbox"
+                  checked={settings.answerSounds}
+                  onChange={(e) => setAnswerSounds(e.target.checked)}
+                />
+                <span className="toggle-switch__track" aria-hidden="true" />
+              </span>
+            </label>
             <label className="settings-toggle-row">
               <span className="settings-toggle-row__text">
                 <strong>切换单词时自动朗读</strong>

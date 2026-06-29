@@ -6,6 +6,7 @@ import {
   listenOnce,
   checkPronunciation,
 } from "../utils/speechRecognition";
+import { playAnswerSound } from "../utils/answerSounds";
 
 const SILENCE_STOP_MS = 2000;
 
@@ -47,6 +48,12 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
   const startDictationRef = useRef(null);
   const dictatingRef = useRef(false);
   const resultRef = useRef(null);
+  const answerSoundsRef = useRef(settings.answerSounds);
+  answerSoundsRef.current = settings.answerSounds;
+
+  function notifyAnswerResult(isCorrect) {
+    if (answerSoundsRef.current) playAnswerSound(isCorrect);
+  }
 
   useEffect(() => {
     answerRef.current = userAnswer;
@@ -123,6 +130,7 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
         setBackMode("ai");
         setFlipped(true);
         if (!aiResult.needs_typo_clarification) {
+          notifyAnswerResult(aiResult.is_correct);
           onResult?.(wordData, aiResult);
         }
         requestAnimationFrame(focusCard);
@@ -155,6 +163,7 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
           };
 
       setResult(finalResult);
+      notifyAnswerResult(finalResult.is_correct);
       onResult?.(wordData, finalResult);
       requestAnimationFrame(focusCard);
     },
@@ -171,6 +180,7 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
 
   const handleManualMark = useCallback(
     (isCorrect) => {
+      notifyAnswerResult(isCorrect);
       onResult?.(wordData, {
         is_correct: isCorrect,
         ai_feedback: isCorrect ? "你已标记为认识" : "你已标记为需加强",

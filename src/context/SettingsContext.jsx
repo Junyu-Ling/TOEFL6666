@@ -68,6 +68,11 @@ export function SettingsProvider({ children }) {
     [updateSettings]
   );
 
+  const setAnswerSounds = useCallback(
+    (answerSounds) => updateSettings({ answerSounds: answerSounds === true }),
+    [updateSettings]
+  );
+
   const updateAiApiSettings = useCallback(
     (patch) => updateSettings(patch),
     [updateSettings]
@@ -88,6 +93,7 @@ export function SettingsProvider({ children }) {
       setAutoAdvanceAfterFlip,
       setAutoAdvanceDelaySec,
       setPracticeStyle,
+      setAnswerSounds,
       updateAiApiSettings,
       speakWord,
     }),
@@ -102,6 +108,7 @@ export function SettingsProvider({ children }) {
       setAutoAdvanceAfterFlip,
       setAutoAdvanceDelaySec,
       setPracticeStyle,
+      setAnswerSounds,
       updateAiApiSettings,
       speakWord,
     ]
