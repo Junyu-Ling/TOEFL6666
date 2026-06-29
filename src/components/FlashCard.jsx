@@ -321,18 +321,27 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
       }
 
       if (e.key === "Enter" && !e.shiftKey) {
-        e.preventDefault();
         if (flippedRef.current) {
+          e.preventDefault();
           if (backModeRef.current === "ai") {
             onNext?.();
           } else {
             flipBack();
           }
-        } else if (isTypeMode && isTypingInAnswerField() && answerRef.current.trim()) {
+          return;
+        }
+
+        const inInput = isTypingInAnswerField();
+        const hasAnswer = answerRef.current.trim();
+
+        if (hasAnswer && (isTypeMode || inInput)) {
+          e.preventDefault();
           submitAnswer(answerRef.current);
-        } else if (isTypeMode && answerRef.current.trim()) {
-          submitAnswer(answerRef.current);
-        } else {
+          return;
+        }
+
+        if (!inInput) {
+          e.preventDefault();
           flipToManual();
         }
       }
@@ -352,7 +361,7 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
       : "输入框已就绪可直接打字 · Enter 提交批改 · 框外空格翻面 · ↑↓ 切换单词"
     : dictating
       ? "说完后停顿 2 秒自动提交"
-      : "空格 / Enter 翻面核对 · 也可点输入框手动输入 · ↑↓ 切换单词";
+      : "默认空格 / Enter 翻面 · 点输入框输入后 Enter 提交批改 · ↑↓ 切换单词";
 
   const mobileHint = isTypeMode
     ? dictating
@@ -360,7 +369,7 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
       : "写好释义点「提交批改」，只看释义点「翻面」"
     : dictating
       ? "说完后停顿 2 秒自动提交"
-      : "先在脑海里想词义，点「翻面」核对，或手动输入后提交";
+      : "默认点「翻面」核对；输入释义后点「提交批改」";
 
   async function handlePronouncePractice() {
     if (!micGranted) {
@@ -478,8 +487,8 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
                     ? "中文释义或英文同义词，也可语音输入…"
                     : "中文释义或英文同义词…"
                   : micGranted
-                    ? "可选：输入释义批改，或按空格/Enter 翻面…"
-                    : "可选：输入释义批改，或按空格/Enter 翻面…"
+                    ? "可选：点这里输入释义，Enter 提交批改…"
+                    : "可选：点这里输入释义，Enter 提交批改…"
               }
               value={userAnswer}
               onChange={(e) => setUserAnswer(e.target.value)}
@@ -589,12 +598,10 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
           <button
             type="button"
             className="flashcard__mobile-btn flashcard__mobile-btn--accent"
-            onClick={() =>
-              isTypeMode && userAnswer.trim() ? submitAnswer(userAnswer) : flipToManual()
-            }
+            onClick={() => (userAnswer.trim() ? submitAnswer(userAnswer) : flipToManual())}
             disabled={loading}
           >
-            {isTypeMode && userAnswer.trim() ? "提交批改" : "翻面"}
+            {userAnswer.trim() ? "提交批改" : "翻面"}
           </button>
         ) : backMode === "ai" ? (
           <button type="button" className="flashcard__mobile-btn flashcard__mobile-btn--accent" onClick={onNext}>

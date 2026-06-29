@@ -113,7 +113,7 @@ export default function SettingsPanel() {
             </div>
             <p className="settings-hint settings-hint--compact">
               {settings.practiceStyle === "recall"
-                ? "新词不自动选中输入框；按空格或 Enter 翻面，在脑海里对照释义"
+                ? "默认不聚焦输入框，空格/Enter 翻面核对；需要时仍可点输入框打字批改"
                 : "新词自动聚焦输入框（蓝色高亮），可直接打字，Enter 提交批改"}
             </p>
           </div>
