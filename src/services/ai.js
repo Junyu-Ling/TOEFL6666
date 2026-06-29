@@ -1,8 +1,10 @@
 import {
   matchesStandardMeaning,
   isObviouslyWrong,
+  isUsingTargetWordItself,
   buildLocalCorrectResult,
   buildLocalWrongResult,
+  TARGET_WORD_ITSELF_MESSAGE,
 } from "./localMatch";
 import { loadSettings } from "./settings";
 import { getRequestApiConfig } from "./aiConfig";
@@ -10,11 +12,15 @@ import { getRequestApiConfig } from "./aiConfig";
 export async function evaluateAnswer(wordData, userAnswer) {
   const trimmed = userAnswer.trim();
 
+  if (isUsingTargetWordItself(trimmed, wordData.word)) {
+    return buildLocalWrongResult(TARGET_WORD_ITSELF_MESSAGE);
+  }
+
   if (matchesStandardMeaning(trimmed, wordData.definitions)) {
     return buildLocalCorrectResult();
   }
 
-  if (isObviouslyWrong(trimmed, wordData.definitions)) {
+  if (isObviouslyWrong(trimmed, wordData.definitions, wordData.word)) {
     return buildLocalWrongResult("回答含有明显无关内容，请重新作答。");
   }
 

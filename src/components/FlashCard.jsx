@@ -390,7 +390,7 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
   }, [onPrev, onNext, submitAnswer, flipToManual, flipBack, handleManualMark, isTypeMode]);
 
   const frontPrompt = isTypeMode
-    ? "用中文或英文同义词解释这个词，Enter 提交批改"
+    ? "用中文或别的英文词解释（勿照抄原词），Enter 提交批改"
     : "先在脑海里回忆词义，按空格或 Enter 翻面核对";
 
   const desktopHint = isTypeMode

@@ -69,6 +69,60 @@ function extractAnswerLatinTokens(answer) {
   return (answer.match(/[a-zA-Z]+/g) || []).map((token) => token.toLowerCase());
 }
 
+const TRIVIAL_ANSWER_WORDS = new Set([
+  "a",
+  "an",
+  "the",
+  "to",
+  "of",
+  "is",
+  "are",
+  "was",
+  "be",
+  "means",
+  "mean",
+  "word",
+  "this",
+  "that",
+  "it",
+  "its",
+  "n",
+  "v",
+  "adj",
+  "adv",
+  "prep",
+]);
+
+function tokenMatchesTargetWord(token, target) {
+  if (token === target) return true;
+  if (target.length > 2 && token === `${target}s`) return true;
+  if (target.length > 3 && token === `${target}ed`) return true;
+  if (target.length > 3 && token === `${target}ing`) return true;
+  if (token.startsWith(target) && token.length <= target.length + 2) return true;
+  return false;
+}
+
+/** 用本题英文单词本身作答，等同未掌握释义。 */
+export function isUsingTargetWordItself(userAnswer, word) {
+  const target = normalizeForCompare(word);
+  if (!target || target.length < 2) return false;
+
+  const stripped = stripOptionalPos(userAnswer).trim();
+  if (!stripped) return false;
+
+  if (normalizeForCompare(stripped) === target) return true;
+
+  const latinTokens = extractAnswerLatinTokens(stripped);
+  if (latinTokens.length === 0) return false;
+
+  const substantive = latinTokens.filter(
+    (token) => !TRIVIAL_ANSWER_WORDS.has(token) && token.length > 1
+  );
+  if (substantive.length === 0) return false;
+
+  return substantive.every((token) => tokenMatchesTargetWord(token, target));
+}
+
 function isAllowedLatinToken(token, allowed) {
   if (allowed.has(token)) return true;
   return [...allowed].some((part) => part.startsWith(token) || token.startsWith(part));
@@ -267,10 +321,15 @@ export function matchesStandardMeaning(userAnswer, definitions) {
   );
 }
 
-/** 明显乱答（乱码等），本地直接判错，不调用 AI。英文释义交给 AI 判断，不在此拦截。 */
-export function isObviouslyWrong(userAnswer, definitions) {
+export const TARGET_WORD_ITSELF_MESSAGE =
+  "不能用单词本身来解释这个词，请用中文释义或别的英文近义词。";
+
+/** 明显乱答（乱码、照抄原词等），本地直接判错，不调用 AI。 */
+export function isObviouslyWrong(userAnswer, definitions, word = "") {
   const answer = userAnswer.trim();
   if (!answer || !definitions?.length) return false;
+
+  if (word && isUsingTargetWordItself(answer, word)) return true;
 
   return hasUnexpectedDigits(answer, definitions);
 }
