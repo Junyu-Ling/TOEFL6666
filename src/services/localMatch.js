@@ -74,9 +74,23 @@ function isAllowedLatinToken(token, allowed) {
   return [...allowed].some((part) => part.startsWith(token) || token.startsWith(part));
 }
 
-export function hasUnexpectedLatin(answer, definitions) {
+function isPureEnglishAnswer(answer) {
+  const stripped = stripOptionalPos(answer).trim();
+  if (!stripped) return false;
+  return /^[a-zA-Z\s.,;/-]+$/.test(stripped);
+}
+
+function matchesEnglishGloss(answer, definitions) {
+  if (!isPureEnglishAnswer(answer)) return false;
+
+  const normalizedAnswer = normalizeForCompare(stripOptionalPos(answer));
+  if (!normalizedAnswer) return false;
+
+  const answerTokens = extractAnswerLatinTokens(answer);
+  if (answerTokens.length === 0) return false;
+
   const allowed = collectAllowedLatinTokens(definitions);
-  return extractAnswerLatinTokens(answer).some((token) => !isAllowedLatinToken(token, allowed));
+  return answerTokens.every((token) => isAllowedLatinToken(token, allowed));
 }
 
 function hasUnexpectedDigits(answer, definitions) {
@@ -235,27 +249,30 @@ function matchesChineseDefinition(answer, definitions) {
 }
 
 /**
- * 用户只需中文释义即可。与任一条标准释义的中文部分完全一致，
- * 或命中同一条释义里用逗号分隔的任一义项时，本地判对，不调用 AI。
- * 多个并列义项可任意顺序、任意常见分隔符作答，连写（如 AB / BA）也算对。
+ * 用户可用中文释义，也可用英文同义词/近义词解释（如 severe → serious）。
+ * 与标准释义一致、或命中逗号分隔义项时本地判对。
+ * 多个并列义项可任意顺序、任意常见分隔符作答，连写也算对。
  * 释义中括号内为可选补充，漏答括号内容仍算对。
  */
 export function matchesStandardMeaning(userAnswer, definitions) {
   const answer = userAnswer.trim();
   if (!answer || !definitions?.length) return false;
 
-  if (hasUnexpectedLatin(answer, definitions)) return false;
   if (hasUnexpectedDigits(answer, definitions)) return false;
 
-  return matchesFullDefinitionLine(answer, definitions) || matchesChineseDefinition(answer, definitions);
+  return (
+    matchesFullDefinitionLine(answer, definitions) ||
+    matchesChineseDefinition(answer, definitions) ||
+    matchesEnglishGloss(answer, definitions)
+  );
 }
 
-/** 明显乱答（乱码/无关英文），本地直接判错，不调用 AI。 */
+/** 明显乱答（乱码等），本地直接判错，不调用 AI。英文释义交给 AI 判断，不在此拦截。 */
 export function isObviouslyWrong(userAnswer, definitions) {
   const answer = userAnswer.trim();
   if (!answer || !definitions?.length) return false;
 
-  return hasUnexpectedLatin(answer, definitions) || hasUnexpectedDigits(answer, definitions);
+  return hasUnexpectedDigits(answer, definitions);
 }
 
 export function buildLocalCorrectResult() {

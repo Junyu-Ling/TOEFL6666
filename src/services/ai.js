@@ -13,7 +13,7 @@ export async function evaluateAnswer(wordData, userAnswer) {
   }
 
   if (isObviouslyWrong(trimmed, wordData.definitions)) {
-    return buildLocalWrongResult("回答含有无关英文或乱码，请只输入中文释义。");
+    return buildLocalWrongResult("回答含有明显无关内容，请重新作答。");
   }
 
   const res = await fetch("/api/ai/evaluate", {

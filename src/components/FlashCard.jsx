@@ -402,13 +402,13 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
             )}
           </div>
 
-          <p className="flashcard__prompt">用你自己的话解释这个词，或直接翻面查看释义</p>
+          <p className="flashcard__prompt">用中文或英文同义词解释这个词，或直接翻面查看释义</p>
 
           <div className="flashcard__input-wrap">
             <textarea
               ref={inputRef}
               className="flashcard__input"
-              placeholder={micGranted ? "输入或语音说出你的释义…" : "输入你的释义…"}
+              placeholder={micGranted ? "中文释义或英文同义词，也可语音输入…" : "中文释义或英文同义词…"}
               value={userAnswer}
               onChange={(e) => setUserAnswer(e.target.value)}
               disabled={loading || dictating}
