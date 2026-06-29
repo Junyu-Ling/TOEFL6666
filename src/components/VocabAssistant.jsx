@@ -19,6 +19,43 @@ const WELCOME = {
 };
 
 const SILENCE_STOP_MS = 2000;
+const PANEL_SIZE_KEY = "toefl666_vocab_assistant_size";
+const DEFAULT_PANEL_SIZE = { width: 352, height: 448 };
+const MIN_PANEL_SIZE = { width: 280, height: 300 };
+const PANEL_VIEWPORT_MARGIN = { x: 32, y: 96 };
+
+function getMaxPanelSize() {
+  if (typeof window === "undefined") {
+    return { width: DEFAULT_PANEL_SIZE.width, height: DEFAULT_PANEL_SIZE.height };
+  }
+  return {
+    width: window.innerWidth - PANEL_VIEWPORT_MARGIN.x,
+    height: window.innerHeight - PANEL_VIEWPORT_MARGIN.y,
+  };
+}
+
+function clampPanelSize(width, height) {
+  const max = getMaxPanelSize();
+  return {
+    width: Math.round(Math.min(max.width, Math.max(MIN_PANEL_SIZE.width, width))),
+    height: Math.round(Math.min(max.height, Math.max(MIN_PANEL_SIZE.height, height))),
+  };
+}
+
+function loadPanelSize() {
+  try {
+    const raw = localStorage.getItem(PANEL_SIZE_KEY);
+    if (!raw) return clampPanelSize(DEFAULT_PANEL_SIZE.width, DEFAULT_PANEL_SIZE.height);
+    const parsed = JSON.parse(raw);
+    return clampPanelSize(Number(parsed.width) || DEFAULT_PANEL_SIZE.width, Number(parsed.height) || DEFAULT_PANEL_SIZE.height);
+  } catch {
+    return clampPanelSize(DEFAULT_PANEL_SIZE.width, DEFAULT_PANEL_SIZE.height);
+  }
+}
+
+function savePanelSize(size) {
+  localStorage.setItem(PANEL_SIZE_KEY, JSON.stringify(size));
+}
 
 function formatTimestamp(at) {
   if (!at) return "";
@@ -50,6 +87,7 @@ export default function VocabAssistant({ currentWord, micGranted }) {
   const [error, setError] = useState(null);
   const [dictating, setDictating] = useState(false);
   const [dictationHint, setDictationHint] = useState("");
+  const [panelSize, setPanelSize] = useState(loadPanelSize);
   const listRef = useRef(null);
   const inputRef = useRef(null);
   const skipSaveRef = useRef(false);
@@ -57,6 +95,7 @@ export default function VocabAssistant({ currentWord, micGranted }) {
   const silenceTimerRef = useRef(null);
   const inputValueRef = useRef("");
   const loadingRef = useRef(false);
+  const panelSizeRef = useRef(panelSize);
 
   const historyItems = useMemo(() => searchChatHistory(historyQuery), [historyQuery, messages, view]);
 
@@ -80,6 +119,51 @@ export default function VocabAssistant({ currentWord, micGranted }) {
   useEffect(() => {
     loadingRef.current = loading;
   }, [loading]);
+
+  useEffect(() => {
+    panelSizeRef.current = panelSize;
+  }, [panelSize]);
+
+  useEffect(() => {
+    function handleWindowResize() {
+      setPanelSize((prev) => {
+        const next = clampPanelSize(prev.width, prev.height);
+        if (next.width === prev.width && next.height === prev.height) return prev;
+        savePanelSize(next);
+        return next;
+      });
+    }
+
+    window.addEventListener("resize", handleWindowResize);
+    return () => window.removeEventListener("resize", handleWindowResize);
+  }, []);
+
+  const handleResizeStart = useCallback((e) => {
+    e.preventDefault();
+    e.currentTarget.setPointerCapture(e.pointerId);
+
+    const start = {
+      x: e.clientX,
+      y: e.clientY,
+      width: panelSizeRef.current.width,
+      height: panelSizeRef.current.height,
+    };
+
+    function onMove(ev) {
+      const dx = start.x - ev.clientX;
+      const dy = start.y - ev.clientY;
+      setPanelSize(clampPanelSize(start.width + dx, start.height + dy));
+    }
+
+    function onUp() {
+      savePanelSize(panelSizeRef.current);
+      window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("pointerup", onUp);
+    }
+
+    window.addEventListener("pointermove", onMove);
+    window.addEventListener("pointerup", onUp);
+  }, []);
 
   const stopDictation = useCallback(() => {
     clearTimeout(silenceTimerRef.current);
@@ -246,7 +330,19 @@ export default function VocabAssistant({ currentWord, micGranted }) {
   return (
     <div className="vocab-assistant" aria-live="polite">
       {open && (
-        <section className="vocab-assistant__panel" aria-label="词汇 AI 助手">
+        <section
+          className="vocab-assistant__panel"
+          style={{ width: panelSize.width, height: panelSize.height }}
+          aria-label="词汇 AI 助手"
+        >
+          <div
+            className="vocab-assistant__resize-handle"
+            onPointerDown={handleResizeStart}
+            role="separator"
+            aria-orientation="both"
+            aria-label="拖动调整对话框大小"
+            title="拖动左上角调整大小"
+          />
           <header className="vocab-assistant__header">
             <div>
               <strong>词汇 AI</strong>
