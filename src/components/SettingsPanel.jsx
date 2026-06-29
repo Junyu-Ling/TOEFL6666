@@ -224,7 +224,7 @@ export default function SettingsPanel() {
 
         <details className="settings-group" open>
           <summary className="settings-group__summary">
-            练习
+            <span className="settings-group__title">练习</span>
             <span className="settings-group__meta">
               {settings.practiceStyle === "recall" ? "默念核对" : "输入批改"}
             </span>
@@ -373,7 +373,7 @@ export default function SettingsPanel() {
 
         <details className="settings-group">
           <summary className="settings-group__summary">
-            进度同步
+            <span className="settings-group__title">进度同步</span>
             <span className="settings-group__meta">
               熟词 {syncSummary.recognized} · 生词 {syncSummary.unrecognized}
             </span>
@@ -442,7 +442,7 @@ export default function SettingsPanel() {
 
         <details className="settings-group">
           <summary className="settings-group__summary">
-            朗读
+            <span className="settings-group__title">朗读</span>
             <span className="settings-group__meta">
               {settings.systemVoiceURI ? "已选音色" : "自动选择"}
             </span>
