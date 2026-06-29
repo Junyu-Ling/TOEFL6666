@@ -53,6 +53,10 @@ export default function App() {
   const [practiceQueue, setPracticeQueue] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isReviewMode, setIsReviewMode] = useState(false);
+  const [isRecognizedReviewMode, setIsRecognizedReviewMode] = useState(
+    savedRef.current.isRecognizedReviewMode ?? false
+  );
+  const inReviewMode = isReviewMode || isRecognizedReviewMode;
   const [reviewShuffle, setReviewShuffle] = useState(savedRef.current.reviewShuffle ?? false);
   const [shuffleSeed, setShuffleSeed] = useState(() => Date.now());
   const [streakData, setStreakData] = useState(() => recordVisit());
@@ -130,25 +134,56 @@ export default function App() {
   useEffect(() => {
     if (wordsLoading || !activeListId) return;
 
-    if (isReviewMode) {
-      saveProgress({ activeListId, activeTab, isReviewMode: true, reviewShuffle, listProgress });
+    if (inReviewMode) {
+      saveProgress({
+        activeListId,
+        activeTab,
+        isReviewMode,
+        isRecognizedReviewMode,
+        reviewShuffle,
+        listProgress,
+      });
       return;
     }
 
     setListProgress((prev) => {
       if (prev[activeListId]?.currentIndex === currentIndex) {
-        saveProgress({ activeListId, activeTab, isReviewMode: false, reviewShuffle, listProgress: prev });
+        saveProgress({
+          activeListId,
+          activeTab,
+          isReviewMode: false,
+          isRecognizedReviewMode: false,
+          reviewShuffle,
+          listProgress: prev,
+        });
         return prev;
       }
       const next = patchListProgress(prev, activeListId, currentIndex);
-      saveProgress({ activeListId, activeTab, isReviewMode: false, reviewShuffle, listProgress: next });
+      saveProgress({
+        activeListId,
+        activeTab,
+        isReviewMode: false,
+        isRecognizedReviewMode: false,
+        reviewShuffle,
+        listProgress: next,
+      });
       return next;
     });
-  }, [currentIndex, activeListId, activeTab, isReviewMode, reviewShuffle, wordsLoading, listProgress]);
+  }, [
+    currentIndex,
+    activeListId,
+    activeTab,
+    inReviewMode,
+    isReviewMode,
+    isRecognizedReviewMode,
+    reviewShuffle,
+    wordsLoading,
+    listProgress,
+  ]);
 
   const handleListChange = useCallback(
     async (listId) => {
-      if (listId === activeListId || isReviewMode) return;
+      if (listId === activeListId || inReviewMode) return;
 
       const nextProgress = patchListProgress(listProgress, activeListId, currentIndex);
       setListProgress(nextProgress);
@@ -161,6 +196,7 @@ export default function App() {
           activeListId: listId,
           activeTab,
           isReviewMode: false,
+          isRecognizedReviewMode: false,
           reviewShuffle,
           listProgress: nextProgress,
         });
@@ -168,13 +204,20 @@ export default function App() {
         setWordsError(err.message || "词库切换失败");
       }
     },
-    [activeListId, activeTab, applyList, currentIndex, isReviewMode, listProgress]
+    [activeListId, activeTab, applyList, currentIndex, inReviewMode, listProgress]
   );
 
   const handleTabChange = useCallback((tab) => {
     setActiveTab(tab);
-    saveProgress({ activeListId, activeTab: tab, isReviewMode, reviewShuffle, listProgress });
-  }, [activeListId, isReviewMode, reviewShuffle, listProgress]);
+    saveProgress({
+      activeListId,
+      activeTab: tab,
+      isReviewMode,
+      isRecognizedReviewMode,
+      reviewShuffle,
+      listProgress,
+    });
+  }, [activeListId, isReviewMode, isRecognizedReviewMode, reviewShuffle, listProgress]);
 
   const currentWord = practiceQueue[currentIndex] ?? null;
 
@@ -230,12 +273,16 @@ export default function App() {
     } else {
       setCurrentIndex(0);
       if (isReviewMode) {
-        setIsReviewMode(false);
         setPracticeQueue(wordList);
         setActiveTab("unrecognized");
+      } else if (isRecognizedReviewMode) {
+        setPracticeQueue(wordList);
+        setActiveTab("recognized");
       }
+      setIsReviewMode(false);
+      setIsRecognizedReviewMode(false);
     }
-  }, [currentIndex, practiceQueue.length, isReviewMode, wordList]);
+  }, [currentIndex, practiceQueue.length, isReviewMode, isRecognizedReviewMode, wordList]);
 
   const handlePrev = useCallback(() => {
     if (currentIndex > 0) {
@@ -248,14 +295,26 @@ export default function App() {
     return sortByWrongCount(unrecognized);
   }, [unrecognized, reviewShuffle, shuffleSeed]);
 
+  const recognizedPastWrong = useMemo(
+    () => recognized.filter((item) => (item.wrongCount ?? 0) >= 1),
+    [recognized]
+  );
+
   const toggleReviewShuffle = useCallback(() => {
     setReviewShuffle((prev) => {
       const next = !prev;
       if (next) setShuffleSeed(Date.now());
-      saveProgress({ activeListId, activeTab, isReviewMode, reviewShuffle: next, listProgress });
+      saveProgress({
+        activeListId,
+        activeTab,
+        isReviewMode,
+        isRecognizedReviewMode,
+        reviewShuffle: next,
+        listProgress,
+      });
       return next;
     });
-  }, [activeListId, activeTab, isReviewMode, listProgress]);
+  }, [activeListId, activeTab, isReviewMode, isRecognizedReviewMode, listProgress]);
 
   const reshuffleUnrecognized = useCallback(() => {
     setShuffleSeed(Date.now());
@@ -272,9 +331,40 @@ export default function App() {
     setPracticeQueue(reviewWords);
     setCurrentIndex(0);
     setIsReviewMode(true);
+    setIsRecognizedReviewMode(false);
     setActiveTab("practice");
-    saveProgress({ activeListId, activeTab: "practice", isReviewMode: true, reviewShuffle, listProgress });
+    saveProgress({
+      activeListId,
+      activeTab: "practice",
+      isReviewMode: true,
+      isRecognizedReviewMode: false,
+      reviewShuffle,
+      listProgress,
+    });
   }, [activeListId, listProgress, reviewShuffle, unrecognized]);
+
+  const startRecognizedReview = useCallback(() => {
+    if (recognizedPastWrong.length === 0) return;
+
+    const reviewWords = (reviewShuffle ? shuffleArray : sortByWrongCount)(recognizedPastWrong).map((item) => ({
+      word: item.word,
+      definitions: item.definitions,
+    }));
+
+    setPracticeQueue(reviewWords);
+    setCurrentIndex(0);
+    setIsRecognizedReviewMode(true);
+    setIsReviewMode(false);
+    setActiveTab("practice");
+    saveProgress({
+      activeListId,
+      activeTab: "practice",
+      isReviewMode: false,
+      isRecognizedReviewMode: true,
+      reviewShuffle,
+      listProgress,
+    });
+  }, [activeListId, listProgress, recognizedPastWrong, reviewShuffle]);
 
   const handleRemoveRecognized = useCallback((word) => {
     setRecognized((prev) => {
@@ -391,13 +481,17 @@ export default function App() {
             <div className="practice-toolbar">
               <div className="practice-toolbar__left">
                 <span className="practice-toolbar__title">
-                  {isReviewMode
+                  {isRecognizedReviewMode
+                    ? reviewShuffle
+                      ? "熟词巩固 · 曾错题 · 乱序"
+                      : "熟词巩固 · 曾错题"
+                    : isReviewMode
                     ? reviewShuffle
                       ? "强化练习 · 乱序"
                       : "强化练习"
                     : listMeta?.title ?? "单词练习"}
                 </span>
-                {!isReviewMode && availableLists.length > 0 && (
+                {!inReviewMode && availableLists.length > 0 && (
                   <div className="practice-toolbar__pickers">
                     {levelNumbers.length > 1 && (
                       <select
@@ -445,7 +539,7 @@ export default function App() {
 
             {currentWord ? (
               <FlashCard
-                key={`${currentWord.word}-${currentIndex}-${isReviewMode}`}
+                key={`${currentWord.word}-${currentIndex}-${isReviewMode}-${isRecognizedReviewMode}`}
                 wordData={currentWord}
                 micGranted={mic.isGranted}
                 onResult={handleResult}
@@ -505,7 +599,11 @@ export default function App() {
         {activeTab === "recognized" && (
           <WordList
             title="已认识的词"
-            subtitle="一次过的词不标注 · 曾错过的词会显示次数 · 本地保存"
+            subtitle={
+              recognizedPastWrong.length > 0
+                ? `${recognized.length} 个 · 曾错 ${recognizedPastWrong.length} 个可巩固 · 本地保存`
+                : "一次过的词不标注 · 曾错过的词会显示次数 · 本地保存"
+            }
             words={recognized}
             emptyText="还没有熟词，去卡片练习场开始吧！"
             onRemoveWord={handleRemoveRecognized}
@@ -514,6 +612,43 @@ export default function App() {
             showWrongCount
             wrongCountPast
             withToolbar
+            reviewBar={
+              <div className="word-list-review-bar">
+                <div className="word-list-review-bar__text">
+                  <strong>曾错题巩固</strong>
+                  <p>
+                    {recognizedPastWrong.length > 0
+                      ? `${recognizedPastWrong.length} 个词曾错过、现已掌握，再过一遍防止遗忘`
+                      : "暂无曾错题。答错后进熟词本的词会带「曾错 N 次」标记，即可在此巩固"}
+                  </p>
+                </div>
+                {recognizedPastWrong.length > 0 && (
+                  <div className="word-list-review-bar__actions">
+                    <button
+                      type="button"
+                      className={`btn btn--ghost btn--sm ${reviewShuffle ? "btn--toggle-on" : ""}`}
+                      onClick={toggleReviewShuffle}
+                      aria-pressed={reviewShuffle}
+                    >
+                      {reviewShuffle ? "乱序" : "顺序"}
+                    </button>
+                    {reviewShuffle && (
+                      <button
+                        type="button"
+                        className="btn btn--ghost btn--sm"
+                        onClick={reshuffleUnrecognized}
+                        title="重新打乱"
+                      >
+                        重新打乱
+                      </button>
+                    )}
+                    <button type="button" className="btn btn--accent" onClick={startRecognizedReview}>
+                      开始巩固（{recognizedPastWrong.length}）
+                    </button>
+                  </div>
+                )}
+              </div>
+            }
           />
         )}
       </main>

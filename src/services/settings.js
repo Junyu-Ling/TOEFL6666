@@ -7,6 +7,11 @@ const DEFAULT_SETTINGS = {
   autoDictateOnNewWord: false,
   autoAdvanceAfterFlip: false,
   autoAdvanceDelaySec: 3,
+  useCustomAiApi: false,
+  aiApiKey: "",
+  aiBaseUrl: "",
+  aiModel: "",
+  aiProviderId: "",
 };
 
 export function clampDelaySec(value) {
@@ -27,6 +32,11 @@ export function loadSettings() {
       autoDictateOnNewWord: parsed.autoDictateOnNewWord === true,
       autoAdvanceAfterFlip: parsed.autoAdvanceAfterFlip === true,
       autoAdvanceDelaySec: clampDelaySec(parsed.autoAdvanceDelaySec),
+      useCustomAiApi: parsed.useCustomAiApi === true,
+      aiApiKey: typeof parsed.aiApiKey === "string" ? parsed.aiApiKey : "",
+      aiBaseUrl: typeof parsed.aiBaseUrl === "string" ? parsed.aiBaseUrl : "",
+      aiModel: typeof parsed.aiModel === "string" ? parsed.aiModel : "",
+      aiProviderId: typeof parsed.aiProviderId === "string" ? parsed.aiProviderId : "",
     };
   } catch {
     return { ...DEFAULT_SETTINGS };

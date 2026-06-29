@@ -8,6 +8,7 @@ const DEFAULT_PROGRESS = {
   activeListId: null,
   activeTab: "practice",
   isReviewMode: false,
+  isRecognizedReviewMode: false,
   reviewShuffle: false,
   listProgress: {},
 };

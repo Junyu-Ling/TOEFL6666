@@ -1,3 +1,4 @@
+import { resolveApiConfig, stripApiConfigFromBody } from "../../server/ai-config.js";
 import { evaluateWithDeepSeek } from "../../server/ai-evaluate.js";
 
 function sendJson(res, status, payload) {
@@ -13,6 +14,15 @@ function parseBody(req) {
   return {};
 }
 
+function getEnvConfig() {
+  return {
+    apiKey: process.env.DEEPSEEK_API_KEY,
+    model: process.env.DEEPSEEK_MODEL,
+    baseUrl: process.env.DEEPSEEK_API_BASE,
+    providerId: "deepseek",
+  };
+}
+
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     sendJson(res, 405, { error: "Method Not Allowed" });
@@ -20,11 +30,9 @@ export default async function handler(req, res) {
   }
 
   try {
-    const result = await evaluateWithDeepSeek(parseBody(req), {
-      apiKey: process.env.DEEPSEEK_API_KEY,
-      model: process.env.DEEPSEEK_MODEL,
-      baseUrl: process.env.DEEPSEEK_API_BASE,
-    });
+    const body = parseBody(req);
+    const config = resolveApiConfig(body.apiConfig, getEnvConfig());
+    const result = await evaluateWithDeepSeek(stripApiConfigFromBody(body), config);
     sendJson(res, 200, result);
   } catch (err) {
     sendJson(res, err.status || 500, { error: err.message || "服务器错误" });

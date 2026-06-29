@@ -1,3 +1,5 @@
+import { chatCompletion } from "./ai-client.js";
+
 const SYSTEM_PROMPT = `你是托福词汇批改助手。只批改对错，不生成记忆法。
 
 必须只返回 json：
@@ -53,61 +55,29 @@ function createConfigError(message, status = 500) {
 }
 
 export async function evaluateWithDeepSeek(payload, config = {}) {
-  const apiKey = config.apiKey || process.env.DEEPSEEK_API_KEY || "";
-  const model = config.model || process.env.DEEPSEEK_MODEL || "deepseek-chat";
-  const baseUrl = (config.baseUrl || process.env.DEEPSEEK_API_BASE || "https://api.deepseek.com").replace(
-    /\/$/,
-    ""
-  );
-
   const { word, definitions, userAnswer } = payload || {};
-
-  if (!apiKey) {
-    throw createConfigError("未配置 DEEPSEEK_API_KEY，请在环境变量中设置");
-  }
 
   if (!word || !userAnswer?.trim()) {
     throw createConfigError("缺少单词或用户回答", 400);
   }
 
-  const response = await fetch(`${baseUrl}/v1/chat/completions`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${apiKey}`,
-    },
-    body: JSON.stringify({
-      model,
-      max_tokens: 384,
-      temperature: 0.3,
-      response_format: { type: "json_object" },
-      messages: [
-        { role: "system", content: SYSTEM_PROMPT },
-        {
-          role: "user",
-          content: `单词：${word}
+  const text = await chatCompletion({
+    config,
+    maxTokens: 384,
+    temperature: 0.3,
+    responseFormat: "json",
+    messages: [
+      { role: "system", content: SYSTEM_PROMPT },
+      {
+        role: "user",
+        content: `单词：${word}
 标准释义：${(definitions || []).join("；")}
 用户的解释（可用中文释义，或用英文同义词/近义词，不要求词性）：${userAnswer.trim()}
 
 请批改并返回 json。`,
-        },
-      ],
-    }),
+      },
+    ],
   });
-
-  const data = await response.json().catch(() => ({}));
-
-  if (!response.ok) {
-    throw createConfigError(
-      data.error?.message || data.error?.msg || "DeepSeek API 请求失败",
-      response.status
-    );
-  }
-
-  const text = data.choices?.[0]?.message?.content;
-  if (!text) {
-    throw createConfigError("AI 未返回有效内容", 502);
-  }
 
   return normalizeResult(parseAiJson(text));
 }

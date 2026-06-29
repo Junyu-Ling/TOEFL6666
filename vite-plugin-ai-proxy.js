@@ -1,4 +1,5 @@
 import { loadEnv } from "vite";
+import { resolveApiConfig, stripApiConfigFromBody } from "./server/ai-config.js";
 import { evaluateWithDeepSeek } from "./server/ai-evaluate.js";
 import { chatWithDeepSeek } from "./server/ai-chat.js";
 
@@ -23,7 +24,7 @@ function matchApiPath(url, path) {
   return url === path || url?.startsWith(`${path}?`);
 }
 
-function createAiHandler(getConfig) {
+export function createAiHandler(getEnvConfig) {
   return async (req, res, next) => {
     if (req.method !== "POST") {
       return next();
@@ -37,15 +38,16 @@ function createAiHandler(getConfig) {
 
     try {
       const body = JSON.parse(await readBody(req));
-      const config = getConfig();
+      const config = resolveApiConfig(body.apiConfig, getEnvConfig());
+      const payload = stripApiConfigFromBody(body);
 
       if (isEvaluate) {
-        const result = await evaluateWithDeepSeek(body, config);
+        const result = await evaluateWithDeepSeek(payload, config);
         sendJson(res, 200, result);
         return;
       }
 
-      const result = await chatWithDeepSeek(body, config);
+      const result = await chatWithDeepSeek(payload, config);
       sendJson(res, 200, result);
     } catch (err) {
       sendJson(res, err.status || 500, { error: err.message || "服务器错误" });
@@ -54,23 +56,26 @@ function createAiHandler(getConfig) {
 }
 
 export function aiProxyPlugin() {
-  let apiKey = "";
-  let model = "deepseek-chat";
-  let baseUrl = "https://api.deepseek.com";
+  let envConfig = {
+    apiKey: "",
+    model: "deepseek-chat",
+    baseUrl: "https://api.deepseek.com/v1",
+    providerId: "deepseek",
+  };
 
   return {
     name: "ai-proxy",
     configResolved(config) {
       const env = loadEnv(config.mode, config.root, "");
-      apiKey = env.DEEPSEEK_API_KEY || "";
-      model = env.DEEPSEEK_MODEL || model;
-      baseUrl = (env.DEEPSEEK_API_BASE || baseUrl).replace(/\/$/, "");
+      envConfig = {
+        apiKey: env.DEEPSEEK_API_KEY || "",
+        model: env.DEEPSEEK_MODEL || "deepseek-chat",
+        baseUrl: (env.DEEPSEEK_API_BASE || "https://api.deepseek.com/v1").replace(/\/$/, ""),
+        providerId: "deepseek",
+      };
     },
     configureServer(server) {
-      server.middlewares.use(createAiHandler(() => ({ apiKey, model, baseUrl })));
-    },
-    configurePreviewServer(server) {
-      server.middlewares.use(createAiHandler(() => ({ apiKey, model, baseUrl })));
+      server.middlewares.use(createAiHandler(() => envConfig));
     },
   };
 }

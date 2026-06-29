@@ -85,6 +85,7 @@ export default function WordList({
   showWrongCount = false,
   wrongCountPast = false,
   withToolbar = false,
+  reviewBar = null,
 }) {
   const [query, setQuery] = useState("");
   const [sortMode, setSortMode] = useState("default");
@@ -146,6 +147,10 @@ export default function WordList({
             ? `显示 ${displayedWords.length} / ${words.length} 个`
             : `共 ${words.length} 个`}
         </p>
+      )}
+
+      {reviewBar && words.length > 0 && (
+        <div className="word-list-view__review-bar">{reviewBar}</div>
       )}
 
       {showEmpty ? (

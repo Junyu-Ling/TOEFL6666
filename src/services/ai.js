@@ -4,6 +4,8 @@ import {
   buildLocalCorrectResult,
   buildLocalWrongResult,
 } from "./localMatch";
+import { loadSettings } from "./settings";
+import { getRequestApiConfig } from "./aiConfig";
 
 export async function evaluateAnswer(wordData, userAnswer) {
   const trimmed = userAnswer.trim();
@@ -16,6 +18,8 @@ export async function evaluateAnswer(wordData, userAnswer) {
     return buildLocalWrongResult("回答含有明显无关内容，请重新作答。");
   }
 
+  const apiConfig = getRequestApiConfig(loadSettings());
+
   const res = await fetch("/api/ai/evaluate", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -23,6 +27,7 @@ export async function evaluateAnswer(wordData, userAnswer) {
       word: wordData.word,
       definitions: wordData.definitions,
       userAnswer: trimmed,
+      ...(apiConfig ? { apiConfig } : {}),
     }),
   });
 

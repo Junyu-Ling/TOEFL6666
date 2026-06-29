@@ -1346,6 +1346,43 @@ body {
   flex-wrap: wrap;
 }
 
+.word-list-view__review-bar {
+  margin-bottom: 1rem;
+}
+
+.word-list-review-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding: 0.875rem 1rem;
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-sm);
+  background: var(--accent-soft);
+}
+
+.word-list-review-bar__text strong {
+  display: block;
+  font-size: 0.9375rem;
+  color: var(--text);
+  margin-bottom: 0.2rem;
+}
+
+.word-list-review-bar__text p {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  line-height: 1.45;
+}
+
+.word-list-review-bar__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
 .word-list-view__search {
   flex: 1;
   min-width: 10rem;
@@ -1730,6 +1767,19 @@ body {
   .word-list-view__search,
   .word-list-view__sort {
     width: 100%;
+  }
+
+  .word-list-review-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .word-list-review-bar__actions {
+    width: 100%;
+  }
+
+  .word-list-review-bar__actions .btn {
+    flex: 1;
   }
 
   .word-item__remove {
@@ -2412,6 +2462,24 @@ body {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.75rem;
+}
+
+.settings-field-row--key {
+  grid-template-columns: 1fr auto;
+  align-items: center;
+}
+
+.ai-provider-badge {
+  display: inline-block;
+  margin-left: 0.35rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border: 1px solid var(--accent);
+  vertical-align: middle;
 }
 
 .settings-actions {

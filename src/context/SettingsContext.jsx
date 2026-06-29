@@ -63,6 +63,16 @@ export function SettingsProvider({ children }) {
     [updateSettings]
   );
 
+  const setUseCustomAiApi = useCallback(
+    (useCustomAiApi) => updateSettings({ useCustomAiApi }),
+    [updateSettings]
+  );
+
+  const updateAiApiSettings = useCallback(
+    (patch) => updateSettings(patch),
+    [updateSettings]
+  );
+
   const speakWord = useCallback((word) => speak(word, settings), [settings]);
 
   const value = useMemo(
@@ -77,6 +87,8 @@ export function SettingsProvider({ children }) {
       setAutoDictateOnNewWord,
       setAutoAdvanceAfterFlip,
       setAutoAdvanceDelaySec,
+      setUseCustomAiApi,
+      updateAiApiSettings,
       speakWord,
     }),
     [
@@ -89,6 +101,8 @@ export function SettingsProvider({ children }) {
       setAutoDictateOnNewWord,
       setAutoAdvanceAfterFlip,
       setAutoAdvanceDelaySec,
+      setUseCustomAiApi,
+      updateAiApiSettings,
       speakWord,
     ]
   );
