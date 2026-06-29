@@ -251,6 +251,16 @@ export default function App() {
     });
   }, []);
 
+  const handleRecognizedMemoryTrick = useCallback((word, memory_trick) => {
+    setRecognized((prev) => {
+      const existing = prev.find((item) => item.word === word);
+      if (!existing || existing.memory_trick) return prev;
+      const next = upsertWord(prev, { ...existing, memory_trick });
+      saveRecognized(next);
+      return next;
+    });
+  }, []);
+
   const handleResult = useCallback(
     (wordData, aiResult) => {
       if (aiResult.is_correct) {
@@ -263,8 +273,9 @@ export default function App() {
             const carryWrong =
               priorWrongCount ?? (existingRec?.wrongCount && existingRec.wrongCount > 0 ? existingRec.wrongCount : undefined);
             const record = buildRecognizedRecord(wordData, aiResult, carryWrong);
-            if (wrongEntry?.memory_trick || aiResult.memory_trick) {
-              record.memory_trick = wrongEntry?.memory_trick || aiResult.memory_trick;
+            if (wrongEntry?.memory_trick || aiResult.memory_trick || existingRec?.memory_trick) {
+              record.memory_trick =
+                wrongEntry?.memory_trick || aiResult.memory_trick || existingRec?.memory_trick;
             }
             const next = upsertWord(prevRec, record);
             saveRecognized(next);
@@ -647,6 +658,7 @@ export default function App() {
             showWrongCount
             wrongCountPast
             withToolbar
+            onMemoryTrickSaved={handleRecognizedMemoryTrick}
             reviewBar={
               <div className="word-list-review-bar">
                 <div className="word-list-review-bar__text">

@@ -1,5 +1,6 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import MemoryTrickBlock from "./MemoryTrickBlock";
+import { fetchMemoryTrick } from "../services/memoryTrick";
 
 const SORT_OPTIONS = [
   { value: "default", label: "默认顺序" },
@@ -32,13 +33,56 @@ function filterWords(words, query) {
     (item) =>
       item.word.toLowerCase().includes(q) ||
       item.definitions?.some((def) => def.toLowerCase().includes(q)) ||
-      item.ai_feedback?.toLowerCase().includes(q)
+      item.ai_feedback?.toLowerCase().includes(q) ||
+      item.memory_trick?.content?.toLowerCase().includes(q) ||
+      item.memory_trick?.formula?.toLowerCase().includes(q)
   );
 }
 
-function WordItem({ item, variant, onRemove, showWrongCount, wrongCountPast = false }) {
+function WordItem({
+  item,
+  variant,
+  onRemove,
+  showWrongCount,
+  wrongCountPast = false,
+  onMemoryTrickSaved,
+}) {
   const wrongCount = item.wrongCount ?? 0;
   const showBadge = showWrongCount && wrongCount > 0;
+  const needsMemoryTrick = wrongCountPast && wrongCount >= 1;
+  const [localTrick, setLocalTrick] = useState(null);
+  const [memoryLoading, setMemoryLoading] = useState(false);
+
+  const trick = item.memory_trick || localTrick;
+
+  useEffect(() => {
+    if (!needsMemoryTrick || item.memory_trick || localTrick) return undefined;
+
+    let cancelled = false;
+    setMemoryLoading(true);
+
+    fetchMemoryTrick({ word: item.word, definitions: item.definitions })
+      .then((memory_trick) => {
+        if (cancelled) return;
+        setLocalTrick(memory_trick);
+        onMemoryTrickSaved?.(item.word, memory_trick);
+      })
+      .catch(() => {})
+      .finally(() => {
+        if (!cancelled) setMemoryLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [
+    needsMemoryTrick,
+    item.word,
+    item.definitions,
+    item.memory_trick,
+    localTrick,
+    onMemoryTrickSaved,
+  ]);
 
   return (
     <article className={`word-item word-item--${variant}`}>
@@ -56,9 +100,20 @@ function WordItem({ item, variant, onRemove, showWrongCount, wrongCountPast = fa
           </div>
           <p className="word-item__defs">{item.definitions?.join(" · ")}</p>
           {item.ai_feedback && <p className="word-item__feedback">{item.ai_feedback}</p>}
-          {item.memory_trick && (
+          {needsMemoryTrick && memoryLoading && !trick && (
+            <p className="word-item__memory-status">
+              <span className="spinner spinner--inline" />
+              记忆法生成中…
+            </p>
+          )}
+          {needsMemoryTrick && trick && (
             <div className="word-item__memory">
-              <MemoryTrickBlock trick={item.memory_trick} compact />
+              <MemoryTrickBlock trick={trick} compact className="word-item__memory-block" />
+            </div>
+          )}
+          {!wrongCountPast && item.memory_trick && (
+            <div className="word-item__memory">
+              <MemoryTrickBlock trick={item.memory_trick} compact className="word-item__memory-block" />
             </div>
           )}
         </div>
@@ -92,6 +147,7 @@ export default function WordList({
   wrongCountPast = false,
   withToolbar = false,
   reviewBar = null,
+  onMemoryTrickSaved,
 }) {
   const [query, setQuery] = useState("");
   const [sortMode, setSortMode] = useState("default");
@@ -179,6 +235,7 @@ export default function WordList({
               onRemove={onRemoveWord}
               showWrongCount={showWrongCount}
               wrongCountPast={wrongCountPast}
+              onMemoryTrickSaved={onMemoryTrickSaved}
             />
           ))}
         </div>
