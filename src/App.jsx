@@ -225,12 +225,31 @@ export default function App() {
 
   const currentWordStats = useMemo(() => {
     if (!currentWord) return { wrongCount: 0, memory_trick: null };
-    const entry = unrecognized.find((item) => item.word === currentWord.word);
+    const unrec = unrecognized.find((item) => item.word === currentWord.word);
+    const rec = recognized.find((item) => item.word === currentWord.word);
+    const entry = unrec || rec;
     return {
       wrongCount: entry?.wrongCount ?? 0,
       memory_trick: entry?.memory_trick ?? null,
     };
-  }, [currentWord, unrecognized]);
+  }, [currentWord, unrecognized, recognized]);
+
+  const handleMemoryTrickGenerated = useCallback((wordData, memory_trick) => {
+    setUnrecognized((prev) => {
+      const existing = prev.find((item) => item.word === wordData.word);
+      if (!existing || existing.memory_trick) return prev;
+      const next = upsertWord(prev, { ...existing, memory_trick });
+      saveUnrecognized(next);
+      return next;
+    });
+    setRecognized((prev) => {
+      const existing = prev.find((item) => item.word === wordData.word);
+      if (!existing || existing.memory_trick) return prev;
+      const next = upsertWord(prev, { ...existing, memory_trick });
+      saveRecognized(next);
+      return next;
+    });
+  }, []);
 
   const handleResult = useCallback(
     (wordData, aiResult) => {
@@ -558,6 +577,7 @@ export default function App() {
                 wordStats={currentWordStats}
                 micGranted={mic.isGranted}
                 onResult={handleResult}
+                onMemoryTrickGenerated={handleMemoryTrickGenerated}
                 onNext={handleNext}
                 onPrev={handlePrev}
               />

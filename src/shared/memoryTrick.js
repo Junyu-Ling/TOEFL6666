@@ -1,5 +1,3 @@
-export const MEMORY_TRICK_WRONG_THRESHOLD = 3;
-
 export const MEMORY_TRICK_TYPE_LABELS = {
   root: "词根词缀",
   homophone: "谐音联想",
@@ -11,8 +9,10 @@ export function memoryTrickTagClass(type) {
   return type === "root" ? "memory__tag--root" : "memory__tag--homophone";
 }
 
+/** 非一遍过：任意一次答错，或历史上曾答错过（wrongCount >= 1） */
 export function shouldFetchMemoryTrick({ isCorrect, priorWrongCount, existingTrick }) {
-  if (isCorrect) return false;
   if (existingTrick) return false;
-  return (priorWrongCount ?? 0) + 1 >= MEMORY_TRICK_WRONG_THRESHOLD;
+  if (isCorrect === true) return false;
+  if (isCorrect === false) return true;
+  return (priorWrongCount ?? 0) >= 1;
 }

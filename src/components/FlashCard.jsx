@@ -32,7 +32,15 @@ function isMarkUnknownKey(e) {
   return e.code === "Digit0" || e.code === "Numpad0" || e.key === "0";
 }
 
-export default function FlashCard({ wordData, wordStats, onResult, onNext, onPrev, micGranted }) {
+export default function FlashCard({
+  wordData,
+  wordStats,
+  onResult,
+  onMemoryTrickGenerated,
+  onNext,
+  onPrev,
+  micGranted,
+}) {
   const { speakWord, settings, settingsOpen } = useSettings();
   const settingsOpenRef = useRef(settingsOpen);
   settingsOpenRef.current = settingsOpen;
@@ -65,6 +73,7 @@ export default function FlashCard({ wordData, wordStats, onResult, onNext, onPre
   const resultRef = useRef(null);
   const handleBlankTapRef = useRef(null);
   const touchStartRef = useRef(null);
+  const memoryFetchRef = useRef(false);
   const answerSoundsRef = useRef(settings.answerSounds);
   const answerSoundCorrectRef = useRef(settings.answerSoundCorrect);
   const answerSoundWrongRef = useRef(settings.answerSoundWrong);
@@ -99,6 +108,9 @@ export default function FlashCard({ wordData, wordStats, onResult, onNext, onPre
         return aiResult;
       }
 
+      if (memoryFetchRef.current) return aiResult;
+
+      memoryFetchRef.current = true;
       setMemoryLoading(true);
       try {
         const memory_trick = await fetchMemoryTrick(wordData);
@@ -106,11 +118,36 @@ export default function FlashCard({ wordData, wordStats, onResult, onNext, onPre
       } catch {
         return aiResult;
       } finally {
+        memoryFetchRef.current = false;
         setMemoryLoading(false);
       }
     },
     [wordData, wordStats?.wrongCount, wordStats?.memory_trick]
   );
+
+  const fetchMemoryTrickIfNeeded = useCallback(async () => {
+    if (memoryFetchRef.current) return;
+    if (
+      !shouldFetchMemoryTrick({
+        priorWrongCount: wordStats?.wrongCount,
+        existingTrick: wordStats?.memory_trick,
+      })
+    ) {
+      return;
+    }
+
+    memoryFetchRef.current = true;
+    setMemoryLoading(true);
+    try {
+      const memory_trick = await fetchMemoryTrick(wordData);
+      onMemoryTrickGenerated?.(wordData, memory_trick);
+    } catch {
+      // ignore prefetch errors
+    } finally {
+      memoryFetchRef.current = false;
+      setMemoryLoading(false);
+    }
+  }, [wordData, wordStats?.wrongCount, wordStats?.memory_trick, onMemoryTrickGenerated]);
 
   useEffect(() => {
     answerRef.current = userAnswer;
@@ -174,21 +211,6 @@ export default function FlashCard({ wordData, wordStats, onResult, onNext, onPre
   }, [stopDictation, focusCard]);
 
   const handleBlankTap = useCallback(() => {
-    if (loadingRef.current || settingsOpenRef.current) return;
-
-    if (flippedRef.current) {
-      if (backModeRef.current === "ai") {
-        const pending = resultRef.current;
-        if (pending?.needs_typo_clarification && !pending?.clarified_typo) return;
-      }
-      flipBack();
-      return;
-    }
-
-    flipToManual();
-  }, [flipBack, flipToManual]);
-
-  const handleCardBlankTap = useCallback(() => {
     if (loadingRef.current || settingsOpenRef.current) return;
 
     if (flippedRef.current) {
@@ -275,6 +297,12 @@ export default function FlashCard({ wordData, wordStats, onResult, onNext, onPre
   useEffect(() => {
     handleBlankTapRef.current = handleBlankTap;
   }, [handleBlankTap]);
+
+  useEffect(() => {
+    if (settingsOpen) return undefined;
+    void fetchMemoryTrickIfNeeded();
+    return undefined;
+  }, [wordData?.word, wordStats?.wrongCount, wordStats?.memory_trick, settingsOpen, fetchMemoryTrickIfNeeded]);
 
   useEffect(() => {
     const el = cardRef.current;
