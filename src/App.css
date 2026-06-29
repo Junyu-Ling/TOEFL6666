@@ -1215,15 +1215,42 @@ body {
 }
 
 .flashcard__typo-question {
-  margin: 0.75rem 0 0;
-  padding: 0.75rem 0.875rem;
+  margin: 0;
+  padding: 1rem 1.125rem;
   border-radius: var(--radius-sm);
   background: var(--accent-soft);
   border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--border));
   color: var(--text);
   font-size: 0.9375rem;
-  line-height: 1.5;
+  line-height: 1.55;
   font-weight: 500;
+}
+
+.flashcard__typo-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  width: 100%;
+}
+
+.flashcard__typo-panel .flashcard__badge {
+  margin-bottom: 0;
+}
+
+.flashcard__typo-panel .flashcard__feedback {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.flashcard__mark-actions--typo {
+  gap: 1rem;
+  margin-top: 0.25rem;
+}
+
+.flashcard__footer--typo {
+  margin-top: 0;
+  padding-top: 0.25rem;
 }
 
 .flashcard__mark-actions {
@@ -1700,6 +1727,15 @@ body {
   .btn.btn--mark {
     min-height: 48px;
     font-size: 1rem;
+  }
+
+  .flashcard__mark-actions--typo {
+    grid-template-columns: 1fr;
+    gap: 0.875rem;
+  }
+
+  .flashcard__typo-panel {
+    gap: 1.125rem;
   }
 
   .flashcard__kbd {

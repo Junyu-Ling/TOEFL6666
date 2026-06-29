@@ -578,13 +578,13 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
           {backMode === "ai" && result && (
             <>
               {awaitingTypoClarification ? (
-                <>
+                <div className="flashcard__typo-panel">
                   <div className="flashcard__badge flashcard__badge--neutral">再确认</div>
                   <div className="flashcard__feedback">
                     <p className="flashcard__feedback-text">{result.ai_feedback}</p>
                     <p className="flashcard__typo-question">{result.typo_clarification_question}</p>
                   </div>
-                  <div className="flashcard__mark-actions">
+                  <div className="flashcard__mark-actions flashcard__mark-actions--typo">
                     <button
                       type="button"
                       className="btn btn--mark btn--mark-ok"
@@ -600,10 +600,10 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
                       真的不认识
                     </button>
                   </div>
-                  <p className="flashcard__footer flashcard__footer--back">
+                  <p className="flashcard__footer flashcard__footer--back flashcard__footer--typo">
                     同音不同字时，选一项即可继续
                   </p>
-                </>
+                </div>
               ) : (
                 <>
               <div className={`flashcard__badge ${result.is_correct ? "flashcard__badge--ok" : "flashcard__badge--fail"}`}>
