@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { sendVocabChat } from "../services/aiChat";
 import { createDictationSession } from "../utils/speechRecognition";
+import RichAiContent from "./RichAiContent";
 import {
   GENERAL_CHAT_KEY,
   getWordKey,
@@ -320,7 +321,11 @@ export default function VocabAssistant({ currentWord, micGranted }) {
                     className={`vocab-assistant__bubble-wrap vocab-assistant__bubble-wrap--${msg.role}`}
                   >
                     <div className={`vocab-assistant__bubble vocab-assistant__bubble--${msg.role}`}>
-                      {msg.content}
+                      {msg.role === "assistant" ? (
+                        <RichAiContent content={msg.content} />
+                      ) : (
+                        msg.content
+                      )}
                     </div>
                     {!msg.welcome && msg.at && (
                       <time className="vocab-assistant__time" dateTime={new Date(msg.at).toISOString()}>
