@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, useEffect, useCallback, useMemo } from "react";
 import { loadSettings, patchSettings, clampDelaySec } from "../services/settings";
 import { getSystemVoices, speakWord as speak } from "../utils/speech";
+import { normalizeCorrectSoundId, normalizeWrongSoundId } from "../utils/answerSounds";
 
 const SettingsContext = createContext(null);
 
@@ -73,6 +74,16 @@ export function SettingsProvider({ children }) {
     [updateSettings]
   );
 
+  const setAnswerSoundCorrect = useCallback(
+    (answerSoundCorrect) => updateSettings({ answerSoundCorrect: normalizeCorrectSoundId(answerSoundCorrect) }),
+    [updateSettings]
+  );
+
+  const setAnswerSoundWrong = useCallback(
+    (answerSoundWrong) => updateSettings({ answerSoundWrong: normalizeWrongSoundId(answerSoundWrong) }),
+    [updateSettings]
+  );
+
   const updateAiApiSettings = useCallback(
     (patch) => updateSettings(patch),
     [updateSettings]
@@ -94,6 +105,8 @@ export function SettingsProvider({ children }) {
       setAutoAdvanceDelaySec,
       setPracticeStyle,
       setAnswerSounds,
+      setAnswerSoundCorrect,
+      setAnswerSoundWrong,
       updateAiApiSettings,
       speakWord,
     }),
@@ -109,6 +122,8 @@ export function SettingsProvider({ children }) {
       setAutoAdvanceDelaySec,
       setPracticeStyle,
       setAnswerSounds,
+      setAnswerSoundCorrect,
+      setAnswerSoundWrong,
       updateAiApiSettings,
       speakWord,
     ]

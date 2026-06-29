@@ -49,10 +49,18 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
   const dictatingRef = useRef(false);
   const resultRef = useRef(null);
   const answerSoundsRef = useRef(settings.answerSounds);
+  const answerSoundCorrectRef = useRef(settings.answerSoundCorrect);
+  const answerSoundWrongRef = useRef(settings.answerSoundWrong);
   answerSoundsRef.current = settings.answerSounds;
+  answerSoundCorrectRef.current = settings.answerSoundCorrect;
+  answerSoundWrongRef.current = settings.answerSoundWrong;
 
   function notifyAnswerResult(isCorrect) {
-    if (answerSoundsRef.current) playAnswerSound(isCorrect);
+    if (!answerSoundsRef.current) return;
+    playAnswerSound(isCorrect, {
+      correctId: answerSoundCorrectRef.current,
+      wrongId: answerSoundWrongRef.current,
+    });
   }
 
   useEffect(() => {

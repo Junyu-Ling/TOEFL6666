@@ -1,3 +1,5 @@
+import { normalizeCorrectSoundId, normalizeWrongSoundId } from "../utils/answerSounds.js";
+
 const SETTINGS_KEY = "toefl666_settings";
 
 const DEFAULT_SETTINGS = {
@@ -10,6 +12,8 @@ const DEFAULT_SETTINGS = {
   aiApiKey: "",
   practiceStyle: "type",
   answerSounds: true,
+  answerSoundCorrect: "default",
+  answerSoundWrong: "default",
 };
 
 export function normalizePracticeStyle(value) {
@@ -37,6 +41,8 @@ export function loadSettings() {
       aiApiKey: typeof parsed.aiApiKey === "string" ? parsed.aiApiKey : "",
       practiceStyle: normalizePracticeStyle(parsed.practiceStyle),
       answerSounds: parsed.answerSounds !== false,
+      answerSoundCorrect: normalizeCorrectSoundId(parsed.answerSoundCorrect),
+      answerSoundWrong: normalizeWrongSoundId(parsed.answerSoundWrong),
     };
   } catch {
     return { ...DEFAULT_SETTINGS };

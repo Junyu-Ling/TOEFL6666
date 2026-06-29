@@ -9,6 +9,11 @@ import {
   normalizePairingCode,
 } from "../shared/sync";
 import { pullSyncPayload, pushSyncPayload } from "../services/syncApi";
+import {
+  CORRECT_SOUND_OPTIONS,
+  WRONG_SOUND_OPTIONS,
+  previewAnswerSound,
+} from "../utils/answerSounds";
 
 const SYNC_SESSION_KEY = "toefl666_last_sync";
 
@@ -56,6 +61,8 @@ export default function SettingsPanel() {
     setAutoAdvanceDelaySec,
     setPracticeStyle,
     setAnswerSounds,
+    setAnswerSoundCorrect,
+    setAnswerSoundWrong,
     updateAiApiSettings,
   } = useSettings();
 
@@ -267,6 +274,54 @@ export default function SettingsPanel() {
                 <span className="toggle-switch__track" aria-hidden="true" />
               </span>
             </label>
+            {settings.answerSounds ? (
+              <>
+                <div className="settings-field settings-field--spaced">
+                  <span>答对音效</span>
+                  <div className="settings-sound-row">
+                    <select
+                      value={settings.answerSoundCorrect}
+                      onChange={(e) => setAnswerSoundCorrect(e.target.value)}
+                    >
+                      {CORRECT_SOUND_OPTIONS.map((opt) => (
+                        <option key={opt.id} value={opt.id}>
+                          {opt.label}
+                        </option>
+                      ))}
+                    </select>
+                    <button
+                      type="button"
+                      className="settings-action-btn settings-sound-row__preview"
+                      onClick={() => previewAnswerSound(true, settings.answerSoundCorrect)}
+                    >
+                      试听
+                    </button>
+                  </div>
+                </div>
+                <div className="settings-field settings-field--spaced">
+                  <span>答错音效</span>
+                  <div className="settings-sound-row">
+                    <select
+                      value={settings.answerSoundWrong}
+                      onChange={(e) => setAnswerSoundWrong(e.target.value)}
+                    >
+                      {WRONG_SOUND_OPTIONS.map((opt) => (
+                        <option key={opt.id} value={opt.id}>
+                          {opt.label}
+                        </option>
+                      ))}
+                    </select>
+                    <button
+                      type="button"
+                      className="settings-action-btn settings-sound-row__preview"
+                      onClick={() => previewAnswerSound(false, settings.answerSoundWrong)}
+                    >
+                      试听
+                    </button>
+                  </div>
+                </div>
+              </>
+            ) : null}
             <label className="settings-toggle-row">
               <span className="settings-toggle-row__text">
                 <strong>切换单词时自动朗读</strong>

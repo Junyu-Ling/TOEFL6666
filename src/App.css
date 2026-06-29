@@ -2823,6 +2823,18 @@ body {
   margin-top: 0.75rem;
 }
 
+.settings-sound-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.settings-sound-row__preview {
+  white-space: nowrap;
+  padding: 0.55rem 0.75rem;
+}
+
 /* ── Vocab AI Assistant ── */
 .vocab-assistant {
   position: fixed;
