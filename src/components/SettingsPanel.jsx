@@ -4,7 +4,6 @@ import { detectProvider } from "../shared/ai-providers";
 import {
   exportLocalData,
   formatPairingCode,
-  generatePairingCode,
   getSyncSummary,
   importLocalData,
   normalizePairingCode,
@@ -26,10 +25,6 @@ function writeLastSync({ code, host, backend }) {
     SYNC_SESSION_KEY,
     JSON.stringify({ code, host, backend, at: Date.now() })
   );
-}
-
-function getResolvedSyncCode(draft, uploaded) {
-  return normalizePairingCode(draft || uploaded || "");
 }
 
 async function copyText(text) {
@@ -65,7 +60,7 @@ export default function SettingsPanel() {
 
   const [delayDraft, setDelayDraft] = useState(String(settings.autoAdvanceDelaySec));
   const [showApiKey, setShowApiKey] = useState(false);
-  const [syncCodeDraft, setSyncCodeDraft] = useState("");
+  const [pullCode, setPullCode] = useState("");
   const [uploadedCode, setUploadedCode] = useState("");
   const [uploadedHost, setUploadedHost] = useState("");
   const [syncBusy, setSyncBusy] = useState(false);
@@ -84,11 +79,11 @@ export default function SettingsPanel() {
       setDelayDraft(String(settings.autoAdvanceDelaySec));
       setSyncMessage("");
       setSyncError("");
+      setPullCode("");
       const last = readLastSync();
       if (last?.code) {
         setUploadedCode(last.code);
         setUploadedHost(last.host || "");
-      setSyncCodeDraft((prev) => prev || last.code);
       }
     }
   }, [settings.autoAdvanceDelaySec, settingsOpen]);
@@ -119,26 +114,22 @@ export default function SettingsPanel() {
     setSyncError("");
     setSyncMessage("");
     try {
-      const customCode = normalizePairingCode(syncCodeDraft);
-      const result = await pushSyncPayload(exportLocalData(), customCode || undefined);
+      const result = await pushSyncPayload(exportLocalData());
       const host = window.location.host;
       setUploadedCode(result.code);
       setUploadedHost(host);
-      setSyncCodeDraft(result.code);
       writeLastSync({ code: result.code, host, backend: result.backend });
       const expires = new Date(result.expiresAt).toLocaleString("zh-CN");
       const copied = await copyText(result.code);
       if (result.backend === "memory") {
         setSyncMessage(
-          `已生成配对码（仅 ${host} 本机开发服务器有效，手机请打开同一局域网地址）。有效期至 ${expires}${
-            copied ? "，已复制到剪贴板" : ""
+          `配对码 ${result.code}（仅 ${host} 开发环境有效）· 至 ${expires}${
+            copied ? " · 已复制" : ""
           }`
         );
       } else {
         setSyncMessage(
-          `已上传至 ${host}。请在另一台设备打开同一网址，输入配对码恢复。有效期至 ${expires}${
-            copied ? "，配对码已复制到剪贴板" : ""
-          }`
+          `配对码 ${result.code} · 至 ${expires}${copied ? " · 已复制" : ""} · 请在另一台设备打开 ${host} 后恢复`
         );
       }
     } catch (err) {
@@ -149,9 +140,9 @@ export default function SettingsPanel() {
   }
 
   async function handlePullSync() {
-    const code = getResolvedSyncCode(syncCodeDraft, uploadedCode);
+    const code = normalizePairingCode(pullCode);
     if (code.length !== 8) {
-      setSyncError("请输入 8 位配对码（须先在上传设备点击「上传本机进度」）");
+      setSyncError("请输入 8 位配对码");
       return;
     }
     if (
@@ -173,8 +164,8 @@ export default function SettingsPanel() {
       const host = window.location.host;
       const last = readLastSync();
       const hints = [
-        "请确认已在源设备点击「上传本机进度」（仅点「生成」无效）",
-        `两台设备须打开同一网址，当前为 ${host}`,
+        "请确认源设备已点击「上传进度」",
+        `两台设备须打开同一网址（当前 ${host}）`,
         "请核对配对码是否抄写正确",
       ];
       if (last?.host && last.host !== host) {
@@ -186,17 +177,9 @@ export default function SettingsPanel() {
   }
 
   async function handleCopyCode() {
-    const code = uploadedCode || formatPairingCode(syncCodeDraft);
-    if (!code) return;
-    const ok = await copyText(code);
-    setSyncMessage(ok ? `已复制配对码 ${code}` : "复制失败，请手动复制");
-    setSyncError("");
-  }
-
-  function handleGenerateCodeOnly() {
-    setSyncCodeDraft(generatePairingCode());
-    setUploadedCode("");
-    setSyncMessage("已生成配对码，点击「上传本机进度」后才会生效");
+    if (!uploadedCode) return;
+    const ok = await copyText(uploadedCode);
+    setSyncMessage(ok ? `已复制 ${uploadedCode}` : "复制失败，请手动复制");
     setSyncError("");
   }
 
@@ -212,7 +195,7 @@ export default function SettingsPanel() {
           </button>
         </header>
 
-        <section className="settings-section">
+        <section className="settings-section settings-section--compact">
           <h3>外观</h3>
           <div className="theme-toggle">
             <button
@@ -232,225 +215,215 @@ export default function SettingsPanel() {
           </div>
         </section>
 
-        <section className="settings-section">
-          <h3>练习</h3>
-          <div className="settings-field">
-            <span>练习方式</span>
-            <div className="theme-toggle">
-              <button
-                type="button"
-                className={`theme-toggle__btn ${settings.practiceStyle !== "recall" ? "theme-toggle__btn--active" : ""}`}
-                onClick={() => setPracticeStyle("type")}
-              >
-                输入批改
-              </button>
-              <button
-                type="button"
-                className={`theme-toggle__btn ${settings.practiceStyle === "recall" ? "theme-toggle__btn--active" : ""}`}
-                onClick={() => setPracticeStyle("recall")}
-              >
-                默念核对
-              </button>
+        <details className="settings-group" open>
+          <summary className="settings-group__summary">
+            练习
+            <span className="settings-group__meta">
+              {settings.practiceStyle === "recall" ? "默念核对" : "输入批改"}
+            </span>
+          </summary>
+          <div className="settings-group__body">
+            <div className="settings-field">
+              <span>练习方式</span>
+              <div className="theme-toggle">
+                <button
+                  type="button"
+                  className={`theme-toggle__btn ${settings.practiceStyle !== "recall" ? "theme-toggle__btn--active" : ""}`}
+                  onClick={() => setPracticeStyle("type")}
+                >
+                  输入批改
+                </button>
+                <button
+                  type="button"
+                  className={`theme-toggle__btn ${settings.practiceStyle === "recall" ? "theme-toggle__btn--active" : ""}`}
+                  onClick={() => setPracticeStyle("recall")}
+                >
+                  默念核对
+                </button>
+              </div>
             </div>
-            <p className="settings-hint settings-hint--compact">
-              {settings.practiceStyle === "recall"
-                ? "默认不聚焦输入框，空格/Enter 翻面核对；需要时仍可点输入框打字批改"
-                : "新词自动聚焦输入框（蓝色高亮），可直接打字，Enter 提交批改"}
-            </p>
-          </div>
-          <label className="settings-toggle-row settings-toggle-row--spaced">
-            <span className="settings-toggle-row__text">
-              <strong>切换单词时自动朗读</strong>
-              <small>关闭后仅在你点击发音按钮时朗读</small>
-            </span>
-            <span className="toggle-switch">
-              <input
-                type="checkbox"
-                checked={settings.autoReadOnNewWord}
-                onChange={(e) => setAutoReadOnNewWord(e.target.checked)}
-              />
-              <span className="toggle-switch__track" aria-hidden="true" />
-            </span>
-          </label>
-          <label className="settings-toggle-row settings-toggle-row--spaced">
-            <span className="settings-toggle-row__text">
-              <strong>切换单词时自动开麦</strong>
-              <small>进入新词后自动开始语音输入，说完停顿 2 秒提交批改</small>
-            </span>
-            <span className="toggle-switch">
-              <input
-                type="checkbox"
-                checked={settings.autoDictateOnNewWord}
-                onChange={(e) => setAutoDictateOnNewWord(e.target.checked)}
-              />
-              <span className="toggle-switch__track" aria-hidden="true" />
-            </span>
-          </label>
-          <label className="settings-toggle-row settings-toggle-row--spaced">
-            <span className="settings-toggle-row__text">
-              <strong>翻面后自动下一个</strong>
-              <small>查看背面释义或批改结果后，按设定时间自动切到下一词</small>
-            </span>
-            <span className="toggle-switch">
-              <input
-                type="checkbox"
-                checked={settings.autoAdvanceAfterFlip}
-                onChange={(e) => setAutoAdvanceAfterFlip(e.target.checked)}
-              />
-              <span className="toggle-switch__track" aria-hidden="true" />
-            </span>
-          </label>
-          {settings.autoAdvanceAfterFlip && (
-            <label className="settings-field settings-field--spaced">
-              <span>翻面后停留时间（0–60 秒）</span>
-              <input
-                type="text"
-                inputMode="numeric"
-                value={delayDraft}
-                onChange={(e) => setDelayDraft(e.target.value)}
-                onBlur={commitDelayDraft}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    e.preventDefault();
-                    commitDelayDraft();
-                    e.currentTarget.blur();
-                  }
-                }}
-              />
+            <label className="settings-toggle-row">
+              <span className="settings-toggle-row__text">
+                <strong>切换单词时自动朗读</strong>
+              </span>
+              <span className="toggle-switch">
+                <input
+                  type="checkbox"
+                  checked={settings.autoReadOnNewWord}
+                  onChange={(e) => setAutoReadOnNewWord(e.target.checked)}
+                />
+                <span className="toggle-switch__track" aria-hidden="true" />
+              </span>
             </label>
-          )}
-        </section>
+            <label className="settings-toggle-row">
+              <span className="settings-toggle-row__text">
+                <strong>切换单词时自动开麦</strong>
+              </span>
+              <span className="toggle-switch">
+                <input
+                  type="checkbox"
+                  checked={settings.autoDictateOnNewWord}
+                  onChange={(e) => setAutoDictateOnNewWord(e.target.checked)}
+                />
+                <span className="toggle-switch__track" aria-hidden="true" />
+              </span>
+            </label>
+            <label className="settings-toggle-row">
+              <span className="settings-toggle-row__text">
+                <strong>翻面后自动下一个</strong>
+              </span>
+              <span className="toggle-switch">
+                <input
+                  type="checkbox"
+                  checked={settings.autoAdvanceAfterFlip}
+                  onChange={(e) => setAutoAdvanceAfterFlip(e.target.checked)}
+                />
+                <span className="toggle-switch__track" aria-hidden="true" />
+              </span>
+            </label>
+            {settings.autoAdvanceAfterFlip && (
+              <label className="settings-field">
+                <span>翻面后停留（秒）</span>
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  value={delayDraft}
+                  onChange={(e) => setDelayDraft(e.target.value)}
+                  onBlur={commitDelayDraft}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      commitDelayDraft();
+                      e.currentTarget.blur();
+                    }
+                  }}
+                />
+              </label>
+            )}
+          </div>
+        </details>
 
-        <section className="settings-section">
-          <h3>AI API</h3>
-          <p className="settings-hint">
-            粘贴 API Key 即可，自动识别厂商并用于批改与助教。留空则使用网站默认配置。Key 仅保存在本机。
-          </p>
-          <label className="settings-field">
-            <span>API Key</span>
-            <div className="settings-field-row settings-field-row--key">
-              <input
-                type={showApiKey ? "text" : "password"}
-                value={settings.aiApiKey}
-                onChange={(e) => handleApiKeyChange(e.target.value)}
-                placeholder="粘贴 Key，自动识别厂商"
-                autoComplete="off"
-                spellCheck={false}
-              />
+        <details className="settings-group">
+          <summary className="settings-group__summary">
+            进度同步
+            <span className="settings-group__meta">
+              熟词 {syncSummary.recognized} · 生词 {syncSummary.unrecognized}
+            </span>
+          </summary>
+          <div className="settings-group__body">
+            <p className="settings-hint settings-hint--compact">
+              电脑与手机须打开同一网址（如 toefl-6666.vercel.app），配对码 7 天内有效。
+            </p>
+
+            <div className="settings-sync-card">
+              <div className="settings-sync-card__head">
+                <strong>上传进度</strong>
+                <span>生成配对码，供其他设备恢复</span>
+              </div>
               <button
                 type="button"
-                className="settings-action-btn"
-                onClick={() => setShowApiKey((v) => !v)}
+                className="settings-action-btn settings-action-btn--primary settings-action-btn--block"
+                onClick={handleUploadSync}
+                disabled={syncBusy}
               >
-                {showApiKey ? "隐藏" : "显示"}
+                {syncBusy ? "处理中…" : "上传本机进度"}
               </button>
-            </div>
-          </label>
-          {settings.aiApiKey.trim() && (
-            <p className="settings-status settings-status--ok">
-              {detectedProvider ? (
-                <>
-                  已识别为
-                  <span className="ai-provider-badge">{detectedProvider.name}</span>
-                  ，将自动调用
-                </>
-              ) : (
-                "已保存 Key，将按 OpenAI 兼容接口调用"
+              {uploadedCode && (
+                <p className="settings-sync-code">
+                  <span className="sync-code-badge">{uploadedCode}</span>
+                  <button
+                    type="button"
+                    className="settings-action-btn settings-action-btn--inline"
+                    onClick={handleCopyCode}
+                  >
+                    复制
+                  </button>
+                </p>
               )}
-            </p>
-          )}
-        </section>
+            </div>
 
-        <section className="settings-section">
-          <h3>进度同步</h3>
-          <p className="settings-hint">
-            用配对码在电脑与手机间同步学习进度。须在同一网址操作：线上请用{" "}
-            <strong>toefl-6666.vercel.app</strong>，不要用 localhost 上传后再到手机恢复。
-            配对码相当于密码，上传后 7 天内有效。
-          </p>
-          <p className="settings-hint settings-hint--compact">
-            本机：熟词 {syncSummary.recognized} · 生词 {syncSummary.unrecognized}
-            {syncSummary.listCount > 0 ? ` · ${syncSummary.listCount} 个列表有进度` : ""}
-          </p>
-
-          <label className="settings-field">
-            <span>配对码</span>
-            <div className="settings-field-row settings-field-row--key">
+            <div className="settings-sync-card">
+              <div className="settings-sync-card__head">
+                <strong>恢复进度</strong>
+                <span>输入另一台设备上传后获得的配对码</span>
+              </div>
               <input
+                className="settings-sync-input"
                 type="text"
-                value={syncCodeDraft}
-                onChange={(e) => setSyncCodeDraft(formatPairingCode(e.target.value))}
-                placeholder="留空自动生成，或输入自定义 8 位"
+                value={pullCode}
+                onChange={(e) => setPullCode(formatPairingCode(e.target.value))}
+                placeholder="XXXX-XXXX"
                 autoComplete="off"
                 spellCheck={false}
                 maxLength={9}
               />
               <button
                 type="button"
-                className="settings-action-btn"
-                onClick={handleGenerateCodeOnly}
+                className="settings-action-btn settings-action-btn--block"
+                onClick={handlePullSync}
                 disabled={syncBusy}
               >
-                生成
+                从配对码恢复
               </button>
             </div>
-          </label>
 
-          {uploadedCode && (
-            <p className="settings-status settings-status--ok">
-              当前配对码：<span className="sync-code-badge">{uploadedCode}</span>
-              {uploadedHost ? `（上传于 ${uploadedHost}）` : ""}
-              <button
-                type="button"
-                className="settings-action-btn settings-action-btn--inline"
-                onClick={handleCopyCode}
-              >
-                复制
-              </button>
-            </p>
-          )}
-
-          <div className="settings-actions settings-actions--spaced">
-            <button
-              type="button"
-              className="settings-action-btn settings-action-btn--primary"
-              onClick={handleUploadSync}
-              disabled={syncBusy}
-            >
-              {syncBusy ? "处理中…" : "上传本机进度"}
-            </button>
-            <button
-              type="button"
-              className="settings-action-btn"
-              onClick={handlePullSync}
-              disabled={syncBusy}
-            >
-              从配对码恢复
-            </button>
+            {syncMessage && <p className="settings-status settings-status--ok">{syncMessage}</p>}
+            {syncError && <p className="settings-status settings-status--error">{syncError}</p>}
           </div>
+        </details>
 
-          {syncMessage && <p className="settings-status settings-status--ok">{syncMessage}</p>}
-          {syncError && <p className="settings-status settings-status--error">{syncError}</p>}
-        </section>
-
-        <section className="settings-section">
-          <h3>朗读音色</h3>
-          <p className="settings-hint">使用系统预设英文语音朗读单词，可在下方选择具体音色。</p>
-          <label className="settings-field">
-            <span>预设声音</span>
-            <select
-              value={settings.systemVoiceURI}
-              onChange={(e) => setSystemVoiceURI(e.target.value)}
-            >
-              <option value="">自动选择（推荐）</option>
-              {systemVoices.map((voice) => (
-                <option key={voice.voiceURI} value={voice.voiceURI}>
-                  {voice.name} ({voice.lang})
-                </option>
-              ))}
-            </select>
-          </label>
-        </section>
+        <details className="settings-group">
+          <summary className="settings-group__summary">
+            AI 与朗读
+            <span className="settings-group__meta">
+              {settings.aiApiKey.trim()
+                ? detectedProvider?.name || "已配置 Key"
+                : "默认 / 系统语音"}
+            </span>
+          </summary>
+          <div className="settings-group__body">
+            <label className="settings-field">
+              <span>API Key（可选，仅本机保存）</span>
+              <div className="settings-field-row settings-field-row--key">
+                <input
+                  type={showApiKey ? "text" : "password"}
+                  value={settings.aiApiKey}
+                  onChange={(e) => handleApiKeyChange(e.target.value)}
+                  placeholder="粘贴 Key，自动识别厂商"
+                  autoComplete="off"
+                  spellCheck={false}
+                />
+                <button
+                  type="button"
+                  className="settings-action-btn"
+                  onClick={() => setShowApiKey((v) => !v)}
+                >
+                  {showApiKey ? "隐藏" : "显示"}
+                </button>
+              </div>
+            </label>
+            {settings.aiApiKey.trim() && detectedProvider && (
+              <p className="settings-status settings-status--ok">
+                已识别为
+                <span className="ai-provider-badge">{detectedProvider.name}</span>
+              </p>
+            )}
+            <label className="settings-field">
+              <span>朗读音色</span>
+              <select
+                value={settings.systemVoiceURI}
+                onChange={(e) => setSystemVoiceURI(e.target.value)}
+              >
+                <option value="">自动选择（推荐）</option>
+                {systemVoices.map((voice) => (
+                  <option key={voice.voiceURI} value={voice.voiceURI}>
+                    {voice.name} ({voice.lang})
+                  </option>
+                ))}
+              </select>
+            </label>
+          </div>
+        </details>
       </aside>
     </div>
   );

@@ -2372,6 +2372,114 @@ body {
   margin-bottom: 1.5rem;
 }
 
+.settings-section--compact {
+  margin-bottom: 1rem;
+}
+
+.settings-group {
+  margin-bottom: 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--input-bg);
+  overflow: hidden;
+}
+
+.settings-group__summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.75rem 0.875rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--text);
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+
+.settings-group__summary::-webkit-details-marker {
+  display: none;
+}
+
+.settings-group__summary::before {
+  content: "▸";
+  margin-right: 0.5rem;
+  color: var(--text-muted);
+  transition: transform 0.15s;
+}
+
+.settings-group[open] > .settings-group__summary::before {
+  transform: rotate(90deg);
+}
+
+.settings-group__meta {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.settings-group__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 0 0.875rem 0.875rem;
+  border-top: 1px solid var(--border);
+}
+
+.settings-sync-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  border-radius: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+.settings-sync-card__head {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.settings-sync-card__head strong {
+  font-size: 0.8125rem;
+  color: var(--text);
+}
+
+.settings-sync-card__head span {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.settings-sync-input {
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: 0.9375rem;
+  letter-spacing: 0.06em;
+  padding: 0.55rem 0.65rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--input-bg);
+  color: var(--text);
+  text-align: center;
+}
+
+.settings-sync-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.settings-sync-code {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 0;
+}
+
 .settings-section h3 {
   font-size: 0.8125rem;
   font-weight: 700;
