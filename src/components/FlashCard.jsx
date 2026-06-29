@@ -41,6 +41,7 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
   const flippedRef = useRef(false);
   const backModeRef = useRef(null);
   const submitAnswerRef = useRef(null);
+  const handleTypoClarificationRef = useRef(null);
   const startDictationRef = useRef(null);
   const dictatingRef = useRef(false);
   const resultRef = useRef(null);
@@ -159,6 +160,10 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
   useEffect(() => {
     submitAnswerRef.current = submitAnswer;
   }, [submitAnswer]);
+
+  useEffect(() => {
+    handleTypoClarificationRef.current = handleTypoClarification;
+  }, [handleTypoClarification]);
 
   const handleManualMark = useCallback(
     (isCorrect) => {
@@ -317,6 +322,24 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
       if (e.metaKey || e.ctrlKey || e.altKey) return;
 
       if (isInsideVocabAssistant()) return;
+
+      if (flippedRef.current && backModeRef.current === "ai") {
+        const pending = resultRef.current;
+        if (pending?.needs_typo_clarification && !pending?.clarified_typo) {
+          if (isMarkKnownKey(e)) {
+            e.preventDefault();
+            e.stopPropagation();
+            handleTypoClarificationRef.current?.(true);
+            return;
+          }
+          if (isMarkUnknownKey(e)) {
+            e.preventDefault();
+            e.stopPropagation();
+            handleTypoClarificationRef.current?.(false);
+            return;
+          }
+        }
+      }
 
       if (flippedRef.current && backModeRef.current === "manual") {
         if (isMarkKnownKey(e)) {
@@ -588,17 +611,20 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
                       className="btn btn--mark btn--mark-ok"
                       onClick={() => handleTypoClarification(true)}
                     >
-                      打错字了（本意对）
+                      打错字了（本意对） <kbd className="flashcard__kbd">1</kbd>
                     </button>
                     <button
                       type="button"
                       className="btn btn--mark btn--mark-fail"
                       onClick={() => handleTypoClarification(false)}
                     >
-                      真的不认识
+                      真的不认识 <kbd className="flashcard__kbd">0</kbd>
                     </button>
                   </div>
-                  <p className="flashcard__footer flashcard__footer--back flashcard__footer--typo">
+                  <p className="flashcard__footer flashcard__footer--back flashcard__footer--typo flashcard__footer--desktop">
+                    1 打错字了 · 0 真的不认识
+                  </p>
+                  <p className="flashcard__footer flashcard__footer--back flashcard__footer--typo flashcard__footer--mobile">
                     同音不同字时，选一项即可继续
                   </p>
                 </div>
