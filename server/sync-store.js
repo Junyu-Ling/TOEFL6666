@@ -39,6 +39,12 @@ export async function saveSyncEntry(code, entry) {
   }
 
   const redis = getRedis();
+  if (!redis && process.env.VERCEL) {
+    throw createError(
+      "服务端未配置 Redis，无法跨设备同步。请在 Vercel 添加 UPSTASH_REDIS_REST_URL 与 UPSTASH_REDIS_REST_TOKEN 后重新部署。",
+      503
+    );
+  }
   if (redis) {
     await redis.set(storageKey(normalized), entry, { ex: TTL_SEC });
     return { backend: "redis", expiresAt: entry.expiresAt };

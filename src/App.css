@@ -2543,6 +2543,12 @@ body {
   gap: 0.5rem;
 }
 
+.settings-action-btn--inline {
+  margin-left: 0.5rem;
+  padding: 0.15rem 0.5rem;
+  vertical-align: middle;
+}
+
 .settings-actions--spaced {
   margin-top: 0.75rem;
 }

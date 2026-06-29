@@ -11,6 +11,36 @@ import {
 } from "../shared/sync";
 import { pullSyncPayload, pushSyncPayload } from "../services/syncApi";
 
+const SYNC_SESSION_KEY = "toefl666_last_sync";
+
+function readLastSync() {
+  try {
+    return JSON.parse(sessionStorage.getItem(SYNC_SESSION_KEY) || "null");
+  } catch {
+    return null;
+  }
+}
+
+function writeLastSync({ code, host, backend }) {
+  sessionStorage.setItem(
+    SYNC_SESSION_KEY,
+    JSON.stringify({ code, host, backend, at: Date.now() })
+  );
+}
+
+function getResolvedSyncCode(draft, uploaded) {
+  return normalizePairingCode(draft || uploaded || "");
+}
+
+async function copyText(text) {
+  try {
+    await navigator.clipboard.writeText(text);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 function clampDelayInput(value) {
   const n = Number(String(value).trim());
   if (!Number.isFinite(n)) return null;
@@ -37,6 +67,7 @@ export default function SettingsPanel() {
   const [showApiKey, setShowApiKey] = useState(false);
   const [syncCodeDraft, setSyncCodeDraft] = useState("");
   const [uploadedCode, setUploadedCode] = useState("");
+  const [uploadedHost, setUploadedHost] = useState("");
   const [syncBusy, setSyncBusy] = useState(false);
   const [syncMessage, setSyncMessage] = useState("");
   const [syncError, setSyncError] = useState("");
@@ -51,10 +82,14 @@ export default function SettingsPanel() {
   useEffect(() => {
     if (settingsOpen) {
       setDelayDraft(String(settings.autoAdvanceDelaySec));
-      setSyncCodeDraft("");
-      setUploadedCode("");
       setSyncMessage("");
       setSyncError("");
+      const last = readLastSync();
+      if (last?.code) {
+        setUploadedCode(last.code);
+        setUploadedHost(last.host || "");
+      setSyncCodeDraft((prev) => prev || last.code);
+      }
     }
   }, [settings.autoAdvanceDelaySec, settingsOpen]);
 
@@ -86,13 +121,26 @@ export default function SettingsPanel() {
     try {
       const customCode = normalizePairingCode(syncCodeDraft);
       const result = await pushSyncPayload(exportLocalData(), customCode || undefined);
+      const host = window.location.host;
       setUploadedCode(result.code);
+      setUploadedHost(host);
+      setSyncCodeDraft(result.code);
+      writeLastSync({ code: result.code, host, backend: result.backend });
       const expires = new Date(result.expiresAt).toLocaleString("zh-CN");
-      setSyncMessage(
-        result.backend === "memory"
-          ? `已生成配对码（开发模式，仅本机有效）。有效期至 ${expires}`
-          : `已上传。配对码 7 天内有效，至 ${expires}`
-      );
+      const copied = await copyText(result.code);
+      if (result.backend === "memory") {
+        setSyncMessage(
+          `已生成配对码（仅 ${host} 本机开发服务器有效，手机请打开同一局域网地址）。有效期至 ${expires}${
+            copied ? "，已复制到剪贴板" : ""
+          }`
+        );
+      } else {
+        setSyncMessage(
+          `已上传至 ${host}。请在另一台设备打开同一网址，输入配对码恢复。有效期至 ${expires}${
+            copied ? "，配对码已复制到剪贴板" : ""
+          }`
+        );
+      }
     } catch (err) {
       setSyncError(err.message || "上传失败");
     } finally {
@@ -101,9 +149,9 @@ export default function SettingsPanel() {
   }
 
   async function handlePullSync() {
-    const code = normalizePairingCode(syncCodeDraft);
+    const code = getResolvedSyncCode(syncCodeDraft, uploadedCode);
     if (code.length !== 8) {
-      setSyncError("请输入 8 位配对码");
+      setSyncError("请输入 8 位配对码（须先在上传设备点击「上传本机进度」）");
       return;
     }
     if (
@@ -122,9 +170,27 @@ export default function SettingsPanel() {
       importLocalData(result.payload);
       window.location.reload();
     } catch (err) {
-      setSyncError(err.message || "拉取失败");
+      const host = window.location.host;
+      const last = readLastSync();
+      const hints = [
+        "请确认已在源设备点击「上传本机进度」（仅点「生成」无效）",
+        `两台设备须打开同一网址，当前为 ${host}`,
+        "请核对配对码是否抄写正确",
+      ];
+      if (last?.host && last.host !== host) {
+        hints.unshift(`本机曾从 ${last.host} 上传，与当前 ${host} 不一致`);
+      }
+      setSyncError(`${err.message || "拉取失败"}。${hints.join("；")}。`);
       setSyncBusy(false);
     }
+  }
+
+  async function handleCopyCode() {
+    const code = uploadedCode || formatPairingCode(syncCodeDraft);
+    if (!code) return;
+    const ok = await copyText(code);
+    setSyncMessage(ok ? `已复制配对码 ${code}` : "复制失败，请手动复制");
+    setSyncError("");
   }
 
   function handleGenerateCodeOnly() {
@@ -298,8 +364,9 @@ export default function SettingsPanel() {
         <section className="settings-section">
           <h3>进度同步</h3>
           <p className="settings-hint">
-            用配对码在电脑与手机间同步学习进度（熟词本、生词本、列表进度、打卡、设置等）。
-            配对码相当于密码，请勿泄露。上传后 7 天内可在另一台设备输入配对码恢复。
+            用配对码在电脑与手机间同步学习进度。须在同一网址操作：线上请用{" "}
+            <strong>toefl-6666.vercel.app</strong>，不要用 localhost 上传后再到手机恢复。
+            配对码相当于密码，上传后 7 天内有效。
           </p>
           <p className="settings-hint settings-hint--compact">
             本机：熟词 {syncSummary.recognized} · 生词 {syncSummary.unrecognized}
@@ -332,6 +399,14 @@ export default function SettingsPanel() {
           {uploadedCode && (
             <p className="settings-status settings-status--ok">
               当前配对码：<span className="sync-code-badge">{uploadedCode}</span>
+              {uploadedHost ? `（上传于 ${uploadedHost}）` : ""}
+              <button
+                type="button"
+                className="settings-action-btn settings-action-btn--inline"
+                onClick={handleCopyCode}
+              >
+                复制
+              </button>
             </p>
           )}
 
