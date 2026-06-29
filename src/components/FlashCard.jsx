@@ -285,7 +285,11 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
       if (e.key === "Enter" && !e.shiftKey) {
         e.preventDefault();
         if (flippedRef.current) {
-          flipBack();
+          if (backModeRef.current === "ai") {
+            onNext?.();
+          } else {
+            flipBack();
+          }
         } else if (answerRef.current.trim()) {
           submitAnswer(answerRef.current);
         } else {
@@ -479,7 +483,7 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
               <button type="button" className="btn btn--primary flashcard__next" onClick={onNext}>
                 下一个
               </button>
-              <p className="flashcard__footer flashcard__footer--back">↓ 下一个 · Enter / 空格翻回正面</p>
+              <p className="flashcard__footer flashcard__footer--back">Enter / ↓ 下一个 · 空格翻回正面</p>
             </>
           )}
 
