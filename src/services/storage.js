@@ -73,12 +73,16 @@ export function patchListProgress(listProgress, listId, currentIndex) {
 }
 
 export function buildWordRecord(wordData, aiResult) {
-  return {
+  const record = {
     word: wordData.word,
     definitions: wordData.definitions,
     ai_feedback: appendBookDefinitions(aiResult.ai_feedback, wordData.definitions),
     savedAt: Date.now(),
   };
+  if (aiResult.memory_trick) {
+    record.memory_trick = aiResult.memory_trick;
+  }
+  return record;
 }
 
 export function buildRecognizedRecord(wordData, aiResult, priorWrongCount) {

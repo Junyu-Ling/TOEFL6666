@@ -223,6 +223,15 @@ export default function App() {
 
   const currentWord = practiceQueue[currentIndex] ?? null;
 
+  const currentWordStats = useMemo(() => {
+    if (!currentWord) return { wrongCount: 0, memory_trick: null };
+    const entry = unrecognized.find((item) => item.word === currentWord.word);
+    return {
+      wrongCount: entry?.wrongCount ?? 0,
+      memory_trick: entry?.memory_trick ?? null,
+    };
+  }, [currentWord, unrecognized]);
+
   const handleResult = useCallback(
     (wordData, aiResult) => {
       if (aiResult.is_correct) {
@@ -235,6 +244,9 @@ export default function App() {
             const carryWrong =
               priorWrongCount ?? (existingRec?.wrongCount && existingRec.wrongCount > 0 ? existingRec.wrongCount : undefined);
             const record = buildRecognizedRecord(wordData, aiResult, carryWrong);
+            if (wrongEntry?.memory_trick || aiResult.memory_trick) {
+              record.memory_trick = wrongEntry?.memory_trick || aiResult.memory_trick;
+            }
             const next = upsertWord(prevRec, record);
             saveRecognized(next);
             return next;
@@ -254,6 +266,7 @@ export default function App() {
           const wrongRecord = {
             ...record,
             wrongCount: (existing?.wrongCount ?? 0) + 1,
+            memory_trick: record.memory_trick ?? existing?.memory_trick,
           };
           const next = upsertWord(prev, wrongRecord);
           saveUnrecognized(next);
@@ -542,6 +555,7 @@ export default function App() {
               <FlashCard
                 key={`${currentWord.word}-${currentIndex}-${isReviewMode}-${isRecognizedReviewMode}`}
                 wordData={currentWord}
+                wordStats={currentWordStats}
                 micGranted={mic.isGranted}
                 onResult={handleResult}
                 onNext={handleNext}

@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import MemoryTrickBlock from "./MemoryTrickBlock";
 
 const SORT_OPTIONS = [
   { value: "default", label: "默认顺序" },
@@ -55,6 +56,11 @@ function WordItem({ item, variant, onRemove, showWrongCount, wrongCountPast = fa
           </div>
           <p className="word-item__defs">{item.definitions?.join(" · ")}</p>
           {item.ai_feedback && <p className="word-item__feedback">{item.ai_feedback}</p>}
+          {item.memory_trick && (
+            <div className="word-item__memory">
+              <MemoryTrickBlock trick={item.memory_trick} compact />
+            </div>
+          )}
         </div>
         <div className="word-item__actions">
           {onRemove && (

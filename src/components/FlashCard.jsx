@@ -7,8 +7,22 @@ import {
   checkPronunciation,
 } from "../utils/speechRecognition";
 import { playAnswerSound } from "../utils/answerSounds";
+import { fetchMemoryTrick } from "../services/memoryTrick";
+import { shouldFetchMemoryTrick } from "../shared/memoryTrick";
+import MemoryTrickBlock from "./MemoryTrickBlock";
 
 const SILENCE_STOP_MS = 2000;
+const SWIPE_THRESHOLD_PX = 48;
+const TAP_MOVE_TOLERANCE_PX = 14;
+const TAP_MAX_DURATION_MS = 350;
+
+function isTouchInteractiveTarget(target) {
+  return Boolean(
+    target?.closest?.(
+      "button, a, input, textarea, select, label, .toggle-switch, .voice-btn, .flashcard__mobile-bar, .flashcard__input-wrap"
+    )
+  );
+}
 
 function isMarkKnownKey(e) {
   return e.code === "Digit1" || e.code === "Numpad1" || e.key === "1";
@@ -18,7 +32,7 @@ function isMarkUnknownKey(e) {
   return e.code === "Digit0" || e.code === "Numpad0" || e.key === "0";
 }
 
-export default function FlashCard({ wordData, onResult, onNext, onPrev, micGranted }) {
+export default function FlashCard({ wordData, wordStats, onResult, onNext, onPrev, micGranted }) {
   const { speakWord, settings, settingsOpen } = useSettings();
   const settingsOpenRef = useRef(settingsOpen);
   settingsOpenRef.current = settingsOpen;
@@ -35,6 +49,7 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
   const [pronounceEnabled, setPronounceEnabled] = useState(false);
   const [pronouncing, setPronouncing] = useState(false);
   const [pronounceResult, setPronounceResult] = useState(null);
+  const [memoryLoading, setMemoryLoading] = useState(false);
   const inputRef = useRef(null);
   const cardRef = useRef(null);
   const dictationRef = useRef(null);
@@ -48,6 +63,8 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
   const startDictationRef = useRef(null);
   const dictatingRef = useRef(false);
   const resultRef = useRef(null);
+  const handleBlankTapRef = useRef(null);
+  const touchStartRef = useRef(null);
   const answerSoundsRef = useRef(settings.answerSounds);
   const answerSoundCorrectRef = useRef(settings.answerSoundCorrect);
   const answerSoundWrongRef = useRef(settings.answerSoundWrong);
@@ -62,6 +79,38 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
       wrongId: answerSoundWrongRef.current,
     });
   }
+
+  const enrichWrongResult = useCallback(
+    async (aiResult) => {
+      const priorWrongCount = wordStats?.wrongCount ?? 0;
+      const existingTrick = wordStats?.memory_trick ?? aiResult.memory_trick ?? null;
+
+      if (existingTrick && !aiResult.memory_trick) {
+        return { ...aiResult, memory_trick: existingTrick };
+      }
+
+      if (
+        !shouldFetchMemoryTrick({
+          isCorrect: aiResult.is_correct,
+          priorWrongCount,
+          existingTrick,
+        })
+      ) {
+        return aiResult;
+      }
+
+      setMemoryLoading(true);
+      try {
+        const memory_trick = await fetchMemoryTrick(wordData);
+        return { ...aiResult, memory_trick };
+      } catch {
+        return aiResult;
+      } finally {
+        setMemoryLoading(false);
+      }
+    },
+    [wordData, wordStats?.wrongCount, wordStats?.memory_trick]
+  );
 
   useEffect(() => {
     answerRef.current = userAnswer;
@@ -124,6 +173,36 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
     requestAnimationFrame(focusCard);
   }, [stopDictation, focusCard]);
 
+  const handleBlankTap = useCallback(() => {
+    if (loadingRef.current || settingsOpenRef.current) return;
+
+    if (flippedRef.current) {
+      if (backModeRef.current === "ai") {
+        const pending = resultRef.current;
+        if (pending?.needs_typo_clarification && !pending?.clarified_typo) return;
+      }
+      flipBack();
+      return;
+    }
+
+    flipToManual();
+  }, [flipBack, flipToManual]);
+
+  const handleCardBlankTap = useCallback(() => {
+    if (loadingRef.current || settingsOpenRef.current) return;
+
+    if (flippedRef.current) {
+      if (backModeRef.current === "ai") {
+        const pending = resultRef.current;
+        if (pending?.needs_typo_clarification && !pending?.clarified_typo) return;
+      }
+      flipBack();
+      return;
+    }
+
+    flipToManual();
+  }, [flipBack, flipToManual]);
+
   const submitAnswer = useCallback(
     async (answerText) => {
       const text = (answerText ?? answerRef.current).trim();
@@ -133,7 +212,10 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
       setLoading(true);
       setError(null);
       try {
-        const aiResult = await evaluateAnswer(wordData, text);
+        let aiResult = await evaluateAnswer(wordData, text);
+        if (!aiResult.needs_typo_clarification && !aiResult.is_correct) {
+          aiResult = await enrichWrongResult(aiResult);
+        }
         setResult(aiResult);
         setBackMode("ai");
         setFlipped(true);
@@ -148,15 +230,15 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
         setLoading(false);
       }
     },
-    [wordData, onResult, stopDictation, focusCard]
+    [wordData, onResult, stopDictation, focusCard, enrichWrongResult]
   );
 
   const handleTypoClarification = useCallback(
-    (isTypo) => {
+    async (isTypo) => {
       if (!result?.needs_typo_clarification || result.clarified_typo) return;
 
       const typoInfo = result.typo_match;
-      const finalResult = isTypo
+      let finalResult = isTypo
         ? {
             is_correct: true,
             ai_feedback: typoInfo
@@ -170,12 +252,16 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
             clarified_typo: true,
           };
 
+      if (!finalResult.is_correct) {
+        finalResult = await enrichWrongResult(finalResult);
+      }
+
       setResult(finalResult);
       notifyAnswerResult(finalResult.is_correct);
       onResult?.(wordData, finalResult);
       requestAnimationFrame(focusCard);
     },
-    [result, wordData, onResult, focusCard]
+    [result, wordData, onResult, focusCard, enrichWrongResult]
   );
 
   useEffect(() => {
@@ -186,16 +272,103 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
     handleTypoClarificationRef.current = handleTypoClarification;
   }, [handleTypoClarification]);
 
+  useEffect(() => {
+    handleBlankTapRef.current = handleBlankTap;
+  }, [handleBlankTap]);
+
+  useEffect(() => {
+    const el = cardRef.current;
+    if (!el) return undefined;
+
+    const isMobileLayout = () => window.matchMedia("(max-width: 640px)").matches;
+
+    function onTouchStart(e) {
+      if (!isMobileLayout() || settingsOpenRef.current || loadingRef.current) return;
+      if (e.touches.length !== 1) return;
+      const touch = e.touches[0];
+      touchStartRef.current = {
+        x: touch.clientX,
+        y: touch.clientY,
+        t: Date.now(),
+        target: e.target,
+      };
+    }
+
+    function onTouchMove(e) {
+      const start = touchStartRef.current;
+      if (!start || !isMobileLayout()) return;
+      const touch = e.touches[0];
+      const dx = touch.clientX - start.x;
+      const dy = touch.clientY - start.y;
+      if (Math.abs(dx) > 12 && Math.abs(dx) > Math.abs(dy) * 1.15) {
+        e.preventDefault();
+      }
+    }
+
+    function clearTouchStart() {
+      touchStartRef.current = null;
+    }
+
+    function onTouchEnd(e) {
+      const start = touchStartRef.current;
+      touchStartRef.current = null;
+      if (!start || !isMobileLayout()) return;
+      if (settingsOpenRef.current || loadingRef.current) return;
+
+      const touch = e.changedTouches[0];
+      const dx = touch.clientX - start.x;
+      const dy = touch.clientY - start.y;
+      const dt = Date.now() - start.t;
+      const absDx = Math.abs(dx);
+      const absDy = Math.abs(dy);
+
+      if (isTouchInteractiveTarget(start.target)) return;
+
+      if (absDx >= SWIPE_THRESHOLD_PX && absDx > absDy * 1.15) {
+        if (dx > 0) {
+          onNext?.();
+        } else {
+          onPrev?.();
+        }
+        return;
+      }
+
+      if (
+        absDx <= TAP_MOVE_TOLERANCE_PX &&
+        absDy <= TAP_MOVE_TOLERANCE_PX &&
+        dt <= TAP_MAX_DURATION_MS
+      ) {
+        handleBlankTapRef.current?.();
+      }
+    }
+
+    el.addEventListener("touchstart", onTouchStart, { passive: true });
+    el.addEventListener("touchmove", onTouchMove, { passive: false });
+    el.addEventListener("touchend", onTouchEnd, { passive: true });
+    el.addEventListener("touchcancel", clearTouchStart, { passive: true });
+
+    return () => {
+      el.removeEventListener("touchstart", onTouchStart);
+      el.removeEventListener("touchmove", onTouchMove);
+      el.removeEventListener("touchend", onTouchEnd);
+      el.removeEventListener("touchcancel", clearTouchStart);
+    };
+  }, [onNext, onPrev]);
+
   const handleManualMark = useCallback(
-    (isCorrect) => {
-      notifyAnswerResult(isCorrect);
-      onResult?.(wordData, {
+    async (isCorrect) => {
+      let aiResult = {
         is_correct: isCorrect,
         ai_feedback: isCorrect ? "你已标记为认识" : "你已标记为需加强",
-      });
+      };
+      if (!isCorrect) {
+        aiResult = await enrichWrongResult(aiResult);
+      }
+      notifyAnswerResult(isCorrect);
+      onResult?.(wordData, aiResult);
       onNext?.();
     },
-    [wordData, onResult, onNext]
+    [wordData, onResult, onNext, enrichWrongResult]
   );
 
   const scheduleSilenceStop = useCallback(() => {
@@ -463,10 +636,10 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
   const mobileHint = isTypeMode
     ? dictating
       ? "说完后停顿 2 秒自动提交"
-      : "写好释义点「提交批改」，只看释义点「翻面」"
+      : "点卡片空白翻面 · 左滑上一词 · 右滑下一词"
     : dictating
       ? "说完后停顿 2 秒自动提交"
-      : "默认点「翻面」核对；输入释义后点「提交批改」";
+      : "点卡片空白翻面 · 左滑上一词 · 右滑下一词";
 
   async function handlePronouncePractice() {
     if (!micGranted) {
@@ -690,6 +863,17 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
                 )}
               </div>
 
+              {!result.is_correct && memoryLoading && (
+                <p className="flashcard__memory-status">
+                  <span className="spinner spinner--inline" />
+                  AI 正在生成记忆法…
+                </p>
+              )}
+
+              {!result.is_correct && result.memory_trick && (
+                <MemoryTrickBlock trick={result.memory_trick} />
+              )}
+
               <button type="button" className="btn btn--primary flashcard__next" onClick={onNext}>
                 下一个
               </button>
@@ -722,7 +906,7 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
                 1 认识 · 0 不认识 · Enter / 空格翻回正面
               </p>
               <p className="flashcard__footer flashcard__footer--back flashcard__footer--mobile">
-                点击下方按钮标记，或点「翻回」返回
+                点空白翻回 · 左滑上一词 · 右滑下一词
               </p>
             </>
           )}

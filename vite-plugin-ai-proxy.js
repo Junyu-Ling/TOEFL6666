@@ -2,6 +2,7 @@ import { loadEnv } from "vite";
 import { resolveApiConfig, stripApiConfigFromBody } from "./server/ai-config.js";
 import { evaluateWithDeepSeek } from "./server/ai-evaluate.js";
 import { chatWithDeepSeek } from "./server/ai-chat.js";
+import { generateMemoryTrick } from "./server/ai-memory-trick.js";
 
 function readBody(req) {
   return new Promise((resolve, reject) => {
@@ -32,7 +33,8 @@ export function createAiHandler(getEnvConfig) {
 
     const isEvaluate = matchApiPath(req.url, "/api/ai/evaluate");
     const isChat = matchApiPath(req.url, "/api/ai/chat");
-    if (!isEvaluate && !isChat) {
+    const isMemoryTrick = matchApiPath(req.url, "/api/ai/memory-trick");
+    if (!isEvaluate && !isChat && !isMemoryTrick) {
       return next();
     }
 
@@ -43,6 +45,12 @@ export function createAiHandler(getEnvConfig) {
 
       if (isEvaluate) {
         const result = await evaluateWithDeepSeek(payload, config);
+        sendJson(res, 200, result);
+        return;
+      }
+
+      if (isMemoryTrick) {
+        const result = await generateMemoryTrick(payload, config);
         sendJson(res, 200, result);
         return;
       }
