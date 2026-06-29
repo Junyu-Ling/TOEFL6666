@@ -372,16 +372,14 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
         const inInput = isTypingInAnswerField();
         const hasAnswer = answerRef.current.trim();
 
+        e.preventDefault();
+
         if (hasAnswer && (isTypeMode || inInput)) {
-          e.preventDefault();
           submitAnswer(answerRef.current);
           return;
         }
 
-        if (!inInput) {
-          e.preventDefault();
-          flipToManual();
-        }
+        flipToManual();
       }
     }
 
@@ -396,10 +394,10 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
   const desktopHint = isTypeMode
     ? dictating
       ? "说完后停顿 2 秒自动提交批改"
-      : "输入框已就绪可直接打字 · Enter 提交批改 · 框外空格翻面 · ↑↓ 切换单词"
+      : "Enter 提交或空内容翻面 · Shift+Enter 换行 · 框外空格翻面 · ↑↓ 切词"
     : dictating
       ? "说完后停顿 2 秒自动提交"
-      : "默认空格 / Enter 翻面 · 点输入框输入后 Enter 提交批改 · ↑↓ 切换单词";
+      : "Enter / 空格翻面 · 输入后 Enter 提交 · Shift+Enter 换行 · ↑↓ 切词";
 
   const mobileHint = isTypeMode
     ? dictating
