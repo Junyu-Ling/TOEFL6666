@@ -10,6 +10,7 @@ import VocabLoadingScreen from "./components/VocabLoadingScreen";
 import MottoFooter from "./components/MottoFooter";
 import { recordVisit, refreshStreak } from "./services/streak";
 import { useMicrophone } from "./hooks/useMicrophone";
+import { useSettings } from "./context/SettingsContext";
 import { fetchWordList, fetchWordListManifest } from "./services/wordlist";
 import {
   loadRecognized,
@@ -36,6 +37,7 @@ function clampIndex(index, length) {
 }
 
 export default function App() {
+  const { settingsOpen } = useSettings();
   const savedRef = useRef(loadProgress());
   const mic = useMicrophone();
   const [micPromptVisible, setMicPromptVisible] = useState(true);
@@ -451,31 +453,30 @@ export default function App() {
 
   return (
     <div className="app">
-      <Navbar
-        activeTab={activeTab}
-        onTabChange={handleTabChange}
-        counts={{ recognized: recognized.length, unrecognized: unrecognized.length }}
-        streak={streakData}
-        onStreakClick={() => {
-          setStreakData(recordVisit());
-          setStreakOpen(true);
-        }}
-      />
+      <div className="app-shell" inert={settingsOpen ? "" : undefined}>
+        <Navbar
+          activeTab={activeTab}
+          onTabChange={handleTabChange}
+          counts={{ recognized: recognized.length, unrecognized: unrecognized.length }}
+          streak={streakData}
+          onStreakClick={() => {
+            setStreakData(recordVisit());
+            setStreakOpen(true);
+          }}
+        />
 
-      {micPromptVisible && (
-        <MicPermissionPrompt mic={mic} onDismiss={() => setMicPromptVisible(false)} />
-      )}
+        {micPromptVisible && (
+          <MicPermissionPrompt mic={mic} onDismiss={() => setMicPromptVisible(false)} />
+        )}
 
-      <SettingsPanel />
+        <StreakPanel
+          open={streakOpen}
+          onClose={() => setStreakOpen(false)}
+          streak={streakData}
+          onStreakChange={setStreakData}
+        />
 
-      <StreakPanel
-        open={streakOpen}
-        onClose={() => setStreakOpen(false)}
-        streak={streakData}
-        onStreakChange={setStreakData}
-      />
-
-      <main className="main">
+        <main className="main">
         {activeTab === "practice" && (
           <section className="practice-view">
             <div className="practice-toolbar">
@@ -659,6 +660,9 @@ export default function App() {
       />
 
       <MottoFooter />
+      </div>
+
+      <SettingsPanel />
     </div>
   );
 }

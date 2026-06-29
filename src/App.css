@@ -1843,6 +1843,18 @@ body {
   }
 }
 
+.app-shell {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.app-shell[inert] {
+  pointer-events: none;
+  user-select: none;
+}
+
 /* ── Settings ── */
 .settings-overlay {
   position: fixed;

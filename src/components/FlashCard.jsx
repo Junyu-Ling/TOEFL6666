@@ -19,6 +19,8 @@ function isMarkUnknownKey(e) {
 
 export default function FlashCard({ wordData, onResult, onNext, onPrev, micGranted }) {
   const { speakWord, settings, settingsOpen } = useSettings();
+  const settingsOpenRef = useRef(settingsOpen);
+  settingsOpenRef.current = settingsOpen;
   const isTypeMode = settings.practiceStyle !== "recall";
   const [flipped, setFlipped] = useState(false);
   const [backMode, setBackMode] = useState(null);
@@ -79,11 +81,13 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
   }, []);
 
   const focusInput = useCallback(() => {
+    if (settingsOpenRef.current) return;
     inputRef.current?.focus({ preventScroll: true });
     if (isTypeMode) setInputReady(true);
   }, [isTypeMode]);
 
   const focusCard = useCallback(() => {
+    if (settingsOpenRef.current) return;
     inputRef.current?.blur();
     setInputReady(false);
     cardRef.current?.focus({ preventScroll: true });
@@ -287,6 +291,13 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
   ]);
 
   useEffect(() => {
+    if (!settingsOpen) return;
+    stopDictation();
+    inputRef.current?.blur();
+    cardRef.current?.blur();
+  }, [settingsOpen, stopDictation]);
+
+  useEffect(() => {
     if (!flipped || !settings.autoAdvanceAfterFlip) return undefined;
     if (result?.needs_typo_clarification && !result?.clarified_typo) return undefined;
 
@@ -318,12 +329,16 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
     }
 
     function isInsideSettingsPanel() {
-      return Boolean(document.activeElement?.closest?.(".settings-panel"));
+      const active = document.activeElement;
+      return Boolean(
+        settingsOpenRef.current ||
+        active?.closest?.(".settings-panel, .settings-overlay")
+      );
     }
 
     function handleGlobalKeyDown(e) {
       if (loadingRef.current) return;
-      if (settingsOpen || isInsideSettingsPanel()) return;
+      if (isInsideSettingsPanel()) return;
       if (e.metaKey || e.ctrlKey || e.altKey) return;
 
       if (isInsideVocabAssistant()) return;
@@ -413,7 +428,7 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
 
     window.addEventListener("keydown", handleGlobalKeyDown, true);
     return () => window.removeEventListener("keydown", handleGlobalKeyDown, true);
-  }, [onPrev, onNext, submitAnswer, flipToManual, flipBack, handleManualMark, isTypeMode, settingsOpen]);
+  }, [onPrev, onNext, submitAnswer, flipToManual, flipBack, handleManualMark, isTypeMode]);
 
   const frontPrompt = isTypeMode
     ? "用中文或别的英文词解释（勿照抄原词），Enter 提交批改"
@@ -561,10 +576,14 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
               value={userAnswer}
               onChange={(e) => setUserAnswer(e.target.value)}
               onFocus={() => {
+                if (settingsOpenRef.current) {
+                  inputRef.current?.blur();
+                  return;
+                }
                 if (isTypeMode) setInputReady(true);
               }}
               onBlur={() => setInputReady(false)}
-              disabled={loading || dictating}
+              disabled={loading || dictating || settingsOpen}
               rows={5}
             />
             {micGranted && (

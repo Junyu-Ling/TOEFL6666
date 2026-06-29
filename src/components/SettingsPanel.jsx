@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import { useSettings } from "../context/SettingsContext";
 import { detectProvider } from "../shared/ai-providers";
 import {
@@ -66,6 +66,7 @@ export default function SettingsPanel() {
   const [syncBusy, setSyncBusy] = useState(false);
   const [syncMessage, setSyncMessage] = useState("");
   const [syncError, setSyncError] = useState("");
+  const panelRef = useRef(null);
 
   const syncSummary = useMemo(() => getSyncSummary(), [settingsOpen]);
 
@@ -73,6 +74,11 @@ export default function SettingsPanel() {
     () => detectProvider(settings.aiApiKey),
     [settings.aiApiKey]
   );
+
+  useEffect(() => {
+    if (!settingsOpen || !panelRef.current) return;
+    panelRef.current.focus({ preventScroll: true });
+  }, [settingsOpen]);
 
   useEffect(() => {
     if (settingsOpen) {
@@ -186,15 +192,12 @@ export default function SettingsPanel() {
   if (!settingsOpen) return null;
 
   return (
-    <div
-      className="settings-overlay"
-      onClick={() => setSettingsOpen(false)}
-      onKeyDown={(e) => e.stopPropagation()}
-    >
+    <div className="settings-overlay" onClick={() => setSettingsOpen(false)}>
       <aside
+        ref={panelRef}
+        tabIndex={-1}
         className="settings-panel"
         onClick={(e) => e.stopPropagation()}
-        onKeyDown={(e) => e.stopPropagation()}
       >
         <header className="settings-panel__header">
           <h2>设置</h2>
