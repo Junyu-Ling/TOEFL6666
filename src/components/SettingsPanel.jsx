@@ -16,6 +16,7 @@ export default function SettingsPanel() {
     setTheme,
     setSystemVoiceURI,
     setAutoReadOnNewWord,
+    setAutoDictateOnNewWord,
     setAutoAdvanceAfterFlip,
     setAutoAdvanceDelaySec,
   } = useSettings();
@@ -89,6 +90,20 @@ export default function SettingsPanel() {
                 type="checkbox"
                 checked={settings.autoReadOnNewWord}
                 onChange={(e) => setAutoReadOnNewWord(e.target.checked)}
+              />
+              <span className="toggle-switch__track" aria-hidden="true" />
+            </span>
+          </label>
+          <label className="settings-toggle-row settings-toggle-row--spaced">
+            <span className="settings-toggle-row__text">
+              <strong>切换单词时自动开麦</strong>
+              <small>进入新词后自动开始语音输入，说完停顿 2 秒提交批改</small>
+            </span>
+            <span className="toggle-switch">
+              <input
+                type="checkbox"
+                checked={settings.autoDictateOnNewWord}
+                onChange={(e) => setAutoDictateOnNewWord(e.target.checked)}
               />
               <span className="toggle-switch__track" aria-hidden="true" />
             </span>

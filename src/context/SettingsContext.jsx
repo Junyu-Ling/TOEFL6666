@@ -48,6 +48,11 @@ export function SettingsProvider({ children }) {
     [updateSettings]
   );
 
+  const setAutoDictateOnNewWord = useCallback(
+    (autoDictateOnNewWord) => updateSettings({ autoDictateOnNewWord }),
+    [updateSettings]
+  );
+
   const setAutoAdvanceAfterFlip = useCallback(
     (autoAdvanceAfterFlip) => updateSettings({ autoAdvanceAfterFlip }),
     [updateSettings]
@@ -69,6 +74,7 @@ export function SettingsProvider({ children }) {
       setTheme,
       setSystemVoiceURI,
       setAutoReadOnNewWord,
+      setAutoDictateOnNewWord,
       setAutoAdvanceAfterFlip,
       setAutoAdvanceDelaySec,
       speakWord,
@@ -80,6 +86,7 @@ export function SettingsProvider({ children }) {
       setTheme,
       setSystemVoiceURI,
       setAutoReadOnNewWord,
+      setAutoDictateOnNewWord,
       setAutoAdvanceAfterFlip,
       setAutoAdvanceDelaySec,
       speakWord,

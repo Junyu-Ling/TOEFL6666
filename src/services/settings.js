@@ -4,6 +4,7 @@ const DEFAULT_SETTINGS = {
   theme: "light",
   systemVoiceURI: "",
   autoReadOnNewWord: true,
+  autoDictateOnNewWord: false,
   autoAdvanceAfterFlip: false,
   autoAdvanceDelaySec: 3,
 };
@@ -23,6 +24,7 @@ export function loadSettings() {
       theme: parsed.theme === "dark" ? "dark" : "light",
       systemVoiceURI: typeof parsed.systemVoiceURI === "string" ? parsed.systemVoiceURI : "",
       autoReadOnNewWord: parsed.autoReadOnNewWord !== false,
+      autoDictateOnNewWord: parsed.autoDictateOnNewWord === true,
       autoAdvanceAfterFlip: parsed.autoAdvanceAfterFlip === true,
       autoAdvanceDelaySec: clampDelaySec(parsed.autoAdvanceDelaySec),
     };

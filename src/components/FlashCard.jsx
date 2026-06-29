@@ -39,6 +39,8 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
   const flippedRef = useRef(false);
   const backModeRef = useRef(null);
   const submitAnswerRef = useRef(null);
+  const startDictationRef = useRef(null);
+  const dictatingRef = useRef(false);
 
   useEffect(() => {
     answerRef.current = userAnswer;
@@ -55,6 +57,10 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
   useEffect(() => {
     backModeRef.current = backMode;
   }, [backMode]);
+
+  useEffect(() => {
+    dictatingRef.current = dictating;
+  }, [dictating]);
 
   const stopDictation = useCallback(() => {
     clearTimeout(silenceTimerRef.current);
@@ -142,7 +148,7 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
   }, [stopDictation]);
 
   const startDictation = useCallback(() => {
-    if (!micGranted || loadingRef.current || flippedRef.current || dictating) return;
+    if (!micGranted || loadingRef.current || flippedRef.current || dictatingRef.current) return;
 
     setError(null);
     setDictationHint("正在聆听…");
@@ -182,7 +188,11 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
     session.start();
     setDictating(true);
     scheduleSilenceStop();
-  }, [micGranted, dictating, scheduleSilenceStop, stopDictation]);
+  }, [micGranted, scheduleSilenceStop, stopDictation]);
+
+  useEffect(() => {
+    startDictationRef.current = startDictation;
+  }, [startDictation]);
 
   useEffect(() => {
     setFlipped(false);
@@ -198,17 +208,22 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
     stopDictation();
 
     let speechTimer;
+    let dictationTimer;
     if (settings.autoReadOnNewWord) {
       speechTimer = setTimeout(() => speakWord(wordData.word), 200);
+    }
+    if (settings.autoDictateOnNewWord && micGranted) {
+      dictationTimer = setTimeout(() => startDictationRef.current?.(), 500);
     }
     const focusTimer = setTimeout(() => inputRef.current?.focus(), 350);
 
     return () => {
       clearTimeout(speechTimer);
+      clearTimeout(dictationTimer);
       clearTimeout(focusTimer);
       stopDictation();
     };
-  }, [wordData?.word, speakWord, stopDictation, settings.autoReadOnNewWord]);
+  }, [wordData?.word, speakWord, stopDictation, settings.autoReadOnNewWord, settings.autoDictateOnNewWord, micGranted]);
 
   useEffect(() => {
     if (!flipped || !settings.autoAdvanceAfterFlip) return undefined;
