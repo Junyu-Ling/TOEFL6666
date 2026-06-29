@@ -1,5 +1,4 @@
 import { JSON_MODE_PROVIDER_IDS } from "../src/shared/ai-providers.js";
-import { toAnthropicMessageContent } from "./ai-message.js";
 
 function createConfigError(message, status = 500) {
   const err = new Error(message);
@@ -72,10 +71,6 @@ async function openaiCompatibleChat({
 
 async function anthropicChat({ apiKey, baseUrl, model, messages, maxTokens, temperature }) {
   const { system, conversation } = splitMessages(messages);
-  const anthropicMessages = conversation.map((message) => ({
-    role: message.role,
-    content: toAnthropicMessageContent(message.content),
-  }));
   const response = await fetch(`${baseUrl}/v1/messages`, {
     method: "POST",
     headers: {
@@ -88,7 +83,7 @@ async function anthropicChat({ apiKey, baseUrl, model, messages, maxTokens, temp
       max_tokens: maxTokens,
       temperature,
       system: system || undefined,
-      messages: anthropicMessages,
+      messages: conversation,
     }),
   });
 

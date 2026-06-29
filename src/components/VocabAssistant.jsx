@@ -3,12 +3,6 @@ import { sendVocabChat } from "../services/aiChat";
 import { createDictationSession } from "../utils/speechRecognition";
 import RichAiContent from "./RichAiContent";
 import {
-  ACCEPT_CHAT_ATTACHMENTS,
-  MAX_CHAT_ATTACHMENTS,
-  attachmentDataUrl,
-  readChatAttachment,
-} from "../utils/chatAttachments";
-import {
   GENERAL_CHAT_KEY,
   getWordKey,
   displayWordKey,
@@ -76,10 +70,8 @@ function withWelcome(messages) {
   return messages.length ? messages : [WELCOME];
 }
 
-function createMessage(role, content, attachments = []) {
-  const message = { role, content, at: Date.now() };
-  if (attachments.length) message.attachments = attachments;
-  return message;
+function createMessage(role, content) {
+  return { role, content, at: Date.now() };
 }
 
 export default function VocabAssistant({ currentWord, micGranted }) {
@@ -96,16 +88,13 @@ export default function VocabAssistant({ currentWord, micGranted }) {
   const [dictating, setDictating] = useState(false);
   const [dictationHint, setDictationHint] = useState("");
   const [panelSize, setPanelSize] = useState(loadPanelSize);
-  const [attachments, setAttachments] = useState([]);
   const listRef = useRef(null);
   const inputRef = useRef(null);
-  const fileInputRef = useRef(null);
   const skipSaveRef = useRef(false);
   const dictationRef = useRef(null);
   const silenceTimerRef = useRef(null);
   const inputValueRef = useRef("");
   const loadingRef = useRef(false);
-  const attachmentsRef = useRef([]);
   const panelSizeRef = useRef(panelSize);
 
   const historyItems = useMemo(() => searchChatHistory(historyQuery), [historyQuery, messages, view]);
@@ -130,10 +119,6 @@ export default function VocabAssistant({ currentWord, micGranted }) {
   useEffect(() => {
     loadingRef.current = loading;
   }, [loading]);
-
-  useEffect(() => {
-    attachmentsRef.current = attachments;
-  }, [attachments]);
 
   useEffect(() => {
     panelSizeRef.current = panelSize;
@@ -192,17 +177,14 @@ export default function VocabAssistant({ currentWord, micGranted }) {
     async (e, answerText) => {
       e?.preventDefault?.();
       const text = (answerText ?? inputValueRef.current).trim();
-      const pendingAttachments = attachmentsRef.current;
-      if ((!text && !pendingAttachments.length) || loadingRef.current) return;
+      if (!text || loadingRef.current) return;
 
       stopDictation();
-      const userMessage = createMessage("user", text, pendingAttachments);
+      const userMessage = createMessage("user", text);
       const nextMessages = [...messages, userMessage];
       setMessages(nextMessages);
       setInput("");
       inputValueRef.current = "";
-      setAttachments([]);
-      attachmentsRef.current = [];
       setError(null);
       setLoading(true);
 
@@ -220,33 +202,6 @@ export default function VocabAssistant({ currentWord, micGranted }) {
     },
     [messages, chatContext, stopDictation]
   );
-
-  const handleAttachmentPick = useCallback(async (e) => {
-    const files = Array.from(e.target.files || []);
-    e.target.value = "";
-    if (!files.length) return;
-
-    const slots = MAX_CHAT_ATTACHMENTS - attachmentsRef.current.length;
-    if (slots <= 0) {
-      setError(`最多上传 ${MAX_CHAT_ATTACHMENTS} 个附件`);
-      return;
-    }
-
-    try {
-      const picked = [];
-      for (const file of files.slice(0, slots)) {
-        picked.push(await readChatAttachment(file));
-      }
-      setAttachments((prev) => [...prev, ...picked]);
-      setError(null);
-    } catch (err) {
-      setError(err.message || "附件读取失败");
-    }
-  }, []);
-
-  const removeAttachment = useCallback((id) => {
-    setAttachments((prev) => prev.filter((item) => item.id !== id));
-  }, []);
 
   const scheduleSilenceStop = useCallback(() => {
     clearTimeout(silenceTimerRef.current);
@@ -313,7 +268,6 @@ export default function VocabAssistant({ currentWord, micGranted }) {
     setMessages(withWelcome(entry.messages));
     setError(null);
     setInput("");
-    setAttachments([]);
     setView("chat");
   }, [stopDictation]);
 
@@ -473,87 +427,39 @@ export default function VocabAssistant({ currentWord, micGranted }) {
               {dictationHint && <p className="vocab-assistant__dictation-hint">{dictationHint}</p>}
 
               <form className="vocab-assistant__form" onSubmit={handleSend}>
-                <div className="vocab-assistant__compose">
-                  {attachments.length > 0 && (
-                    <div className="vocab-assistant__attachment-list">
-                      {attachments.map((item) => (
-                        <div key={item.id} className="vocab-assistant__attachment-chip">
-                          {item.kind === "image" ? (
-                            <img src={attachmentDataUrl(item)} alt="" />
-                          ) : (
-                            <span className="vocab-assistant__attachment-file" title={item.name}>
-                              📄 {item.name}
-                            </span>
-                          )}
-                          <button
-                            type="button"
-                            className="vocab-assistant__attachment-remove"
-                            onClick={() => removeAttachment(item.id)}
-                            aria-label={`移除 ${item.name}`}
-                          >
-                            ×
-                          </button>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                  <div className="vocab-assistant__input-wrap">
+                <div className="vocab-assistant__input-wrap">
+                  <textarea
+                    ref={inputRef}
+                    className="vocab-assistant__input"
+                    rows={2}
+                    placeholder={micGranted ? "输入或语音提问…" : "问词义、用法、易混词…"}
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" && !e.shiftKey) {
+                        e.preventDefault();
+                        handleSend(e);
+                      }
+                    }}
+                    disabled={loading || dictating}
+                  />
+                  {micGranted && (
                     <button
                       type="button"
-                      className="vocab-assistant__attach-btn"
-                      onClick={() => fileInputRef.current?.click()}
-                      disabled={loading || dictating || attachments.length >= MAX_CHAT_ATTACHMENTS}
-                      title="上传附件"
-                      aria-label="上传附件"
-                    >
-                      <AttachIcon />
-                    </button>
-                    <input
-                      ref={fileInputRef}
-                      type="file"
-                      className="vocab-assistant__file-input"
-                      accept={ACCEPT_CHAT_ATTACHMENTS}
-                      multiple
-                      onChange={handleAttachmentPick}
-                      tabIndex={-1}
-                    />
-                    <textarea
-                      ref={inputRef}
-                      className="vocab-assistant__input"
-                      rows={2}
-                      placeholder={
-                        micGranted
-                          ? "输入、上传附件或语音提问…"
-                          : "问词义、用法、易混词，可上传图片或文本…"
-                      }
-                      value={input}
-                      onChange={(e) => setInput(e.target.value)}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter" && !e.shiftKey) {
-                          e.preventDefault();
-                          handleSend(e);
-                        }
-                      }}
+                      className={`voice-btn voice-btn--dictate vocab-assistant__voice-btn ${dictating ? "voice-btn--active" : ""}`}
+                      onClick={startDictation}
                       disabled={loading || dictating}
-                    />
-                    {micGranted && (
-                      <button
-                        type="button"
-                        className={`voice-btn voice-btn--dictate vocab-assistant__voice-btn ${dictating ? "voice-btn--active" : ""}`}
-                        onClick={startDictation}
-                        disabled={loading || dictating}
-                        title="语音输入"
-                        aria-label="语音输入"
-                      >
-                        <MicIcon />
-                      </button>
-                    )}
-                  </div>
+                      title="语音输入"
+                      aria-label="语音输入"
+                    >
+                      <MicIcon />
+                    </button>
+                  )}
                 </div>
                 <button
                   type="submit"
                   className="btn btn--primary vocab-assistant__send"
-                  disabled={loading || dictating || (!input.trim() && attachments.length === 0)}
+                  disabled={loading || dictating || !input.trim()}
                 >
                   发送
                 </button>
@@ -610,43 +516,9 @@ function UserAvatar() {
   );
 }
 
-function AttachIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20" aria-hidden>
-      <path d="M16.5 6.5v9a4.5 4.5 0 01-9 0v-8a3 3 0 016 0v7.5a1.5 1.5 0 01-3 0V8h-1.5v6a3 3 0 006 0v-8.5a4.5 4.5 0 00-9 0v9a6 6 0 0012 0v-9H16.5z" />
-    </svg>
-  );
-}
-
-function MessageAttachments({ items }) {
-  if (!items?.length) return null;
-  return (
-    <div className="vocab-assistant__message-attachments">
-      {items.map((item) =>
-        item.kind === "image" ? (
-          <a
-            key={item.id}
-            className="vocab-assistant__message-image"
-            href={attachmentDataUrl(item)}
-            target="_blank"
-            rel="noreferrer"
-          >
-            <img src={attachmentDataUrl(item)} alt={item.name} />
-          </a>
-        ) : (
-          <div key={item.id} className="vocab-assistant__message-file" title={item.name}>
-            📄 {item.name}
-          </div>
-        )
-      )}
-    </div>
-  );
-}
-
 function ChatMessageRow({ msg }) {
   const isUser = msg.role === "user";
   const isPending = Boolean(msg.pending);
-  const hasText = Boolean(String(msg.content || "").trim());
 
   return (
     <div className={`vocab-assistant__message-row vocab-assistant__message-row--${msg.role}`}>
@@ -662,16 +534,10 @@ function ChatMessageRow({ msg }) {
               <span className="spinner" />
               {msg.content}
             </>
+          ) : msg.role === "assistant" ? (
+            <RichAiContent content={msg.content} />
           ) : (
-            <>
-              <MessageAttachments items={msg.attachments} />
-              {hasText &&
-                (msg.role === "assistant" ? (
-                  <RichAiContent content={msg.content} />
-                ) : (
-                  <p className="vocab-assistant__user-text">{msg.content}</p>
-                ))}
-            </>
+            <p className="vocab-assistant__user-text">{msg.content}</p>
           )}
         </div>
         {!msg.welcome && msg.at && (

@@ -3,12 +3,16 @@ import { getRequestApiConfig } from "./aiConfig";
 
 export async function sendVocabChat({ messages, context }) {
   const apiConfig = getRequestApiConfig(loadSettings());
+  const textOnlyMessages = messages.map((m) => ({
+    role: m.role,
+    content: String(m.content || "").trim(),
+  }));
 
   const res = await fetch("/api/ai/chat", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      messages,
+      messages: textOnlyMessages,
       context,
       ...(apiConfig ? { apiConfig } : {}),
     }),
