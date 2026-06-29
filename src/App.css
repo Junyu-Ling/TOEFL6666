@@ -272,11 +272,10 @@ body {
   font-size: 1rem;
   line-height: 1;
   transform-origin: 50% 85%;
-  animation: streak-flame-flicker 1.1s ease-in-out infinite;
 }
 
-.navbar__streak--active .navbar__streak-flame-inner {
-  animation-duration: 0.75s;
+.navbar__streak:hover .navbar__streak-flame-inner {
+  animation: streak-flame-flicker 0.75s ease-in-out infinite;
 }
 
 @keyframes streak-flame-flicker {
@@ -2858,49 +2857,19 @@ body {
   display: block;
   width: 100%;
   height: 100%;
-  transform: scale(1.12);
-}
-
-.robot-fab-icon__eye {
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: robot-eye-blink 4.2s ease-in-out infinite;
-}
-
-.robot-fab-icon__eye--right {
-  animation-delay: 0.08s;
-}
-
-@keyframes robot-eye-blink {
-  0%,
-  86%,
-  100% {
-    transform: scaleY(1);
-  }
-  88% {
-    transform: scaleY(0.12);
-  }
-  90% {
-    transform: scaleY(1);
-  }
-  92% {
-    transform: scaleY(0.18);
-  }
-  94% {
-    transform: scaleY(1);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .navbar__streak-flame-inner,
-  .robot-fab-icon__eye {
-    animation: none;
-  }
+  object-fit: cover;
+  transform: scale(1.18);
 }
 
 .vocab-assistant__fab:hover {
   transform: translateY(-2px);
   box-shadow: 0 12px 30px rgba(47, 128, 237, 0.45);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .navbar__streak:hover .navbar__streak-flame-inner {
+    animation: none;
+  }
 }
 
 .vocab-assistant__fab--open {
@@ -3086,19 +3055,62 @@ body {
   color: var(--text-muted);
 }
 
-.vocab-assistant__bubble-wrap {
+.vocab-assistant__message-row {
   display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-  max-width: 92%;
+  align-items: flex-start;
+  gap: 0.5rem;
+  max-width: 100%;
 }
 
-.vocab-assistant__bubble-wrap--assistant {
+.vocab-assistant__message-row--assistant {
   align-self: flex-start;
 }
 
-.vocab-assistant__bubble-wrap--user {
+.vocab-assistant__message-row--user {
   align-self: flex-end;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.vocab-assistant__message-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  max-width: calc(100% - 2.75rem);
+  min-width: 0;
+}
+
+.vocab-assistant__message-row--user .vocab-assistant__message-body {
+  align-items: flex-end;
+}
+
+.vocab-assistant__avatar {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 6px;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.vocab-assistant__avatar--bot {
+  background: #2f80ed;
+}
+
+.vocab-assistant__avatar--bot img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.vocab-assistant__avatar--user {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(145deg, #5b9df5, #2f80ed);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
 }
 
 .vocab-assistant__time {
@@ -3107,7 +3119,7 @@ body {
   padding-inline: 0.15rem;
 }
 
-.vocab-assistant__bubble-wrap--user .vocab-assistant__time {
+.vocab-assistant__message-row--user .vocab-assistant__time {
   align-self: flex-end;
 }
 
@@ -3117,29 +3129,61 @@ body {
   padding: 0.875rem;
   display: flex;
   flex-direction: column;
-  gap: 0.625rem;
+  gap: 0.875rem;
+  background: color-mix(in srgb, var(--border) 28%, var(--surface));
 }
 
 .vocab-assistant__bubble {
+  position: relative;
   padding: 0.625rem 0.75rem;
-  border-radius: 12px;
+  border-radius: 8px;
   font-size: 0.8125rem;
   line-height: 1.55;
   word-break: break-word;
+  max-width: 100%;
 }
 
 .vocab-assistant__bubble--assistant {
-  background: var(--input-bg);
+  background: var(--surface);
   color: var(--text);
-  border: 1px solid var(--border);
+  border: 1px solid color-mix(in srgb, var(--border) 80%, transparent);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
   white-space: normal;
 }
 
+.vocab-assistant__bubble--assistant::before {
+  content: "";
+  position: absolute;
+  left: -5px;
+  top: 12px;
+  border: 6px solid transparent;
+  border-right-color: var(--surface);
+  filter: drop-shadow(-1px 0 0 color-mix(in srgb, var(--border) 80%, transparent));
+}
+
 .vocab-assistant__bubble--user {
-  background: var(--accent-soft);
-  color: var(--text);
-  border: 1px solid color-mix(in srgb, var(--accent) 25%, var(--border));
+  background: #95ec69;
+  color: #1a1a1a;
+  border: none;
   white-space: pre-wrap;
+}
+
+.vocab-assistant__bubble--user::before {
+  content: "";
+  position: absolute;
+  right: -5px;
+  top: 12px;
+  border: 6px solid transparent;
+  border-left-color: #95ec69;
+}
+
+:root[data-theme="dark"] .vocab-assistant__bubble--user {
+  background: #3f7a36;
+  color: #f3f3f3;
+}
+
+:root[data-theme="dark"] .vocab-assistant__bubble--user::before {
+  border-left-color: #3f7a36;
 }
 
 .vocab-assistant__bubble--pending {

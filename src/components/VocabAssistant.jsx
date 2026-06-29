@@ -2,7 +2,6 @@ import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { sendVocabChat } from "../services/aiChat";
 import { createDictationSession } from "../utils/speechRecognition";
 import RichAiContent from "./RichAiContent";
-import RobotFabIcon from "./RobotFabIcon";
 import {
   GENERAL_CHAT_KEY,
   getWordKey,
@@ -413,31 +412,12 @@ export default function VocabAssistant({ currentWord, micGranted }) {
             <>
               <div ref={listRef} className="vocab-assistant__messages">
                 {messages.map((msg, i) => (
-                  <div
-                    key={`${msg.role}-${msg.at ?? i}`}
-                    className={`vocab-assistant__bubble-wrap vocab-assistant__bubble-wrap--${msg.role}`}
-                  >
-                    <div className={`vocab-assistant__bubble vocab-assistant__bubble--${msg.role}`}>
-                      {msg.role === "assistant" ? (
-                        <RichAiContent content={msg.content} />
-                      ) : (
-                        msg.content
-                      )}
-                    </div>
-                    {!msg.welcome && msg.at && (
-                      <time className="vocab-assistant__time" dateTime={new Date(msg.at).toISOString()}>
-                        {formatTimestamp(msg.at)}
-                      </time>
-                    )}
-                  </div>
+                  <ChatMessageRow key={`${msg.role}-${msg.at ?? i}`} msg={msg} />
                 ))}
                 {loading && (
-                  <div className="vocab-assistant__bubble-wrap vocab-assistant__bubble-wrap--assistant">
-                    <div className="vocab-assistant__bubble vocab-assistant__bubble--assistant vocab-assistant__bubble--pending">
-                      <span className="spinner" />
-                      思考中…
-                    </div>
-                  </div>
+                  <ChatMessageRow
+                    msg={{ role: "assistant", pending: true, content: "思考中…" }}
+                  />
                 )}
               </div>
 
@@ -498,7 +478,13 @@ export default function VocabAssistant({ currentWord, micGranted }) {
         {open ? (
           "×"
         ) : (
-          <RobotFabIcon className="vocab-assistant__fab-icon" />
+          <img
+            src="/ai-assistant-icon.png"
+            alt=""
+            className="vocab-assistant__fab-icon"
+            width={64}
+            height={64}
+          />
         )}
       </button>
     </div>
@@ -510,5 +496,56 @@ function MicIcon() {
     <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
       <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5-3c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z" />
     </svg>
+  );
+}
+
+function BotAvatar() {
+  return (
+    <div className="vocab-assistant__avatar vocab-assistant__avatar--bot" aria-hidden>
+      <img src="/ai-assistant-icon.png" alt="" />
+    </div>
+  );
+}
+
+function UserAvatar() {
+  return (
+    <div className="vocab-assistant__avatar vocab-assistant__avatar--user" aria-hidden>
+      我
+    </div>
+  );
+}
+
+function ChatMessageRow({ msg }) {
+  const isUser = msg.role === "user";
+  const isPending = Boolean(msg.pending);
+
+  return (
+    <div className={`vocab-assistant__message-row vocab-assistant__message-row--${msg.role}`}>
+      {!isUser && <BotAvatar />}
+      <div className="vocab-assistant__message-body">
+        <div
+          className={`vocab-assistant__bubble vocab-assistant__bubble--${msg.role}${
+            isPending ? " vocab-assistant__bubble--pending" : ""
+          }`}
+        >
+          {isPending ? (
+            <>
+              <span className="spinner" />
+              {msg.content}
+            </>
+          ) : msg.role === "assistant" ? (
+            <RichAiContent content={msg.content} />
+          ) : (
+            msg.content
+          )}
+        </div>
+        {!msg.welcome && msg.at && (
+          <time className="vocab-assistant__time" dateTime={new Date(msg.at).toISOString()}>
+            {formatTimestamp(msg.at)}
+          </time>
+        )}
+      </div>
+      {isUser && <UserAvatar />}
+    </div>
   );
 }
