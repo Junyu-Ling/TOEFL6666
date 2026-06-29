@@ -285,9 +285,7 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
       if (e.key === "Enter" && !e.shiftKey) {
         e.preventDefault();
         if (flippedRef.current) {
-          if (backModeRef.current === "ai") {
-            onNext?.();
-          }
+          flipBack();
         } else if (answerRef.current.trim()) {
           submitAnswer(answerRef.current);
         } else {
@@ -481,7 +479,7 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
               <button type="button" className="btn btn--primary flashcard__next" onClick={onNext}>
                 下一个
               </button>
-              <p className="flashcard__footer flashcard__footer--back">↓ 下一个 · 空格翻回正面</p>
+              <p className="flashcard__footer flashcard__footer--back">↓ 下一个 · Enter / 空格翻回正面</p>
             </>
           )}
 
@@ -505,7 +503,7 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
                 </button>
               </div>
               <p className="flashcard__footer flashcard__footer--back flashcard__footer--desktop">
-                1 认识 · 0 不认识 · 空格翻回正面
+                1 认识 · 0 不认识 · Enter / 空格翻回正面
               </p>
               <p className="flashcard__footer flashcard__footer--back flashcard__footer--mobile">
                 点击下方按钮标记，或点「翻回」返回
