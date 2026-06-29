@@ -19,9 +19,11 @@ function isMarkUnknownKey(e) {
 
 export default function FlashCard({ wordData, onResult, onNext, onPrev, micGranted }) {
   const { speakWord, settings } = useSettings();
+  const isTypeMode = settings.practiceStyle !== "recall";
   const [flipped, setFlipped] = useState(false);
   const [backMode, setBackMode] = useState(null);
   const [userAnswer, setUserAnswer] = useState("");
+  const [inputReady, setInputReady] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [result, setResult] = useState(null);
@@ -70,21 +72,23 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
     setDictationHint("");
   }, []);
 
-  const focusCard = useCallback(() => {
-    inputRef.current?.blur();
-    cardRef.current?.focus({ preventScroll: true });
-  }, []);
-
   const focusInput = useCallback(() => {
     inputRef.current?.focus({ preventScroll: true });
+    if (isTypeMode) setInputReady(true);
+  }, [isTypeMode]);
+
+  const focusCard = useCallback(() => {
+    inputRef.current?.blur();
+    setInputReady(false);
+    cardRef.current?.focus({ preventScroll: true });
   }, []);
 
   const flipBack = useCallback(() => {
     setFlipped(false);
     setBackMode(null);
     setResult(null);
-    requestAnimationFrame(focusInput);
-  }, [focusInput]);
+    requestAnimationFrame(isTypeMode ? focusInput : focusCard);
+  }, [focusInput, focusCard, isTypeMode]);
 
   const flipToManual = useCallback(() => {
     if (loadingRef.current || flippedRef.current) return;
@@ -141,11 +145,14 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
       const text = answerRef.current.trim();
       if (text && !loadingRef.current && !flippedRef.current) {
         submitAnswerRef.current?.(text);
-      } else {
+      } else if (isTypeMode) {
         inputRef.current?.focus();
+        setInputReady(true);
+      } else {
+        focusCard();
       }
     }, SILENCE_STOP_MS);
-  }, [stopDictation]);
+  }, [stopDictation, isTypeMode, focusCard]);
 
   const startDictation = useCallback(() => {
     if (!micGranted || loadingRef.current || flippedRef.current || dictatingRef.current) return;
@@ -205,17 +212,22 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
     setDictationHint("");
     setPronounceResult(null);
     setPronouncing(false);
+    setInputReady(false);
     stopDictation();
 
     let speechTimer;
     let dictationTimer;
+    let focusTimer;
     if (settings.autoReadOnNewWord) {
       speechTimer = setTimeout(() => speakWord(wordData.word), 200);
     }
     if (settings.autoDictateOnNewWord && micGranted) {
       dictationTimer = setTimeout(() => startDictationRef.current?.(), 500);
+    } else if (isTypeMode) {
+      focusTimer = setTimeout(() => focusInput(), 350);
+    } else {
+      focusTimer = setTimeout(() => focusCard(), 350);
     }
-    const focusTimer = setTimeout(() => inputRef.current?.focus(), 350);
 
     return () => {
       clearTimeout(speechTimer);
@@ -223,7 +235,18 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
       clearTimeout(focusTimer);
       stopDictation();
     };
-  }, [wordData?.word, speakWord, stopDictation, settings.autoReadOnNewWord, settings.autoDictateOnNewWord, micGranted]);
+  }, [
+    wordData?.word,
+    speakWord,
+    stopDictation,
+    settings.autoReadOnNewWord,
+    settings.autoDictateOnNewWord,
+    settings.practiceStyle,
+    micGranted,
+    isTypeMode,
+    focusInput,
+    focusCard,
+  ]);
 
   useEffect(() => {
     if (!flipped || !settings.autoAdvanceAfterFlip) return undefined;
@@ -305,7 +328,9 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
           } else {
             flipBack();
           }
-        } else if (answerRef.current.trim()) {
+        } else if (isTypeMode && isTypingInAnswerField() && answerRef.current.trim()) {
+          submitAnswer(answerRef.current);
+        } else if (isTypeMode && answerRef.current.trim()) {
           submitAnswer(answerRef.current);
         } else {
           flipToManual();
@@ -315,7 +340,27 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
 
     window.addEventListener("keydown", handleGlobalKeyDown, true);
     return () => window.removeEventListener("keydown", handleGlobalKeyDown, true);
-  }, [onPrev, onNext, submitAnswer, flipToManual, flipBack, handleManualMark]);
+  }, [onPrev, onNext, submitAnswer, flipToManual, flipBack, handleManualMark, isTypeMode]);
+
+  const frontPrompt = isTypeMode
+    ? "用中文或英文同义词解释这个词，Enter 提交批改"
+    : "先在脑海里回忆词义，按空格或 Enter 翻面核对";
+
+  const desktopHint = isTypeMode
+    ? dictating
+      ? "说完后停顿 2 秒自动提交批改"
+      : "输入框已就绪可直接打字 · Enter 提交批改 · 框外空格翻面 · ↑↓ 切换单词"
+    : dictating
+      ? "说完后停顿 2 秒自动提交"
+      : "空格 / Enter 翻面核对 · 也可点输入框手动输入 · ↑↓ 切换单词";
+
+  const mobileHint = isTypeMode
+    ? dictating
+      ? "说完后停顿 2 秒自动提交"
+      : "写好释义点「提交批改」，只看释义点「翻面」"
+    : dictating
+      ? "说完后停顿 2 秒自动提交"
+      : "先在脑海里想词义，点「翻面」核对，或手动输入后提交";
 
   async function handlePronouncePractice() {
     if (!micGranted) {
@@ -421,15 +466,27 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
             )}
           </div>
 
-          <p className="flashcard__prompt">用中文或英文同义词解释这个词，或直接翻面查看释义</p>
+          <p className="flashcard__prompt">{frontPrompt}</p>
 
           <div className="flashcard__input-wrap">
             <textarea
               ref={inputRef}
-              className="flashcard__input"
-              placeholder={micGranted ? "中文释义或英文同义词，也可语音输入…" : "中文释义或英文同义词…"}
+              className={`flashcard__input${inputReady ? " flashcard__input--ready" : ""}`}
+              placeholder={
+                isTypeMode
+                  ? micGranted
+                    ? "中文释义或英文同义词，也可语音输入…"
+                    : "中文释义或英文同义词…"
+                  : micGranted
+                    ? "可选：输入释义批改，或按空格/Enter 翻面…"
+                    : "可选：输入释义批改，或按空格/Enter 翻面…"
+              }
               value={userAnswer}
               onChange={(e) => setUserAnswer(e.target.value)}
+              onFocus={() => {
+                if (isTypeMode) setInputReady(true);
+              }}
+              onBlur={() => setInputReady(false)}
               disabled={loading || dictating}
               rows={5}
             />
@@ -459,16 +516,8 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
               <span className="flashcard__status flashcard__status--error">{error}</span>
             ) : (
               <>
-                <span className="flashcard__status flashcard__status--desktop">
-                  {dictating
-                    ? "说完后停顿 2 秒自动提交批改"
-                    : "输入框内：空格正常输入 · Enter 提交批改｜框外：空格翻面｜↑↓ 切换单词"}
-                </span>
-                <span className="flashcard__status flashcard__status--mobile">
-                  {dictating
-                    ? "说完后停顿 2 秒自动提交"
-                    : "写好释义点「提交批改」，只看释义点「翻面」，用底部按钮切词"}
-                </span>
+                <span className="flashcard__status flashcard__status--desktop">{desktopHint}</span>
+                <span className="flashcard__status flashcard__status--mobile">{mobileHint}</span>
               </>
             )}
           </div>
@@ -540,10 +589,12 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
           <button
             type="button"
             className="flashcard__mobile-btn flashcard__mobile-btn--accent"
-            onClick={() => (userAnswer.trim() ? submitAnswer(userAnswer) : flipToManual())}
+            onClick={() =>
+              isTypeMode && userAnswer.trim() ? submitAnswer(userAnswer) : flipToManual()
+            }
             disabled={loading}
           >
-            {userAnswer.trim() ? "提交批改" : "翻面"}
+            {isTypeMode && userAnswer.trim() ? "提交批改" : "翻面"}
           </button>
         ) : backMode === "ai" ? (
           <button type="button" className="flashcard__mobile-btn flashcard__mobile-btn--accent" onClick={onNext}>

@@ -68,6 +68,11 @@ export function SettingsProvider({ children }) {
     [updateSettings]
   );
 
+  const setPracticeStyle = useCallback(
+    (practiceStyle) => updateSettings({ practiceStyle: practiceStyle === "recall" ? "recall" : "type" }),
+    [updateSettings]
+  );
+
   const updateAiApiSettings = useCallback(
     (patch) => updateSettings(patch),
     [updateSettings]
@@ -88,6 +93,7 @@ export function SettingsProvider({ children }) {
       setAutoAdvanceAfterFlip,
       setAutoAdvanceDelaySec,
       setUseCustomAiApi,
+      setPracticeStyle,
       updateAiApiSettings,
       speakWord,
     }),
@@ -102,6 +108,7 @@ export function SettingsProvider({ children }) {
       setAutoAdvanceAfterFlip,
       setAutoAdvanceDelaySec,
       setUseCustomAiApi,
+      setPracticeStyle,
       updateAiApiSettings,
       speakWord,
     ]

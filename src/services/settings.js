@@ -12,7 +12,12 @@ const DEFAULT_SETTINGS = {
   aiBaseUrl: "",
   aiModel: "",
   aiProviderId: "",
+  practiceStyle: "type",
 };
+
+export function normalizePracticeStyle(value) {
+  return value === "recall" ? "recall" : "type";
+}
 
 export function clampDelaySec(value) {
   const n = Number(value);
@@ -37,6 +42,7 @@ export function loadSettings() {
       aiBaseUrl: typeof parsed.aiBaseUrl === "string" ? parsed.aiBaseUrl : "",
       aiModel: typeof parsed.aiModel === "string" ? parsed.aiModel : "",
       aiProviderId: typeof parsed.aiProviderId === "string" ? parsed.aiProviderId : "",
+      practiceStyle: normalizePracticeStyle(parsed.practiceStyle),
     };
   } catch {
     return { ...DEFAULT_SETTINGS };

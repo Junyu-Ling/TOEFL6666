@@ -722,6 +722,13 @@ body {
   box-shadow: 0 0 0 4px var(--accent-soft);
 }
 
+.flashcard__input--ready,
+.flashcard__input--ready:focus {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 28%, transparent);
+}
+
 .flashcard__input::placeholder {
   color: var(--text-light);
 }

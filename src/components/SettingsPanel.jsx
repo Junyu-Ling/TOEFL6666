@@ -32,6 +32,7 @@ export default function SettingsPanel() {
     setAutoAdvanceAfterFlip,
     setAutoAdvanceDelaySec,
     setUseCustomAiApi,
+    setPracticeStyle,
     updateAiApiSettings,
   } = useSettings();
 
@@ -134,7 +135,31 @@ export default function SettingsPanel() {
 
         <section className="settings-section">
           <h3>练习</h3>
-          <label className="settings-toggle-row">
+          <div className="settings-field">
+            <span>练习方式</span>
+            <div className="theme-toggle">
+              <button
+                type="button"
+                className={`theme-toggle__btn ${settings.practiceStyle !== "recall" ? "theme-toggle__btn--active" : ""}`}
+                onClick={() => setPracticeStyle("type")}
+              >
+                输入批改
+              </button>
+              <button
+                type="button"
+                className={`theme-toggle__btn ${settings.practiceStyle === "recall" ? "theme-toggle__btn--active" : ""}`}
+                onClick={() => setPracticeStyle("recall")}
+              >
+                默念核对
+              </button>
+            </div>
+            <p className="settings-hint settings-hint--compact">
+              {settings.practiceStyle === "recall"
+                ? "新词不自动选中输入框；按空格或 Enter 翻面，在脑海里对照释义"
+                : "新词自动聚焦输入框（蓝色高亮），可直接打字，Enter 提交批改"}
+            </p>
+          </div>
+          <label className="settings-toggle-row settings-toggle-row--spaced">
             <span className="settings-toggle-row__text">
               <strong>切换单词时自动朗读</strong>
               <small>关闭后仅在你点击发音按钮时朗读</small>
