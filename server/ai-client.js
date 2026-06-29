@@ -107,13 +107,13 @@ export async function chatCompletion({
   const { apiKey, baseUrl, model, providerId, apiStyle } = config;
 
   if (!apiKey) {
-    throw createConfigError("未配置 API Key，请在设置中填写或使用服务端环境变量", 500);
+    throw createConfigError("未配置 API Key，请设置 DEEPSEEK_API_KEY 环境变量", 500);
   }
   if (!baseUrl) {
-    throw createConfigError("未配置 API 地址，请在设置中填写 Base URL", 500);
+    throw createConfigError("未配置 API 地址，请设置 DEEPSEEK_API_BASE 环境变量", 500);
   }
   if (!model) {
-    throw createConfigError("未配置模型名称，请在设置中填写 Model", 500);
+    throw createConfigError("未配置模型名称，请设置 DEEPSEEK_MODEL 环境变量", 500);
   }
 
   const enrichedMessages =

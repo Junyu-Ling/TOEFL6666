@@ -1,8 +1,4 @@
-import { loadSettings } from "./settings";
-import { getRequestApiConfig } from "./aiConfig";
-
 export async function sendVocabChat({ messages, context }) {
-  const apiConfig = getRequestApiConfig(loadSettings());
   const textOnlyMessages = messages.map((m) => ({
     role: m.role,
     content: String(m.content || "").trim(),
@@ -14,7 +10,6 @@ export async function sendVocabChat({ messages, context }) {
     body: JSON.stringify({
       messages: textOnlyMessages,
       context,
-      ...(apiConfig ? { apiConfig } : {}),
     }),
   });
 

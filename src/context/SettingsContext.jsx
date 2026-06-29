@@ -84,11 +84,6 @@ export function SettingsProvider({ children }) {
     [updateSettings]
   );
 
-  const updateAiApiSettings = useCallback(
-    (patch) => updateSettings(patch),
-    [updateSettings]
-  );
-
   const speakWord = useCallback((word) => speak(word, settings), [settings]);
 
   const value = useMemo(
@@ -107,7 +102,6 @@ export function SettingsProvider({ children }) {
       setAnswerSounds,
       setAnswerSoundCorrect,
       setAnswerSoundWrong,
-      updateAiApiSettings,
       speakWord,
     }),
     [
@@ -124,7 +118,6 @@ export function SettingsProvider({ children }) {
       setAnswerSounds,
       setAnswerSoundCorrect,
       setAnswerSoundWrong,
-      updateAiApiSettings,
       speakWord,
     ]
   );

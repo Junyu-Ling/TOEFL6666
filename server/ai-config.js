@@ -1,20 +1,4 @@
-import { buildProviderDefaults, getProviderById } from "../src/shared/ai-providers.js";
-
-export function resolveApiConfig(requestConfig = {}, envConfig = {}) {
-  const userKey = requestConfig?.apiKey?.trim();
-  if (userKey) {
-    const defaults = buildProviderDefaults(userKey);
-    const provider = getProviderById(defaults.providerId);
-    return {
-      apiKey: userKey,
-      baseUrl: (defaults.baseUrl || "").replace(/\/$/, ""),
-      model: defaults.model,
-      providerId: defaults.providerId,
-      apiStyle: provider?.apiStyle || "openai",
-      source: "user",
-    };
-  }
-
+export function resolveApiConfig(envConfig = {}) {
   return {
     apiKey: envConfig.apiKey || "",
     baseUrl: (envConfig.baseUrl || "https://api.deepseek.com/v1").replace(/\/$/, ""),

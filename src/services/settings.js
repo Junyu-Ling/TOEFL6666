@@ -9,7 +9,6 @@ const DEFAULT_SETTINGS = {
   autoDictateOnNewWord: false,
   autoAdvanceAfterFlip: false,
   autoAdvanceDelaySec: 3,
-  aiApiKey: "",
   practiceStyle: "type",
   answerSounds: true,
   answerSoundCorrect: "default",
@@ -31,19 +30,22 @@ export function loadSettings() {
     const raw = localStorage.getItem(SETTINGS_KEY);
     if (!raw) return { ...DEFAULT_SETTINGS };
     const parsed = JSON.parse(raw);
-    return {
+    const next = {
       theme: parsed.theme === "dark" ? "dark" : "light",
       systemVoiceURI: typeof parsed.systemVoiceURI === "string" ? parsed.systemVoiceURI : "",
       autoReadOnNewWord: parsed.autoReadOnNewWord !== false,
       autoDictateOnNewWord: parsed.autoDictateOnNewWord === true,
       autoAdvanceAfterFlip: parsed.autoAdvanceAfterFlip === true,
       autoAdvanceDelaySec: clampDelaySec(parsed.autoAdvanceDelaySec),
-      aiApiKey: typeof parsed.aiApiKey === "string" ? parsed.aiApiKey : "",
       practiceStyle: normalizePracticeStyle(parsed.practiceStyle),
       answerSounds: parsed.answerSounds !== false,
       answerSoundCorrect: normalizeCorrectSoundId(parsed.answerSoundCorrect),
       answerSoundWrong: normalizeWrongSoundId(parsed.answerSoundWrong),
     };
+    if ("aiApiKey" in parsed) {
+      saveSettings(next);
+    }
+    return next;
   } catch {
     return { ...DEFAULT_SETTINGS };
   }

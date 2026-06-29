@@ -35,25 +35,11 @@ export function exportLocalData() {
       data[key] = localStorage.getItem(key);
     }
   }
-  return sanitizeForExport({
+  return {
     version: SYNC_VERSION,
     exportedAt: Date.now(),
     data,
-  });
-}
-
-function sanitizeForExport(bundle) {
-  const data = { ...bundle.data };
-  if (data.toefl666_settings) {
-    try {
-      const settings = JSON.parse(data.toefl666_settings);
-      delete settings.aiApiKey;
-      data.toefl666_settings = JSON.stringify(settings);
-    } catch {
-      // keep as-is
-    }
-  }
-  return { ...bundle, data };
+  };
 }
 
 export function importLocalData(bundle) {
@@ -61,10 +47,15 @@ export function importLocalData(bundle) {
     throw new Error("同步数据格式无效");
   }
 
-  let localApiKey = "";
   try {
     const raw = localStorage.getItem("toefl666_settings");
-    if (raw) localApiKey = JSON.parse(raw).aiApiKey || "";
+    if (raw) {
+      const settings = JSON.parse(raw);
+      if (settings.aiApiKey) {
+        delete settings.aiApiKey;
+        localStorage.setItem("toefl666_settings", JSON.stringify(settings));
+      }
+    }
   } catch {
     // ignore
   }
@@ -80,10 +71,10 @@ export function importLocalData(bundle) {
 
   for (const [key, value] of Object.entries(bundle.data)) {
     if (!key.startsWith(SYNC_PREFIX) || typeof value !== "string") continue;
-    if (key === "toefl666_settings" && localApiKey) {
+    if (key === "toefl666_settings") {
       try {
         const settings = JSON.parse(value);
-        settings.aiApiKey = localApiKey;
+        delete settings.aiApiKey;
         localStorage.setItem(key, JSON.stringify(settings));
         continue;
       } catch {

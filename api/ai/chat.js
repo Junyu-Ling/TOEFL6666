@@ -31,7 +31,7 @@ export default async function handler(req, res) {
 
   try {
     const body = parseBody(req);
-    const config = resolveApiConfig(body.apiConfig, getEnvConfig());
+    const config = resolveApiConfig(getEnvConfig());
     const result = await chatWithDeepSeek(stripApiConfigFromBody(body), config);
     sendJson(res, 200, result);
   } catch (err) {

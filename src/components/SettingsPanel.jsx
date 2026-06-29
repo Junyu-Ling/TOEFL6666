@@ -1,6 +1,5 @@
 import { useState, useEffect, useMemo, useRef } from "react";
 import { useSettings } from "../context/SettingsContext";
-import { detectProvider } from "../shared/ai-providers";
 import {
   exportLocalData,
   formatPairingCode,
@@ -63,11 +62,9 @@ export default function SettingsPanel() {
     setAnswerSounds,
     setAnswerSoundCorrect,
     setAnswerSoundWrong,
-    updateAiApiSettings,
   } = useSettings();
 
   const [delayDraft, setDelayDraft] = useState(String(settings.autoAdvanceDelaySec));
-  const [showApiKey, setShowApiKey] = useState(false);
   const [pullCode, setPullCode] = useState("");
   const [uploadedCode, setUploadedCode] = useState("");
   const [uploadedHost, setUploadedHost] = useState("");
@@ -77,11 +74,6 @@ export default function SettingsPanel() {
   const panelRef = useRef(null);
 
   const syncSummary = useMemo(() => getSyncSummary(), [settingsOpen]);
-
-  const detectedProvider = useMemo(
-    () => detectProvider(settings.aiApiKey),
-    [settings.aiApiKey]
-  );
 
   useEffect(() => {
     if (!settingsOpen || !panelRef.current) return;
@@ -117,10 +109,6 @@ export default function SettingsPanel() {
     if (clamped !== settings.autoAdvanceDelaySec) {
       setAutoAdvanceDelaySec(clamped);
     }
-  }
-
-  function handleApiKeyChange(value) {
-    updateAiApiSettings({ aiApiKey: value });
   }
 
   async function handleUploadSync() {
@@ -161,7 +149,7 @@ export default function SettingsPanel() {
     }
     if (
       !window.confirm(
-        "将用云端进度覆盖本机所有学习数据（API Key 会保留）。确定继续吗？"
+        "将用云端进度覆盖本机所有学习数据。确定继续吗？"
       )
     ) {
       return;
@@ -454,40 +442,12 @@ export default function SettingsPanel() {
 
         <details className="settings-group">
           <summary className="settings-group__summary">
-            AI 与朗读
+            朗读
             <span className="settings-group__meta">
-              {settings.aiApiKey.trim()
-                ? detectedProvider?.name || "已配置 Key"
-                : "默认 / 系统语音"}
+              {settings.systemVoiceURI ? "已选音色" : "自动选择"}
             </span>
           </summary>
           <div className="settings-group__body">
-            <label className="settings-field">
-              <span>API Key（可选，仅本机保存）</span>
-              <div className="settings-field-row settings-field-row--key">
-                <input
-                  type={showApiKey ? "text" : "password"}
-                  value={settings.aiApiKey}
-                  onChange={(e) => handleApiKeyChange(e.target.value)}
-                  placeholder="粘贴 Key，自动识别厂商"
-                  autoComplete="off"
-                  spellCheck={false}
-                />
-                <button
-                  type="button"
-                  className="settings-action-btn"
-                  onClick={() => setShowApiKey((v) => !v)}
-                >
-                  {showApiKey ? "隐藏" : "显示"}
-                </button>
-              </div>
-            </label>
-            {settings.aiApiKey.trim() && detectedProvider && (
-              <p className="settings-status settings-status--ok">
-                已识别为
-                <span className="ai-provider-badge">{detectedProvider.name}</span>
-              </p>
-            )}
             <label className="settings-field">
               <span>朗读音色</span>
               <select

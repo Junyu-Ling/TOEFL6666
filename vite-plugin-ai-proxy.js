@@ -38,7 +38,7 @@ export function createAiHandler(getEnvConfig) {
 
     try {
       const body = JSON.parse(await readBody(req));
-      const config = resolveApiConfig(body.apiConfig, getEnvConfig());
+      const config = resolveApiConfig(getEnvConfig());
       const payload = stripApiConfigFromBody(body);
 
       if (isEvaluate) {
