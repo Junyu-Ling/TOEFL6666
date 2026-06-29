@@ -1214,6 +1214,18 @@ body {
   margin-bottom: 0.875rem;
 }
 
+.flashcard__typo-question {
+  margin: 0.75rem 0 0;
+  padding: 0.75rem 0.875rem;
+  border-radius: var(--radius-sm);
+  background: var(--accent-soft);
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--border));
+  color: var(--text);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
 .flashcard__mark-actions {
   display: grid;
   grid-template-columns: 1fr 1fr;

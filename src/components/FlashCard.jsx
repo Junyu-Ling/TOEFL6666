@@ -43,6 +43,7 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
   const submitAnswerRef = useRef(null);
   const startDictationRef = useRef(null);
   const dictatingRef = useRef(false);
+  const resultRef = useRef(null);
 
   useEffect(() => {
     answerRef.current = userAnswer;
@@ -63,6 +64,10 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
   useEffect(() => {
     dictatingRef.current = dictating;
   }, [dictating]);
+
+  useEffect(() => {
+    resultRef.current = result;
+  }, [result]);
 
   const stopDictation = useCallback(() => {
     clearTimeout(silenceTimerRef.current);
@@ -112,7 +117,9 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
         setResult(aiResult);
         setBackMode("ai");
         setFlipped(true);
-        onResult?.(wordData, aiResult);
+        if (!aiResult.needs_typo_clarification) {
+          onResult?.(wordData, aiResult);
+        }
         requestAnimationFrame(focusCard);
       } catch (err) {
         setError(err.message || "AI 批改失败，请稍后重试");
@@ -121,6 +128,32 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
       }
     },
     [wordData, onResult, stopDictation, focusCard]
+  );
+
+  const handleTypoClarification = useCallback(
+    (isTypo) => {
+      if (!result?.needs_typo_clarification || result.clarified_typo) return;
+
+      const typoInfo = result.typo_match;
+      const finalResult = isTypo
+        ? {
+            is_correct: true,
+            ai_feedback: typoInfo
+              ? `同音错字，本意应为「${typoInfo.expected}」，算正确。`
+              : "打错字了，但本意是对的，算正确。",
+            clarified_typo: true,
+          }
+        : {
+            is_correct: false,
+            ai_feedback: result.ai_feedback,
+            clarified_typo: true,
+          };
+
+      setResult(finalResult);
+      onResult?.(wordData, finalResult);
+      requestAnimationFrame(focusCard);
+    },
+    [result, wordData, onResult, focusCard]
   );
 
   useEffect(() => {
@@ -250,6 +283,7 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
 
   useEffect(() => {
     if (!flipped || !settings.autoAdvanceAfterFlip) return undefined;
+    if (result?.needs_typo_clarification && !result?.clarified_typo) return undefined;
 
     const delayMs = Math.min(60, Math.max(0, settings.autoAdvanceDelaySec)) * 1000;
     const timer = setTimeout(() => {
@@ -264,6 +298,8 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
     settings.autoAdvanceDelaySec,
     onNext,
     wordData?.word,
+    result?.needs_typo_clarification,
+    result?.clarified_typo,
   ]);
 
   useEffect(() => {
@@ -324,6 +360,8 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
         if (flippedRef.current) {
           e.preventDefault();
           if (backModeRef.current === "ai") {
+            const pending = resultRef.current;
+            if (pending?.needs_typo_clarification && !pending?.clarified_typo) return;
             onNext?.();
           } else {
             flipBack();
@@ -400,8 +438,12 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
     }
   }
 
+  const awaitingTypoClarification = Boolean(
+    result?.needs_typo_clarification && !result?.clarified_typo
+  );
+
   const borderClass =
-    backMode === "ai" && result
+    backMode === "ai" && result && !awaitingTypoClarification
       ? result.is_correct
         ? "card--correct"
         : "card--wrong"
@@ -535,6 +577,35 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
         <div className="flashcard__face flashcard__back">
           {backMode === "ai" && result && (
             <>
+              {awaitingTypoClarification ? (
+                <>
+                  <div className="flashcard__badge flashcard__badge--neutral">再确认</div>
+                  <div className="flashcard__feedback">
+                    <p className="flashcard__feedback-text">{result.ai_feedback}</p>
+                    <p className="flashcard__typo-question">{result.typo_clarification_question}</p>
+                  </div>
+                  <div className="flashcard__mark-actions">
+                    <button
+                      type="button"
+                      className="btn btn--mark btn--mark-ok"
+                      onClick={() => handleTypoClarification(true)}
+                    >
+                      打错字了（本意对）
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn--mark btn--mark-fail"
+                      onClick={() => handleTypoClarification(false)}
+                    >
+                      真的不认识
+                    </button>
+                  </div>
+                  <p className="flashcard__footer flashcard__footer--back">
+                    同音不同字时，选一项即可继续
+                  </p>
+                </>
+              ) : (
+                <>
               <div className={`flashcard__badge ${result.is_correct ? "flashcard__badge--ok" : "flashcard__badge--fail"}`}>
                 {result.is_correct ? "正确" : "需加强"}
               </div>
@@ -557,6 +628,8 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
                 下一个
               </button>
               <p className="flashcard__footer flashcard__footer--back">Enter / ↓ 下一个 · 空格翻回正面</p>
+                </>
+              )}
             </>
           )}
 
@@ -604,9 +677,15 @@ export default function FlashCard({ wordData, onResult, onNext, onPrev, micGrant
             {userAnswer.trim() ? "提交批改" : "翻面"}
           </button>
         ) : backMode === "ai" ? (
+          awaitingTypoClarification ? (
+            <button type="button" className="flashcard__mobile-btn" disabled>
+              请先确认
+            </button>
+          ) : (
           <button type="button" className="flashcard__mobile-btn flashcard__mobile-btn--accent" onClick={onNext}>
             下一个
           </button>
+          )
         ) : (
           <button type="button" className="flashcard__mobile-btn" onClick={flipBack}>
             翻回正面
