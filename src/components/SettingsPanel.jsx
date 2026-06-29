@@ -186,8 +186,16 @@ export default function SettingsPanel() {
   if (!settingsOpen) return null;
 
   return (
-    <div className="settings-overlay" onClick={() => setSettingsOpen(false)}>
-      <aside className="settings-panel" onClick={(e) => e.stopPropagation()}>
+    <div
+      className="settings-overlay"
+      onClick={() => setSettingsOpen(false)}
+      onKeyDown={(e) => e.stopPropagation()}
+    >
+      <aside
+        className="settings-panel"
+        onClick={(e) => e.stopPropagation()}
+        onKeyDown={(e) => e.stopPropagation()}
+      >
         <header className="settings-panel__header">
           <h2>设置</h2>
           <button type="button" className="settings-panel__close" onClick={() => setSettingsOpen(false)}>
