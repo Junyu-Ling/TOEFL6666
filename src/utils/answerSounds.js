@@ -12,7 +12,10 @@ function getAudioContext() {
   return audioCtx;
 }
 
-function playTone(ctx, { freq, start, duration, volume = 0.18, type = "sine", slideTo = null }) {
+function playTone(
+  ctx,
+  { freq, start, duration, volume = 0.18, type = "sine", slideTo = null, attack = 0.012 }
+) {
   const osc = ctx.createOscillator();
   const gain = ctx.createGain();
   osc.type = type;
@@ -21,12 +24,33 @@ function playTone(ctx, { freq, start, duration, volume = 0.18, type = "sine", sl
     osc.frequency.exponentialRampToValueAtTime(Math.max(slideTo, 1), start + duration);
   }
   gain.gain.setValueAtTime(0.0001, start);
-  gain.gain.exponentialRampToValueAtTime(volume, start + 0.012);
+  gain.gain.exponentialRampToValueAtTime(volume, start + attack);
   gain.gain.exponentialRampToValueAtTime(0.0001, start + duration);
   osc.connect(gain);
   gain.connect(ctx.destination);
   osc.start(start);
   osc.stop(start + duration + 0.04);
+}
+
+function playBuzz(ctx, { freq, start, duration, volume, slideTo }) {
+  const osc = ctx.createOscillator();
+  const filter = ctx.createBiquadFilter();
+  const gain = ctx.createGain();
+  osc.type = "square";
+  osc.frequency.setValueAtTime(freq, start);
+  osc.frequency.exponentialRampToValueAtTime(Math.max(slideTo, 1), start + duration);
+  filter.type = "lowpass";
+  filter.frequency.setValueAtTime(900, start);
+  filter.frequency.exponentialRampToValueAtTime(280, start + duration);
+  filter.Q.value = 2.2;
+  gain.gain.setValueAtTime(0.0001, start);
+  gain.gain.exponentialRampToValueAtTime(volume, start + 0.006);
+  gain.gain.exponentialRampToValueAtTime(0.0001, start + duration);
+  osc.connect(filter);
+  filter.connect(gain);
+  gain.connect(ctx.destination);
+  osc.start(start);
+  osc.stop(start + duration + 0.05);
 }
 
 function playCorrect(ctx) {
@@ -38,8 +62,29 @@ function playCorrect(ctx) {
 
 function playIncorrect(ctx) {
   const t = ctx.currentTime;
-  playTone(ctx, { freq: 220, start: t, duration: 0.22, volume: 0.14, type: "triangle", slideTo: 140 });
-  playTone(ctx, { freq: 165, start: t + 0.1, duration: 0.28, volume: 0.12, type: "sawtooth", slideTo: 90 });
+  playTone(ctx, {
+    freq: 92,
+    start: t,
+    duration: 0.14,
+    volume: 0.34,
+    type: "sine",
+    slideTo: 62,
+    attack: 0.004,
+  });
+  playBuzz(ctx, {
+    freq: 210,
+    start: t + 0.02,
+    duration: 0.24,
+    volume: 0.38,
+    slideTo: 95,
+  });
+  playBuzz(ctx, {
+    freq: 155,
+    start: t + 0.16,
+    duration: 0.36,
+    volume: 0.34,
+    slideTo: 72,
+  });
 }
 
 export function playAnswerSound(isCorrect) {
