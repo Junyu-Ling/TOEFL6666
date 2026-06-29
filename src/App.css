@@ -258,9 +258,41 @@ body {
 }
 
 .navbar__streak-flame {
-  font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.125rem;
+  height: 1.125rem;
   line-height: 1;
   margin-right: 0.125rem;
+}
+
+.navbar__streak-flame-inner {
+  display: block;
+  font-size: 1rem;
+  line-height: 1;
+  transform-origin: 50% 85%;
+  animation: streak-flame-flicker 1.1s ease-in-out infinite;
+}
+
+.navbar__streak--active .navbar__streak-flame-inner {
+  animation-duration: 0.75s;
+}
+
+@keyframes streak-flame-flicker {
+  0%,
+  100% {
+    transform: scale(1) rotate(-2deg) translateY(0);
+  }
+  20% {
+    transform: scale(1.12) rotate(3deg) translateY(-1px);
+  }
+  45% {
+    transform: scale(0.94) rotate(-4deg) translateY(0);
+  }
+  70% {
+    transform: scale(1.08) rotate(2deg) translateY(-2px);
+  }
 }
 
 .navbar__streak-count {
@@ -2826,8 +2858,44 @@ body {
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  transform: scale(1.18);
+  transform: scale(1.12);
+}
+
+.robot-fab-icon__eye {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: robot-eye-blink 4.2s ease-in-out infinite;
+}
+
+.robot-fab-icon__eye--right {
+  animation-delay: 0.08s;
+}
+
+@keyframes robot-eye-blink {
+  0%,
+  86%,
+  100% {
+    transform: scaleY(1);
+  }
+  88% {
+    transform: scaleY(0.12);
+  }
+  90% {
+    transform: scaleY(1);
+  }
+  92% {
+    transform: scaleY(0.18);
+  }
+  94% {
+    transform: scaleY(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .navbar__streak-flame-inner,
+  .robot-fab-icon__eye {
+    animation: none;
+  }
 }
 
 .vocab-assistant__fab:hover {

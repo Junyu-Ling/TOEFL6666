@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { sendVocabChat } from "../services/aiChat";
 import { createDictationSession } from "../utils/speechRecognition";
 import RichAiContent from "./RichAiContent";
+import RobotFabIcon from "./RobotFabIcon";
 import {
   GENERAL_CHAT_KEY,
   getWordKey,
@@ -497,13 +498,7 @@ export default function VocabAssistant({ currentWord, micGranted }) {
         {open ? (
           "×"
         ) : (
-          <img
-            src="/ai-assistant-icon.png"
-            alt=""
-            className="vocab-assistant__fab-icon"
-            width={64}
-            height={64}
-          />
+          <RobotFabIcon className="vocab-assistant__fab-icon" />
         )}
       </button>
     </div>

@@ -43,7 +43,7 @@ export default function Navbar({ activeTab, onTabChange, counts, streak, onStrea
           aria-label={`连续学习 ${streak?.currentStreak ?? 0} 天，打开学习日历`}
         >
           <span className="navbar__streak-flame" aria-hidden>
-            🔥
+            <span className="navbar__streak-flame-inner">🔥</span>
           </span>
           <span className="navbar__streak-count">{streak?.currentStreak ?? 0}</span>
           <span className="navbar__streak-label">天</span>
