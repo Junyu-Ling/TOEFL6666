@@ -385,18 +385,29 @@ export default function FlashCard({
 
   const handleManualMark = useCallback(
     async (isCorrect) => {
-      let aiResult = {
-        is_correct: isCorrect,
-        ai_feedback: isCorrect ? "你已标记为认识" : "你已标记为需加强",
-      };
-      if (!isCorrect) {
-        aiResult = await enrichWrongResult(aiResult);
+      if (isCorrect) {
+        notifyAnswerResult(true);
+        onResult?.(wordData, {
+          is_correct: true,
+          ai_feedback: "你已标记为认识",
+        });
+        onNext?.();
+        return;
       }
-      notifyAnswerResult(isCorrect);
+
+      stopDictation();
+      let aiResult = {
+        is_correct: false,
+        ai_feedback: "你已标记为需加强",
+      };
+      aiResult = await enrichWrongResult(aiResult);
+      setResult(aiResult);
+      setBackMode("ai");
+      notifyAnswerResult(false);
       onResult?.(wordData, aiResult);
-      onNext?.();
+      requestAnimationFrame(focusCard);
     },
-    [wordData, onResult, onNext, enrichWrongResult]
+    [wordData, onResult, onNext, enrichWrongResult, stopDictation, focusCard]
   );
 
   const scheduleSilenceStop = useCallback(() => {
