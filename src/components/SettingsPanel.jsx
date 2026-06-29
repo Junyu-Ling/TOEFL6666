@@ -1,22 +1,11 @@
 import { useState, useEffect, useMemo } from "react";
 import { useSettings } from "../context/SettingsContext";
-import { AI_PROVIDERS, buildProviderDefaults, detectProvider, getProviderById } from "../shared/ai-providers";
+import { detectProvider } from "../shared/ai-providers";
 
 function clampDelayInput(value) {
   const n = Number(String(value).trim());
   if (!Number.isFinite(n)) return null;
   return Math.min(60, Math.max(0, Math.round(n)));
-}
-
-function applyProviderDefaults(settings, { apiKey, baseUrl, providerId } = {}) {
-  const key = (apiKey ?? settings.aiApiKey).trim();
-  const url = (baseUrl ?? settings.aiBaseUrl).trim();
-  const defaults = buildProviderDefaults(key, url, providerId ?? settings.aiProviderId);
-  return {
-    aiProviderId: defaults.providerId,
-    aiBaseUrl: url || defaults.baseUrl,
-    aiModel: settings.aiModel.trim() || defaults.model,
-  };
 }
 
 export default function SettingsPanel() {
@@ -31,7 +20,6 @@ export default function SettingsPanel() {
     setAutoDictateOnNewWord,
     setAutoAdvanceAfterFlip,
     setAutoAdvanceDelaySec,
-    setUseCustomAiApi,
     setPracticeStyle,
     updateAiApiSettings,
   } = useSettings();
@@ -40,13 +28,8 @@ export default function SettingsPanel() {
   const [showApiKey, setShowApiKey] = useState(false);
 
   const detectedProvider = useMemo(
-    () => detectProvider(settings.aiApiKey, settings.aiBaseUrl),
-    [settings.aiApiKey, settings.aiBaseUrl]
-  );
-
-  const activeProvider = useMemo(
-    () => getProviderById(settings.aiProviderId) || detectedProvider,
-    [settings.aiProviderId, detectedProvider]
+    () => detectProvider(settings.aiApiKey),
+    [settings.aiApiKey]
   );
 
   useEffect(() => {
@@ -73,32 +56,7 @@ export default function SettingsPanel() {
   }
 
   function handleApiKeyChange(value) {
-    const nextKey = value;
-    const patch = { aiApiKey: nextKey };
-    if (nextKey.trim()) {
-      Object.assign(patch, applyProviderDefaults(settings, { apiKey: nextKey }));
-    }
-    updateAiApiSettings(patch);
-  }
-
-  function handleBaseUrlChange(value) {
-    const patch = { aiBaseUrl: value };
-    if (value.trim() || settings.aiApiKey.trim()) {
-      Object.assign(patch, applyProviderDefaults(settings, { baseUrl: value }));
-    }
-    updateAiApiSettings(patch);
-  }
-
-  function handleProviderChange(providerId) {
-    const provider = getProviderById(providerId);
-    const patch = {
-      aiProviderId: providerId,
-      aiBaseUrl: provider?.baseUrl || settings.aiBaseUrl,
-    };
-    if (!settings.aiModel.trim() && provider?.defaultModel) {
-      patch.aiModel = provider.defaultModel;
-    }
-    updateAiApiSettings(patch);
+    updateAiApiSettings({ aiApiKey: value });
   }
 
   if (!settingsOpen) return null;
@@ -225,99 +183,40 @@ export default function SettingsPanel() {
         <section className="settings-section">
           <h3>AI API</h3>
           <p className="settings-hint">
-            可使用自己的 API Key 进行批改与词汇问答。Key 仅保存在本机，随请求经本站代理转发，不会写入代码仓库。
-            未开启时仍使用服务端默认配置（DeepSeek 环境变量）。
+            粘贴 API Key 即可，自动识别厂商并用于批改与助教。留空则使用网站默认配置。Key 仅保存在本机。
           </p>
-          <label className="settings-toggle-row">
-            <span className="settings-toggle-row__text">
-              <strong>使用自备 API</strong>
-              <small>开启后批改与 AI 助教将使用下方配置</small>
-            </span>
-            <span className="toggle-switch">
+          <label className="settings-field">
+            <span>API Key</span>
+            <div className="settings-field-row settings-field-row--key">
               <input
-                type="checkbox"
-                checked={settings.useCustomAiApi}
-                onChange={(e) => setUseCustomAiApi(e.target.checked)}
+                type={showApiKey ? "text" : "password"}
+                value={settings.aiApiKey}
+                onChange={(e) => handleApiKeyChange(e.target.value)}
+                placeholder="粘贴 Key，自动识别厂商"
+                autoComplete="off"
+                spellCheck={false}
               />
-              <span className="toggle-switch__track" aria-hidden="true" />
-            </span>
+              <button
+                type="button"
+                className="settings-action-btn"
+                onClick={() => setShowApiKey((v) => !v)}
+              >
+                {showApiKey ? "隐藏" : "显示"}
+              </button>
+            </div>
           </label>
-
-          {settings.useCustomAiApi && (
-            <>
-              <label className="settings-field settings-field--spaced">
-                <span>API Key</span>
-                <div className="settings-field-row settings-field-row--key">
-                  <input
-                    type={showApiKey ? "text" : "password"}
-                    value={settings.aiApiKey}
-                    onChange={(e) => handleApiKeyChange(e.target.value)}
-                    placeholder="粘贴 Key，将自动识别厂商"
-                    autoComplete="off"
-                    spellCheck={false}
-                  />
-                  <button
-                    type="button"
-                    className="settings-action-btn"
-                    onClick={() => setShowApiKey((v) => !v)}
-                  >
-                    {showApiKey ? "隐藏" : "显示"}
-                  </button>
-                </div>
-              </label>
-
-              {(activeProvider || settings.aiApiKey.trim()) && (
-                <p className="settings-status settings-status--ok">
-                  识别厂商：
-                  <span className="ai-provider-badge">{activeProvider?.name || "未识别"}</span>
-                  {detectedProvider && settings.aiProviderId && detectedProvider.id !== settings.aiProviderId
-                    ? "（已手动选择其它厂商）"
-                    : ""}
-                </p>
+          {settings.aiApiKey.trim() && (
+            <p className="settings-status settings-status--ok">
+              {detectedProvider ? (
+                <>
+                  已识别为
+                  <span className="ai-provider-badge">{detectedProvider.name}</span>
+                  ，将自动调用
+                </>
+              ) : (
+                "已保存 Key，将按 OpenAI 兼容接口调用"
               )}
-
-              <label className="settings-field settings-field--spaced">
-                <span>厂商（可手动覆盖自动识别）</span>
-                <select
-                  value={settings.aiProviderId || activeProvider?.id || "custom"}
-                  onChange={(e) => handleProviderChange(e.target.value)}
-                >
-                  {AI_PROVIDERS.map((provider) => (
-                    <option key={provider.id} value={provider.id}>
-                      {provider.name}
-                    </option>
-                  ))}
-                </select>
-              </label>
-
-              <label className="settings-field settings-field--spaced">
-                <span>Base URL</span>
-                <input
-                  type="url"
-                  value={settings.aiBaseUrl}
-                  onChange={(e) => handleBaseUrlChange(e.target.value)}
-                  placeholder={activeProvider?.baseUrl || "https://api.example.com/v1"}
-                  spellCheck={false}
-                />
-              </label>
-
-              <label className="settings-field settings-field--spaced">
-                <span>Model</span>
-                <input
-                  type="text"
-                  value={settings.aiModel}
-                  onChange={(e) => updateAiApiSettings({ aiModel: e.target.value })}
-                  placeholder={activeProvider?.defaultModel || "模型名称"}
-                  spellCheck={false}
-                />
-              </label>
-
-              <p className="settings-hint settings-hint--compact">
-                支持 OpenAI、DeepSeek、Anthropic、智谱、通义、Moonshot、硅基流动、Groq、OpenRouter、Google
-                Gemini、豆包、百川、MiniMax、腾讯混元、百度千帆、Mistral、xAI、Azure OpenAI 及任意 OpenAI
-                兼容接口。
-              </p>
-            </>
+            </p>
           )}
         </section>
 

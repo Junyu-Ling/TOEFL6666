@@ -63,11 +63,6 @@ export function SettingsProvider({ children }) {
     [updateSettings]
   );
 
-  const setUseCustomAiApi = useCallback(
-    (useCustomAiApi) => updateSettings({ useCustomAiApi }),
-    [updateSettings]
-  );
-
   const setPracticeStyle = useCallback(
     (practiceStyle) => updateSettings({ practiceStyle: practiceStyle === "recall" ? "recall" : "type" }),
     [updateSettings]
@@ -92,7 +87,6 @@ export function SettingsProvider({ children }) {
       setAutoDictateOnNewWord,
       setAutoAdvanceAfterFlip,
       setAutoAdvanceDelaySec,
-      setUseCustomAiApi,
       setPracticeStyle,
       updateAiApiSettings,
       speakWord,
@@ -107,7 +101,6 @@ export function SettingsProvider({ children }) {
       setAutoDictateOnNewWord,
       setAutoAdvanceAfterFlip,
       setAutoAdvanceDelaySec,
-      setUseCustomAiApi,
       setPracticeStyle,
       updateAiApiSettings,
       speakWord,
