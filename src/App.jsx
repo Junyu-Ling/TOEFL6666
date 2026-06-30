@@ -21,7 +21,8 @@ import {
   saveProgress,
   getSavedIndex,
   patchListProgress,
-  normalizeBookPractice,
+  loadBookPractices,
+  loadBookPracticePaused,
   buildWordRecord,
   buildRecognizedRecord,
   upsertWord,
@@ -54,8 +55,9 @@ export default function App() {
   const [wordsLoading, setWordsLoading] = useState(true);
   const [wordsError, setWordsError] = useState(null);
   const [listIndex, setListIndex] = useState(0);
-  const [bookPractice, setBookPractice] = useState(() =>
-    normalizeBookPractice(savedRef.current.bookPractice)
+  const [bookPractices, setBookPractices] = useState(() => loadBookPractices(savedRef.current));
+  const [bookPracticePaused, setBookPracticePaused] = useState(() =>
+    loadBookPracticePaused(savedRef.current, loadBookPractices(savedRef.current))
   );
   const [reviewShuffle, setReviewShuffle] = useState(savedRef.current.reviewShuffle ?? false);
   const [shuffleSeed, setShuffleSeed] = useState(() => Date.now());
@@ -145,9 +147,10 @@ export default function App() {
       activeTab,
       reviewShuffle,
       listProgress,
-      bookPractice,
+      bookPractices,
+      bookPracticePaused,
     });
-  }, [activeListId, activeTab, reviewShuffle, listProgress, bookPractice, wordsLoading]);
+  }, [activeListId, activeTab, reviewShuffle, listProgress, bookPractices, bookPracticePaused, wordsLoading]);
 
   const handleListChange = useCallback(
     async (listId) => {
@@ -165,13 +168,14 @@ export default function App() {
           activeTab,
           reviewShuffle,
           listProgress: nextProgress,
-          bookPractice,
+          bookPractices,
+          bookPracticePaused,
         });
       } catch (err) {
         setWordsError(err.message || "词库切换失败");
       }
     },
-    [activeListId, activeTab, applyList, bookPractice, listIndex, listProgress, reviewShuffle]
+    [activeListId, activeTab, applyList, bookPracticePaused, bookPractices, listIndex, listProgress, reviewShuffle]
   );
 
   const handleTabChange = useCallback(
@@ -184,22 +188,29 @@ export default function App() {
           activeTab: tab,
           reviewShuffle,
           listProgress: next,
-          bookPractice,
+          bookPractices,
+          bookPracticePaused,
         });
         return next;
       });
     },
-    [activeListId, bookPractice, listIndex, reviewShuffle]
+    [activeListId, bookPracticePaused, bookPractices, listIndex, reviewShuffle]
   );
 
   const listWord = wordList[listIndex] ?? null;
-  const bookWord = bookPractice ? bookPractice.queue[bookPractice.index] ?? null : null;
+  const unrecognizedSession = bookPractices.unrecognized;
+  const recognizedSession = bookPractices.recognized;
+  const unrecognizedWord = unrecognizedSession?.queue[unrecognizedSession.index] ?? null;
+  const recognizedWord = recognizedSession?.queue[recognizedSession.index] ?? null;
+
   const currentWord =
     activeTab === "practice"
       ? listWord
-      : bookPractice?.type === activeTab
-        ? bookWord
-        : null;
+      : activeTab === "unrecognized"
+        ? unrecognizedWord
+        : activeTab === "recognized"
+          ? recognizedWord
+          : null;
 
   const getWordStats = useCallback(
     (wordData) => {
@@ -323,20 +334,11 @@ export default function App() {
     }
   }, [listIndex]);
 
-  const handleBookNext = useCallback(() => {
-    setBookPractice((prev) => {
-      if (!prev) return null;
-      if (prev.index < prev.queue.length - 1) {
-        return { ...prev, index: prev.index + 1 };
-      }
-      return null;
-    });
-  }, []);
-
-  const handleBookPrev = useCallback(() => {
-    setBookPractice((prev) => {
-      if (!prev || prev.index <= 0) return prev;
-      return { ...prev, index: prev.index - 1 };
+  const handleBookPrev = useCallback((bookType) => {
+    setBookPractices((prev) => {
+      const session = prev[bookType];
+      if (!session || session.index <= 0) return prev;
+      return { ...prev, [bookType]: { ...session, index: session.index - 1 } };
     });
   }, []);
 
@@ -359,11 +361,12 @@ export default function App() {
         activeTab,
         reviewShuffle: next,
         listProgress,
-        bookPractice,
+        bookPractices,
+        bookPracticePaused,
       });
       return next;
     });
-  }, [activeListId, activeTab, bookPractice, listProgress]);
+  }, [activeListId, activeTab, bookPracticePaused, bookPractices, listProgress]);
 
   const reshuffleUnrecognized = useCallback(() => {
     setShuffleSeed(Date.now());
@@ -372,45 +375,83 @@ export default function App() {
   const startReview = useCallback(() => {
     if (unrecognized.length === 0) return;
 
-    const reviewWords = (reviewShuffle ? shuffleArray : sortByWrongCount)(unrecognized).map((item) => ({
-      word: item.word,
-      definitions: item.definitions,
-    }));
+    setBookPracticePaused((p) => ({ ...p, unrecognized: false }));
+    setBookPractices((prev) => {
+      if (prev.unrecognized) return prev;
 
-    setBookPractice({ type: "unrecognized", queue: reviewWords, index: 0 });
+      const reviewWords = (reviewShuffle ? shuffleArray : sortByWrongCount)(unrecognized).map((item) => ({
+        word: item.word,
+        definitions: item.definitions,
+      }));
+
+      return { ...prev, unrecognized: { queue: reviewWords, index: 0 } };
+    });
   }, [reviewShuffle, unrecognized]);
 
   const startRecognizedReview = useCallback(() => {
     if (recognizedPastWrong.length === 0) return;
 
-    const reviewWords = (reviewShuffle ? shuffleArray : sortByWrongCount)(recognizedPastWrong).map((item) => ({
-      word: item.word,
-      definitions: item.definitions,
-    }));
+    setBookPracticePaused((p) => ({ ...p, recognized: false }));
+    setBookPractices((prev) => {
+      if (prev.recognized) return prev;
 
-    setBookPractice({ type: "recognized", queue: reviewWords, index: 0 });
+      const reviewWords = (reviewShuffle ? shuffleArray : sortByWrongCount)(recognizedPastWrong).map(
+        (item) => ({
+          word: item.word,
+          definitions: item.definitions,
+        })
+      );
+
+      return { ...prev, recognized: { queue: reviewWords, index: 0 } };
+    });
   }, [recognizedPastWrong, reviewShuffle]);
 
-  const stopBookPractice = useCallback(() => {
-    setBookPractice(null);
+  const pauseUnrecognizedPractice = useCallback(() => {
+    setBookPracticePaused((p) => ({ ...p, unrecognized: true }));
   }, []);
 
-  const unrecognizedPracticeActive = bookPractice?.type === "unrecognized";
-  const recognizedPracticeActive = bookPractice?.type === "recognized";
+  const pauseRecognizedPractice = useCallback(() => {
+    setBookPracticePaused((p) => ({ ...p, recognized: true }));
+  }, []);
 
-  const bookPracticeTitle = useMemo(() => {
-    if (!bookPractice) return "";
-    if (bookPractice.type === "unrecognized") {
-      return reviewShuffle ? "针对性强化练习 · 乱序" : "针对性强化练习";
+  const resumeUnrecognizedPractice = useCallback(() => {
+    if (!bookPractices.unrecognized) {
+      startReview();
+      return;
     }
-    return reviewShuffle ? "曾错题巩固 · 乱序" : "曾错题巩固";
-  }, [bookPractice, reviewShuffle]);
+    setBookPracticePaused((p) => ({ ...p, unrecognized: false }));
+  }, [bookPractices.unrecognized, startReview]);
 
-  const bookPracticeExitButton = (
-    <button type="button" className="btn btn--ghost btn--sm" onClick={stopBookPractice}>
-      返回列表
-    </button>
-  );
+  const resumeRecognizedPractice = useCallback(() => {
+    if (!bookPractices.recognized) {
+      startRecognizedReview();
+      return;
+    }
+    setBookPracticePaused((p) => ({ ...p, recognized: false }));
+  }, [bookPractices.recognized, startRecognizedReview]);
+
+  const handleBookNext = useCallback((bookType) => {
+    setBookPractices((prev) => {
+      const session = prev[bookType];
+      if (!session) return prev;
+      if (session.index < session.queue.length - 1) {
+        return { ...prev, [bookType]: { ...session, index: session.index + 1 } };
+      }
+      setBookPracticePaused((p) => ({ ...p, [bookType]: false }));
+      return { ...prev, [bookType]: null };
+    });
+  }, []);
+
+  const unrecognizedPracticeActive =
+    Boolean(unrecognizedSession) && !bookPracticePaused.unrecognized;
+  const recognizedPracticeActive =
+    Boolean(recognizedSession) && !bookPracticePaused.recognized;
+
+  const unrecognizedPracticeTitle = reviewShuffle
+    ? "针对性强化练习 · 乱序"
+    : "针对性强化练习";
+
+  const recognizedPracticeTitle = reviewShuffle ? "曾错题巩固 · 乱序" : "曾错题巩固";
 
   const handleRemoveRecognized = useCallback((word) => {
     setRecognized((prev) => {
@@ -575,18 +616,26 @@ export default function App() {
         {activeTab === "unrecognized" && (
           unrecognizedPracticeActive ? (
             <PracticeSession
-              title={bookPracticeTitle}
-              toolbarExtra={bookPracticeExitButton}
-              queueLength={bookPractice.queue.length}
-              currentIndex={bookPractice.index}
-              currentWord={bookWord}
-              wordStats={getWordStats(bookWord)}
+              title={unrecognizedPracticeTitle}
+              toolbarExtra={
+                <button
+                  type="button"
+                  className="btn btn--ghost btn--sm"
+                  onClick={pauseUnrecognizedPractice}
+                >
+                  返回列表
+                </button>
+              }
+              queueLength={unrecognizedSession.queue.length}
+              currentIndex={unrecognizedSession.index}
+              currentWord={unrecognizedWord}
+              wordStats={getWordStats(unrecognizedWord)}
               micGranted={mic.isGranted}
               onResult={handleUnrecognizedBookResult}
               onMemoryTrickGenerated={handleMemoryTrickGenerated}
-              onNext={handleBookNext}
-              onPrev={handleBookPrev}
-              sessionKey={`unrec-${bookWord?.word ?? "empty"}-${bookPractice.index}`}
+              onNext={() => handleBookNext("unrecognized")}
+              onPrev={() => handleBookPrev("unrecognized")}
+              sessionKey={`unrec-${unrecognizedWord?.word ?? "empty"}-${unrecognizedSession.index}`}
               emptyMessage="本轮强化练习已完成！"
             />
           ) : (
@@ -621,8 +670,10 @@ export default function App() {
                       重新打乱
                     </button>
                   )}
-                  <button type="button" className="btn btn--accent" onClick={startReview}>
-                    针对性强化练习
+                  <button type="button" className="btn btn--accent" onClick={resumeUnrecognizedPractice}>
+                    {unrecognizedSession && bookPracticePaused.unrecognized
+                      ? `继续强化练习（${unrecognizedSession.index + 1}/${unrecognizedSession.queue.length}）`
+                      : "针对性强化练习"}
                   </button>
                 </>
               ) : null
@@ -634,18 +685,26 @@ export default function App() {
         {activeTab === "recognized" && (
           recognizedPracticeActive ? (
             <PracticeSession
-              title={bookPracticeTitle}
-              toolbarExtra={bookPracticeExitButton}
-              queueLength={bookPractice.queue.length}
-              currentIndex={bookPractice.index}
-              currentWord={bookWord}
-              wordStats={getWordStats(bookWord)}
+              title={recognizedPracticeTitle}
+              toolbarExtra={
+                <button
+                  type="button"
+                  className="btn btn--ghost btn--sm"
+                  onClick={pauseRecognizedPractice}
+                >
+                  返回列表
+                </button>
+              }
+              queueLength={recognizedSession.queue.length}
+              currentIndex={recognizedSession.index}
+              currentWord={recognizedWord}
+              wordStats={getWordStats(recognizedWord)}
               micGranted={mic.isGranted}
               onResult={handleRecognizedBookResult}
               onMemoryTrickGenerated={handleMemoryTrickGenerated}
-              onNext={handleBookNext}
-              onPrev={handleBookPrev}
-              sessionKey={`rec-${bookWord?.word ?? "empty"}-${bookPractice.index}`}
+              onNext={() => handleBookNext("recognized")}
+              onPrev={() => handleBookPrev("recognized")}
+              sessionKey={`rec-${recognizedWord?.word ?? "empty"}-${recognizedSession.index}`}
               emptyMessage="本轮巩固练习已完成！"
             />
           ) : (
@@ -695,8 +754,10 @@ export default function App() {
                         重新打乱
                       </button>
                     )}
-                    <button type="button" className="btn btn--accent" onClick={startRecognizedReview}>
-                      开始巩固（{recognizedPastWrong.length}）
+                    <button type="button" className="btn btn--accent" onClick={resumeRecognizedPractice}>
+                      {recognizedSession && bookPracticePaused.recognized
+                        ? `继续巩固（${recognizedSession.index + 1}/${recognizedSession.queue.length}）`
+                        : `开始巩固（${recognizedPastWrong.length}）`}
                     </button>
                   </div>
                 )}

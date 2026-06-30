@@ -11,7 +11,14 @@ const DEFAULT_PROGRESS = {
   isRecognizedReviewMode: false,
   reviewShuffle: false,
   listProgress: {},
-  bookPractice: null,
+  bookPractices: {
+    unrecognized: null,
+    recognized: null,
+  },
+  bookPracticePaused: {
+    unrecognized: false,
+    recognized: false,
+  },
 };
 
 function readList(key) {
@@ -61,10 +68,14 @@ export function saveProgress(progress) {
   localStorage.setItem(PROGRESS_KEY, JSON.stringify(progress));
 }
 
-/** Restore in-progress 生词本/熟词本练习（切换 Tab 或刷新后仍可继续）。 */
-export function normalizeBookPractice(raw) {
-  if (!raw || (raw.type !== "unrecognized" && raw.type !== "recognized")) return null;
-  if (!Array.isArray(raw.queue) || raw.queue.length === 0) return null;
+export const EMPTY_BOOK_PRACTICES = {
+  unrecognized: null,
+  recognized: null,
+};
+
+/** 单个词本练习会话（生词本 / 熟词本各一份，互不影响）。 */
+export function normalizeBookPracticeSession(raw) {
+  if (!raw || !Array.isArray(raw.queue) || raw.queue.length === 0) return null;
 
   const queue = raw.queue
     .filter((item) => item?.word && Array.isArray(item.definitions))
@@ -74,9 +85,44 @@ export function normalizeBookPractice(raw) {
 
   const index = typeof raw.index === "number" ? raw.index : 0;
   return {
-    type: raw.type,
     queue,
     index: Math.min(Math.max(index, 0), queue.length - 1),
+  };
+}
+
+/** @deprecated 兼容旧版单一 bookPractice 字段 */
+export function normalizeBookPractice(raw) {
+  if (!raw || (raw.type !== "unrecognized" && raw.type !== "recognized")) return null;
+  const session = normalizeBookPracticeSession(raw);
+  if (!session) return null;
+  return { type: raw.type, ...session };
+}
+
+/** 同时恢复生词本、熟词本两份练习进度（最多与词库练习共三个独立进度）。 */
+export function loadBookPractices(saved = {}) {
+  const result = { ...EMPTY_BOOK_PRACTICES };
+
+  if (saved.bookPractices && typeof saved.bookPractices === "object") {
+    result.unrecognized = normalizeBookPracticeSession(saved.bookPractices.unrecognized);
+    result.recognized = normalizeBookPracticeSession(saved.bookPractices.recognized);
+  }
+
+  const legacy = normalizeBookPractice(saved.bookPractice);
+  if (legacy?.type === "unrecognized" && !result.unrecognized) {
+    result.unrecognized = { queue: legacy.queue, index: legacy.index };
+  }
+  if (legacy?.type === "recognized" && !result.recognized) {
+    result.recognized = { queue: legacy.queue, index: legacy.index };
+  }
+
+  return result;
+}
+
+export function loadBookPracticePaused(saved = {}, bookPractices = EMPTY_BOOK_PRACTICES) {
+  const paused = saved.bookPracticePaused;
+  return {
+    unrecognized: Boolean(paused?.unrecognized) && Boolean(bookPractices.unrecognized),
+    recognized: Boolean(paused?.recognized) && Boolean(bookPractices.recognized),
   };
 }
 
