@@ -46,7 +46,7 @@ export function isSupportedTextUpload(file) {
 }
 
 export function getSupportedUploadHint() {
-  return "支持 txt / md / csv / json，或含文字的图片、PDF（最大 5MB）";
+  return "支持 txt / md / csv / json、含文字的图片/PDF，或在输入框 Ctrl+V 粘贴图片（最大 5MB）";
 }
 
 function readFileAsText(file) {

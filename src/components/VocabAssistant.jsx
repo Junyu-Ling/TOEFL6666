@@ -111,6 +111,7 @@ export default function VocabAssistant({ currentWord, micGranted }) {
   const silenceTimerRef = useRef(null);
   const inputValueRef = useRef("");
   const loadingRef = useRef(false);
+  const fileProcessingRef = useRef(false);
   const panelSizeRef = useRef(panelSize);
 
   const historyItems = useMemo(() => searchChatHistory(historyQuery), [historyQuery, messages, view]);
@@ -135,6 +136,10 @@ export default function VocabAssistant({ currentWord, micGranted }) {
   useEffect(() => {
     loadingRef.current = loading;
   }, [loading]);
+
+  useEffect(() => {
+    fileProcessingRef.current = fileProcessing;
+  }, [fileProcessing]);
 
   useEffect(() => {
     panelSizeRef.current = panelSize;
@@ -228,48 +233,79 @@ export default function VocabAssistant({ currentWord, micGranted }) {
     setAttachments((prev) => prev.filter((item) => item.id !== id));
   }, []);
 
+  const processUploadFile = useCallback(async (file) => {
+    if (!file || fileProcessingRef.current || loadingRef.current) return;
+
+    if (!isSupportedTextUpload(file)) {
+      setError(getSupportedUploadHint());
+      return;
+    }
+
+    const attachmentId = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+    setAttachments((prev) => [
+      ...prev,
+      { id: attachmentId, name: file.name, text: "", status: "processing", source: null },
+    ]);
+    setError(null);
+    setFileProcessing(true);
+
+    try {
+      const result = await extractTextFromUpload(file);
+      setAttachments((prev) =>
+        prev.map((item) =>
+          item.id === attachmentId
+            ? {
+                ...item,
+                text: result.text,
+                status: "ready",
+                source: result.source,
+              }
+            : item
+        )
+      );
+    } catch (err) {
+      setAttachments((prev) => prev.filter((item) => item.id !== attachmentId));
+      setError(err.message || "文件识别失败");
+    } finally {
+      setFileProcessing(false);
+      requestAnimationFrame(() => inputRef.current?.focus());
+    }
+  }, []);
+
   const handleFilePick = useCallback(
     async (event) => {
       const file = event.target.files?.[0];
       event.target.value = "";
       if (!file) return;
-
-      if (!isSupportedTextUpload(file)) {
-        setError(getSupportedUploadHint());
-        return;
-      }
-
-      const attachmentId = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
-      setAttachments((prev) => [
-        ...prev,
-        { id: attachmentId, name: file.name, text: "", status: "processing", source: null },
-      ]);
-      setError(null);
-      setFileProcessing(true);
-
-      try {
-        const result = await extractTextFromUpload(file);
-        setAttachments((prev) =>
-          prev.map((item) =>
-            item.id === attachmentId
-              ? {
-                  ...item,
-                  text: result.text,
-                  status: "ready",
-                  source: result.source,
-                }
-              : item
-          )
-        );
-      } catch (err) {
-        setAttachments((prev) => prev.filter((item) => item.id !== attachmentId));
-        setError(err.message || "文件识别失败");
-      } finally {
-        setFileProcessing(false);
-        requestAnimationFrame(() => inputRef.current?.focus());
-      }
+      await processUploadFile(file);
     },
-    []
+    [processUploadFile]
+  );
+
+  const handlePaste = useCallback(
+    (event) => {
+      if (loadingRef.current || fileProcessingRef.current) return;
+
+      const clipboard = event.clipboardData;
+      if (!clipboard) return;
+
+      const imageItem = Array.from(clipboard.items || []).find(
+        (item) => item.kind === "file" && item.type.startsWith("image/")
+      );
+      if (!imageItem) return;
+
+      const blob = imageItem.getAsFile();
+      if (!blob) return;
+
+      event.preventDefault();
+      const subtype = blob.type.split("/")[1]?.replace("jpeg", "jpg") || "png";
+      const file = new File([blob], `粘贴图片-${Date.now()}.${subtype}`, {
+        type: blob.type || "image/png",
+      });
+
+      void processUploadFile(file);
+    },
+    [processUploadFile]
   );
 
   const scheduleSilenceStop = useCallback(() => {
@@ -552,9 +588,14 @@ export default function VocabAssistant({ currentWord, micGranted }) {
                       ref={inputRef}
                       className="vocab-assistant__input"
                       rows={2}
-                      placeholder={micGranted ? "输入、上传文件或语音提问…" : "问词义、用法、易混词，或上传含文字的文件…"}
+                      placeholder={
+                        micGranted
+                          ? "输入、上传文件、Ctrl+V 粘贴图片或语音提问…"
+                          : "问词义、用法、易混词；可上传文件或 Ctrl+V 粘贴图片…"
+                      }
                       value={input}
                       onChange={(e) => setInput(e.target.value)}
+                      onPaste={handlePaste}
                       onKeyDown={(e) => {
                         if (e.key === "Enter" && !e.shiftKey) {
                           e.preventDefault();
