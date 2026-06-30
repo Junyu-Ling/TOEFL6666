@@ -108,40 +108,61 @@ export default function FlashCard({
     });
   }
 
-  const enrichWrongResult = useCallback(
-    async (aiResult) => {
+  const fetchMemoryTrickBackground = useCallback(
+    async (baseResult) => {
       const priorWrongCount = wordStats?.wrongCount ?? 0;
-      const existingTrick = wordStats?.memory_trick ?? aiResult.memory_trick ?? null;
-
-      if (existingTrick && !aiResult.memory_trick) {
-        return { ...aiResult, memory_trick: existingTrick };
-      }
+      const existingTrick = wordStats?.memory_trick ?? baseResult.memory_trick ?? null;
 
       if (
+        existingTrick ||
         !shouldFetchMemoryTrick({
-          isCorrect: aiResult.is_correct,
+          isCorrect: false,
           priorWrongCount,
           existingTrick,
         })
       ) {
-        return aiResult;
+        return;
       }
-
-      if (memoryFetchRef.current) return aiResult;
+      if (memoryFetchRef.current) return;
 
       memoryFetchRef.current = true;
       setMemoryLoading(true);
       try {
         const memory_trick = await fetchMemoryTrick(wordData);
-        return { ...aiResult, memory_trick };
+        setResult((prev) =>
+          prev && prev.is_correct === false ? { ...prev, memory_trick } : prev
+        );
+        onMemoryTrickGenerated?.(wordData, memory_trick);
       } catch {
-        return aiResult;
+        // ignore background fetch errors
       } finally {
         memoryFetchRef.current = false;
         setMemoryLoading(false);
       }
     },
-    [wordData, wordStats?.wrongCount, wordStats?.memory_trick]
+    [wordData, wordStats?.wrongCount, wordStats?.memory_trick, onMemoryTrickGenerated]
+  );
+
+  const showWrongAnswer = useCallback(
+    (aiResult, { playSound = true, persist = true } = {}) => {
+      const existingTrick = wordStats?.memory_trick ?? aiResult.memory_trick ?? null;
+      const nextResult = {
+        ...aiResult,
+        is_correct: false,
+        ...(existingTrick && !aiResult.memory_trick ? { memory_trick: existingTrick } : {}),
+      };
+
+      setResult(nextResult);
+      setBackMode("ai");
+      if (playSound) notifyAnswerResult(false);
+      if (persist) onResult?.(wordData, nextResult);
+      requestAnimationFrame(focusCard);
+
+      if (!nextResult.memory_trick) {
+        void fetchMemoryTrickBackground(nextResult);
+      }
+    },
+    [wordData, wordStats?.memory_trick, onResult, focusCard, fetchMemoryTrickBackground]
   );
 
   const fetchMemoryTrickIfNeeded = useCallback(async () => {
@@ -253,9 +274,11 @@ export default function FlashCard({
       setLoading(true);
       setError(null);
       try {
-        let aiResult = await evaluateAnswer(wordData, text);
+        const aiResult = await evaluateAnswer(wordData, text);
         if (!aiResult.needs_typo_clarification && !aiResult.is_correct) {
-          aiResult = await enrichWrongResult(aiResult);
+          setFlipped(true);
+          showWrongAnswer(aiResult);
+          return;
         }
         setResult(aiResult);
         setBackMode("ai");
@@ -271,7 +294,7 @@ export default function FlashCard({
         setLoading(false);
       }
     },
-    [wordData, onResult, stopDictation, focusCard, enrichWrongResult]
+    [wordData, onResult, stopDictation, focusCard, showWrongAnswer]
   );
 
   const handleTypoClarification = useCallback(
@@ -293,16 +316,23 @@ export default function FlashCard({
             clarified_typo: true,
           };
 
-      if (!finalResult.is_correct) {
-        finalResult = await enrichWrongResult(finalResult);
+      if (isTypo) {
+        setResult(finalResult);
+        notifyAnswerResult(true);
+        onResult?.(wordData, finalResult);
+        requestAnimationFrame(focusCard);
+        return;
       }
 
-      setResult(finalResult);
-      notifyAnswerResult(finalResult.is_correct);
-      onResult?.(wordData, finalResult);
-      requestAnimationFrame(focusCard);
+      showWrongAnswer(
+        {
+          ...finalResult,
+          clarified_typo: true,
+        },
+        { playSound: true, persist: true }
+      );
     },
-    [result, wordData, onResult, focusCard, enrichWrongResult]
+    [result, wordData, onResult, focusCard, showWrongAnswer]
   );
 
   useEffect(() => {
@@ -438,18 +468,12 @@ export default function FlashCard({
       }
 
       stopDictation();
-      let aiResult = {
+      showWrongAnswer({
         is_correct: false,
         ai_feedback: "你已标记为需加强",
-      };
-      aiResult = await enrichWrongResult(aiResult);
-      setResult(aiResult);
-      setBackMode("ai");
-      notifyAnswerResult(false);
-      onResult?.(wordData, aiResult);
-      requestAnimationFrame(focusCard);
+      });
     },
-    [wordData, onResult, onNext, enrichWrongResult, stopDictation, focusCard]
+    [wordData, onResult, onNext, stopDictation, showWrongAnswer]
   );
 
   const scheduleSilenceStop = useCallback(() => {
@@ -952,9 +976,20 @@ export default function FlashCard({
                 {result.is_correct ? "正确" : "需加强"}
               </div>
 
+              {!result.is_correct && wordData.definitions?.length > 0 && (
+                <div className="flashcard__book-defs flashcard__book-defs--lead">
+                  <span className="flashcard__book-defs-label">书上释义</span>
+                  <ul className="flashcard__definitions flashcard__definitions--book">
+                    {wordData.definitions.map((def, i) => (
+                      <li key={i}>{def}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
               <div className="flashcard__feedback">
                 <p className="flashcard__feedback-text">{result.ai_feedback}</p>
-                {wordData.definitions?.length > 0 && (
+                {result.is_correct && wordData.definitions?.length > 0 && (
                   <div className="flashcard__book-defs">
                     <span className="flashcard__book-defs-label">书上释义</span>
                     <ul className="flashcard__definitions flashcard__definitions--book">
@@ -966,10 +1001,10 @@ export default function FlashCard({
                 )}
               </div>
 
-              {!result.is_correct && memoryLoading && (
+              {!result.is_correct && memoryLoading && !result.memory_trick && (
                 <p className="flashcard__memory-status">
                   <span className="spinner spinner--inline" />
-                  AI 正在生成记忆法…
+                  记忆法生成中…
                 </p>
               )}
 
