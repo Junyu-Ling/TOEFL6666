@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { sendVocabChat } from "../services/aiChat";
-import { extractTextFromUpload, getSupportedUploadHint, isSupportedTextUpload } from "../services/ocr";
 import { createDictationSession } from "../utils/speechRecognition";
 import RichAiContent from "./RichAiContent";
 import {
@@ -72,19 +71,8 @@ function withWelcome(messages) {
   return messages.length ? messages : [WELCOME];
 }
 
-function createMessage(role, content, extra = {}) {
-  return { role, content, at: Date.now(), ...extra };
-}
-
-function buildOutgoingContent(text, attachments) {
-  const parts = [];
-  for (const item of attachments) {
-    if (!item.text?.trim()) continue;
-    parts.push(`[来自文件「${item.name}」]\n${item.text.trim()}`);
-  }
-  const trimmed = String(text || "").trim();
-  if (trimmed) parts.push(trimmed);
-  return parts.join("\n\n");
+function createMessage(role, content) {
+  return { role, content, at: Date.now() };
 }
 
 export default function VocabAssistant({ currentWord, micGranted }) {
@@ -100,18 +88,14 @@ export default function VocabAssistant({ currentWord, micGranted }) {
   const [error, setError] = useState(null);
   const [dictating, setDictating] = useState(false);
   const [dictationHint, setDictationHint] = useState("");
-  const [attachments, setAttachments] = useState([]);
-  const [fileProcessing, setFileProcessing] = useState(false);
   const [panelSize, setPanelSize] = useState(loadPanelSize);
   const listRef = useRef(null);
   const inputRef = useRef(null);
-  const fileInputRef = useRef(null);
   const skipSaveRef = useRef(false);
   const dictationRef = useRef(null);
   const silenceTimerRef = useRef(null);
   const inputValueRef = useRef("");
   const loadingRef = useRef(false);
-  const fileProcessingRef = useRef(false);
   const panelSizeRef = useRef(panelSize);
 
   const historyItems = useMemo(() => searchChatHistory(historyQuery), [historyQuery, messages, view]);
@@ -136,10 +120,6 @@ export default function VocabAssistant({ currentWord, micGranted }) {
   useEffect(() => {
     loadingRef.current = loading;
   }, [loading]);
-
-  useEffect(() => {
-    fileProcessingRef.current = fileProcessing;
-  }, [fileProcessing]);
 
   useEffect(() => {
     panelSizeRef.current = panelSize;
@@ -198,19 +178,14 @@ export default function VocabAssistant({ currentWord, micGranted }) {
     async (e, answerText) => {
       e?.preventDefault?.();
       const text = (answerText ?? inputValueRef.current).trim();
-      const readyAttachments = attachments.filter((item) => item.status === "ready" && item.text?.trim());
-      const outgoing = buildOutgoingContent(text, readyAttachments);
-      if (!outgoing || loadingRef.current || fileProcessing) return;
+      if (!text || loadingRef.current) return;
 
       stopDictation();
-      const userMessage = createMessage("user", outgoing, {
-        attachments: readyAttachments.map(({ id, name, source }) => ({ id, name, source })),
-      });
+      const userMessage = createMessage("user", text);
       const nextMessages = [...messages, userMessage];
       setMessages(nextMessages);
       setInput("");
       inputValueRef.current = "";
-      setAttachments([]);
       setError(null);
       setLoading(true);
 
@@ -226,86 +201,7 @@ export default function VocabAssistant({ currentWord, micGranted }) {
         setLoading(false);
       }
     },
-    [messages, chatContext, stopDictation, attachments, fileProcessing]
-  );
-
-  const handleRemoveAttachment = useCallback((id) => {
-    setAttachments((prev) => prev.filter((item) => item.id !== id));
-  }, []);
-
-  const processUploadFile = useCallback(async (file) => {
-    if (!file || fileProcessingRef.current || loadingRef.current) return;
-
-    if (!isSupportedTextUpload(file)) {
-      setError(getSupportedUploadHint());
-      return;
-    }
-
-    const attachmentId = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
-    setAttachments((prev) => [
-      ...prev,
-      { id: attachmentId, name: file.name, text: "", status: "processing", source: null },
-    ]);
-    setError(null);
-    setFileProcessing(true);
-
-    try {
-      const result = await extractTextFromUpload(file);
-      setAttachments((prev) =>
-        prev.map((item) =>
-          item.id === attachmentId
-            ? {
-                ...item,
-                text: result.text,
-                status: "ready",
-                source: result.source,
-              }
-            : item
-        )
-      );
-    } catch (err) {
-      setAttachments((prev) => prev.filter((item) => item.id !== attachmentId));
-      setError(err.message || "文件识别失败");
-    } finally {
-      setFileProcessing(false);
-      requestAnimationFrame(() => inputRef.current?.focus());
-    }
-  }, []);
-
-  const handleFilePick = useCallback(
-    async (event) => {
-      const file = event.target.files?.[0];
-      event.target.value = "";
-      if (!file) return;
-      await processUploadFile(file);
-    },
-    [processUploadFile]
-  );
-
-  const handlePaste = useCallback(
-    (event) => {
-      if (loadingRef.current || fileProcessingRef.current) return;
-
-      const clipboard = event.clipboardData;
-      if (!clipboard) return;
-
-      const imageItem = Array.from(clipboard.items || []).find(
-        (item) => item.kind === "file" && item.type.startsWith("image/")
-      );
-      if (!imageItem) return;
-
-      const blob = imageItem.getAsFile();
-      if (!blob) return;
-
-      event.preventDefault();
-      const subtype = blob.type.split("/")[1]?.replace("jpeg", "jpg") || "png";
-      const file = new File([blob], `粘贴图片-${Date.now()}.${subtype}`, {
-        type: blob.type || "image/png",
-      });
-
-      void processUploadFile(file);
-    },
-    [processUploadFile]
+    [messages, chatContext, stopDictation]
   );
 
   const scheduleSilenceStop = useCallback(() => {
@@ -373,7 +269,6 @@ export default function VocabAssistant({ currentWord, micGranted }) {
     setMessages(withWelcome(entry.messages));
     setError(null);
     setInput("");
-    setAttachments([]);
     setView("chat");
   }, [stopDictation]);
 
@@ -424,7 +319,6 @@ export default function VocabAssistant({ currentWord, micGranted }) {
     setMessages([WELCOME]);
     setError(null);
     setInput("");
-    setAttachments([]);
   }
 
   function handleSelectHistory(wordKey) {
@@ -533,103 +427,42 @@ export default function VocabAssistant({ currentWord, micGranted }) {
               {dictationHint && <p className="vocab-assistant__dictation-hint">{dictationHint}</p>}
 
               <form className="vocab-assistant__form" onSubmit={handleSend}>
-                <input
-                  ref={fileInputRef}
-                  type="file"
-                  className="vocab-assistant__file-input"
-                  accept=".txt,.md,.csv,.json,.pdf,.jpg,.jpeg,.png,.webp,.gif,.bmp,text/plain,text/markdown,text/csv,application/json,application/pdf,image/*"
-                  onChange={handleFilePick}
-                  tabIndex={-1}
-                  aria-hidden
-                />
-                {(attachments.length > 0 || fileProcessing) && (
-                  <ul className="vocab-assistant__attachments" aria-label="已上传文件">
-                    {attachments.map((item) => (
-                      <li key={item.id} className="vocab-assistant__attachment">
-                        <span className="vocab-assistant__attachment-name" title={item.name}>
-                          {item.status === "processing" ? (
-                            <>
-                              <span className="spinner spinner--inline" />
-                              识别中：{item.name}
-                            </>
-                          ) : (
-                            <>
-                              {item.source === "ocr" ? "OCR" : "文本"} · {item.name}
-                            </>
-                          )}
-                        </span>
-                        {item.status === "ready" && (
-                          <button
-                            type="button"
-                            className="vocab-assistant__attachment-remove"
-                            onClick={() => handleRemoveAttachment(item.id)}
-                            aria-label={`移除 ${item.name}`}
-                          >
-                            ×
-                          </button>
-                        )}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-                <div className="vocab-assistant__composer">
-                  <button
-                    type="button"
-                    className="vocab-assistant__upload-btn"
-                    onClick={() => fileInputRef.current?.click()}
-                    disabled={loading || dictating || fileProcessing}
-                    title={getSupportedUploadHint()}
-                    aria-label="上传含文字的文件"
-                  >
-                    <AttachIcon />
-                  </button>
-                  <div className="vocab-assistant__input-wrap">
-                    <textarea
-                      ref={inputRef}
-                      className="vocab-assistant__input"
-                      rows={2}
-                      placeholder={
-                        micGranted
-                          ? "输入、上传文件、Ctrl+V 粘贴图片或语音提问…"
-                          : "问词义、用法、易混词；可上传文件或 Ctrl+V 粘贴图片…"
+                <div className="vocab-assistant__input-wrap">
+                  <textarea
+                    ref={inputRef}
+                    className="vocab-assistant__input"
+                    rows={2}
+                    placeholder={micGranted ? "输入或语音提问…" : "问词义、用法、易混词…"}
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" && !e.shiftKey) {
+                        e.preventDefault();
+                        handleSend(e);
                       }
-                      value={input}
-                      onChange={(e) => setInput(e.target.value)}
-                      onPaste={handlePaste}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter" && !e.shiftKey) {
-                          e.preventDefault();
-                          handleSend(e);
-                        }
-                      }}
-                      disabled={loading || dictating || fileProcessing}
-                    />
-                    {micGranted && (
-                      <button
-                        type="button"
-                        className={`voice-btn voice-btn--dictate vocab-assistant__voice-btn ${dictating ? "voice-btn--active" : ""}`}
-                        onClick={startDictation}
-                        disabled={loading || dictating || fileProcessing}
-                        title="语音输入"
-                        aria-label="语音输入"
-                      >
-                        <MicIcon />
-                      </button>
-                    )}
-                  </div>
-                  <button
-                    type="submit"
-                    className="btn btn--primary vocab-assistant__send"
-                    disabled={
-                      loading ||
-                      dictating ||
-                      fileProcessing ||
-                      (!input.trim() && !attachments.some((item) => item.status === "ready" && item.text?.trim()))
-                    }
-                  >
-                    发送
-                  </button>
+                    }}
+                    disabled={loading || dictating}
+                  />
+                  {micGranted && (
+                    <button
+                      type="button"
+                      className={`voice-btn voice-btn--dictate vocab-assistant__voice-btn ${dictating ? "voice-btn--active" : ""}`}
+                      onClick={startDictation}
+                      disabled={loading || dictating}
+                      title="语音输入"
+                      aria-label="语音输入"
+                    >
+                      <MicIcon />
+                    </button>
+                  )}
                 </div>
+                <button
+                  type="submit"
+                  className="btn btn--primary vocab-assistant__send"
+                  disabled={loading || dictating || !input.trim()}
+                >
+                  发送
+                </button>
               </form>
             </>
           )}
@@ -663,14 +496,6 @@ function MicIcon() {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
       <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5-3c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z" />
-    </svg>
-  );
-}
-
-function AttachIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20" aria-hidden>
-      <path d="M16.5 6.5v9.25a4.25 4.25 0 1 1-8.5 0V5.75a2.75 2.75 0 1 1 5.5 0v9.5a1.25 1.25 0 1 1-2.5 0V6.5h-1.5v8.75a2.75 2.75 0 1 0 5.5 0V5.75a4.25 4.25 0 0 0-8.5 0v10a5.75 5.75 0 1 0 11.5 0V6.5h-1.5z" />
     </svg>
   );
 }
