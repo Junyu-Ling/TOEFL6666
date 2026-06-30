@@ -675,6 +675,7 @@ export default function FlashCard({
       if (flippedRef.current && backModeRef.current === "ai") {
         const pending = resultRef.current;
         if (pending?.needs_typo_clarification && !pending?.clarified_typo) {
+          if (isTypingInAnswerField()) return;
           if (isMarkKnownKey(e)) {
             e.preventDefault();
             e.stopPropagation();
@@ -691,6 +692,7 @@ export default function FlashCard({
       }
 
       if (flippedRef.current && backModeRef.current === "manual") {
+        if (isTypingInAnswerField()) return;
         if (isMarkKnownKey(e)) {
           e.preventDefault();
           e.stopPropagation();

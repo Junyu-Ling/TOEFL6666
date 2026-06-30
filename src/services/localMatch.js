@@ -324,12 +324,99 @@ export function matchesStandardMeaning(userAnswer, definitions) {
 export const TARGET_WORD_ITSELF_MESSAGE =
   "不能用单词本身来解释这个词，请用中文释义或别的英文近义词。";
 
-/** 明显乱答（乱码、照抄原词等），本地直接判错，不调用 AI。 */
+export const META_ANSWER_MESSAGE =
+  "请输入该单词的释义，不要输入「正确」「认识」等评价或操作用语。";
+
+const EXACT_META_ANSWERS = new Set([
+  "正确",
+  "错误",
+  "对的",
+  "错的",
+  "对",
+  "错",
+  "没错",
+  "不对",
+  "错了",
+  "是的",
+  "是",
+  "不是",
+  "否",
+  "认识",
+  "不认识",
+  "不会",
+  "不知道",
+  "不懂",
+  "不清楚",
+  "忘了",
+  "忘记了",
+  "需加强",
+  "下一个",
+  "下一词",
+  "上一词",
+  "翻面",
+  "翻回",
+  "提交",
+  "提交批改",
+  "打错字了",
+  "真的不认识",
+  "本意对",
+  "好",
+  "嗯",
+  "哦",
+  "啊",
+  "行",
+  "可以",
+  "随便",
+  "什么意思",
+  "是什么意思",
+  "啥意思",
+  "释义",
+  "词义",
+  "correct",
+  "wrong",
+  "right",
+  "yes",
+  "no",
+  "ok",
+  "okay",
+  "idk",
+  "dunno",
+  "true",
+  "false",
+  "pass",
+  "next",
+  "0",
+  "1",
+]);
+
+const INSTRUCTION_ANSWER_PATTERNS = [
+  /^(?:请|帮我|给我|让我).+/,
+  /(?:判|算|标记|当作|算做).{0,8}(?:正确|对|认识|会)/,
+  /^(?:我)?(?:觉得|认为)?(?:自己)?(?:答)?(?:对|错)了?[。!！.?？]?$/,
+  /^(?:这?个)?(?:词)?(?:的)?(?:意思|释义)(?:是|为)?[。?？]?$/,
+];
+
+/** 用户输入的是对错/认识度/操作用语，而非单词释义。 */
+export function isMetaOrCommandAnswer(userAnswer) {
+  const answer = userAnswer?.trim();
+  if (!answer) return false;
+
+  const normalized = normalizeForCompare(stripOptionalPos(answer));
+  if (!normalized) return false;
+
+  if (EXACT_META_ANSWERS.has(normalized)) return true;
+
+  return INSTRUCTION_ANSWER_PATTERNS.some((pattern) => pattern.test(answer.trim()));
+}
+
+/** 明显乱答（乱码、照抄原词、操作用语等），本地直接判错，不调用 AI。 */
 export function isObviouslyWrong(userAnswer, definitions, word = "") {
   const answer = userAnswer.trim();
   if (!answer || !definitions?.length) return false;
 
   if (word && isUsingTargetWordItself(answer, word)) return true;
+
+  if (isMetaOrCommandAnswer(answer)) return true;
 
   return hasUnexpectedDigits(answer, definitions);
 }
