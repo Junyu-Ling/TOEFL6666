@@ -3,6 +3,7 @@ import { resolveApiConfig, stripApiConfigFromBody } from "./server/ai-config.js"
 import { evaluateWithDeepSeek } from "./server/ai-evaluate.js";
 import { chatWithDeepSeek } from "./server/ai-chat.js";
 import { generateMemoryTrick } from "./server/ai-memory-trick.js";
+import { extractTextWithOcr } from "./server/ocr.js";
 
 function readBody(req) {
   return new Promise((resolve, reject) => {
@@ -63,12 +64,32 @@ export function createAiHandler(getEnvConfig) {
   };
 }
 
+export function createOcrHandler(getEnvConfig) {
+  return async (req, res, next) => {
+    if (req.method !== "POST" || !matchApiPath(req.url, "/api/ocr/extract-text")) {
+      return next();
+    }
+
+    try {
+      const body = JSON.parse(await readBody(req));
+      const config = getEnvConfig();
+      const result = await extractTextWithOcr(body, config);
+      sendJson(res, 200, result);
+    } catch (err) {
+      sendJson(res, err.status || 500, { error: err.message || "服务器错误" });
+    }
+  };
+}
+
 export function aiProxyPlugin() {
   let envConfig = {
     apiKey: "",
     model: "deepseek-chat",
     baseUrl: "https://api.deepseek.com/v1",
     providerId: "deepseek",
+  };
+  let ocrConfig = {
+    apiKey: "",
   };
 
   return {
@@ -81,9 +102,13 @@ export function aiProxyPlugin() {
         baseUrl: (env.DEEPSEEK_API_BASE || "https://api.deepseek.com/v1").replace(/\/$/, ""),
         providerId: "deepseek",
       };
+      ocrConfig = {
+        apiKey: env.OCR_API_KEY || "",
+      };
     },
     configureServer(server) {
       server.middlewares.use(createAiHandler(() => envConfig));
+      server.middlewares.use(createOcrHandler(() => ocrConfig));
     },
   };
 }
