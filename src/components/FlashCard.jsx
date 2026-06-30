@@ -143,28 +143,6 @@ export default function FlashCard({
     [wordData, wordStats?.wrongCount, wordStats?.memory_trick, onMemoryTrickGenerated]
   );
 
-  const showWrongAnswer = useCallback(
-    (aiResult, { playSound = true, persist = true } = {}) => {
-      const existingTrick = wordStats?.memory_trick ?? aiResult.memory_trick ?? null;
-      const nextResult = {
-        ...aiResult,
-        is_correct: false,
-        ...(existingTrick && !aiResult.memory_trick ? { memory_trick: existingTrick } : {}),
-      };
-
-      setResult(nextResult);
-      setBackMode("ai");
-      if (playSound) notifyAnswerResult(false);
-      if (persist) onResult?.(wordData, nextResult);
-      requestAnimationFrame(focusCard);
-
-      if (!nextResult.memory_trick) {
-        void fetchMemoryTrickBackground(nextResult);
-      }
-    },
-    [wordData, wordStats?.memory_trick, onResult, focusCard, fetchMemoryTrickBackground]
-  );
-
   const fetchMemoryTrickIfNeeded = useCallback(async () => {
     if (memoryFetchRef.current) return;
     if (
@@ -233,6 +211,29 @@ export default function FlashCard({
     setInputReady(false);
     cardRef.current?.focus({ preventScroll: true });
   }, []);
+
+  const showWrongAnswer = useCallback(
+    (aiResult, { playSound = true, persist = true } = {}) => {
+      const existingTrick = wordStats?.memory_trick ?? aiResult.memory_trick ?? null;
+      const nextResult = {
+        ...aiResult,
+        is_correct: false,
+        ...(existingTrick && !aiResult.memory_trick ? { memory_trick: existingTrick } : {}),
+      };
+
+      setResult(nextResult);
+      setBackMode("ai");
+      setFlipped(true);
+      if (playSound) notifyAnswerResult(false);
+      if (persist) onResult?.(wordData, nextResult);
+      requestAnimationFrame(focusCard);
+
+      if (!nextResult.memory_trick) {
+        void fetchMemoryTrickBackground(nextResult);
+      }
+    },
+    [wordData, wordStats?.memory_trick, onResult, focusCard, fetchMemoryTrickBackground]
+  );
 
   const flipBack = useCallback(() => {
     setFlipped(false);
