@@ -1,6 +1,6 @@
 import { useState, useCallback, useMemo, useEffect, useRef } from "react";
 import Navbar from "./components/Navbar";
-import FlashCard from "./components/FlashCard";
+import PracticeSession from "./components/PracticeSession";
 import WordList from "./components/WordList";
 import MicPermissionPrompt from "./components/MicPermissionPrompt";
 import SettingsPanel from "./components/SettingsPanel";
@@ -52,13 +52,8 @@ export default function App() {
   const [listProgress, setListProgress] = useState(savedRef.current.listProgress);
   const [wordsLoading, setWordsLoading] = useState(true);
   const [wordsError, setWordsError] = useState(null);
-  const [practiceQueue, setPracticeQueue] = useState([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isReviewMode, setIsReviewMode] = useState(false);
-  const [isRecognizedReviewMode, setIsRecognizedReviewMode] = useState(
-    savedRef.current.isRecognizedReviewMode ?? false
-  );
-  const inReviewMode = isReviewMode || isRecognizedReviewMode;
+  const [listIndex, setListIndex] = useState(0);
+  const [bookPractice, setBookPractice] = useState(null);
   const [reviewShuffle, setReviewShuffle] = useState(savedRef.current.reviewShuffle ?? false);
   const [shuffleSeed, setShuffleSeed] = useState(() => Date.now());
   const [streakData, setStreakData] = useState(() => recordVisit());
@@ -94,8 +89,7 @@ export default function App() {
     setListMeta(meta);
     setWordList(words);
     setActiveListId(listId);
-    setPracticeQueue(words);
-    setCurrentIndex(clampIndex(index, words.length));
+    setListIndex(clampIndex(index, words.length));
   }, []);
 
   useEffect(() => {
@@ -134,60 +128,34 @@ export default function App() {
   }, [applyList]);
 
   useEffect(() => {
-    if (wordsLoading || !activeListId) return;
-
-    if (inReviewMode) {
-      saveProgress({
-        activeListId,
-        activeTab,
-        isReviewMode,
-        isRecognizedReviewMode,
-        reviewShuffle,
-        listProgress,
-      });
-      return;
-    }
+    if (wordsLoading || !activeListId || activeTab !== "practice") return;
 
     setListProgress((prev) => {
-      if (prev[activeListId]?.currentIndex === currentIndex) {
+      if (prev[activeListId]?.currentIndex === listIndex) {
         saveProgress({
           activeListId,
           activeTab,
-          isReviewMode: false,
-          isRecognizedReviewMode: false,
           reviewShuffle,
           listProgress: prev,
         });
         return prev;
       }
-      const next = patchListProgress(prev, activeListId, currentIndex);
+      const next = patchListProgress(prev, activeListId, listIndex);
       saveProgress({
         activeListId,
         activeTab,
-        isReviewMode: false,
-        isRecognizedReviewMode: false,
         reviewShuffle,
         listProgress: next,
       });
       return next;
     });
-  }, [
-    currentIndex,
-    activeListId,
-    activeTab,
-    inReviewMode,
-    isReviewMode,
-    isRecognizedReviewMode,
-    reviewShuffle,
-    wordsLoading,
-    listProgress,
-  ]);
+  }, [listIndex, activeListId, activeTab, reviewShuffle, wordsLoading, listProgress]);
 
   const handleListChange = useCallback(
     async (listId) => {
-      if (listId === activeListId || inReviewMode) return;
+      if (listId === activeListId) return;
 
-      const nextProgress = patchListProgress(listProgress, activeListId, currentIndex);
+      const nextProgress = patchListProgress(listProgress, activeListId, listIndex);
       setListProgress(nextProgress);
 
       try {
@@ -197,8 +165,6 @@ export default function App() {
         saveProgress({
           activeListId: listId,
           activeTab,
-          isReviewMode: false,
-          isRecognizedReviewMode: false,
           reviewShuffle,
           listProgress: nextProgress,
         });
@@ -206,33 +172,50 @@ export default function App() {
         setWordsError(err.message || "词库切换失败");
       }
     },
-    [activeListId, activeTab, applyList, currentIndex, inReviewMode, listProgress]
+    [activeListId, activeTab, applyList, listIndex, listProgress, reviewShuffle]
   );
 
-  const handleTabChange = useCallback((tab) => {
-    setActiveTab(tab);
-    saveProgress({
-      activeListId,
-      activeTab: tab,
-      isReviewMode,
-      isRecognizedReviewMode,
-      reviewShuffle,
-      listProgress,
-    });
-  }, [activeListId, isReviewMode, isRecognizedReviewMode, reviewShuffle, listProgress]);
+  const handleTabChange = useCallback(
+    (tab) => {
+      setActiveTab(tab);
+      setBookPractice((prev) => {
+        if (!prev) return null;
+        if (prev.type === "unrecognized" && tab !== "unrecognized") return null;
+        if (prev.type === "recognized" && tab !== "recognized") return null;
+        return prev;
+      });
+      saveProgress({
+        activeListId,
+        activeTab: tab,
+        reviewShuffle,
+        listProgress,
+      });
+    },
+    [activeListId, reviewShuffle, listProgress]
+  );
 
-  const currentWord = practiceQueue[currentIndex] ?? null;
+  const listWord = wordList[listIndex] ?? null;
+  const bookWord = bookPractice ? bookPractice.queue[bookPractice.index] ?? null : null;
+  const currentWord =
+    activeTab === "practice"
+      ? listWord
+      : bookPractice?.type === activeTab
+        ? bookWord
+        : null;
 
-  const currentWordStats = useMemo(() => {
-    if (!currentWord) return { wrongCount: 0, memory_trick: null };
-    const unrec = unrecognized.find((item) => item.word === currentWord.word);
-    const rec = recognized.find((item) => item.word === currentWord.word);
-    const entry = unrec || rec;
-    return {
-      wrongCount: entry?.wrongCount ?? 0,
-      memory_trick: entry?.memory_trick ?? null,
-    };
-  }, [currentWord, unrecognized, recognized]);
+  const getWordStats = useCallback(
+    (wordData) => {
+      if (!wordData) return { wrongCount: 0, memory_trick: null };
+      const unrec = unrecognized.find((item) => item.word === wordData.word);
+      const rec = recognized.find((item) => item.word === wordData.word);
+      const entry = unrec || rec;
+      return {
+        wrongCount: entry?.wrongCount ?? 0,
+        memory_trick: entry?.memory_trick ?? null,
+      };
+    },
+    [unrecognized, recognized]
+  );
 
   const handleMemoryTrickGenerated = useCallback((wordData, memory_trick) => {
     setUnrecognized((prev) => {
@@ -261,8 +244,8 @@ export default function App() {
     });
   }, []);
 
-  const handleResult = useCallback(
-    (wordData, aiResult) => {
+  const handleBookResult = useCallback(
+    (wordData, aiResult, removeFromUnrecognizedOnCorrect) => {
       if (aiResult.is_correct) {
         setUnrecognized((prevUnrec) => {
           const wrongEntry = prevUnrec.find((item) => item.word === wordData.word);
@@ -271,7 +254,8 @@ export default function App() {
           setRecognized((prevRec) => {
             const existingRec = prevRec.find((item) => item.word === wordData.word);
             const carryWrong =
-              priorWrongCount ?? (existingRec?.wrongCount && existingRec.wrongCount > 0 ? existingRec.wrongCount : undefined);
+              priorWrongCount ??
+              (existingRec?.wrongCount && existingRec.wrongCount > 0 ? existingRec.wrongCount : undefined);
             const record = buildRecognizedRecord(wordData, aiResult, carryWrong);
             if (wrongEntry?.memory_trick || aiResult.memory_trick || existingRec?.memory_trick) {
               record.memory_trick =
@@ -282,7 +266,7 @@ export default function App() {
             return next;
           });
 
-          if (isReviewMode) {
+          if (removeFromUnrecognizedOnCorrect) {
             const next = removeWord(prevUnrec, wordData.word);
             saveUnrecognized(next);
             return next;
@@ -309,31 +293,54 @@ export default function App() {
         });
       }
     },
-    [isReviewMode]
+    []
   );
 
-  const handleNext = useCallback(() => {
-    if (currentIndex < practiceQueue.length - 1) {
-      setCurrentIndex((i) => i + 1);
-    } else {
-      setCurrentIndex(0);
-      if (isReviewMode) {
-        setPracticeQueue(wordList);
-        setActiveTab("unrecognized");
-      } else if (isRecognizedReviewMode) {
-        setPracticeQueue(wordList);
-        setActiveTab("recognized");
-      }
-      setIsReviewMode(false);
-      setIsRecognizedReviewMode(false);
-    }
-  }, [currentIndex, practiceQueue.length, isReviewMode, isRecognizedReviewMode, wordList]);
+  const handleListResult = useCallback(
+    (wordData, aiResult) => handleBookResult(wordData, aiResult, false),
+    [handleBookResult]
+  );
 
-  const handlePrev = useCallback(() => {
-    if (currentIndex > 0) {
-      setCurrentIndex((i) => i - 1);
+  const handleUnrecognizedBookResult = useCallback(
+    (wordData, aiResult) => handleBookResult(wordData, aiResult, true),
+    [handleBookResult]
+  );
+
+  const handleRecognizedBookResult = useCallback(
+    (wordData, aiResult) => handleBookResult(wordData, aiResult, false),
+    [handleBookResult]
+  );
+
+  const handleListNext = useCallback(() => {
+    if (listIndex < wordList.length - 1) {
+      setListIndex((i) => i + 1);
+    } else {
+      setListIndex(0);
     }
-  }, [currentIndex]);
+  }, [listIndex, wordList.length]);
+
+  const handleListPrev = useCallback(() => {
+    if (listIndex > 0) {
+      setListIndex((i) => i - 1);
+    }
+  }, [listIndex]);
+
+  const handleBookNext = useCallback(() => {
+    setBookPractice((prev) => {
+      if (!prev) return null;
+      if (prev.index < prev.queue.length - 1) {
+        return { ...prev, index: prev.index + 1 };
+      }
+      return null;
+    });
+  }, []);
+
+  const handleBookPrev = useCallback(() => {
+    setBookPractice((prev) => {
+      if (!prev || prev.index <= 0) return prev;
+      return { ...prev, index: prev.index - 1 };
+    });
+  }, []);
 
   const displayedUnrecognized = useMemo(() => {
     if (reviewShuffle) return seededShuffle(unrecognized, shuffleSeed);
@@ -352,14 +359,12 @@ export default function App() {
       saveProgress({
         activeListId,
         activeTab,
-        isReviewMode,
-        isRecognizedReviewMode,
         reviewShuffle: next,
         listProgress,
       });
       return next;
     });
-  }, [activeListId, activeTab, isReviewMode, isRecognizedReviewMode, listProgress]);
+  }, [activeListId, activeTab, listProgress]);
 
   const reshuffleUnrecognized = useCallback(() => {
     setShuffleSeed(Date.now());
@@ -373,20 +378,8 @@ export default function App() {
       definitions: item.definitions,
     }));
 
-    setPracticeQueue(reviewWords);
-    setCurrentIndex(0);
-    setIsReviewMode(true);
-    setIsRecognizedReviewMode(false);
-    setActiveTab("practice");
-    saveProgress({
-      activeListId,
-      activeTab: "practice",
-      isReviewMode: true,
-      isRecognizedReviewMode: false,
-      reviewShuffle,
-      listProgress,
-    });
-  }, [activeListId, listProgress, reviewShuffle, unrecognized]);
+    setBookPractice({ type: "unrecognized", queue: reviewWords, index: 0 });
+  }, [reviewShuffle, unrecognized]);
 
   const startRecognizedReview = useCallback(() => {
     if (recognizedPastWrong.length === 0) return;
@@ -396,20 +389,29 @@ export default function App() {
       definitions: item.definitions,
     }));
 
-    setPracticeQueue(reviewWords);
-    setCurrentIndex(0);
-    setIsRecognizedReviewMode(true);
-    setIsReviewMode(false);
-    setActiveTab("practice");
-    saveProgress({
-      activeListId,
-      activeTab: "practice",
-      isReviewMode: false,
-      isRecognizedReviewMode: true,
-      reviewShuffle,
-      listProgress,
-    });
-  }, [activeListId, listProgress, recognizedPastWrong, reviewShuffle]);
+    setBookPractice({ type: "recognized", queue: reviewWords, index: 0 });
+  }, [recognizedPastWrong, reviewShuffle]);
+
+  const stopBookPractice = useCallback(() => {
+    setBookPractice(null);
+  }, []);
+
+  const unrecognizedPracticeActive = bookPractice?.type === "unrecognized";
+  const recognizedPracticeActive = bookPractice?.type === "recognized";
+
+  const bookPracticeTitle = useMemo(() => {
+    if (!bookPractice) return "";
+    if (bookPractice.type === "unrecognized") {
+      return reviewShuffle ? "针对性强化练习 · 乱序" : "针对性强化练习";
+    }
+    return reviewShuffle ? "曾错题巩固 · 乱序" : "曾错题巩固";
+  }, [bookPractice, reviewShuffle]);
+
+  const bookPracticeExitButton = (
+    <button type="button" className="btn btn--ghost btn--sm" onClick={stopBookPractice}>
+      返回列表
+    </button>
+  );
 
   const handleRemoveRecognized = useCallback((word) => {
     setRecognized((prev) => {
@@ -425,11 +427,6 @@ export default function App() {
     setRecognized([]);
     saveRecognized([]);
   }, [recognized.length]);
-
-  const progress = useMemo(() => {
-    if (!practiceQueue.length) return 0;
-    return Math.round(((currentIndex + 1) / practiceQueue.length) * 100);
-  }, [currentIndex, practiceQueue.length]);
 
   const listsByLevel = useMemo(() => {
     const map = new Map();
@@ -521,87 +518,79 @@ export default function App() {
 
         <main className="main">
         {activeTab === "practice" && (
-          <section className="practice-view">
-            <div className="practice-toolbar">
-              <div className="practice-toolbar__left">
-                <span className="practice-toolbar__title">
-                  {isRecognizedReviewMode
-                    ? reviewShuffle
-                      ? "熟词巩固 · 曾错题 · 乱序"
-                      : "熟词巩固 · 曾错题"
-                    : isReviewMode
-                    ? reviewShuffle
-                      ? "强化练习 · 乱序"
-                      : "强化练习"
-                    : listMeta?.title ?? "单词练习"}
-                </span>
-                {!inReviewMode && availableLists.length > 0 && (
-                  <div className="practice-toolbar__pickers">
-                    {levelNumbers.length > 1 && (
-                      <select
-                        className="practice-toolbar__select"
-                        value={activeLevel ?? ""}
-                        onChange={(e) => handleLevelChange(e.target.value)}
-                        aria-label="选择 Level"
-                      >
-                        {levelNumbers.map((level) => (
-                          <option key={level} value={level}>
-                            Level {level}
-                          </option>
-                        ))}
-                      </select>
-                    )}
-                    {listsInActiveLevel.length > 1 && (
-                      <select
-                        className="practice-toolbar__select"
-                        value={activeListId ?? ""}
-                        onChange={(e) => handleListChange(e.target.value)}
-                        aria-label="选择 List"
-                      >
-                        {listsInActiveLevel.map((item) => (
-                          <option key={item.id} value={item.id}>
-                            List {item.list}
-                          </option>
-                        ))}
-                      </select>
-                    )}
-                  </div>
-                )}
-              </div>
-              <div className="practice-toolbar__stats">
+          <PracticeSession
+            title={listMeta?.title ?? "单词练习"}
+            toolbarExtra={
+              availableLists.length > 0 ? (
+                <div className="practice-toolbar__pickers">
+                  {levelNumbers.length > 1 && (
+                    <select
+                      className="practice-toolbar__select"
+                      value={activeLevel ?? ""}
+                      onChange={(e) => handleLevelChange(e.target.value)}
+                      aria-label="选择 Level"
+                    >
+                      {levelNumbers.map((level) => (
+                        <option key={level} value={level}>
+                          Level {level}
+                        </option>
+                      ))}
+                    </select>
+                  )}
+                  {listsInActiveLevel.length > 1 && (
+                    <select
+                      className="practice-toolbar__select"
+                      value={activeListId ?? ""}
+                      onChange={(e) => handleListChange(e.target.value)}
+                      aria-label="选择 List"
+                    >
+                      {listsInActiveLevel.map((item) => (
+                        <option key={item.id} value={item.id}>
+                          List {item.list}
+                        </option>
+                      ))}
+                    </select>
+                  )}
+                </div>
+              ) : null
+            }
+            stats={
+              <>
                 <span className="stat-pill stat-pill--ok">认识 {recognized.length}</span>
                 <span className="stat-pill stat-pill--fail">不认识 {unrecognized.length}</span>
-              </div>
-            </div>
-
-            <div className="progress-track" aria-label="学习进度">
-              <div className="progress-track__fill" style={{ width: `${progress}%` }} />
-            </div>
-            <p className="progress-label">
-              {currentIndex + 1} / {practiceQueue.length}
-            </p>
-
-            {currentWord ? (
-              <FlashCard
-                key={`${currentWord.word}-${currentIndex}-${isReviewMode}-${isRecognizedReviewMode}`}
-                wordData={currentWord}
-                wordStats={currentWordStats}
-                micGranted={mic.isGranted}
-                onResult={handleResult}
-                onMemoryTrickGenerated={handleMemoryTrickGenerated}
-                onNext={handleNext}
-                onPrev={handlePrev}
-              />
-            ) : (
-              <div className="word-list-view__empty">
-                <span className="empty-icon">🎉</span>
-                <p>本轮练习已完成！</p>
-              </div>
-            )}
-          </section>
+              </>
+            }
+            queueLength={wordList.length}
+            currentIndex={listIndex}
+            currentWord={listWord}
+            wordStats={getWordStats(listWord)}
+            micGranted={mic.isGranted}
+            onResult={handleListResult}
+            onMemoryTrickGenerated={handleMemoryTrickGenerated}
+            onNext={handleListNext}
+            onPrev={handleListPrev}
+            sessionKey={`list-${listWord?.word ?? "empty"}-${listIndex}`}
+          />
         )}
 
         {activeTab === "unrecognized" && (
+          unrecognizedPracticeActive ? (
+            <PracticeSession
+              title={bookPracticeTitle}
+              toolbarExtra={bookPracticeExitButton}
+              queueLength={bookPractice.queue.length}
+              currentIndex={bookPractice.index}
+              currentWord={bookWord}
+              wordStats={getWordStats(bookWord)}
+              micGranted={mic.isGranted}
+              onResult={handleUnrecognizedBookResult}
+              onMemoryTrickGenerated={handleMemoryTrickGenerated}
+              onNext={handleBookNext}
+              onPrev={handleBookPrev}
+              sessionKey={`unrec-${bookWord?.word ?? "empty"}-${bookPractice.index}`}
+              emptyMessage="本轮强化练习已完成！"
+            />
+          ) : (
           <WordList
             title="不认识的词"
             subtitle={
@@ -640,9 +629,27 @@ export default function App() {
               ) : null
             }
           />
+          )
         )}
 
         {activeTab === "recognized" && (
+          recognizedPracticeActive ? (
+            <PracticeSession
+              title={bookPracticeTitle}
+              toolbarExtra={bookPracticeExitButton}
+              queueLength={bookPractice.queue.length}
+              currentIndex={bookPractice.index}
+              currentWord={bookWord}
+              wordStats={getWordStats(bookWord)}
+              micGranted={mic.isGranted}
+              onResult={handleRecognizedBookResult}
+              onMemoryTrickGenerated={handleMemoryTrickGenerated}
+              onNext={handleBookNext}
+              onPrev={handleBookPrev}
+              sessionKey={`rec-${bookWord?.word ?? "empty"}-${bookPractice.index}`}
+              emptyMessage="本轮巩固练习已完成！"
+            />
+          ) : (
           <WordList
             title="已认识的词"
             subtitle={
@@ -697,11 +704,12 @@ export default function App() {
               </div>
             }
           />
+          )
         )}
       </main>
 
       <VocabAssistant
-        currentWord={activeTab === "practice" ? currentWord : null}
+        currentWord={currentWord}
         micGranted={mic.isGranted}
       />
 
