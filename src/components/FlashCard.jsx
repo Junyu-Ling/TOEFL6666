@@ -18,6 +18,10 @@ const TAP_MAX_DURATION_MS = 350;
 const SWIPE_EXIT_MS = 300;
 const SWIPE_SNAP_MS = 320;
 
+function isMobileLayout() {
+  return window.matchMedia("(max-width: 640px)").matches;
+}
+
 function isTouchInteractiveTarget(target) {
   return Boolean(
     target?.closest?.(
@@ -56,7 +60,9 @@ export default function FlashCard({
   const { speakWord, settings, settingsOpen } = useSettings();
   const settingsOpenRef = useRef(settingsOpen);
   settingsOpenRef.current = settingsOpen;
+  const isTypeModeRef = useRef(settings.practiceStyle !== "recall");
   const isTypeMode = settings.practiceStyle !== "recall";
+  isTypeModeRef.current = isTypeMode;
   const [flipped, setFlipped] = useState(false);
   const [backMode, setBackMode] = useState(null);
   const [userAnswer, setUserAnswer] = useState("");
@@ -87,6 +93,7 @@ export default function FlashCard({
   const handleBlankTapRef = useRef(null);
   const touchStartRef = useRef(null);
   const memoryFetchRef = useRef(false);
+  const mobileInputFocusRef = useRef(false);
   const swipeLockRef = useRef(false);
   const swipeDraggingRef = useRef(false);
   const onNextRef = useRef(onNext);
@@ -201,9 +208,25 @@ export default function FlashCard({
 
   const focusInput = useCallback(() => {
     if (settingsOpenRef.current) return;
-    inputRef.current?.focus({ preventScroll: true });
-    if (isTypeMode) setInputReady(true);
-  }, [isTypeMode]);
+    const input = inputRef.current;
+    if (!input || input.disabled) return;
+
+    if (isMobileLayout()) {
+      const wasReadOnly = input.readOnly;
+      input.readOnly = true;
+      input.focus({ preventScroll: true });
+      input.readOnly = wasReadOnly;
+    } else {
+      input.focus({ preventScroll: true });
+    }
+    if (isTypeModeRef.current) setInputReady(true);
+  }, []);
+
+  const queueMobileInputFocus = useCallback(() => {
+    if (isMobileLayout() && isTypeModeRef.current) {
+      mobileInputFocusRef.current = true;
+    }
+  }, []);
 
   const focusCard = useCallback(() => {
     if (settingsOpenRef.current) return;
@@ -358,8 +381,6 @@ export default function FlashCard({
     const el = cardRef.current;
     if (!el) return undefined;
 
-    const isMobileLayout = () => window.matchMedia("(max-width: 640px)").matches;
-
     function onTouchStart(e) {
       if (!isMobileLayout() || settingsOpenRef.current || loadingRef.current || swipeLockRef.current) {
         return;
@@ -419,6 +440,9 @@ export default function FlashCard({
         const exitMode = dx > 0 ? "exit-next" : "exit-prev";
         setSwipeVisual({ mode: exitMode });
         window.setTimeout(() => {
+          if (isMobileLayout() && isTypeModeRef.current) {
+            mobileInputFocusRef.current = true;
+          }
           if (dx > 0) onNextRef.current?.();
           else onPrevRef.current?.();
           setSwipeVisual(null);
@@ -464,6 +488,9 @@ export default function FlashCard({
           is_correct: true,
           ai_feedback: "你已标记为认识",
         });
+        if (isMobileLayout() && isTypeModeRef.current) {
+          mobileInputFocusRef.current = true;
+        }
         onNext?.();
         return;
       }
@@ -566,7 +593,9 @@ export default function FlashCard({
     if (settings.autoDictateOnNewWord && micGranted) {
       dictationTimer = setTimeout(() => startDictationRef.current?.(), 500);
     } else if (isTypeMode) {
-      focusTimer = setTimeout(() => focusInput(), 350);
+      const delay = isMobileLayout() || mobileInputFocusRef.current ? 0 : 350;
+      mobileInputFocusRef.current = false;
+      focusTimer = setTimeout(() => focusInput(), delay);
     } else {
       focusTimer = setTimeout(() => focusCard(), 350);
     }
@@ -883,6 +912,11 @@ export default function FlashCard({
             <textarea
               ref={inputRef}
               className={`flashcard__input${inputReady ? " flashcard__input--ready" : ""}`}
+              inputMode="text"
+              enterKeyHint="done"
+              autoComplete="off"
+              autoCorrect="off"
+              spellCheck={false}
               placeholder={
                 isTypeMode
                   ? micGranted
@@ -1054,7 +1088,14 @@ export default function FlashCard({
       </div>
 
       <div className="flashcard__mobile-bar" aria-label="移动端快捷操作">
-        <button type="button" className="flashcard__mobile-btn" onClick={onPrev}>
+        <button
+          type="button"
+          className="flashcard__mobile-btn"
+          onClick={() => {
+            queueMobileInputFocus();
+            onPrev?.();
+          }}
+        >
           上一词
         </button>
         {!flipped ? (
@@ -1072,7 +1113,10 @@ export default function FlashCard({
               请先确认
             </button>
           ) : (
-          <button type="button" className="flashcard__mobile-btn flashcard__mobile-btn--accent" onClick={onNext}>
+          <button type="button" className="flashcard__mobile-btn flashcard__mobile-btn--accent" onClick={() => {
+            queueMobileInputFocus();
+            onNext?.();
+          }}>
             下一个
           </button>
           )
@@ -1081,7 +1125,14 @@ export default function FlashCard({
             翻回正面
           </button>
         )}
-        <button type="button" className="flashcard__mobile-btn" onClick={onNext}>
+        <button
+          type="button"
+          className="flashcard__mobile-btn"
+          onClick={() => {
+            queueMobileInputFocus();
+            onNext?.();
+          }}
+        >
           下一词
         </button>
       </div>
