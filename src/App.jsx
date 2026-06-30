@@ -21,6 +21,7 @@ import {
   saveProgress,
   getSavedIndex,
   patchListProgress,
+  normalizeBookPractice,
   buildWordRecord,
   buildRecognizedRecord,
   upsertWord,
@@ -53,7 +54,9 @@ export default function App() {
   const [wordsLoading, setWordsLoading] = useState(true);
   const [wordsError, setWordsError] = useState(null);
   const [listIndex, setListIndex] = useState(0);
-  const [bookPractice, setBookPractice] = useState(null);
+  const [bookPractice, setBookPractice] = useState(() =>
+    normalizeBookPractice(savedRef.current.bookPractice)
+  );
   const [reviewShuffle, setReviewShuffle] = useState(savedRef.current.reviewShuffle ?? false);
   const [shuffleSeed, setShuffleSeed] = useState(() => Date.now());
   const [streakData, setStreakData] = useState(() => recordVisit());
@@ -128,28 +131,23 @@ export default function App() {
   }, [applyList]);
 
   useEffect(() => {
-    if (wordsLoading || !activeListId || activeTab !== "practice") return;
-
+    if (wordsLoading || !activeListId) return;
     setListProgress((prev) => {
-      if (prev[activeListId]?.currentIndex === listIndex) {
-        saveProgress({
-          activeListId,
-          activeTab,
-          reviewShuffle,
-          listProgress: prev,
-        });
-        return prev;
-      }
-      const next = patchListProgress(prev, activeListId, listIndex);
-      saveProgress({
-        activeListId,
-        activeTab,
-        reviewShuffle,
-        listProgress: next,
-      });
-      return next;
+      if (prev[activeListId]?.currentIndex === listIndex) return prev;
+      return patchListProgress(prev, activeListId, listIndex);
     });
-  }, [listIndex, activeListId, activeTab, reviewShuffle, wordsLoading, listProgress]);
+  }, [listIndex, activeListId, wordsLoading]);
+
+  useEffect(() => {
+    if (wordsLoading) return;
+    saveProgress({
+      activeListId,
+      activeTab,
+      reviewShuffle,
+      listProgress,
+      bookPractice,
+    });
+  }, [activeListId, activeTab, reviewShuffle, listProgress, bookPractice, wordsLoading]);
 
   const handleListChange = useCallback(
     async (listId) => {
@@ -167,31 +165,31 @@ export default function App() {
           activeTab,
           reviewShuffle,
           listProgress: nextProgress,
+          bookPractice,
         });
       } catch (err) {
         setWordsError(err.message || "词库切换失败");
       }
     },
-    [activeListId, activeTab, applyList, listIndex, listProgress, reviewShuffle]
+    [activeListId, activeTab, applyList, bookPractice, listIndex, listProgress, reviewShuffle]
   );
 
   const handleTabChange = useCallback(
     (tab) => {
       setActiveTab(tab);
-      setBookPractice((prev) => {
-        if (!prev) return null;
-        if (prev.type === "unrecognized" && tab !== "unrecognized") return null;
-        if (prev.type === "recognized" && tab !== "recognized") return null;
-        return prev;
-      });
-      saveProgress({
-        activeListId,
-        activeTab: tab,
-        reviewShuffle,
-        listProgress,
+      setListProgress((prev) => {
+        const next = activeListId ? patchListProgress(prev, activeListId, listIndex) : prev;
+        saveProgress({
+          activeListId,
+          activeTab: tab,
+          reviewShuffle,
+          listProgress: next,
+          bookPractice,
+        });
+        return next;
       });
     },
-    [activeListId, reviewShuffle, listProgress]
+    [activeListId, bookPractice, listIndex, reviewShuffle]
   );
 
   const listWord = wordList[listIndex] ?? null;
@@ -361,10 +359,11 @@ export default function App() {
         activeTab,
         reviewShuffle: next,
         listProgress,
+        bookPractice,
       });
       return next;
     });
-  }, [activeListId, activeTab, listProgress]);
+  }, [activeListId, activeTab, bookPractice, listProgress]);
 
   const reshuffleUnrecognized = useCallback(() => {
     setShuffleSeed(Date.now());

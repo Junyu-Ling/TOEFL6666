@@ -11,6 +11,7 @@ const DEFAULT_PROGRESS = {
   isRecognizedReviewMode: false,
   reviewShuffle: false,
   listProgress: {},
+  bookPractice: null,
 };
 
 function readList(key) {
@@ -58,6 +59,25 @@ export function loadProgress() {
 
 export function saveProgress(progress) {
   localStorage.setItem(PROGRESS_KEY, JSON.stringify(progress));
+}
+
+/** Restore in-progress 生词本/熟词本练习（切换 Tab 或刷新后仍可继续）。 */
+export function normalizeBookPractice(raw) {
+  if (!raw || (raw.type !== "unrecognized" && raw.type !== "recognized")) return null;
+  if (!Array.isArray(raw.queue) || raw.queue.length === 0) return null;
+
+  const queue = raw.queue
+    .filter((item) => item?.word && Array.isArray(item.definitions))
+    .map(({ word, definitions }) => ({ word, definitions }));
+
+  if (queue.length === 0) return null;
+
+  const index = typeof raw.index === "number" ? raw.index : 0;
+  return {
+    type: raw.type,
+    queue,
+    index: Math.min(Math.max(index, 0), queue.length - 1),
+  };
 }
 
 export function getSavedIndex(listProgress, listId) {
