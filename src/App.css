@@ -3380,7 +3380,7 @@ body {
 .rich-ai-content ol,
 .rich-ai-content blockquote,
 .rich-ai-content pre,
-.rich-ai-content table {
+.rich-ai-content__table-wrap {
   margin: 0.5rem 0;
 }
 
@@ -3433,12 +3433,16 @@ body {
   background: transparent;
 }
 
+.rich-ai-content__table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
 .rich-ai-content table {
   width: 100%;
+  min-width: max-content;
   border-collapse: collapse;
   font-size: 0.8125rem;
-  display: block;
-  overflow-x: auto;
 }
 
 .rich-ai-content th,

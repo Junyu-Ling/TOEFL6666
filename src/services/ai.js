@@ -2,11 +2,9 @@ import {
   matchesStandardMeaning,
   isObviouslyWrong,
   isUsingTargetWordItself,
-  isMetaOrCommandAnswer,
   buildLocalCorrectResult,
   buildLocalWrongResult,
   TARGET_WORD_ITSELF_MESSAGE,
-  META_ANSWER_MESSAGE,
 } from "./localMatch";
 
 export async function evaluateAnswer(wordData, userAnswer) {
@@ -14,10 +12,6 @@ export async function evaluateAnswer(wordData, userAnswer) {
 
   if (isUsingTargetWordItself(trimmed, wordData.word)) {
     return buildLocalWrongResult(TARGET_WORD_ITSELF_MESSAGE);
-  }
-
-  if (isMetaOrCommandAnswer(trimmed)) {
-    return buildLocalWrongResult(META_ANSWER_MESSAGE);
   }
 
   if (matchesStandardMeaning(trimmed, wordData.definitions)) {
