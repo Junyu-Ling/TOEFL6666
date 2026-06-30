@@ -15,6 +15,8 @@ const SILENCE_STOP_MS = 2000;
 const SWIPE_THRESHOLD_PX = 48;
 const TAP_MOVE_TOLERANCE_PX = 14;
 const TAP_MAX_DURATION_MS = 350;
+const SWIPE_EXIT_MS = 300;
+const SWIPE_SNAP_MS = 320;
 
 function isTouchInteractiveTarget(target) {
   return Boolean(
@@ -30,6 +32,16 @@ function isMarkKnownKey(e) {
 
 function isMarkUnknownKey(e) {
   return e.code === "Digit0" || e.code === "Numpad0" || e.key === "0";
+}
+
+function computeSwipeTransform(dx) {
+  const clamped = Math.max(-160, Math.min(160, dx));
+  const progress = clamped / 160;
+  return {
+    x: clamped * 0.88,
+    rotate: progress * 14,
+    opacity: 1 - Math.abs(progress) * 0.14,
+  };
 }
 
 export default function FlashCard({
@@ -58,6 +70,7 @@ export default function FlashCard({
   const [pronouncing, setPronouncing] = useState(false);
   const [pronounceResult, setPronounceResult] = useState(null);
   const [memoryLoading, setMemoryLoading] = useState(false);
+  const [swipeVisual, setSwipeVisual] = useState(null);
   const inputRef = useRef(null);
   const cardRef = useRef(null);
   const dictationRef = useRef(null);
@@ -74,6 +87,12 @@ export default function FlashCard({
   const handleBlankTapRef = useRef(null);
   const touchStartRef = useRef(null);
   const memoryFetchRef = useRef(false);
+  const swipeLockRef = useRef(false);
+  const swipeDraggingRef = useRef(false);
+  const onNextRef = useRef(onNext);
+  const onPrevRef = useRef(onPrev);
+  onNextRef.current = onNext;
+  onPrevRef.current = onPrev;
   const answerSoundsRef = useRef(settings.answerSounds);
   const answerSoundCorrectRef = useRef(settings.answerSoundCorrect);
   const answerSoundWrongRef = useRef(settings.answerSoundWrong);
@@ -311,7 +330,9 @@ export default function FlashCard({
     const isMobileLayout = () => window.matchMedia("(max-width: 640px)").matches;
 
     function onTouchStart(e) {
-      if (!isMobileLayout() || settingsOpenRef.current || loadingRef.current) return;
+      if (!isMobileLayout() || settingsOpenRef.current || loadingRef.current || swipeLockRef.current) {
+        return;
+      }
       if (e.touches.length !== 1) return;
       const touch = e.touches[0];
       touchStartRef.current = {
@@ -320,16 +341,23 @@ export default function FlashCard({
         t: Date.now(),
         target: e.target,
       };
+      setSwipeVisual(null);
+      swipeDraggingRef.current = false;
     }
 
     function onTouchMove(e) {
       const start = touchStartRef.current;
-      if (!start || !isMobileLayout()) return;
+      if (!start || !isMobileLayout() || swipeLockRef.current) return;
+      if (isTouchInteractiveTarget(start.target)) return;
+
       const touch = e.touches[0];
       const dx = touch.clientX - start.x;
       const dy = touch.clientY - start.y;
-      if (Math.abs(dx) > 12 && Math.abs(dx) > Math.abs(dy) * 1.15) {
+      if (Math.abs(dx) > 8 && Math.abs(dx) > Math.abs(dy) * 1.15) {
         e.preventDefault();
+        swipeDraggingRef.current = true;
+        const transform = computeSwipeTransform(dx);
+        setSwipeVisual({ mode: "drag", ...transform });
       }
     }
 
@@ -341,7 +369,7 @@ export default function FlashCard({
       const start = touchStartRef.current;
       touchStartRef.current = null;
       if (!start || !isMobileLayout()) return;
-      if (settingsOpenRef.current || loadingRef.current) return;
+      if (settingsOpenRef.current || loadingRef.current || swipeLockRef.current) return;
 
       const touch = e.changedTouches[0];
       const dx = touch.clientX - start.x;
@@ -350,14 +378,28 @@ export default function FlashCard({
       const absDx = Math.abs(dx);
       const absDy = Math.abs(dy);
 
-      if (isTouchInteractiveTarget(start.target)) return;
+      if (isTouchInteractiveTarget(start.target)) {
+        setSwipeVisual(null);
+        return;
+      }
 
       if (absDx >= SWIPE_THRESHOLD_PX && absDx > absDy * 1.15) {
-        if (dx > 0) {
-          onNext?.();
-        } else {
-          onPrev?.();
-        }
+        swipeLockRef.current = true;
+        const exitMode = dx > 0 ? "exit-next" : "exit-prev";
+        setSwipeVisual({ mode: exitMode });
+        window.setTimeout(() => {
+          if (dx > 0) onNextRef.current?.();
+          else onPrevRef.current?.();
+          setSwipeVisual(null);
+          swipeLockRef.current = false;
+        }, SWIPE_EXIT_MS);
+        return;
+      }
+
+      if (swipeDraggingRef.current) {
+        swipeDraggingRef.current = false;
+        setSwipeVisual({ mode: "snap", x: 0, rotate: 0, opacity: 1 });
+        window.setTimeout(() => setSwipeVisual(null), SWIPE_SNAP_MS);
         return;
       }
 
@@ -381,7 +423,7 @@ export default function FlashCard({
       el.removeEventListener("touchend", onTouchEnd);
       el.removeEventListener("touchcancel", clearTouchStart);
     };
-  }, [onNext, onPrev]);
+  }, []);
 
   const handleManualMark = useCallback(
     async (isCorrect) => {
@@ -485,6 +527,9 @@ export default function FlashCard({
     setPronounceResult(null);
     setPronouncing(false);
     setInputReady(false);
+    setSwipeVisual(null);
+    swipeLockRef.current = false;
+    swipeDraggingRef.current = false;
     stopDictation();
 
     let speechTimer;
@@ -720,6 +765,24 @@ export default function FlashCard({
         : "card--wrong"
       : "";
 
+  const swipeLayerClass = [
+    "flashcard-swipe",
+    swipeVisual?.mode === "drag" && "flashcard-swipe--dragging",
+    swipeVisual?.mode === "snap" && "flashcard-swipe--snap",
+    swipeVisual?.mode === "exit-next" && "flashcard-swipe--exit-next",
+    swipeVisual?.mode === "exit-prev" && "flashcard-swipe--exit-prev",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  const swipeLayerStyle =
+    swipeVisual && (swipeVisual.mode === "drag" || swipeVisual.mode === "snap")
+      ? {
+          transform: `translateX(${swipeVisual.x}px) rotate(${swipeVisual.rotate}deg)`,
+          opacity: swipeVisual.opacity ?? 1,
+        }
+      : undefined;
+
   return (
     <div
       ref={cardRef}
@@ -727,6 +790,7 @@ export default function FlashCard({
       tabIndex={-1}
       aria-label="单词卡片"
     >
+      <div className={swipeLayerClass} style={swipeLayerStyle}>
       <div className={`flashcard ${flipped ? "flashcard--flipped" : ""} ${borderClass}`}>
         <div className="flashcard__face flashcard__front">
           <div className="flashcard__term">
@@ -950,6 +1014,7 @@ export default function FlashCard({
             </>
           )}
         </div>
+      </div>
       </div>
 
       <div className="flashcard__mobile-bar" aria-label="移动端快捷操作">
