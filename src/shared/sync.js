@@ -1,6 +1,13 @@
 export const SYNC_PREFIX = "toefl666_";
 export const SYNC_VERSION = 1;
 export const PAIRING_CODE_LENGTH = 8;
+export const PAIRING_STORAGE_KEY = "toefl666_pairing";
+
+/** 不参与云端同步的本地键 */
+export const SYNC_EXCLUDED_KEYS = new Set([
+  PAIRING_STORAGE_KEY,
+  "toefl666_last_sync",
+]);
 
 const CODE_CHARS = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 
@@ -31,7 +38,7 @@ export function exportLocalData() {
   const data = {};
   for (let i = 0; i < localStorage.length; i++) {
     const key = localStorage.key(i);
-    if (key?.startsWith(SYNC_PREFIX)) {
+    if (key?.startsWith(SYNC_PREFIX) && !SYNC_EXCLUDED_KEYS.has(key)) {
       data[key] = localStorage.getItem(key);
     }
   }
@@ -40,6 +47,251 @@ export function exportLocalData() {
     exportedAt: Date.now(),
     data,
   };
+}
+
+function parseJson(value, fallback) {
+  try {
+    return value ? JSON.parse(value) : fallback;
+  } catch {
+    return fallback;
+  }
+}
+
+function mergeWordEntry(a, b) {
+  const aTime = a.savedAt || 0;
+  const bTime = b.savedAt || 0;
+  const primary = aTime >= bTime ? a : b;
+  const secondary = primary === a ? b : a;
+  return {
+    ...primary,
+    wrongCount: Math.max(a.wrongCount || 0, b.wrongCount || 0),
+    memory_trick: primary.memory_trick || secondary.memory_trick,
+    definitions: primary.definitions?.length ? primary.definitions : secondary.definitions,
+    ai_feedback: primary.ai_feedback || secondary.ai_feedback,
+  };
+}
+
+function mergeWordLists(localList, remoteList) {
+  const map = new Map();
+  for (const item of localList) map.set(item.word, item);
+  for (const item of remoteList) {
+    const existing = map.get(item.word);
+    map.set(item.word, existing ? mergeWordEntry(existing, item) : item);
+  }
+  return [...map.values()];
+}
+
+function mergeBookSession(localSession, remoteSession) {
+  if (!localSession) return remoteSession || null;
+  if (!remoteSession) return localSession;
+
+  const sameQueue =
+    localSession.queue.length === remoteSession.queue.length &&
+    localSession.queue.every((item, index) => item.word === remoteSession.queue[index]?.word);
+
+  if (sameQueue) {
+    return {
+      queue: localSession.queue,
+      index: Math.max(localSession.index || 0, remoteSession.index || 0),
+    };
+  }
+
+  const localRatio = localSession.queue.length
+    ? (localSession.index || 0) / localSession.queue.length
+    : 0;
+  const remoteRatio = remoteSession.queue.length
+    ? (remoteSession.index || 0) / remoteSession.queue.length
+    : 0;
+  return localRatio >= remoteRatio ? localSession : remoteSession;
+}
+
+function mergeProgressObject(local, remote) {
+  const merged = { ...local };
+  merged.listProgress = { ...(local.listProgress || {}) };
+
+  for (const [listId, entry] of Object.entries(remote.listProgress || {})) {
+    const localEntry = merged.listProgress[listId];
+    if (!localEntry || (entry.updatedAt || 0) > (localEntry.updatedAt || 0)) {
+      merged.listProgress[listId] = entry;
+    }
+  }
+
+  const localBooks = local.bookPractices || {};
+  const remoteBooks = remote.bookPractices || {};
+  merged.bookPractices = {
+    unrecognized: mergeBookSession(localBooks.unrecognized, remoteBooks.unrecognized),
+    recognized: mergeBookSession(localBooks.recognized, remoteBooks.recognized),
+  };
+
+  const localPaused = local.bookPracticePaused || {};
+  const remotePaused = remote.bookPracticePaused || {};
+  merged.bookPracticePaused = {
+    unrecognized: Boolean(localPaused.unrecognized && remotePaused.unrecognized),
+    recognized: Boolean(localPaused.recognized && remotePaused.recognized),
+  };
+
+  if ((remote.updatedAt || 0) > (local.updatedAt || 0)) {
+    if (remote.activeListId) merged.activeListId = remote.activeListId;
+    if (remote.activeTab) merged.activeTab = remote.activeTab;
+    if (typeof remote.reviewShuffle === "boolean") merged.reviewShuffle = remote.reviewShuffle;
+  }
+
+  return merged;
+}
+
+function mergeStreakObject(local, remote) {
+  const loginDates = [...new Set([...(local.loginDates || []), ...(remote.loginDates || [])])].sort();
+  const marks = new Map();
+  for (const mark of [...(local.examMarks || []), ...(remote.examMarks || [])]) {
+    if (!mark?.id) continue;
+    const existing = marks.get(mark.id);
+    if (!existing || String(mark.dateKey) > String(existing.dateKey)) {
+      marks.set(mark.id, mark);
+    }
+  }
+  return {
+    ...local,
+    ...remote,
+    loginDates,
+    longestStreak: Math.max(local.longestStreak || 0, remote.longestStreak || 0),
+    examMarks: [...marks.values()],
+  };
+}
+
+function mergeChatHistory(local, remote) {
+  const merged = { ...local };
+  for (const [key, entry] of Object.entries(remote)) {
+    const localEntry = merged[key];
+    if (!localEntry?.messages?.length) {
+      merged[key] = entry;
+      continue;
+    }
+    if (!entry?.messages?.length) continue;
+    const seen = new Set(localEntry.messages.map((m) => m.at));
+    const messages = [...localEntry.messages];
+    for (const message of entry.messages) {
+      if (!seen.has(message.at)) {
+        messages.push(message);
+        seen.add(message.at);
+      }
+    }
+    messages.sort((a, b) => (a.at || 0) - (b.at || 0));
+    merged[key] = {
+      ...localEntry,
+      ...entry,
+      messages,
+      definitions: entry.definitions?.length ? entry.definitions : localEntry.definitions,
+    };
+  }
+  return merged;
+}
+
+function mergeSettingsValue(localStr, remoteStr) {
+  const local = parseJson(localStr, {});
+  const remote = parseJson(remoteStr, {});
+  const merged = { ...local, ...remote };
+  delete merged.aiApiKey;
+  return JSON.stringify(merged);
+}
+
+/** 双向合并两台设备的同步包，保留双方学习增量。 */
+export function mergeSyncBundles(localBundle, remoteBundle) {
+  if (!remoteBundle?.data) return localBundle;
+  if (!localBundle?.data) return remoteBundle;
+
+  const mergedData = { ...localBundle.data };
+  const remoteData = remoteBundle.data;
+
+  for (const [key, remoteValue] of Object.entries(remoteData)) {
+    if (!key.startsWith(SYNC_PREFIX) || SYNC_EXCLUDED_KEYS.has(key)) continue;
+    const localValue = mergedData[key];
+
+    if (key === "toefl666_recognized" || key === "toefl666_unrecognized") {
+      mergedData[key] = JSON.stringify(
+        mergeWordLists(parseJson(localValue, []), parseJson(remoteValue, []))
+      );
+      continue;
+    }
+
+    if (key === "toefl666_progress") {
+      mergedData[key] = JSON.stringify(
+        mergeProgressObject(parseJson(localValue, {}), parseJson(remoteValue, {}))
+      );
+      continue;
+    }
+
+    if (key === "toefl666_streak") {
+      mergedData[key] = JSON.stringify(
+        mergeStreakObject(parseJson(localValue, {}), parseJson(remoteValue, {}))
+      );
+      continue;
+    }
+
+    if (key === "toefl666_ai_chat_history") {
+      mergedData[key] = JSON.stringify(
+        mergeChatHistory(parseJson(localValue, {}), parseJson(remoteValue, {}))
+      );
+      continue;
+    }
+
+    if (key === "toefl666_settings") {
+      mergedData[key] = mergeSettingsValue(localValue, remoteValue);
+      continue;
+    }
+
+    if (!localValue) {
+      mergedData[key] = remoteValue;
+      continue;
+    }
+
+    mergedData[key] = remoteBundle.exportedAt >= localBundle.exportedAt ? remoteValue : localValue;
+  }
+
+  return {
+    version: SYNC_VERSION,
+    exportedAt: Math.max(localBundle.exportedAt || 0, remoteBundle.exportedAt || 0),
+    data: mergedData,
+  };
+}
+
+export function loadPairingSession() {
+  try {
+    const raw = localStorage.getItem(PAIRING_STORAGE_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    const code = normalizePairingCode(parsed.code || "");
+    if (!isValidPairingCode(code)) return null;
+    return {
+      code,
+      role: parsed.role === "host" ? "host" : "linked",
+      linkedAt: parsed.linkedAt || Date.now(),
+      lastPushedAt: parsed.lastPushedAt || 0,
+      lastRemoteUpdatedAt: parsed.lastRemoteUpdatedAt || 0,
+    };
+  } catch {
+    return null;
+  }
+}
+
+export function savePairingSession(session) {
+  if (!session?.code || !isValidPairingCode(session.code)) {
+    localStorage.removeItem(PAIRING_STORAGE_KEY);
+    return;
+  }
+  localStorage.setItem(
+    PAIRING_STORAGE_KEY,
+    JSON.stringify({
+      code: normalizePairingCode(session.code),
+      role: session.role === "host" ? "host" : "linked",
+      linkedAt: session.linkedAt || Date.now(),
+      lastPushedAt: session.lastPushedAt || 0,
+      lastRemoteUpdatedAt: session.lastRemoteUpdatedAt || 0,
+    })
+  );
+}
+
+export function clearPairingSession() {
+  localStorage.removeItem(PAIRING_STORAGE_KEY);
 }
 
 export function importLocalData(bundle) {
@@ -60,10 +312,18 @@ export function importLocalData(bundle) {
     // ignore
   }
 
+  const preserved = {};
+  for (const key of SYNC_EXCLUDED_KEYS) {
+    const value = localStorage.getItem(key);
+    if (value != null) preserved[key] = value;
+  }
+
   const keysToRemove = [];
   for (let i = 0; i < localStorage.length; i++) {
     const key = localStorage.key(i);
-    if (key?.startsWith(SYNC_PREFIX)) keysToRemove.push(key);
+    if (key?.startsWith(SYNC_PREFIX) && !SYNC_EXCLUDED_KEYS.has(key)) {
+      keysToRemove.push(key);
+    }
   }
   for (const key of keysToRemove) {
     localStorage.removeItem(key);
@@ -71,6 +331,7 @@ export function importLocalData(bundle) {
 
   for (const [key, value] of Object.entries(bundle.data)) {
     if (!key.startsWith(SYNC_PREFIX) || typeof value !== "string") continue;
+    if (SYNC_EXCLUDED_KEYS.has(key)) continue;
     if (key === "toefl666_settings") {
       try {
         const settings = JSON.parse(value);
@@ -81,6 +342,10 @@ export function importLocalData(bundle) {
         // fall through
       }
     }
+    localStorage.setItem(key, value);
+  }
+
+  for (const [key, value] of Object.entries(preserved)) {
     localStorage.setItem(key, value);
   }
 }

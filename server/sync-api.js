@@ -44,6 +44,7 @@ export async function handleSyncPush(body = {}) {
   return {
     code: formatPairingCode(code),
     expiresAt,
+    updatedAt: Date.now(),
     backend,
   };
 }
@@ -58,6 +59,7 @@ export async function handleSyncPull(body = {}) {
   return {
     payload: entry.payload,
     exportedAt: entry.payload.exportedAt,
+    updatedAt: entry.updatedAt || entry.payload.exportedAt,
     expiresAt: entry.expiresAt,
     backend,
   };

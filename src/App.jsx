@@ -9,6 +9,7 @@ import StreakPanel from "./components/StreakPanel";
 import VocabLoadingScreen from "./components/VocabLoadingScreen";
 import MottoFooter from "./components/MottoFooter";
 import { recordVisit, refreshStreak } from "./services/streak";
+import { syncService, SYNC_APPLIED_EVENT, SYNC_STATUS_EVENT } from "./services/syncService";
 import { useMicrophone } from "./hooks/useMicrophone";
 import { useSettings } from "./context/SettingsContext";
 import { fetchWordList, fetchWordListManifest } from "./services/wordlist";
@@ -89,6 +90,39 @@ export default function App() {
       window.removeEventListener("storage", handleStorage);
     };
   }, []);
+
+  const reloadFromSync = useCallback(() => {
+    const progress = loadProgress();
+    savedRef.current = progress;
+    setRecognized(loadRecognized());
+    setUnrecognized(loadUnrecognized());
+    setListProgress(progress.listProgress || {});
+    const practices = loadBookPractices(progress);
+    setBookPractices(practices);
+    setBookPracticePaused(loadBookPracticePaused(progress, practices));
+    if (progress.activeTab) setActiveTab(progress.activeTab);
+    setReviewShuffle(progress.reviewShuffle ?? false);
+    setStreakData(refreshStreak());
+    if (activeListId) {
+      setListIndex(getSavedIndex(progress.listProgress, activeListId));
+    }
+  }, [activeListId]);
+
+  useEffect(() => {
+    const cleanupFocus = syncService.start();
+    const onApplied = () => reloadFromSync();
+    window.addEventListener(SYNC_APPLIED_EVENT, onApplied);
+    return () => {
+      window.removeEventListener(SYNC_APPLIED_EVENT, onApplied);
+      cleanupFocus?.();
+      syncService.stop();
+    };
+  }, [reloadFromSync]);
+
+  useEffect(() => {
+    if (wordsLoading) return;
+    syncService.markDirty();
+  }, [recognized, unrecognized, listProgress, bookPractices, bookPracticePaused, streakData, wordsLoading]);
 
   const applyList = useCallback((listId, words, meta, index) => {
     setListMeta(meta);

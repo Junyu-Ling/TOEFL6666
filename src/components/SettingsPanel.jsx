@@ -1,13 +1,8 @@
 import { useState, useEffect, useMemo, useRef } from "react";
 import { useSettings } from "../context/SettingsContext";
-import {
-  exportLocalData,
-  formatPairingCode,
-  getSyncSummary,
-  importLocalData,
-  normalizePairingCode,
-} from "../shared/sync";
-import { pullSyncPayload, pushSyncPayload } from "../services/syncApi";
+import { exportLocalData, formatPairingCode, getSyncSummary, normalizePairingCode } from "../shared/sync";
+import { pushSyncPayload } from "../services/syncApi";
+import { syncService, SYNC_STATUS_EVENT } from "../services/syncService";
 import {
   CORRECT_SOUND_OPTIONS,
   WRONG_SOUND_OPTIONS,
@@ -71,9 +66,21 @@ export default function SettingsPanel() {
   const [syncBusy, setSyncBusy] = useState(false);
   const [syncMessage, setSyncMessage] = useState("");
   const [syncError, setSyncError] = useState("");
+  const [pairingCode, setPairingCode] = useState(() => syncService.getPairingCode());
+  const [syncStatus, setSyncStatus] = useState(() => syncService.getStatus());
   const panelRef = useRef(null);
 
-  const syncSummary = useMemo(() => getSyncSummary(), [settingsOpen]);
+  const syncSummary = useMemo(() => getSyncSummary(), [settingsOpen, syncStatus.state]);
+
+  useEffect(() => {
+    function onStatus(event) {
+      setSyncStatus(event.detail || syncService.getStatus());
+      const code = event.detail?.code || syncService.getPairingCode();
+      if (code) setPairingCode(code);
+    }
+    window.addEventListener(SYNC_STATUS_EVENT, onStatus);
+    return () => window.removeEventListener(SYNC_STATUS_EVENT, onStatus);
+  }, []);
 
   useEffect(() => {
     if (!settingsOpen || !panelRef.current) return;
@@ -83,9 +90,10 @@ export default function SettingsPanel() {
   useEffect(() => {
     if (settingsOpen) {
       setDelayDraft(String(settings.autoAdvanceDelaySec));
-      setSyncMessage("");
       setSyncError("");
       setPullCode("");
+      setPairingCode(syncService.getPairingCode());
+      setSyncStatus(syncService.getStatus());
       const last = readLastSync();
       if (last?.code) {
         setUploadedCode(last.code);
@@ -121,17 +129,22 @@ export default function SettingsPanel() {
       setUploadedCode(result.code);
       setUploadedHost(host);
       writeLastSync({ code: result.code, host, backend: result.backend });
+      await syncService.establishHost(result.code, {
+        push: false,
+        remoteUpdatedAt: result.updatedAt || Date.now(),
+      });
+      setPairingCode(formatPairingCode(result.code));
       const expires = new Date(result.expiresAt).toLocaleString("zh-CN");
       const copied = await copyText(result.code);
       if (result.backend === "memory") {
         setSyncMessage(
           `配对码 ${result.code}（仅 ${host} 开发环境有效）· 至 ${expires}${
             copied ? " · 已复制" : ""
-          }`
+          } · 本机已开启实时同步`
         );
       } else {
         setSyncMessage(
-          `配对码 ${result.code} · 至 ${expires}${copied ? " · 已复制" : ""} · 请在另一台设备打开 ${host} 后恢复`
+          `配对码 ${result.code} · 至 ${expires}${copied ? " · 已复制" : ""} · 另一台设备输入此码即可双向实时同步`
         );
       }
     } catch (err) {
@@ -141,17 +154,10 @@ export default function SettingsPanel() {
     }
   }
 
-  async function handlePullSync() {
+  async function handleLinkSync() {
     const code = normalizePairingCode(pullCode);
     if (code.length !== 8) {
       setSyncError("请输入 8 位配对码");
-      return;
-    }
-    if (
-      !window.confirm(
-        "将用云端进度覆盖本机所有学习数据。确定继续吗？"
-      )
-    ) {
       return;
     }
 
@@ -159,29 +165,42 @@ export default function SettingsPanel() {
     setSyncError("");
     setSyncMessage("");
     try {
-      const result = await pullSyncPayload(code);
-      importLocalData(result.payload);
-      window.location.reload();
+      const merged = await syncService.linkDevice(code);
+      setPairingCode(formatPairingCode(code));
+      setSyncMessage(
+        merged
+          ? "已与云端进度合并，正在实时同步"
+          : "已连接配对码，两台设备进度将自动双向同步"
+      );
     } catch (err) {
       const host = window.location.host;
       const last = readLastSync();
       const hints = [
-        "请确认源设备已点击「上传进度」",
+        "请确认源设备已点击「生成配对码」",
         `两台设备须打开同一网址（当前 ${host}）`,
         "请核对配对码是否抄写正确",
       ];
       if (last?.host && last.host !== host) {
         hints.unshift(`本机曾从 ${last.host} 上传，与当前 ${host} 不一致`);
       }
-      setSyncError(`${err.message || "拉取失败"}。${hints.join("；")}。`);
+      setSyncError(`${err.message || "连接失败"}。${hints.join("；")}。`);
+    } finally {
       setSyncBusy(false);
     }
   }
 
+  function handleUnlink() {
+    syncService.unlink();
+    setPairingCode("");
+    setSyncMessage("已解除实时同步");
+    setSyncError("");
+  }
+
   async function handleCopyCode() {
-    if (!uploadedCode) return;
-    const ok = await copyText(uploadedCode);
-    setSyncMessage(ok ? `已复制 ${uploadedCode}` : "复制失败，请手动复制");
+    const code = pairingCode || uploadedCode;
+    if (!code) return;
+    const ok = await copyText(code);
+    setSyncMessage(ok ? `已复制 ${code}` : "复制失败，请手动复制");
     setSyncError("");
   }
 
@@ -380,13 +399,40 @@ export default function SettingsPanel() {
           </summary>
           <div className="settings-group__body">
             <p className="settings-hint settings-hint--compact">
-              电脑与手机须打开同一网址（如 toefl-6666.vercel.app），配对码 7 天内有效。
+              电脑与手机须打开同一网址（如 toefl-6666.vercel.app）。配对后两台设备会每 5 秒自动双向合并进度，无需刷新页面。
             </p>
+
+            {pairingCode ? (
+              <div className="settings-sync-card settings-sync-card--active">
+                <div className="settings-sync-card__head">
+                  <strong>实时同步中</strong>
+                  <span>{syncStatus.message || `配对码 ${pairingCode}`}</span>
+                </div>
+                <p className="settings-sync-code">
+                  <span className="sync-code-badge">{pairingCode}</span>
+                  <button
+                    type="button"
+                    className="settings-action-btn settings-action-btn--inline"
+                    onClick={handleCopyCode}
+                  >
+                    复制
+                  </button>
+                </p>
+                <button
+                  type="button"
+                  className="settings-action-btn settings-action-btn--block"
+                  onClick={handleUnlink}
+                  disabled={syncBusy}
+                >
+                  解除配对
+                </button>
+              </div>
+            ) : null}
 
             <div className="settings-sync-card">
               <div className="settings-sync-card__head">
-                <strong>上传进度</strong>
-                <span>生成配对码，供其他设备恢复</span>
+                <strong>生成配对码</strong>
+                <span>在本机上传进度并开启实时同步</span>
               </div>
               <button
                 type="button"
@@ -394,9 +440,9 @@ export default function SettingsPanel() {
                 onClick={handleUploadSync}
                 disabled={syncBusy}
               >
-                {syncBusy ? "处理中…" : "上传本机进度"}
+                {syncBusy ? "处理中…" : "生成配对码"}
               </button>
-              {uploadedCode && (
+              {uploadedCode && !pairingCode ? (
                 <p className="settings-sync-code">
                   <span className="sync-code-badge">{uploadedCode}</span>
                   <button
@@ -407,13 +453,16 @@ export default function SettingsPanel() {
                     复制
                   </button>
                 </p>
-              )}
+              ) : null}
+              {uploadedHost ? (
+                <p className="settings-hint settings-hint--compact">上次上传站点：{uploadedHost}</p>
+              ) : null}
             </div>
 
             <div className="settings-sync-card">
               <div className="settings-sync-card__head">
-                <strong>恢复进度</strong>
-                <span>输入另一台设备上传后获得的配对码</span>
+                <strong>连接配对码</strong>
+                <span>输入另一台设备的配对码，合并并持续同步</span>
               </div>
               <input
                 className="settings-sync-input"
@@ -428,10 +477,10 @@ export default function SettingsPanel() {
               <button
                 type="button"
                 className="settings-action-btn settings-action-btn--block"
-                onClick={handlePullSync}
+                onClick={handleLinkSync}
                 disabled={syncBusy}
               >
-                从配对码恢复
+                输入配对码并实时同步
               </button>
             </div>
 
