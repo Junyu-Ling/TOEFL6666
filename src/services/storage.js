@@ -79,7 +79,11 @@ export function normalizeBookPracticeSession(raw) {
 
   const queue = raw.queue
     .filter((item) => item?.word && Array.isArray(item.definitions))
-    .map(({ word, definitions }) => ({ word, definitions }));
+    .map(({ word, definitions, sourceListId }) => ({
+      word,
+      definitions,
+      ...(sourceListId ? { sourceListId } : {}),
+    }));
 
   if (queue.length === 0) return null;
 
@@ -87,6 +91,7 @@ export function normalizeBookPracticeSession(raw) {
   return {
     queue,
     index: Math.min(Math.max(index, 0), queue.length - 1),
+    ...(typeof raw.listId === "string" && raw.listId ? { listId: raw.listId } : {}),
   };
 }
 
@@ -145,6 +150,9 @@ export function buildWordRecord(wordData, aiResult) {
     ai_feedback: appendBookDefinitions(aiResult.ai_feedback, wordData.definitions),
     savedAt: Date.now(),
   };
+  if (wordData.sourceListId) {
+    record.sourceListId = wordData.sourceListId;
+  }
   if (aiResult.memory_trick) {
     record.memory_trick = aiResult.memory_trick;
   }

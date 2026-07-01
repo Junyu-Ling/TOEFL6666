@@ -5,6 +5,7 @@ import {
   createDictationSession,
   listenOnce,
   checkPronunciation,
+  matchesEnglishRecall,
 } from "../utils/speechRecognition";
 import { playAnswerSound } from "../utils/answerSounds";
 import { fetchMemoryTrick } from "../services/memoryTrick";
@@ -62,10 +63,16 @@ export default function FlashCard({
   settingsOpenRef.current = settingsOpen;
   const isTypeModeRef = useRef(settings.practiceStyle !== "recall");
   const isTypeMode = settings.practiceStyle !== "recall";
+  const hideWordFirst = settings.hideWordFirst && isTypeMode;
+  const hideWordFirstRef = useRef(hideWordFirst);
+  hideWordFirstRef.current = hideWordFirst;
   isTypeModeRef.current = isTypeMode;
   const [flipped, setFlipped] = useState(false);
   const [backMode, setBackMode] = useState(null);
   const [userAnswer, setUserAnswer] = useState("");
+  const [englishAttempt, setEnglishAttempt] = useState("");
+  const [recallStep, setRecallStep] = useState("english");
+  const [englishRecallHint, setEnglishRecallHint] = useState("");
   const [inputReady, setInputReady] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -78,10 +85,13 @@ export default function FlashCard({
   const [memoryLoading, setMemoryLoading] = useState(false);
   const [swipeVisual, setSwipeVisual] = useState(null);
   const inputRef = useRef(null);
+  const englishInputRef = useRef(null);
   const cardRef = useRef(null);
   const dictationRef = useRef(null);
   const silenceTimerRef = useRef(null);
   const answerRef = useRef("");
+  const englishAnswerRef = useRef("");
+  const recallStepRef = useRef("english");
   const loadingRef = useRef(false);
   const flippedRef = useRef(false);
   const backModeRef = useRef(null);
@@ -180,6 +190,14 @@ export default function FlashCard({
   }, [userAnswer]);
 
   useEffect(() => {
+    englishAnswerRef.current = englishAttempt;
+  }, [englishAttempt]);
+
+  useEffect(() => {
+    recallStepRef.current = recallStep;
+  }, [recallStep]);
+
+  useEffect(() => {
     loadingRef.current = loading;
   }, [loading]);
 
@@ -209,7 +227,10 @@ export default function FlashCard({
 
   const focusInput = useCallback(() => {
     if (settingsOpenRef.current) return;
-    const input = inputRef.current;
+    const input =
+      hideWordFirstRef.current && recallStepRef.current === "english"
+        ? englishInputRef.current
+        : inputRef.current;
     if (!input || input.disabled) return;
 
     if (isMobileLayout()) {
@@ -263,11 +284,16 @@ export default function FlashCard({
     setFlipped(false);
     setBackMode(null);
     setResult(null);
+    if (hideWordFirstRef.current) {
+      setRecallStep("english");
+      setEnglishRecallHint("");
+    }
     requestAnimationFrame(isTypeMode ? focusInput : focusCard);
   }, [focusInput, focusCard, isTypeMode]);
 
   const flipToManual = useCallback(() => {
     if (loadingRef.current || flippedRef.current) return;
+    if (hideWordFirstRef.current && recallStepRef.current === "english") return;
     stopDictation();
     setError(null);
     setBackMode("manual");
@@ -306,6 +332,7 @@ export default function FlashCard({
     async (answerText) => {
       const text = (answerText ?? answerRef.current).trim();
       if (loadingRef.current || flippedRef.current || !text) return;
+      if (hideWordFirstRef.current && recallStepRef.current !== "meaning") return;
 
       stopDictation();
       evalAbortRef.current?.abort();
@@ -531,10 +558,46 @@ export default function FlashCard({
     [wordData, onResult, onNext, stopDictation, showWrongAnswer]
   );
 
+  const advanceToMeaningStepRef = useRef(null);
+
+  const advanceToMeaningStep = useCallback(() => {
+    const text = englishAnswerRef.current.trim();
+    if (!text || !hideWordFirstRef.current) return;
+
+    stopDictation();
+    const matched = matchesEnglishRecall(text, wordData.word);
+    setEnglishRecallHint(
+      matched ? "拼写正确，请写出中文释义" : `已记录「${text}」，请写出中文释义`
+    );
+    setRecallStep("meaning");
+    setUserAnswer("");
+    answerRef.current = "";
+    setDictationHint("");
+    requestAnimationFrame(() => {
+      inputRef.current?.focus({ preventScroll: true });
+      setInputReady(true);
+    });
+  }, [wordData.word, stopDictation]);
+
+  useEffect(() => {
+    advanceToMeaningStepRef.current = advanceToMeaningStep;
+  }, [advanceToMeaningStep]);
+
   const scheduleSilenceStop = useCallback(() => {
     clearTimeout(silenceTimerRef.current);
     silenceTimerRef.current = setTimeout(() => {
       stopDictation();
+      if (hideWordFirstRef.current && recallStepRef.current === "english") {
+        const text = englishAnswerRef.current.trim();
+        if (text) {
+          advanceToMeaningStepRef.current?.();
+        } else {
+          englishInputRef.current?.focus();
+          setInputReady(true);
+        }
+        return;
+      }
+
       const text = answerRef.current.trim();
       if (text && !loadingRef.current && !flippedRef.current) {
         submitAnswerRef.current?.(text);
@@ -550,22 +613,39 @@ export default function FlashCard({
   const startDictation = useCallback(() => {
     if (!micGranted || loadingRef.current || flippedRef.current || dictatingRef.current) return;
 
+    const englishPhase = hideWordFirstRef.current && recallStepRef.current === "english";
+
     setError(null);
-    setDictationHint("正在聆听…");
-    setUserAnswer("");
-    answerRef.current = "";
+    setDictationHint(englishPhase ? "正在聆听英文…" : "正在聆听…");
+    if (englishPhase) {
+      setEnglishAttempt("");
+      englishAnswerRef.current = "";
+    } else {
+      setUserAnswer("");
+      answerRef.current = "";
+    }
 
     const session = createDictationSession({
-      lang: "zh-CN",
+      lang: englishPhase ? "en-US" : "zh-CN",
       onInterim: (text) => {
-        setUserAnswer(text);
-        answerRef.current = text;
+        if (englishPhase) {
+          setEnglishAttempt(text);
+          englishAnswerRef.current = text;
+        } else {
+          setUserAnswer(text);
+          answerRef.current = text;
+        }
         setDictationHint(text);
         scheduleSilenceStop();
       },
       onFinal: (text) => {
-        setUserAnswer(text);
-        answerRef.current = text;
+        if (englishPhase) {
+          setEnglishAttempt(text);
+          englishAnswerRef.current = text;
+        } else {
+          setUserAnswer(text);
+          answerRef.current = text;
+        }
         setDictationHint("");
         scheduleSilenceStop();
       },
@@ -600,6 +680,9 @@ export default function FlashCard({
     setFlipped(false);
     setBackMode(null);
     setUserAnswer("");
+    setEnglishAttempt("");
+    setRecallStep("english");
+    setEnglishRecallHint("");
     setResult(null);
     setError(null);
     setLoading(false);
@@ -641,6 +724,7 @@ export default function FlashCard({
     stopDictation,
     settings.autoReadOnNewWord,
     settings.autoDictateOnNewWord,
+    settings.hideWordFirst,
     settings.practiceStyle,
     micGranted,
     isTypeMode,
@@ -679,7 +763,11 @@ export default function FlashCard({
   useEffect(() => {
     function isTypingInAnswerField() {
       const active = document.activeElement;
-      return active === inputRef.current;
+      return active === inputRef.current || active === englishInputRef.current;
+    }
+
+    function isTypingEnglishField() {
+      return document.activeElement === englishInputRef.current;
     }
 
     function isInsideVocabAssistant() {
@@ -756,6 +844,9 @@ export default function FlashCard({
 
       if (e.key === " ") {
         if (isTypingInAnswerField()) return;
+        if (hideWordFirstRef.current && recallStepRef.current === "english" && !flippedRef.current) {
+          return;
+        }
         e.preventDefault();
         if (flippedRef.current) {
           flipBack();
@@ -778,6 +869,14 @@ export default function FlashCard({
           return;
         }
 
+        if (hideWordFirstRef.current && recallStepRef.current === "english") {
+          const hasEnglish = englishAnswerRef.current.trim();
+          if (!hasEnglish) return;
+          e.preventDefault();
+          advanceToMeaningStepRef.current?.();
+          return;
+        }
+
         const inInput = isTypingInAnswerField();
         const hasAnswer = answerRef.current.trim();
 
@@ -788,7 +887,9 @@ export default function FlashCard({
           return;
         }
 
-        flipToManual();
+        if (!hideWordFirstRef.current) {
+          flipToManual();
+        }
       }
     }
 
@@ -796,25 +897,40 @@ export default function FlashCard({
     return () => window.removeEventListener("keydown", handleGlobalKeyDown, true);
   }, [onPrev, onNext, submitAnswer, flipToManual, flipBack, handleManualMark, isTypeMode]);
 
-  const frontPrompt = isTypeMode
-    ? "用中文或别的英文词解释（勿照抄原词），Enter 提交批改"
-    : "先在脑海里回忆词义，按空格或 Enter 翻面核对";
+  const onEnglishPhase = hideWordFirst && recallStep === "english";
+  const showWord = !onEnglishPhase;
 
-  const desktopHint = isTypeMode
-    ? dictating
-      ? "说完后停顿 2 秒自动提交批改"
-      : "Enter 提交或空内容翻面 · Shift+Enter 换行 · 框外空格翻面 · ↑↓ 切词"
-    : dictating
-      ? "说完后停顿 2 秒自动提交"
-      : "Enter / 空格翻面 · 输入后 Enter 提交 · Shift+Enter 换行 · ↑↓ 切词";
+  const frontPrompt = onEnglishPhase
+    ? "先听发音，默写或语音输入英文单词"
+    : hideWordFirst && recallStep === "meaning"
+      ? "写出该词的中文释义，Enter 提交批改"
+      : isTypeMode
+        ? "用中文或别的英文词解释（勿照抄原词），Enter 提交批改"
+        : "先在脑海里回忆词义，按空格或 Enter 翻面核对";
 
-  const mobileHint = isTypeMode
+  const desktopHint = onEnglishPhase
     ? dictating
-      ? "说完后停顿 2 秒自动提交"
-      : "点卡片空白翻面 · 左滑上一词 · 右滑下一词"
-    : dictating
-      ? "说完后停顿 2 秒自动提交"
-      : "点卡片空白翻面 · 左滑上一词 · 右滑下一词";
+      ? "说完后停顿 2 秒进入写释义"
+      : "Enter 写释义 · 可点喇叭重听 · ↑↓ 切词"
+    : isTypeMode
+      ? dictating
+        ? "说完后停顿 2 秒自动提交批改"
+        : "Enter 提交或空内容翻面 · Shift+Enter 换行 · 框外空格翻面 · ↑↓ 切词"
+      : dictating
+        ? "说完后停顿 2 秒自动提交"
+        : "Enter / 空格翻面 · 输入后 Enter 提交 · Shift+Enter 换行 · ↑↓ 切词";
+
+  const mobileHint = onEnglishPhase
+    ? dictating
+      ? "说完后停顿 2 秒进入写释义"
+      : "听音默写英文 · 点「写释义」继续"
+    : isTypeMode
+      ? dictating
+        ? "说完后停顿 2 秒自动提交"
+        : "点卡片空白翻面 · 左滑上一词 · 右滑下一词"
+      : dictating
+        ? "说完后停顿 2 秒自动提交"
+        : "点卡片空白翻面 · 左滑上一词 · 右滑下一词";
 
   async function handlePronouncePractice() {
     if (!micGranted) {
@@ -886,7 +1002,12 @@ export default function FlashCard({
         <div className="flashcard__face flashcard__front">
           <div className="flashcard__term">
             <div className="flashcard__term-row">
-              <h2 className="flashcard__word">{wordData.word}</h2>
+              <h2
+                className={`flashcard__word${showWord ? "" : " flashcard__word--hidden"}`}
+                aria-hidden={!showWord}
+              >
+                {showWord ? wordData.word : "？？？"}
+              </h2>
               <div className="flashcard__term-actions">
                 <button
                   type="button"
@@ -945,6 +1066,44 @@ export default function FlashCard({
 
           <p className="flashcard__prompt">{frontPrompt}</p>
 
+          {onEnglishPhase ? (
+            <div className="flashcard__input-wrap">
+              <textarea
+                ref={englishInputRef}
+                className={`flashcard__input flashcard__input--english${inputReady ? " flashcard__input--ready" : ""}`}
+                inputMode="text"
+                enterKeyHint="next"
+                autoComplete="off"
+                autoCorrect="off"
+                spellCheck={false}
+                placeholder={micGranted ? "听音默写英文单词，也可语音输入…" : "听音默写英文单词…"}
+                value={englishAttempt}
+                onChange={(e) => setEnglishAttempt(e.target.value)}
+                onFocus={() => {
+                  if (settingsOpenRef.current) {
+                    englishInputRef.current?.blur();
+                    return;
+                  }
+                  setInputReady(true);
+                }}
+                onBlur={() => setInputReady(false)}
+                disabled={loading || dictating || settingsOpen}
+                rows={3}
+              />
+              {micGranted && (
+                <button
+                  type="button"
+                  className={`voice-btn voice-btn--dictate ${dictating ? "voice-btn--active" : ""}`}
+                  onClick={startDictation}
+                  disabled={loading || dictating}
+                  title="语音输入英文单词"
+                  aria-label="语音输入英文单词"
+                >
+                  <MicIcon />
+                </button>
+              )}
+            </div>
+          ) : (
           <div className="flashcard__input-wrap">
             <textarea
               ref={inputRef}
@@ -955,13 +1114,17 @@ export default function FlashCard({
               autoCorrect="off"
               spellCheck={false}
               placeholder={
-                isTypeMode
+                hideWordFirst && recallStep === "meaning"
                   ? micGranted
-                    ? "中文释义或英文同义词，也可语音输入…"
-                    : "中文释义或英文同义词…"
-                  : micGranted
-                    ? "可选：点这里输入释义，Enter 提交批改…"
-                    : "可选：点这里输入释义，Enter 提交批改…"
+                    ? "写出中文释义，也可语音输入…"
+                    : "写出中文释义…"
+                  : isTypeMode
+                    ? micGranted
+                      ? "中文释义或英文同义词，也可语音输入…"
+                      : "中文释义或英文同义词…"
+                    : micGranted
+                      ? "可选：点这里输入释义，Enter 提交批改…"
+                      : "可选：点这里输入释义，Enter 提交批改…"
               }
               value={userAnswer}
               onChange={(e) => setUserAnswer(e.target.value)}
@@ -973,7 +1136,7 @@ export default function FlashCard({
                 if (isTypeMode) setInputReady(true);
               }}
               onBlur={() => setInputReady(false)}
-              disabled={loading || dictating || settingsOpen}
+              disabled={loading || dictating || settingsOpen || (hideWordFirst && recallStep === "english")}
               rows={5}
             />
             {micGranted && (
@@ -989,6 +1152,11 @@ export default function FlashCard({
               </button>
             )}
           </div>
+          )}
+
+          {englishRecallHint && !onEnglishPhase ? (
+            <p className="flashcard__recall-hint">{englishRecallHint}</p>
+          ) : null}
 
           {dictationHint && <p className="flashcard__dictation-hint">{dictationHint}</p>}
 
@@ -1150,6 +1318,15 @@ export default function FlashCard({
               onClick={cancelEvaluation}
             >
               取消批改
+            </button>
+          ) : onEnglishPhase ? (
+            <button
+              type="button"
+              className="flashcard__mobile-btn flashcard__mobile-btn--accent"
+              onClick={() => advanceToMeaningStep()}
+              disabled={!englishAttempt.trim()}
+            >
+              写释义
             </button>
           ) : (
           <button

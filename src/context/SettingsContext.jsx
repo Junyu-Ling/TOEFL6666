@@ -69,6 +69,11 @@ export function SettingsProvider({ children }) {
     [updateSettings]
   );
 
+  const setHideWordFirst = useCallback(
+    (hideWordFirst) => updateSettings({ hideWordFirst: hideWordFirst === true }),
+    [updateSettings]
+  );
+
   const setAnswerSounds = useCallback(
     (answerSounds) => updateSettings({ answerSounds: answerSounds === true }),
     [updateSettings]
@@ -99,6 +104,7 @@ export function SettingsProvider({ children }) {
       setAutoAdvanceAfterFlip,
       setAutoAdvanceDelaySec,
       setPracticeStyle,
+      setHideWordFirst,
       setAnswerSounds,
       setAnswerSoundCorrect,
       setAnswerSoundWrong,
@@ -115,6 +121,7 @@ export function SettingsProvider({ children }) {
       setAutoAdvanceAfterFlip,
       setAutoAdvanceDelaySec,
       setPracticeStyle,
+      setHideWordFirst,
       setAnswerSounds,
       setAnswerSoundCorrect,
       setAnswerSoundWrong,

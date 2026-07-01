@@ -54,6 +54,7 @@ export default function SettingsPanel() {
     setAutoAdvanceAfterFlip,
     setAutoAdvanceDelaySec,
     setPracticeStyle,
+    setHideWordFirst,
     setAnswerSounds,
     setAnswerSoundCorrect,
     setAnswerSoundWrong,
@@ -245,7 +246,11 @@ export default function SettingsPanel() {
           <summary className="settings-group__summary">
             <span className="settings-group__title">练习</span>
             <span className="settings-group__meta">
-              {settings.practiceStyle === "recall" ? "默念核对" : "输入批改"}
+              {settings.hideWordFirst && settings.practiceStyle !== "recall"
+                ? "听写后写释义"
+                : settings.practiceStyle === "recall"
+                  ? "默念核对"
+                  : "输入批改"}
             </span>
           </summary>
           <div className="settings-group__body">
@@ -268,6 +273,22 @@ export default function SettingsPanel() {
                 </button>
               </div>
             </div>
+            {settings.practiceStyle !== "recall" ? (
+              <label className="settings-toggle-row">
+                <span className="settings-toggle-row__text">
+                  <strong>先隐藏单词</strong>
+                  <small>听音默写英文后再写中文释义</small>
+                </span>
+                <span className="toggle-switch">
+                  <input
+                    type="checkbox"
+                    checked={settings.hideWordFirst}
+                    onChange={(e) => setHideWordFirst(e.target.checked)}
+                  />
+                  <span className="toggle-switch__track" aria-hidden="true" />
+                </span>
+              </label>
+            ) : null}
             <label className="settings-toggle-row">
               <span className="settings-toggle-row__text">
                 <strong>答对 / 答错音效</strong>

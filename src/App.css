@@ -732,6 +732,20 @@ body {
   color: var(--text);
 }
 
+.flashcard__word--hidden {
+  letter-spacing: 0.35em;
+  color: var(--text-muted);
+  user-select: none;
+}
+
+.flashcard__recall-hint {
+  margin: 0.5rem 0 0;
+  text-align: center;
+  font-size: 0.8125rem;
+  color: var(--accent);
+  font-weight: 600;
+}
+
 .flashcard__sound {
   width: var(--fc-sound-size);
   height: var(--fc-sound-size);
@@ -1533,6 +1547,18 @@ body {
   align-items: center;
   gap: 0.5rem;
   flex-wrap: wrap;
+}
+
+.word-list-review-bar__pickers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.word-list-review-bar__pickers .practice-toolbar__select {
+  flex: 1 1 7rem;
+  min-width: 7rem;
 }
 
 .word-list-view__search {

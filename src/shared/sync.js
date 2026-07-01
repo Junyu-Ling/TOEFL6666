@@ -65,6 +65,7 @@ function mergeWordEntry(a, b) {
   return {
     ...primary,
     wrongCount: Math.max(a.wrongCount || 0, b.wrongCount || 0),
+    sourceListId: primary.sourceListId || secondary.sourceListId,
     memory_trick: primary.memory_trick || secondary.memory_trick,
     definitions: primary.definitions?.length ? primary.definitions : secondary.definitions,
     ai_feedback: primary.ai_feedback || secondary.ai_feedback,

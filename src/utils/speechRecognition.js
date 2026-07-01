@@ -137,3 +137,7 @@ export function checkPronunciation(transcript, targetWord) {
   const targetNoHyphen = target.replace(/-/g, "");
   return spokenParts.some((part) => part.replace(/-/g, "") === targetNoHyphen);
 }
+
+export function matchesEnglishRecall(attempt, targetWord) {
+  return checkPronunciation(attempt, targetWord);
+}
