@@ -1,6 +1,7 @@
 import { useMemo, useState, useEffect } from "react";
 import MemoryTrickBlock from "./MemoryTrickBlock";
 import { fetchMemoryTrick } from "../services/memoryTrick";
+import { groupWordsByList } from "../utils/wordListGrouping";
 
 const SORT_OPTIONS = [
   { value: "default", label: "默认顺序" },
@@ -134,6 +135,57 @@ function WordItem({
   );
 }
 
+function WordGroupSection({
+  group,
+  variant,
+  onRemove,
+  showWrongCount,
+  wrongCountPast,
+  onMemoryTrickSaved,
+  defaultOpen = true,
+}) {
+  const [open, setOpen] = useState(defaultOpen);
+  const wrongLabel = wrongCountPast ? "曾错" : "错";
+  const summary =
+    variant === "unknown"
+      ? `${group.words.length} 词`
+      : group.wrongTotal > 0
+        ? `${group.words.length} 词 · ${wrongLabel} ${group.wrongTotal} 次`
+        : `${group.words.length} 词`;
+
+  return (
+    <section className="word-list-group">
+      <button
+        type="button"
+        className="word-list-group__header"
+        onClick={() => setOpen((value) => !value)}
+        aria-expanded={open}
+      >
+        <span className="word-list-group__title">{group.label}</span>
+        <span className="word-list-group__meta">{summary}</span>
+        <span className="word-list-group__chevron" aria-hidden>
+          {open ? "▾" : "▸"}
+        </span>
+      </button>
+      {open && (
+        <div className="word-list-group__items">
+          {group.words.map((item) => (
+            <WordItem
+              key={item.word}
+              item={item}
+              variant={variant}
+              onRemove={onRemove}
+              showWrongCount={showWrongCount}
+              wrongCountPast={wrongCountPast}
+              onMemoryTrickSaved={onMemoryTrickSaved}
+            />
+          ))}
+        </div>
+      )}
+    </section>
+  );
+}
+
 export default function WordList({
   title,
   subtitle,
@@ -148,6 +200,9 @@ export default function WordList({
   withToolbar = false,
   reviewBar = null,
   onMemoryTrickSaved,
+  groupByList = false,
+  availableLists = [],
+  wordListIndex = null,
 }) {
   const [query, setQuery] = useState("");
   const [sortMode, setSortMode] = useState("default");
@@ -156,6 +211,13 @@ export default function WordList({
     const filtered = filterWords(words, query);
     return sortWords(filtered, sortMode);
   }, [words, query, sortMode]);
+
+  const groupedWords = useMemo(() => {
+    if (!groupByList || availableLists.length === 0) return null;
+    return groupWordsByList(displayedWords, availableLists, wordListIndex).filter((group) => group.words.length > 0);
+  }, [displayedWords, groupByList, availableLists, wordListIndex]);
+
+  const variant = title.includes("不认识") ? "unknown" : "known";
 
   const isFiltering = query.trim().length > 0;
   const showEmpty = words.length === 0;
@@ -226,12 +288,28 @@ export default function WordList({
           <p>没有匹配的单词</p>
         </div>
       ) : (
+        groupedWords ? (
+          <div className="word-list word-list--grouped">
+            {groupedWords.map((group) => (
+              <WordGroupSection
+                key={group.listId}
+                group={group}
+                variant={variant}
+                onRemove={onRemoveWord}
+                showWrongCount={showWrongCount}
+                wrongCountPast={wrongCountPast}
+                onMemoryTrickSaved={onMemoryTrickSaved}
+                defaultOpen={group.wrongTotal > 0 || group.listId === groupedWords[0]?.listId}
+              />
+            ))}
+          </div>
+        ) : (
         <div className="word-list">
           {displayedWords.map((item) => (
             <WordItem
               key={item.word}
               item={item}
-              variant={title.includes("不认识") ? "unknown" : "known"}
+              variant={variant}
               onRemove={onRemoveWord}
               showWrongCount={showWrongCount}
               wrongCountPast={wrongCountPast}
@@ -239,6 +317,7 @@ export default function WordList({
             />
           ))}
         </div>
+        )
       )}
     </div>
   );

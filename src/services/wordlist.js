@@ -6,6 +6,13 @@ export async function fetchWordListManifest() {
   return res.json();
 }
 
+export async function fetchWordListIndex() {
+  const res = await fetch(`${API_BASE}/word-index.json`, { cache: "no-cache" });
+  if (!res.ok) throw new Error("无法加载词库索引");
+  const data = await res.json();
+  return data.index ?? data;
+}
+
 export async function fetchWordList(listId) {
   const res = await fetch(`${API_BASE}/${listId}.json`, { cache: "no-cache" });
   if (!res.ok) throw new Error(`无法加载词库：${listId}`);

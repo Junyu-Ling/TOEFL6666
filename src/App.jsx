@@ -12,7 +12,7 @@ import { recordVisit, refreshStreak } from "./services/streak";
 import { syncService, SYNC_APPLIED_EVENT, SYNC_STATUS_EVENT } from "./services/syncService";
 import { useMicrophone } from "./hooks/useMicrophone";
 import { useSettings } from "./context/SettingsContext";
-import { fetchWordList, fetchWordListManifest } from "./services/wordlist";
+import { fetchWordList, fetchWordListManifest, fetchWordListIndex } from "./services/wordlist";
 import {
   loadRecognized,
   loadUnrecognized,
@@ -30,8 +30,8 @@ import {
   removeWord,
   shuffleArray,
   sortByWrongCount,
-  seededShuffle,
 } from "./services/storage";
+import { inferSourceListId } from "./utils/wordListGrouping";
 import "./App.css";
 
 function clampIndex(index, length) {
@@ -51,6 +51,9 @@ export default function App() {
   const [wordList, setWordList] = useState([]);
   const [listMeta, setListMeta] = useState(null);
   const [availableLists, setAvailableLists] = useState([]);
+  const [wordListIndex, setWordListIndex] = useState(null);
+  const wordListIndexRef = useRef(null);
+  wordListIndexRef.current = wordListIndex;
   const [activeListId, setActiveListId] = useState(savedRef.current.activeListId);
   const [listProgress, setListProgress] = useState(savedRef.current.listProgress);
   const [wordsLoading, setWordsLoading] = useState(true);
@@ -61,7 +64,6 @@ export default function App() {
     loadBookPracticePaused(savedRef.current, loadBookPractices(savedRef.current))
   );
   const [reviewShuffle, setReviewShuffle] = useState(savedRef.current.reviewShuffle ?? false);
-  const [shuffleSeed, setShuffleSeed] = useState(() => Date.now());
   const [streakData, setStreakData] = useState(() => recordVisit());
   const [streakOpen, setStreakOpen] = useState(false);
 
@@ -138,10 +140,14 @@ export default function App() {
       setWordsLoading(true);
       setWordsError(null);
       try {
-        const manifest = await fetchWordListManifest();
+        const [manifest, index] = await Promise.all([
+          fetchWordListManifest(),
+          fetchWordListIndex(),
+        ]);
         if (cancelled) return;
 
         setAvailableLists(manifest.lists ?? []);
+        setWordListIndex(index);
 
         const listId =
           savedRef.current.activeListId ??
@@ -231,7 +237,11 @@ export default function App() {
     [activeListId, bookPracticePaused, bookPractices, listIndex, reviewShuffle]
   );
 
-  const listWord = wordList[listIndex] ?? null;
+  const listWord = useMemo(() => {
+    const item = wordList[listIndex];
+    if (!item) return null;
+    return activeListId ? { ...item, sourceListId: activeListId } : item;
+  }, [wordList, listIndex, activeListId]);
   const unrecognizedSession = bookPractices.unrecognized;
   const recognizedSession = bookPractices.recognized;
   const unrecognizedWord = unrecognizedSession?.queue[unrecognizedSession.index] ?? null;
@@ -289,6 +299,7 @@ export default function App() {
 
   const handleBookResult = useCallback(
     (wordData, aiResult, removeFromUnrecognizedOnCorrect) => {
+      const bookListId = inferSourceListId(wordData, wordListIndexRef.current);
       if (aiResult.is_correct) {
         setUnrecognized((prevUnrec) => {
           const wrongEntry = prevUnrec.find((item) => item.word === wordData.word);
@@ -299,7 +310,18 @@ export default function App() {
             const carryWrong =
               priorWrongCount ??
               (existingRec?.wrongCount && existingRec.wrongCount > 0 ? existingRec.wrongCount : undefined);
-            const record = buildRecognizedRecord(wordData, aiResult, carryWrong);
+            const record = buildRecognizedRecord(
+              {
+                ...wordData,
+                sourceListId:
+                  wordData.sourceListId ??
+                  wrongEntry?.sourceListId ??
+                  existingRec?.sourceListId ??
+                  bookListId,
+              },
+              aiResult,
+              carryWrong
+            );
             if (wrongEntry?.memory_trick || aiResult.memory_trick || existingRec?.memory_trick) {
               record.memory_trick =
                 wrongEntry?.memory_trick || aiResult.memory_trick || existingRec?.memory_trick;
@@ -322,6 +344,7 @@ export default function App() {
           const existing = prev.find((item) => item.word === wordData.word);
           const wrongRecord = {
             ...record,
+            sourceListId: record.sourceListId ?? existing?.sourceListId ?? wordData.sourceListId ?? bookListId,
             wrongCount: (existing?.wrongCount ?? 0) + 1,
             memory_trick: record.memory_trick ?? existing?.memory_trick,
           };
@@ -376,11 +399,6 @@ export default function App() {
     });
   }, []);
 
-  const displayedUnrecognized = useMemo(() => {
-    if (reviewShuffle) return seededShuffle(unrecognized, shuffleSeed);
-    return sortByWrongCount(unrecognized);
-  }, [unrecognized, reviewShuffle, shuffleSeed]);
-
   const recognizedPastWrong = useMemo(
     () => recognized.filter((item) => (item.wrongCount ?? 0) >= 1),
     [recognized]
@@ -389,7 +407,6 @@ export default function App() {
   const toggleReviewShuffle = useCallback(() => {
     setReviewShuffle((prev) => {
       const next = !prev;
-      if (next) setShuffleSeed(Date.now());
       saveProgress({
         activeListId,
         activeTab,
@@ -402,10 +419,6 @@ export default function App() {
     });
   }, [activeListId, activeTab, bookPracticePaused, bookPractices, listProgress]);
 
-  const reshuffleUnrecognized = useCallback(() => {
-    setShuffleSeed(Date.now());
-  }, []);
-
   const startReview = useCallback(() => {
     if (unrecognized.length === 0) return;
 
@@ -416,6 +429,7 @@ export default function App() {
       const reviewWords = (reviewShuffle ? shuffleArray : sortByWrongCount)(unrecognized).map((item) => ({
         word: item.word,
         definitions: item.definitions,
+        ...(item.sourceListId ? { sourceListId: item.sourceListId } : {}),
       }));
 
       return { ...prev, unrecognized: { queue: reviewWords, index: 0 } };
@@ -433,6 +447,7 @@ export default function App() {
         (item) => ({
           word: item.word,
           definitions: item.definitions,
+          ...(item.sourceListId ? { sourceListId: item.sourceListId } : {}),
         })
       );
 
@@ -677,12 +692,15 @@ export default function App() {
             title="不认识的词"
             subtitle={
               reviewShuffle
-                ? `${unrecognized.length} 个 · 乱序显示 · 按错误次数排序可关闭打乱`
-                : `${unrecognized.length} 个 · 按错误次数排序 · 本地保存`
+                ? `${unrecognized.length} 个 · 按 Level · List 分组 · 乱序仅影响练习`
+                : `${unrecognized.length} 个 · 按 Level · List 分组 · 按错误次数排序`
             }
-            words={displayedUnrecognized}
+            words={sortByWrongCount(unrecognized)}
             emptyText="太棒了！目前没有生词，继续保持。"
             showWrongCount
+            groupByList
+            availableLists={availableLists}
+            wordListIndex={wordListIndex}
             headerAction={
               unrecognized.length > 0 ? (
                 <>
@@ -694,16 +712,6 @@ export default function App() {
                   >
                     {reviewShuffle ? "乱序" : "顺序"}
                   </button>
-                  {reviewShuffle && (
-                    <button
-                      type="button"
-                      className="btn btn--ghost btn--sm"
-                      onClick={reshuffleUnrecognized}
-                      title="重新打乱"
-                    >
-                      重新打乱
-                    </button>
-                  )}
                   <button type="button" className="btn btn--accent" onClick={resumeUnrecognizedPractice}>
                     {unrecognizedSession && bookPracticePaused.unrecognized
                       ? `继续强化练习（${unrecognizedSession.index + 1}/${unrecognizedSession.queue.length}）`
@@ -746,8 +754,8 @@ export default function App() {
             title="已认识的词"
             subtitle={
               recognizedPastWrong.length > 0
-                ? `${recognized.length} 个 · 曾错 ${recognizedPastWrong.length} 个可巩固 · 本地保存`
-                : "一次过的词不标注 · 曾错过的词会显示次数 · 本地保存"
+                ? `${recognized.length} 个 · 按 Level · List 分组 · 曾错 ${recognizedPastWrong.length} 个可巩固`
+                : `${recognized.length} 个 · 按 Level · List 分组 · 本地保存`
             }
             words={recognized}
             emptyText="还没有熟词，去卡片练习场开始吧！"
@@ -757,6 +765,9 @@ export default function App() {
             showWrongCount
             wrongCountPast
             withToolbar
+            groupByList
+            availableLists={availableLists}
+            wordListIndex={wordListIndex}
             onMemoryTrickSaved={handleRecognizedMemoryTrick}
             reviewBar={
               <div className="word-list-review-bar">
@@ -778,16 +789,6 @@ export default function App() {
                     >
                       {reviewShuffle ? "乱序" : "顺序"}
                     </button>
-                    {reviewShuffle && (
-                      <button
-                        type="button"
-                        className="btn btn--ghost btn--sm"
-                        onClick={reshuffleUnrecognized}
-                        title="重新打乱"
-                      >
-                        重新打乱
-                      </button>
-                    )}
                     <button type="button" className="btn btn--accent" onClick={resumeRecognizedPractice}>
                       {recognizedSession && bookPracticePaused.recognized
                         ? `继续巩固（${recognizedSession.index + 1}/${recognizedSession.queue.length}）`

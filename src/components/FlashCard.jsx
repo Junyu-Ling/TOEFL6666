@@ -887,7 +887,10 @@ export default function FlashCard({
           return;
         }
 
-        if (!hideWordFirstRef.current) {
+        const onMeaningStep =
+          !hideWordFirstRef.current ||
+          recallStepRef.current === "meaning";
+        if (onMeaningStep) {
           flipToManual();
         }
       }
@@ -903,7 +906,7 @@ export default function FlashCard({
   const frontPrompt = onEnglishPhase
     ? "先听发音，默写或语音输入英文单词"
     : hideWordFirst && recallStep === "meaning"
-      ? "写出该词的中文释义，Enter 提交批改"
+      ? "写出该词的中文释义，Enter 提交或空内容翻面"
       : isTypeMode
         ? "用中文或别的英文词解释（勿照抄原词），Enter 提交批改"
         : "先在脑海里回忆词义，按空格或 Enter 翻面核对";

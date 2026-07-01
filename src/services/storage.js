@@ -145,6 +145,9 @@ export function buildWordRecord(wordData, aiResult) {
     ai_feedback: appendBookDefinitions(aiResult.ai_feedback, wordData.definitions),
     savedAt: Date.now(),
   };
+  if (wordData.sourceListId) {
+    record.sourceListId = wordData.sourceListId;
+  }
   if (aiResult.memory_trick) {
     record.memory_trick = aiResult.memory_trick;
   }
