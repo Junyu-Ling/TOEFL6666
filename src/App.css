@@ -1563,18 +1563,6 @@ body {
   flex-wrap: wrap;
 }
 
-.word-list-review-bar__pickers {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  width: 100%;
-}
-
-.word-list-review-bar__pickers .practice-toolbar__select {
-  flex: 1 1 7rem;
-  min-width: 7rem;
-}
-
 .word-list-view__search {
   flex: 1;
   min-width: 10rem;
