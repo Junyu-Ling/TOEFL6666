@@ -86,6 +86,7 @@ export default function FlashCard({
   const flippedRef = useRef(false);
   const backModeRef = useRef(null);
   const submitAnswerRef = useRef(null);
+  const cancelEvaluationRef = useRef(null);
   const handleTypoClarificationRef = useRef(null);
   const startDictationRef = useRef(null);
   const dictatingRef = useRef(false);
@@ -289,16 +290,32 @@ export default function FlashCard({
     flipToManual();
   }, [flipBack, flipToManual]);
 
+  const evalAbortRef = useRef(null);
+
+  const cancelEvaluation = useCallback(() => {
+    if (!loadingRef.current) return;
+    evalAbortRef.current?.abort();
+    evalAbortRef.current = null;
+    loadingRef.current = false;
+    setLoading(false);
+    setError(null);
+    requestAnimationFrame(focusInput);
+  }, [focusInput]);
+
   const submitAnswer = useCallback(
     async (answerText) => {
       const text = (answerText ?? answerRef.current).trim();
       if (loadingRef.current || flippedRef.current || !text) return;
 
       stopDictation();
+      evalAbortRef.current?.abort();
+      const controller = new AbortController();
+      evalAbortRef.current = controller;
       setLoading(true);
       setError(null);
       try {
-        const aiResult = await evaluateAnswer(wordData, text);
+        const aiResult = await evaluateAnswer(wordData, text, { signal: controller.signal });
+        if (controller.signal.aborted) return;
         if (!aiResult.needs_typo_clarification && !aiResult.is_correct) {
           setFlipped(true);
           showWrongAnswer(aiResult);
@@ -313,9 +330,15 @@ export default function FlashCard({
         }
         requestAnimationFrame(focusCard);
       } catch (err) {
+        if (err?.name === "AbortError" || controller.signal.aborted) return;
         setError(err.message || "AI 批改失败，请稍后重试");
       } finally {
-        setLoading(false);
+        if (evalAbortRef.current === controller) {
+          evalAbortRef.current = null;
+        }
+        if (!controller.signal.aborted) {
+          setLoading(false);
+        }
       }
     },
     [wordData, onResult, stopDictation, focusCard, showWrongAnswer]
@@ -362,6 +385,10 @@ export default function FlashCard({
   useEffect(() => {
     submitAnswerRef.current = submitAnswer;
   }, [submitAnswer]);
+
+  useEffect(() => {
+    cancelEvaluationRef.current = cancelEvaluation;
+  }, [cancelEvaluation]);
 
   useEffect(() => {
     handleTypoClarificationRef.current = handleTypoClarification;
@@ -568,6 +595,8 @@ export default function FlashCard({
   }, [startDictation]);
 
   useEffect(() => {
+    evalAbortRef.current?.abort();
+    evalAbortRef.current = null;
     setFlipped(false);
     setBackMode(null);
     setUserAnswer("");
@@ -666,7 +695,13 @@ export default function FlashCard({
     }
 
     function handleGlobalKeyDown(e) {
-      if (loadingRef.current) return;
+      if (loadingRef.current) {
+        if (e.key === "Escape") {
+          e.preventDefault();
+          cancelEvaluationRef.current?.();
+        }
+        return;
+      }
       if (isInsideSettingsPanel()) return;
       if (e.metaKey || e.ctrlKey || e.altKey) return;
 
@@ -962,6 +997,13 @@ export default function FlashCard({
               <span className="flashcard__status">
                 <span className="spinner" />
                 批改中
+                <button
+                  type="button"
+                  className="flashcard__cancel-eval"
+                  onClick={cancelEvaluation}
+                >
+                  取消
+                </button>
               </span>
             ) : error ? (
               <span className="flashcard__status flashcard__status--error">{error}</span>
@@ -1101,14 +1143,23 @@ export default function FlashCard({
           上一词
         </button>
         {!flipped ? (
+          loading ? (
+            <button
+              type="button"
+              className="flashcard__mobile-btn flashcard__mobile-btn--accent"
+              onClick={cancelEvaluation}
+            >
+              取消批改
+            </button>
+          ) : (
           <button
             type="button"
             className="flashcard__mobile-btn flashcard__mobile-btn--accent"
             onClick={() => (userAnswer.trim() ? submitAnswer(userAnswer) : flipToManual())}
-            disabled={loading}
           >
             {userAnswer.trim() ? "提交批改" : "翻面"}
           </button>
+          )
         ) : backMode === "ai" ? (
           awaitingTypoClarification ? (
             <button type="button" className="flashcard__mobile-btn" disabled>

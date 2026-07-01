@@ -952,6 +952,23 @@ body {
   color: var(--wrong);
 }
 
+.flashcard__cancel-eval {
+  margin-left: 0.35rem;
+  padding: 0.15rem 0.55rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.flashcard__cancel-eval:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
 .spinner {
   width: 14px;
   height: 14px;
