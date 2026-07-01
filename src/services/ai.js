@@ -4,6 +4,7 @@ import {
   isUsingTargetWordItself,
   buildLocalCorrectResult,
   buildLocalWrongResult,
+  analyzeDefinitionCoverage,
   TARGET_WORD_ITSELF_MESSAGE,
 } from "./localMatch";
 import { loadRecognized } from "./storage";
@@ -22,7 +23,7 @@ export async function evaluateAnswer(wordData, userAnswer, options = {}) {
   }
 
   if (matchesStandardMeaning(trimmed, wordData.definitions)) {
-    return buildLocalCorrectResult();
+    return buildLocalCorrectResult(analyzeDefinitionCoverage(trimmed, wordData.definitions));
   }
 
   if (isObviouslyWrong(trimmed, wordData.definitions, wordData.word)) {

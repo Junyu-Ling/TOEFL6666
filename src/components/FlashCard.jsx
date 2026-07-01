@@ -1224,27 +1224,13 @@ export default function FlashCard({
               </div>
 
               {!result.is_correct && wordData.definitions?.length > 0 && (
-                <div className="flashcard__book-defs flashcard__book-defs--lead">
-                  <span className="flashcard__book-defs-label">书上释义</span>
-                  <ul className="flashcard__definitions flashcard__definitions--book">
-                    {wordData.definitions.map((def, i) => (
-                      <li key={i}>{def}</li>
-                    ))}
-                  </ul>
-                </div>
+                <BookDefinitionsList definitions={wordData.definitions} result={result} lead />
               )}
 
               <div className="flashcard__feedback">
                 <p className="flashcard__feedback-text">{result.ai_feedback}</p>
                 {result.is_correct && wordData.definitions?.length > 0 && (
-                  <div className="flashcard__book-defs">
-                    <span className="flashcard__book-defs-label">书上释义</span>
-                    <ul className="flashcard__definitions flashcard__definitions--book">
-                      {wordData.definitions.map((def, i) => (
-                        <li key={i}>{def}</li>
-                      ))}
-                    </ul>
-                  </div>
+                  <BookDefinitionsList definitions={wordData.definitions} result={result} />
                 )}
               </div>
 
@@ -1366,6 +1352,38 @@ export default function FlashCard({
           下一词
         </button>
       </div>
+    </div>
+  );
+}
+
+function BookDefinitionsList({ definitions, result, lead = false }) {
+  if (!definitions?.length) return null;
+
+  const matched = new Set(result?.matched_definition_indices ?? []);
+  const missed = new Set(result?.missed_definition_indices ?? []);
+  const highlight = Boolean(result?.is_correct && result?.partial_meaning);
+
+  return (
+    <div className={`flashcard__book-defs${lead ? " flashcard__book-defs--lead" : ""}`}>
+      <span className="flashcard__book-defs-label">
+        {highlight ? "书上释义（高亮为尚未答到的义项）" : "书上释义"}
+      </span>
+      <ul className="flashcard__definitions flashcard__definitions--book">
+        {definitions.map((def, i) => (
+          <li
+            key={i}
+            className={
+              highlight && missed.has(i)
+                ? "flashcard__def--missed"
+                : highlight && matched.has(i)
+                  ? "flashcard__def--matched"
+                  : undefined
+            }
+          >
+            {def}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }

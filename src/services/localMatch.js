@@ -302,16 +302,11 @@ function matchesChineseDefinition(answer, definitions) {
   );
 }
 
-/**
- * 用户可用中文释义，也可用英文同义词/近义词解释（如 severe → serious）。
- * 与标准释义一致、或命中逗号分隔义项时本地判对。
- * 多个并列义项可任意顺序、任意常见分隔符作答，连写也算对。
- * 释义中括号内为可选补充，漏答括号内容仍算对。
- */
-export function matchesStandardMeaning(userAnswer, definitions) {
+function matchesDefinitionLine(userAnswer, definition) {
   const answer = userAnswer.trim();
-  if (!answer || !definitions?.length) return false;
+  if (!answer || !definition) return false;
 
+  const definitions = [definition];
   if (hasUnexpectedDigits(answer, definitions)) return false;
 
   return (
@@ -319,6 +314,73 @@ export function matchesStandardMeaning(userAnswer, definitions) {
     matchesChineseDefinition(answer, definitions) ||
     matchesEnglishGloss(answer, definitions)
   );
+}
+
+/** 分析用户答案覆盖了书上哪些义项（definitions 数组每一项为一个义项）。 */
+export function analyzeDefinitionCoverage(userAnswer, definitions) {
+  if (!definitions?.length) {
+    return {
+      matchedIndices: [],
+      missedIndices: [],
+      isCorrect: false,
+      isPartial: false,
+    };
+  }
+
+  const matchedIndices = [];
+  const missedIndices = [];
+
+  for (let i = 0; i < definitions.length; i++) {
+    if (matchesDefinitionLine(userAnswer, definitions[i])) {
+      matchedIndices.push(i);
+    } else {
+      missedIndices.push(i);
+    }
+  }
+
+  return {
+    matchedIndices,
+    missedIndices,
+    isCorrect: matchedIndices.length > 0,
+    isPartial: matchedIndices.length > 0 && missedIndices.length > 0,
+  };
+}
+
+export function enrichResultWithDefinitionCoverage(result, userAnswer, definitions) {
+  if (!result?.is_correct || !definitions?.length) return result;
+
+  const coverage = analyzeDefinitionCoverage(userAnswer, definitions);
+  if (!coverage.isCorrect) return result;
+
+  const partial = coverage.isPartial;
+  let ai_feedback = result.ai_feedback || "正确！";
+  if (partial && !/义项|其它|其他/.test(ai_feedback)) {
+    ai_feedback =
+      ai_feedback === "正确！" || ai_feedback === "批改完成。"
+        ? "这个意思对了！书上还有其它义项，请看高亮提醒。"
+        : `${ai_feedback} 书上还有其它义项未答到，已高亮提醒。`;
+  }
+
+  return {
+    ...result,
+    ai_feedback,
+    matched_definition_indices: coverage.matchedIndices,
+    missed_definition_indices: coverage.missedIndices,
+    partial_meaning: partial,
+  };
+}
+
+/**
+ * 用户可用中文释义，也可用英文同义词/近义词解释（如 severe → serious）。
+ * 与标准释义中任意一条义项一致即可判对。
+ */
+export function matchesStandardMeaning(userAnswer, definitions) {
+  const answer = userAnswer.trim();
+  if (!answer || !definitions?.length) return false;
+
+  if (hasUnexpectedDigits(answer, definitions)) return false;
+
+  return analyzeDefinitionCoverage(answer, definitions).isCorrect;
 }
 
 export const TARGET_WORD_ITSELF_MESSAGE =
@@ -334,11 +396,17 @@ export function isObviouslyWrong(userAnswer, definitions, word = "") {
   return hasUnexpectedDigits(answer, definitions);
 }
 
-export function buildLocalCorrectResult() {
+export function buildLocalCorrectResult(coverage) {
+  const partial = coverage?.isPartial;
   return {
     is_correct: true,
-    ai_feedback: "正确！",
+    ai_feedback: partial
+      ? "这个意思对了！书上还有其它义项，请看高亮提醒。"
+      : "正确！",
     matched_locally: true,
+    matched_definition_indices: coverage?.matchedIndices ?? [],
+    missed_definition_indices: coverage?.missedIndices ?? [],
+    partial_meaning: Boolean(partial),
   };
 }
 

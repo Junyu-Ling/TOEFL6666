@@ -9,6 +9,7 @@ import {
 import {
   isUsingTargetWordItself,
   TARGET_WORD_ITSELF_MESSAGE,
+  enrichResultWithDefinitionCoverage,
 } from "../src/services/localMatch.js";
 
 const SYSTEM_PROMPT = `你是托福词汇批改助手。只批改对错，不生成记忆法。
@@ -24,6 +25,7 @@ const SYSTEM_PROMPT = `你是托福词汇批改助手。只批改对错，不生
 批改规则：
 1. 用户可用中文释义，也可用英文同义词/近义词解释（如 severe 答 serious、happy 答 glad）；不要求写词性（n./v./adj. 等），缺少词性不算错。
 2. 用户释义与标准释义含义一致即可判 true，允许合理同义表述；标准释义里括号内为可选补充，用户不写括号内容不算错。
+2b. 标准释义若有多条（每条对应一个词性/义项），用户答对其中任意一条与书上对应的义项即可判 true，不要求一次答全；答错或未覆盖的其它义项会在界面上高亮提醒。
 3. 仅沾个别汉字、含义明显错误、空泛或与词义无关，判 false。
 4. 回答中胡乱拼接英文、无意义字母串或乱码判 false；但单个/少量英文同义词释义是允许的。
 5. 不要仅因表述比标准释义简短就判错；不确定时看核心义是否命中。
@@ -81,7 +83,7 @@ function normalizeResult(raw, { word, definitions, userAnswer } = {}) {
     }
   }
 
-  return result;
+  return enrichResultWithDefinitionCoverage(result, userAnswer, definitions);
 }
 
 function createConfigError(message, status = 500) {
