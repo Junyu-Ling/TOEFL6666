@@ -7,6 +7,7 @@ import SettingsPanel from "./components/SettingsPanel";
 import VocabAssistant from "./components/VocabAssistant";
 import StreakPanel from "./components/StreakPanel";
 import VocabLoadingScreen from "./components/VocabLoadingScreen";
+import BookReviewScopeBar from "./components/BookReviewScopeBar";
 import MottoFooter from "./components/MottoFooter";
 import { recordVisit, refreshStreak } from "./services/streak";
 import { syncService, SYNC_APPLIED_EVENT, SYNC_STATUS_EVENT } from "./services/syncService";
@@ -32,12 +33,29 @@ import {
   shuffleArray,
   sortByWrongCount,
 } from "./services/storage";
-import { inferSourceListId } from "./utils/wordListGrouping";
+import {
+  UNCategorized_LIST_ID,
+  inferSourceListId,
+  countWordsByListId,
+  countPastWrongByListId,
+  filterWordsByListId,
+  filterPastWrongByListId,
+  getListReviewLabel,
+  matchesBookPracticeListId,
+} from "./utils/wordListGrouping";
 import "./App.css";
 
 function clampIndex(index, length) {
   if (length <= 0) return 0;
   return Math.min(Math.max(index, 0), length - 1);
+}
+
+function pickDefaultReviewListId(countsByListId, availableLists, sessionListId) {
+  if (sessionListId && (countsByListId.get(sessionListId) || 0) > 0) return sessionListId;
+  const firstList = availableLists.find((item) => (countsByListId.get(item.id) || 0) > 0);
+  if (firstList) return firstList.id;
+  if ((countsByListId.get(UNCategorized_LIST_ID) || 0) > 0) return UNCategorized_LIST_ID;
+  return null;
 }
 
 export default function App() {
@@ -67,6 +85,8 @@ export default function App() {
   const [reviewShuffle, setReviewShuffle] = useState(savedRef.current.reviewShuffle ?? false);
   const [streakData, setStreakData] = useState(() => recordVisit());
   const [streakOpen, setStreakOpen] = useState(false);
+  const [unrecognizedReviewListId, setUnrecognizedReviewListId] = useState(null);
+  const [recognizedReviewListId, setRecognizedReviewListId] = useState(null);
 
   useEffect(() => {
     function syncStreak() {
@@ -323,6 +343,15 @@ export default function App() {
             if ((record.wrongCount ?? 0) >= 1) {
               setBookPractices((prevBp) => {
                 if (!prevBp.recognized) return prevBp;
+                if (
+                  !matchesBookPracticeListId(
+                    prevBp.recognized,
+                    record,
+                    wordListIndexRef.current
+                  )
+                ) {
+                  return prevBp;
+                }
                 return {
                   ...prevBp,
                   recognized: appendToBookQueue(prevBp.recognized, record),
@@ -353,6 +382,15 @@ export default function App() {
           saveUnrecognized(next);
           setBookPractices((prevBp) => {
             if (!prevBp.unrecognized) return prevBp;
+            if (
+              !matchesBookPracticeListId(
+                prevBp.unrecognized,
+                wrongRecord,
+                wordListIndexRef.current
+              )
+            ) {
+              return prevBp;
+            }
             return {
               ...prevBp,
               unrecognized: appendToBookQueue(prevBp.unrecognized, wrongRecord),
@@ -427,41 +465,53 @@ export default function App() {
     });
   }, [activeListId, activeTab, bookPracticePaused, bookPractices, listProgress]);
 
-  const startReview = useCallback(() => {
-    if (unrecognized.length === 0) return;
+  const startReview = useCallback(
+    (listId) => {
+      const targetListId = listId ?? unrecognizedReviewListId;
+      if (!targetListId) return;
 
-    setBookPracticePaused((p) => ({ ...p, unrecognized: false }));
-    setBookPractices((prev) => {
-      if (prev.unrecognized) return prev;
+      const pool = filterWordsByListId(unrecognized, targetListId, wordListIndex);
+      if (pool.length === 0) return;
 
-      const reviewWords = (reviewShuffle ? shuffleArray : sortByWrongCount)(unrecognized).map((item) => ({
-        word: item.word,
-        definitions: item.definitions,
-        ...(item.sourceListId ? { sourceListId: item.sourceListId } : {}),
-      }));
+      setBookPracticePaused((p) => ({ ...p, unrecognized: false }));
+      setBookPractices((prev) => {
+        if (prev.unrecognized?.listId === targetListId && prev.unrecognized) return prev;
 
-      return { ...prev, unrecognized: { queue: reviewWords, index: 0 } };
-    });
-  }, [reviewShuffle, unrecognized]);
-
-  const startRecognizedReview = useCallback(() => {
-    if (recognizedPastWrong.length === 0) return;
-
-    setBookPracticePaused((p) => ({ ...p, recognized: false }));
-    setBookPractices((prev) => {
-      if (prev.recognized) return prev;
-
-      const reviewWords = (reviewShuffle ? shuffleArray : sortByWrongCount)(recognizedPastWrong).map(
-        (item) => ({
+        const reviewWords = (reviewShuffle ? shuffleArray : sortByWrongCount)(pool).map((item) => ({
           word: item.word,
           definitions: item.definitions,
           ...(item.sourceListId ? { sourceListId: item.sourceListId } : {}),
-        })
-      );
+        }));
 
-      return { ...prev, recognized: { queue: reviewWords, index: 0 } };
-    });
-  }, [recognizedPastWrong, reviewShuffle]);
+        return { ...prev, unrecognized: { queue: reviewWords, index: 0, listId: targetListId } };
+      });
+    },
+    [unrecognized, unrecognizedReviewListId, reviewShuffle, wordListIndex]
+  );
+
+  const startRecognizedReview = useCallback(
+    (listId) => {
+      const targetListId = listId ?? recognizedReviewListId;
+      if (!targetListId) return;
+
+      const pool = filterPastWrongByListId(recognized, targetListId, wordListIndex);
+      if (pool.length === 0) return;
+
+      setBookPracticePaused((p) => ({ ...p, recognized: false }));
+      setBookPractices((prev) => {
+        if (prev.recognized?.listId === targetListId && prev.recognized) return prev;
+
+        const reviewWords = (reviewShuffle ? shuffleArray : sortByWrongCount)(pool).map((item) => ({
+          word: item.word,
+          definitions: item.definitions,
+          ...(item.sourceListId ? { sourceListId: item.sourceListId } : {}),
+        }));
+
+        return { ...prev, recognized: { queue: reviewWords, index: 0, listId: targetListId } };
+      });
+    },
+    [recognized, recognizedReviewListId, reviewShuffle, wordListIndex]
+  );
 
   const pauseUnrecognizedPractice = useCallback(() => {
     setBookPracticePaused((p) => ({ ...p, unrecognized: true }));
@@ -472,20 +522,26 @@ export default function App() {
   }, []);
 
   const resumeUnrecognizedPractice = useCallback(() => {
-    if (!bookPractices.unrecognized) {
-      startReview();
+    if (
+      !bookPractices.unrecognized ||
+      bookPractices.unrecognized.listId !== unrecognizedReviewListId
+    ) {
+      startReview(unrecognizedReviewListId);
       return;
     }
     setBookPracticePaused((p) => ({ ...p, unrecognized: false }));
-  }, [bookPractices.unrecognized, startReview]);
+  }, [bookPractices.unrecognized, unrecognizedReviewListId, startReview]);
 
   const resumeRecognizedPractice = useCallback(() => {
-    if (!bookPractices.recognized) {
-      startRecognizedReview();
+    if (
+      !bookPractices.recognized ||
+      bookPractices.recognized.listId !== recognizedReviewListId
+    ) {
+      startRecognizedReview(recognizedReviewListId);
       return;
     }
     setBookPracticePaused((p) => ({ ...p, recognized: false }));
-  }, [bookPractices.recognized, startRecognizedReview]);
+  }, [bookPractices.recognized, recognizedReviewListId, startRecognizedReview]);
 
   const handleBookNext = useCallback((bookType) => {
     setBookPractices((prev) => {
@@ -513,11 +569,17 @@ export default function App() {
           ? recognizedWord
           : null;
 
-  const unrecognizedPracticeTitle = reviewShuffle
-    ? "针对性强化练习 · 乱序"
-    : "针对性强化练习";
+  const unrecognizedPracticeTitle = useMemo(() => {
+    const listId = unrecognizedSession?.listId ?? unrecognizedReviewListId;
+    const label = getListReviewLabel(listId, availableLists);
+    return reviewShuffle ? `${label} · 乱序` : `${label} · 针对性强化练习`;
+  }, [unrecognizedSession?.listId, unrecognizedReviewListId, availableLists, reviewShuffle]);
 
-  const recognizedPracticeTitle = reviewShuffle ? "曾错题巩固 · 乱序" : "曾错题巩固";
+  const recognizedPracticeTitle = useMemo(() => {
+    const listId = recognizedSession?.listId ?? recognizedReviewListId;
+    const label = getListReviewLabel(listId, availableLists);
+    return reviewShuffle ? `${label} · 乱序` : `${label} · 曾错题巩固`;
+  }, [recognizedSession?.listId, recognizedReviewListId, availableLists, reviewShuffle]);
 
   const handleRemoveRecognized = useCallback((word) => {
     setRecognized((prev) => {
@@ -573,6 +635,150 @@ export default function App() {
       handleListChange(preferred?.id ?? lists[0].id);
     },
     [activeListId, availableLists, handleListChange, listsByLevel]
+  );
+
+  const unrecognizedCountByListId = useMemo(
+    () => countWordsByListId(unrecognized, wordListIndex),
+    [unrecognized, wordListIndex]
+  );
+
+  const pastWrongCountByListId = useMemo(
+    () => countPastWrongByListId(recognized, wordListIndex),
+    [recognized, wordListIndex]
+  );
+
+  const selectedUnrecognizedCount = unrecognizedReviewListId
+    ? unrecognizedCountByListId.get(unrecognizedReviewListId) || 0
+    : 0;
+
+  const selectedPastWrongCount = recognizedReviewListId
+    ? pastWrongCountByListId.get(recognizedReviewListId) || 0
+    : 0;
+
+  const levelNumbersWithUnrecognized = useMemo(
+    () =>
+      levelNumbers.filter((level) =>
+        (listsByLevel.get(level) ?? []).some(
+          (item) => (unrecognizedCountByListId.get(item.id) || 0) > 0
+        )
+      ),
+    [levelNumbers, listsByLevel, unrecognizedCountByListId]
+  );
+
+  const levelNumbersWithPastWrong = useMemo(
+    () =>
+      levelNumbers.filter((level) =>
+        (listsByLevel.get(level) ?? []).some(
+          (item) => (pastWrongCountByListId.get(item.id) || 0) > 0
+        )
+      ),
+    [levelNumbers, listsByLevel, pastWrongCountByListId]
+  );
+
+  const unrecognizedReviewLevel = useMemo(() => {
+    if (unrecognizedReviewListId === UNCategorized_LIST_ID) return null;
+    const current = availableLists.find((item) => item.id === unrecognizedReviewListId);
+    if (current) return current.level;
+    return levelNumbersWithUnrecognized[0] ?? null;
+  }, [availableLists, unrecognizedReviewListId, levelNumbersWithUnrecognized]);
+
+  const recognizedReviewLevel = useMemo(() => {
+    if (recognizedReviewListId === UNCategorized_LIST_ID) return null;
+    const current = availableLists.find((item) => item.id === recognizedReviewListId);
+    if (current) return current.level;
+    return levelNumbersWithPastWrong[0] ?? null;
+  }, [availableLists, recognizedReviewListId, levelNumbersWithPastWrong]);
+
+  const listsInUnrecognizedReviewLevel = useMemo(() => {
+    if (unrecognizedReviewLevel == null) return [];
+    return (listsByLevel.get(unrecognizedReviewLevel) ?? []).filter(
+      (item) => (unrecognizedCountByListId.get(item.id) || 0) > 0
+    );
+  }, [listsByLevel, unrecognizedReviewLevel, unrecognizedCountByListId]);
+
+  const listsInRecognizedReviewLevel = useMemo(() => {
+    if (recognizedReviewLevel == null) return [];
+    return (listsByLevel.get(recognizedReviewLevel) ?? []).filter(
+      (item) => (pastWrongCountByListId.get(item.id) || 0) > 0
+    );
+  }, [listsByLevel, recognizedReviewLevel, pastWrongCountByListId]);
+
+  const uncategorizedUnrecognizedCount =
+    unrecognizedCountByListId.get(UNCategorized_LIST_ID) || 0;
+  const uncategorizedPastWrongCount = pastWrongCountByListId.get(UNCategorized_LIST_ID) || 0;
+
+  useEffect(() => {
+    if (unrecognized.length === 0) {
+      setUnrecognizedReviewListId(null);
+      return;
+    }
+    if (
+      unrecognizedReviewListId &&
+      (unrecognizedCountByListId.get(unrecognizedReviewListId) || 0) > 0
+    ) {
+      return;
+    }
+    const sessionListId = bookPractices.unrecognized?.listId;
+    const nextId = pickDefaultReviewListId(
+      unrecognizedCountByListId,
+      availableLists,
+      sessionListId
+    );
+    if (nextId) setUnrecognizedReviewListId(nextId);
+  }, [
+    unrecognized.length,
+    unrecognizedReviewListId,
+    unrecognizedCountByListId,
+    availableLists,
+    bookPractices.unrecognized?.listId,
+  ]);
+
+  useEffect(() => {
+    if (recognizedPastWrong.length === 0) {
+      setRecognizedReviewListId(null);
+      return;
+    }
+    if (
+      recognizedReviewListId &&
+      (pastWrongCountByListId.get(recognizedReviewListId) || 0) > 0
+    ) {
+      return;
+    }
+    const sessionListId = bookPractices.recognized?.listId;
+    const nextId = pickDefaultReviewListId(
+      pastWrongCountByListId,
+      availableLists,
+      sessionListId
+    );
+    if (nextId) setRecognizedReviewListId(nextId);
+  }, [
+    recognizedPastWrong.length,
+    recognizedReviewListId,
+    pastWrongCountByListId,
+    availableLists,
+    bookPractices.recognized?.listId,
+  ]);
+
+  const handleUnrecognizedReviewLevelChange = useCallback(
+    (levelValue) => {
+      const level = Number(levelValue);
+      const lists = (listsByLevel.get(level) ?? []).filter(
+        (item) => (unrecognizedCountByListId.get(item.id) || 0) > 0
+      );
+      if (lists.length > 0) setUnrecognizedReviewListId(lists[0].id);
+    },
+    [listsByLevel, unrecognizedCountByListId]
+  );
+
+  const handleRecognizedReviewLevelChange = useCallback(
+    (levelValue) => {
+      const level = Number(levelValue);
+      const lists = (listsByLevel.get(level) ?? []).filter(
+        (item) => (pastWrongCountByListId.get(item.id) || 0) > 0
+      );
+      if (lists.length > 0) setRecognizedReviewListId(lists[0].id);
+    },
+    [listsByLevel, pastWrongCountByListId]
   );
 
   if (wordsLoading) {
@@ -718,23 +924,29 @@ export default function App() {
             groupByList
             availableLists={availableLists}
             wordListIndex={wordListIndex}
-            headerAction={
+            reviewBar={
               unrecognized.length > 0 ? (
-                <>
-                  <button
-                    type="button"
-                    className={`btn btn--ghost btn--sm ${reviewShuffle ? "btn--toggle-on" : ""}`}
-                    onClick={toggleReviewShuffle}
-                    aria-pressed={reviewShuffle}
-                  >
-                    {reviewShuffle ? "乱序" : "顺序"}
-                  </button>
-                  <button type="button" className="btn btn--accent" onClick={resumeUnrecognizedPractice}>
-                    {unrecognizedSession && bookPracticePaused.unrecognized
-                      ? `继续强化练习（${unrecognizedSession.index + 1}/${unrecognizedSession.queue.length}）`
-                      : "针对性强化练习"}
-                  </button>
-                </>
+                <BookReviewScopeBar
+                  title="针对性强化练习"
+                  description={`按 Level · List 选择复习范围（共 ${unrecognized.length} 个生词）`}
+                  levelNumbers={levelNumbersWithUnrecognized}
+                  reviewLevel={unrecognizedReviewLevel}
+                  onLevelChange={handleUnrecognizedReviewLevelChange}
+                  listsInLevel={listsInUnrecognizedReviewLevel}
+                  countByListId={unrecognizedCountByListId}
+                  reviewListId={unrecognizedReviewListId}
+                  onListChange={setUnrecognizedReviewListId}
+                  uncategorizedCount={uncategorizedUnrecognizedCount}
+                  reviewShuffle={reviewShuffle}
+                  onToggleShuffle={toggleReviewShuffle}
+                  primaryLabel={
+                    unrecognizedSession && bookPracticePaused.unrecognized
+                      ? `继续强化（${unrecognizedSession.index + 1}/${unrecognizedSession.queue.length}）`
+                      : `开始强化（${selectedUnrecognizedCount}）`
+                  }
+                  onPrimary={resumeUnrecognizedPractice}
+                  primaryDisabled={selectedUnrecognizedCount === 0}
+                />
               ) : null
             }
           />
@@ -787,33 +999,31 @@ export default function App() {
             wordListIndex={wordListIndex}
             onMemoryTrickSaved={handleRecognizedMemoryTrick}
             reviewBar={
-              <div className="word-list-review-bar">
-                <div className="word-list-review-bar__text">
-                  <strong>曾错题巩固</strong>
-                  <p>
-                    {recognizedPastWrong.length > 0
-                      ? `${recognizedPastWrong.length} 个词曾错过、现已掌握，再过一遍防止遗忘`
-                      : "暂无曾错题。答错后进熟词本的词会带「曾错 N 次」标记，即可在此巩固"}
-                  </p>
-                </div>
-                {recognizedPastWrong.length > 0 && (
-                  <div className="word-list-review-bar__actions">
-                    <button
-                      type="button"
-                      className={`btn btn--ghost btn--sm ${reviewShuffle ? "btn--toggle-on" : ""}`}
-                      onClick={toggleReviewShuffle}
-                      aria-pressed={reviewShuffle}
-                    >
-                      {reviewShuffle ? "乱序" : "顺序"}
-                    </button>
-                    <button type="button" className="btn btn--accent" onClick={resumeRecognizedPractice}>
-                      {recognizedSession && bookPracticePaused.recognized
-                        ? `继续巩固（${recognizedSession.index + 1}/${recognizedSession.queue.length}）`
-                        : `开始巩固（${recognizedPastWrong.length}）`}
-                    </button>
-                  </div>
-                )}
-              </div>
+              <BookReviewScopeBar
+                title="曾错题巩固"
+                description={
+                  recognizedPastWrong.length > 0
+                    ? `按 Level · List 选择巩固范围（共 ${recognizedPastWrong.length} 个曾错题）`
+                    : "暂无曾错题。答错后进熟词本的词会带「曾错 N 次」标记，即可在此巩固"
+                }
+                levelNumbers={levelNumbersWithPastWrong}
+                reviewLevel={recognizedReviewLevel}
+                onLevelChange={handleRecognizedReviewLevelChange}
+                listsInLevel={listsInRecognizedReviewLevel}
+                countByListId={pastWrongCountByListId}
+                reviewListId={recognizedReviewListId}
+                onListChange={setRecognizedReviewListId}
+                uncategorizedCount={uncategorizedPastWrongCount}
+                reviewShuffle={reviewShuffle}
+                onToggleShuffle={toggleReviewShuffle}
+                primaryLabel={
+                  recognizedSession && bookPracticePaused.recognized
+                    ? `继续巩固（${recognizedSession.index + 1}/${recognizedSession.queue.length}）`
+                    : `开始巩固（${selectedPastWrongCount}）`
+                }
+                onPrimary={resumeRecognizedPractice}
+                primaryDisabled={selectedPastWrongCount === 0}
+              />
             }
           />
           )

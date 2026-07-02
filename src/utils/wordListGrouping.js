@@ -17,6 +17,41 @@ export function getListReviewLabel(listId, availableLists) {
   return meta?.title || listId;
 }
 
+export function countWordsByListId(words, wordListIndex = null) {
+  const counts = new Map();
+  for (const item of words) {
+    const listId = resolveWordListId(item, wordListIndex);
+    counts.set(listId, (counts.get(listId) || 0) + 1);
+  }
+  return counts;
+}
+
+export function countPastWrongByListId(words, wordListIndex = null) {
+  const counts = new Map();
+  for (const item of words) {
+    if ((item.wrongCount ?? 0) < 1) continue;
+    const listId = resolveWordListId(item, wordListIndex);
+    counts.set(listId, (counts.get(listId) || 0) + 1);
+  }
+  return counts;
+}
+
+export function filterWordsByListId(words, listId, wordListIndex = null) {
+  if (!listId) return [];
+  return words.filter((item) => resolveWordListId(item, wordListIndex) === listId);
+}
+
+export function filterPastWrongByListId(words, listId, wordListIndex = null) {
+  return filterWordsByListId(words, listId, wordListIndex).filter(
+    (item) => (item.wrongCount ?? 0) >= 1
+  );
+}
+
+export function matchesBookPracticeListId(session, item, wordListIndex = null) {
+  if (!session?.listId) return true;
+  return resolveWordListId(item, wordListIndex) === session.listId;
+}
+
 export function groupWordsByList(words, availableLists, wordListIndex = null) {
   const listMetaById = new Map(availableLists.map((item) => [item.id, item]));
   const buckets = new Map();

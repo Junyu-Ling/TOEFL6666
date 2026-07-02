@@ -88,10 +88,12 @@ export function normalizeBookPracticeSession(raw) {
   if (queue.length === 0) return null;
 
   const index = typeof raw.index === "number" ? raw.index : 0;
-  return {
+  const session = {
     queue,
     index: Math.min(Math.max(index, 0), queue.length - 1),
   };
+  if (raw.listId) session.listId = raw.listId;
+  return session;
 }
 
 /** @deprecated 兼容旧版单一 bookPractice 字段 */
