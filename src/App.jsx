@@ -247,15 +247,6 @@ export default function App() {
   const unrecognizedWord = unrecognizedSession?.queue[unrecognizedSession.index] ?? null;
   const recognizedWord = recognizedSession?.queue[recognizedSession.index] ?? null;
 
-  const currentWord =
-    activeTab === "practice"
-      ? listWord
-      : activeTab === "unrecognized"
-        ? unrecognizedWord
-        : activeTab === "recognized"
-          ? recognizedWord
-          : null;
-
   const getWordStats = useCallback(
     (wordData) => {
       if (!wordData) return { wrongCount: 0, memory_trick: null };
@@ -495,6 +486,15 @@ export default function App() {
     Boolean(unrecognizedSession) && !bookPracticePaused.unrecognized;
   const recognizedPracticeActive =
     Boolean(recognizedSession) && !bookPracticePaused.recognized;
+
+  const assistantWord =
+    activeTab === "practice"
+      ? listWord
+      : activeTab === "unrecognized" && unrecognizedPracticeActive
+        ? unrecognizedWord
+        : activeTab === "recognized" && recognizedPracticeActive
+          ? recognizedWord
+          : null;
 
   const unrecognizedPracticeTitle = reviewShuffle
     ? "针对性强化练习 · 乱序"
@@ -804,7 +804,7 @@ export default function App() {
       </main>
 
       <VocabAssistant
-        currentWord={currentWord}
+        currentWord={assistantWord}
         micGranted={mic.isGranted}
       />
 
