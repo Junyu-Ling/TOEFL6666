@@ -39,10 +39,12 @@ export default function BookReviewScopeBar({
     <div className="word-list-review-bar word-list-review-bar--multi">
       <div className="word-list-review-bar__header">
         <div className="word-list-review-bar__text">
-          <strong>{title}</strong>
+          <div className="word-list-review-bar__title-row">
+            <strong>{title}</strong>
+            <span className="word-list-review-bar__badge">已选 {selectedListIds.length} 个列表</span>
+          </div>
           <p>{description}</p>
         </div>
-        <span className="word-list-review-bar__badge">已选 {selectedListIds.length} 个列表</span>
       </div>
 
       <div className="word-list-review-scope">

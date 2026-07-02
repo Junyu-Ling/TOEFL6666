@@ -45,7 +45,6 @@ import {
   getListReviewScopeLabel,
   getSessionListIds,
   matchesBookPracticeListId,
-  pickDefaultReviewListIds,
   sameListIdSet,
 } from "./utils/wordListGrouping";
 import "./App.css";
@@ -85,6 +84,7 @@ export default function App() {
   const [streakOpen, setStreakOpen] = useState(false);
   const [unrecognizedReviewListIds, setUnrecognizedReviewListIds] = useState([]);
   const [recognizedReviewListIds, setRecognizedReviewListIds] = useState([]);
+  const reviewScopeInitializedRef = useRef({ unrecognized: false, recognized: false });
 
   useEffect(() => {
     function syncStreak() {
@@ -774,54 +774,42 @@ export default function App() {
   useEffect(() => {
     if (unrecognized.length === 0) {
       setUnrecognizedReviewListIds([]);
+      reviewScopeInitializedRef.current.unrecognized = false;
       return;
     }
-    if (
-      unrecognizedReviewListIds.length > 0 &&
-      unrecognizedReviewListIds.every(
-        (listId) => (unrecognizedCountByListId.get(listId) || 0) > 0
-      )
-    ) {
-      return;
-    }
-    const nextIds = pickDefaultReviewListIds(
-      unrecognizedCountByListId,
-      availableLists,
-      getSessionListIds(bookPractices.unrecognized)
-    );
-    if (nextIds.length > 0) setUnrecognizedReviewListIds(nextIds);
-  }, [
-    unrecognized.length,
-    unrecognizedReviewListIds,
-    unrecognizedCountByListId,
-    availableLists,
-    bookPractices.unrecognized,
-  ]);
+    setUnrecognizedReviewListIds((prev) => {
+      const pruned = prev.filter((id) => (unrecognizedCountByListId.get(id) || 0) > 0);
+      if (pruned.length > 0) return pruned;
+      if (!reviewScopeInitializedRef.current.unrecognized) {
+        reviewScopeInitializedRef.current.unrecognized = true;
+        const sessionIds = getSessionListIds(bookPractices.unrecognized).filter(
+          (id) => (unrecognizedCountByListId.get(id) || 0) > 0
+        );
+        return sessionIds;
+      }
+      return [];
+    });
+  }, [unrecognized.length, unrecognizedCountByListId, bookPractices.unrecognized]);
 
   useEffect(() => {
     if (recognizedPastWrong.length === 0) {
       setRecognizedReviewListIds([]);
+      reviewScopeInitializedRef.current.recognized = false;
       return;
     }
-    if (
-      recognizedReviewListIds.length > 0 &&
-      recognizedReviewListIds.every((listId) => (pastWrongCountByListId.get(listId) || 0) > 0)
-    ) {
-      return;
-    }
-    const nextIds = pickDefaultReviewListIds(
-      pastWrongCountByListId,
-      availableLists,
-      getSessionListIds(bookPractices.recognized)
-    );
-    if (nextIds.length > 0) setRecognizedReviewListIds(nextIds);
-  }, [
-    recognizedPastWrong.length,
-    recognizedReviewListIds,
-    pastWrongCountByListId,
-    availableLists,
-    bookPractices.recognized,
-  ]);
+    setRecognizedReviewListIds((prev) => {
+      const pruned = prev.filter((id) => (pastWrongCountByListId.get(id) || 0) > 0);
+      if (pruned.length > 0) return pruned;
+      if (!reviewScopeInitializedRef.current.recognized) {
+        reviewScopeInitializedRef.current.recognized = true;
+        const sessionIds = getSessionListIds(bookPractices.recognized).filter(
+          (id) => (pastWrongCountByListId.get(id) || 0) > 0
+        );
+        return sessionIds;
+      }
+      return [];
+    });
+  }, [recognizedPastWrong.length, pastWrongCountByListId, bookPractices.recognized]);
 
   if (wordsLoading) {
     return (
@@ -1026,7 +1014,10 @@ export default function App() {
                       : `开始强化（${selectedUnrecognizedCount}）`
                   }
                   onPrimary={resumeUnrecognizedPractice}
-                  primaryDisabled={selectedUnrecognizedCount === 0}
+                  primaryDisabled={
+                    !(unrecognizedSession && bookPracticePaused.unrecognized) &&
+                    (unrecognizedReviewListIds.length === 0 || selectedUnrecognizedCount === 0)
+                  }
                 />
               ) : null
             }
@@ -1101,7 +1092,10 @@ export default function App() {
                     : `开始巩固（${selectedPastWrongCount}）`
                 }
                 onPrimary={resumeRecognizedPractice}
-                primaryDisabled={selectedPastWrongCount === 0}
+                primaryDisabled={
+                  !(recognizedSession && bookPracticePaused.recognized) &&
+                  (recognizedReviewListIds.length === 0 || selectedPastWrongCount === 0)
+                }
               />
             }
           />
