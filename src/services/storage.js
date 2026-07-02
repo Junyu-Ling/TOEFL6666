@@ -79,7 +79,11 @@ export function normalizeBookPracticeSession(raw) {
 
   const queue = raw.queue
     .filter((item) => item?.word && Array.isArray(item.definitions))
-    .map(({ word, definitions }) => ({ word, definitions }));
+    .map(({ word, definitions, sourceListId }) => ({
+      word,
+      definitions,
+      ...(sourceListId ? { sourceListId } : {}),
+    }));
 
   if (queue.length === 0) return null;
 
@@ -169,6 +173,44 @@ export function upsertWord(list, record) {
 
 export function removeWord(list, word) {
   return list.filter((item) => item.word !== word);
+}
+
+export function toBookQueueItem(item) {
+  return {
+    word: item.word,
+    definitions: item.definitions,
+    ...(item.sourceListId ? { sourceListId: item.sourceListId } : {}),
+  };
+}
+
+/** 进行中的词本练习队列：追加新词（已存在则跳过）。 */
+export function appendToBookQueue(session, item) {
+  if (!session?.queue) return session;
+  if (!item?.word) return session;
+  if (session.queue.some((entry) => entry.word === item.word)) return session;
+  return {
+    ...session,
+    queue: [...session.queue, toBookQueueItem(item)],
+  };
+}
+
+/** 进行中的词本练习队列：移除已掌握/移出词本的词，并校正当前进度。 */
+export function removeFromBookQueue(session, word) {
+  if (!session?.queue?.length) return session;
+  const removeIndex = session.queue.findIndex((entry) => entry.word === word);
+  if (removeIndex < 0) return session;
+
+  const queue = session.queue.filter((entry) => entry.word !== word);
+  if (queue.length === 0) return null;
+
+  let index = session.index;
+  if (removeIndex < index) index -= 1;
+  else if (removeIndex === index) index = Math.min(index, queue.length - 1);
+
+  return {
+    queue,
+    index: Math.max(0, index),
+  };
 }
 
 export function shuffleArray(items) {

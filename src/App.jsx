@@ -28,6 +28,8 @@ import {
   buildRecognizedRecord,
   upsertWord,
   removeWord,
+  appendToBookQueue,
+  removeFromBookQueue,
   shuffleArray,
   sortByWrongCount,
 } from "./services/storage";
@@ -319,10 +321,26 @@ export default function App() {
             }
             const next = upsertWord(prevRec, record);
             saveRecognized(next);
+            if ((record.wrongCount ?? 0) >= 1) {
+              setBookPractices((prevBp) => {
+                if (!prevBp.recognized) return prevBp;
+                return {
+                  ...prevBp,
+                  recognized: appendToBookQueue(prevBp.recognized, record),
+                };
+              });
+            }
             return next;
           });
 
           if (removeFromUnrecognizedOnCorrect) {
+            setBookPractices((prevBp) => {
+              if (!prevBp.unrecognized) return prevBp;
+              return {
+                ...prevBp,
+                unrecognized: removeFromBookQueue(prevBp.unrecognized, wordData.word),
+              };
+            });
             const next = removeWord(prevUnrec, wordData.word);
             saveUnrecognized(next);
             return next;
@@ -341,6 +359,22 @@ export default function App() {
           };
           const next = upsertWord(prev, wrongRecord);
           saveUnrecognized(next);
+          setBookPractices((prevBp) => {
+            let next = prevBp;
+            if (prevBp.unrecognized) {
+              next = {
+                ...next,
+                unrecognized: appendToBookQueue(prevBp.unrecognized, wrongRecord),
+              };
+            }
+            if (prevBp.recognized) {
+              next = {
+                ...next,
+                recognized: removeFromBookQueue(prevBp.recognized, wordData.word),
+              };
+            }
+            return next;
+          });
           return next;
         });
         setRecognized((prev) => {
