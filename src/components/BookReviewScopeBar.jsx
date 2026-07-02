@@ -117,7 +117,7 @@ export default function BookReviewScopeBar({
         </button>
         <button
           type="button"
-          className="btn btn--accent"
+          className={`btn btn--accent${primaryDisabled ? " btn--accent-disabled" : ""}`}
           onClick={onPrimary}
           disabled={primaryDisabled}
         >

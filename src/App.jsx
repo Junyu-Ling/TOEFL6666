@@ -84,7 +84,6 @@ export default function App() {
   const [streakOpen, setStreakOpen] = useState(false);
   const [unrecognizedReviewListIds, setUnrecognizedReviewListIds] = useState([]);
   const [recognizedReviewListIds, setRecognizedReviewListIds] = useState([]);
-  const reviewScopeInitializedRef = useRef({ unrecognized: false, recognized: false });
 
   useEffect(() => {
     function syncStreak() {
@@ -591,29 +590,22 @@ export default function App() {
   );
 
   const resumeUnrecognizedPractice = useCallback(() => {
-    if (
-      !bookPractices.unrecognized ||
-      !sameListIdSet(
-        getSessionListIds(bookPractices.unrecognized),
-        unrecognizedReviewListIds
-      )
-    ) {
-      startReview(unrecognizedReviewListIds);
+    if (bookPractices.unrecognized && bookPracticePaused.unrecognized) {
+      setBookPracticePaused((p) => ({ ...p, unrecognized: false }));
       return;
     }
-    setBookPracticePaused((p) => ({ ...p, unrecognized: false }));
-  }, [bookPractices.unrecognized, unrecognizedReviewListIds, startReview]);
+    if (unrecognizedReviewListIds.length === 0) return;
+    startReview(unrecognizedReviewListIds);
+  }, [bookPractices.unrecognized, bookPracticePaused.unrecognized, unrecognizedReviewListIds, startReview]);
 
   const resumeRecognizedPractice = useCallback(() => {
-    if (
-      !bookPractices.recognized ||
-      !sameListIdSet(getSessionListIds(bookPractices.recognized), recognizedReviewListIds)
-    ) {
-      startRecognizedReview(recognizedReviewListIds);
+    if (bookPractices.recognized && bookPracticePaused.recognized) {
+      setBookPracticePaused((p) => ({ ...p, recognized: false }));
       return;
     }
-    setBookPracticePaused((p) => ({ ...p, recognized: false }));
-  }, [bookPractices.recognized, recognizedReviewListIds, startRecognizedReview]);
+    if (recognizedReviewListIds.length === 0) return;
+    startRecognizedReview(recognizedReviewListIds);
+  }, [bookPractices.recognized, bookPracticePaused.recognized, recognizedReviewListIds, startRecognizedReview]);
 
   const handleBookNext = useCallback((bookType) => {
     setBookPractices((prev) => {
@@ -774,42 +766,22 @@ export default function App() {
   useEffect(() => {
     if (unrecognized.length === 0) {
       setUnrecognizedReviewListIds([]);
-      reviewScopeInitializedRef.current.unrecognized = false;
       return;
     }
-    setUnrecognizedReviewListIds((prev) => {
-      const pruned = prev.filter((id) => (unrecognizedCountByListId.get(id) || 0) > 0);
-      if (pruned.length > 0) return pruned;
-      if (!reviewScopeInitializedRef.current.unrecognized) {
-        reviewScopeInitializedRef.current.unrecognized = true;
-        const sessionIds = getSessionListIds(bookPractices.unrecognized).filter(
-          (id) => (unrecognizedCountByListId.get(id) || 0) > 0
-        );
-        return sessionIds;
-      }
-      return [];
-    });
-  }, [unrecognized.length, unrecognizedCountByListId, bookPractices.unrecognized]);
+    setUnrecognizedReviewListIds((prev) =>
+      prev.filter((id) => (unrecognizedCountByListId.get(id) || 0) > 0)
+    );
+  }, [unrecognized.length, unrecognizedCountByListId]);
 
   useEffect(() => {
     if (recognizedPastWrong.length === 0) {
       setRecognizedReviewListIds([]);
-      reviewScopeInitializedRef.current.recognized = false;
       return;
     }
-    setRecognizedReviewListIds((prev) => {
-      const pruned = prev.filter((id) => (pastWrongCountByListId.get(id) || 0) > 0);
-      if (pruned.length > 0) return pruned;
-      if (!reviewScopeInitializedRef.current.recognized) {
-        reviewScopeInitializedRef.current.recognized = true;
-        const sessionIds = getSessionListIds(bookPractices.recognized).filter(
-          (id) => (pastWrongCountByListId.get(id) || 0) > 0
-        );
-        return sessionIds;
-      }
-      return [];
-    });
-  }, [recognizedPastWrong.length, pastWrongCountByListId, bookPractices.recognized]);
+    setRecognizedReviewListIds((prev) =>
+      prev.filter((id) => (pastWrongCountByListId.get(id) || 0) > 0)
+    );
+  }, [recognizedPastWrong.length, pastWrongCountByListId]);
 
   if (wordsLoading) {
     return (
@@ -1011,12 +983,14 @@ export default function App() {
                   primaryLabel={
                     unrecognizedSession && bookPracticePaused.unrecognized
                       ? `继续强化（${unrecognizedSession.index + 1}/${unrecognizedSession.queue.length}）`
-                      : `开始强化（${selectedUnrecognizedCount}）`
+                      : unrecognizedReviewListIds.length === 0
+                        ? "开始强化"
+                        : `开始强化（${selectedUnrecognizedCount}）`
                   }
                   onPrimary={resumeUnrecognizedPractice}
                   primaryDisabled={
                     !(unrecognizedSession && bookPracticePaused.unrecognized) &&
-                    (unrecognizedReviewListIds.length === 0 || selectedUnrecognizedCount === 0)
+                    unrecognizedReviewListIds.length === 0
                   }
                 />
               ) : null
@@ -1089,12 +1063,14 @@ export default function App() {
                 primaryLabel={
                   recognizedSession && bookPracticePaused.recognized
                     ? `继续巩固（${recognizedSession.index + 1}/${recognizedSession.queue.length}）`
-                    : `开始巩固（${selectedPastWrongCount}）`
+                    : recognizedReviewListIds.length === 0
+                      ? "开始巩固"
+                      : `开始巩固（${selectedPastWrongCount}）`
                 }
                 onPrimary={resumeRecognizedPractice}
                 primaryDisabled={
                   !(recognizedSession && bookPracticePaused.recognized) &&
-                  (recognizedReviewListIds.length === 0 || selectedPastWrongCount === 0)
+                  recognizedReviewListIds.length === 0
                 }
               />
             }
