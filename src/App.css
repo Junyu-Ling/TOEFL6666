@@ -1642,36 +1642,42 @@ body {
   align-items: center;
   gap: 0.75rem;
   width: 100%;
-  padding: 0.875rem 1rem;
+  padding: 0.75rem 1rem 0.75rem 0.875rem;
   border: none;
-  background: var(--surface-raised, var(--surface));
+  border-left: 3px solid var(--accent);
+  background: var(--accent-soft);
   color: inherit;
   font: inherit;
   text-align: left;
   cursor: pointer;
-  transition: background 0.15s;
+  transition: background 0.15s, border-color 0.15s;
 }
 
 .word-list-group__header:hover {
-  background: var(--surface-hover, rgba(127, 127, 127, 0.06));
+  background: var(--accent-soft-hover);
+  border-left-color: var(--accent-hover);
 }
 
 .word-list-group__title {
   flex: 1;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 0.9375rem;
+  letter-spacing: 0.01em;
+  color: var(--accent);
 }
 
 .word-list-group__meta {
   font-size: 0.8125rem;
-  color: var(--text-muted);
+  font-weight: 500;
+  color: color-mix(in srgb, var(--accent) 72%, var(--text-muted));
   white-space: nowrap;
 }
 
 .word-list-group__chevron {
-  color: var(--text-muted);
+  color: var(--accent);
   font-size: 0.875rem;
   line-height: 1;
+  opacity: 0.85;
 }
 
 .word-list-group__items {
