@@ -1533,19 +1533,44 @@ body {
 .word-list-review-bar--multi {
   flex-direction: column;
   align-items: stretch;
+  gap: 0.8rem;
+  padding: 1rem;
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+  background: color-mix(in srgb, var(--accent-soft) 72%, var(--surface));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 10%, transparent);
+}
+
+.word-list-review-bar__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.word-list-review-bar__badge {
+  flex-shrink: 0;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent-soft) 80%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--border));
 }
 
 .word-list-review-scope {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
+  display: grid;
+  gap: 0.625rem;
   width: 100%;
 }
 
 .word-list-review-scope__level {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+  display: grid;
+  gap: 0.55rem;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, var(--border));
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--surface) 88%, var(--accent-soft));
 }
 
 .word-list-review-scope__level-label {
@@ -1562,7 +1587,7 @@ body {
 .word-list-review-scope__lists {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem 1rem;
+  gap: 0.5rem;
   padding-left: 1.5rem;
 }
 
@@ -1570,29 +1595,56 @@ body {
 .word-list-review-scope__uncategorized {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.35rem;
   font-size: 0.8125rem;
   color: var(--text);
   cursor: pointer;
   user-select: none;
+  padding: 0.24rem 0.56rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  transition: border-color 0.15s, background 0.15s, color 0.15s;
+}
+
+.word-list-review-scope__list-option:hover,
+.word-list-review-scope__uncategorized:hover {
+  border-color: color-mix(in srgb, var(--accent) 50%, var(--border));
+  background: color-mix(in srgb, var(--accent-soft) 45%, var(--surface));
+}
+
+.word-list-review-scope__list-option:has(input:checked),
+.word-list-review-scope__uncategorized:has(input:checked) {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 20%, transparent);
 }
 
 .word-list-review-scope__uncategorized {
-  padding-top: 0.25rem;
+  width: fit-content;
+  margin-top: 0.15rem;
   border-top: 1px dashed var(--border);
+  border-style: dashed;
 }
 
 .word-list-review-bar--multi .word-list-review-bar__actions {
   width: 100%;
   justify-content: flex-end;
-  padding-top: 0.25rem;
+  padding-top: 0.35rem;
+  border-top: 1px solid color-mix(in srgb, var(--accent) 25%, var(--border));
 }
 
 .word-list-review-scope input[type="checkbox"] {
-  width: 1rem;
-  height: 1rem;
+  width: 0.95rem;
+  height: 0.95rem;
   accent-color: var(--accent);
   cursor: pointer;
+}
+
+.word-list-review-scope__list-option input[type="checkbox"]:checked + span,
+.word-list-review-scope__uncategorized input[type="checkbox"]:checked + span {
+  color: var(--accent);
+  font-weight: 600;
 }
 
 .word-list-review-bar {
@@ -2113,6 +2165,15 @@ body {
   .word-list-review-bar {
     flex-direction: column;
     align-items: stretch;
+  }
+
+  .word-list-review-bar__header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .word-list-review-scope__lists {
+    padding-left: 0.25rem;
   }
 
   .word-list-review-bar__actions {
