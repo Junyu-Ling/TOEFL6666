@@ -92,7 +92,11 @@ export function normalizeBookPracticeSession(raw) {
     queue,
     index: Math.min(Math.max(index, 0), queue.length - 1),
   };
-  if (raw.listId) session.listId = raw.listId;
+  if (Array.isArray(raw.listIds) && raw.listIds.length > 0) {
+    session.listIds = raw.listIds.filter(Boolean);
+  } else if (raw.listId) {
+    session.listIds = [raw.listId];
+  }
   return session;
 }
 

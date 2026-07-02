@@ -38,24 +38,20 @@ import {
   inferSourceListId,
   countWordsByListId,
   countPastWrongByListId,
-  filterWordsByListId,
-  filterPastWrongByListId,
-  getListReviewLabel,
+  countWordsInListIds,
+  filterWordsByListIds,
+  filterPastWrongByListIds,
+  getListReviewScopeLabel,
+  getSessionListIds,
   matchesBookPracticeListId,
+  pickDefaultReviewListIds,
+  sameListIdSet,
 } from "./utils/wordListGrouping";
 import "./App.css";
 
 function clampIndex(index, length) {
   if (length <= 0) return 0;
   return Math.min(Math.max(index, 0), length - 1);
-}
-
-function pickDefaultReviewListId(countsByListId, availableLists, sessionListId) {
-  if (sessionListId && (countsByListId.get(sessionListId) || 0) > 0) return sessionListId;
-  const firstList = availableLists.find((item) => (countsByListId.get(item.id) || 0) > 0);
-  if (firstList) return firstList.id;
-  if ((countsByListId.get(UNCategorized_LIST_ID) || 0) > 0) return UNCategorized_LIST_ID;
-  return null;
 }
 
 export default function App() {
@@ -85,8 +81,8 @@ export default function App() {
   const [reviewShuffle, setReviewShuffle] = useState(savedRef.current.reviewShuffle ?? false);
   const [streakData, setStreakData] = useState(() => recordVisit());
   const [streakOpen, setStreakOpen] = useState(false);
-  const [unrecognizedReviewListId, setUnrecognizedReviewListId] = useState(null);
-  const [recognizedReviewListId, setRecognizedReviewListId] = useState(null);
+  const [unrecognizedReviewListIds, setUnrecognizedReviewListIds] = useState([]);
+  const [recognizedReviewListIds, setRecognizedReviewListIds] = useState([]);
 
   useEffect(() => {
     function syncStreak() {
@@ -466,16 +462,21 @@ export default function App() {
   }, [activeListId, activeTab, bookPracticePaused, bookPractices, listProgress]);
 
   const startReview = useCallback(
-    (listId) => {
-      const targetListId = listId ?? unrecognizedReviewListId;
-      if (!targetListId) return;
+    (listIds) => {
+      const targetListIds = listIds ?? unrecognizedReviewListIds;
+      if (!targetListIds?.length) return;
 
-      const pool = filterWordsByListId(unrecognized, targetListId, wordListIndex);
+      const pool = filterWordsByListIds(unrecognized, targetListIds, wordListIndex);
       if (pool.length === 0) return;
 
       setBookPracticePaused((p) => ({ ...p, unrecognized: false }));
       setBookPractices((prev) => {
-        if (prev.unrecognized?.listId === targetListId && prev.unrecognized) return prev;
+        if (
+          prev.unrecognized &&
+          sameListIdSet(getSessionListIds(prev.unrecognized), targetListIds)
+        ) {
+          return prev;
+        }
 
         const reviewWords = (reviewShuffle ? shuffleArray : sortByWrongCount)(pool).map((item) => ({
           word: item.word,
@@ -483,23 +484,31 @@ export default function App() {
           ...(item.sourceListId ? { sourceListId: item.sourceListId } : {}),
         }));
 
-        return { ...prev, unrecognized: { queue: reviewWords, index: 0, listId: targetListId } };
+        return {
+          ...prev,
+          unrecognized: { queue: reviewWords, index: 0, listIds: targetListIds },
+        };
       });
     },
-    [unrecognized, unrecognizedReviewListId, reviewShuffle, wordListIndex]
+    [unrecognized, unrecognizedReviewListIds, reviewShuffle, wordListIndex]
   );
 
   const startRecognizedReview = useCallback(
-    (listId) => {
-      const targetListId = listId ?? recognizedReviewListId;
-      if (!targetListId) return;
+    (listIds) => {
+      const targetListIds = listIds ?? recognizedReviewListIds;
+      if (!targetListIds?.length) return;
 
-      const pool = filterPastWrongByListId(recognized, targetListId, wordListIndex);
+      const pool = filterPastWrongByListIds(recognized, targetListIds, wordListIndex);
       if (pool.length === 0) return;
 
       setBookPracticePaused((p) => ({ ...p, recognized: false }));
       setBookPractices((prev) => {
-        if (prev.recognized?.listId === targetListId && prev.recognized) return prev;
+        if (
+          prev.recognized &&
+          sameListIdSet(getSessionListIds(prev.recognized), targetListIds)
+        ) {
+          return prev;
+        }
 
         const reviewWords = (reviewShuffle ? shuffleArray : sortByWrongCount)(pool).map((item) => ({
           word: item.word,
@@ -507,10 +516,13 @@ export default function App() {
           ...(item.sourceListId ? { sourceListId: item.sourceListId } : {}),
         }));
 
-        return { ...prev, recognized: { queue: reviewWords, index: 0, listId: targetListId } };
+        return {
+          ...prev,
+          recognized: { queue: reviewWords, index: 0, listIds: targetListIds },
+        };
       });
     },
-    [recognized, recognizedReviewListId, reviewShuffle, wordListIndex]
+    [recognized, recognizedReviewListIds, reviewShuffle, wordListIndex]
   );
 
   const pauseUnrecognizedPractice = useCallback(() => {
@@ -524,24 +536,27 @@ export default function App() {
   const resumeUnrecognizedPractice = useCallback(() => {
     if (
       !bookPractices.unrecognized ||
-      bookPractices.unrecognized.listId !== unrecognizedReviewListId
+      !sameListIdSet(
+        getSessionListIds(bookPractices.unrecognized),
+        unrecognizedReviewListIds
+      )
     ) {
-      startReview(unrecognizedReviewListId);
+      startReview(unrecognizedReviewListIds);
       return;
     }
     setBookPracticePaused((p) => ({ ...p, unrecognized: false }));
-  }, [bookPractices.unrecognized, unrecognizedReviewListId, startReview]);
+  }, [bookPractices.unrecognized, unrecognizedReviewListIds, startReview]);
 
   const resumeRecognizedPractice = useCallback(() => {
     if (
       !bookPractices.recognized ||
-      bookPractices.recognized.listId !== recognizedReviewListId
+      !sameListIdSet(getSessionListIds(bookPractices.recognized), recognizedReviewListIds)
     ) {
-      startRecognizedReview(recognizedReviewListId);
+      startRecognizedReview(recognizedReviewListIds);
       return;
     }
     setBookPracticePaused((p) => ({ ...p, recognized: false }));
-  }, [bookPractices.recognized, recognizedReviewListId, startRecognizedReview]);
+  }, [bookPractices.recognized, recognizedReviewListIds, startRecognizedReview]);
 
   const handleBookNext = useCallback((bookType) => {
     setBookPractices((prev) => {
@@ -570,16 +585,20 @@ export default function App() {
           : null;
 
   const unrecognizedPracticeTitle = useMemo(() => {
-    const listId = unrecognizedSession?.listId ?? unrecognizedReviewListId;
-    const label = getListReviewLabel(listId, availableLists);
+    const listIds = getSessionListIds(unrecognizedSession).length
+      ? getSessionListIds(unrecognizedSession)
+      : unrecognizedReviewListIds;
+    const label = getListReviewScopeLabel(listIds, availableLists);
     return reviewShuffle ? `${label} · 乱序` : `${label} · 针对性强化练习`;
-  }, [unrecognizedSession?.listId, unrecognizedReviewListId, availableLists, reviewShuffle]);
+  }, [unrecognizedSession, unrecognizedReviewListIds, availableLists, reviewShuffle]);
 
   const recognizedPracticeTitle = useMemo(() => {
-    const listId = recognizedSession?.listId ?? recognizedReviewListId;
-    const label = getListReviewLabel(listId, availableLists);
+    const listIds = getSessionListIds(recognizedSession).length
+      ? getSessionListIds(recognizedSession)
+      : recognizedReviewListIds;
+    const label = getListReviewScopeLabel(listIds, availableLists);
     return reviewShuffle ? `${label} · 乱序` : `${label} · 曾错题巩固`;
-  }, [recognizedSession?.listId, recognizedReviewListId, availableLists, reviewShuffle]);
+  }, [recognizedSession, recognizedReviewListIds, availableLists, reviewShuffle]);
 
   const handleRemoveRecognized = useCallback((word) => {
     setRecognized((prev) => {
@@ -647,13 +666,15 @@ export default function App() {
     [recognized, wordListIndex]
   );
 
-  const selectedUnrecognizedCount = unrecognizedReviewListId
-    ? unrecognizedCountByListId.get(unrecognizedReviewListId) || 0
-    : 0;
+  const selectedUnrecognizedCount = countWordsInListIds(
+    unrecognizedCountByListId,
+    unrecognizedReviewListIds
+  );
 
-  const selectedPastWrongCount = recognizedReviewListId
-    ? pastWrongCountByListId.get(recognizedReviewListId) || 0
-    : 0;
+  const selectedPastWrongCount = countWordsInListIds(
+    pastWrongCountByListId,
+    recognizedReviewListIds
+  );
 
   const levelNumbersWithUnrecognized = useMemo(
     () =>
@@ -675,111 +696,61 @@ export default function App() {
     [levelNumbers, listsByLevel, pastWrongCountByListId]
   );
 
-  const unrecognizedReviewLevel = useMemo(() => {
-    if (unrecognizedReviewListId === UNCategorized_LIST_ID) return null;
-    const current = availableLists.find((item) => item.id === unrecognizedReviewListId);
-    if (current) return current.level;
-    return levelNumbersWithUnrecognized[0] ?? null;
-  }, [availableLists, unrecognizedReviewListId, levelNumbersWithUnrecognized]);
-
-  const recognizedReviewLevel = useMemo(() => {
-    if (recognizedReviewListId === UNCategorized_LIST_ID) return null;
-    const current = availableLists.find((item) => item.id === recognizedReviewListId);
-    if (current) return current.level;
-    return levelNumbersWithPastWrong[0] ?? null;
-  }, [availableLists, recognizedReviewListId, levelNumbersWithPastWrong]);
-
-  const listsInUnrecognizedReviewLevel = useMemo(() => {
-    if (unrecognizedReviewLevel == null) return [];
-    return (listsByLevel.get(unrecognizedReviewLevel) ?? []).filter(
-      (item) => (unrecognizedCountByListId.get(item.id) || 0) > 0
-    );
-  }, [listsByLevel, unrecognizedReviewLevel, unrecognizedCountByListId]);
-
-  const listsInRecognizedReviewLevel = useMemo(() => {
-    if (recognizedReviewLevel == null) return [];
-    return (listsByLevel.get(recognizedReviewLevel) ?? []).filter(
-      (item) => (pastWrongCountByListId.get(item.id) || 0) > 0
-    );
-  }, [listsByLevel, recognizedReviewLevel, pastWrongCountByListId]);
-
   const uncategorizedUnrecognizedCount =
     unrecognizedCountByListId.get(UNCategorized_LIST_ID) || 0;
   const uncategorizedPastWrongCount = pastWrongCountByListId.get(UNCategorized_LIST_ID) || 0;
 
   useEffect(() => {
     if (unrecognized.length === 0) {
-      setUnrecognizedReviewListId(null);
+      setUnrecognizedReviewListIds([]);
       return;
     }
     if (
-      unrecognizedReviewListId &&
-      (unrecognizedCountByListId.get(unrecognizedReviewListId) || 0) > 0
+      unrecognizedReviewListIds.length > 0 &&
+      unrecognizedReviewListIds.every(
+        (listId) => (unrecognizedCountByListId.get(listId) || 0) > 0
+      )
     ) {
       return;
     }
-    const sessionListId = bookPractices.unrecognized?.listId;
-    const nextId = pickDefaultReviewListId(
+    const nextIds = pickDefaultReviewListIds(
       unrecognizedCountByListId,
       availableLists,
-      sessionListId
+      getSessionListIds(bookPractices.unrecognized)
     );
-    if (nextId) setUnrecognizedReviewListId(nextId);
+    if (nextIds.length > 0) setUnrecognizedReviewListIds(nextIds);
   }, [
     unrecognized.length,
-    unrecognizedReviewListId,
+    unrecognizedReviewListIds,
     unrecognizedCountByListId,
     availableLists,
-    bookPractices.unrecognized?.listId,
+    bookPractices.unrecognized,
   ]);
 
   useEffect(() => {
     if (recognizedPastWrong.length === 0) {
-      setRecognizedReviewListId(null);
+      setRecognizedReviewListIds([]);
       return;
     }
     if (
-      recognizedReviewListId &&
-      (pastWrongCountByListId.get(recognizedReviewListId) || 0) > 0
+      recognizedReviewListIds.length > 0 &&
+      recognizedReviewListIds.every((listId) => (pastWrongCountByListId.get(listId) || 0) > 0)
     ) {
       return;
     }
-    const sessionListId = bookPractices.recognized?.listId;
-    const nextId = pickDefaultReviewListId(
+    const nextIds = pickDefaultReviewListIds(
       pastWrongCountByListId,
       availableLists,
-      sessionListId
+      getSessionListIds(bookPractices.recognized)
     );
-    if (nextId) setRecognizedReviewListId(nextId);
+    if (nextIds.length > 0) setRecognizedReviewListIds(nextIds);
   }, [
     recognizedPastWrong.length,
-    recognizedReviewListId,
+    recognizedReviewListIds,
     pastWrongCountByListId,
     availableLists,
-    bookPractices.recognized?.listId,
+    bookPractices.recognized,
   ]);
-
-  const handleUnrecognizedReviewLevelChange = useCallback(
-    (levelValue) => {
-      const level = Number(levelValue);
-      const lists = (listsByLevel.get(level) ?? []).filter(
-        (item) => (unrecognizedCountByListId.get(item.id) || 0) > 0
-      );
-      if (lists.length > 0) setUnrecognizedReviewListId(lists[0].id);
-    },
-    [listsByLevel, unrecognizedCountByListId]
-  );
-
-  const handleRecognizedReviewLevelChange = useCallback(
-    (levelValue) => {
-      const level = Number(levelValue);
-      const lists = (listsByLevel.get(level) ?? []).filter(
-        (item) => (pastWrongCountByListId.get(item.id) || 0) > 0
-      );
-      if (lists.length > 0) setRecognizedReviewListId(lists[0].id);
-    },
-    [listsByLevel, pastWrongCountByListId]
-  );
 
   if (wordsLoading) {
     return (
@@ -928,14 +899,12 @@ export default function App() {
               unrecognized.length > 0 ? (
                 <BookReviewScopeBar
                   title="针对性强化练习"
-                  description={`按 Level · List 选择复习范围（共 ${unrecognized.length} 个生词）`}
+                  description={`按 Level · List 多选复习范围（共 ${unrecognized.length} 个生词）`}
                   levelNumbers={levelNumbersWithUnrecognized}
-                  reviewLevel={unrecognizedReviewLevel}
-                  onLevelChange={handleUnrecognizedReviewLevelChange}
-                  listsInLevel={listsInUnrecognizedReviewLevel}
+                  listsByLevel={listsByLevel}
                   countByListId={unrecognizedCountByListId}
-                  reviewListId={unrecognizedReviewListId}
-                  onListChange={setUnrecognizedReviewListId}
+                  selectedListIds={unrecognizedReviewListIds}
+                  onSelectedListIdsChange={setUnrecognizedReviewListIds}
                   uncategorizedCount={uncategorizedUnrecognizedCount}
                   reviewShuffle={reviewShuffle}
                   onToggleShuffle={toggleReviewShuffle}
@@ -1003,16 +972,14 @@ export default function App() {
                 title="曾错题巩固"
                 description={
                   recognizedPastWrong.length > 0
-                    ? `按 Level · List 选择巩固范围（共 ${recognizedPastWrong.length} 个曾错题）`
+                    ? `按 Level · List 多选巩固范围（共 ${recognizedPastWrong.length} 个曾错题）`
                     : "暂无曾错题。答错后进熟词本的词会带「曾错 N 次」标记，即可在此巩固"
                 }
                 levelNumbers={levelNumbersWithPastWrong}
-                reviewLevel={recognizedReviewLevel}
-                onLevelChange={handleRecognizedReviewLevelChange}
-                listsInLevel={listsInRecognizedReviewLevel}
+                listsByLevel={listsByLevel}
                 countByListId={pastWrongCountByListId}
-                reviewListId={recognizedReviewListId}
-                onListChange={setRecognizedReviewListId}
+                selectedListIds={recognizedReviewListIds}
+                onSelectedListIdsChange={setRecognizedReviewListIds}
                 uncategorizedCount={uncategorizedPastWrongCount}
                 reviewShuffle={reviewShuffle}
                 onToggleShuffle={toggleReviewShuffle}
