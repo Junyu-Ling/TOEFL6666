@@ -760,6 +760,38 @@ body {
   font-weight: 600;
 }
 
+.pronunciation-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.35rem;
+  margin: 0.45rem 0 0;
+  padding: 0.45rem 0.65rem;
+  border-radius: 10px;
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  color: #9a5b00;
+  background: color-mix(in srgb, #ffb020 18%, var(--surface));
+  border: 1px solid color-mix(in srgb, #ffb020 45%, var(--border));
+}
+
+.pronunciation-alert__icon {
+  flex-shrink: 0;
+  line-height: 1.2;
+}
+
+.pronunciation-alert__label {
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.flashcard__pronunciation-alert {
+  margin-top: 0.35rem;
+}
+
+.word-item__pronunciation-alert {
+  margin-top: 0.25rem;
+}
+
 .flashcard__sound {
   width: var(--fc-sound-size);
   height: var(--fc-sound-size);

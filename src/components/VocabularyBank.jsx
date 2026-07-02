@@ -6,9 +6,12 @@ import {
   groupBankWords,
   getBankWordLabel,
 } from "../utils/vocabularyBank";
+import PronunciationAlert from "./PronunciationAlert";
+import { getPronunciationAlert } from "../utils/pronunciationAlert";
 
 function BankWordItem({ item, availableLists, bookStatus }) {
   const listLabel = getBankWordLabel(item, availableLists);
+  const pronunciationAlert = getPronunciationAlert(item.word);
 
   return (
     <article className="word-item word-item--bank">
@@ -25,6 +28,7 @@ function BankWordItem({ item, availableLists, bookStatus }) {
             )}
           </div>
           <p className="word-item__defs">{item.definitions?.join(" · ")}</p>
+          <PronunciationAlert alert={pronunciationAlert} className="word-item__pronunciation-alert" />
         </div>
       </div>
     </article>

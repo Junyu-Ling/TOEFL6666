@@ -1,6 +1,8 @@
-import { useMemo, useState, useEffect } from "react";
+import { useMemo, useState, useEffect, useRef } from "react";
 import MemoryTrickBlock from "./MemoryTrickBlock";
+import PronunciationAlert from "./PronunciationAlert";
 import { fetchMemoryTrick } from "../services/memoryTrick";
+import { getPronunciationAlert } from "../utils/pronunciationAlert";
 import { groupWordsByList } from "../utils/wordListGrouping";
 
 const SORT_OPTIONS = [
@@ -53,11 +55,35 @@ function WordItem({
   const needsMemoryTrick = wrongCountPast && wrongCount >= 1;
   const [localTrick, setLocalTrick] = useState(null);
   const [memoryLoading, setMemoryLoading] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const itemRef = useRef(null);
 
   const trick = item.memory_trick || localTrick;
+  const pronunciationAlert = getPronunciationAlert(
+    item.word,
+    trick?.pronunciation_alert
+  );
 
   useEffect(() => {
-    if (!needsMemoryTrick || item.memory_trick || localTrick) return undefined;
+    const node = itemRef.current;
+    if (!node || !needsMemoryTrick || item.memory_trick || localTrick) return undefined;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "120px 0px" }
+    );
+
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [needsMemoryTrick, item.memory_trick, localTrick]);
+
+  useEffect(() => {
+    if (!visible || !needsMemoryTrick || item.memory_trick || localTrick) return undefined;
 
     let cancelled = false;
     setMemoryLoading(true);
@@ -77,6 +103,7 @@ function WordItem({
       cancelled = true;
     };
   }, [
+    visible,
     needsMemoryTrick,
     item.word,
     item.definitions,
@@ -86,7 +113,7 @@ function WordItem({
   ]);
 
   return (
-    <article className={`word-item word-item--${variant}`}>
+    <article ref={itemRef} className={`word-item word-item--${variant}`}>
       <div className="word-item__main">
         <div className="word-item__left">
           <div className="word-item__title-row">
@@ -100,6 +127,7 @@ function WordItem({
             )}
           </div>
           <p className="word-item__defs">{item.definitions?.join(" · ")}</p>
+          <PronunciationAlert alert={pronunciationAlert} className="word-item__pronunciation-alert" />
           {item.ai_feedback && <p className="word-item__feedback">{item.ai_feedback}</p>}
           {needsMemoryTrick && memoryLoading && !trick && (
             <p className="word-item__memory-status">

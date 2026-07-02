@@ -66,7 +66,7 @@ function toCompactEntry(item) {
 }
 
 /** 从熟词本挑选可能与当前题/用户答案混淆的词条，供 AI 优先引用。 */
-export function buildRecognizedConfusionContext(recognizedList, targetWord, userAnswer, { maxEntries = 48 } = {}) {
+export function buildRecognizedConfusionContext(recognizedList, targetWord, userAnswer, { maxEntries = 24 } = {}) {
   const list = Array.isArray(recognizedList) ? recognizedList : [];
   const answerTokens = extractAnswerEnglishTokens(userAnswer);
   const compact = list.map(toCompactEntry).filter(Boolean);
@@ -101,7 +101,7 @@ export function formatRecognizedConfusionContext(recognizedVocabulary = []) {
 
   return recognizedVocabulary
     .map((item) => {
-      const defs = (item.definitions || []).filter(Boolean).join("；") || "（无释义）";
+      const defs = (item.definitions || []).filter(Boolean).slice(0, 2).join("；") || "（无释义）";
       return `- ${item.word}：${defs}`;
     })
     .join("\n");

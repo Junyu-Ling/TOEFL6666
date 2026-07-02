@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { evaluateAnswer } from "../services/ai";
 import { useSettings } from "../context/SettingsContext";
 import {
@@ -11,6 +11,8 @@ import { playAnswerSound } from "../utils/answerSounds";
 import { fetchMemoryTrick } from "../services/memoryTrick";
 import { shouldFetchMemoryTrick } from "../shared/memoryTrick";
 import MemoryTrickBlock from "./MemoryTrickBlock";
+import PronunciationAlert from "./PronunciationAlert";
+import { getPronunciationAlert } from "../utils/pronunciationAlert";
 
 const SILENCE_STOP_MS = 2000;
 const SWIPE_THRESHOLD_PX = 48;
@@ -161,29 +163,18 @@ export default function FlashCard({
     [wordData, wordStats?.wrongCount, wordStats?.memory_trick, onMemoryTrickGenerated]
   );
 
-  const fetchMemoryTrickIfNeeded = useCallback(async () => {
-    if (memoryFetchRef.current) return;
-    if (
-      !shouldFetchMemoryTrick({
-        priorWrongCount: wordStats?.wrongCount,
-        existingTrick: wordStats?.memory_trick,
-      })
-    ) {
-      return;
-    }
-
-    memoryFetchRef.current = true;
-    setMemoryLoading(true);
-    try {
-      const memory_trick = await fetchMemoryTrick(wordData);
-      onMemoryTrickGenerated?.(wordData, memory_trick);
-    } catch {
-      // ignore prefetch errors
-    } finally {
-      memoryFetchRef.current = false;
-      setMemoryLoading(false);
-    }
-  }, [wordData, wordStats?.wrongCount, wordStats?.memory_trick, onMemoryTrickGenerated]);
+  const pronunciationAlert = useMemo(
+    () =>
+      getPronunciationAlert(
+        wordData?.word,
+        wordStats?.memory_trick?.pronunciation_alert ?? result?.memory_trick?.pronunciation_alert
+      ),
+    [
+      wordData?.word,
+      wordStats?.memory_trick?.pronunciation_alert,
+      result?.memory_trick?.pronunciation_alert,
+    ]
+  );
 
   useEffect(() => {
     answerRef.current = userAnswer;
@@ -424,12 +415,6 @@ export default function FlashCard({
   useEffect(() => {
     handleBlankTapRef.current = handleBlankTap;
   }, [handleBlankTap]);
-
-  useEffect(() => {
-    if (settingsOpen) return undefined;
-    void fetchMemoryTrickIfNeeded();
-    return undefined;
-  }, [wordData?.word, wordStats?.wrongCount, wordStats?.memory_trick, settingsOpen, fetchMemoryTrickIfNeeded]);
 
   useEffect(() => {
     const el = cardRef.current;
@@ -1036,6 +1021,8 @@ export default function FlashCard({
                 )}
               </div>
             </div>
+
+            <PronunciationAlert alert={pronunciationAlert} className="flashcard__pronunciation-alert" />
 
             {micGranted && (
               <div className="flashcard__pronounce-opts">
