@@ -792,6 +792,14 @@ body {
   margin-top: 0.25rem;
 }
 
+.vocabulary-bank__toolbar {
+  align-items: center;
+}
+
+.vocabulary-bank__toolbar .word-list-view__sort {
+  min-width: 7.5rem;
+}
+
 .flashcard__sound {
   width: var(--fc-sound-size);
   height: var(--fc-sound-size);

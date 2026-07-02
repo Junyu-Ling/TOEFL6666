@@ -6,6 +6,11 @@ export const BANK_SORT_OPTIONS = [
   { value: "alpha-desc", label: "字母 Z→A" },
 ];
 
+export const BANK_VIEW_OPTIONS = [
+  { value: "all", label: "全部单词" },
+  { value: "irregular-pronunciation", label: "特殊发音" },
+];
+
 export function filterBankWords(words, query) {
   const q = query.trim().toLowerCase();
   if (!q) return words;

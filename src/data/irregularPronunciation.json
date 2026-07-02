@@ -1,0 +1,352 @@
+{
+  "generatedAt": "2026-07-02",
+  "totalWords": 3231,
+  "count": 69,
+  "entries": [
+    {
+      "word": "aisle",
+      "message": "s 不发音，读 /aɪl/",
+      "category": "known"
+    },
+    {
+      "word": "align",
+      "message": "g 不发音，读 /əˈlaɪn/",
+      "category": "known"
+    },
+    {
+      "word": "architect",
+      "message": "ch 读 /k/，不是「吃」",
+      "category": "ch-special"
+    },
+    {
+      "word": "architecture",
+      "message": "ch 读 /k/，不是「吃」",
+      "category": "ch-special"
+    },
+    {
+      "word": "assign",
+      "message": "g 不发音，读 /əˈsaɪn/",
+      "category": "known"
+    },
+    {
+      "word": "assignment",
+      "message": "g 不发音，读 /əˈsaɪnmənt/",
+      "category": "known"
+    },
+    {
+      "word": "bizarre",
+      "message": "读 /bɪˈzɑːr/，末尾 -re 不发「瑞」",
+      "category": "known"
+    },
+    {
+      "word": "bustle",
+      "message": "t 不发音，读 /ˈbʌsəl/",
+      "category": "known"
+    },
+    {
+      "word": "campaign",
+      "message": "g 不发音，读 /kæmˈpeɪn/",
+      "category": "known"
+    },
+    {
+      "word": "chaotic",
+      "message": "ch 读 /k/，读 /keɪˈɑːtɪk/",
+      "category": "known"
+    },
+    {
+      "word": "character",
+      "message": "ch 读 /k/，不是「吃」",
+      "category": "ch-special"
+    },
+    {
+      "word": "characteristic",
+      "message": "ch 读 /k/，不是「吃」",
+      "category": "ch-special"
+    },
+    {
+      "word": "characterize",
+      "message": "ch 读 /k/，不是「吃」",
+      "category": "ch-special"
+    },
+    {
+      "word": "chloride",
+      "message": "ch 读 /k/，读 /ˈklɔːraɪd/",
+      "category": "known"
+    },
+    {
+      "word": "choir",
+      "message": "读 /ˈkwaɪər/，ch 发 /k/",
+      "category": "known"
+    },
+    {
+      "word": "chondrite",
+      "message": "ch 读 /k/，读 /ˈkɒndraɪt/",
+      "category": "known"
+    },
+    {
+      "word": "choreograph",
+      "message": "ch 读 /k/，读 /ˈkɔːriəɡræf/",
+      "category": "known"
+    },
+    {
+      "word": "choreographer",
+      "message": "ch 读 /k/，读 /ˌkɔːriˈɑːɡrəfər/",
+      "category": "known"
+    },
+    {
+      "word": "chorus",
+      "message": "ch 读 /k/，读 /ˈkɔːrəs/",
+      "category": "known"
+    },
+    {
+      "word": "chromosome",
+      "message": "ch 读 /k/，读 /ˈkroʊməsoʊm/",
+      "category": "known"
+    },
+    {
+      "word": "chronological",
+      "message": "ch 读 /k/，读 /ˌkrɒnəˈlɒdʒɪkəl/",
+      "category": "known"
+    },
+    {
+      "word": "column",
+      "message": "n 不发音，读 /ˈkɒləm/",
+      "category": "known"
+    },
+    {
+      "word": "debris",
+      "message": "s 不发音，读 /dəˈbriː/",
+      "category": "known"
+    },
+    {
+      "word": "designate",
+      "message": "g 不发音，读 /ˈdezɪɡneɪt/",
+      "category": "known"
+    },
+    {
+      "word": "designation",
+      "message": "g 不发音，读 /ˌdezɪɡˈneɪʃən/",
+      "category": "known"
+    },
+    {
+      "word": "doubtful",
+      "message": "沿 doubt 读音，b 不发音，读 /ˈdaʊtfəl/",
+      "category": "known"
+    },
+    {
+      "word": "drought",
+      "message": "ough 读 /aʊ/，读 /draʊt/",
+      "category": "known"
+    },
+    {
+      "word": "epitome",
+      "message": "读 /ɪˈpɪtəmi/，末尾 -ome 不发「欧姆」",
+      "category": "known"
+    },
+    {
+      "word": "extraordinary",
+      "message": "读 /ɪkˈstrɔːrdəneri/，重音在第二音节",
+      "category": "known"
+    },
+    {
+      "word": "folk",
+      "message": "l 不发音，读 /foʊk/",
+      "category": "known"
+    },
+    {
+      "word": "genre",
+      "message": "读 /ˈʒɑːnrə/，g 发 /ʒ/",
+      "category": "known"
+    },
+    {
+      "word": "ghost",
+      "message": "gh 不发音，读 /ɡoʊst/",
+      "category": "known"
+    },
+    {
+      "word": "hasten",
+      "message": "t 不发音，读 /ˈheɪsən/",
+      "category": "known"
+    },
+    {
+      "word": "isle",
+      "message": "s 不发音，读 /aɪl/",
+      "category": "known"
+    },
+    {
+      "word": "kneel",
+      "message": "字母 k 不发音，别按自然拼读读 k",
+      "category": "silent-k"
+    },
+    {
+      "word": "knit",
+      "message": "字母 k 不发音，别按自然拼读读 k",
+      "category": "silent-k"
+    },
+    {
+      "word": "limb",
+      "message": "b 不发音，读 /lɪm/",
+      "category": "known"
+    },
+    {
+      "word": "mortgage",
+      "message": "t 常不发音，读 /ˈmɔːrɡɪdʒ/",
+      "category": "known"
+    },
+    {
+      "word": "nestle",
+      "message": "t 不发音，读 /ˈnesəl/",
+      "category": "known"
+    },
+    {
+      "word": "numb",
+      "message": "b 不发音，读 /nʌm/",
+      "category": "known"
+    },
+    {
+      "word": "plumb",
+      "message": "b 不发音，读 /plʌm/",
+      "category": "known"
+    },
+    {
+      "word": "psychological",
+      "message": "p 不发音，读 /saɪ/",
+      "category": "silent-p"
+    },
+    {
+      "word": "psychologist",
+      "message": "p 不发音，读 /saɪ/",
+      "category": "silent-p"
+    },
+    {
+      "word": "receipt",
+      "message": "p 不发音，读 /rɪˈsiːt/",
+      "category": "known"
+    },
+    {
+      "word": "recipe",
+      "message": "读 /ˈresəpi/，不是按 re-ci-pe 自然拼读",
+      "category": "known"
+    },
+    {
+      "word": "recipient",
+      "message": "re- 常读 /rɪ/ 或 /rə/，不是「瑞」",
+      "category": "recipe-family"
+    },
+    {
+      "word": "recital",
+      "message": "re- 常读 /rɪ/ 或 /rə/，不是「瑞」",
+      "category": "recipe-family"
+    },
+    {
+      "word": "redesign",
+      "message": "g 不发音（design 部分），读 /ˌriːdɪˈzaɪn/",
+      "category": "known"
+    },
+    {
+      "word": "reign",
+      "message": "g 不发音，读 /reɪn/",
+      "category": "known"
+    },
+    {
+      "word": "reschedule",
+      "message": "ch 读 /k/，读 /riːˈskedʒuːl/",
+      "category": "known"
+    },
+    {
+      "word": "rough",
+      "message": "ough 读 /ʌf/，读 /rʌf/",
+      "category": "known"
+    },
+    {
+      "word": "roughly",
+      "message": "ough 读 /ʌf/，读 /ˈrʌfli/",
+      "category": "known"
+    },
+    {
+      "word": "schedule",
+      "message": "ch 读 /k/，美式读 /ˈskedʒuːl/",
+      "category": "known"
+    },
+    {
+      "word": "scheme",
+      "message": "ch 读 /k/，读 /skiːm/",
+      "category": "known"
+    },
+    {
+      "word": "scholar",
+      "message": "ch 读 /k/，读 /ˈskɑːlər/",
+      "category": "known"
+    },
+    {
+      "word": "sovereign",
+      "message": "g 不发音，读 /ˈsɒvrɪn/",
+      "category": "known"
+    },
+    {
+      "word": "subtle",
+      "message": "b 不发音，读 /ˈsʌtl/",
+      "category": "known"
+    },
+    {
+      "word": "technician",
+      "message": "ch 读 /k/，不是「吃」",
+      "category": "ch-special"
+    },
+    {
+      "word": "technique",
+      "message": "ch 读 /k/，不是「吃」",
+      "category": "ch-special"
+    },
+    {
+      "word": "technological",
+      "message": "ch 读 /k/，不是「吃」",
+      "category": "ch-special"
+    },
+    {
+      "word": "thorough",
+      "message": "ough 读 /ʌrə/，读 /ˈθɜːroʊ/",
+      "category": "known"
+    },
+    {
+      "word": "thoughtful",
+      "message": "ough 读 /ɔː/，读 /ˈθɔːtfəl/",
+      "category": "known"
+    },
+    {
+      "word": "tough",
+      "message": "ough 读 /ʌf/，读 /tʌf/",
+      "category": "known"
+    },
+    {
+      "word": "viscera",
+      "message": "c 读 /ʃ/，读 /ˈvɪsərə/",
+      "category": "known"
+    },
+    {
+      "word": "wrap",
+      "message": "w 不发音，读 /ræp/",
+      "category": "known"
+    },
+    {
+      "word": "wreck",
+      "message": "w 不发音，读 /rek/",
+      "category": "known"
+    },
+    {
+      "word": "wrestle",
+      "message": "w 不发音，读 /ˈresəl/",
+      "category": "known"
+    },
+    {
+      "word": "wrinkle",
+      "message": "w 不发音，读 /ˈrɪŋkəl/",
+      "category": "known"
+    },
+    {
+      "word": "wrist",
+      "message": "w 不发音，读 /rɪst/",
+      "category": "known"
+    }
+  ]
+}

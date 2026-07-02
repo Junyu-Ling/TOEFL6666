@@ -1,13 +1,14 @@
 import { useMemo, useState } from "react";
 import {
   BANK_SORT_OPTIONS,
+  BANK_VIEW_OPTIONS,
   filterBankWords,
   sortBankWords,
   groupBankWords,
   getBankWordLabel,
 } from "../utils/vocabularyBank";
 import PronunciationAlert from "./PronunciationAlert";
-import { getPronunciationAlert } from "../utils/pronunciationAlert";
+import { getPronunciationAlert, getIrregularPronunciationStats } from "../utils/pronunciationAlert";
 
 function BankWordItem({ item, availableLists, bookStatus }) {
   const listLabel = getBankWordLabel(item, availableLists);
@@ -82,6 +83,9 @@ export default function VocabularyBank({
 }) {
   const [query, setQuery] = useState("");
   const [sortMode, setSortMode] = useState("level-list");
+  const [viewMode, setViewMode] = useState("all");
+
+  const irregularStats = useMemo(() => getIrregularPronunciationStats(), []);
 
   const bookStatusByWord = useMemo(() => {
     const map = new Map();
@@ -93,9 +97,12 @@ export default function VocabularyBank({
   }, [recognizedSet, unrecognizedSet]);
 
   const displayedWords = useMemo(() => {
-    const filtered = filterBankWords(words, query);
+    let filtered = filterBankWords(words, query);
+    if (viewMode === "irregular-pronunciation") {
+      filtered = filtered.filter((item) => getPronunciationAlert(item.word));
+    }
     return sortBankWords(filtered, sortMode, availableLists);
-  }, [words, query, sortMode, availableLists]);
+  }, [words, query, sortMode, viewMode, availableLists]);
 
   const groupedWords = useMemo(
     () => groupBankWords(displayedWords, sortMode, availableLists, wordListIndex),
@@ -103,6 +110,7 @@ export default function VocabularyBank({
   );
 
   const isFiltering = query.trim().length > 0;
+  const isSpecialView = viewMode === "irregular-pronunciation";
   const practiceLabel =
     bankSession && bankPracticePaused
       ? `继续练习（${bankSession.index + 1}/${bankSession.queue.length}）`
@@ -114,9 +122,11 @@ export default function VocabularyBank({
         <div>
           <h2>词库</h2>
           <p>
-            {isFiltering || sortMode !== "level-list"
-              ? `显示 ${displayedWords.length} / ${words.length} 个`
-              : `共 ${words.length} 个单词 · 网站全部词书`}
+            {isSpecialView
+              ? `特殊发音 ${displayedWords.length} 个（已扫描词库 ${irregularStats.totalWords} 词）`
+              : isFiltering || sortMode !== "level-list"
+                ? `显示 ${displayedWords.length} / ${words.length} 个`
+                : `共 ${words.length} 个单词 · 网站全部词书 · 特殊发音 ${irregularStats.count} 个`}
           </p>
         </div>
         <div className="word-list-view__header-actions">
@@ -139,15 +149,27 @@ export default function VocabularyBank({
         </div>
       </header>
 
-      <div className="word-list-view__toolbar">
+      <div className="word-list-view__toolbar vocabulary-bank__toolbar">
         <input
           className="word-list-view__search"
           type="search"
-          placeholder="搜索单词或释义…"
+          placeholder={isSpecialView ? "在特殊发音列表中搜索…" : "搜索单词或释义…"}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           aria-label="搜索单词"
         />
+        <select
+          className="word-list-view__sort"
+          value={viewMode}
+          onChange={(e) => setViewMode(e.target.value)}
+          aria-label="词库视图"
+        >
+          {BANK_VIEW_OPTIONS.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
         <select
           className="word-list-view__sort"
           value={sortMode}
@@ -164,8 +186,8 @@ export default function VocabularyBank({
 
       {displayedWords.length === 0 ? (
         <div className="word-list-view__empty">
-          <span className="empty-icon">🔍</span>
-          <p>没有匹配的单词</p>
+          <span className="empty-icon">{isSpecialView ? "🔊" : "🔍"}</span>
+          <p>{isSpecialView ? "没有匹配的特殊发音单词" : "没有匹配的单词"}</p>
         </div>
       ) : groupedWords ? (
         <div className="word-list word-list--grouped">
