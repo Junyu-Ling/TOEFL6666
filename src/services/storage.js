@@ -14,10 +14,12 @@ const DEFAULT_PROGRESS = {
   bookPractices: {
     unrecognized: null,
     recognized: null,
+    bank: null,
   },
   bookPracticePaused: {
     unrecognized: false,
     recognized: false,
+    bank: false,
   },
 };
 
@@ -71,6 +73,7 @@ export function saveProgress(progress) {
 export const EMPTY_BOOK_PRACTICES = {
   unrecognized: null,
   recognized: null,
+  bank: null,
 };
 
 /** 单个词本练习会话（生词本 / 熟词本各一份，互不影响）。 */
@@ -108,13 +111,14 @@ export function normalizeBookPractice(raw) {
   return { type: raw.type, ...session };
 }
 
-/** 同时恢复生词本、熟词本两份练习进度（最多与词库练习共三个独立进度）。 */
+/** 同时恢复生词本、熟词本、词库练习进度。 */
 export function loadBookPractices(saved = {}) {
   const result = { ...EMPTY_BOOK_PRACTICES };
 
   if (saved.bookPractices && typeof saved.bookPractices === "object") {
     result.unrecognized = normalizeBookPracticeSession(saved.bookPractices.unrecognized);
     result.recognized = normalizeBookPracticeSession(saved.bookPractices.recognized);
+    result.bank = normalizeBookPracticeSession(saved.bookPractices.bank);
   }
 
   const legacy = normalizeBookPractice(saved.bookPractice);
@@ -133,6 +137,7 @@ export function loadBookPracticePaused(saved = {}, bookPractices = EMPTY_BOOK_PR
   return {
     unrecognized: Boolean(paused?.unrecognized) && Boolean(bookPractices.unrecognized),
     recognized: Boolean(paused?.recognized) && Boolean(bookPractices.recognized),
+    bank: Boolean(paused?.bank) && Boolean(bookPractices.bank),
   };
 }
 

@@ -8,12 +8,13 @@ import VocabAssistant from "./components/VocabAssistant";
 import StreakPanel from "./components/StreakPanel";
 import VocabLoadingScreen from "./components/VocabLoadingScreen";
 import BookReviewScopeBar from "./components/BookReviewScopeBar";
+import VocabularyBank from "./components/VocabularyBank";
 import MottoFooter from "./components/MottoFooter";
 import { recordVisit, refreshStreak } from "./services/streak";
 import { syncService, SYNC_APPLIED_EVENT, SYNC_STATUS_EVENT } from "./services/syncService";
 import { useMicrophone } from "./hooks/useMicrophone";
 import { useSettings } from "./context/SettingsContext";
-import { fetchWordList, fetchWordListManifest, fetchWordListIndex } from "./services/wordlist";
+import { fetchWordList, fetchWordListManifest, fetchWordListIndex, fetchAllWordBank } from "./services/wordlist";
 import {
   loadRecognized,
   loadUnrecognized,
@@ -64,6 +65,7 @@ export default function App() {
   const [recognized, setRecognized] = useState(loadRecognized);
   const [unrecognized, setUnrecognized] = useState(loadUnrecognized);
   const [wordList, setWordList] = useState([]);
+  const [allBankWords, setAllBankWords] = useState([]);
   const [listMeta, setListMeta] = useState(null);
   const [availableLists, setAvailableLists] = useState([]);
   const [wordListIndex, setWordListIndex] = useState(null);
@@ -166,13 +168,21 @@ export default function App() {
         setAvailableLists(manifest.lists ?? []);
         setWordListIndex(index);
 
-        const listId =
-          savedRef.current.activeListId ??
-          manifest.defaultListId ??
-          manifest.lists?.[0]?.id;
-
-        const { meta, words } = await fetchWordList(listId);
+        const [bankWords, listPayload] = await Promise.all([
+          fetchAllWordBank(manifest.lists ?? []),
+          (async () => {
+            const listId =
+              savedRef.current.activeListId ??
+              manifest.defaultListId ??
+              manifest.lists?.[0]?.id;
+            return fetchWordList(listId).then((data) => ({ listId, ...data }));
+          })(),
+        ]);
         if (cancelled) return;
+
+        setAllBankWords(bankWords);
+
+        const { listId, meta, words } = listPayload;
 
         const savedIndex = getSavedIndex(savedRef.current.listProgress, listId);
         applyList(listId, words, meta, savedIndex);
@@ -261,8 +271,10 @@ export default function App() {
   }, [wordList, listIndex, activeListId]);
   const unrecognizedSession = bookPractices.unrecognized;
   const recognizedSession = bookPractices.recognized;
+  const bankSession = bookPractices.bank;
   const unrecognizedWord = unrecognizedSession?.queue[unrecognizedSession.index] ?? null;
   const recognizedWord = recognizedSession?.queue[recognizedSession.index] ?? null;
+  const bankWord = bankSession?.queue[bankSession.index] ?? null;
 
   const getWordStats = useCallback(
     (wordData) => {
@@ -377,20 +389,27 @@ export default function App() {
           const next = upsertWord(prev, wrongRecord);
           saveUnrecognized(next);
           setBookPractices((prevBp) => {
-            if (!prevBp.unrecognized) return prevBp;
+            let nextBp = prevBp;
             if (
-              !matchesBookPracticeListId(
+              prevBp.unrecognized &&
+              matchesBookPracticeListId(
                 prevBp.unrecognized,
                 wrongRecord,
                 wordListIndexRef.current
               )
             ) {
-              return prevBp;
+              nextBp = {
+                ...nextBp,
+                unrecognized: appendToBookQueue(prevBp.unrecognized, wrongRecord),
+              };
             }
-            return {
-              ...prevBp,
-              unrecognized: appendToBookQueue(prevBp.unrecognized, wrongRecord),
-            };
+            if (prevBp.bank) {
+              nextBp = {
+                ...nextBp,
+                bank: appendToBookQueue(prevBp.bank, wrongRecord),
+              };
+            }
+            return nextBp;
           });
           return next;
         });
@@ -533,6 +552,44 @@ export default function App() {
     setBookPracticePaused((p) => ({ ...p, recognized: true }));
   }, []);
 
+  const pauseBankPractice = useCallback(() => {
+    setBookPracticePaused((p) => ({ ...p, bank: true }));
+  }, []);
+
+  const startBankPractice = useCallback(
+    (displayedWords) => {
+      if (!displayedWords?.length) return;
+
+      setBookPracticePaused((p) => ({ ...p, bank: false }));
+      setBookPractices((prev) => {
+        const reviewWords = (reviewShuffle ? shuffleArray : (items) => items)(displayedWords).map(
+          (item) => ({
+            word: item.word,
+            definitions: item.definitions,
+            ...(item.sourceListId ? { sourceListId: item.sourceListId } : {}),
+          })
+        );
+
+        return {
+          ...prev,
+          bank: { queue: reviewWords, index: 0 },
+        };
+      });
+    },
+    [reviewShuffle]
+  );
+
+  const resumeBankPractice = useCallback(
+    (displayedWords) => {
+      if (bookPractices.bank && bookPracticePaused.bank) {
+        setBookPracticePaused((p) => ({ ...p, bank: false }));
+        return;
+      }
+      startBankPractice(displayedWords);
+    },
+    [bookPractices.bank, bookPracticePaused.bank, startBankPractice]
+  );
+
   const resumeUnrecognizedPractice = useCallback(() => {
     if (
       !bookPractices.unrecognized ||
@@ -574,15 +631,18 @@ export default function App() {
     Boolean(unrecognizedSession) && !bookPracticePaused.unrecognized;
   const recognizedPracticeActive =
     Boolean(recognizedSession) && !bookPracticePaused.recognized;
+  const bankPracticeActive = Boolean(bankSession) && !bookPracticePaused.bank;
 
   const assistantWord =
     activeTab === "practice"
       ? listWord
-      : activeTab === "unrecognized" && unrecognizedPracticeActive
-        ? unrecognizedWord
-        : activeTab === "recognized" && recognizedPracticeActive
-          ? recognizedWord
-          : null;
+      : activeTab === "bank" && bankPracticeActive
+        ? bankWord
+        : activeTab === "unrecognized" && unrecognizedPracticeActive
+          ? unrecognizedWord
+          : activeTab === "recognized" && recognizedPracticeActive
+            ? recognizedWord
+            : null;
 
   const unrecognizedPracticeTitle = useMemo(() => {
     const listIds = getSessionListIds(unrecognizedSession).length
@@ -599,6 +659,17 @@ export default function App() {
     const label = getListReviewScopeLabel(listIds, availableLists);
     return reviewShuffle ? `${label} · 乱序` : `${label} · 曾错题巩固`;
   }, [recognizedSession, recognizedReviewListIds, availableLists, reviewShuffle]);
+
+  const bankPracticeTitle = reviewShuffle ? "词库 · 乱序" : "词库练习";
+
+  const recognizedWordSet = useMemo(
+    () => new Set(recognized.map((item) => item.word)),
+    [recognized]
+  );
+  const unrecognizedWordSet = useMemo(
+    () => new Set(unrecognized.map((item) => item.word)),
+    [unrecognized]
+  );
 
   const handleRemoveRecognized = useCallback((word) => {
     setRecognized((prev) => {
@@ -854,6 +925,47 @@ export default function App() {
             onPrev={handleListPrev}
             sessionKey={`list-${listWord?.word ?? "empty"}-${listIndex}`}
           />
+        )}
+
+        {activeTab === "bank" && (
+          bankPracticeActive ? (
+            <PracticeSession
+              title={bankPracticeTitle}
+              toolbarExtra={
+                <button
+                  type="button"
+                  className="btn btn--ghost btn--sm"
+                  onClick={pauseBankPractice}
+                >
+                  返回列表
+                </button>
+              }
+              queueLength={bankSession.queue.length}
+              currentIndex={bankSession.index}
+              currentWord={bankWord}
+              wordStats={getWordStats(bankWord)}
+              micGranted={mic.isGranted}
+              onResult={handleListResult}
+              onMemoryTrickGenerated={handleMemoryTrickGenerated}
+              onNext={() => handleBookNext("bank")}
+              onPrev={() => handleBookPrev("bank")}
+              sessionKey={`bank-${bankWord?.word ?? "empty"}-${bankSession.index}`}
+              emptyMessage="本轮词库练习已完成！"
+            />
+          ) : (
+            <VocabularyBank
+              words={allBankWords}
+              availableLists={availableLists}
+              wordListIndex={wordListIndex}
+              recognizedSet={recognizedWordSet}
+              unrecognizedSet={unrecognizedWordSet}
+              bankSession={bankSession}
+              bankPracticePaused={bookPracticePaused.bank}
+              onResumePractice={resumeBankPractice}
+              reviewShuffle={reviewShuffle}
+              onToggleShuffle={toggleReviewShuffle}
+            />
+          )
         )}
 
         {activeTab === "unrecognized" && (

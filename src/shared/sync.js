@@ -121,6 +121,7 @@ function mergeProgressObject(local, remote) {
   merged.bookPractices = {
     unrecognized: mergeBookSession(localBooks.unrecognized, remoteBooks.unrecognized),
     recognized: mergeBookSession(localBooks.recognized, remoteBooks.recognized),
+    bank: mergeBookSession(localBooks.bank, remoteBooks.bank),
   };
 
   const localPaused = local.bookPracticePaused || {};
@@ -128,6 +129,7 @@ function mergeProgressObject(local, remote) {
   merged.bookPracticePaused = {
     unrecognized: Boolean(localPaused.unrecognized && remotePaused.unrecognized),
     recognized: Boolean(localPaused.recognized && remotePaused.recognized),
+    bank: Boolean(localPaused.bank && remotePaused.bank),
   };
 
   if ((remote.updatedAt || 0) > (local.updatedAt || 0)) {

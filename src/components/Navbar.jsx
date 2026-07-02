@@ -2,6 +2,7 @@ import { useSettings } from "../context/SettingsContext";
 
 const TABS = [
   { id: "practice", label: "练习" },
+  { id: "bank", label: "词库" },
   { id: "unrecognized", label: "生词本" },
   { id: "recognized", label: "熟词本" },
 ];

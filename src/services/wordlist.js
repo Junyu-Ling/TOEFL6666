@@ -22,3 +22,24 @@ export async function fetchWordList(listId) {
     words: data.words ?? [],
   };
 }
+
+export async function fetchAllWordBank(lists) {
+  const batches = await Promise.all(
+    lists.map(async (list) => {
+      const { words } = await fetchWordList(list.id);
+      return words.map((word) => ({ ...word, sourceListId: list.id }));
+    })
+  );
+
+  const seen = new Set();
+  const result = [];
+  for (const batch of batches) {
+    for (const item of batch) {
+      const key = item.word.toLowerCase();
+      if (seen.has(key)) continue;
+      seen.add(key);
+      result.push(item);
+    }
+  }
+  return result;
+}

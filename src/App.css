@@ -1890,6 +1890,25 @@ body {
   white-space: nowrap;
 }
 
+.word-item__list-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.125rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+.word-item--bank .word-item__wrong-count--past {
+  color: var(--ok);
+  background: var(--ok-bg);
+  border-color: var(--ok-border);
+}
+
 .word-item__defs {
   font-size: 0.8125rem;
   color: var(--text-muted);
