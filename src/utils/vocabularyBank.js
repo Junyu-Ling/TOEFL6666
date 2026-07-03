@@ -1,4 +1,9 @@
 import { groupWordsByList, getListReviewLabel } from "./wordListGrouping";
+import { groupBankWordsByFamily } from "./wordFamilies";
+import familyData from "../data/wordFamilies.json";
+
+const familyRootByWord = new Map(Object.entries(familyData.wordToRoot || {}));
+const multiFamilyRoots = new Set((familyData.families || []).map((item) => item.root));
 
 export const BANK_SORT_OPTIONS = [
   { value: "level-list", label: "Level · List" },
@@ -9,7 +14,24 @@ export const BANK_SORT_OPTIONS = [
 export const BANK_VIEW_OPTIONS = [
   { value: "all", label: "全部单词" },
   { value: "irregular-pronunciation", label: "特殊发音" },
+  { value: "word-family", label: "词族" },
 ];
+
+export function getWordFamilyStats() {
+  return {
+    familyCount: familyData.familyCount || 0,
+    memberCount: familyData.memberCount || 0,
+    totalWords: familyData.totalWords || 0,
+  };
+}
+
+export function filterBankFamilyWords(words) {
+  return words.filter((item) => multiFamilyRoots.has(familyRootByWord.get(item.word.toLowerCase())));
+}
+
+export function groupBankFamilyWords(words) {
+  return groupBankWordsByFamily(words, familyRootByWord);
+}
 
 export function filterBankWords(words, query) {
   const q = query.trim().toLowerCase();

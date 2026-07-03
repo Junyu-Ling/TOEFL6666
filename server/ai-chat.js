@@ -1,4 +1,4 @@
-import { chatCompletion } from "./ai-client.js";
+import { chatCompletion, streamChatCompletion } from "./ai-client.js";
 import { TOEFL_2026_KNOWLEDGE } from "./toefl2026-knowledge.js";
 
 const CHAT_SYSTEM_BASE = `你是 TOEFL 6·6·6·6 背单词应用里的英语词汇与 **2026 新托福（TOEFL iBT）** 助教。
@@ -49,6 +49,20 @@ function buildContextBlock(context) {
 
 export async function chatWithDeepSeek(payload, config = {}) {
   const { messages, context } = payload || {};
+  const trimmed = prepareChatMessages({ messages });
+
+  const reply = await chatCompletion({
+    config,
+    maxTokens: 900,
+    temperature: 0.5,
+    messages: buildChatRequestMessages(trimmed, context),
+  });
+
+  return { reply: reply.trim() };
+}
+
+function prepareChatMessages(payload) {
+  const { messages } = payload || {};
 
   if (!Array.isArray(messages) || messages.length === 0) {
     throw createConfigError("缺少对话内容", 400);
@@ -62,15 +76,27 @@ export async function chatWithDeepSeek(payload, config = {}) {
     throw createConfigError("最后一条消息须为用户提问", 400);
   }
 
-  const reply = await chatCompletion({
+  return trimmed;
+}
+
+function buildChatRequestMessages(trimmed, context) {
+  return [
+    { role: "system", content: buildSystemPrompt(trimmed) + buildContextBlock(context) },
+    ...trimmed.slice(-8),
+  ];
+}
+
+export async function* streamChatWithDeepSeek(payload, config = {}) {
+  const { context } = payload || {};
+  const trimmed = prepareChatMessages(payload);
+  const requestMessages = buildChatRequestMessages(trimmed, context);
+
+  for await (const delta of streamChatCompletion({
     config,
     maxTokens: 900,
     temperature: 0.5,
-    messages: [
-      { role: "system", content: buildSystemPrompt(trimmed) + buildContextBlock(context) },
-      ...trimmed.slice(-8),
-    ],
-  });
-
-  return { reply: reply.trim() };
+    messages: requestMessages,
+  })) {
+    yield delta;
+  }
 }

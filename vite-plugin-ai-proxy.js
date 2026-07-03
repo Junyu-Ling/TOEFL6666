@@ -1,7 +1,7 @@
 import { loadEnv } from "vite";
 import { resolveApiConfig, stripApiConfigFromBody } from "./server/ai-config.js";
 import { evaluateWithDeepSeek } from "./server/ai-evaluate.js";
-import { chatWithDeepSeek } from "./server/ai-chat.js";
+import { chatWithDeepSeek, streamChatWithDeepSeek } from "./server/ai-chat.js";
 import { generateMemoryTrick } from "./server/ai-memory-trick.js";
 import { evaluatePronunciationWithDeepSeek } from "./server/ai-pronounce-evaluate.js";
 
@@ -20,6 +20,28 @@ function sendJson(res, status, payload) {
   res.statusCode = status;
   res.setHeader("Content-Type", "application/json");
   res.end(JSON.stringify(payload));
+}
+
+function sendSse(res, payload) {
+  res.write(`data: ${JSON.stringify(payload)}\n\n`);
+}
+
+async function handleStreamChat(res, payload, config) {
+  res.statusCode = 200;
+  res.setHeader("Content-Type", "text/event-stream; charset=utf-8");
+  res.setHeader("Cache-Control", "no-cache, no-transform");
+  res.setHeader("Connection", "keep-alive");
+
+  try {
+    for await (const delta of streamChatWithDeepSeek(payload, config)) {
+      sendSse(res, { delta });
+    }
+    res.write("data: [DONE]\n\n");
+    res.end();
+  } catch (err) {
+    sendSse(res, { error: err.message || "流式输出失败" });
+    res.end();
+  }
 }
 
 function matchApiPath(url, path) {
@@ -60,6 +82,11 @@ export function createAiHandler(getEnvConfig) {
       if (isPronounceEvaluate) {
         const result = await evaluatePronunciationWithDeepSeek(payload, config);
         sendJson(res, 200, result);
+        return;
+      }
+
+      if (body.stream) {
+        await handleStreamChat(res, payload, config);
         return;
       }
 

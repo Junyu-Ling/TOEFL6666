@@ -1,5 +1,5 @@
 import { resolveApiConfig, stripApiConfigFromBody } from "../../server/ai-config.js";
-import { chatWithDeepSeek } from "../../server/ai-chat.js";
+import { chatWithDeepSeek, streamChatWithDeepSeek } from "../../server/ai-chat.js";
 
 function sendJson(res, status, payload) {
   res.statusCode = status;
@@ -23,6 +23,24 @@ function getEnvConfig() {
   };
 }
 
+async function handleStreamChat(res, payload, config) {
+  res.statusCode = 200;
+  res.setHeader("Content-Type", "text/event-stream; charset=utf-8");
+  res.setHeader("Cache-Control", "no-cache, no-transform");
+  res.setHeader("Connection", "keep-alive");
+
+  try {
+    for await (const delta of streamChatWithDeepSeek(payload, config)) {
+      res.write(`data: ${JSON.stringify({ delta })}\n\n`);
+    }
+    res.write("data: [DONE]\n\n");
+    res.end();
+  } catch (err) {
+    res.write(`data: ${JSON.stringify({ error: err.message || "流式输出失败" })}\n\n`);
+    res.end();
+  }
+}
+
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     sendJson(res, 405, { error: "Method Not Allowed" });
@@ -32,7 +50,14 @@ export default async function handler(req, res) {
   try {
     const body = parseBody(req);
     const config = resolveApiConfig(getEnvConfig());
-    const result = await chatWithDeepSeek(stripApiConfigFromBody(body), config);
+    const payload = stripApiConfigFromBody(body);
+
+    if (body.stream) {
+      await handleStreamChat(res, payload, config);
+      return;
+    }
+
+    const result = await chatWithDeepSeek(payload, config);
     sendJson(res, 200, result);
   } catch (err) {
     sendJson(res, err.status || 500, { error: err.message || "服务器错误" });

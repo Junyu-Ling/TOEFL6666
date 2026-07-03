@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build:pronunciation": "node scripts/build-irregular-pronunciation.mjs",
-    "build": "npm run build:pronunciation && vite build",
+    "build:families": "node scripts/build-word-families.mjs",
+    "build": "npm run build:pronunciation && npm run build:families && vite build",
     "lint": "oxlint",
     "preview": "vite preview"
   },

@@ -1,21 +1,24 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useDeferredValue } from "react";
 import {
   BANK_SORT_OPTIONS,
   BANK_VIEW_OPTIONS,
   filterBankWords,
+  filterBankFamilyWords,
   sortBankWords,
   groupBankWords,
+  groupBankFamilyWords,
   getBankWordLabel,
+  getWordFamilyStats,
 } from "../utils/vocabularyBank";
 import PronunciationAlert from "./PronunciationAlert";
 import { getPronunciationAlert, getIrregularPronunciationStats } from "../utils/pronunciationAlert";
 
-function BankWordItem({ item, availableLists, bookStatus }) {
-  const listLabel = getBankWordLabel(item, availableLists);
+function BankWordItem({ item, availableLists, bookStatus, compact = false }) {
+  const listLabel = compact ? "" : getBankWordLabel(item, availableLists);
   const pronunciationAlert = getPronunciationAlert(item.word);
 
   return (
-    <article className="word-item word-item--bank">
+    <article className={`word-item word-item--bank${compact ? " word-item--bank-compact" : ""}`}>
       <div className="word-item__main">
         <div className="word-item__left">
           <div className="word-item__title-row">
@@ -29,7 +32,9 @@ function BankWordItem({ item, availableLists, bookStatus }) {
             )}
           </div>
           <p className="word-item__defs">{item.definitions?.join(" · ")}</p>
-          <PronunciationAlert alert={pronunciationAlert} className="word-item__pronunciation-alert" />
+          {!compact && (
+            <PronunciationAlert alert={pronunciationAlert} className="word-item__pronunciation-alert" />
+          )}
         </div>
       </div>
     </article>
@@ -69,6 +74,43 @@ function BankGroupSection({ group, availableLists, bookStatusByWord }) {
   );
 }
 
+function BankFamilySection({ group, availableLists, bookStatusByWord }) {
+  const [open, setOpen] = useState(true);
+
+  return (
+    <section className="word-list-group word-list-group--family">
+      <button
+        type="button"
+        className="word-list-group__header"
+        onClick={() => setOpen((value) => !value)}
+        aria-expanded={open}
+      >
+        <span className="word-list-group__title">
+          <span className="word-list-group__family-root">{group.root}</span>
+          <span className="word-list-group__family-forms">{group.label}</span>
+        </span>
+        <span className="word-list-group__meta">{group.words.length} 词</span>
+        <span className="word-list-group__chevron" aria-hidden>
+          {open ? "▾" : "▸"}
+        </span>
+      </button>
+      {open && (
+        <div className="word-list-group__items">
+          {group.words.map((item) => (
+            <BankWordItem
+              key={item.word}
+              item={item}
+              availableLists={availableLists}
+              bookStatus={bookStatusByWord.get(item.word)}
+              compact
+            />
+          ))}
+        </div>
+      )}
+    </section>
+  );
+}
+
 export default function VocabularyBank({
   words,
   availableLists,
@@ -82,10 +124,13 @@ export default function VocabularyBank({
   onToggleShuffle,
 }) {
   const [query, setQuery] = useState("");
+  const deferredQuery = useDeferredValue(query);
   const [sortMode, setSortMode] = useState("level-list");
   const [viewMode, setViewMode] = useState("all");
+  const isSearchPending = query !== deferredQuery;
 
   const irregularStats = useMemo(() => getIrregularPronunciationStats(), []);
+  const familyStats = useMemo(() => getWordFamilyStats(), []);
 
   const bookStatusByWord = useMemo(() => {
     const map = new Map();
@@ -97,20 +142,29 @@ export default function VocabularyBank({
   }, [recognizedSet, unrecognizedSet]);
 
   const displayedWords = useMemo(() => {
-    let filtered = filterBankWords(words, query);
+    let filtered = words;
     if (viewMode === "irregular-pronunciation") {
-      filtered = filtered.filter((item) => getPronunciationAlert(item.word));
+      filtered = words.filter((item) => getPronunciationAlert(item.word));
+    } else if (viewMode === "word-family") {
+      filtered = filterBankFamilyWords(words);
     }
+    filtered = filterBankWords(filtered, deferredQuery);
     return sortBankWords(filtered, sortMode, availableLists);
-  }, [words, query, sortMode, viewMode, availableLists]);
+  }, [words, deferredQuery, sortMode, viewMode, availableLists]);
 
   const groupedWords = useMemo(
     () => groupBankWords(displayedWords, sortMode, availableLists, wordListIndex),
     [displayedWords, sortMode, availableLists, wordListIndex]
   );
 
+  const familyGroups = useMemo(() => {
+    if (viewMode !== "word-family") return null;
+    return groupBankFamilyWords(displayedWords);
+  }, [displayedWords, viewMode]);
+
   const isFiltering = query.trim().length > 0;
   const isSpecialView = viewMode === "irregular-pronunciation";
+  const isFamilyView = viewMode === "word-family";
   const practiceLabel =
     bankSession && bankPracticePaused
       ? `继续练习（${bankSession.index + 1}/${bankSession.queue.length}）`
@@ -122,11 +176,13 @@ export default function VocabularyBank({
         <div>
           <h2>词库</h2>
           <p>
-            {isSpecialView
-              ? `特殊发音 ${displayedWords.length} 个（已扫描词库 ${irregularStats.totalWords} 词）`
-              : isFiltering || sortMode !== "level-list"
-                ? `显示 ${displayedWords.length} / ${words.length} 个`
-                : `共 ${words.length} 个单词 · 网站全部词书 · 特殊发音 ${irregularStats.count} 个`}
+            {isFamilyView
+              ? `词族 ${familyGroups?.length ?? 0} 组 · 显示 ${displayedWords.length} 词（全库 ${familyStats.familyCount} 组 / ${familyStats.memberCount} 词）`
+              : isSpecialView
+                ? `特殊发音 ${displayedWords.length} 个（已扫描词库 ${irregularStats.totalWords} 词）`
+                : isFiltering || sortMode !== "level-list"
+                  ? `显示 ${displayedWords.length} / ${words.length} 个`
+                  : `共 ${words.length} 个单词 · 网站全部词书 · 特殊发音 ${irregularStats.count} 个 · 词族 ${familyStats.familyCount} 组`}
           </p>
         </div>
         <div className="word-list-view__header-actions">
@@ -151,9 +207,15 @@ export default function VocabularyBank({
 
       <div className="word-list-view__toolbar vocabulary-bank__toolbar">
         <input
-          className="word-list-view__search"
+          className={`word-list-view__search${isSearchPending ? " word-list-view__search--pending" : ""}`}
           type="search"
-          placeholder={isSpecialView ? "在特殊发音列表中搜索…" : "搜索单词或释义…"}
+          placeholder={
+            isFamilyView
+              ? "在词族中搜索单词或释义…"
+              : isSpecialView
+                ? "在特殊发音列表中搜索…"
+                : "搜索单词或释义…"
+          }
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           aria-label="搜索单词"
@@ -175,6 +237,7 @@ export default function VocabularyBank({
           value={sortMode}
           onChange={(e) => setSortMode(e.target.value)}
           aria-label="排序方式"
+          disabled={isFamilyView}
         >
           {BANK_SORT_OPTIONS.map((option) => (
             <option key={option.value} value={option.value}>
@@ -186,8 +249,25 @@ export default function VocabularyBank({
 
       {displayedWords.length === 0 ? (
         <div className="word-list-view__empty">
-          <span className="empty-icon">{isSpecialView ? "🔊" : "🔍"}</span>
-          <p>{isSpecialView ? "没有匹配的特殊发音单词" : "没有匹配的单词"}</p>
+          <span className="empty-icon">{isFamilyView ? "🌿" : isSpecialView ? "🔊" : "🔍"}</span>
+          <p>
+            {isFamilyView
+              ? "没有匹配的词族单词"
+              : isSpecialView
+                ? "没有匹配的特殊发音单词"
+                : "没有匹配的单词"}
+          </p>
+        </div>
+      ) : isFamilyView && familyGroups ? (
+        <div className="word-list word-list--grouped word-list--families">
+          {familyGroups.map((group) => (
+            <BankFamilySection
+              key={group.root}
+              group={group}
+              availableLists={availableLists}
+              bookStatusByWord={bookStatusByWord}
+            />
+          ))}
         </div>
       ) : groupedWords ? (
         <div className="word-list word-list--grouped">

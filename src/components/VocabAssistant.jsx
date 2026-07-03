@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback, useMemo } from "react";
-import { sendVocabChat } from "../services/aiChat";
+import { streamVocabChat } from "../services/aiChat";
 import { createDictationSession } from "../utils/speechRecognition";
 import RichAiContent from "./RichAiContent";
 import {
@@ -71,8 +71,8 @@ function withWelcome(messages) {
   return messages.length ? messages : [WELCOME];
 }
 
-function createMessage(role, content) {
-  return { role, content, at: Date.now() };
+function createMessage(role, content, extra = {}) {
+  return { role, content, at: Date.now(), id: `${role}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`, ...extra };
 }
 
 export default function VocabAssistant({ currentWord, micGranted }) {
@@ -189,13 +189,37 @@ export default function VocabAssistant({ currentWord, micGranted }) {
       setError(null);
       setLoading(true);
 
+      const assistantId = `assistant-stream-${Date.now()}`;
+      const chatMessages = nextMessages.filter(
+        (m) => (m.role === "user" || m.role === "assistant") && !m.welcome
+      );
+
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "assistant",
+          content: "",
+          at: Date.now(),
+          id: assistantId,
+          streaming: true,
+        },
+      ]);
+
       try {
-        const { reply } = await sendVocabChat({
-          messages: nextMessages.filter((m) => (m.role === "user" || m.role === "assistant") && !m.welcome),
+        await streamVocabChat({
+          messages: chatMessages,
           context: chatContext,
+          onDelta: (_delta, reply) => {
+            setMessages((prev) =>
+              prev.map((msg) => (msg.id === assistantId ? { ...msg, content: reply } : msg))
+            );
+          },
         });
-        setMessages((prev) => [...prev, createMessage("assistant", reply)]);
+        setMessages((prev) =>
+          prev.map((msg) => (msg.id === assistantId ? { ...msg, streaming: false } : msg))
+        );
       } catch (err) {
+        setMessages((prev) => prev.filter((msg) => msg.id !== assistantId));
         setError(err.message || "发送失败，请稍后重试");
       } finally {
         setLoading(false);
@@ -413,13 +437,8 @@ export default function VocabAssistant({ currentWord, micGranted }) {
             <>
               <div ref={listRef} className="vocab-assistant__messages">
                 {messages.map((msg, i) => (
-                  <ChatMessageRow key={`${msg.role}-${msg.at ?? i}`} msg={msg} />
+                  <ChatMessageRow key={msg.id ?? `${msg.role}-${msg.at ?? i}`} msg={msg} />
                 ))}
-                {loading && (
-                  <ChatMessageRow
-                    msg={{ role: "assistant", pending: true, content: "思考中…" }}
-                  />
-                )}
               </div>
 
               {error && <p className="vocab-assistant__error">{error}</p>}
@@ -518,7 +537,8 @@ function UserAvatar() {
 
 function ChatMessageRow({ msg }) {
   const isUser = msg.role === "user";
-  const isPending = Boolean(msg.pending);
+  const isStreaming = Boolean(msg.streaming);
+  const isWaiting = isStreaming && !msg.content?.trim();
 
   return (
     <div className={`vocab-assistant__message-row vocab-assistant__message-row--${msg.role}`}>
@@ -526,16 +546,19 @@ function ChatMessageRow({ msg }) {
       <div className="vocab-assistant__message-body">
         <div
           className={`vocab-assistant__bubble vocab-assistant__bubble--${msg.role}${
-            isPending ? " vocab-assistant__bubble--pending" : ""
-          }`}
+            isWaiting ? " vocab-assistant__bubble--pending" : ""
+          }${isStreaming ? " vocab-assistant__bubble--streaming" : ""}`}
         >
-          {isPending ? (
+          {isWaiting ? (
             <>
               <span className="spinner" />
-              {msg.content}
+              正在组织回答…
             </>
           ) : msg.role === "assistant" ? (
-            <RichAiContent content={msg.content} />
+            <>
+              <RichAiContent content={msg.content} />
+              {isStreaming && <span className="vocab-assistant__stream-cursor" aria-hidden />}
+            </>
           ) : (
             <p className="vocab-assistant__user-text">{msg.content}</p>
           )}

@@ -1968,6 +1968,34 @@ body {
   border-radius: var(--radius-sm);
 }
 
+.word-list-group--family .word-list-group__title {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.word-list-group__family-root {
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.word-list-group__family-forms {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.word-item--bank-compact .word-item__defs {
+  font-size: 0.875rem;
+}
+
+.word-list-view__search--pending {
+  opacity: 0.92;
+}
+
 .word-item {
   background: var(--surface);
   border-radius: var(--radius-sm);
@@ -3703,6 +3731,25 @@ body {
   align-items: center;
   gap: 0.5rem;
   color: var(--text-muted);
+}
+
+.vocab-assistant__bubble--streaming .rich-ai-content {
+  display: inline;
+}
+
+.vocab-assistant__stream-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  background: var(--accent);
+  animation: vocab-assistant-cursor 0.9s step-end infinite;
+}
+
+@keyframes vocab-assistant-cursor {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }
 
 .vocab-assistant__error {

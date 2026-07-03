@@ -69,6 +69,72 @@ async function openaiCompatibleChat({
   return text;
 }
 
+async function* openaiCompatibleChatStream({
+  apiKey,
+  baseUrl,
+  model,
+  messages,
+  maxTokens,
+  temperature,
+  providerId,
+}) {
+  const response = await fetch(resolveChatCompletionsUrl(baseUrl, providerId), {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${apiKey}`,
+    },
+    body: JSON.stringify({
+      model,
+      max_tokens: maxTokens,
+      temperature,
+      messages,
+      stream: true,
+    }),
+  });
+
+  if (!response.ok) {
+    const data = await response.json().catch(() => ({}));
+    throw createConfigError(
+      data.error?.message || data.error?.msg || data.message || "AI API 请求失败",
+      response.status
+    );
+  }
+
+  if (!response.body) {
+    throw createConfigError("AI 流式响应不可用", 502);
+  }
+
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder();
+  let buffer = "";
+
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+
+    buffer += decoder.decode(value, { stream: true });
+    const lines = buffer.split("\n");
+    buffer = lines.pop() || "";
+
+    for (const line of lines) {
+      const trimmed = line.trim();
+      if (!trimmed.startsWith("data:")) continue;
+
+      const payload = trimmed.slice(5).trim();
+      if (!payload || payload === "[DONE]") continue;
+
+      try {
+        const parsed = JSON.parse(payload);
+        const delta = parsed.choices?.[0]?.delta?.content;
+        if (delta) yield delta;
+      } catch {
+        // ignore malformed chunks
+      }
+    }
+  }
+}
+
 async function anthropicChat({ apiKey, baseUrl, model, messages, maxTokens, temperature }) {
   const { system, conversation } = splitMessages(messages);
   const response = await fetch(`${baseUrl}/v1/messages`, {
@@ -147,6 +213,39 @@ export async function chatCompletion({
     maxTokens,
     temperature,
     responseFormat,
+    providerId,
+  });
+}
+
+export async function* streamChatCompletion({
+  config,
+  messages,
+  maxTokens = 512,
+  temperature = 0.3,
+}) {
+  const { apiKey, baseUrl, model, providerId, apiStyle } = config;
+
+  if (!apiKey) {
+    throw createConfigError("未配置 API Key，请设置 DEEPSEEK_API_KEY 环境变量", 500);
+  }
+  if (!baseUrl) {
+    throw createConfigError("未配置 API 地址，请设置 DEEPSEEK_API_BASE 环境变量", 500);
+  }
+  if (!model) {
+    throw createConfigError("未配置模型名称，请设置 DEEPSEEK_MODEL 环境变量", 500);
+  }
+
+  if (apiStyle === "anthropic") {
+    throw createConfigError("当前 API 暂不支持流式输出", 501);
+  }
+
+  yield* openaiCompatibleChatStream({
+    apiKey,
+    baseUrl,
+    model,
+    messages,
+    maxTokens,
+    temperature,
     providerId,
   });
 }
