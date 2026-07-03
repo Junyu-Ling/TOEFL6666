@@ -50,12 +50,74 @@ function normalizeWord(word = "") {
   return String(word).trim().toLowerCase();
 }
 
+/** 词根在接后缀前的常见拼写变体（如 acquire → acquis + ition） */
+function expandRootToStems(root) {
+  const stems = new Set([root]);
+
+  if (root.endsWith("e")) {
+    stems.add(root.slice(0, -1));
+  }
+
+  if (root.endsWith("ire")) {
+    stems.add(root.slice(0, -3) + "is");
+  }
+
+  if (root.endsWith("ade")) {
+    stems.add(root.slice(0, -2) + "s");
+  } else if (root.endsWith("de")) {
+    stems.add(root.slice(0, -2) + "s");
+  }
+
+  if (root.endsWith("ce")) {
+    stems.add(root.slice(0, -1) + "t");
+  }
+
+  if (root.endsWith("y")) {
+    stems.add(root.slice(0, -1) + "i");
+  }
+
+  return [...stems];
+}
+
+function expandStemToRoots(stem) {
+  const roots = new Set([stem, `${stem}e`]);
+
+  if (stem.endsWith("is")) {
+    roots.add(`${stem.slice(0, -2)}ire`);
+  }
+
+  if (stem.endsWith("as")) {
+    roots.add(`${stem.slice(0, -1)}de`);
+    roots.add(`${stem}e`);
+  }
+
+  if (stem.endsWith("s") && !stem.endsWith("ss")) {
+    roots.add(`${stem.slice(0, -1)}de`);
+  }
+
+  if (stem.endsWith("t") && !stem.endsWith("tt")) {
+    roots.add(`${stem}e`);
+  }
+
+  return [...roots];
+}
+
 function isMorphologicalDerivative(root, word) {
-  if (word === root) return true;
-  if (!word.startsWith(root)) return false;
-  const rest = word.slice(root.length);
-  if (!rest) return false;
-  return FAMILY_SUFFIXES.includes(rest);
+  for (const stem of expandRootToStems(root)) {
+    if (word === stem) return true;
+    if (!word.startsWith(stem)) continue;
+    const rest = word.slice(stem.length);
+    if (rest && FAMILY_SUFFIXES.includes(rest)) return true;
+  }
+  return false;
+}
+
+function isCandidateFamilyRoot(prefix, allWords, wordSet) {
+  if (wordSet.has(prefix)) return true;
+  for (const word of allWords) {
+    if (expandRootToStems(word).includes(prefix)) return true;
+  }
+  return false;
 }
 
 function getMorphologicalFamily(prefix, allWords) {
@@ -89,6 +151,12 @@ export function resolveBankFamilyRoot(word, wordSet) {
       return resolveBankFamilyRoot(stem, wordSet);
     }
 
+    for (const candidate of expandStemToRoots(stem)) {
+      if (wordSet.has(candidate)) {
+        return resolveBankFamilyRoot(candidate, wordSet);
+      }
+    }
+
     if (stem.length > 2 && stem.endsWith(stem.slice(-1))) {
       const undoubled = stem.slice(0, -1);
       if (wordSet.has(undoubled)) {
@@ -107,20 +175,23 @@ export function resolveBankFamilyRoot(word, wordSet) {
   return w;
 }
 
-function resolveSharedPrefixRoot(word, allWords) {
+function resolveSharedPrefixRoot(word, allWords, wordSet) {
   const w = normalizeWord(word);
   let best = w;
   let bestMembers = null;
 
   for (let len = MIN_ROOT_LEN; len <= w.length; len++) {
     const prefix = w.slice(0, len);
+    if (!isCandidateFamilyRoot(prefix, allWords, wordSet)) continue;
+
     const members = getMorphologicalFamily(prefix, allWords);
     if (members.length < 2) continue;
 
     if (
       !bestMembers ||
       members.length > bestMembers.length ||
-      (members.length === bestMembers.length && len < best.length)
+      (members.length === bestMembers.length &&
+        (wordSet.has(prefix) && !wordSet.has(best) ? true : len > best.length))
     ) {
       best = prefix;
       bestMembers = members;
@@ -139,7 +210,7 @@ export function resolveFamilyRoot(word, wordSet, allWords) {
   const w = normalizeWord(word);
   const bankRoot = resolveBankFamilyRoot(w, wordSet);
   if (bankRoot !== w) return bankRoot;
-  return resolveSharedPrefixRoot(w, allWords);
+  return resolveSharedPrefixRoot(w, allWords, wordSet);
 }
 
 /** @deprecated alias */
