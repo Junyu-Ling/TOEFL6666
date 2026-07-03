@@ -683,7 +683,7 @@ export default function FlashCard({
     setDictating(false);
     setDictationHint("");
     setPronounceResult(null);
-    setPronouncing(false);
+    setPronouncePhase(null);
     setInputReady(false);
     setSwipeVisual(null);
     swipeLockRef.current = false;
