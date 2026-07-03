@@ -56,6 +56,7 @@ function computeSwipeTransform(dx) {
 export default function FlashCard({
   wordData,
   wordStats,
+  wordBankMap,
   onResult,
   onMemoryTrickGenerated,
   onNext,
@@ -344,7 +345,10 @@ export default function FlashCard({
       setLoading(true);
       setError(null);
       try {
-        const aiResult = await evaluateAnswer(wordData, text, { signal: controller.signal });
+        const aiResult = await evaluateAnswer(wordData, text, {
+          signal: controller.signal,
+          wordBankMap,
+        });
         if (controller.signal.aborted) return;
         if (!aiResult.needs_typo_clarification && !aiResult.is_correct) {
           setFlipped(true);
@@ -371,7 +375,7 @@ export default function FlashCard({
         }
       }
     },
-    [wordData, onResult, stopDictation, focusCard, showWrongAnswer]
+    [wordData, wordBankMap, onResult, stopDictation, focusCard, showWrongAnswer]
   );
 
   const handleTypoClarification = useCallback(
@@ -382,9 +386,11 @@ export default function FlashCard({
       let finalResult = isTypo
         ? {
             is_correct: true,
-            ai_feedback: typoInfo
-              ? `同音错字，本意应为「${typoInfo.expected}」，算正确。`
-              : "打错字了，但本意是对的，算正确。",
+            ai_feedback: typoInfo?.confusedWord
+              ? `读音与「${typoInfo.confusedWord}」相近，但你本意是 ${wordData.word}，算正确。`
+              : typoInfo?.expected
+                ? `同音错字，本意应为「${typoInfo.expected}」，算正确。`
+                : "打错字了，但本意是对的，算正确。",
             clarified_typo: true,
           }
         : {

@@ -8,6 +8,7 @@ export default function PracticeSession({
   currentIndex,
   currentWord,
   wordStats,
+  wordBankMap,
   micGranted,
   onResult,
   onMemoryTrickGenerated,
@@ -40,6 +41,7 @@ export default function PracticeSession({
           key={sessionKey}
           wordData={currentWord}
           wordStats={wordStats}
+          wordBankMap={wordBankMap}
           micGranted={micGranted}
           onResult={onResult}
           onMemoryTrickGenerated={onMemoryTrickGenerated}

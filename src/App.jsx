@@ -47,6 +47,7 @@ import {
   matchesBookPracticeListId,
   sameListIdSet,
 } from "./utils/wordListGrouping";
+import { buildWordBankMap } from "./utils/homophoneBank";
 import "./App.css";
 
 function clampIndex(index, length) {
@@ -662,6 +663,7 @@ export default function App() {
     () => new Set(unrecognized.map((item) => item.word)),
     [unrecognized]
   );
+  const wordBankMap = useMemo(() => buildWordBankMap(allBankWords), [allBankWords]);
 
   const handleRemoveRecognized = useCallback((word) => {
     setRecognized((prev) => {
@@ -878,6 +880,7 @@ export default function App() {
             currentIndex={listIndex}
             currentWord={listWord}
             wordStats={getWordStats(listWord)}
+            wordBankMap={wordBankMap}
             micGranted={mic.isGranted}
             onResult={handleListResult}
             onMemoryTrickGenerated={handleMemoryTrickGenerated}
@@ -904,6 +907,7 @@ export default function App() {
               currentIndex={bankSession.index}
               currentWord={bankWord}
               wordStats={getWordStats(bankWord)}
+              wordBankMap={wordBankMap}
               micGranted={mic.isGranted}
               onResult={handleListResult}
               onMemoryTrickGenerated={handleMemoryTrickGenerated}
@@ -945,6 +949,7 @@ export default function App() {
               currentIndex={unrecognizedSession.index}
               currentWord={unrecognizedWord}
               wordStats={getWordStats(unrecognizedWord)}
+              wordBankMap={wordBankMap}
               micGranted={mic.isGranted}
               onResult={handleUnrecognizedBookResult}
               onMemoryTrickGenerated={handleMemoryTrickGenerated}
@@ -1016,6 +1021,7 @@ export default function App() {
               currentIndex={recognizedSession.index}
               currentWord={recognizedWord}
               wordStats={getWordStats(recognizedWord)}
+              wordBankMap={wordBankMap}
               micGranted={mic.isGranted}
               onResult={handleRecognizedBookResult}
               onMemoryTrickGenerated={handleMemoryTrickGenerated}

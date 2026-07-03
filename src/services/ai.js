@@ -9,10 +9,17 @@ import {
 } from "./localMatch";
 import { loadRecognized } from "./storage";
 import { buildRecognizedConfusionContext } from "../shared/confusionContext";
+import {
+  buildWordBankMap,
+  detectAnswerConfusion,
+  buildConfusionClarificationResult,
+  applyConfusionToWrongResult,
+} from "../utils/homophoneBank";
 
 export async function evaluateAnswer(wordData, userAnswer, options = {}) {
-  const { signal } = options;
+  const { signal, wordBank } = options;
   const trimmed = userAnswer.trim();
+  const wordBankMap = options.wordBankMap ?? (wordBank ? buildWordBankMap(wordBank) : null);
 
   if (signal?.aborted) {
     throw new DOMException("Aborted", "AbortError");
@@ -24,6 +31,18 @@ export async function evaluateAnswer(wordData, userAnswer, options = {}) {
 
   if (matchesStandardMeaning(trimmed, wordData.definitions)) {
     return buildLocalCorrectResult(analyzeDefinitionCoverage(trimmed, wordData.definitions));
+  }
+
+  const confusion = wordBankMap
+    ? detectAnswerConfusion(wordData.word, wordData.definitions, trimmed, wordBankMap)
+    : null;
+  if (confusion) {
+    return buildConfusionClarificationResult(
+      wordData.word,
+      wordData.definitions,
+      trimmed,
+      confusion
+    );
   }
 
   if (isObviouslyWrong(trimmed, wordData.definitions, wordData.word)) {
@@ -56,5 +75,7 @@ export async function evaluateAnswer(wordData, userAnswer, options = {}) {
     throw new Error(data.error || `AI 批改失败 (${res.status})`);
   }
 
-  return data;
+  return wordBankMap
+    ? applyConfusionToWrongResult(data, wordData.word, wordData.definitions, trimmed, wordBankMap)
+    : data;
 }
