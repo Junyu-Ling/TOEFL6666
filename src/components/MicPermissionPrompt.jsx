@@ -17,7 +17,7 @@ export default function MicPermissionPrompt({ mic, onDismiss }) {
         </div>
         <div>
           <strong>开启麦克风，体验语音学习</strong>
-          <p>授权后可直接语音输入释义，还可选择开启「练习读音」跟读单词。</p>
+          <p>授权后可直接语音输入释义；开启「练习读音」后，会按音节与重音严格批改跟读。</p>
         </div>
       </div>
       <div className="mic-prompt__actions">

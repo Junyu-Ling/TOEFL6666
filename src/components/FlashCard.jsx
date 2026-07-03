@@ -4,15 +4,15 @@ import { useSettings } from "../context/SettingsContext";
 import {
   createDictationSession,
   listenOnce,
-  checkPronunciation,
   matchesEnglishRecall,
 } from "../utils/speechRecognition";
+import { evaluatePronunciation } from "../services/pronunciationEvaluate";
+import { getPronunciationAlert } from "../utils/pronunciationAlert";
 import { playAnswerSound } from "../utils/answerSounds";
 import { fetchMemoryTrick } from "../services/memoryTrick";
 import { shouldFetchMemoryTrick } from "../shared/memoryTrick";
 import MemoryTrickBlock from "./MemoryTrickBlock";
 import PronunciationAlert from "./PronunciationAlert";
-import { getPronunciationAlert } from "../utils/pronunciationAlert";
 
 const SILENCE_STOP_MS = 2000;
 const SWIPE_THRESHOLD_PX = 48;
@@ -82,8 +82,9 @@ export default function FlashCard({
   const [dictating, setDictating] = useState(false);
   const [dictationHint, setDictationHint] = useState("");
   const [pronounceEnabled, setPronounceEnabled] = useState(false);
-  const [pronouncing, setPronouncing] = useState(false);
+  const [pronouncePhase, setPronouncePhase] = useState(null);
   const [pronounceResult, setPronounceResult] = useState(null);
+  const pronounceAbortRef = useRef(null);
   const [memoryLoading, setMemoryLoading] = useState(false);
   const [swipeVisual, setSwipeVisual] = useState(null);
   const inputRef = useRef(null);
@@ -926,27 +927,78 @@ export default function FlashCard({
       return;
     }
 
-    setPronouncing(true);
+    pronounceAbortRef.current?.abort();
+    const controller = new AbortController();
+    pronounceAbortRef.current = controller;
+
+    setPronouncePhase("listening");
     setPronounceResult(null);
     setError(null);
 
     try {
-      const transcript = await listenOnce({ lang: "en-US", maxDurationMs: 8000 });
-      const ok = checkPronunciation(transcript, wordData.word);
-      setPronounceResult({
-        ok,
+      const heard = await listenOnce({
+        lang: "en-US",
+        maxDurationMs: 8000,
+        withAlternatives: true,
+      });
+
+      const transcript = typeof heard === "string" ? heard : heard.transcript;
+      const alternatives = typeof heard === "string" ? [] : heard.alternatives ?? [];
+
+      if (!transcript?.trim()) {
+        throw new Error("未检测到语音，请再试一次");
+      }
+
+      setPronouncePhase("evaluating");
+
+      const alert = getPronunciationAlert(wordData.word);
+      const evaluation = await evaluatePronunciation(wordData, {
         transcript,
-        message: ok ? "发音正确，很棒！" : `识别为「${transcript}」，再听标准音试试`,
+        alternatives,
+        pronunciationHint: alert?.message,
+        signal: controller.signal,
+      });
+
+      setPronounceResult({
+        ok: evaluation.is_correct,
+        transcript,
+        message: evaluation.feedback,
+        syllables: evaluation.expected_syllables,
+        stressIndex: evaluation.stress_index,
+        expectedIpa: evaluation.expected_ipa,
+        issues: evaluation.issues,
       });
     } catch (err) {
+      if (err.name === "AbortError") return;
       setPronounceResult({
         ok: false,
         transcript: "",
-        message: err.message || "读音识别失败",
+        message: err.message || "读音批改失败",
+        syllables: [],
+        stressIndex: 0,
+        expectedIpa: "",
+        issues: [],
       });
     } finally {
-      setPronouncing(false);
+      setPronouncePhase(null);
+      pronounceAbortRef.current = null;
     }
+  }
+
+  function renderSyllableGuide(syllables, stressIndex) {
+    if (!syllables?.length) return null;
+    return (
+      <span className="flashcard__pronounce-syllables">
+        {syllables.map((syllable, index) => (
+          <span
+            key={`${syllable}-${index}`}
+            className={`flashcard__pronounce-syllable${index === stressIndex ? " flashcard__pronounce-syllable--stress" : ""}`}
+          >
+            {syllable}
+          </span>
+        ))}
+      </span>
+    );
   }
 
   const awaitingTypoClarification = Boolean(
@@ -1010,11 +1062,11 @@ export default function FlashCard({
                 {micGranted && pronounceEnabled && (
                   <button
                     type="button"
-                    className={`flashcard__sound flashcard__sound--repeat ${pronouncing ? "flashcard__sound--active" : ""}`}
+                    className={`flashcard__sound flashcard__sound--repeat ${pronouncePhase ? "flashcard__sound--active" : ""}`}
                     onClick={handlePronouncePractice}
-                    disabled={pronouncing || loading}
+                    disabled={Boolean(pronouncePhase) || loading}
                     aria-label="跟读单词"
-                    title="跟读单词"
+                    title="跟读单词（按音节与重音严格批改）"
                   >
                     <MicIcon />
                   </button>
@@ -1038,17 +1090,40 @@ export default function FlashCard({
                   <span className="toggle-switch__track" aria-hidden="true" />
                   <span className="toggle-switch__label">练习读音</span>
                 </label>
-                {pronounceEnabled && pronouncing && (
+                {pronounceEnabled && pronouncePhase === "listening" && (
                   <span className="flashcard__pronounce-status flashcard__pronounce-status--pending">
                     聆听中…
                   </span>
                 )}
-                {pronounceEnabled && !pronouncing && pronounceResult && (
-                  <span
-                    className={`flashcard__pronounce-status ${pronounceResult.ok ? "flashcard__pronounce-status--ok" : "flashcard__pronounce-status--fail"}`}
-                  >
-                    {pronounceResult.message}
+                {pronounceEnabled && pronouncePhase === "evaluating" && (
+                  <span className="flashcard__pronounce-status flashcard__pronounce-status--pending">
+                    分析音节与重音…
                   </span>
+                )}
+                {pronounceEnabled && !pronouncePhase && pronounceResult && (
+                  <div
+                    className={`flashcard__pronounce-feedback ${pronounceResult.ok ? "flashcard__pronounce-feedback--ok" : "flashcard__pronounce-feedback--fail"}`}
+                  >
+                    <p className="flashcard__pronounce-status">{pronounceResult.message}</p>
+                    {(pronounceResult.expectedIpa || pronounceResult.syllables?.length > 0) && (
+                      <div className="flashcard__pronounce-guide">
+                        {pronounceResult.expectedIpa && (
+                          <span className="flashcard__pronounce-ipa">{pronounceResult.expectedIpa}</span>
+                        )}
+                        {renderSyllableGuide(pronounceResult.syllables, pronounceResult.stressIndex)}
+                      </div>
+                    )}
+                    {pronounceResult.issues?.length > 0 && (
+                      <ul className="flashcard__pronounce-issues">
+                        {pronounceResult.issues.map((issue) => (
+                          <li key={issue}>{issue}</li>
+                        ))}
+                      </ul>
+                    )}
+                    {pronounceResult.transcript && !pronounceResult.ok && (
+                      <p className="flashcard__pronounce-heard">识别为「{pronounceResult.transcript}」</p>
+                    )}
+                  </div>
                 )}
               </div>
             )}

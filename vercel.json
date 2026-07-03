@@ -11,6 +11,9 @@
     "api/ai/memory-trick.js": {
       "maxDuration": 30
     },
+    "api/ai/pronounce-evaluate.js": {
+      "maxDuration": 30
+    },
     "api/sync/push.js": {
       "maxDuration": 15
     },

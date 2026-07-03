@@ -8,7 +8,7 @@ function createRecognition() {
   return new SpeechRecognition();
 }
 
-export function listenOnce({ lang = "zh-CN", maxDurationMs = 15000 } = {}) {
+export function listenOnce({ lang = "zh-CN", maxDurationMs = 15000, withAlternatives = false } = {}) {
   return new Promise((resolve, reject) => {
     const recognition = createRecognition();
     if (!recognition) {
@@ -34,10 +34,24 @@ export function listenOnce({ lang = "zh-CN", maxDurationMs = 15000 } = {}) {
       settled = true;
       clearTimeout(timer);
 
+      const result = event.results[0];
       const transcript = Array.from(event.results)
-        .map((result) => result[0]?.transcript ?? "")
+        .map((item) => item[0]?.transcript ?? "")
         .join("")
         .trim();
+
+      if (withAlternatives && result) {
+        const alternatives = [];
+        for (let i = 0; i < result.length; i++) {
+          const piece = result[i]?.transcript?.trim();
+          if (piece) alternatives.push(piece);
+        }
+        resolve({
+          transcript: alternatives[0] || transcript,
+          alternatives: [...new Set(alternatives)],
+        });
+        return;
+      }
 
       resolve(transcript);
     };

@@ -737,6 +737,83 @@ body {
   color: var(--accent);
 }
 
+.flashcard__pronounce-feedback {
+  width: 100%;
+  max-width: 100%;
+  margin-top: 0.35rem;
+  padding: 0.55rem 0.65rem;
+  border-radius: 10px;
+  font-size: 0.8125rem;
+  line-height: 1.45;
+}
+
+.flashcard__pronounce-feedback--ok {
+  color: var(--correct);
+  background: var(--correct-bg);
+  border: 1px solid var(--correct-border);
+}
+
+.flashcard__pronounce-feedback--fail {
+  color: var(--wrong);
+  background: var(--wrong-bg);
+  border: 1px solid var(--wrong-border);
+}
+
+.flashcard__pronounce-feedback .flashcard__pronounce-status {
+  max-width: none;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: unset;
+}
+
+.flashcard__pronounce-guide {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: 0.4rem;
+}
+
+.flashcard__pronounce-ipa {
+  font-family: "Segoe UI", system-ui, sans-serif;
+  color: var(--text-muted);
+}
+
+.flashcard__pronounce-syllables {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.flashcard__pronounce-syllable {
+  padding: 0.1rem 0.35rem;
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--surface) 70%, transparent);
+  border: 1px solid var(--border);
+}
+
+.flashcard__pronounce-syllable--stress {
+  font-weight: 700;
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.flashcard__pronounce-issues {
+  margin: 0.4rem 0 0;
+  padding-left: 1.1rem;
+}
+
+.flashcard__pronounce-issues li {
+  margin-top: 0.15rem;
+}
+
+.flashcard__pronounce-heard {
+  margin: 0.35rem 0 0;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
 .flashcard__word {
   font-family: var(--word-font);
   font-size: var(--fc-word-size);
