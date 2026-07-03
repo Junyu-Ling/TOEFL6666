@@ -35,7 +35,7 @@ export async function saveSyncEntry(code, entry) {
 
   const serialized = JSON.stringify(entry);
   if (serialized.length > MAX_BYTES) {
-    throw createError("同步数据过大，请减少生词/对话记录后重试", 413);
+    throw createError("同步数据过大，请减少生词本数据后重试", 413);
   }
 
   const redis = getRedis();

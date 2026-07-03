@@ -1,3 +1,5 @@
+import { AI_CHAT_HISTORY_KEY } from "../services/aiChatHistory.js";
+
 export const SYNC_PREFIX = "toefl666_";
 export const SYNC_VERSION = 1;
 export const PAIRING_CODE_LENGTH = 8;
@@ -7,6 +9,7 @@ export const PAIRING_STORAGE_KEY = "toefl666_pairing";
 export const SYNC_EXCLUDED_KEYS = new Set([
   PAIRING_STORAGE_KEY,
   "toefl666_last_sync",
+  AI_CHAT_HISTORY_KEY,
 ]);
 
 const CODE_CHARS = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
@@ -160,34 +163,6 @@ function mergeStreakObject(local, remote) {
   };
 }
 
-function mergeChatHistory(local, remote) {
-  const merged = { ...local };
-  for (const [key, entry] of Object.entries(remote)) {
-    const localEntry = merged[key];
-    if (!localEntry?.messages?.length) {
-      merged[key] = entry;
-      continue;
-    }
-    if (!entry?.messages?.length) continue;
-    const seen = new Set(localEntry.messages.map((m) => m.at));
-    const messages = [...localEntry.messages];
-    for (const message of entry.messages) {
-      if (!seen.has(message.at)) {
-        messages.push(message);
-        seen.add(message.at);
-      }
-    }
-    messages.sort((a, b) => (a.at || 0) - (b.at || 0));
-    merged[key] = {
-      ...localEntry,
-      ...entry,
-      messages,
-      definitions: entry.definitions?.length ? entry.definitions : localEntry.definitions,
-    };
-  }
-  return merged;
-}
-
 function mergeSettingsValue(localStr, remoteStr) {
   const local = parseJson(localStr, {});
   const remote = parseJson(remoteStr, {});
@@ -225,13 +200,6 @@ export function mergeSyncBundles(localBundle, remoteBundle) {
     if (key === "toefl666_streak") {
       mergedData[key] = JSON.stringify(
         mergeStreakObject(parseJson(localValue, {}), parseJson(remoteValue, {}))
-      );
-      continue;
-    }
-
-    if (key === "toefl666_ai_chat_history") {
-      mergedData[key] = JSON.stringify(
-        mergeChatHistory(parseJson(localValue, {}), parseJson(remoteValue, {}))
       );
       continue;
     }
