@@ -75,3 +75,15 @@ export function getBankWordLabel(item, availableLists) {
   if (!item?.sourceListId) return "";
   return getListReviewLabel(item.sourceListId, availableLists);
 }
+
+export function isEnglishWordQuery(query) {
+  const q = query.trim();
+  if (!q || q.length > 48) return false;
+  return /^[a-zA-Z][a-zA-Z' -]*$/.test(q);
+}
+
+export function isWordInBank(words, query) {
+  const q = query.trim().toLowerCase();
+  if (!q) return false;
+  return words.some((item) => item.word.toLowerCase() === q);
+}

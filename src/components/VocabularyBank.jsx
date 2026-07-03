@@ -1,4 +1,4 @@
-import { useMemo, useState, useDeferredValue } from "react";
+import { useMemo, useState, useDeferredValue, useEffect, useRef, useCallback } from "react";
 import {
   BANK_SORT_OPTIONS,
   BANK_VIEW_OPTIONS,
@@ -9,9 +9,12 @@ import {
   groupBankFamilyWords,
   getBankWordLabel,
   getWordFamilyStats,
+  isEnglishWordQuery,
+  isWordInBank,
 } from "../utils/vocabularyBank";
 import PronunciationAlert from "./PronunciationAlert";
 import { getPronunciationAlert, getIrregularPronunciationStats } from "../utils/pronunciationAlert";
+import { lookupWordDefinitions } from "../services/wordLookup";
 
 function BankWordItem({ item, availableLists, bookStatus, compact = false }) {
   const listLabel = compact ? "" : getBankWordLabel(item, availableLists);
@@ -127,6 +130,10 @@ export default function VocabularyBank({
   const deferredQuery = useDeferredValue(query);
   const [sortMode, setSortMode] = useState("level-list");
   const [viewMode, setViewMode] = useState("all");
+  const [aiLookup, setAiLookup] = useState(null);
+  const [aiLookupLoading, setAiLookupLoading] = useState(false);
+  const [aiLookupError, setAiLookupError] = useState(null);
+  const lookupAbortRef = useRef(null);
   const isSearchPending = query !== deferredQuery;
 
   const irregularStats = useMemo(() => getIrregularPronunciationStats(), []);
@@ -163,8 +170,50 @@ export default function VocabularyBank({
   }, [displayedWords, viewMode]);
 
   const isFiltering = query.trim().length > 0;
+  const searchTerm = deferredQuery.trim();
+  const canAiLookup =
+    isFiltering &&
+    displayedWords.length === 0 &&
+    isEnglishWordQuery(searchTerm) &&
+    !isWordInBank(words, searchTerm);
   const isSpecialView = viewMode === "irregular-pronunciation";
   const isFamilyView = viewMode === "word-family";
+
+  useEffect(() => {
+    lookupAbortRef.current?.abort();
+    lookupAbortRef.current = null;
+    setAiLookup(null);
+    setAiLookupError(null);
+    setAiLookupLoading(false);
+  }, [searchTerm, viewMode]);
+
+  const handleAiLookup = useCallback(async () => {
+    if (!canAiLookup || aiLookupLoading) return;
+
+    lookupAbortRef.current?.abort();
+    const controller = new AbortController();
+    lookupAbortRef.current = controller;
+
+    setAiLookupLoading(true);
+    setAiLookupError(null);
+    setAiLookup(null);
+
+    try {
+      const result = await lookupWordDefinitions(searchTerm, { signal: controller.signal });
+      if (controller.signal.aborted) return;
+      setAiLookup(result);
+    } catch (err) {
+      if (err?.name === "AbortError" || controller.signal.aborted) return;
+      setAiLookupError(err.message || "AI 查词失败，请稍后重试");
+    } finally {
+      if (lookupAbortRef.current === controller) {
+        lookupAbortRef.current = null;
+      }
+      if (!controller.signal.aborted) {
+        setAiLookupLoading(false);
+      }
+    }
+  }, [aiLookupLoading, canAiLookup, searchTerm]);
   const practiceLabel =
     bankSession && bankPracticePaused
       ? `继续练习（${bankSession.index + 1}/${bankSession.queue.length}）`
@@ -248,15 +297,59 @@ export default function VocabularyBank({
       </div>
 
       {displayedWords.length === 0 ? (
-        <div className="word-list-view__empty">
+        <div className="word-list-view__empty vocabulary-bank__empty">
           <span className="empty-icon">{isFamilyView ? "🌿" : isSpecialView ? "🔊" : "🔍"}</span>
-          <p>
-            {isFamilyView
-              ? "没有匹配的词族单词"
-              : isSpecialView
-                ? "没有匹配的特殊发音单词"
-                : "没有匹配的单词"}
-          </p>
+          {canAiLookup ? (
+            <>
+              <p>
+                词库中未找到 <strong>{searchTerm}</strong>
+              </p>
+              {!aiLookup && !aiLookupLoading && (
+                <div className="vocabulary-bank__ai-lookup">
+                  <p className="vocabulary-bank__ai-lookup-hint">是否使用 AI 查询该词的中文释义？</p>
+                  <button
+                    type="button"
+                    className="btn btn--accent btn--sm"
+                    onClick={handleAiLookup}
+                  >
+                    用 AI 查询
+                  </button>
+                </div>
+              )}
+            </>
+          ) : (
+            <p>
+              {isFamilyView
+                ? "没有匹配的词族单词"
+                : isSpecialView
+                  ? "没有匹配的特殊发音单词"
+                  : "没有匹配的单词"}
+            </p>
+          )}
+          {aiLookupLoading && (
+            <p className="vocabulary-bank__ai-lookup-status">
+              <span className="spinner" aria-hidden />
+              AI 正在查询释义…
+            </p>
+          )}
+          {aiLookupError && <p className="vocabulary-bank__ai-lookup-error">{aiLookupError}</p>}
+          {aiLookup && (
+            <article className="word-item word-item--bank word-item--ai-lookup">
+              <div className="word-item__main">
+                <div className="word-item__left">
+                  <div className="word-item__title-row">
+                    <h3 className="word-item__word">{aiLookup.word}</h3>
+                    <span className="word-item__list-badge word-item__list-badge--ai">AI 释义</span>
+                  </div>
+                  <p className="word-item__defs">{aiLookup.definitions.join(" · ")}</p>
+                  <PronunciationAlert
+                    alert={getPronunciationAlert(aiLookup.word)}
+                    className="word-item__pronunciation-alert"
+                  />
+                </div>
+              </div>
+            </article>
+          )}
         </div>
       ) : isFamilyView && familyGroups ? (
         <div className="word-list word-list--grouped word-list--families">
