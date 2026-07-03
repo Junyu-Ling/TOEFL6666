@@ -650,6 +650,14 @@ body {
   flex-shrink: 0;
 }
 
+.flashcard__pronounce-block {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.5rem;
+}
+
 .flashcard__pronounce-opts {
   display: flex;
   align-items: center;
@@ -657,6 +665,7 @@ body {
   flex-wrap: wrap;
   gap: 0.5rem 0.75rem;
   min-height: 24px;
+  width: 100%;
 }
 
 .toggle-switch {
@@ -2201,7 +2210,7 @@ body {
     max-width: 100%;
     padding: 0 0.125rem;
     touch-action: pan-y;
-    overflow: hidden;
+    overflow: visible;
   }
 
   .flashcard-swipe {

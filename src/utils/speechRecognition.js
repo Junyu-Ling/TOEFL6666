@@ -53,6 +53,14 @@ export function listenOnce({ lang = "zh-CN", maxDurationMs = 15000, withAlternat
         return;
       }
 
+      if (withAlternatives) {
+        resolve({
+          transcript,
+          alternatives: transcript ? [transcript] : [],
+        });
+        return;
+      }
+
       resolve(transcript);
     };
 

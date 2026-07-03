@@ -4,6 +4,7 @@ import { useSettings } from "../context/SettingsContext";
 import {
   createDictationSession,
   listenOnce,
+  checkPronunciation,
   matchesEnglishRecall,
 } from "../utils/speechRecognition";
 import { evaluatePronunciation } from "../services/pronunciationEvaluate";
@@ -176,6 +177,13 @@ export default function FlashCard({
       result?.memory_trick?.pronunciation_alert,
     ]
   );
+
+  useEffect(() => {
+    setPronounceResult(null);
+    setPronouncePhase(null);
+    pronounceAbortRef.current?.abort();
+    pronounceAbortRef.current = null;
+  }, [wordData?.word]);
 
   useEffect(() => {
     answerRef.current = userAnswer;
@@ -935,6 +943,8 @@ export default function FlashCard({
     setPronounceResult(null);
     setError(null);
 
+    let heardTranscript = "";
+
     try {
       const heard = await listenOnce({
         lang: "en-US",
@@ -942,10 +952,11 @@ export default function FlashCard({
         withAlternatives: true,
       });
 
-      const transcript = typeof heard === "string" ? heard : heard.transcript;
-      const alternatives = typeof heard === "string" ? [] : heard.alternatives ?? [];
+      const transcript = typeof heard === "string" ? heard : heard?.transcript;
+      const alternatives = typeof heard === "string" ? [] : heard?.alternatives ?? [];
+      heardTranscript = transcript?.trim() || "";
 
-      if (!transcript?.trim()) {
+      if (!heardTranscript) {
         throw new Error("未检测到语音，请再试一次");
       }
 
@@ -953,31 +964,40 @@ export default function FlashCard({
 
       const alert = getPronunciationAlert(wordData.word);
       const evaluation = await evaluatePronunciation(wordData, {
-        transcript,
+        transcript: heardTranscript,
         alternatives,
         pronunciationHint: alert?.message,
         signal: controller.signal,
       });
 
       setPronounceResult({
-        ok: evaluation.is_correct,
-        transcript,
-        message: evaluation.feedback,
-        syllables: evaluation.expected_syllables,
-        stressIndex: evaluation.stress_index,
-        expectedIpa: evaluation.expected_ipa,
-        issues: evaluation.issues,
+        ok: Boolean(evaluation.is_correct),
+        transcript: heardTranscript,
+        message: evaluation.feedback || (evaluation.is_correct ? "发音正确！" : "请再听标准音，按音节重读。"),
+        syllables: evaluation.expected_syllables ?? [],
+        stressIndex: evaluation.stress_index ?? 0,
+        expectedIpa: evaluation.expected_ipa ?? "",
+        issues: evaluation.issues ?? [],
       });
     } catch (err) {
       if (err.name === "AbortError") return;
+      const fallbackOk = heardTranscript
+        ? checkPronunciation(heardTranscript, wordData.word)
+        : false;
       setPronounceResult({
-        ok: false,
-        transcript: "",
-        message: err.message || "读音批改失败",
+        ok: fallbackOk,
+        transcript: heardTranscript,
+        message:
+          err.message ||
+          (fallbackOk
+            ? "发音基本正确（AI 批改暂不可用）"
+            : heardTranscript
+              ? `识别为「${heardTranscript}」，再听标准音试试`
+              : "读音批改失败"),
         syllables: [],
         stressIndex: 0,
         expectedIpa: "",
-        issues: [],
+        issues: err.message ? [err.message] : [],
       });
     } finally {
       setPronouncePhase(null);
@@ -1077,29 +1097,31 @@ export default function FlashCard({
             <PronunciationAlert alert={pronunciationAlert} className="flashcard__pronunciation-alert" />
 
             {micGranted && (
-              <div className="flashcard__pronounce-opts">
-                <label className="toggle-switch">
-                  <input
-                    type="checkbox"
-                    checked={pronounceEnabled}
-                    onChange={(e) => {
-                      setPronounceEnabled(e.target.checked);
-                      setPronounceResult(null);
-                    }}
-                  />
-                  <span className="toggle-switch__track" aria-hidden="true" />
-                  <span className="toggle-switch__label">练习读音</span>
-                </label>
-                {pronounceEnabled && pronouncePhase === "listening" && (
-                  <span className="flashcard__pronounce-status flashcard__pronounce-status--pending">
-                    聆听中…
-                  </span>
-                )}
-                {pronounceEnabled && pronouncePhase === "evaluating" && (
-                  <span className="flashcard__pronounce-status flashcard__pronounce-status--pending">
-                    分析音节与重音…
-                  </span>
-                )}
+              <div className="flashcard__pronounce-block">
+                <div className="flashcard__pronounce-opts">
+                  <label className="toggle-switch">
+                    <input
+                      type="checkbox"
+                      checked={pronounceEnabled}
+                      onChange={(e) => {
+                        setPronounceEnabled(e.target.checked);
+                        setPronounceResult(null);
+                      }}
+                    />
+                    <span className="toggle-switch__track" aria-hidden="true" />
+                    <span className="toggle-switch__label">练习读音</span>
+                  </label>
+                  {pronounceEnabled && pronouncePhase === "listening" && (
+                    <span className="flashcard__pronounce-status flashcard__pronounce-status--pending">
+                      聆听中…
+                    </span>
+                  )}
+                  {pronounceEnabled && pronouncePhase === "evaluating" && (
+                    <span className="flashcard__pronounce-status flashcard__pronounce-status--pending">
+                      分析音节与重音…
+                    </span>
+                  )}
+                </div>
                 {pronounceEnabled && !pronouncePhase && pronounceResult && (
                   <div
                     className={`flashcard__pronounce-feedback ${pronounceResult.ok ? "flashcard__pronounce-feedback--ok" : "flashcard__pronounce-feedback--fail"}`}
