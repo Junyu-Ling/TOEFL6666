@@ -44,6 +44,9 @@ const FAMILY_SUFFIXES = [
   "s",
   "y",
   "ate",
+  "ize",
+  "ise",
+  "ify",
 ];
 
 function normalizeWord(word = "") {
@@ -117,7 +120,7 @@ function isCandidateFamilyRoot(prefix, allWords, wordSet) {
   for (const word of allWords) {
     if (expandRootToStems(word).includes(prefix)) return true;
   }
-  return false;
+  return getMorphologicalFamily(prefix, allWords).length >= 2;
 }
 
 function getMorphologicalFamily(prefix, allWords) {
@@ -134,7 +137,7 @@ function getMorphologicalFamily(prefix, allWords) {
  * @param {string} word
  * @param {Set<string>} wordSet
  */
-export function resolveBankFamilyRoot(word, wordSet) {
+export function resolveBankFamilyRoot(word, wordSet, allWords = []) {
   const w = normalizeWord(word);
   if (!w) return w;
 
@@ -144,23 +147,27 @@ export function resolveBankFamilyRoot(word, wordSet) {
     let stem = w.slice(0, -suffix.length);
 
     if (suffix === "ies" && wordSet.has(`${stem}y`)) {
-      return resolveBankFamilyRoot(`${stem}y`, wordSet);
+      return resolveBankFamilyRoot(`${stem}y`, wordSet, allWords);
     }
 
     if (wordSet.has(stem)) {
-      return resolveBankFamilyRoot(stem, wordSet);
+      return resolveBankFamilyRoot(stem, wordSet, allWords);
     }
 
     for (const candidate of expandStemToRoots(stem)) {
       if (wordSet.has(candidate)) {
-        return resolveBankFamilyRoot(candidate, wordSet);
+        return resolveBankFamilyRoot(candidate, wordSet, allWords);
       }
+    }
+
+    if (getMorphologicalFamily(stem, allWords).length >= 2) {
+      return stem;
     }
 
     if (stem.length > 2 && stem.endsWith(stem.slice(-1))) {
       const undoubled = stem.slice(0, -1);
       if (wordSet.has(undoubled)) {
-        return resolveBankFamilyRoot(undoubled, wordSet);
+        return resolveBankFamilyRoot(undoubled, wordSet, allWords);
       }
     }
   }
@@ -168,7 +175,7 @@ export function resolveBankFamilyRoot(word, wordSet) {
   for (let len = w.length - 1; len >= MIN_ROOT_LEN; len--) {
     const prefix = w.slice(0, len);
     if (wordSet.has(prefix)) {
-      return resolveBankFamilyRoot(prefix, wordSet);
+      return resolveBankFamilyRoot(prefix, wordSet, allWords);
     }
   }
 
@@ -208,7 +215,7 @@ function resolveSharedPrefixRoot(word, allWords, wordSet) {
  */
 export function resolveFamilyRoot(word, wordSet, allWords) {
   const w = normalizeWord(word);
-  const bankRoot = resolveBankFamilyRoot(w, wordSet);
+  const bankRoot = resolveBankFamilyRoot(w, wordSet, allWords);
   if (bankRoot !== w) return bankRoot;
   return resolveSharedPrefixRoot(w, allWords, wordSet);
 }

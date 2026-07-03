@@ -1,8 +1,8 @@
 {
   "generatedAt": "2026-07-03",
   "totalWords": 3231,
-  "familyCount": 269,
-  "memberCount": 629,
+  "familyCount": 359,
+  "memberCount": 874,
   "families": [
     {
       "root": "abstract",
@@ -67,10 +67,10 @@
       ]
     },
     {
-      "root": "advent",
+      "root": "adve",
       "words": [
         "advent",
-        "adventure"
+        "adverse"
       ]
     },
     {
@@ -97,6 +97,28 @@
       ]
     },
     {
+      "root": "ample",
+      "words": [
+        "ample",
+        "amplify"
+      ]
+    },
+    {
+      "root": "analog",
+      "words": [
+        "analogy",
+        "analogue",
+        "analogous"
+      ]
+    },
+    {
+      "root": "ancestr",
+      "words": [
+        "ancestry",
+        "ancestral"
+      ]
+    },
+    {
       "root": "antarctic",
       "words": [
         "Antarctic",
@@ -104,12 +126,39 @@
       ]
     },
     {
+      "root": "anthropolog",
+      "words": [
+        "anthropology",
+        "anthropological"
+      ]
+    },
+    {
+      "root": "appe",
+      "words": [
+        "appeal",
+        "appetite"
+      ]
+    },
+    {
+      "root": "applic",
+      "words": [
+        "applicant",
+        "applicable",
+        "application"
+      ]
+    },
+    {
       "root": "arch",
       "words": [
         "arch",
         "architect",
+        "architecture"
+      ]
+    },
+    {
+      "root": "archaeolog",
+      "words": [
         "archaeology",
-        "architecture",
         "archaeologist"
       ]
     },
@@ -142,10 +191,24 @@
       ]
     },
     {
+      "root": "associ",
+      "words": [
+        "associate",
+        "association"
+      ]
+    },
+    {
       "root": "authentic",
       "words": [
         "authentic",
         "authenticity"
+      ]
+    },
+    {
+      "root": "autonom",
+      "words": [
+        "autonomy",
+        "autonomous"
       ]
     },
     {
@@ -174,6 +237,13 @@
       "words": [
         "bid",
         "bidder"
+      ]
+    },
+    {
+      "root": "biograph",
+      "words": [
+        "biography",
+        "biographer"
       ]
     },
     {
@@ -279,10 +349,26 @@
       ]
     },
     {
+      "root": "colon",
+      "words": [
+        "colony",
+        "colonial",
+        "colonist",
+        "colonize"
+      ]
+    },
+    {
       "root": "column",
       "words": [
         "column",
         "columnist"
+      ]
+    },
+    {
+      "root": "come",
+      "words": [
+        "comet",
+        "comedy"
       ]
     },
     {
@@ -329,6 +415,13 @@
       ]
     },
     {
+      "root": "compens",
+      "words": [
+        "compensate",
+        "compensation"
+      ]
+    },
+    {
       "root": "complex",
       "words": [
         "complex",
@@ -350,6 +443,16 @@
         "consist",
         "consistent",
         "consistency"
+      ]
+    },
+    {
+      "root": "conce",
+      "words": [
+        "conceal",
+        "concern",
+        "conceive",
+        "conception",
+        "concentrate"
       ]
     },
     {
@@ -410,10 +513,25 @@
       ]
     },
     {
+      "root": "conservat",
+      "words": [
+        "conservatism",
+        "conservative"
+      ]
+    },
+    {
       "root": "conserve",
       "words": [
         "conserve",
         "conservation"
+      ]
+    },
+    {
+      "root": "consider",
+      "words": [
+        "considerate",
+        "considerable",
+        "consideration"
       ]
     },
     {
@@ -518,6 +636,22 @@
       ]
     },
     {
+      "root": "decor",
+      "words": [
+        "decorate",
+        "decoration"
+      ]
+    },
+    {
+      "root": "defe",
+      "words": [
+        "defer",
+        "defect",
+        "defend",
+        "defensive"
+      ]
+    },
+    {
       "root": "definite",
       "words": [
         "definite",
@@ -532,11 +666,40 @@
       ]
     },
     {
+      "root": "dehydr",
+      "words": [
+        "dehydrate",
+        "dehydration"
+      ]
+    },
+    {
+      "root": "deliber",
+      "words": [
+        "deliberate",
+        "deliberation"
+      ]
+    },
+    {
       "root": "democrat",
       "words": [
         "democrat",
         "democratic",
         "democratization"
+      ]
+    },
+    {
+      "root": "demonstr",
+      "words": [
+        "demonstrate",
+        "demonstration"
+      ]
+    },
+    {
+      "root": "depend",
+      "words": [
+        "dependent",
+        "dependable",
+        "dependence"
       ]
     },
     {
@@ -547,7 +710,7 @@
       ]
     },
     {
-      "root": "depress",
+      "root": "depres",
       "words": [
         "depress",
         "depression"
@@ -558,6 +721,13 @@
       "words": [
         "descend",
         "descendant"
+      ]
+    },
+    {
+      "root": "design",
+      "words": [
+        "designate",
+        "designation"
       ]
     },
     {
@@ -576,10 +746,25 @@
       ]
     },
     {
+      "root": "deterior",
+      "words": [
+        "deteriorate",
+        "deterioration"
+      ]
+    },
+    {
       "root": "determine",
       "words": [
         "determine",
         "determination"
+      ]
+    },
+    {
+      "root": "dict",
+      "words": [
+        "dictate",
+        "dictator",
+        "dictation"
       ]
     },
     {
@@ -675,6 +860,20 @@
       ]
     },
     {
+      "root": "ecolog",
+      "words": [
+        "ecology",
+        "ecologist"
+      ]
+    },
+    {
+      "root": "elabor",
+      "words": [
+        "elaborate",
+        "elaboration"
+      ]
+    },
+    {
       "root": "elect",
       "words": [
         "elect",
@@ -682,6 +881,20 @@
         "electrify",
         "electronics",
         "electromagnetic"
+      ]
+    },
+    {
+      "root": "elev",
+      "words": [
+        "elevate",
+        "elevation"
+      ]
+    },
+    {
+      "root": "elimin",
+      "words": [
+        "eliminate",
+        "elimination"
       ]
     },
     {
@@ -727,6 +940,13 @@
       ]
     },
     {
+      "root": "eradic",
+      "words": [
+        "eradicate",
+        "eradication"
+      ]
+    },
+    {
       "root": "establish",
       "words": [
         "establish",
@@ -738,6 +958,13 @@
       "words": [
         "evolution",
         "evolutionary"
+      ]
+    },
+    {
+      "root": "exagger",
+      "words": [
+        "exaggerate",
+        "exaggeration"
       ]
     },
     {
@@ -790,6 +1017,13 @@
       ]
     },
     {
+      "root": "extermin",
+      "words": [
+        "exterminate",
+        "extermination"
+      ]
+    },
+    {
       "root": "extra",
       "words": [
         "extra",
@@ -813,6 +1047,13 @@
       ]
     },
     {
+      "root": "feas",
+      "words": [
+        "feasible",
+        "feasibility"
+      ]
+    },
+    {
       "root": "feat",
       "words": [
         "feat",
@@ -824,6 +1065,13 @@
       "words": [
         "feud",
         "feudal"
+      ]
+    },
+    {
+      "root": "financi",
+      "words": [
+        "financial",
+        "financier"
       ]
     },
     {
@@ -899,13 +1147,26 @@
       "root": "gene",
       "words": [
         "gene",
-        "general",
         "genetic",
+        "genetically"
+      ]
+    },
+    {
+      "root": "gener",
+      "words": [
+        "general",
         "generate",
         "generalize",
         "generation",
-        "genetically",
         "generalization"
+      ]
+    },
+    {
+      "root": "glaci",
+      "words": [
+        "glacial",
+        "glacier",
+        "glaciation"
       ]
     },
     {
@@ -937,6 +1198,13 @@
       ]
     },
     {
+      "root": "gravit",
+      "words": [
+        "gravity",
+        "gravitation"
+      ]
+    },
+    {
       "root": "grind",
       "words": [
         "grind",
@@ -955,6 +1223,13 @@
       "words": [
         "gull",
         "gully"
+      ]
+    },
+    {
+      "root": "harmon",
+      "words": [
+        "harmony",
+        "harmonious"
       ]
     },
     {
@@ -1001,7 +1276,39 @@
       ]
     },
     {
-      "root": "impress",
+      "root": "ident",
+      "words": [
+        "identify",
+        "identical",
+        "identifiable",
+        "identification"
+      ]
+    },
+    {
+      "root": "immigr",
+      "words": [
+        "immigrant",
+        "immigrate",
+        "immigration"
+      ]
+    },
+    {
+      "root": "imperson",
+      "words": [
+        "impersonal",
+        "impersonate"
+      ]
+    },
+    {
+      "root": "implic",
+      "words": [
+        "implicit",
+        "implicate",
+        "implication"
+      ]
+    },
+    {
+      "root": "impres",
       "words": [
         "impress",
         "impression",
@@ -1039,9 +1346,10 @@
       ]
     },
     {
-      "root": "initial",
+      "root": "initi",
       "words": [
         "initial",
+        "initiate",
         "initially"
       ]
     },
@@ -1053,10 +1361,40 @@
       ]
     },
     {
+      "root": "inst",
+      "words": [
+        "instill",
+        "instance",
+        "instinct",
+        "instantly",
+        "instigate",
+        "institute",
+        "instability",
+        "institution",
+        "instructive",
+        "instrumental"
+      ]
+    },
+    {
       "root": "install",
       "words": [
         "install",
         "installation"
+      ]
+    },
+    {
+      "root": "integr",
+      "words": [
+        "integral",
+        "integrate",
+        "integrity"
+      ]
+    },
+    {
+      "root": "intense",
+      "words": [
+        "intense",
+        "intensify"
       ]
     },
     {
@@ -1090,6 +1428,13 @@
       ]
     },
     {
+      "root": "irrig",
+      "words": [
+        "irrigate",
+        "irrigation"
+      ]
+    },
+    {
       "root": "labor",
       "words": [
         "labor",
@@ -1097,10 +1442,39 @@
       ]
     },
     {
+      "root": "length",
+      "words": [
+        "lengthy",
+        "lengthen"
+      ]
+    },
+    {
+      "root": "liber",
+      "words": [
+        "liberal",
+        "liberty",
+        "liberate"
+      ]
+    },
+    {
       "root": "linguist",
       "words": [
         "linguist",
         "linguistic"
+      ]
+    },
+    {
+      "root": "locale",
+      "words": [
+        "locale",
+        "localize"
+      ]
+    },
+    {
+      "root": "luxur",
+      "words": [
+        "luxury",
+        "luxurious"
       ]
     },
     {
@@ -1148,10 +1522,11 @@
       ]
     },
     {
-      "root": "mechanic",
+      "root": "mechan",
       "words": [
         "mechanic",
-        "mechanically"
+        "mechanism",
+        "mechanization"
       ]
     },
     {
@@ -1181,6 +1556,13 @@
       ]
     },
     {
+      "root": "migr",
+      "words": [
+        "migrant",
+        "migrate"
+      ]
+    },
+    {
       "root": "mill",
       "words": [
         "mill",
@@ -1192,6 +1574,22 @@
       "words": [
         "minor",
         "minority"
+      ]
+    },
+    {
+      "root": "mobile",
+      "words": [
+        "mobile",
+        "mobilize"
+      ]
+    },
+    {
+      "root": "mode",
+      "words": [
+        "modem",
+        "modest",
+        "moderate",
+        "modernization"
       ]
     },
     {
@@ -1247,6 +1645,20 @@
       ]
     },
     {
+      "root": "navig",
+      "words": [
+        "navigate",
+        "navigable"
+      ]
+    },
+    {
+      "root": "necessit",
+      "words": [
+        "necessity",
+        "necessitate"
+      ]
+    },
+    {
       "root": "nest",
       "words": [
         "nest",
@@ -1265,6 +1677,14 @@
       "words": [
         "norm",
         "normal"
+      ]
+    },
+    {
+      "root": "nutri",
+      "words": [
+        "nutrient",
+        "nutrition",
+        "nutritious"
       ]
     },
     {
@@ -1296,6 +1716,14 @@
       ]
     },
     {
+      "root": "occup",
+      "words": [
+        "occupy",
+        "occupant",
+        "occupation"
+      ]
+    },
+    {
       "root": "occur",
       "words": [
         "occur",
@@ -1323,7 +1751,24 @@
       "root": "oxide",
       "words": [
         "oxide",
+        "oxidize",
         "oxidation"
+      ]
+    },
+    {
+      "root": "parti",
+      "words": [
+        "partial",
+        "particle",
+        "partition",
+        "particular"
+      ]
+    },
+    {
+      "root": "particip",
+      "words": [
+        "participant",
+        "participate"
       ]
     },
     {
@@ -1331,6 +1776,13 @@
       "words": [
         "perform",
         "performance"
+      ]
+    },
+    {
+      "root": "perman",
+      "words": [
+        "permanent",
+        "permanence"
       ]
     },
     {
@@ -1348,12 +1800,27 @@
       ]
     },
     {
+      "root": "physiolog",
+      "words": [
+        "physiology",
+        "physiological"
+      ]
+    },
+    {
       "root": "plum",
       "words": [
         "plum",
         "plumb",
         "plume",
         "plummet"
+      ]
+    },
+    {
+      "root": "popul",
+      "words": [
+        "populate",
+        "populous",
+        "popularize"
       ]
     },
     {
@@ -1383,6 +1850,13 @@
       "words": [
         "precede",
         "preceding"
+      ]
+    },
+    {
+      "root": "precipit",
+      "words": [
+        "precipitate",
+        "precipitation"
       ]
     },
     {
@@ -1425,9 +1899,15 @@
       "root": "pro",
       "words": [
         "pro",
-        "proxy",
+        "proxy"
+      ]
+    },
+    {
+      "root": "prob",
+      "words": [
         "probable",
-        "probability"
+        "probability",
+        "problematic"
       ]
     },
     {
@@ -1454,11 +1934,45 @@
       ]
     },
     {
+      "root": "psycholog",
+      "words": [
+        "psychologist",
+        "psychological"
+      ]
+    },
+    {
+      "root": "public",
+      "words": [
+        "publicity",
+        "publicize",
+        "publication"
+      ]
+    },
+    {
+      "root": "punctu",
+      "words": [
+        "punctuate",
+        "punctuation"
+      ]
+    },
+    {
       "root": "quest",
       "words": [
         "quest",
         "questionable",
         "questionnaire"
+      ]
+    },
+    {
+      "root": "radi",
+      "words": [
+        "radius",
+        "radiant",
+        "radiate",
+        "radical",
+        "radiator",
+        "radiation",
+        "radioactive"
       ]
     },
     {
@@ -1476,10 +1990,13 @@
       ]
     },
     {
-      "root": "realist",
+      "root": "real",
       "words": [
+        "realm",
+        "realism",
         "realist",
-        "realistic"
+        "realistic",
+        "realization"
       ]
     },
     {
@@ -1494,6 +2011,13 @@
       "words": [
         "recur",
         "recurrence"
+      ]
+    },
+    {
+      "root": "rede",
+      "words": [
+        "redefine",
+        "redesign"
       ]
     },
     {
@@ -1526,6 +2050,31 @@
       ]
     },
     {
+      "root": "regul",
+      "words": [
+        "regulate",
+        "regularize",
+        "regulation"
+      ]
+    },
+    {
+      "root": "relev",
+      "words": [
+        "relevant",
+        "relevance"
+      ]
+    },
+    {
+      "root": "reli",
+      "words": [
+        "relic",
+        "reliant",
+        "reliable",
+        "reliance",
+        "reliability"
+      ]
+    },
+    {
       "root": "remark",
       "words": [
         "remark",
@@ -1547,11 +2096,19 @@
       ]
     },
     {
-      "root": "represent",
+      "root": "repres",
       "words": [
+        "repress",
         "represent",
         "representation",
         "representative"
+      ]
+    },
+    {
+      "root": "rese",
+      "words": [
+        "resent",
+        "reserve"
       ]
     },
     {
@@ -1576,6 +2133,20 @@
         "resist",
         "resistant",
         "resistance"
+      ]
+    },
+    {
+      "root": "reson",
+      "words": [
+        "resonate",
+        "resonance"
+      ]
+    },
+    {
+      "root": "respect",
+      "words": [
+        "respective",
+        "respectable"
       ]
     },
     {
@@ -1605,6 +2176,14 @@
       "words": [
         "retrieve",
         "retrieval"
+      ]
+    },
+    {
+      "root": "reve",
+      "words": [
+        "reveal",
+        "revenue",
+        "reverse"
       ]
     },
     {
@@ -1687,10 +2266,28 @@
       ]
     },
     {
-      "root": "sensation",
+      "root": "sens",
       "words": [
+        "sensory",
+        "sensible",
         "sensation",
-        "sensational"
+        "sensitive",
+        "sensational",
+        "sensitivity"
+      ]
+    },
+    {
+      "root": "seri",
+      "words": [
+        "series",
+        "serious"
+      ]
+    },
+    {
+      "root": "settle",
+      "words": [
+        "settler",
+        "settlement"
       ]
     },
     {
@@ -1698,6 +2295,15 @@
       "words": [
         "severe",
         "severely"
+      ]
+    },
+    {
+      "root": "sign",
+      "words": [
+        "signal",
+        "signify",
+        "signature",
+        "significant"
       ]
     },
     {
@@ -1729,8 +2335,23 @@
       ]
     },
     {
-      "root": "specialize",
+      "root": "spec",
       "words": [
+        "speck",
+        "species",
+        "specify",
+        "specific",
+        "specimen",
+        "spectrum",
+        "spectator",
+        "speculate",
+        "spectacular"
+      ]
+    },
+    {
+      "root": "special",
+      "words": [
+        "specialist",
         "specialize",
         "specialization"
       ]
@@ -1779,6 +2400,13 @@
       ]
     },
     {
+      "root": "statistic",
+      "words": [
+        "statistics",
+        "statistical"
+      ]
+    },
+    {
       "root": "statue",
       "words": [
         "statue",
@@ -1790,6 +2418,15 @@
       "words": [
         "sting",
         "stingless"
+      ]
+    },
+    {
+      "root": "stre",
+      "words": [
+        "streak",
+        "stress",
+        "stretch",
+        "strength"
       ]
     },
     {
@@ -1814,10 +2451,18 @@
       ]
     },
     {
-      "root": "substantial",
+      "root": "substanti",
       "words": [
         "substantial",
+        "substantiate",
         "substantially"
+      ]
+    },
+    {
+      "root": "summar",
+      "words": [
+        "summary",
+        "summarize"
       ]
     },
     {
@@ -1849,6 +2494,13 @@
       ]
     },
     {
+      "root": "symbol",
+      "words": [
+        "symbolism",
+        "symbolize"
+      ]
+    },
+    {
       "root": "tale",
       "words": [
         "tale",
@@ -1856,11 +2508,25 @@
       ]
     },
     {
-      "root": "term",
+      "root": "termin",
       "words": [
-        "term",
         "terminal",
         "terminate"
+      ]
+    },
+    {
+      "root": "theor",
+      "words": [
+        "theory",
+        "theorist",
+        "theorize"
+      ]
+    },
+    {
+      "root": "toler",
+      "words": [
+        "tolerate",
+        "tolerance"
       ]
     },
     {
@@ -1885,6 +2551,13 @@
       ]
     },
     {
+      "root": "turbul",
+      "words": [
+        "turbulent",
+        "turbulence"
+      ]
+    },
+    {
       "root": "unite",
       "words": [
         "unite",
@@ -1900,9 +2573,11 @@
       ]
     },
     {
-      "root": "utilize",
+      "root": "util",
       "words": [
+        "utility",
         "utilize",
+        "utilitarian",
         "utilization"
       ]
     },
@@ -1924,7 +2599,6 @@
     {
       "root": "vari",
       "words": [
-        "variety",
         "variable",
         "variation"
       ]
@@ -1941,6 +2615,27 @@
       "words": [
         "vent",
         "venture"
+      ]
+    },
+    {
+      "root": "vertebr",
+      "words": [
+        "vertebral",
+        "vertebrate"
+      ]
+    },
+    {
+      "root": "vibr",
+      "words": [
+        "vibrant",
+        "vibrate"
+      ]
+    },
+    {
+      "root": "viol",
+      "words": [
+        "violate",
+        "violent"
       ]
     },
     {
@@ -1982,11 +2677,8 @@
   "wordToRoot": {
     "code": "code",
     "unwilling": "unwilling",
-    "arch": "arch",
-    "architect": "arch",
-    "archaeology": "arch",
-    "architecture": "arch",
-    "archaeologist": "arch",
+    "archaeology": "archaeolog",
+    "archaeologist": "archaeolog",
     "unfortunate": "unfortunate",
     "fairly": "fairly",
     "tremendous": "tremendous",
@@ -1996,7 +2688,8 @@
     "committee": "commit",
     "commitment": "commit",
     "satisfaction": "satisfaction",
-    "appetite": "appetite",
+    "appeal": "appe",
+    "appetite": "appe",
     "mysterious": "mysterious",
     "mental": "mental",
     "mentality": "mental",
@@ -2004,7 +2697,10 @@
     "sociologist": "sociologist",
     "anxious": "anxious",
     "essential": "essential",
-    "strength": "strength",
+    "streak": "stre",
+    "stress": "stre",
+    "stretch": "stre",
+    "strength": "stre",
     "refine": "refine",
     "refinery": "refine",
     "refinement": "refine",
@@ -2030,16 +2726,19 @@
     "conduct": "conduct",
     "conductance": "conduct",
     "conductivity": "conduct",
-    "relief": "relief",
+    "relief": "relie",
     "polar": "polar",
-    "dictation": "dictation",
+    "dictate": "dict",
+    "dictator": "dict",
+    "dictation": "dict",
     "meaty": "meaty",
     "straightforward": "straightforward",
     "advance": "advance",
     "advanced": "advance",
     "contribute": "contribute",
-    "mechanic": "mechanic",
-    "mechanically": "mechanic",
+    "mechanic": "mechan",
+    "mechanism": "mechan",
+    "mechanization": "mechan",
     "assign": "assign",
     "assignment": "assign",
     "self-sufficient": "self-sufficient",
@@ -2056,10 +2755,9 @@
     "organization": "organ",
     "destine": "destine",
     "destination": "destine",
-    "stress": "stress",
-    "impress": "impress",
-    "impression": "impress",
-    "impressive": "impress",
+    "impress": "impres",
+    "impression": "impres",
+    "impressive": "impres",
     "naturalist": "naturalist",
     "disturb": "disturb",
     "evil": "evil",
@@ -2070,7 +2768,9 @@
     "diversity": "dive",
     "divergence": "dive",
     "diversification": "dive",
-    "applicant": "applicant",
+    "applicant": "applic",
+    "applicable": "applic",
+    "application": "applic",
     "accord": "accord",
     "accordingly": "accord",
     "imprisonment": "imprisonment",
@@ -2082,7 +2782,10 @@
     "roughly": "rough",
     "pour": "pour",
     "seize": "seize",
-    "signal": "signal",
+    "signal": "sign",
+    "signify": "sign",
+    "signature": "sign",
+    "significant": "sign",
     "statement": "statement",
     "horizon": "horizon",
     "horizontal": "horizon",
@@ -2095,13 +2798,21 @@
     "mill": "mill",
     "millimeter": "mill",
     "anticipate": "anticipate",
-    "instinct": "instinct",
+    "instill": "inst",
+    "instance": "inst",
+    "instinct": "inst",
+    "instantly": "inst",
+    "instigate": "inst",
+    "institute": "inst",
+    "instability": "inst",
+    "institution": "inst",
+    "instructive": "inst",
+    "instrumental": "inst",
     "reject": "reject",
     "leap": "leap",
     "review": "review",
-    "term": "term",
-    "terminal": "term",
-    "terminate": "term",
+    "terminal": "termin",
+    "terminate": "termin",
     "conform": "conform",
     "conformity": "conform",
     "virus": "virus",
@@ -2114,6 +2825,7 @@
     "informative": "informative",
     "candid": "candid",
     "candidate": "candid",
+    "term": "term",
     "incomplete": "incomplete",
     "antarctic": "antarctic",
     "antarctica": "antarctic",
@@ -2131,9 +2843,14 @@
     "detect": "detect",
     "detector": "detect",
     "detection": "detect",
-    "reliance": "reliance",
+    "relic": "reli",
+    "reliant": "reli",
+    "reliable": "reli",
+    "reliance": "reli",
+    "reliability": "reli",
     "strictly": "strictly",
-    "lengthy": "lengthy",
+    "lengthy": "length",
+    "lengthen": "length",
     "royal": "royal",
     "mere": "mere",
     "address": "address",
@@ -2142,14 +2859,15 @@
     "electrify": "elect",
     "electronics": "elect",
     "electromagnetic": "elect",
-    "signature": "signature",
     "likelihood": "likelihood",
     "mount": "mount",
     "mountainous": "mount",
     "calendar": "calendar",
     "joint": "joint",
     "justice": "justice",
-    "publication": "publication",
+    "publicity": "public",
+    "publicize": "public",
+    "publication": "public",
     "negative": "negative",
     "twinkle": "twinkle",
     "contract": "contract",
@@ -2167,7 +2885,10 @@
     "investor": "invest",
     "investigate": "invest",
     "investigator": "invest",
-    "defensive": "defensive",
+    "defer": "defe",
+    "defect": "defe",
+    "defend": "defe",
+    "defensive": "defe",
     "outstanding": "outstanding",
     "precise": "precise",
     "precisely": "precise",
@@ -2182,7 +2903,8 @@
     "slightly": "slightly",
     "dimension": "dimension",
     "weed": "weed",
-    "necessity": "necessity",
+    "necessity": "necessit",
+    "necessitate": "necessit",
     "emerge": "emerge",
     "emergency": "emerge",
     "journalism": "journalism",
@@ -2195,13 +2917,20 @@
     "calculate": "calculate",
     "inspiration": "inspiration",
     "interrelationship": "interrelationship",
-    "realm": "realm",
-    "theory": "theory",
+    "realm": "real",
+    "realism": "real",
+    "realist": "real",
+    "realistic": "real",
+    "realization": "real",
+    "theory": "theor",
+    "theorist": "theor",
+    "theorize": "theor",
     "herd": "herd",
     "herder": "herd",
     "absorb": "absorb",
     "finance": "finance",
-    "decoration": "decoration",
+    "decorate": "decor",
+    "decoration": "decor",
     "genius": "genius",
     "leak": "leak",
     "annual": "annual",
@@ -2217,26 +2946,23 @@
     "make-up": "make-up",
     "decline": "decline",
     "intense": "intense",
+    "intensify": "intense",
     "military": "military",
-    "participant": "participant",
+    "participant": "particip",
+    "participate": "particip",
     "fortune": "fortune",
     "administer": "administer",
     "lighten": "lighten",
     "route": "route",
     "gene": "gene",
-    "general": "gene",
     "genetic": "gene",
-    "generate": "gene",
-    "generalize": "gene",
-    "generation": "gene",
     "genetically": "gene",
-    "generalization": "gene",
     "unite": "unite",
     "unity": "unite",
-    "instantly": "instantly",
     "release": "release",
     "leaflet": "leaflet",
-    "tolerate": "tolerate",
+    "tolerate": "toler",
+    "tolerance": "toler",
     "typical": "typical",
     "vapor": "vapor",
     "vaporize": "vapor",
@@ -2248,30 +2974,37 @@
     "channel": "channel",
     "faith": "faith",
     "diagram": "diagram",
-    "relevant": "relevant",
+    "relevant": "relev",
+    "relevance": "relev",
     "disprove": "disprove",
     "shade": "shade",
     "toxic": "toxic",
     "slope": "slope",
-    "association": "association",
+    "associate": "associ",
+    "association": "associ",
     "vision": "vision",
     "accomplish": "accomplish",
     "suffer": "suffer",
     "prior": "prior",
     "priority": "prior",
     "remainder": "remainder",
-    "revenue": "revenue",
+    "reveal": "reve",
+    "revenue": "reve",
+    "reverse": "reve",
     "usage": "usage",
     "appreciate": "appreciate",
     "embrace": "embrace",
     "severe": "severe",
     "severely": "severe",
-    "summarize": "summarize",
+    "summary": "summar",
+    "summarize": "summar",
     "survival": "survival",
-    "represent": "represent",
-    "representation": "represent",
-    "representative": "represent",
-    "ecology": "ecology",
+    "repress": "repres",
+    "represent": "repres",
+    "representation": "repres",
+    "representative": "repres",
+    "ecology": "ecolog",
+    "ecologist": "ecolog",
     "amateur": "amateur",
     "structural": "structural",
     "unoccupied": "unoccupied",
@@ -2283,8 +3016,17 @@
     "handicap": "handicap",
     "tale": "tale",
     "talented": "tale",
-    "species": "species",
-    "settler": "settler",
+    "speck": "spec",
+    "species": "spec",
+    "specify": "spec",
+    "specific": "spec",
+    "specimen": "spec",
+    "spectrum": "spec",
+    "spectator": "spec",
+    "speculate": "spec",
+    "spectacular": "spec",
+    "settler": "settle",
+    "settlement": "settle",
     "survivor": "survivor",
     "doubtful": "doubtful",
     "wide-ranging": "wide-ranging",
@@ -2294,7 +3036,8 @@
     "motivate": "motive",
     "motivation": "motive",
     "expense": "expense",
-    "exaggeration": "exaggeration",
+    "exaggerate": "exagger",
+    "exaggeration": "exagger",
     "presidential": "presidential",
     "attitude": "attitude",
     "plentiful": "plentiful",
@@ -2305,12 +3048,17 @@
     "expectation": "expectation",
     "ceremony": "ceremony",
     "equation": "equation",
-    "particular": "particular",
+    "partial": "parti",
+    "particle": "parti",
+    "partition": "parti",
+    "particular": "parti",
     "proceed": "proceed",
-    "instructive": "instructive",
-    "redesign": "redesign",
+    "redefine": "rede",
+    "redesign": "rede",
     "fade": "fade",
-    "dependent": "dependent",
+    "dependent": "depend",
+    "dependable": "depend",
+    "dependence": "depend",
     "handle": "handle",
     "surround": "surround",
     "sect": "sect",
@@ -2324,7 +3072,6 @@
     "inferior": "infer",
     "inference": "infer",
     "infertile": "infer",
-    "institute": "institute",
     "apparent": "apparent",
     "announce": "announce",
     "territory": "territory",
@@ -2337,7 +3084,11 @@
     "drainage": "drain",
     "geographic": "geographic",
     "property": "property",
-    "psychological": "psychological",
+    "arch": "arch",
+    "architect": "arch",
+    "architecture": "arch",
+    "psychologist": "psycholog",
+    "psychological": "psycholog",
     "shrub": "shrub",
     "marsh": "marsh",
     "marshy": "marsh",
@@ -2360,13 +3111,17 @@
     "characterize": "character",
     "characteristic": "character",
     "recipe": "recipe",
-    "realist": "realist",
-    "realistic": "realist",
-    "sensitivity": "sensitivity",
+    "sensory": "sens",
+    "sensible": "sens",
+    "sensation": "sens",
+    "sensitive": "sens",
+    "sensational": "sens",
+    "sensitivity": "sens",
     "peasant": "peasant",
-    "publicize": "publicize",
     "poverty": "poverty",
-    "popularize": "popularize",
+    "populate": "popul",
+    "populous": "popul",
+    "popularize": "popul",
     "qualification": "qualification",
     "slide": "slide",
     "intelligent": "intelligent",
@@ -2380,9 +3135,11 @@
     "customize": "customize",
     "classify": "classify",
     "bravery": "bravery",
-    "irrigation": "irrigation",
+    "irrigate": "irrig",
+    "irrigation": "irrig",
     "abundant": "abundant",
-    "impersonal": "impersonal",
+    "impersonal": "imperson",
+    "impersonate": "imperson",
     "nursery": "nursery",
     "accelerate": "accelerate",
     "insight": "insight",
@@ -2409,7 +3166,8 @@
     "magnificent": "magnificent",
     "standard": "standard",
     "standardize": "standard",
-    "serious": "serious",
+    "series": "seri",
+    "serious": "seri",
     "centralize": "centralize",
     "withdraw": "withdraw",
     "withdrawal": "withdraw",
@@ -2426,8 +3184,10 @@
     "counter": "counter",
     "counterpart": "counter",
     "counterbalance": "counter",
-    "application": "application",
-    "colony": "colony",
+    "colony": "colon",
+    "colonial": "colon",
+    "colonist": "colon",
+    "colonize": "colon",
     "multiple": "multiple",
     "multiply": "multiple",
     "drift": "drift",
@@ -2441,7 +3201,6 @@
     "curly": "curly",
     "qualify": "qualify",
     "emperor": "emperor",
-    "reliability": "reliability",
     "orbit": "orbit",
     "aid": "aid",
     "thoughtful": "thoughtful",
@@ -2483,9 +3242,12 @@
     "warn": "warn",
     "commerce": "commerce",
     "seek": "seek",
-    "comedy": "comedy",
+    "comet": "come",
+    "comedy": "come",
     "hint": "hint",
-    "occupy": "occupy",
+    "occupy": "occup",
+    "occupant": "occup",
+    "occupation": "occup",
     "critic": "critic",
     "critical": "critic",
     "criticism": "critic",
@@ -2496,7 +3258,8 @@
     "forum": "forum",
     "alphabet": "alphabet",
     "shellfish": "shellfish",
-    "harmony": "harmony",
+    "harmony": "harmon",
+    "harmonious": "harmon",
     "fundamental": "fundamental",
     "access": "access",
     "accessory": "access",
@@ -2539,7 +3302,9 @@
     "pit": "pit",
     "occur": "occur",
     "occurrence": "occur",
-    "glacial": "glacial",
+    "glacial": "glaci",
+    "glacier": "glaci",
+    "glaciation": "glaci",
     "chew": "chew",
     "platform": "platform",
     "submit": "submit",
@@ -2569,11 +3334,17 @@
     "greedy": "greedy",
     "extend": "extend",
     "distribute": "distribute",
+    "general": "gener",
+    "generate": "gener",
+    "generalize": "gener",
+    "generation": "gener",
+    "generalization": "gener",
     "volcanic": "volcanic",
     "academy": "academy",
     "pulse": "pulse",
-    "initial": "initial",
-    "initially": "initial",
+    "initial": "initi",
+    "initiate": "initi",
+    "initially": "initi",
     "devil": "devil",
     "insufficient": "insufficient",
     "unused": "unused",
@@ -2595,12 +3366,13 @@
     "odd": "odd",
     "execute": "execute",
     "swift": "swift",
-    "violent": "violent",
+    "violate": "viol",
+    "violent": "viol",
     "capture": "capture",
-    "sensitive": "sensitive",
     "stain": "stain",
     "stainless": "stain",
-    "gravity": "gravity",
+    "gravity": "gravit",
+    "gravitation": "gravit",
     "documentary": "documentary",
     "absence": "absence",
     "pattern": "pattern",
@@ -2609,7 +3381,8 @@
     "wound": "wound",
     "confront": "confront",
     "retail": "retail",
-    "demonstrate": "demonstrate",
+    "demonstrate": "demonstr",
+    "demonstration": "demonstr",
     "unsatisfactory": "unsatisfactory",
     "scholar": "scholar",
     "motor": "motor",
@@ -2640,9 +3413,14 @@
     "cell": "cell",
     "cello": "cell",
     "cellular": "cell",
-    "liberty": "liberty",
+    "liberal": "liber",
+    "liberty": "liber",
+    "liberate": "liber",
     "victimize": "victimize",
-    "identify": "identify",
+    "identify": "ident",
+    "identical": "ident",
+    "identifiable": "ident",
+    "identification": "ident",
     "enrich": "enrich",
     "orchestra": "orchestra",
     "suck": "suck",
@@ -2673,7 +3451,6 @@
     "tempt": "tempt",
     "renew": "renew",
     "renewable": "renew",
-    "stretch": "stretch",
     "fossil": "fossil",
     "fossilize": "fossil",
     "promote": "promote",
@@ -2681,7 +3458,9 @@
     "damp": "damp",
     "dampen": "damp",
     "whereby": "whereby",
-    "implication": "implication",
+    "implicit": "implic",
+    "implicate": "implic",
+    "implication": "implic",
     "convey": "convey",
     "unavailable": "unavailable",
     "pursue": "pursue",
@@ -2704,9 +3483,7 @@
     "criminal": "criminal",
     "departure": "departure",
     "sizable": "sizable",
-    "decorate": "decorate",
     "wrist": "wrist",
-    "theorist": "theorist",
     "install": "install",
     "installation": "install",
     "coordinate": "coordinate",
@@ -2726,17 +3503,21 @@
     "recognizable": "recognizable",
     "atmosphere": "atmosphere",
     "originality": "originality",
-    "regulation": "regulation",
+    "regulate": "regul",
+    "regularize": "regul",
+    "regulation": "regul",
     "reinvent": "reinvent",
-    "advent": "advent",
     "adventure": "advent",
     "faint": "faint",
     "faculty": "faculty",
     "purity": "purity",
-    "statistical": "statistical",
+    "statistics": "statistic",
+    "statistical": "statistic",
     "kneel": "kneel",
-    "utilize": "utilize",
-    "utilization": "utilize",
+    "utility": "util",
+    "utilize": "util",
+    "utilitarian": "util",
+    "utilization": "util",
     "persuade": "persuade",
     "persuasive": "persuade",
     "invade": "invade",
@@ -2745,8 +3526,6 @@
     "shallow": "shallow",
     "dealer": "dealer",
     "poisonous": "poisonous",
-    "reliable": "reliable",
-    "lengthen": "lengthen",
     "unstable": "unstable",
     "mass": "mass",
     "massive": "mass",
@@ -2756,13 +3535,11 @@
     "mythic": "myth",
     "mythical": "myth",
     "mythology": "myth",
-    "summary": "summary",
     "project": "project",
     "projector": "project",
     "projection": "project",
     "angular": "angular",
     "combine": "combine",
-    "reveal": "reveal",
     "fatty": "fatty",
     "preparedness": "preparedness",
     "plural": "plural",
@@ -2780,7 +3557,6 @@
     "fold": "fold",
     "label": "label",
     "unexplored": "unexplored",
-    "mechanization": "mechanization",
     "discount": "discount",
     "permission": "permission",
     "transform": "transform",
@@ -2807,16 +3583,22 @@
     "flexible": "flexible",
     "schedule": "schedule",
     "threaten": "threaten",
-    "radiate": "radiate",
+    "radius": "radi",
+    "radiant": "radi",
+    "radiate": "radi",
+    "radical": "radi",
+    "radiator": "radi",
+    "radiation": "radi",
+    "radioactive": "radi",
     "logical": "logical",
     "security": "security",
     "overcome": "overcome",
-    "pro": "pro",
-    "proxy": "pro",
-    "probable": "pro",
-    "probability": "pro",
+    "probable": "prob",
+    "probability": "prob",
+    "problematic": "prob",
     "extent": "extent",
-    "localize": "localize",
+    "locale": "locale",
+    "localize": "locale",
     "trace": "trace",
     "warrior": "warrior",
     "tone": "tone",
@@ -2826,14 +3608,17 @@
     "relativity": "relativity",
     "sketch": "sketch",
     "scope": "scope",
-    "permanent": "permanent",
-    "measurement": "measurement",
+    "permanent": "perman",
+    "permanence": "perman",
+    "measurement": "measure",
     "focus": "focus",
     "debate": "debate",
     "debatable": "debate",
     "pretend": "pretend",
     "examine": "examine",
     "examination": "examine",
+    "pro": "pro",
+    "proxy": "pro",
     "historic": "historic",
     "redistribution": "redistribution",
     "supernatural": "supernatural",
@@ -2870,8 +3655,8 @@
     "redirect": "redirect",
     "definite": "definite",
     "definitely": "definite",
-    "depress": "depress",
-    "depression": "depress",
+    "depress": "depres",
+    "depression": "depres",
     "discipline": "discipline",
     "curriculum": "curriculum",
     "botany": "botany",
@@ -2902,18 +3687,18 @@
     "cattle": "cattle",
     "universal": "universal",
     "inadequate": "inadequate",
-    "realization": "realization",
     "impact": "impact",
     "oven": "oven",
     "handy": "handy",
     "ecosystem": "ecosystem",
-    "participate": "participate",
     "labor": "labor",
     "laboratory": "labor",
     "define": "define",
     "aware": "aware",
     "awareness": "aware",
-    "nutritious": "nutritious",
+    "nutrient": "nutri",
+    "nutrition": "nutri",
+    "nutritious": "nutri",
     "resource": "resource",
     "terrify": "terrify",
     "gathering": "gathering",
@@ -2934,9 +3719,7 @@
     "charge": "charge",
     "charged": "charge",
     "currency": "currency",
-    "variety": "vari",
-    "variable": "vari",
-    "variation": "vari",
+    "variety": "varie",
     "fate": "fate",
     "brief": "brief",
     "satellite": "satellite",
@@ -2945,13 +3728,21 @@
     "civilization": "civil",
     "comparative": "comparative",
     "comparatively": "comparative",
-    "considerate": "considerate",
+    "considerate": "consider",
+    "considerable": "consider",
+    "consideration": "consider",
     "comic": "comic",
     "comical": "comic",
     "flatten": "flatten",
-    "concern": "concern",
-    "modernization": "modernization",
-    "nutrient": "nutrient",
+    "conceal": "conce",
+    "concern": "conce",
+    "conceive": "conce",
+    "conception": "conce",
+    "concentrate": "conce",
+    "modem": "mode",
+    "modest": "mode",
+    "moderate": "mode",
+    "modernization": "mode",
     "pave": "pave",
     "nest": "nest",
     "nestle": "nest",
@@ -2963,25 +3754,20 @@
     "microorganism": "micro",
     "invisible": "invisible",
     "quantify": "quantify",
-    "defend": "defend",
     "donate": "donate",
     "outline": "outline",
-    "biographer": "biographer",
+    "biography": "biograph",
+    "biographer": "biograph",
     "command": "command",
     "profile": "profile",
     "harvest": "harvest",
     "graceful": "graceful",
-    "regularize": "regularize",
     "loner": "loner",
     "spoil": "spoil",
-    "significant": "significant",
     "concrete": "concrete",
     "incline": "incline",
     "inclination": "incline",
     "extreme": "extreme",
-    "consideration": "consideration",
-    "considerable": "considerable",
-    "concentrate": "concentrate",
     "object": "object",
     "objective": "object",
     "scale": "scale",
@@ -2993,16 +3779,13 @@
     "comparison": "comparison",
     "slip": "slip",
     "sue": "sue",
-    "redefine": "redefine",
     "preference": "preference",
-    "dependence": "dependence",
     "shipyard": "shipyard",
-    "occupation": "occupation",
     "expand": "expand",
-    "migrate": "migrate",
+    "migrant": "migr",
+    "migrate": "migr",
     "bother": "bother",
     "buildup": "buildup",
-    "settlement": "settlement",
     "simplicity": "simplicity",
     "critique": "critique",
     "intend": "intend",
@@ -3026,10 +3809,10 @@
     "portion": "portion",
     "grant": "grant",
     "mobile": "mobile",
+    "mobilize": "mobile",
     "survey": "survey",
     "surveyor": "survey",
     "imperfection": "imperfection",
-    "series": "series",
     "theme": "theme",
     "restless": "restless",
     "far-reaching": "far-reaching",
@@ -3037,11 +3820,11 @@
     "drip": "drip",
     "prime": "prime",
     "primate": "prime",
-    "physiological": "physiological",
+    "physiology": "physiolog",
+    "physiological": "physiolog",
     "reunite": "reunite",
     "manufacture": "manufacture",
     "harbor": "harbor",
-    "conceal": "conceal",
     "fame": "fame",
     "reduction": "reduction",
     "context": "context",
@@ -3049,13 +3832,11 @@
     "rapid": "rapid",
     "draft": "draft",
     "output": "output",
-    "spectator": "spectator",
     "corporation": "corporation",
     "democracy": "democracy",
     "disrupt": "disrupt",
     "disruption": "disrupt",
     "ancestor": "ancestor",
-    "statistics": "statistics",
     "coexist": "coexist",
     "coexistence": "coexist",
     "arise": "arise",
@@ -3064,7 +3845,6 @@
     "conflict": "conflict",
     "productive": "productive",
     "illusion": "illusion",
-    "nutrition": "nutrition",
     "pot": "pot",
     "folk": "folk",
     "folklore": "folk",
@@ -3082,19 +3862,21 @@
     "widespread": "widespread",
     "breadth": "breadth",
     "partnership": "partnership",
-    "publicity": "publicity",
     "humble": "humble",
     "diligently": "diligently",
     "flame": "flame",
     "unpredictable": "unpredictable",
     "cope": "cope",
-    "immigrate": "immigrate",
+    "immigrant": "immigr",
+    "immigrate": "immigr",
+    "immigration": "immigr",
     "dome": "dome",
     "domestic": "dome",
     "domesticate": "dome",
     "monument": "monument",
     "profitable": "profitable",
-    "luxury": "luxury",
+    "luxury": "luxur",
+    "luxurious": "luxur",
     "posit": "posit",
     "positive": "posit",
     "incoming": "incoming",
@@ -3105,7 +3887,8 @@
     "fir": "fir",
     "firmly": "fir",
     "slice": "slice",
-    "navigate": "navigate",
+    "navigate": "navig",
+    "navigable": "navig",
     "temporary": "temporary",
     "restrain": "restrain",
     "restraint": "restrain",
@@ -3123,15 +3906,16 @@
     "geologist": "geologist",
     "drought": "drought",
     "flyer": "flyer",
-    "elevate": "elevate",
-    "instability": "instability",
+    "elevate": "elev",
+    "elevation": "elev",
     "fountain": "fountain",
     "convenience": "convenience",
     "embarrass": "embarrass",
     "ridicule": "ridicule",
     "ridiculous": "ridicule",
-    "specialize": "specialize",
-    "specialization": "specialize",
+    "specialist": "special",
+    "specialize": "special",
+    "specialization": "special",
     "imitate": "imitate",
     "philosopher": "philosopher",
     "innovate": "innovate",
@@ -3144,13 +3928,13 @@
     "frequency": "frequency",
     "log": "log",
     "longevity": "longevity",
-    "modest": "modest",
     "notion": "notion",
     "breast": "breast",
     "uneducated": "uneducated",
     "abstract": "abstract",
     "abstraction": "abstract",
-    "financial": "financial",
+    "financial": "financi",
+    "financier": "financi",
     "advocate": "advocate",
     "grain": "grain",
     "endure": "endure",
@@ -3166,7 +3950,6 @@
     "handout": "handout",
     "dwell": "dwell",
     "responsive": "responsive",
-    "intensify": "intensify",
     "insure": "insure",
     "redistribute": "redistribute",
     "ingredient": "ingredient",
@@ -3183,7 +3966,8 @@
     "circumstance": "circumstance",
     "descend": "descend",
     "descendant": "descend",
-    "punctuation": "punctuation",
+    "punctuate": "punctu",
+    "punctuation": "punctu",
     "compose": "compose",
     "composer": "compose",
     "rally": "rally",
@@ -3219,8 +4003,9 @@
     "collective": "collective",
     "runaway": "runaway",
     "applaud": "applaud",
-    "substantial": "substantial",
-    "substantially": "substantial",
+    "substantial": "substanti",
+    "substantiate": "substanti",
+    "substantially": "substanti",
     "immeasurably": "immeasurably",
     "valid": "valid",
     "validate": "valid",
@@ -3229,10 +4014,10 @@
     "genre": "genre",
     "frontier": "frontier",
     "secrete": "secrete",
-    "ancestry": "ancestry",
+    "ancestry": "ancestr",
+    "ancestral": "ancestr",
     "bid": "bid",
     "bidder": "bid",
-    "radiation": "radiation",
     "empire": "empire",
     "empirical": "empire",
     "unaltered": "unaltered",
@@ -3257,14 +4042,8 @@
     "civic": "civic",
     "bloom": "bloom",
     "cue": "cue",
-    "defect": "defect",
     "unforeseen": "unforeseen",
     "inhale": "inhale",
-    "tolerance": "tolerance",
-    "theorize": "theorize",
-    "initiate": "initiate",
-    "migrant": "migrant",
-    "conceive": "conceive",
     "decay": "decay",
     "avoidance": "avoidance",
     "apparatus": "apparatus",
@@ -3289,8 +4068,8 @@
     "interdependence": "interdependence",
     "trait": "trait",
     "justify": "justify",
-    "conception": "conception",
-    "autonomous": "autonomous",
+    "autonomy": "autonom",
+    "autonomous": "autonom",
     "gymnastic": "gymnastic",
     "unevenly": "unevenly",
     "expenditure": "expenditure",
@@ -3331,7 +4110,6 @@
     "phoenix": "phoenix",
     "maxim": "maxim",
     "maximal": "maxim",
-    "physiology": "physiology",
     "virtue": "virtue",
     "virtual": "virtue",
     "dim": "dim",
@@ -3360,21 +4138,18 @@
     "rodent": "rodent",
     "drown": "drown",
     "flock": "flock",
-    "problematic": "problematic",
     "maritime": "maritime",
     "panic": "panic",
     "encounter": "encounter",
     "reclaim": "reclaim",
     "aluminum": "aluminum",
     "dynasty": "dynasty",
-    "eliminate": "eliminate",
+    "eliminate": "elimin",
+    "elimination": "elimin",
     "equator": "equator",
     "twist": "twist",
-    "mechanism": "mechanism",
-    "identification": "identification",
     "sighting": "sighting",
     "procedure": "procedure",
-    "radius": "radius",
     "rectangle": "rectangle",
     "perimeter": "perimeter",
     "voltage": "voltage",
@@ -3406,7 +4181,6 @@
     "accusation": "accuse",
     "bargain": "bargain",
     "extension": "extension",
-    "immigration": "immigration",
     "jealous": "jealous",
     "medication": "medication",
     "paraphrase": "paraphrase",
@@ -3440,20 +4214,16 @@
     "rear": "rear",
     "discern": "discern",
     "pillar": "pillar",
-    "glaciation": "glaciation",
     "crust": "crust",
     "crustal": "crust",
     "combat": "combat",
-    "demonstration": "demonstration",
     "overhear": "overhear",
-    "instill": "instill",
     "interconnect": "interconnect",
     "absorption": "absorption",
     "inadequacy": "inadequacy",
     "numb": "numb",
     "wrestle": "wrestle",
     "namely": "namely",
-    "violate": "violate",
     "uppermost": "uppermost",
     "suppose": "suppose",
     "supposedly": "suppose",
@@ -3487,7 +4257,6 @@
     "literally": "literally",
     "progressive": "progressive",
     "tidal": "tidal",
-    "occupant": "occupant",
     "compromise": "compromise",
     "overgrow": "overgrow",
     "oblige": "oblige",
@@ -3505,7 +4274,6 @@
     "cement": "cement",
     "flee": "flee",
     "subtropical": "subtropical",
-    "colonial": "colonial",
     "posture": "posture",
     "pierce": "pierce",
     "scribe": "scribe",
@@ -3522,8 +4290,8 @@
     "pressing": "pressing",
     "undergo": "undergo",
     "substitute": "substitute",
-    "exterminate": "exterminate",
-    "instance": "instance",
+    "exterminate": "extermin",
+    "extermination": "extermin",
     "swing": "swing",
     "halt": "halt",
     "sting": "sting",
@@ -3551,32 +4319,27 @@
     "stroke": "stroke",
     "medieval": "medieval",
     "pasture": "pasture",
-    "realism": "realism",
     "comment": "comment",
     "commentary": "comment",
     "soar": "soar",
-    "elaborate": "elaborate",
+    "elaborate": "elabor",
+    "elaboration": "elabor",
     "fuse": "fuse",
     "amphibian": "amphibian",
     "nasty": "nasty",
-    "respectable": "respectable",
+    "respective": "respect",
+    "respectable": "respect",
     "worship": "worship",
     "deviate": "deviate",
     "peer": "peer",
     "recreational": "recreational",
     "shed": "shed",
-    "applicable": "applicable",
     "desirability": "desirability",
-    "colonize": "colonize",
     "ongoing": "ongoing",
     "bizarre": "bizarre",
     "comprehend": "comprehend",
-    "reliant": "reliant",
-    "sensible": "sensible",
     "sway": "sway",
     "revolutionize": "revolutionize",
-    "liberate": "liberate",
-    "specialist": "specialist",
     "spice": "spice",
     "evolve": "evolve",
     "tend": "tend",
@@ -3585,10 +4348,10 @@
     "capacity": "capacity",
     "erosion": "erosion",
     "diplomacy": "diplomacy",
-    "symbolism": "symbolism",
+    "symbolism": "symbol",
+    "symbolize": "symbol",
     "rotate": "rotate",
     "commodity": "commodity",
-    "exaggerate": "exaggerate",
     "intrude": "intrude",
     "advantageous": "advantageous",
     "proportion": "proportion",
@@ -3616,7 +4379,9 @@
     "discourage": "discourage",
     "expel": "expel",
     "persevere": "persevere",
-    "implement": "implement",
+    "variable": "vari",
+    "variation": "vari",
+    "implement": "imple",
     "hasten": "hasten",
     "presence": "presence",
     "delta": "delta",
@@ -3649,7 +4414,6 @@
     "transaction": "transaction",
     "literary": "literary",
     "infancy": "infancy",
-    "implicit": "implicit",
     "blacken": "blacken",
     "mist": "mist",
     "inappropriate": "inappropriate",
@@ -3659,9 +4423,10 @@
     "internal": "internal",
     "optical": "optical",
     "soak": "soak",
-    "resent": "resent",
-    "deliberation": "deliberation",
-    "colonist": "colonist",
+    "resent": "rese",
+    "reserve": "rese",
+    "deliberate": "deliber",
+    "deliberation": "deliber",
     "constrict": "constrict",
     "index": "index",
     "provoke": "provoke",
@@ -3677,9 +4442,9 @@
     "prompt": "prompt",
     "workload": "workload",
     "weave": "weave",
-    "relevance": "relevance",
     "analysis": "analysis",
-    "vibrate": "vibrate",
+    "vibrant": "vibr",
+    "vibrate": "vibr",
     "disastrous": "disastrous",
     "conserve": "conserve",
     "conservation": "conserve",
@@ -3693,7 +4458,6 @@
     "vent": "vent",
     "venture": "vent",
     "solidify": "solidify",
-    "utility": "utility",
     "dual": "dual",
     "outermost": "outermost",
     "sparse": "sparse",
@@ -3748,7 +4512,6 @@
     "mobility": "mobility",
     "outnumber": "outnumber",
     "beaver": "beaver",
-    "necessitate": "necessitate",
     "impurity": "impurity",
     "nominate": "nominate",
     "shelve": "shelve",
@@ -3763,7 +4526,6 @@
     "disposal": "disposal",
     "offspring": "offspring",
     "flush": "flush",
-    "particle": "particle",
     "correction": "correction",
     "chaotic": "chaotic",
     "imagery": "imagery",
@@ -3776,22 +4538,19 @@
     "sphere": "sphere",
     "spherical": "sphere",
     "toxin": "toxin",
-    "luxurious": "luxurious",
     "sustain": "sustain",
     "distort": "distort",
     "uplift": "uplift",
     "supervise": "supervise",
     "peel": "peel",
     "strip": "strip",
-    "radical": "radical",
     "authorize": "authorize",
     "transmit": "transmit",
-    "potent": "potent",
+    "potent": "pote",
     "elite": "elite",
     "restate": "restate",
     "discharge": "discharge",
     "constituent": "constituent",
-    "symbolize": "symbolize",
     "confine": "confine",
     "squirrel": "squirrel",
     "receptive": "receptive",
@@ -3807,18 +4566,15 @@
     "humid": "humid",
     "packet": "packet",
     "register": "register",
-    "partial": "partial",
     "scenario": "scenario",
     "immense": "immense",
-    "comet": "comet",
     "testify": "testify",
     "void": "void",
     "overlook": "overlook",
     "compel": "compel",
     "analyst": "analyst",
-    "dehydrate": "dehydrate",
-    "populous": "populous",
-    "spectacular": "spectacular",
+    "dehydrate": "dehydr",
+    "dehydration": "dehydr",
     "dispense": "dispense",
     "crash": "crash",
     "expire": "expire",
@@ -3849,25 +4605,22 @@
     "oppose": "oppose",
     "feat": "feat",
     "feature": "feat",
-    "instrumental": "instrumental",
     "lean": "lean",
     "cohesive": "cohesive",
     "echo": "echo",
-    "oxidize": "oxidize",
+    "oxide": "oxide",
+    "oxidize": "oxide",
+    "oxidation": "oxide",
     "blink": "blink",
     "periodical": "periodical",
     "fuss": "fuss",
-    "navigable": "navigable",
     "static": "static",
-    "liberal": "liberal",
     "square": "square",
     "citizenry": "citizenry",
     "competence": "competence",
     "compress": "compress",
-    "populate": "populate",
     "artifact": "artifact",
     "dizziness": "dizziness",
-    "identical": "identical",
     "timber": "timber",
     "principal": "principal",
     "corridor": "corridor",
@@ -3878,7 +4631,8 @@
     "illuminate": "illuminate",
     "vegetation": "vegetation",
     "diplomat": "diplomat",
-    "turbulence": "turbulence",
+    "turbulent": "turbul",
+    "turbulence": "turbul",
     "backbone": "backbone",
     "unintentional": "unintentional",
     "conceptual": "conceptual",
@@ -3893,26 +4647,20 @@
     "spiral": "spiral",
     "dinosaur": "dinosaur",
     "underlie": "underlie",
-    "sensation": "sensation",
-    "sensational": "sensation",
     "accompany": "accompany",
     "intake": "intake",
     "bud": "bud",
     "successive": "successive",
     "bundle": "bundle",
     "mortgage": "mortgage",
-    "irrigate": "irrigate",
     "exotic": "exotic",
     "row": "row",
     "strongman": "strongman",
-    "oxide": "oxide",
-    "oxidation": "oxide",
     "indefensible": "indefensible",
     "eject": "eject",
     "devise": "devise",
-    "theoretical": "theoretical",
+    "theoretical": "theore",
     "complicate": "complicate",
-    "specific": "specific",
     "persistent": "persistent",
     "relay": "relay",
     "boast": "boast",
@@ -3925,7 +4673,6 @@
     "pollutant": "pollutant",
     "degrade": "degrade",
     "impose": "impose",
-    "radiant": "radiant",
     "troop": "troop",
     "exterior": "exterior",
     "rhythm": "rhythm",
@@ -3939,7 +4686,6 @@
     "compaction": "compact",
     "protest": "protest",
     "compass": "compass",
-    "deliberate": "deliberate",
     "proficient": "proficient",
     "analytical": "analytical",
     "contend": "contend",
@@ -3948,7 +4694,6 @@
     "visibility": "visibility",
     "passageway": "passageway",
     "sponsor": "sponsor",
-    "dependable": "dependable",
     "embryo": "embryo",
     "ivory": "ivory",
     "inequality": "inequality",
@@ -3957,7 +4702,6 @@
     "resume": "resume",
     "spur": "spur",
     "genuine": "genuine",
-    "regulate": "regulate",
     "wane": "wane",
     "predecessor": "predecessor",
     "dye": "dye",
@@ -3966,10 +4710,12 @@
     "typify": "typify",
     "accommodate": "accommodate",
     "elementary": "elementary",
-    "vertebrate": "vertebrate",
+    "vertebral": "vertebr",
+    "vertebrate": "vertebr",
     "breed": "breed",
     "sediment": "sediment",
     "fragile": "fragile",
+    "mechanically": "mechanic",
     "overshadow": "overshadow",
     "lettuce": "lettuce",
     "thorough": "thorough",
@@ -3978,9 +4724,7 @@
     "peculiarity": "peculiarity",
     "outlook": "outlook",
     "emphasis": "emphasis",
-    "associate": "associate",
     "saint": "saint",
-    "appeal": "appeal",
     "cottage": "cottage",
     "layout": "layout",
     "obstacle": "obstacle",
@@ -3997,10 +4741,8 @@
     "astronomy": "astronomy",
     "unequaled": "unequaled",
     "fiber": "fiber",
-    "immigrant": "immigrant",
     "immune": "immune",
     "distress": "distress",
-    "institution": "institution",
     "argumentative": "argumentative",
     "filter": "filter",
     "nonetheless": "nonetheless",
@@ -4015,13 +4757,11 @@
     "plume": "plum",
     "plummet": "plum",
     "wreck": "wreck",
-    "sensory": "sensory",
     "irresistible": "irresistible",
     "showcase": "showcase",
     "unobtainable": "unobtainable",
     "ratio": "ratio",
     "ration": "ratio",
-    "moderate": "moderate",
     "peak": "peak",
     "hormone": "hormone",
     "per capita": "per capita",
@@ -4033,7 +4773,6 @@
     "progression": "progression",
     "mimic": "mimic",
     "hallmark": "hallmark",
-    "dictate": "dictate",
     "endeavor": "endeavor",
     "longitude": "longitude",
     "infect": "infect",
@@ -4045,10 +4784,9 @@
     "chill": "chill",
     "taxation": "taxation",
     "gross": "gross",
-    "vibrant": "vibrant",
     "consequence": "consequence",
-    "compensate": "compensate",
-    "harmonious": "harmonious",
+    "compensate": "compens",
+    "compensation": "compens",
     "stimulate": "stimulate",
     "format": "format",
     "hay": "hay",
@@ -4061,7 +4799,6 @@
     "abbreviate": "abbreviate",
     "vague": "vague",
     "ditch": "ditch",
-    "respective": "respective",
     "roast": "roast",
     "tablet": "tablet",
     "adequate": "adequate",
@@ -4090,7 +4827,6 @@
     "chamber": "chamber",
     "plow": "plow",
     "windmill": "windmill",
-    "ecologist": "ecologist",
     "asteroid": "asteroid",
     "compile": "compile",
     "disharmony": "disharmony",
@@ -4101,7 +4837,7 @@
     "facial": "facial",
     "strive": "strive",
     "bounce": "bounce",
-    "violet": "violet",
+    "violet": "viole",
     "entity": "entity",
     "ripe": "ripe",
     "envision": "envision",
@@ -4109,7 +4845,6 @@
     "landmark": "landmark",
     "protectionist": "protectionist",
     "pitch": "pitch",
-    "reserve": "reserve",
     "matrix": "matrix",
     "versatile": "versatile",
     "dominate": "dominate",
@@ -4126,7 +4861,6 @@
     "landmass": "landmass",
     "counsel": "counsel",
     "pollinate": "pollinate",
-    "speculate": "speculate",
     "fatal": "fatal",
     "retreat": "retreat",
     "metropolitan": "metropolitan",
@@ -4146,7 +4880,6 @@
     "commissioner": "commission",
     "watertight": "watertight",
     "temperate": "temperate",
-    "identifiable": "identifiable",
     "hardy": "hardy",
     "chunk": "chunk",
     "lease": "lease",
@@ -4158,7 +4891,8 @@
     "mediterranean": "mediterranean",
     "frost": "frost",
     "extensive": "extensive",
-    "feasible": "feasible",
+    "feasible": "feas",
+    "feasibility": "feas",
     "approximate": "approximate",
     "swirl": "swirl",
     "rectangular": "rectangular",
@@ -4168,7 +4902,6 @@
     "wavelength": "wavelength",
     "odor": "odor",
     "privilege": "privilege",
-    "glacier": "glacier",
     "gut": "gut",
     "negligible": "negligible",
     "duplicate": "duplicate",
@@ -4192,12 +4925,13 @@
     "embellish": "embellish",
     "irreversible": "irreversible",
     "reign": "reign",
-    "resonance": "resonance",
-    "anthropology": "anthropology",
+    "resonate": "reson",
+    "resonance": "reson",
+    "anthropology": "anthropolog",
+    "anthropological": "anthropolog",
     "soluble": "soluble",
     "decipher": "decipher",
     "clutch": "clutch",
-    "financier": "financier",
     "flap": "flap",
     "liquefy": "liquefy",
     "flora": "flora",
@@ -4210,7 +4944,6 @@
     "topography": "topography",
     "frenzy": "frenzy",
     "saline": "saline",
-    "specimen": "specimen",
     "ore": "ore",
     "aquarium": "aquarium",
     "unearned": "unearned",
@@ -4235,14 +4968,13 @@
     "ingenious": "ingenious",
     "artisan": "artisan",
     "derivative": "derivative",
-    "deterioration": "deterioration",
+    "deteriorate": "deterior",
+    "deterioration": "deterior",
     "overemphasize": "overemphasize",
     "celsius": "celsius",
-    "radiator": "radiator",
     "vertical": "vertical",
     "satire": "satire",
     "venom": "venom",
-    "elevation": "elevation",
     "superficial": "superficial",
     "superficially": "superficial",
     "converge": "converge",
@@ -4250,7 +4982,8 @@
     "volatile": "volatile",
     "foul": "foul",
     "census": "census",
-    "designate": "designate",
+    "designate": "design",
+    "designation": "design",
     "shroud": "shroud",
     "confederacy": "confederacy",
     "maneuver": "maneuver",
@@ -4263,11 +4996,10 @@
     "reciprocity": "reciprocity",
     "elicit": "elicit",
     "pivotal": "pivotal",
-    "mobilize": "mobilize",
     "sterile": "sterile",
     "excursion": "excursion",
     "ferment": "ferment",
-    "mower": "mower",
+    "mower": "mowe",
     "robust": "robust",
     "sentiment": "sentiment",
     "summon": "summon",
@@ -4313,7 +5045,6 @@
     "clog": "clog",
     "crescent": "crescent",
     "indicative": "indicative",
-    "elaboration": "elaboration",
     "formidable": "formidable",
     "chop": "chop",
     "planetary": "planetary",
@@ -4330,13 +5061,12 @@
     "democratization": "democrat",
     "rye": "rye",
     "meadow": "meadow",
-    "speck": "speck",
     "perspective": "perspective",
     "horn": "horn",
     "heap": "heap",
     "cosmic": "cosmic",
-    "substantiate": "substantiate",
-    "adverse": "adverse",
+    "advent": "adve",
+    "adverse": "adve",
     "assemble": "assemble",
     "assembly": "assemble",
     "ambient": "ambient",
@@ -4353,7 +5083,6 @@
     "impetus": "impetus",
     "contemporary": "contemporary",
     "presumably": "presumably",
-    "designation": "designation",
     "surplus": "surplus",
     "phony": "phony",
     "requisition": "requisition",
@@ -4362,10 +5091,10 @@
     "provision": "provision",
     "stark": "stark",
     "chronological": "chronological",
-    "eradicate": "eradicate",
+    "eradicate": "eradic",
+    "eradication": "eradic",
     "entice": "entice",
     "octopus": "octopus",
-    "elimination": "elimination",
     "manuscript": "manuscript",
     "cling": "cling",
     "bleach": "bleach",
@@ -4398,9 +5127,7 @@
     "afield": "afield",
     "grind": "grind",
     "grinding": "grind",
-    "resonate": "resonate",
     "landslide": "landslide",
-    "specify": "specify",
     "insulate": "insulate",
     "camouflage": "camouflage",
     "grandiose": "grandiose",
@@ -4420,7 +5147,6 @@
     "cobble": "cobble",
     "mirage": "mirage",
     "decease": "decease",
-    "psychologist": "psychologist",
     "mutate": "mutate",
     "tile": "tile",
     "amass": "amass",
@@ -4429,7 +5155,7 @@
     "ceramic": "ceramic",
     "vein": "vein",
     "ample": "ample",
-    "repress": "repress",
+    "amplify": "ample",
     "coerce": "coerce",
     "phenomenon": "phenomenon",
     "indispensable": "indispensable",
@@ -4491,7 +5217,6 @@
     "mandarin": "mandarin",
     "silhouette": "silhouette",
     "symphony": "symphony",
-    "radioactive": "radioactive",
     "entrepreneur": "entrepreneur",
     "predetermine": "predetermine",
     "wagon": "wagon",
@@ -4521,7 +5246,6 @@
     "fragment": "fragment",
     "stiff": "stiff",
     "gist": "gist",
-    "dictator": "dictator",
     "unleash": "unleash",
     "inventory": "inventory",
     "velvet": "velvet",
@@ -4530,7 +5254,6 @@
     "revitalize": "revitalize",
     "nucleus": "nucleus",
     "propel": "propel",
-    "streak": "streak",
     "sodium": "sodium",
     "subterranean": "subterranean",
     "suppress": "suppress",
@@ -4549,7 +5272,9 @@
     "entwine": "entwine",
     "hectare": "hectare",
     "pictorial": "pictorial",
-    "analogue": "analogue",
+    "analogy": "analog",
+    "analogue": "analog",
+    "analogous": "analog",
     "perennial": "perennial",
     "default": "default",
     "congestion": "congestion",
@@ -4559,8 +5284,6 @@
     "frontal": "frontal",
     "immobile": "immobile",
     "meticulous": "meticulous",
-    "dehydration": "dehydration",
-    "gravitation": "gravitation",
     "elliptical": "elliptical",
     "ridge": "ridge",
     "imperil": "imperil",
@@ -4568,7 +5291,6 @@
     "discoloration": "discoloration",
     "discrete": "discrete",
     "ripple": "ripple",
-    "turbulent": "turbulent",
     "canvas": "canvas",
     "retrieve": "retrieve",
     "retrieval": "retrieve",
@@ -4592,7 +5314,6 @@
     "retraction": "retraction",
     "linen": "linen",
     "canon": "canon",
-    "amplify": "amplify",
     "prolific": "prolific",
     "catholic": "catholic",
     "strait": "strait",
@@ -4630,12 +5351,10 @@
     "decimal": "decimal",
     "ultraviolet": "ultraviolet",
     "legislation": "legislation",
-    "defer": "defer",
     "embody": "embody",
     "hospitalize": "hospitalize",
     "unsophisticated": "unsophisticated",
     "germinate": "germinate",
-    "impersonate": "impersonate",
     "raft": "raft",
     "monastery": "monastery",
     "sulfur": "sulfur",
@@ -4662,7 +5381,6 @@
     "flake": "flake",
     "patron": "patron",
     "dynamism": "dynamism",
-    "compensation": "compensation",
     "convict": "convict",
     "conviction": "convict",
     "junction": "junction",
@@ -4673,9 +5391,7 @@
     "utter": "utter",
     "monopoly": "monopoly",
     "misconception": "misconception",
-    "spectrum": "spectrum",
     "altitude": "altitude",
-    "ancestral": "ancestral",
     "grandeur": "grandeur",
     "contaminate": "contaminate",
     "crow": "crow",
@@ -4712,7 +5428,6 @@
     "mutualism": "mutual",
     "bleak": "bleak",
     "ensue": "ensue",
-    "analogy": "analogy",
     "driven": "driven",
     "anomaly": "anomaly",
     "buffalo": "buffalo",
@@ -4732,9 +5447,7 @@
     "digress": "digress",
     "bliss": "bliss",
     "solidarity": "solidarity",
-    "locale": "locale",
     "equivalent": "equivalent",
-    "utilitarian": "utilitarian",
     "cape": "cape",
     "heterogeneous": "heterogeneous",
     "pristine": "pristine",
@@ -4763,7 +5476,6 @@
     "prevail": "prevail",
     "synchronize": "synchronize",
     "credential": "credential",
-    "feasibility": "feasibility",
     "reef": "reef",
     "barn": "barn",
     "alumnus": "alumnus",
@@ -4783,7 +5495,6 @@
     "hydro": "hydro",
     "manifest": "manifest",
     "inertia": "inertia",
-    "punctuate": "punctuate",
     "suite": "suite",
     "adjacent": "adjacent",
     "swarm": "swarm",
@@ -4798,7 +5509,8 @@
     "lodging": "lodging",
     "diffuse": "diffuse",
     "diffuser": "diffuse",
-    "conservative": "conservative",
+    "conservatism": "conservat",
+    "conservative": "conservat",
     "substrate": "substrate",
     "expedition": "expedition",
     "entail": "entail",
@@ -4827,7 +5539,6 @@
     "handicraft": "handicraft",
     "erode": "erode",
     "imperial": "imperial",
-    "autonomy": "autonomy",
     "akin": "akin",
     "compost": "compost",
     "improvise": "improvise",
@@ -4841,7 +5552,6 @@
     "render": "render",
     "juvenile": "juvenile",
     "chivalry": "chivalry",
-    "partition": "partition",
     "exemplary": "exemplary",
     "constellation": "constellation",
     "terrain": "terrain",
@@ -4858,7 +5568,6 @@
     "disorient": "disorient",
     "impend": "impend",
     "foggy": "foggy",
-    "signify": "signify",
     "bemoan": "bemoan",
     "override": "override",
     "terrestrial": "terrestrial",
@@ -4885,22 +5594,20 @@
     "silicon": "silicon",
     "incompatibility": "incompatibility",
     "expanse": "expanse",
-    "integrate": "integrate",
+    "integral": "integr",
+    "integrate": "integr",
+    "integrity": "integr",
     "buffer": "buffer",
     "aggregate": "aggregate",
-    "implicate": "implicate",
     "allergy": "allergy",
     "respiratory": "respiratory",
     "pigment": "pigment",
     "haul": "haul",
-    "vertebral": "vertebral",
     "impermeable": "impermeable",
     "inadvertent": "inadvertent",
     "crater": "crater",
     "cargo": "cargo",
-    "reverse": "reverse",
     "marvel": "marvel",
-    "integral": "integral",
     "contention": "contention",
     "strain": "strain",
     "vanish": "vanish",
@@ -4911,20 +5618,15 @@
     "shrine": "shrine",
     "clam": "clam",
     "clamor": "clam",
-    "extermination": "extermination",
-    "deteriorate": "deteriorate",
     "spatial": "spatial",
-    "permanence": "permanence",
     "regenerate": "regenerate",
     "presume": "presume",
-    "analogous": "analogous",
     "verdict": "verdict",
     "qualitatively": "qualitatively",
     "frigid": "frigid",
     "offset": "offset",
     "illiterate": "illiterate",
     "ruthless": "ruthless",
-    "eradication": "eradication",
     "watt": "watt",
     "intrinsic": "intrinsic",
     "provincial": "provincial",
@@ -4962,10 +5664,8 @@
     "gaze": "gaze",
     "gazelle": "gaze",
     "revision": "revision",
-    "biography": "biography",
     "inflation": "inflation",
     "renaissance": "renaissance",
-    "modem": "modem",
     "fatigue": "fatigue",
     "capsule": "capsule",
     "grid": "grid",
@@ -4974,7 +5674,6 @@
     "remedy": "remedy",
     "defy": "defy",
     "heed": "heed",
-    "integrity": "integrity",
     "lateral": "lateral",
     "inherent": "inherent",
     "plagiarism": "plagiarism",
@@ -5008,7 +5707,6 @@
     "caravan": "caravan",
     "presage": "presage",
     "caravel": "caravel",
-    "conservatism": "conservatism",
     "interlock": "interlock",
     "nickel": "nickel",
     "buzzer": "buzzer",
@@ -5058,7 +5756,8 @@
     "sulfate": "sulfate",
     "brook": "brook",
     "demean": "demean",
-    "precipitation": "precipitation",
+    "precipitate": "precipit",
+    "precipitation": "precipit",
     "phosphorus": "phosphorus",
     "grapple": "grapple",
     "rift": "rift",
@@ -5086,7 +5785,6 @@
     "bask": "bask",
     "arthropod": "arthropod",
     "ameliorate": "ameliorate",
-    "anthropological": "anthropological",
     "conspicuous": "conspicuous",
     "bellow": "bellow",
     "fecund": "fecund",
@@ -5110,7 +5808,6 @@
     "chariot": "chariot",
     "titanium": "titanium",
     "calve": "calve",
-    "instigate": "instigate",
     "bode": "bode",
     "genotype": "genotype",
     "enamor": "enamor",
@@ -5137,7 +5834,6 @@
     "caucasian": "caucasian",
     "custodian": "custodian",
     "bowel": "bowel",
-    "relic": "relic",
     "fling": "fling",
     "ion": "ion",
     "fledgling": "fledgling",
@@ -5166,7 +5862,6 @@
     "chromosome": "chromosome",
     "nebula": "nebula",
     "loam": "loam",
-    "precipitate": "precipitate",
     "befit": "befit",
     "capillary": "capillary",
     "fen": "fen",
