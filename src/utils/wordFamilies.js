@@ -43,17 +43,36 @@ const FAMILY_SUFFIXES = [
   "es",
   "s",
   "y",
+  "ate",
 ];
 
 function normalizeWord(word = "") {
   return String(word).trim().toLowerCase();
 }
 
+function isMorphologicalDerivative(root, word) {
+  if (word === root) return true;
+  if (!word.startsWith(root)) return false;
+  const rest = word.slice(root.length);
+  if (!rest) return false;
+  return FAMILY_SUFFIXES.includes(rest);
+}
+
+function getMorphologicalFamily(prefix, allWords) {
+  const members = [];
+  for (const word of allWords) {
+    if (isMorphologicalDerivative(prefix, word)) {
+      members.push(word);
+    }
+  }
+  return members;
+}
+
 /**
  * @param {string} word
  * @param {Set<string>} wordSet
  */
-export function resolveFamilyRoot(word, wordSet) {
+export function resolveBankFamilyRoot(word, wordSet) {
   const w = normalizeWord(word);
   if (!w) return w;
 
@@ -63,17 +82,17 @@ export function resolveFamilyRoot(word, wordSet) {
     let stem = w.slice(0, -suffix.length);
 
     if (suffix === "ies" && wordSet.has(`${stem}y`)) {
-      return resolveFamilyRoot(`${stem}y`, wordSet);
+      return resolveBankFamilyRoot(`${stem}y`, wordSet);
     }
 
     if (wordSet.has(stem)) {
-      return resolveFamilyRoot(stem, wordSet);
+      return resolveBankFamilyRoot(stem, wordSet);
     }
 
     if (stem.length > 2 && stem.endsWith(stem.slice(-1))) {
       const undoubled = stem.slice(0, -1);
       if (wordSet.has(undoubled)) {
-        return resolveFamilyRoot(undoubled, wordSet);
+        return resolveBankFamilyRoot(undoubled, wordSet);
       }
     }
   }
@@ -81,23 +100,64 @@ export function resolveFamilyRoot(word, wordSet) {
   for (let len = w.length - 1; len >= MIN_ROOT_LEN; len--) {
     const prefix = w.slice(0, len);
     if (wordSet.has(prefix)) {
-      return resolveFamilyRoot(prefix, wordSet);
+      return resolveBankFamilyRoot(prefix, wordSet);
     }
   }
 
   return w;
 }
 
+function resolveSharedPrefixRoot(word, allWords) {
+  const w = normalizeWord(word);
+  let best = w;
+  let bestMembers = null;
+
+  for (let len = MIN_ROOT_LEN; len <= w.length; len++) {
+    const prefix = w.slice(0, len);
+    const members = getMorphologicalFamily(prefix, allWords);
+    if (members.length < 2) continue;
+
+    if (
+      !bestMembers ||
+      members.length > bestMembers.length ||
+      (members.length === bestMembers.length && len < best.length)
+    ) {
+      best = prefix;
+      bestMembers = members;
+    }
+  }
+
+  return bestMembers ? best : w;
+}
+
+/**
+ * @param {string} word
+ * @param {Set<string>} wordSet
+ * @param {string[]} allWords
+ */
+export function resolveFamilyRoot(word, wordSet, allWords) {
+  const w = normalizeWord(word);
+  const bankRoot = resolveBankFamilyRoot(w, wordSet);
+  if (bankRoot !== w) return bankRoot;
+  return resolveSharedPrefixRoot(w, allWords);
+}
+
+/** @deprecated alias */
+export function resolveFamilyRootLegacy(word, wordSet) {
+  return resolveBankFamilyRoot(word, wordSet);
+}
+
 /**
  * @param {{ word: string }[]} words
  */
 export function buildWordFamilyMap(words) {
-  const wordSet = new Set(words.map((item) => normalizeWord(item.word)));
+  const normalizedWords = words.map((item) => normalizeWord(item.word));
+  const wordSet = new Set(normalizedWords);
   const rootByWord = new Map();
 
   for (const item of words) {
     const key = normalizeWord(item.word);
-    rootByWord.set(key, resolveFamilyRoot(key, wordSet));
+    rootByWord.set(key, resolveFamilyRoot(key, wordSet, normalizedWords));
   }
 
   const families = new Map();
