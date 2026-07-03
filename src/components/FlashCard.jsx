@@ -14,6 +14,7 @@ import { fetchMemoryTrick } from "../services/memoryTrick";
 import { shouldFetchMemoryTrick } from "../shared/memoryTrick";
 import MemoryTrickBlock from "./MemoryTrickBlock";
 import PronunciationAlert from "./PronunciationAlert";
+import { useWordPhonetic } from "../hooks/useWordPhonetic";
 
 const SILENCE_STOP_MS = 2000;
 const SWIPE_THRESHOLD_PX = 48;
@@ -177,6 +178,8 @@ export default function FlashCard({
       result?.memory_trick?.pronunciation_alert,
     ]
   );
+
+  const phonetic = useWordPhonetic(wordData?.word);
 
   useEffect(() => {
     setPronounceResult(null);
@@ -1093,6 +1096,12 @@ export default function FlashCard({
                 )}
               </div>
             </div>
+
+            {showWord && phonetic && (
+              <p className="flashcard__phonetic" lang="en" aria-label={`音标 ${phonetic}`}>
+                {phonetic}
+              </p>
+            )}
 
             <PronunciationAlert alert={pronunciationAlert} className="flashcard__pronunciation-alert" />
 
