@@ -1,89 +1,48 @@
+import phoneticData from "../data/phonetics.json";
+import { normalizeIpa, pickPhoneticFromApiPayload } from "../utils/phoneticFormat.js";
+
 const API_BASE = "https://api.dictionaryapi.dev/api/v2/entries/en";
-const CACHE_KEY = "toefl666_phonetics_v1";
-const MAX_CACHE_ENTRIES = 800;
+const bankPhonetics = phoneticData.phonetics || {};
+const runtimeCache = new Map(Object.entries(bankPhonetics));
 
-const memoryCache = new Map();
-
-function normalizeIpa(text) {
-  const value = String(text || "").trim();
-  if (!value) return "";
-  if (value.startsWith("/") || value.startsWith("[")) return value;
-  return `/${value}/`;
-}
-
-function readStorageCache() {
-  try {
-    const raw = sessionStorage.getItem(CACHE_KEY);
-    if (!raw) return;
-    const parsed = JSON.parse(raw);
-    if (!parsed || typeof parsed !== "object") return;
-    for (const [key, value] of Object.entries(parsed)) {
-      if (typeof value === "string") memoryCache.set(key, value);
-    }
-  } catch {
-    // ignore cache read errors
-  }
-}
-
-function writeStorageCache() {
-  try {
-    const entries = [...memoryCache.entries()].slice(-MAX_CACHE_ENTRIES);
-    sessionStorage.setItem(CACHE_KEY, JSON.stringify(Object.fromEntries(entries)));
-  } catch {
-    // ignore quota errors
-  }
-}
-
-readStorageCache();
-
-function pickPhonetic(entry) {
-  if (!entry) return "";
-
-  const phonetics = Array.isArray(entry.phonetics) ? entry.phonetics : [];
-  const us = phonetics.find((item) => item.text && /-us\b|\/us\//i.test(item.audio || ""));
-  if (us?.text) return normalizeIpa(us.text);
-
-  const uk = phonetics.find((item) => item.text && /-gb\b|\/uk\//i.test(item.audio || ""));
-  if (uk?.text) return normalizeIpa(uk.text);
-
-  const first = phonetics.find((item) => item.text)?.text;
-  if (first) return normalizeIpa(first);
-
-  return normalizeIpa(entry.phonetic);
+export function getWordPhoneticSync(word) {
+  const key = String(word || "").trim().toLowerCase();
+  if (!key) return "";
+  return runtimeCache.get(key) || "";
 }
 
 export async function fetchWordPhonetic(word, { signal } = {}) {
   const key = String(word || "").trim().toLowerCase();
   if (!key) return "";
 
-  if (memoryCache.has(key)) {
-    return memoryCache.get(key);
+  const cached = getWordPhoneticSync(key);
+  if (cached || runtimeCache.has(key)) {
+    return cached;
   }
 
   const res = await fetch(`${API_BASE}/${encodeURIComponent(key)}`, { signal });
   if (!res.ok) {
-    memoryCache.set(key, "");
-    writeStorageCache();
+    runtimeCache.set(key, "");
     return "";
   }
 
   const data = await res.json().catch(() => []);
-  const ipa = pickPhonetic(Array.isArray(data) ? data[0] : null);
-
-  memoryCache.set(key, ipa);
-  writeStorageCache();
+  const ipa = pickPhoneticFromApiPayload(data);
+  runtimeCache.set(key, ipa);
   return ipa;
 }
 
 export async function getWordPhonetic(word, options = {}) {
-  const key = String(word || "").trim().toLowerCase();
-  if (!key) return "";
-  if (memoryCache.has(key)) return memoryCache.get(key);
+  const sync = getWordPhoneticSync(word);
+  if (sync || runtimeCache.has(String(word || "").trim().toLowerCase())) {
+    return sync;
+  }
   return fetchWordPhonetic(word, options);
 }
 
+/** @deprecated use getWordPhoneticSync */
 export function getCachedPhonetic(word) {
-  const key = String(word || "").trim().toLowerCase();
-  if (!key || !memoryCache.has(key)) return "";
-  return memoryCache.get(key) || "";
+  return getWordPhoneticSync(word);
 }
+
+export { normalizeIpa };
