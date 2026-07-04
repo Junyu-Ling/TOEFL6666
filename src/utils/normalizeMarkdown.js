@@ -9,12 +9,23 @@ function unwrapMarkdownFences(text) {
 
 function splitInlineTableRows(text) {
   return text
-    .replace(/\|\s*\|\s*(?=-{3,})/g, "|\n|")
-    .replace(/\|\s*\|\s*(?=[A-Za-z\u4e00-\u9fff(])/g, "|\n| ");
+    .replace(/\|\s*\|\s*(?=\s*:?-{3,})/g, "|\n|")
+    .replace(/\|\s*\|\s*(?=[A-Za-z0-9\u4e00-\u9fff(])/g, "|\n| ");
 }
 
 /** 把「说明文字： | 表头 |」拆成说明 + 独立表格行 */
 function detachLeadingTextFromTable(text) {
+  const inlineHeaderSep = text.match(
+    /^([\s\S]*?)(\|[^|\n]+(?:\|[^|\n]+)+\|)\s*\|(\s*:?-{3,}[^|\n]*(?:\|[^|\n]+)*\|)([\s\S]*)$/
+  );
+  if (inlineHeaderSep) {
+    const [, intro, headerRow, separatorBody, rest] = inlineHeaderSep;
+    const trimmedIntro = intro.trim();
+    if (trimmedIntro && !trimmedIntro.includes("|")) {
+      return `${trimmedIntro}\n\n${headerRow}\n|${separatorBody}${rest}`;
+    }
+  }
+
   const match = text.match(/^([\s\S]*?)(\|[^|\n]+(?:\|[^|\n]+)+\|)\s*(\|[-:\s|]+\|[\s\S]*)$/);
   if (!match) return text;
 

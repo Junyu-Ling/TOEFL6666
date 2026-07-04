@@ -544,17 +544,36 @@ export default function App() {
     [recognized, recognizedReviewListIds, reviewShuffle, wordListIndex]
   );
 
-  const pauseUnrecognizedPractice = useCallback(() => {
-    setBookPracticePaused((p) => ({ ...p, unrecognized: true }));
+  const exitBookPractice = useCallback((bookType, save) => {
+    if (save) {
+      setBookPracticePaused((p) => ({ ...p, [bookType]: true }));
+      return;
+    }
+    setBookPractices((prev) => ({ ...prev, [bookType]: null }));
+    setBookPracticePaused((p) => ({ ...p, [bookType]: false }));
   }, []);
+
+  const handleReturnFromBookPractice = useCallback(
+    (bookType) => {
+      const save = window.confirm(
+        "是否保存当前练习进度？\n\n确定：保存并返回列表\n取消：不保存并返回列表"
+      );
+      exitBookPractice(bookType, save);
+    },
+    [exitBookPractice]
+  );
+
+  const pauseUnrecognizedPractice = useCallback(() => {
+    handleReturnFromBookPractice("unrecognized");
+  }, [handleReturnFromBookPractice]);
 
   const pauseRecognizedPractice = useCallback(() => {
-    setBookPracticePaused((p) => ({ ...p, recognized: true }));
-  }, []);
+    handleReturnFromBookPractice("recognized");
+  }, [handleReturnFromBookPractice]);
 
   const pauseBankPractice = useCallback(() => {
-    setBookPracticePaused((p) => ({ ...p, bank: true }));
-  }, []);
+    handleReturnFromBookPractice("bank");
+  }, [handleReturnFromBookPractice]);
 
   const startBankPractice = useCallback(
     (displayedWords) => {
