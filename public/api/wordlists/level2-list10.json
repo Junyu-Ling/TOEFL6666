@@ -1,0 +1,632 @@
+{
+  "meta": {
+    "level": 2,
+    "list": 10,
+    "title": "Level 2 · List 10",
+    "updatedAt": "2026-07-04"
+  },
+  "words": [
+    {
+      "word": "wherever",
+      "definitions": [
+        "conj. 无论何地"
+      ]
+    },
+    {
+      "word": "downward",
+      "definitions": [
+        "adv. 向下",
+        "adj. 下降的"
+      ]
+    },
+    {
+      "word": "storm",
+      "definitions": [
+        "n. 暴风雨；猛攻",
+        "v. 猛冲"
+      ]
+    },
+    {
+      "word": "cabbage",
+      "definitions": [
+        "n. 卷心菜"
+      ]
+    },
+    {
+      "word": "elevator",
+      "definitions": [
+        "n. 电梯，起重机"
+      ]
+    },
+    {
+      "word": "darken",
+      "definitions": [
+        "v. 变暗"
+      ]
+    },
+    {
+      "word": "multicolored",
+      "definitions": [
+        "adj. 多彩的"
+      ]
+    },
+    {
+      "word": "worm",
+      "definitions": [
+        "n. 蠕虫"
+      ]
+    },
+    {
+      "word": "evergreen",
+      "definitions": [
+        "adj. 常青的"
+      ]
+    },
+    {
+      "word": "steam",
+      "definitions": [
+        "n. 蒸汽",
+        "v. 蒸；疾行"
+      ]
+    },
+    {
+      "word": "thunder",
+      "definitions": [
+        "n. 雷声"
+      ]
+    },
+    {
+      "word": "breath",
+      "definitions": [
+        "n. 呼吸，气息；迹象"
+      ]
+    },
+    {
+      "word": "deliver",
+      "definitions": [
+        "v. 递送；发表；接生；实现"
+      ]
+    },
+    {
+      "word": "verb",
+      "definitions": [
+        "n. 动词"
+      ]
+    },
+    {
+      "word": "mouthful",
+      "definitions": [
+        "n. 一整口"
+      ]
+    },
+    {
+      "word": "cable",
+      "definitions": [
+        "n. 电缆；有线电视"
+      ]
+    },
+    {
+      "word": "violinist",
+      "definitions": [
+        "n. 小提琴手"
+      ]
+    },
+    {
+      "word": "boredom",
+      "definitions": [
+        "n. 厌倦"
+      ]
+    },
+    {
+      "word": "attract",
+      "definitions": [
+        "v. 吸引"
+      ]
+    },
+    {
+      "word": "noun",
+      "definitions": [
+        "n. 名词"
+      ]
+    },
+    {
+      "word": "accept",
+      "definitions": [
+        "v. 接受"
+      ]
+    },
+    {
+      "word": "Greek",
+      "definitions": [
+        "n. 希腊人",
+        "adj. 希腊的"
+      ]
+    },
+    {
+      "word": "encourage",
+      "definitions": [
+        "v. 鼓励；促进，激发"
+      ]
+    },
+    {
+      "word": "unusually",
+      "definitions": [
+        "adv. 出乎意料地"
+      ]
+    },
+    {
+      "word": "mean",
+      "definitions": [
+        "v. 意味着；打算",
+        "adj. 刻薄的",
+        "n. 平均数"
+      ]
+    },
+    {
+      "word": "auto",
+      "definitions": [
+        "n. 汽车"
+      ]
+    },
+    {
+      "word": "present",
+      "definitions": [
+        "adj. 在场的；当前的",
+        "n. 现在；礼物",
+        "v. 呈现"
+      ]
+    },
+    {
+      "word": "geologic",
+      "definitions": [
+        "adj. 地质的"
+      ]
+    },
+    {
+      "word": "phrase",
+      "definitions": [
+        "n. 词组",
+        "v. 表达"
+      ]
+    },
+    {
+      "word": "unimportant",
+      "definitions": [
+        "adj. 不重要的"
+      ]
+    },
+    {
+      "word": "photocopy",
+      "definitions": [
+        "n. 复印"
+      ]
+    },
+    {
+      "word": "drug",
+      "definitions": [
+        "n. 药；毒品"
+      ]
+    },
+    {
+      "word": "learned",
+      "definitions": [
+        "adj. 博学的，学来的"
+      ]
+    },
+    {
+      "word": "paycheck",
+      "definitions": [
+        "n. 工资单"
+      ]
+    },
+    {
+      "word": "couch",
+      "definitions": [
+        "n. 沙发"
+      ]
+    },
+    {
+      "word": "bow",
+      "definitions": [
+        "n. 弓；蝴蝶结；鞠躬",
+        "v. 鞠躬"
+      ]
+    },
+    {
+      "word": "insect",
+      "definitions": [
+        "n. 昆虫"
+      ]
+    },
+    {
+      "word": "adulthood",
+      "definitions": [
+        "n. 成年"
+      ]
+    },
+    {
+      "word": "spacecraft",
+      "definitions": [
+        "n. 宇宙飞船"
+      ]
+    },
+    {
+      "word": "outward",
+      "definitions": [
+        "adj./adv. 向外"
+      ]
+    },
+    {
+      "word": "score",
+      "definitions": [
+        "n. 得分；乐谱；大量",
+        "v. 赢得；打分"
+      ]
+    },
+    {
+      "word": "whenever",
+      "definitions": [
+        "conj. 无论何时"
+      ]
+    },
+    {
+      "word": "while",
+      "definitions": [
+        "conj. 在……期间；虽然，然而",
+        "n. 一段时间"
+      ]
+    },
+    {
+      "word": "needle",
+      "definitions": [
+        "n. 针"
+      ]
+    },
+    {
+      "word": "exact",
+      "definitions": [
+        "adj. 准确的",
+        "v. 索取"
+      ]
+    },
+    {
+      "word": "pavement",
+      "definitions": [
+        "n. 人行道，铺面"
+      ]
+    },
+    {
+      "word": "unemployment",
+      "definitions": [
+        "n. 失业"
+      ]
+    },
+    {
+      "word": "supportive",
+      "definitions": [
+        "adj. 支持的"
+      ]
+    },
+    {
+      "word": "regard",
+      "definitions": [
+        "v. 看待",
+        "n. 尊敬；问候；方面"
+      ]
+    },
+    {
+      "word": "marriage",
+      "definitions": [
+        "n. 婚姻"
+      ]
+    },
+    {
+      "word": "simply",
+      "definitions": [
+        "adv. 仅仅；实在"
+      ]
+    },
+    {
+      "word": "mathematics",
+      "definitions": [
+        "n. 数学"
+      ]
+    },
+    {
+      "word": "drawing",
+      "definitions": [
+        "n. 图画"
+      ]
+    },
+    {
+      "word": "adjust",
+      "definitions": [
+        "v. 调整"
+      ]
+    },
+    {
+      "word": "article",
+      "definitions": [
+        "n. 条款；文章；物件"
+      ]
+    },
+    {
+      "word": "confidence",
+      "definitions": [
+        "n. 信任；自信"
+      ]
+    },
+    {
+      "word": "since",
+      "definitions": [
+        "conj. 自从；由于"
+      ]
+    },
+    {
+      "word": "geology",
+      "definitions": [
+        "n. 地质学"
+      ]
+    },
+    {
+      "word": "pressure",
+      "definitions": [
+        "n. 压力"
+      ]
+    },
+    {
+      "word": "physics",
+      "definitions": [
+        "n. 物理学"
+      ]
+    },
+    {
+      "word": "select",
+      "definitions": [
+        "v. 选择",
+        "adj. 精选的"
+      ]
+    },
+    {
+      "word": "melody",
+      "definitions": [
+        "n. 旋律"
+      ]
+    },
+    {
+      "word": "advertiser",
+      "definitions": [
+        "n. 广告商"
+      ]
+    },
+    {
+      "word": "likewise",
+      "definitions": [
+        "adv. 同样地"
+      ]
+    },
+    {
+      "word": "organize",
+      "definitions": [
+        "v. 组织"
+      ]
+    },
+    {
+      "word": "tide",
+      "definitions": [
+        "n. 浪潮"
+      ]
+    },
+    {
+      "word": "symbol",
+      "definitions": [
+        "n. 符号，象征"
+      ]
+    },
+    {
+      "word": "report",
+      "definitions": [
+        "n./v. 报告，报导"
+      ]
+    },
+    {
+      "word": "teller",
+      "definitions": [
+        "n. 出纳；叙述者"
+      ]
+    },
+    {
+      "word": "viewer",
+      "definitions": [
+        "n. 观众"
+      ]
+    },
+    {
+      "word": "suit",
+      "definitions": [
+        "n. 套装；诉讼",
+        "v. 适合"
+      ]
+    },
+    {
+      "word": "carbon",
+      "definitions": [
+        "n. 碳"
+      ]
+    },
+    {
+      "word": "sauce",
+      "definitions": [
+        "n. 调味汁"
+      ]
+    },
+    {
+      "word": "rank",
+      "definitions": [
+        "n. 等级",
+        "v. 排位"
+      ]
+    },
+    {
+      "word": "contain",
+      "definitions": [
+        "v. 克制；包含"
+      ]
+    },
+    {
+      "word": "artistic",
+      "definitions": [
+        "adj. 艺术的"
+      ]
+    },
+    {
+      "word": "graduate",
+      "definitions": [
+        "n. 毕业生；研究生",
+        "v. 毕业"
+      ]
+    },
+    {
+      "word": "ballet",
+      "definitions": [
+        "n. 芭蕾"
+      ]
+    },
+    {
+      "word": "settle",
+      "definitions": [
+        "v. 解决；定居；落下"
+      ]
+    },
+    {
+      "word": "storytelling",
+      "definitions": [
+        "n. 讲故事"
+      ]
+    },
+    {
+      "word": "touch",
+      "definitions": [
+        "v. 碰；打动",
+        "n. 触觉；润色；风格；些许"
+      ]
+    },
+    {
+      "word": "capable",
+      "definitions": [
+        "adj. 能干的；有能力的，有可能的"
+      ]
+    },
+    {
+      "word": "cherry",
+      "definitions": [
+        "n. 樱桃"
+      ]
+    },
+    {
+      "word": "properly",
+      "definitions": [
+        "adv. 恰当地"
+      ]
+    },
+    {
+      "word": "blank",
+      "definitions": [
+        "adj. 空白的",
+        "n. 空白处"
+      ]
+    },
+    {
+      "word": "mineral",
+      "definitions": [
+        "n. 矿物质"
+      ]
+    },
+    {
+      "word": "shore",
+      "definitions": [
+        "n. 岸"
+      ]
+    },
+    {
+      "word": "seasonal",
+      "definitions": [
+        "adj. 季节性的"
+      ]
+    },
+    {
+      "word": "banker",
+      "definitions": [
+        "n. 银行家"
+      ]
+    },
+    {
+      "word": "contrast",
+      "definitions": [
+        "n. 对比"
+      ]
+    },
+    {
+      "word": "bacteria",
+      "definitions": [
+        "n. 细菌"
+      ]
+    },
+    {
+      "word": "dozen",
+      "definitions": [
+        "n. 一打"
+      ]
+    },
+    {
+      "word": "degree",
+      "definitions": [
+        "n. 学位；度；程度"
+      ]
+    },
+    {
+      "word": "benefit",
+      "definitions": [
+        "n. 好处；福利",
+        "v. 对……有益"
+      ]
+    },
+    {
+      "word": "maple",
+      "definitions": [
+        "n. 枫树"
+      ]
+    },
+    {
+      "word": "finding",
+      "definitions": [
+        "n. 发现"
+      ]
+    },
+    {
+      "word": "complete",
+      "definitions": [
+        "adj. 完整的；完全的",
+        "v. 使……完整；完成"
+      ]
+    },
+    {
+      "word": "philosophy",
+      "definitions": [
+        "n. 哲学"
+      ]
+    },
+    {
+      "word": "equip",
+      "definitions": [
+        "v. 装备，配备"
+      ]
+    },
+    {
+      "word": "hang",
+      "definitions": [
+        "v. 悬挂；绞死"
+      ]
+    }
+  ]
+}

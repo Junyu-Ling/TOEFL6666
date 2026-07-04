@@ -35,7 +35,7 @@
     {
       "word": "former",
       "definitions": [
-        "adj. 以前的；前任的",
+        "adj. 以前的，前任的",
         "n. 前者"
       ]
     },
@@ -142,7 +142,7 @@
     {
       "word": "scan",
       "definitions": [
-        "n./v. 扫描"
+        "v. 扫描"
       ]
     },
     {
@@ -256,7 +256,7 @@
     {
       "word": "solid",
       "definitions": [
-        "adj. 固体的；坚实的，可信赖的；紧密团结的，(意见)一致的"
+        "adj. 固体的；坚实的，可信赖的；紧密团结的，（意见）一致的"
       ]
     },
     {
@@ -319,7 +319,7 @@
     {
       "word": "coast",
       "definitions": [
-        "n. 海",
+        "n. 海；海岸",
         "v. 滑行"
       ]
     },
@@ -437,6 +437,118 @@
       "word": "environment",
       "definitions": [
         "n. 环境"
+      ]
+    },
+    {
+      "word": "influential",
+      "definitions": [
+        "adj. 有影响力的"
+      ]
+    },
+    {
+      "word": "printer",
+      "definitions": [
+        "n. 打印机"
+      ]
+    },
+    {
+      "word": "aboard",
+      "definitions": [
+        "adv. 在（船、飞机等）上，加入（某组织）"
+      ]
+    },
+    {
+      "word": "express",
+      "definitions": [
+        "n. 快车；快递",
+        "v. 表达"
+      ]
+    },
+    {
+      "word": "couple",
+      "definitions": [
+        "n. 夫妻，情侣；一两个",
+        "v. 加上；联系在一起"
+      ]
+    },
+    {
+      "word": "wealthy",
+      "definitions": [
+        "adj. 富裕的"
+      ]
+    },
+    {
+      "word": "sugarcane",
+      "definitions": [
+        "n. 甘蔗"
+      ]
+    },
+    {
+      "word": "retirement",
+      "definitions": [
+        "n. 退休"
+      ]
+    },
+    {
+      "word": "republic",
+      "definitions": [
+        "n. 共和国"
+      ]
+    },
+    {
+      "word": "noble",
+      "definitions": [
+        "adj. 高贵的",
+        "n. 贵族"
+      ]
+    },
+    {
+      "word": "downtown",
+      "definitions": [
+        "n. 市中心"
+      ]
+    },
+    {
+      "word": "injure",
+      "definitions": [
+        "v. 使……受伤"
+      ]
+    },
+    {
+      "word": "pain",
+      "definitions": [
+        "n. 痛苦"
+      ]
+    },
+    {
+      "word": "goer",
+      "definitions": [
+        "n. 去……的人"
+      ]
+    },
+    {
+      "word": "treat",
+      "definitions": [
+        "v. 对待；治疗",
+        "n. 请客，招待"
+      ]
+    },
+    {
+      "word": "photography",
+      "definitions": [
+        "n. 摄影"
+      ]
+    },
+    {
+      "word": "billion",
+      "definitions": [
+        "n. 十亿"
+      ]
+    },
+    {
+      "word": "unemployed",
+      "definitions": [
+        "adj. 失业的"
       ]
     }
   ]

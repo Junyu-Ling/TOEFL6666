@@ -1,0 +1,632 @@
+{
+  "meta": {
+    "level": 2,
+    "list": 7,
+    "title": "Level 2 · List 7",
+    "updatedAt": "2026-07-04"
+  },
+  "words": [
+    {
+      "word": "duration",
+      "definitions": [
+        "n. 持续时间"
+      ]
+    },
+    {
+      "word": "wealth",
+      "definitions": [
+        "n. 财富；大量"
+      ]
+    },
+    {
+      "word": "forecast",
+      "definitions": [
+        "n. 预报"
+      ]
+    },
+    {
+      "word": "salty",
+      "definitions": [
+        "adj. 咸的"
+      ]
+    },
+    {
+      "word": "developmental",
+      "definitions": [
+        "adj. 发展的"
+      ]
+    },
+    {
+      "word": "partially",
+      "definitions": [
+        "adv. 部分地"
+      ]
+    },
+    {
+      "word": "kitchenware",
+      "definitions": [
+        "n. 厨房用品"
+      ]
+    },
+    {
+      "word": "drum",
+      "definitions": [
+        "n. 鼓"
+      ]
+    },
+    {
+      "word": "probably",
+      "definitions": [
+        "adv. 很可能"
+      ]
+    },
+    {
+      "word": "undergraduate",
+      "definitions": [
+        "n. 本科生"
+      ]
+    },
+    {
+      "word": "grassy",
+      "definitions": [
+        "adj. 长满草的"
+      ]
+    },
+    {
+      "word": "playwright",
+      "definitions": [
+        "n. 剧作家"
+      ]
+    },
+    {
+      "word": "electric",
+      "definitions": [
+        "adj. 用电的，导电的；紧张刺激的",
+        "n. 电路"
+      ]
+    },
+    {
+      "word": "instrument",
+      "definitions": [
+        "n. 仪器，乐器；手段，工具"
+      ]
+    },
+    {
+      "word": "recreate",
+      "definitions": [
+        "v. 再现"
+      ]
+    },
+    {
+      "word": "Arctic",
+      "definitions": [
+        "n. 北极",
+        "adj. 北极的"
+      ]
+    },
+    {
+      "word": "further",
+      "definitions": [
+        "adj./adv. 更远的（地），更进一步",
+        "v. 促进，推动，支持"
+      ]
+    },
+    {
+      "word": "deck",
+      "definitions": [
+        "n. 甲板；层"
+      ]
+    },
+    {
+      "word": "basically",
+      "definitions": [
+        "adv. 基本上"
+      ]
+    },
+    {
+      "word": "various",
+      "definitions": [
+        "adj. 多种多样的"
+      ]
+    },
+    {
+      "word": "independently",
+      "definitions": [
+        "adv. 独立地"
+      ]
+    },
+    {
+      "word": "admiration",
+      "definitions": [
+        "n. 欣赏"
+      ]
+    },
+    {
+      "word": "bug",
+      "definitions": [
+        "n. 虫；漏洞；窃听",
+        "v. 使……烦恼"
+      ]
+    },
+    {
+      "word": "storey",
+      "definitions": [
+        "n. 楼层"
+      ]
+    },
+    {
+      "word": "pop",
+      "definitions": [
+        "n. 流行音乐；汽水",
+        "v. 突然出现；砰的一声爆开了；瞪出"
+      ]
+    },
+    {
+      "word": "ocean",
+      "definitions": [
+        "n. 海洋"
+      ]
+    },
+    {
+      "word": "captain",
+      "definitions": [
+        "n. 领袖，船长，机长；上尉"
+      ]
+    },
+    {
+      "word": "Amazon",
+      "definitions": [
+        "n. 亚马孙河"
+      ]
+    },
+    {
+      "word": "click",
+      "definitions": [
+        "v. 发出咔嗒声；点击；一见如故；醒悟"
+      ]
+    },
+    {
+      "word": "thereafter",
+      "definitions": [
+        "adv. 此后"
+      ]
+    },
+    {
+      "word": "regular",
+      "definitions": [
+        "adj. 规律的"
+      ]
+    },
+    {
+      "word": "sample",
+      "definitions": [
+        "n. 样本；样品",
+        "v. 抽样调查；品尝"
+      ]
+    },
+    {
+      "word": "site",
+      "definitions": [
+        "n. 地点，现场",
+        "v. 选址"
+      ]
+    },
+    {
+      "word": "prove",
+      "definitions": [
+        "v. 证明"
+      ]
+    },
+    {
+      "word": "skillful",
+      "definitions": [
+        "adj. 娴熟的"
+      ]
+    },
+    {
+      "word": "living",
+      "definitions": [
+        "adj. 活着的",
+        "n. 生计"
+      ]
+    },
+    {
+      "word": "cotton",
+      "definitions": [
+        "n. 棉"
+      ]
+    },
+    {
+      "word": "breathe",
+      "definitions": [
+        "v. 呼吸；低声说"
+      ]
+    },
+    {
+      "word": "bush",
+      "definitions": [
+        "n. 灌木"
+      ]
+    },
+    {
+      "word": "Pacific",
+      "definitions": [
+        "n. 太平洋"
+      ]
+    },
+    {
+      "word": "responsible",
+      "definitions": [
+        "adj. 负责"
+      ]
+    },
+    {
+      "word": "formation",
+      "definitions": [
+        "n. 排列；形成"
+      ]
+    },
+    {
+      "word": "argument",
+      "definitions": [
+        "n. 论点；争论"
+      ]
+    },
+    {
+      "word": "planet",
+      "definitions": [
+        "n. 行星"
+      ]
+    },
+    {
+      "word": "jeans",
+      "definitions": [
+        "n. 牛仔裤"
+      ]
+    },
+    {
+      "word": "item",
+      "definitions": [
+        "n. 条目；一件物品"
+      ]
+    },
+    {
+      "word": "weakness",
+      "definitions": [
+        "n. 弱点；虚弱；迷恋"
+      ]
+    },
+    {
+      "word": "major",
+      "definitions": [
+        "adj. 主要的，重大的，重要的",
+        "n./v. 主修"
+      ]
+    },
+    {
+      "word": "battle",
+      "definitions": [
+        "n. 战斗"
+      ]
+    },
+    {
+      "word": "nighttime",
+      "definitions": [
+        "n. 夜间"
+      ]
+    },
+    {
+      "word": "inability",
+      "definitions": [
+        "n. 无能"
+      ]
+    },
+    {
+      "word": "silver",
+      "definitions": [
+        "n. 银"
+      ]
+    },
+    {
+      "word": "tiredness",
+      "definitions": [
+        "n. 疲劳"
+      ]
+    },
+    {
+      "word": "attend",
+      "definitions": [
+        "v. 参加；照料"
+      ]
+    },
+    {
+      "word": "recreation",
+      "definitions": [
+        "n. 娱乐，消遣"
+      ]
+    },
+    {
+      "word": "intelligence",
+      "definitions": [
+        "n. 智力；情报"
+      ]
+    },
+    {
+      "word": "ought",
+      "definitions": [
+        "modal v. 应该"
+      ]
+    },
+    {
+      "word": "lung",
+      "definitions": [
+        "n. 肺"
+      ]
+    },
+    {
+      "word": "lick",
+      "definitions": [
+        "n./v. 舔",
+        "n. 少量"
+      ]
+    },
+    {
+      "word": "scientific",
+      "definitions": [
+        "adj. 科学的"
+      ]
+    },
+    {
+      "word": "suburb",
+      "definitions": [
+        "n. 郊区"
+      ]
+    },
+    {
+      "word": "regularly",
+      "definitions": [
+        "adv. 规律地"
+      ]
+    },
+    {
+      "word": "post",
+      "definitions": [
+        "v. 张贴，公告；邮寄；布置",
+        "n. 邮政；岗位；（部队）驻地，站"
+      ]
+    },
+    {
+      "word": "wedding",
+      "definitions": [
+        "n. 婚礼"
+      ]
+    },
+    {
+      "word": "clay",
+      "definitions": [
+        "n. 陶土，粘土"
+      ]
+    },
+    {
+      "word": "widen",
+      "definitions": [
+        "v. 加宽，拓展"
+      ]
+    },
+    {
+      "word": "amaze",
+      "definitions": [
+        "v. 使……惊奇"
+      ]
+    },
+    {
+      "word": "screen",
+      "definitions": [
+        "n. 屏幕",
+        "v. 筛选"
+      ]
+    },
+    {
+      "word": "liter",
+      "definitions": [
+        "n. 一升"
+      ]
+    },
+    {
+      "word": "acre",
+      "definitions": [
+        "n. 英亩"
+      ]
+    },
+    {
+      "word": "rather",
+      "definitions": [
+        "adv. 相当；宁愿"
+      ]
+    },
+    {
+      "word": "diet",
+      "definitions": [
+        "n. 食谱；节食"
+      ]
+    },
+    {
+      "word": "rent",
+      "definitions": [
+        "n. 租金",
+        "v. 租借"
+      ]
+    },
+    {
+      "word": "creation",
+      "definitions": [
+        "n. 创造，作品"
+      ]
+    },
+    {
+      "word": "tight",
+      "definitions": [
+        "adj./adv. 紧的（地）"
+      ]
+    },
+    {
+      "word": "courage",
+      "definitions": [
+        "n. 勇气"
+      ]
+    },
+    {
+      "word": "waken",
+      "definitions": [
+        "v. 唤醒"
+      ]
+    },
+    {
+      "word": "yard",
+      "definitions": [
+        "n. 庭院；码"
+      ]
+    },
+    {
+      "word": "spell",
+      "definitions": [
+        "n. 魔咒",
+        "v. 拼写"
+      ]
+    },
+    {
+      "word": "blame",
+      "definitions": [
+        "n. 过错责任",
+        "v. 责怪"
+      ]
+    },
+    {
+      "word": "unnecessary",
+      "definitions": [
+        "adj. 不必要的"
+      ]
+    },
+    {
+      "word": "form",
+      "definitions": [
+        "n. 形状；形式；表格",
+        "v. 形成"
+      ]
+    },
+    {
+      "word": "paragraph",
+      "definitions": [
+        "n. 段落"
+      ]
+    },
+    {
+      "word": "sandwich",
+      "definitions": [
+        "n. 三明治"
+      ]
+    },
+    {
+      "word": "producer",
+      "definitions": [
+        "n. 生产商，制片人"
+      ]
+    },
+    {
+      "word": "smoky",
+      "definitions": [
+        "adj. 烟雾弥漫的"
+      ]
+    },
+    {
+      "word": "compare",
+      "definitions": [
+        "v. 比较"
+      ]
+    },
+    {
+      "word": "lack",
+      "definitions": [
+        "n. 缺乏",
+        "v. 缺乏"
+      ]
+    },
+    {
+      "word": "ahead",
+      "definitions": [
+        "adv. 向前；在……之前；领先"
+      ]
+    },
+    {
+      "word": "sail",
+      "definitions": [
+        "n. 帆",
+        "v. 航行"
+      ]
+    },
+    {
+      "word": "slave",
+      "definitions": [
+        "n. 奴隶"
+      ]
+    },
+    {
+      "word": "sweat",
+      "definitions": [
+        "n. 汗",
+        "v. 出汗"
+      ]
+    },
+    {
+      "word": "individual",
+      "definitions": [
+        "adj. 个人的，个体的",
+        "n. 个人，个体"
+      ]
+    },
+    {
+      "word": "display",
+      "definitions": [
+        "n. 陈列展览；表演；显示器",
+        "v. 展示"
+      ]
+    },
+    {
+      "word": "depend",
+      "definitions": [
+        "v. 依赖；取决于"
+      ]
+    },
+    {
+      "word": "produce",
+      "definitions": [
+        "v. 生产",
+        "n. 农产品"
+      ]
+    },
+    {
+      "word": "shrimp",
+      "definitions": [
+        "n. 虾"
+      ]
+    },
+    {
+      "word": "knight",
+      "definitions": [
+        "n. 骑士"
+      ]
+    },
+    {
+      "word": "compete",
+      "definitions": [
+        "v. 竞争"
+      ]
+    },
+    {
+      "word": "seashore",
+      "definitions": [
+        "n. 海岸"
+      ]
+    }
+  ]
+}

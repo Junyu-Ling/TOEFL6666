@@ -127,7 +127,49 @@
       "title": "Level 2 · List 6",
       "level": 2,
       "list": 6,
-      "wordCount": 69
+      "wordCount": 87
+    },
+    {
+      "id": "level2-list7",
+      "title": "Level 2 · List 7",
+      "level": 2,
+      "list": 7,
+      "wordCount": 100
+    },
+    {
+      "id": "level2-list8",
+      "title": "Level 2 · List 8",
+      "level": 2,
+      "list": 8,
+      "wordCount": 113
+    },
+    {
+      "id": "level2-list9",
+      "title": "Level 2 · List 9",
+      "level": 2,
+      "list": 9,
+      "wordCount": 74
+    },
+    {
+      "id": "level2-list10",
+      "title": "Level 2 · List 10",
+      "level": 2,
+      "list": 10,
+      "wordCount": 100
+    },
+    {
+      "id": "level2-list11",
+      "title": "Level 2 · List 11",
+      "level": 2,
+      "list": 11,
+      "wordCount": 126
+    },
+    {
+      "id": "level2-list12",
+      "title": "Level 2 · List 12",
+      "level": 2,
+      "list": 12,
+      "wordCount": 22
     },
     {
       "id": "level3-list1",

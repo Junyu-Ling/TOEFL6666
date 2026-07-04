@@ -4,13 +4,17 @@ import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const dir = path.join(__dirname, "../public/api/wordlists");
-const sourcePath = path.join(__dirname, "raw/level1-level2.txt");
+const defaultSourcePath = path.join(__dirname, "raw/level1-level2.txt");
 
 const POS_START =
-  /^(n\.|v\.|adj\.|adv\.|prep\.|conj\.|pron\.|aux\.|abbr\.)/;
+  /^(n\.|v\.|adj\.|adv\.|prep\.|conj\.|pron\.|aux\.|abbr\.|modal\b)/;
 
 function isDefinitionLine(line) {
   return POS_START.test(line);
+}
+
+function cleanDefinition(line) {
+  return line.replace(/\s*[（(]注：[^）)]*[）)]/g, "").trim();
 }
 
 function parseListBody(raw) {
@@ -27,7 +31,7 @@ function parseListBody(raw) {
       if (!current) {
         throw new Error(`Definition without word: ${line}`);
       }
-      current.definitions.push(line);
+      current.definitions.push(cleanDefinition(line));
       continue;
     }
 
@@ -66,8 +70,14 @@ function parseSource(text) {
   return sections;
 }
 
-const source = fs.readFileSync(sourcePath, "utf8");
-const sections = parseSource(source);
+const sourcePaths = process.argv.slice(2).length
+  ? process.argv.slice(2).map((p) => path.resolve(p))
+  : [defaultSourcePath];
+
+const sections = sourcePaths.flatMap((sourcePath) => {
+  const source = fs.readFileSync(sourcePath, "utf8").replace(/^\uFEFF/, "");
+  return parseSource(source);
+});
 const updatedAt = new Date().toISOString().slice(0, 10);
 const manifestPath = path.join(dir, "manifest.json");
 const manifest = JSON.parse(fs.readFileSync(manifestPath, "utf8"));
