@@ -139,7 +139,7 @@ export function groupWordsByList(words, availableLists, wordListIndex = null) {
         listId,
         label: getListReviewLabel(listId, availableLists),
         level: listMetaById.get(listId)?.level ?? null,
-        words: items,
+        words: items.sort((a, b) => (a.listIndex ?? 999999) - (b.listIndex ?? 999999)),
         wrongTotal,
       };
     });

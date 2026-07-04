@@ -62,7 +62,7 @@ export function sortBankWords(words, sortMode, availableLists) {
     const listA = metaA?.list ?? 999;
     const listB = metaB?.list ?? 999;
     if (listA !== listB) return listA - listB;
-    return a.word.localeCompare(b.word, "en");
+    return (a.listIndex ?? 999999) - (b.listIndex ?? 999999);
   });
 }
 

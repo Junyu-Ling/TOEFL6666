@@ -27,7 +27,7 @@ export async function fetchAllWordBank(lists) {
   const batches = await Promise.all(
     lists.map(async (list) => {
       const { words } = await fetchWordList(list.id);
-      return words.map((word) => ({ ...word, sourceListId: list.id }));
+      return words.map((word, index) => ({ ...word, sourceListId: list.id, listIndex: index }));
     })
   );
 
