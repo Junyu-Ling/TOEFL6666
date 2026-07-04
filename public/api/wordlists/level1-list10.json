@@ -1,0 +1,632 @@
+{
+  "meta": {
+    "level": 1,
+    "list": 10,
+    "title": "Level 1 · List 10",
+    "updatedAt": "2026-07-04"
+  },
+  "words": [
+    {
+      "word": "will",
+      "definitions": [
+        "n. 意志；遗嘱"
+      ]
+    },
+    {
+      "word": "cold",
+      "definitions": [
+        "adj. 冷的，冷酷的",
+        "n. 感冒"
+      ]
+    },
+    {
+      "word": "backward",
+      "definitions": [
+        "adj. 向后的；落后的"
+      ]
+    },
+    {
+      "word": "toward",
+      "definitions": [
+        "prep. 向着；对于"
+      ]
+    },
+    {
+      "word": "study",
+      "definitions": [
+        "n. 学习；研究；书房",
+        "v. 学习；研究"
+      ]
+    },
+    {
+      "word": "uncertain",
+      "definitions": [
+        "adj. 不确定的"
+      ]
+    },
+    {
+      "word": "jump",
+      "definitions": [
+        "n./v. 跳；上涨"
+      ]
+    },
+    {
+      "word": "meeting",
+      "definitions": [
+        "n. 会议"
+      ]
+    },
+    {
+      "word": "funny",
+      "definitions": [
+        "adj. 滑稽的"
+      ]
+    },
+    {
+      "word": "knowledge",
+      "definitions": [
+        "n. 知识"
+      ]
+    },
+    {
+      "word": "timer",
+      "definitions": [
+        "n. 计时器"
+      ]
+    },
+    {
+      "word": "together",
+      "definitions": [
+        "adv. 一起"
+      ]
+    },
+    {
+      "word": "award",
+      "definitions": [
+        "n. 奖",
+        "v. 授予"
+      ]
+    },
+    {
+      "word": "adult",
+      "definitions": [
+        "n. 成年人"
+      ]
+    },
+    {
+      "word": "railroad",
+      "definitions": [
+        "n. 铁路"
+      ]
+    },
+    {
+      "word": "river",
+      "definitions": [
+        "n. 河"
+      ]
+    },
+    {
+      "word": "shelf",
+      "definitions": [
+        "n. 架子；暗礁，大陆架"
+      ]
+    },
+    {
+      "word": "kilometer",
+      "definitions": [
+        "n. 千米"
+      ]
+    },
+    {
+      "word": "elephant",
+      "definitions": [
+        "n. 大象"
+      ]
+    },
+    {
+      "word": "fluency",
+      "definitions": [
+        "n. 流利"
+      ]
+    },
+    {
+      "word": "thick",
+      "definitions": [
+        "adj. 厚的"
+      ]
+    },
+    {
+      "word": "social",
+      "definitions": [
+        "adj. 社会地位的；社交的"
+      ]
+    },
+    {
+      "word": "worry",
+      "definitions": [
+        "v. 担心",
+        "n. 忧虑"
+      ]
+    },
+    {
+      "word": "kid",
+      "definitions": [
+        "n. 小孩",
+        "v. 戏弄"
+      ]
+    },
+    {
+      "word": "next",
+      "definitions": [
+        "adj. 紧接在后的",
+        "adv. 再次"
+      ]
+    },
+    {
+      "word": "lightning",
+      "definitions": [
+        "n. 闪电"
+      ]
+    },
+    {
+      "word": "personally",
+      "definitions": [
+        "adv. 亲自；就本人来说"
+      ]
+    },
+    {
+      "word": "fluent",
+      "definitions": [
+        "adj. 流利的"
+      ]
+    },
+    {
+      "word": "lift",
+      "definitions": [
+        "v. 提起",
+        "n. 电梯"
+      ]
+    },
+    {
+      "word": "golden",
+      "definitions": [
+        "adj. 金色的"
+      ]
+    },
+    {
+      "word": "drop",
+      "definitions": [
+        "v. 掉落，放下",
+        "n. 水滴"
+      ]
+    },
+    {
+      "word": "much",
+      "definitions": [
+        "adj. 很多的",
+        "adv. 非常"
+      ]
+    },
+    {
+      "word": "unable",
+      "definitions": [
+        "adj. 无能的"
+      ]
+    },
+    {
+      "word": "awake",
+      "definitions": [
+        "adj. 醒着的",
+        "v. 唤醒"
+      ]
+    },
+    {
+      "word": "praise",
+      "definitions": [
+        "n./v. 赞扬"
+      ]
+    },
+    {
+      "word": "hunt",
+      "definitions": [
+        "v. 寻找；捕猎"
+      ]
+    },
+    {
+      "word": "tiny",
+      "definitions": [
+        "adj. 极小的"
+      ]
+    },
+    {
+      "word": "bath",
+      "definitions": [
+        "n. 洗澡"
+      ]
+    },
+    {
+      "word": "cousin",
+      "definitions": [
+        "n. 堂表兄弟姐妹"
+      ]
+    },
+    {
+      "word": "pollution",
+      "definitions": [
+        "n. 污染"
+      ]
+    },
+    {
+      "word": "wed",
+      "definitions": [
+        "v. 结婚；融合"
+      ]
+    },
+    {
+      "word": "lifetime",
+      "definitions": [
+        "n. 一生",
+        "adj. 终身的"
+      ]
+    },
+    {
+      "word": "week",
+      "definitions": [
+        "n. 星期"
+      ]
+    },
+    {
+      "word": "ticket",
+      "definitions": [
+        "n. 票；罚单"
+      ]
+    },
+    {
+      "word": "knock",
+      "definitions": [
+        "v. 敲击"
+      ]
+    },
+    {
+      "word": "snow",
+      "definitions": [
+        "n. 雪",
+        "v. 降雪"
+      ]
+    },
+    {
+      "word": "below",
+      "definitions": [
+        "prep. 在……之下"
+      ]
+    },
+    {
+      "word": "eastern",
+      "definitions": [
+        "adj. 东方的"
+      ]
+    },
+    {
+      "word": "stomach",
+      "definitions": [
+        "n. 胃"
+      ]
+    },
+    {
+      "word": "senior",
+      "definitions": [
+        "adj. 年长的；地位较高的；高年级的",
+        "n. 年长者；地位较高者；高年级生"
+      ]
+    },
+    {
+      "word": "police",
+      "definitions": [
+        "n. 警察"
+      ]
+    },
+    {
+      "word": "richness",
+      "definitions": [
+        "n. 富裕"
+      ]
+    },
+    {
+      "word": "family",
+      "definitions": [
+        "n. 家庭"
+      ]
+    },
+    {
+      "word": "cough",
+      "definitions": [
+        "n./v. 咳嗽"
+      ]
+    },
+    {
+      "word": "turn",
+      "definitions": [
+        "v. 转变；翻动",
+        "n. 轮到的机会"
+      ]
+    },
+    {
+      "word": "easily",
+      "definitions": [
+        "adv. 容易地"
+      ]
+    },
+    {
+      "word": "coke",
+      "definitions": [
+        "n. 可乐"
+      ]
+    },
+    {
+      "word": "belong",
+      "definitions": [
+        "v. 属于"
+      ]
+    },
+    {
+      "word": "traditional",
+      "definitions": [
+        "adj. 传统的"
+      ]
+    },
+    {
+      "word": "truly",
+      "definitions": [
+        "adv. 确实地"
+      ]
+    },
+    {
+      "word": "business",
+      "definitions": [
+        "n. 生意；个人事务"
+      ]
+    },
+    {
+      "word": "understand",
+      "definitions": [
+        "v. 懂得"
+      ]
+    },
+    {
+      "word": "excite",
+      "definitions": [
+        "v. 使……激动"
+      ]
+    },
+    {
+      "word": "mistake",
+      "definitions": [
+        "n. 错误",
+        "v. 弄错"
+      ]
+    },
+    {
+      "word": "uncle",
+      "definitions": [
+        "n. 伯父，叔父"
+      ]
+    },
+    {
+      "word": "die",
+      "definitions": [
+        "v. 死；渴望"
+      ]
+    },
+    {
+      "word": "file",
+      "definitions": [
+        "n. 文件",
+        "v. 提交；归档"
+      ]
+    },
+    {
+      "word": "surprisingly",
+      "definitions": [
+        "adv. 惊人的"
+      ]
+    },
+    {
+      "word": "ink",
+      "definitions": [
+        "n. 墨水"
+      ]
+    },
+    {
+      "word": "fast",
+      "definitions": [
+        "adj. 快的；紧的，稳固的",
+        "n./v. 斋戒"
+      ]
+    },
+    {
+      "word": "political",
+      "definitions": [
+        "adj. 政治的"
+      ]
+    },
+    {
+      "word": "title",
+      "definitions": [
+        "n. 标题；头衔；所有权"
+      ]
+    },
+    {
+      "word": "run",
+      "definitions": [
+        "v. 跑；管理；运行"
+      ]
+    },
+    {
+      "word": "beyond",
+      "definitions": [
+        "prep. 超出"
+      ]
+    },
+    {
+      "word": "silk",
+      "definitions": [
+        "n. 丝"
+      ]
+    },
+    {
+      "word": "sky",
+      "definitions": [
+        "n. 天空"
+      ]
+    },
+    {
+      "word": "sunset",
+      "definitions": [
+        "n. 日落"
+      ]
+    },
+    {
+      "word": "classroom",
+      "definitions": [
+        "n. 教室"
+      ]
+    },
+    {
+      "word": "without",
+      "definitions": [
+        "prep. 没有"
+      ]
+    },
+    {
+      "word": "daylight",
+      "definitions": [
+        "n. 日光"
+      ]
+    },
+    {
+      "word": "program",
+      "definitions": [
+        "n. 程序；课程；节目",
+        "v. 编程"
+      ]
+    },
+    {
+      "word": "homeland",
+      "definitions": [
+        "n. 祖国"
+      ]
+    },
+    {
+      "word": "payment",
+      "definitions": [
+        "n. 付款；报偿"
+      ]
+    },
+    {
+      "word": "glass",
+      "definitions": [
+        "n. 玻璃"
+      ]
+    },
+    {
+      "word": "icy",
+      "definitions": [
+        "adj. 冰冷的"
+      ]
+    },
+    {
+      "word": "bridge",
+      "definitions": [
+        "n. 桥梁",
+        "v. 连接"
+      ]
+    },
+    {
+      "word": "unlikely",
+      "definitions": [
+        "adj. 不大可能的"
+      ]
+    },
+    {
+      "word": "marry",
+      "definitions": [
+        "v. 结婚；结合"
+      ]
+    },
+    {
+      "word": "impossible",
+      "definitions": [
+        "adj. 不可能的"
+      ]
+    },
+    {
+      "word": "practice",
+      "definitions": [
+        "n. 实践；练习；做法"
+      ]
+    },
+    {
+      "word": "break",
+      "definitions": [
+        "v. 打破；拆分",
+        "n. 休息"
+      ]
+    },
+    {
+      "word": "tasty",
+      "definitions": [
+        "adj. 可口的"
+      ]
+    },
+    {
+      "word": "rebuild",
+      "definitions": [
+        "v. 重建"
+      ]
+    },
+    {
+      "word": "autumn",
+      "definitions": [
+        "n. 秋季"
+      ]
+    },
+    {
+      "word": "flag",
+      "definitions": [
+        "n. 旗"
+      ]
+    },
+    {
+      "word": "public",
+      "definitions": [
+        "adj. 公用的；公开的，上市的",
+        "n. 公众"
+      ]
+    },
+    {
+      "word": "unlike",
+      "definitions": [
+        "prep. 与……不同"
+      ]
+    },
+    {
+      "word": "over",
+      "definitions": [
+        "prep. 在……上方；超过；遍及",
+        "adj. 结束"
+      ]
+    },
+    {
+      "word": "almost",
+      "definitions": [
+        "adv. 几乎"
+      ]
+    },
+    {
+      "word": "subway",
+      "definitions": [
+        "n. 地铁"
+      ]
+    }
+  ]
+}

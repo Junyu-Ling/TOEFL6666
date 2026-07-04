@@ -1,0 +1,633 @@
+{
+  "meta": {
+    "level": 2,
+    "list": 4,
+    "title": "Level 2 · List 4",
+    "updatedAt": "2026-07-04"
+  },
+  "words": [
+    {
+      "word": "alarm",
+      "definitions": [
+        "n. 警报；惊慌",
+        "v. 警告；使惊恐"
+      ]
+    },
+    {
+      "word": "outdoors",
+      "definitions": [
+        "adv./n. 户外"
+      ]
+    },
+    {
+      "word": "fond",
+      "definitions": [
+        "adj. 喜欢的"
+      ]
+    },
+    {
+      "word": "pianist",
+      "definitions": [
+        "n. 钢琴家"
+      ]
+    },
+    {
+      "word": "possibility",
+      "definitions": [
+        "n. 可能性"
+      ]
+    },
+    {
+      "word": "relate",
+      "definitions": [
+        "v. 联系起来；讲述"
+      ]
+    },
+    {
+      "word": "match",
+      "definitions": [
+        "n. 比赛，对手；相配",
+        "v. 和……相配"
+      ]
+    },
+    {
+      "word": "divide",
+      "definitions": [
+        "v. 划分；除",
+        "n. 分歧，分界点"
+      ]
+    },
+    {
+      "word": "complain",
+      "definitions": [
+        "v. 抱怨"
+      ]
+    },
+    {
+      "word": "oral",
+      "definitions": [
+        "adj. 口头的"
+      ]
+    },
+    {
+      "word": "request",
+      "definitions": [
+        "n./v. 要求"
+      ]
+    },
+    {
+      "word": "countless",
+      "definitions": [
+        "adj. 无数的"
+      ]
+    },
+    {
+      "word": "seahorse",
+      "definitions": [
+        "n. 海马"
+      ]
+    },
+    {
+      "word": "jaw",
+      "definitions": [
+        "n. 下巴"
+      ]
+    },
+    {
+      "word": "neck",
+      "definitions": [
+        "n. 脖子"
+      ]
+    },
+    {
+      "word": "creature",
+      "definitions": [
+        "n. 生物；傀儡"
+      ]
+    },
+    {
+      "word": "storyteller",
+      "definitions": [
+        "n. 讲故事的人"
+      ]
+    },
+    {
+      "word": "shelter",
+      "definitions": [
+        "n. 遮蔽；庇护所"
+      ]
+    },
+    {
+      "word": "island",
+      "definitions": [
+        "n. 岛"
+      ]
+    },
+    {
+      "word": "wasteful",
+      "definitions": [
+        "adj. 浪费的"
+      ]
+    },
+    {
+      "word": "harmful",
+      "definitions": [
+        "adj. 有害的"
+      ]
+    },
+    {
+      "word": "mode",
+      "definitions": [
+        "n. 模式；风尚"
+      ]
+    },
+    {
+      "word": "cheek",
+      "definitions": [
+        "n. 脸颊"
+      ]
+    },
+    {
+      "word": "store",
+      "definitions": [
+        "v. 储存",
+        "n. 商店"
+      ]
+    },
+    {
+      "word": "height",
+      "definitions": [
+        "n. 高度；高点"
+      ]
+    },
+    {
+      "word": "known",
+      "definitions": [
+        "adj. 出名的；已知的"
+      ]
+    },
+    {
+      "word": "sudden",
+      "definitions": [
+        "adj. 突然的"
+      ]
+    },
+    {
+      "word": "battery",
+      "definitions": [
+        "n. 电池；一排"
+      ]
+    },
+    {
+      "word": "description",
+      "definitions": [
+        "n. 描述；种类"
+      ]
+    },
+    {
+      "word": "weapon",
+      "definitions": [
+        "n. 武器"
+      ]
+    },
+    {
+      "word": "purpose",
+      "definitions": [
+        "n. 目的；用途"
+      ]
+    },
+    {
+      "word": "Middle-Ages",
+      "definitions": [
+        "n. 中世纪"
+      ]
+    },
+    {
+      "word": "fax",
+      "definitions": [
+        "n./v. 传真"
+      ]
+    },
+    {
+      "word": "prefer",
+      "definitions": [
+        "v. 偏好"
+      ]
+    },
+    {
+      "word": "background",
+      "definitions": [
+        "n. 背景"
+      ]
+    },
+    {
+      "word": "solo",
+      "definitions": [
+        "n. 独奏",
+        "adj./adv. 单独的(地)"
+      ]
+    },
+    {
+      "word": "landowner",
+      "definitions": [
+        "n. 地主"
+      ]
+    },
+    {
+      "word": "original",
+      "definitions": [
+        "n. 原件",
+        "adj. 起初的；独创的"
+      ]
+    },
+    {
+      "word": "button",
+      "definitions": [
+        "n. 按钮；纽扣",
+        "v. 系上"
+      ]
+    },
+    {
+      "word": "prisoner",
+      "definitions": [
+        "n. 囚犯"
+      ]
+    },
+    {
+      "word": "afterwards",
+      "definitions": [
+        "adv. 后来"
+      ]
+    },
+    {
+      "word": "glassy",
+      "definitions": [
+        "adj. 光滑的；呆滞的"
+      ]
+    },
+    {
+      "word": "excitement",
+      "definitions": [
+        "n. 激动"
+      ]
+    },
+    {
+      "word": "mosquito",
+      "definitions": [
+        "n. 蚊子"
+      ]
+    },
+    {
+      "word": "capital",
+      "definitions": [
+        "n. 资本；大写字母；首都",
+        "adj. 可处死刑的；主要的"
+      ]
+    },
+    {
+      "word": "camp",
+      "definitions": [
+        "n. 营地",
+        "v. 露营"
+      ]
+    },
+    {
+      "word": "retire",
+      "definitions": [
+        "v. 退休；就寝"
+      ]
+    },
+    {
+      "word": "advantage",
+      "definitions": [
+        "n. 优势"
+      ]
+    },
+    {
+      "word": "collection",
+      "definitions": [
+        "n. 作品集；收集；捐款"
+      ]
+    },
+    {
+      "word": "deal",
+      "definitions": [
+        "n. 大量；交易，协议",
+        "v. 发牌"
+      ]
+    },
+    {
+      "word": "highway",
+      "definitions": [
+        "n. 公路"
+      ]
+    },
+    {
+      "word": "belt",
+      "definitions": [
+        "n. 带"
+      ]
+    },
+    {
+      "word": "promise",
+      "definitions": [
+        "v. 承诺",
+        "n. 承诺；希望，指望"
+      ]
+    },
+    {
+      "word": "ambition",
+      "definitions": [
+        "n. 志向"
+      ]
+    },
+    {
+      "word": "flat",
+      "definitions": [
+        "adj. 平的",
+        "n. 公寓"
+      ]
+    },
+    {
+      "word": "bubble",
+      "definitions": [
+        "n. 气泡",
+        "v. 冒泡；充满着"
+      ]
+    },
+    {
+      "word": "increasingly",
+      "definitions": [
+        "adv. 越来越"
+      ]
+    },
+    {
+      "word": "input",
+      "definitions": [
+        "n./v. 输入",
+        "n. 建议，评价"
+      ]
+    },
+    {
+      "word": "equipment",
+      "definitions": [
+        "n. 设备"
+      ]
+    },
+    {
+      "word": "improve",
+      "definitions": [
+        "v. 改善"
+      ]
+    },
+    {
+      "word": "ladder",
+      "definitions": [
+        "n. 梯子"
+      ]
+    },
+    {
+      "word": "fit",
+      "definitions": [
+        "adj. 健康的；适合的",
+        "v. 合适；容纳；符合"
+      ]
+    },
+    {
+      "word": "abandon",
+      "definitions": [
+        "v. 抛弃"
+      ]
+    },
+    {
+      "word": "confuse",
+      "definitions": [
+        "v. 迷惑；混淆"
+      ]
+    },
+    {
+      "word": "warmth",
+      "definitions": [
+        "n. 温暖"
+      ]
+    },
+    {
+      "word": "ankle",
+      "definitions": [
+        "n. 脚踝"
+      ]
+    },
+    {
+      "word": "risk",
+      "definitions": [
+        "n. 风险",
+        "v. 冒险"
+      ]
+    },
+    {
+      "word": "poem",
+      "definitions": [
+        "n. 诗"
+      ]
+    },
+    {
+      "word": "draw",
+      "definitions": [
+        "v. 画；抽出；吸引；总结",
+        "v. 平手"
+      ]
+    },
+    {
+      "word": "sub",
+      "definitions": [
+        "n. 地铁(简称)"
+      ]
+    },
+    {
+      "word": "anxiety",
+      "definitions": [
+        "n. 焦虑；渴望"
+      ]
+    },
+    {
+      "word": "whatsoever",
+      "definitions": [
+        "pron. 无论如何；任何"
+      ]
+    },
+    {
+      "word": "professional",
+      "definitions": [
+        "adj. 职业的，专业的，称职的",
+        "n. 专业人士"
+      ]
+    },
+    {
+      "word": "sparrow",
+      "definitions": [
+        "n. 麻雀"
+      ]
+    },
+    {
+      "word": "distance",
+      "definitions": [
+        "n. 距离",
+        "v. 疏远，把……远远甩在后面"
+      ]
+    },
+    {
+      "word": "kangaroo",
+      "definitions": [
+        "n. 袋鼠"
+      ]
+    },
+    {
+      "word": "source",
+      "definitions": [
+        "n. 来源"
+      ]
+    },
+    {
+      "word": "meaning",
+      "definitions": [
+        "n. 意义"
+      ]
+    },
+    {
+      "word": "blind",
+      "definitions": [
+        "adj. 失明的；盲目的"
+      ]
+    },
+    {
+      "word": "manner",
+      "definitions": [
+        "n. 方式；礼仪；态度"
+      ]
+    },
+    {
+      "word": "lizard",
+      "definitions": [
+        "n. 蜥蜴"
+      ]
+    },
+    {
+      "word": "loosen",
+      "definitions": [
+        "v. 放松"
+      ]
+    },
+    {
+      "word": "orderly",
+      "definitions": [
+        "adj. 有序的"
+      ]
+    },
+    {
+      "word": "woody",
+      "definitions": [
+        "adj. 木质的"
+      ]
+    },
+    {
+      "word": "preparation",
+      "definitions": [
+        "n. 准备"
+      ]
+    },
+    {
+      "word": "await",
+      "definitions": [
+        "v. 等候"
+      ]
+    },
+    {
+      "word": "forbid",
+      "definitions": [
+        "v. 禁止"
+      ]
+    },
+    {
+      "word": "discussion",
+      "definitions": [
+        "n. 讨论"
+      ]
+    },
+    {
+      "word": "spider",
+      "definitions": [
+        "n. 蜘蛛"
+      ]
+    },
+    {
+      "word": "communication",
+      "definitions": [
+        "n. 交流；通信"
+      ]
+    },
+    {
+      "word": "harden",
+      "definitions": [
+        "v. 变硬"
+      ]
+    },
+    {
+      "word": "percentage",
+      "definitions": [
+        "n. 百分比"
+      ]
+    },
+    {
+      "word": "gentle",
+      "definitions": [
+        "adj. 柔和的"
+      ]
+    },
+    {
+      "word": "fake",
+      "definitions": [
+        "n. 赝品",
+        "adj. 假的",
+        "v. 假装"
+      ]
+    },
+    {
+      "word": "indicate",
+      "definitions": [
+        "v. 指示；表明"
+      ]
+    },
+    {
+      "word": "accountant",
+      "definitions": [
+        "n. 会计"
+      ]
+    },
+    {
+      "word": "movement",
+      "definitions": [
+        "n. 移动，动作；运动"
+      ]
+    },
+    {
+      "word": "concert",
+      "definitions": [
+        "n. 音乐会"
+      ]
+    },
+    {
+      "word": "matter",
+      "definitions": [
+        "n. 事情；物质",
+        "v. 要紧"
+      ]
+    },
+    {
+      "word": "range",
+      "definitions": [
+        "n. 范围；牧场",
+        "v. 漫游；变动"
+      ]
+    }
+  ]
+}

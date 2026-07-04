@@ -1,0 +1,631 @@
+{
+  "meta": {
+    "level": 1,
+    "list": 5,
+    "title": "Level 1 · List 5",
+    "updatedAt": "2026-07-04"
+  },
+  "words": [
+    {
+      "word": "pan",
+      "definitions": [
+        "n. 平底锅"
+      ]
+    },
+    {
+      "word": "town",
+      "definitions": [
+        "n. 城镇"
+      ]
+    },
+    {
+      "word": "grey",
+      "definitions": [
+        "adj. 灰白的"
+      ]
+    },
+    {
+      "word": "exit",
+      "definitions": [
+        "n. 出口"
+      ]
+    },
+    {
+      "word": "soon",
+      "definitions": [
+        "adv. 不久"
+      ]
+    },
+    {
+      "word": "note",
+      "definitions": [
+        "n. 笔记；注释",
+        "v. 记录；注意到"
+      ]
+    },
+    {
+      "word": "southern",
+      "definitions": [
+        "adj. 南方的"
+      ]
+    },
+    {
+      "word": "coin",
+      "definitions": [
+        "n. 硬币"
+      ]
+    },
+    {
+      "word": "hard",
+      "definitions": [
+        "adj. 坚硬的；困难的；努力的"
+      ]
+    },
+    {
+      "word": "hole",
+      "definitions": [
+        "n. 洞"
+      ]
+    },
+    {
+      "word": "slow",
+      "definitions": [
+        "adj. 慢的",
+        "v. 减慢"
+      ]
+    },
+    {
+      "word": "teach",
+      "definitions": [
+        "v. 教"
+      ]
+    },
+    {
+      "word": "color",
+      "definitions": [
+        "n. 颜色",
+        "v. 上色"
+      ]
+    },
+    {
+      "word": "middle",
+      "definitions": [
+        "n. 中间"
+      ]
+    },
+    {
+      "word": "kick",
+      "definitions": [
+        "v. 踢"
+      ]
+    },
+    {
+      "word": "stop",
+      "definitions": [
+        "v. 停下",
+        "n. 停止；车站"
+      ]
+    },
+    {
+      "word": "goddess",
+      "definitions": [
+        "n. 女神"
+      ]
+    },
+    {
+      "word": "cafe",
+      "definitions": [
+        "n. 咖啡厅"
+      ]
+    },
+    {
+      "word": "problem",
+      "definitions": [
+        "n. 问题"
+      ]
+    },
+    {
+      "word": "lost",
+      "definitions": [
+        "adj. 迷失的；消逝的"
+      ]
+    },
+    {
+      "word": "wood",
+      "definitions": [
+        "n. 木头"
+      ]
+    },
+    {
+      "word": "put",
+      "definitions": [
+        "v. 放；使处于；说明"
+      ]
+    },
+    {
+      "word": "south",
+      "definitions": [
+        "n. 南"
+      ]
+    },
+    {
+      "word": "paper",
+      "definitions": [
+        "n. 纸；文件；论文"
+      ]
+    },
+    {
+      "word": "example",
+      "definitions": [
+        "n. 例子"
+      ]
+    },
+    {
+      "word": "sweet",
+      "definitions": [
+        "adj. 甜的；善良的"
+      ]
+    },
+    {
+      "word": "professor",
+      "definitions": [
+        "n. 教授"
+      ]
+    },
+    {
+      "word": "Ice-Age",
+      "definitions": [
+        "n. 冰河世纪"
+      ]
+    },
+    {
+      "word": "watery",
+      "definitions": [
+        "adj. 稀的，水一样的"
+      ]
+    },
+    {
+      "word": "apartment",
+      "definitions": [
+        "n. 公寓"
+      ]
+    },
+    {
+      "word": "eyeglass",
+      "definitions": [
+        "n. 眼镜"
+      ]
+    },
+    {
+      "word": "cite",
+      "definitions": [
+        "v. 引用"
+      ]
+    },
+    {
+      "word": "upwards",
+      "definitions": [
+        "adv. 向上地"
+      ]
+    },
+    {
+      "word": "pear",
+      "definitions": [
+        "n. 梨"
+      ]
+    },
+    {
+      "word": "dirt",
+      "definitions": [
+        "n. 土，尘垢；流言蜚语"
+      ]
+    },
+    {
+      "word": "publicly",
+      "definitions": [
+        "adv. 公开地；由国家地"
+      ]
+    },
+    {
+      "word": "reduce",
+      "definitions": [
+        "v. 减少；使……沦为"
+      ]
+    },
+    {
+      "word": "change",
+      "definitions": [
+        "v. 改变；替换",
+        "n. 零钱"
+      ]
+    },
+    {
+      "word": "country",
+      "definitions": [
+        "n. 国家；乡村"
+      ]
+    },
+    {
+      "word": "hometown",
+      "definitions": [
+        "n. 家乡"
+      ]
+    },
+    {
+      "word": "filmmaker",
+      "definitions": [
+        "n. 电影摄制者"
+      ]
+    },
+    {
+      "word": "top",
+      "definitions": [
+        "n. 顶端",
+        "adj. 最高的，顶尖的",
+        "v. 置顶"
+      ]
+    },
+    {
+      "word": "noon",
+      "definitions": [
+        "n. 中午"
+      ]
+    },
+    {
+      "word": "rope",
+      "definitions": [
+        "n. 绳子"
+      ]
+    },
+    {
+      "word": "fine",
+      "definitions": [
+        "adj. 极好的",
+        "n. 罚金"
+      ]
+    },
+    {
+      "word": "sell",
+      "definitions": [
+        "v. 卖；使……接受"
+      ]
+    },
+    {
+      "word": "boil",
+      "definitions": [
+        "v. 煮沸"
+      ]
+    },
+    {
+      "word": "pair",
+      "definitions": [
+        "n. 一双",
+        "v. 配对"
+      ]
+    },
+    {
+      "word": "nothing",
+      "definitions": [
+        "pron. 没有什么"
+      ]
+    },
+    {
+      "word": "allow",
+      "definitions": [
+        "v. 允许；使能够"
+      ]
+    },
+    {
+      "word": "sound",
+      "definitions": [
+        "n. 声音",
+        "v. 听起来",
+        "adj. 健康的；可靠的"
+      ]
+    },
+    {
+      "word": "greatly",
+      "definitions": [
+        "adv. 非常地"
+      ]
+    },
+    {
+      "word": "earn",
+      "definitions": [
+        "v. 挣得"
+      ]
+    },
+    {
+      "word": "million",
+      "definitions": [
+        "n. 一百万"
+      ]
+    },
+    {
+      "word": "dry",
+      "definitions": [
+        "adj. 干燥的",
+        "v. 使……变干"
+      ]
+    },
+    {
+      "word": "goat",
+      "definitions": [
+        "n. 山羊"
+      ]
+    },
+    {
+      "word": "house",
+      "definitions": [
+        "n. 房子"
+      ]
+    },
+    {
+      "word": "engine",
+      "definitions": [
+        "n. 发动机"
+      ]
+    },
+    {
+      "word": "rice",
+      "definitions": [
+        "n. 大米"
+      ]
+    },
+    {
+      "word": "raise",
+      "definitions": [
+        "v. 提高；筹集；抚养；提出",
+        "n. 加薪"
+      ]
+    },
+    {
+      "word": "painter",
+      "definitions": [
+        "n. 画家"
+      ]
+    },
+    {
+      "word": "swim",
+      "definitions": [
+        "v. 游泳"
+      ]
+    },
+    {
+      "word": "client",
+      "definitions": [
+        "n. 客户"
+      ]
+    },
+    {
+      "word": "finally",
+      "definitions": [
+        "adv. 最终"
+      ]
+    },
+    {
+      "word": "comfortable",
+      "definitions": [
+        "adj. 舒服的"
+      ]
+    },
+    {
+      "word": "waste",
+      "definitions": [
+        "n./v. 浪费"
+      ]
+    },
+    {
+      "word": "southeast",
+      "definitions": [
+        "n. 东南"
+      ]
+    },
+    {
+      "word": "super",
+      "definitions": [
+        "adj. 超级",
+        "adv. 极度"
+      ]
+    },
+    {
+      "word": "feet",
+      "definitions": [
+        "n. 脚；英尺"
+      ]
+    },
+    {
+      "word": "west",
+      "definitions": [
+        "n. 西边"
+      ]
+    },
+    {
+      "word": "even",
+      "definitions": [
+        "adv. 甚至，即使",
+        "adj. 相等的",
+        "v. 使均等，使平衡"
+      ]
+    },
+    {
+      "word": "year",
+      "definitions": [
+        "n. 年"
+      ]
+    },
+    {
+      "word": "peanut",
+      "definitions": [
+        "n. 花生"
+      ]
+    },
+    {
+      "word": "theater",
+      "definitions": [
+        "n. 剧院，戏剧"
+      ]
+    },
+    {
+      "word": "event",
+      "definitions": [
+        "n. 事件，活动"
+      ]
+    },
+    {
+      "word": "festival",
+      "definitions": [
+        "n. 节日"
+      ]
+    },
+    {
+      "word": "hungry",
+      "definitions": [
+        "adj. 饿的"
+      ]
+    },
+    {
+      "word": "fall",
+      "definitions": [
+        "v. 落下，倒下",
+        "n. 秋天；瀑布"
+      ]
+    },
+    {
+      "word": "artist",
+      "definitions": [
+        "n. 艺术家"
+      ]
+    },
+    {
+      "word": "animal",
+      "definitions": [
+        "n. 动物"
+      ]
+    },
+    {
+      "word": "southeastern",
+      "definitions": [
+        "adj. 东南的"
+      ]
+    },
+    {
+      "word": "dance",
+      "definitions": [
+        "n./v. 跳舞"
+      ]
+    },
+    {
+      "word": "grass",
+      "definitions": [
+        "n. 草地"
+      ]
+    },
+    {
+      "word": "difficult",
+      "definitions": [
+        "adj. 难的"
+      ]
+    },
+    {
+      "word": "decide",
+      "definitions": [
+        "v. 决定"
+      ]
+    },
+    {
+      "word": "system",
+      "definitions": [
+        "n. 系统"
+      ]
+    },
+    {
+      "word": "lamp",
+      "definitions": [
+        "n. 灯"
+      ]
+    },
+    {
+      "word": "shock",
+      "definitions": [
+        "n. 震惊；冲击，电击"
+      ]
+    },
+    {
+      "word": "ring",
+      "definitions": [
+        "v. 环绕；敲响",
+        "n. 环状物，戒指"
+      ]
+    },
+    {
+      "word": "add",
+      "definitions": [
+        "v. 添加"
+      ]
+    },
+    {
+      "word": "story",
+      "definitions": [
+        "n. 故事"
+      ]
+    },
+    {
+      "word": "level",
+      "definitions": [
+        "n. 水平",
+        "v. 平衡"
+      ]
+    },
+    {
+      "word": "error",
+      "definitions": [
+        "n. 错误"
+      ]
+    },
+    {
+      "word": "repair",
+      "definitions": [
+        "n. 修复"
+      ]
+    },
+    {
+      "word": "patient",
+      "definitions": [
+        "adj. 有耐心的",
+        "n. 病人"
+      ]
+    },
+    {
+      "word": "full",
+      "definitions": [
+        "adj. 满的，充分的"
+      ]
+    },
+    {
+      "word": "learn",
+      "definitions": [
+        "v. 学习；得知"
+      ]
+    },
+    {
+      "word": "straight",
+      "definitions": [
+        "adj. 直的",
+        "adv. 直接地，坦率地"
+      ]
+    },
+    {
+      "word": "describe",
+      "definitions": [
+        "v. 描述"
+      ]
+    },
+    {
+      "word": "researcher",
+      "definitions": [
+        "n. 研究者"
+      ]
+    }
+  ]
+}

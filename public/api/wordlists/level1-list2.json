@@ -1,0 +1,633 @@
+{
+  "meta": {
+    "level": 1,
+    "list": 2,
+    "title": "Level 1 · List 2",
+    "updatedAt": "2026-07-04"
+  },
+  "words": [
+    {
+      "word": "development",
+      "definitions": [
+        "n. 发展"
+      ]
+    },
+    {
+      "word": "wide",
+      "definitions": [
+        "adj. 宽的"
+      ]
+    },
+    {
+      "word": "onion",
+      "definitions": [
+        "n. 洋葱"
+      ]
+    },
+    {
+      "word": "feeling",
+      "definitions": [
+        "n. 感觉"
+      ]
+    },
+    {
+      "word": "giant",
+      "definitions": [
+        "adj. 巨大的"
+      ]
+    },
+    {
+      "word": "winter",
+      "definitions": [
+        "n. 冬季"
+      ]
+    },
+    {
+      "word": "gray",
+      "definitions": [
+        "adj. 灰白的"
+      ]
+    },
+    {
+      "word": "rest",
+      "definitions": [
+        "n. 休息；剩下的人/东西",
+        "v. 休息"
+      ]
+    },
+    {
+      "word": "other",
+      "definitions": [
+        "adj. 其他的，另外的",
+        "adv. 另外地",
+        "pron. 其他的人/物"
+      ]
+    },
+    {
+      "word": "train",
+      "definitions": [
+        "v. 训练",
+        "n. 火车；行列，一连串，一系列"
+      ]
+    },
+    {
+      "word": "yellow",
+      "definitions": [
+        "adj. 黄色的"
+      ]
+    },
+    {
+      "word": "room",
+      "definitions": [
+        "n. 房间；空间"
+      ]
+    },
+    {
+      "word": "travel",
+      "definitions": [
+        "v. 旅行；移动",
+        "n. 旅程"
+      ]
+    },
+    {
+      "word": "favorite",
+      "definitions": [
+        "adj. 最爱的"
+      ]
+    },
+    {
+      "word": "piece",
+      "definitions": [
+        "n. 一片，一件"
+      ]
+    },
+    {
+      "word": "great",
+      "definitions": [
+        "adj. 伟大的；超乎寻常的"
+      ]
+    },
+    {
+      "word": "quiet",
+      "definitions": [
+        "adj. 安静的"
+      ]
+    },
+    {
+      "word": "star",
+      "definitions": [
+        "n. 星星",
+        "v. 主演"
+      ]
+    },
+    {
+      "word": "darling",
+      "definitions": [
+        "n. 亲爱的"
+      ]
+    },
+    {
+      "word": "danger",
+      "definitions": [
+        "n. 危险"
+      ]
+    },
+    {
+      "word": "rainbow",
+      "definitions": [
+        "n. 彩虹"
+      ]
+    },
+    {
+      "word": "share",
+      "definitions": [
+        "v. 分享",
+        "n. 一份，股份"
+      ]
+    },
+    {
+      "word": "tear",
+      "definitions": [
+        "v. 撕裂",
+        "n. 眼泪"
+      ]
+    },
+    {
+      "word": "hunter",
+      "definitions": [
+        "n. 猎人"
+      ]
+    },
+    {
+      "word": "small",
+      "definitions": [
+        "adj. 小的"
+      ]
+    },
+    {
+      "word": "habit",
+      "definitions": [
+        "n. 习惯"
+      ]
+    },
+    {
+      "word": "whale",
+      "definitions": [
+        "n. 鲸鱼"
+      ]
+    },
+    {
+      "word": "abroad",
+      "definitions": [
+        "adj. 国外的"
+      ]
+    },
+    {
+      "word": "paint",
+      "definitions": [
+        "v. 画，刷漆",
+        "n. 颜料，油漆"
+      ]
+    },
+    {
+      "word": "silent",
+      "definitions": [
+        "adj. 安静的；无声的"
+      ]
+    },
+    {
+      "word": "fight",
+      "definitions": [
+        "n./v. 战斗，吵架"
+      ]
+    },
+    {
+      "word": "earthquake",
+      "definitions": [
+        "n. 地震"
+      ]
+    },
+    {
+      "word": "happen",
+      "definitions": [
+        "v. 发生"
+      ]
+    },
+    {
+      "word": "laughter",
+      "definitions": [
+        "n. 笑声"
+      ]
+    },
+    {
+      "word": "thief",
+      "definitions": [
+        "n. 小偷"
+      ]
+    },
+    {
+      "word": "simple",
+      "definitions": [
+        "adj. 简单的"
+      ]
+    },
+    {
+      "word": "real",
+      "definitions": [
+        "adj. 真的"
+      ]
+    },
+    {
+      "word": "secret",
+      "definitions": [
+        "n. 秘密"
+      ]
+    },
+    {
+      "word": "sigh",
+      "definitions": [
+        "v./n. 叹气"
+      ]
+    },
+    {
+      "word": "party",
+      "definitions": [
+        "n. 聚会；党派"
+      ]
+    },
+    {
+      "word": "shop",
+      "definitions": [
+        "n. 商店",
+        "v. 购物"
+      ]
+    },
+    {
+      "word": "tank",
+      "definitions": [
+        "n. 箱；坦克",
+        "v. 打败"
+      ]
+    },
+    {
+      "word": "side",
+      "definitions": [
+        "n. 侧面；边",
+        "v. 同意，支持"
+      ]
+    },
+    {
+      "word": "broad",
+      "definitions": [
+        "adj. 宽的；广泛的"
+      ]
+    },
+    {
+      "word": "several",
+      "definitions": [
+        "adj. 几个"
+      ]
+    },
+    {
+      "word": "addition",
+      "definitions": [
+        "n. 加法；增加(值)之物"
+      ]
+    },
+    {
+      "word": "maker",
+      "definitions": [
+        "n. 制造者"
+      ]
+    },
+    {
+      "word": "cloudy",
+      "definitions": [
+        "adj. 多云的"
+      ]
+    },
+    {
+      "word": "passenger",
+      "definitions": [
+        "n. 旅客；行人"
+      ]
+    },
+    {
+      "word": "software",
+      "definitions": [
+        "n. 软件"
+      ]
+    },
+    {
+      "word": "foolish",
+      "definitions": [
+        "adj. 愚蠢的"
+      ]
+    },
+    {
+      "word": "joke",
+      "definitions": [
+        "n. 玩笑",
+        "v. 开玩笑"
+      ]
+    },
+    {
+      "word": "modern",
+      "definitions": [
+        "adj. 现代的"
+      ]
+    },
+    {
+      "word": "explanation",
+      "definitions": [
+        "n. 解释"
+      ]
+    },
+    {
+      "word": "see",
+      "definitions": [
+        "v. 看；领会；见证"
+      ]
+    },
+    {
+      "word": "except",
+      "definitions": [
+        "prep. 除……之外"
+      ]
+    },
+    {
+      "word": "confident",
+      "definitions": [
+        "adj. 自信的"
+      ]
+    },
+    {
+      "word": "inside",
+      "definitions": [
+        "n. 里面",
+        "prep. 在……里面"
+      ]
+    },
+    {
+      "word": "technical",
+      "definitions": [
+        "adj. 技术上的"
+      ]
+    },
+    {
+      "word": "hat",
+      "definitions": [
+        "n. 帽子"
+      ]
+    },
+    {
+      "word": "incorrect",
+      "definitions": [
+        "adj. 不正确的"
+      ]
+    },
+    {
+      "word": "neither",
+      "definitions": [
+        "conj. 都不"
+      ]
+    },
+    {
+      "word": "childhood",
+      "definitions": [
+        "n. 童年"
+      ]
+    },
+    {
+      "word": "help",
+      "definitions": [
+        "v. 帮助；阻止，忍住",
+        "n. 帮助"
+      ]
+    },
+    {
+      "word": "twice",
+      "definitions": [
+        "adv. 两次"
+      ]
+    },
+    {
+      "word": "idea",
+      "definitions": [
+        "n. 想法"
+      ]
+    },
+    {
+      "word": "management",
+      "definitions": [
+        "n. 管理"
+      ]
+    },
+    {
+      "word": "give",
+      "definitions": [
+        "v. 给"
+      ]
+    },
+    {
+      "word": "hour",
+      "definitions": [
+        "n. 小时"
+      ]
+    },
+    {
+      "word": "park",
+      "definitions": [
+        "n. 公园",
+        "v. 停放"
+      ]
+    },
+    {
+      "word": "lend",
+      "definitions": [
+        "v. 借出；增添，提供"
+      ]
+    },
+    {
+      "word": "smell",
+      "definitions": [
+        "n. 气味",
+        "v. 闻；发臭"
+      ]
+    },
+    {
+      "word": "between",
+      "definitions": [
+        "prep. 在……之间"
+      ]
+    },
+    {
+      "word": "disagree",
+      "definitions": [
+        "v. 不同意"
+      ]
+    },
+    {
+      "word": "pass",
+      "definitions": [
+        "v. 通过；传递",
+        "n. 通行证"
+      ]
+    },
+    {
+      "word": "zero",
+      "definitions": [
+        "n. 零"
+      ]
+    },
+    {
+      "word": "math",
+      "definitions": [
+        "n. 数学"
+      ]
+    },
+    {
+      "word": "little",
+      "definitions": [
+        "adj. 小的，很少的"
+      ]
+    },
+    {
+      "word": "Paris",
+      "definitions": [
+        "n. 巴黎"
+      ]
+    },
+    {
+      "word": "serve",
+      "definitions": [
+        "v. 服务；任职；发球"
+      ]
+    },
+    {
+      "word": "narrow",
+      "definitions": [
+        "adj. 狭窄的",
+        "v. 缩小"
+      ]
+    },
+    {
+      "word": "policy",
+      "definitions": [
+        "n. 政策"
+      ]
+    },
+    {
+      "word": "shine",
+      "definitions": [
+        "v. 发光"
+      ]
+    },
+    {
+      "word": "village",
+      "definitions": [
+        "n. 村庄"
+      ]
+    },
+    {
+      "word": "pipe",
+      "definitions": [
+        "n. 管子"
+      ]
+    },
+    {
+      "word": "ever",
+      "definitions": [
+        "adv. 从来"
+      ]
+    },
+    {
+      "word": "just",
+      "definitions": [
+        "adv. 刚好；只是",
+        "adj. 公正的"
+      ]
+    },
+    {
+      "word": "shout",
+      "definitions": [
+        "v. 大喊",
+        "n. 喊叫"
+      ]
+    },
+    {
+      "word": "butterfly",
+      "definitions": [
+        "n. 蝴蝶"
+      ]
+    },
+    {
+      "word": "brain",
+      "definitions": [
+        "n. 大脑"
+      ]
+    },
+    {
+      "word": "mind",
+      "definitions": [
+        "n. 头脑，思想",
+        "v. 介意"
+      ]
+    },
+    {
+      "word": "hear",
+      "definitions": [
+        "v. 听到；审理"
+      ]
+    },
+    {
+      "word": "hope",
+      "definitions": [
+        "n./v. 希望"
+      ]
+    },
+    {
+      "word": "shopper",
+      "definitions": [
+        "n. 购物者"
+      ]
+    },
+    {
+      "word": "crazy",
+      "definitions": [
+        "adj. 疯狂的"
+      ]
+    },
+    {
+      "word": "drive",
+      "definitions": [
+        "v. 驾驶；驱赶",
+        "n. 动力"
+      ]
+    },
+    {
+      "word": "reality",
+      "definitions": [
+        "n. 现实"
+      ]
+    },
+    {
+      "word": "career",
+      "definitions": [
+        "n. 事业"
+      ]
+    },
+    {
+      "word": "cave",
+      "definitions": [
+        "n. 洞穴"
+      ]
+    },
+    {
+      "word": "successful",
+      "definitions": [
+        "adj. 成功的"
+      ]
+    }
+  ]
+}

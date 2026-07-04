@@ -510,6 +510,16 @@ body {
     opacity 0.28s ease;
 }
 
+.flashcard-swipe--hint-known .flashcard__face {
+  border-color: var(--correct-border);
+  box-shadow: 0 0 0 1px var(--correct-border), var(--shadow-lg);
+}
+
+.flashcard-swipe--hint-unknown .flashcard__face {
+  border-color: var(--wrong-border);
+  box-shadow: 0 0 0 1px var(--wrong-border), var(--shadow-lg);
+}
+
 .flashcard__face {
   transform-style: preserve-3d;
   backface-visibility: hidden;

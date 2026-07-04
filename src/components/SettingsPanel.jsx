@@ -1,8 +1,7 @@
 import { useState, useEffect, useMemo, useRef } from "react";
 import { useSettings } from "../context/SettingsContext";
-import { exportLocalData, formatPairingCode, getSyncSummary, normalizePairingCode } from "../shared/sync";
-import { pushSyncPayload } from "../services/syncApi";
-import { syncService, SYNC_STATUS_EVENT } from "../services/syncService";
+import { formatPairingCode, getSyncSummary, normalizePairingCode } from "../shared/sync";
+import { pushSyncData, syncService, SYNC_STATUS_EVENT } from "../services/syncService";
 import {
   CORRECT_SOUND_OPTIONS,
   WRONG_SOUND_OPTIONS,
@@ -125,7 +124,7 @@ export default function SettingsPanel() {
     setSyncError("");
     setSyncMessage("");
     try {
-      const result = await pushSyncPayload(exportLocalData());
+      const result = await pushSyncData();
       const host = window.location.host;
       setUploadedCode(result.code);
       setUploadedHost(host);
@@ -149,7 +148,7 @@ export default function SettingsPanel() {
         );
       }
     } catch (err) {
-      setSyncError(err.message || "上传失败");
+      setSyncError(err.message || "上传失败，请稍后重试");
     } finally {
       setSyncBusy(false);
     }

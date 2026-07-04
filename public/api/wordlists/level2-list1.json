@@ -1,0 +1,625 @@
+{
+  "meta": {
+    "level": 2,
+    "list": 1,
+    "title": "Level 2 · List 1",
+    "updatedAt": "2026-07-04"
+  },
+  "words": [
+    {
+      "word": "nitrogen",
+      "definitions": [
+        "n. 氮"
+      ]
+    },
+    {
+      "word": "heat",
+      "definitions": [
+        "n. 高温；暖气；激情",
+        "v. 加热；供暖"
+      ]
+    },
+    {
+      "word": "cartoon",
+      "definitions": [
+        "n. 漫画，动画"
+      ]
+    },
+    {
+      "word": "remember",
+      "definitions": [
+        "v. 记得"
+      ]
+    },
+    {
+      "word": "relaxation",
+      "definitions": [
+        "n. 放松"
+      ]
+    },
+    {
+      "word": "advertise",
+      "definitions": [
+        "v. 为……做广告"
+      ]
+    },
+    {
+      "word": "creator",
+      "definitions": [
+        "n. 创造者"
+      ]
+    },
+    {
+      "word": "spear",
+      "definitions": [
+        "n. 矛"
+      ]
+    },
+    {
+      "word": "dioxide",
+      "definitions": [
+        "n. 二氧化物"
+      ]
+    },
+    {
+      "word": "victim",
+      "definitions": [
+        "n. 受害者"
+      ]
+    },
+    {
+      "word": "medical",
+      "definitions": [
+        "adj. 医学的"
+      ]
+    },
+    {
+      "word": "totally",
+      "definitions": [
+        "adv. 完全"
+      ]
+    },
+    {
+      "word": "oxygen",
+      "definitions": [
+        "n. 氧气"
+      ]
+    },
+    {
+      "word": "dine",
+      "definitions": [
+        "v. 进餐"
+      ]
+    },
+    {
+      "word": "farming",
+      "definitions": [
+        "n. 农业"
+      ]
+    },
+    {
+      "word": "culture",
+      "definitions": [
+        "n. 文化；培植(细菌)"
+      ]
+    },
+    {
+      "word": "separate",
+      "definitions": [
+        "adj. 分开的",
+        "v. 分开"
+      ]
+    },
+    {
+      "word": "ordinary",
+      "definitions": [
+        "adj. 普通的"
+      ]
+    },
+    {
+      "word": "seaweed",
+      "definitions": [
+        "n. 海草"
+      ]
+    },
+    {
+      "word": "Darwin",
+      "definitions": [
+        "n. 达尔文"
+      ]
+    },
+    {
+      "word": "chapter",
+      "definitions": [
+        "n. 地方分会；篇章；全体教职人员"
+      ]
+    },
+    {
+      "word": "jet",
+      "definitions": [
+        "n. 喷气式飞机",
+        "v. 喷出"
+      ]
+    },
+    {
+      "word": "carrot",
+      "definitions": [
+        "n. 胡萝卜"
+      ]
+    },
+    {
+      "word": "bunch",
+      "definitions": [
+        "n. 一束，一群",
+        "v. 把……扎成捆"
+      ]
+    },
+    {
+      "word": "lord",
+      "definitions": [
+        "n. 主，上帝；领主，贵族"
+      ]
+    },
+    {
+      "word": "forth",
+      "definitions": [
+        "adv. 向前"
+      ]
+    },
+    {
+      "word": "wetland",
+      "definitions": [
+        "n. 湿地"
+      ]
+    },
+    {
+      "word": "due",
+      "definitions": [
+        "adj. 到期的；应得的；正当的",
+        "prep. 由于"
+      ]
+    },
+    {
+      "word": "nuclear",
+      "definitions": [
+        "adj. 核能的"
+      ]
+    },
+    {
+      "word": "radar",
+      "definitions": [
+        "n. 雷达"
+      ]
+    },
+    {
+      "word": "elsewhere",
+      "definitions": [
+        "adv. 别处"
+      ]
+    },
+    {
+      "word": "boot",
+      "definitions": [
+        "n. 靴子",
+        "v. 启动电脑(系统)"
+      ]
+    },
+    {
+      "word": "lobster",
+      "definitions": [
+        "n. 龙虾"
+      ]
+    },
+    {
+      "word": "employ",
+      "definitions": [
+        "v. 使用；雇用"
+      ]
+    },
+    {
+      "word": "treasure",
+      "definitions": [
+        "n. 珍宝",
+        "v. 珍惜，珍藏"
+      ]
+    },
+    {
+      "word": "employer",
+      "definitions": [
+        "n. 雇主"
+      ]
+    },
+    {
+      "word": "moreover",
+      "definitions": [
+        "adv. 此外"
+      ]
+    },
+    {
+      "word": "container",
+      "definitions": [
+        "n. 容器；集装箱"
+      ]
+    },
+    {
+      "word": "affect",
+      "definitions": [
+        "v. 影响"
+      ]
+    },
+    {
+      "word": "steel",
+      "definitions": [
+        "n. 钢"
+      ]
+    },
+    {
+      "word": "directly",
+      "definitions": [
+        "adv. 直接地，恰好地；立刻"
+      ]
+    },
+    {
+      "word": "issue",
+      "definitions": [
+        "n. 问题，议题；发行物",
+        "v. 发布，发行；发给，放出"
+      ]
+    },
+    {
+      "word": "bun",
+      "definitions": [
+        "n. 圆面包；圆发髻"
+      ]
+    },
+    {
+      "word": "European",
+      "definitions": [
+        "n. 欧洲人",
+        "adj. 欧洲的"
+      ]
+    },
+    {
+      "word": "timekeeper",
+      "definitions": [
+        "n. 计时员"
+      ]
+    },
+    {
+      "word": "metal",
+      "definitions": [
+        "n./adj. 金属(的)"
+      ]
+    },
+    {
+      "word": "lily",
+      "definitions": [
+        "n. 百合花"
+      ]
+    },
+    {
+      "word": "inexpensive",
+      "definitions": [
+        "adj. 不贵的"
+      ]
+    },
+    {
+      "word": "belief",
+      "definitions": [
+        "n. 信仰"
+      ]
+    },
+    {
+      "word": "humorous",
+      "definitions": [
+        "adj. 幽默的"
+      ]
+    },
+    {
+      "word": "ignore",
+      "definitions": [
+        "v. 无视"
+      ]
+    },
+    {
+      "word": "upset",
+      "definitions": [
+        "v. 使……苦恼"
+      ]
+    },
+    {
+      "word": "bay",
+      "definitions": [
+        "n. 湾；月桂"
+      ]
+    },
+    {
+      "word": "throughout",
+      "definitions": [
+        "prep. 遍及，贯穿"
+      ]
+    },
+    {
+      "word": "fair",
+      "definitions": [
+        "n. 集市，展会",
+        "adj. 公平的；美丽的"
+      ]
+    },
+    {
+      "word": "popularity",
+      "definitions": [
+        "n. 受欢迎程度"
+      ]
+    },
+    {
+      "word": "suitable",
+      "definitions": [
+        "adj. 恰当的"
+      ]
+    },
+    {
+      "word": "unless",
+      "definitions": [
+        "conj. 除非"
+      ]
+    },
+    {
+      "word": "friendliness",
+      "definitions": [
+        "n. 友好"
+      ]
+    },
+    {
+      "word": "disappoint",
+      "definitions": [
+        "v. 使……失望"
+      ]
+    },
+    {
+      "word": "amazed",
+      "definitions": [
+        "adj. 惊奇的"
+      ]
+    },
+    {
+      "word": "mathematician",
+      "definitions": [
+        "n. 数学家"
+      ]
+    },
+    {
+      "word": "weigh",
+      "definitions": [
+        "v. 称重；权衡"
+      ]
+    },
+    {
+      "word": "mention",
+      "definitions": [
+        "v. 提及"
+      ]
+    },
+    {
+      "word": "spoon",
+      "definitions": [
+        "n. 匙"
+      ]
+    },
+    {
+      "word": "explorer",
+      "definitions": [
+        "n. 探险者"
+      ]
+    },
+    {
+      "word": "model",
+      "definitions": [
+        "n. 模型；榜样；模特"
+      ]
+    },
+    {
+      "word": "lead",
+      "definitions": [
+        "n. 铅；线索",
+        "n./v. 引领，领先"
+      ]
+    },
+    {
+      "word": "stonewall",
+      "definitions": [
+        "n. 石墙",
+        "v. 拖延"
+      ]
+    },
+    {
+      "word": "giraffe",
+      "definitions": [
+        "n. 长颈鹿"
+      ]
+    },
+    {
+      "word": "deed",
+      "definitions": [
+        "n. 行为；契约"
+      ]
+    },
+    {
+      "word": "scene",
+      "definitions": [
+        "n. 场景；现场"
+      ]
+    },
+    {
+      "word": "photographic",
+      "definitions": [
+        "adj. 摄影的；过目不忘的"
+      ]
+    },
+    {
+      "word": "whatever",
+      "definitions": [
+        "pron. 无论什么；随便"
+      ]
+    },
+    {
+      "word": "hire",
+      "definitions": [
+        "n. 雇用"
+      ]
+    },
+    {
+      "word": "experimentally",
+      "definitions": [
+        "adv. 试验性的"
+      ]
+    },
+    {
+      "word": "dragon",
+      "definitions": [
+        "n. 龙"
+      ]
+    },
+    {
+      "word": "flash",
+      "definitions": [
+        "n. 闪光；闪现"
+      ]
+    },
+    {
+      "word": "beneficial",
+      "definitions": [
+        "adj. 有益的"
+      ]
+    },
+    {
+      "word": "update",
+      "definitions": [
+        "n./v. 更新"
+      ]
+    },
+    {
+      "word": "certainty",
+      "definitions": [
+        "n. 确定"
+      ]
+    },
+    {
+      "word": "gasoline",
+      "definitions": [
+        "n. 汽油"
+      ]
+    },
+    {
+      "word": "breeze",
+      "definitions": [
+        "n. 微风"
+      ]
+    },
+    {
+      "word": "somehow",
+      "definitions": [
+        "adv. 以某种方法，总能"
+      ]
+    },
+    {
+      "word": "vitamin",
+      "definitions": [
+        "n. 维生素"
+      ]
+    },
+    {
+      "word": "blanket",
+      "definitions": [
+        "n. 毯子",
+        "v. 覆盖"
+      ]
+    },
+    {
+      "word": "ancient",
+      "definitions": [
+        "adj. 古老的"
+      ]
+    },
+    {
+      "word": "unclear",
+      "definitions": [
+        "adj. 不清楚的"
+      ]
+    },
+    {
+      "word": "dust",
+      "definitions": [
+        "n. 灰尘",
+        "v. 打扫；撒"
+      ]
+    },
+    {
+      "word": "broadcast",
+      "definitions": [
+        "n./v. 广播，传播、散布(消息)"
+      ]
+    },
+    {
+      "word": "pine",
+      "definitions": [
+        "n. 松树"
+      ]
+    },
+    {
+      "word": "border",
+      "definitions": [
+        "n. 边界",
+        "v. 接壤；环绕"
+      ]
+    },
+    {
+      "word": "recorder",
+      "definitions": [
+        "n. 录音机；记录员"
+      ]
+    },
+    {
+      "word": "exactly",
+      "definitions": [
+        "adv. 确切地"
+      ]
+    },
+    {
+      "word": "gently",
+      "definitions": [
+        "adv. 柔和地"
+      ]
+    },
+    {
+      "word": "prehistory",
+      "definitions": [
+        "n. 史前"
+      ]
+    },
+    {
+      "word": "choice",
+      "definitions": [
+        "n. 选择"
+      ]
+    },
+    {
+      "word": "climatic",
+      "definitions": [
+        "adj. 气候的"
+      ]
+    },
+    {
+      "word": "rename",
+      "definitions": [
+        "v. 重命名"
+      ]
+    },
+    {
+      "word": "sleepiness",
+      "definitions": [
+        "n. 困倦"
+      ]
+    }
+  ]
+}

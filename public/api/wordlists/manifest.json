@@ -1,8 +1,134 @@
 {
   "version": 1,
-  "updatedAt": "2026-06-28",
+  "updatedAt": "2026-07-04",
   "defaultListId": "level3-list1",
   "lists": [
+    {
+      "id": "level1-list1",
+      "title": "Level 1 · List 1",
+      "level": 1,
+      "list": 1,
+      "wordCount": 100
+    },
+    {
+      "id": "level1-list2",
+      "title": "Level 1 · List 2",
+      "level": 1,
+      "list": 2,
+      "wordCount": 100
+    },
+    {
+      "id": "level1-list3",
+      "title": "Level 1 · List 3",
+      "level": 1,
+      "list": 3,
+      "wordCount": 100
+    },
+    {
+      "id": "level1-list4",
+      "title": "Level 1 · List 4",
+      "level": 1,
+      "list": 4,
+      "wordCount": 100
+    },
+    {
+      "id": "level1-list5",
+      "title": "Level 1 · List 5",
+      "level": 1,
+      "list": 5,
+      "wordCount": 100
+    },
+    {
+      "id": "level1-list6",
+      "title": "Level 1 · List 6",
+      "level": 1,
+      "list": 6,
+      "wordCount": 100
+    },
+    {
+      "id": "level1-list7",
+      "title": "Level 1 · List 7",
+      "level": 1,
+      "list": 7,
+      "wordCount": 100
+    },
+    {
+      "id": "level1-list8",
+      "title": "Level 1 · List 8",
+      "level": 1,
+      "list": 8,
+      "wordCount": 100
+    },
+    {
+      "id": "level1-list9",
+      "title": "Level 1 · List 9",
+      "level": 1,
+      "list": 9,
+      "wordCount": 99
+    },
+    {
+      "id": "level1-list10",
+      "title": "Level 1 · List 10",
+      "level": 1,
+      "list": 10,
+      "wordCount": 100
+    },
+    {
+      "id": "level1-list11",
+      "title": "Level 1 · List 11",
+      "level": 1,
+      "list": 11,
+      "wordCount": 100
+    },
+    {
+      "id": "level1-list12",
+      "title": "Level 1 · List 12",
+      "level": 1,
+      "list": 12,
+      "wordCount": 42
+    },
+    {
+      "id": "level2-list1",
+      "title": "Level 2 · List 1",
+      "level": 2,
+      "list": 1,
+      "wordCount": 100
+    },
+    {
+      "id": "level2-list2",
+      "title": "Level 2 · List 2",
+      "level": 2,
+      "list": 2,
+      "wordCount": 100
+    },
+    {
+      "id": "level2-list3",
+      "title": "Level 2 · List 3",
+      "level": 2,
+      "list": 3,
+      "wordCount": 100
+    },
+    {
+      "id": "level2-list4",
+      "title": "Level 2 · List 4",
+      "level": 2,
+      "list": 4,
+      "wordCount": 100
+    },
+    {
+      "id": "level2-list5",
+      "title": "Level 2 · List 5",
+      "level": 2,
+      "list": 5,
+      "wordCount": 100
+    },
+    {
+      "id": "level2-list6",
+      "title": "Level 2 · List 6",
+      "level": 2,
+      "list": 6,
+      "wordCount": 69
+    },
     {
       "id": "level3-list1",
       "title": "Level 3 · List 1",

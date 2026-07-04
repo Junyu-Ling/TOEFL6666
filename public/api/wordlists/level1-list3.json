@@ -1,0 +1,630 @@
+{
+  "meta": {
+    "level": 1,
+    "list": 3,
+    "title": "Level 1 · List 3",
+    "updatedAt": "2026-07-04"
+  },
+  "words": [
+    {
+      "word": "oil",
+      "definitions": [
+        "n. 油"
+      ]
+    },
+    {
+      "word": "sign",
+      "definitions": [
+        "n. 告示牌；手势；迹象",
+        "v. 签字"
+      ]
+    },
+    {
+      "word": "pleasure",
+      "definitions": [
+        "n. 愉悦"
+      ]
+    },
+    {
+      "word": "alive",
+      "definitions": [
+        "adj. 活着的；有活力的"
+      ]
+    },
+    {
+      "word": "player",
+      "definitions": [
+        "n. 运动员；演奏者"
+      ]
+    },
+    {
+      "word": "take",
+      "definitions": [
+        "v. 带走；接受"
+      ]
+    },
+    {
+      "word": "short",
+      "definitions": [
+        "adj. 短的；不足的"
+      ]
+    },
+    {
+      "word": "beneath",
+      "definitions": [
+        "prep. 在……之下"
+      ]
+    },
+    {
+      "word": "meter",
+      "definitions": [
+        "n. 米；仪表"
+      ]
+    },
+    {
+      "word": "gift",
+      "definitions": [
+        "n. 礼物；天赋"
+      ]
+    },
+    {
+      "word": "human",
+      "definitions": [
+        "n. 人"
+      ]
+    },
+    {
+      "word": "deep",
+      "definitions": [
+        "adj. 深的，深奥的"
+      ]
+    },
+    {
+      "word": "illness",
+      "definitions": [
+        "n. 疾病"
+      ]
+    },
+    {
+      "word": "bored",
+      "definitions": [
+        "adj. 厌倦的"
+      ]
+    },
+    {
+      "word": "magical",
+      "definitions": [
+        "adj. 有魔力的"
+      ]
+    },
+    {
+      "word": "cover",
+      "definitions": [
+        "v. 覆盖；掩护；报导",
+        "n. 封套"
+      ]
+    },
+    {
+      "word": "word",
+      "definitions": [
+        "n. 单词；话；消息"
+      ]
+    },
+    {
+      "word": "editor",
+      "definitions": [
+        "n. 编辑"
+      ]
+    },
+    {
+      "word": "mall",
+      "definitions": [
+        "n. 购物中心"
+      ]
+    },
+    {
+      "word": "climate",
+      "definitions": [
+        "n. 气候；风气，环境"
+      ]
+    },
+    {
+      "word": "vegetable",
+      "definitions": [
+        "n. 蔬菜"
+      ]
+    },
+    {
+      "word": "interesting",
+      "definitions": [
+        "adj. 有趣的"
+      ]
+    },
+    {
+      "word": "song",
+      "definitions": [
+        "n. 歌"
+      ]
+    },
+    {
+      "word": "goods",
+      "definitions": [
+        "n. 商品"
+      ]
+    },
+    {
+      "word": "junk",
+      "definitions": [
+        "n. 垃圾"
+      ]
+    },
+    {
+      "word": "act",
+      "definitions": [
+        "n. 行为；表演；法案",
+        "v. 行动；扮演"
+      ]
+    },
+    {
+      "word": "globe",
+      "definitions": [
+        "n. 地球"
+      ]
+    },
+    {
+      "word": "soft",
+      "definitions": [
+        "adj. 柔软的"
+      ]
+    },
+    {
+      "word": "play",
+      "definitions": [
+        "v. 玩；扮演，演奏；参与比赛",
+        "n. 戏剧；比赛"
+      ]
+    },
+    {
+      "word": "become",
+      "definitions": [
+        "v. 变成"
+      ]
+    },
+    {
+      "word": "cool",
+      "definitions": [
+        "adj. 凉的，冷静的，出色的",
+        "v. (使)冷却，(使)冷静"
+      ]
+    },
+    {
+      "word": "active",
+      "definitions": [
+        "adj. 活跃的；活性的"
+      ]
+    },
+    {
+      "word": "turtle",
+      "definitions": [
+        "n. 龟"
+      ]
+    },
+    {
+      "word": "stay",
+      "definitions": [
+        "v. 停留；保持"
+      ]
+    },
+    {
+      "word": "coat",
+      "definitions": [
+        "n. 外套；层",
+        "v. 给……涂上"
+      ]
+    },
+    {
+      "word": "usual",
+      "definitions": [
+        "adj. 通常的"
+      ]
+    },
+    {
+      "word": "child",
+      "definitions": [
+        "n. 小孩"
+      ]
+    },
+    {
+      "word": "use",
+      "definitions": [
+        "v. 使用",
+        "n. 使用；用处"
+      ]
+    },
+    {
+      "word": "salad",
+      "definitions": [
+        "n. 沙拉"
+      ]
+    },
+    {
+      "word": "strongly",
+      "definitions": [
+        "adv. 强烈地"
+      ]
+    },
+    {
+      "word": "newspaper",
+      "definitions": [
+        "n. 报纸"
+      ]
+    },
+    {
+      "word": "enter",
+      "definitions": [
+        "v. 进入"
+      ]
+    },
+    {
+      "word": "guide",
+      "definitions": [
+        "n. 向导",
+        "v. 引导"
+      ]
+    },
+    {
+      "word": "loss",
+      "definitions": [
+        "n. 损失"
+      ]
+    },
+    {
+      "word": "thing",
+      "definitions": [
+        "n. 东西；事情"
+      ]
+    },
+    {
+      "word": "nowadays",
+      "definitions": [
+        "adv. 当今"
+      ]
+    },
+    {
+      "word": "time",
+      "definitions": [
+        "n. 时间；次数；倍数；时期",
+        "v. 乘以"
+      ]
+    },
+    {
+      "word": "those",
+      "definitions": [
+        "pron. 那些"
+      ]
+    },
+    {
+      "word": "anger",
+      "definitions": [
+        "n. 愤怒",
+        "v. 使……发怒"
+      ]
+    },
+    {
+      "word": "work",
+      "definitions": [
+        "n. 工作；成果",
+        "v. 工作；起作用"
+      ]
+    },
+    {
+      "word": "already",
+      "definitions": [
+        "adv. 已经"
+      ]
+    },
+    {
+      "word": "office",
+      "definitions": [
+        "n. 办公室"
+      ]
+    },
+    {
+      "word": "gulf",
+      "definitions": [
+        "n. 海湾；巨大差别"
+      ]
+    },
+    {
+      "word": "choose",
+      "definitions": [
+        "v. 选择"
+      ]
+    },
+    {
+      "word": "high",
+      "definitions": [
+        "adj. 高的"
+      ]
+    },
+    {
+      "word": "museum",
+      "definitions": [
+        "n. 博物馆"
+      ]
+    },
+    {
+      "word": "waiter",
+      "definitions": [
+        "n. 服务生"
+      ]
+    },
+    {
+      "word": "everyday",
+      "definitions": [
+        "adj. 每日的"
+      ]
+    },
+    {
+      "word": "user",
+      "definitions": [
+        "n. 使用者"
+      ]
+    },
+    {
+      "word": "most",
+      "definitions": [
+        "adj. 最；大部分的"
+      ]
+    },
+    {
+      "word": "till",
+      "definitions": [
+        "prep. 直到"
+      ]
+    },
+    {
+      "word": "pocket",
+      "definitions": [
+        "n. 袋子；小区域"
+      ]
+    },
+    {
+      "word": "ill",
+      "definitions": [
+        "adj. 患病的；坏的"
+      ]
+    },
+    {
+      "word": "visit",
+      "definitions": [
+        "n. 访问",
+        "v. 来访"
+      ]
+    },
+    {
+      "word": "visitor",
+      "definitions": [
+        "n. 来访者"
+      ]
+    },
+    {
+      "word": "importance",
+      "definitions": [
+        "n. 重要性"
+      ]
+    },
+    {
+      "word": "god",
+      "definitions": [
+        "n. 神"
+      ]
+    },
+    {
+      "word": "best",
+      "definitions": [
+        "adj. 最好的"
+      ]
+    },
+    {
+      "word": "passage",
+      "definitions": [
+        "n. 通道；段落"
+      ]
+    },
+    {
+      "word": "second",
+      "definitions": [
+        "adj. 第二的",
+        "n. 秒",
+        "v. 支持"
+      ]
+    },
+    {
+      "word": "stand",
+      "definitions": [
+        "v. 站；忍受",
+        "n. 立场"
+      ]
+    },
+    {
+      "word": "long",
+      "definitions": [
+        "adj. 长的",
+        "v. 期望"
+      ]
+    },
+    {
+      "word": "tourism",
+      "definitions": [
+        "n. 旅游业"
+      ]
+    },
+    {
+      "word": "outsider",
+      "definitions": [
+        "n. 外来者"
+      ]
+    },
+    {
+      "word": "creative",
+      "definitions": [
+        "adj. 有创造力的"
+      ]
+    },
+    {
+      "word": "manage",
+      "definitions": [
+        "v. 管理；做到"
+      ]
+    },
+    {
+      "word": "listen",
+      "definitions": [
+        "v. 听"
+      ]
+    },
+    {
+      "word": "fee",
+      "definitions": [
+        "n. 费用"
+      ]
+    },
+    {
+      "word": "edit",
+      "definitions": [
+        "v. 编辑"
+      ]
+    },
+    {
+      "word": "useful",
+      "definitions": [
+        "adj. 有用的"
+      ]
+    },
+    {
+      "word": "rewrite",
+      "definitions": [
+        "v. 重写"
+      ]
+    },
+    {
+      "word": "power",
+      "definitions": [
+        "n. 力量；电能"
+      ]
+    },
+    {
+      "word": "easy",
+      "definitions": [
+        "adj. 容易的",
+        "adv. 从容地"
+      ]
+    },
+    {
+      "word": "invent",
+      "definitions": [
+        "v. 发明"
+      ]
+    },
+    {
+      "word": "powerful",
+      "definitions": [
+        "adj. 有力的"
+      ]
+    },
+    {
+      "word": "Europe",
+      "definitions": [
+        "n. 欧洲"
+      ]
+    },
+    {
+      "word": "cook",
+      "definitions": [
+        "v. 做饭；伪造",
+        "n. 厨师"
+      ]
+    },
+    {
+      "word": "soap",
+      "definitions": [
+        "n. 肥皂"
+      ]
+    },
+    {
+      "word": "horse",
+      "definitions": [
+        "n. 马"
+      ]
+    },
+    {
+      "word": "during",
+      "definitions": [
+        "prep. 在……期间"
+      ]
+    },
+    {
+      "word": "increase",
+      "definitions": [
+        "v. 增加"
+      ]
+    },
+    {
+      "word": "lip",
+      "definitions": [
+        "n. 嘴唇"
+      ]
+    },
+    {
+      "word": "heater",
+      "definitions": [
+        "n. 加热器"
+      ]
+    },
+    {
+      "word": "material",
+      "definitions": [
+        "n. 材料；内容",
+        "adj. 物质的；实质的"
+      ]
+    },
+    {
+      "word": "follower",
+      "definitions": [
+        "n. 追随者"
+      ]
+    },
+    {
+      "word": "might",
+      "definitions": [
+        "aux./v. (may过去式)可能，可以",
+        "n. 力量，强权"
+      ]
+    },
+    {
+      "word": "invitation",
+      "definitions": [
+        "n. 邀请"
+      ]
+    },
+    {
+      "word": "leader",
+      "definitions": [
+        "n. 领导者"
+      ]
+    },
+    {
+      "word": "area",
+      "definitions": [
+        "n. 面积；地区"
+      ]
+    },
+    {
+      "word": "scientist",
+      "definitions": [
+        "n. 科学家"
+      ]
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-export const AI_CHAT_HISTORY_KEY = "toefl666_ai_chat_history";
+const AI_CHAT_HISTORY_KEY = "toefl666_ai_chat_history";
 export const GENERAL_CHAT_KEY = "__general__";
 
 function readStore() {

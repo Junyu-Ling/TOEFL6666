@@ -52,6 +52,10 @@ function computeSwipeTransform(dx) {
   };
 }
 
+function isMarkSwipeMode(flipped, backMode) {
+  return flipped && backMode === "manual";
+}
+
 export default function FlashCard({
   wordData,
   wordStats,
@@ -107,6 +111,7 @@ export default function FlashCard({
   const dictatingRef = useRef(false);
   const resultRef = useRef(null);
   const handleBlankTapRef = useRef(null);
+  const handleManualMarkRef = useRef(null);
   const touchStartRef = useRef(null);
   const memoryFetchRef = useRef(false);
   const mobileInputFocusRef = useRef(false);
@@ -463,7 +468,13 @@ export default function FlashCard({
         e.preventDefault();
         swipeDraggingRef.current = true;
         const transform = computeSwipeTransform(dx);
-        setSwipeVisual({ mode: "drag", ...transform });
+        const markIntent =
+          isMarkSwipeMode(flippedRef.current, backModeRef.current) && dx !== 0
+            ? dx < 0
+              ? "known"
+              : "unknown"
+            : null;
+        setSwipeVisual({ mode: "drag", ...transform, markIntent });
       }
     }
 
@@ -491,6 +502,23 @@ export default function FlashCard({
 
       if (absDx >= SWIPE_THRESHOLD_PX && absDx > absDy * 1.15) {
         swipeLockRef.current = true;
+
+        if (isMarkSwipeMode(flippedRef.current, backModeRef.current)) {
+          const isKnown = dx < 0;
+          const exitMode = isKnown ? "exit-prev" : "exit-next";
+          const markIntent = isKnown ? "known" : "unknown";
+          setSwipeVisual({ mode: exitMode, markIntent });
+          window.setTimeout(() => {
+            if (isKnown && isMobileLayout() && isTypeModeRef.current) {
+              mobileInputFocusRef.current = true;
+            }
+            handleManualMarkRef.current?.(isKnown);
+            setSwipeVisual(null);
+            swipeLockRef.current = false;
+          }, SWIPE_EXIT_MS);
+          return;
+        }
+
         const exitMode = dx > 0 ? "exit-next" : "exit-prev";
         setSwipeVisual({ mode: exitMode });
         window.setTimeout(() => {
@@ -557,6 +585,10 @@ export default function FlashCard({
     },
     [wordData, onResult, onNext, stopDictation, showWrongAnswer]
   );
+
+  useEffect(() => {
+    handleManualMarkRef.current = handleManualMark;
+  }, [handleManualMark]);
 
   const advanceToMeaningStepRef = useRef(null);
 
@@ -1044,6 +1076,8 @@ export default function FlashCard({
     swipeVisual?.mode === "snap" && "flashcard-swipe--snap",
     swipeVisual?.mode === "exit-next" && "flashcard-swipe--exit-next",
     swipeVisual?.mode === "exit-prev" && "flashcard-swipe--exit-prev",
+    swipeVisual?.markIntent === "known" && "flashcard-swipe--hint-known",
+    swipeVisual?.markIntent === "unknown" && "flashcard-swipe--hint-unknown",
   ]
     .filter(Boolean)
     .join(" ");
@@ -1370,7 +1404,7 @@ export default function FlashCard({
                 1 认识 · 0 不认识 · Enter / 空格翻回正面
               </p>
               <p className="flashcard__footer flashcard__footer--back flashcard__footer--mobile">
-                点空白翻回 · 左滑上一词 · 右滑下一词
+                左滑认识 · 右滑不认识 · 点空白翻回
               </p>
             </>
           )}

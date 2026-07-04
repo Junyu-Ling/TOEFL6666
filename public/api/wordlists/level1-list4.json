@@ -1,0 +1,626 @@
+{
+  "meta": {
+    "level": 1,
+    "list": 4,
+    "title": "Level 1 · List 4",
+    "updatedAt": "2026-07-04"
+  },
+  "words": [
+    {
+      "word": "harmless",
+      "definitions": [
+        "adj. 无害的"
+      ]
+    },
+    {
+      "word": "headache",
+      "definitions": [
+        "n. 头痛"
+      ]
+    },
+    {
+      "word": "service",
+      "definitions": [
+        "n. 服务；服役"
+      ]
+    },
+    {
+      "word": "mainland",
+      "definitions": [
+        "n. 大陆"
+      ]
+    },
+    {
+      "word": "such",
+      "definitions": [
+        "adj. 如此的"
+      ]
+    },
+    {
+      "word": "tell",
+      "definitions": [
+        "v. 告诉；分辨"
+      ]
+    },
+    {
+      "word": "finger",
+      "definitions": [
+        "n. 手指"
+      ]
+    },
+    {
+      "word": "radio",
+      "definitions": [
+        "n. 收音机"
+      ]
+    },
+    {
+      "word": "beginning",
+      "definitions": [
+        "n. 开始"
+      ]
+    },
+    {
+      "word": "lake",
+      "definitions": [
+        "n. 湖"
+      ]
+    },
+    {
+      "word": "across",
+      "definitions": [
+        "prep. 穿过"
+      ]
+    },
+    {
+      "word": "month",
+      "definitions": [
+        "n. 月"
+      ]
+    },
+    {
+      "word": "heavy",
+      "definitions": [
+        "adj. 重的"
+      ]
+    },
+    {
+      "word": "tongue",
+      "definitions": [
+        "n. 舌头；语言；说话方式"
+      ]
+    },
+    {
+      "word": "warm",
+      "definitions": [
+        "adj. 温暖的"
+      ]
+    },
+    {
+      "word": "guitar",
+      "definitions": [
+        "n. 吉他"
+      ]
+    },
+    {
+      "word": "hill",
+      "definitions": [
+        "n. 小山坡"
+      ]
+    },
+    {
+      "word": "seller",
+      "definitions": [
+        "n. 售卖者"
+      ]
+    },
+    {
+      "word": "cent",
+      "definitions": [
+        "n. 一分钱"
+      ]
+    },
+    {
+      "word": "bedroom",
+      "definitions": [
+        "n. 卧室"
+      ]
+    },
+    {
+      "word": "thought",
+      "definitions": [
+        "n. 想法；思考"
+      ]
+    },
+    {
+      "word": "dirty",
+      "definitions": [
+        "adj. 脏的"
+      ]
+    },
+    {
+      "word": "carry",
+      "definitions": [
+        "v. 拿，携带；传播"
+      ]
+    },
+    {
+      "word": "war",
+      "definitions": [
+        "n. 战争"
+      ]
+    },
+    {
+      "word": "birthday",
+      "definitions": [
+        "n. 生日"
+      ]
+    },
+    {
+      "word": "supermarket",
+      "definitions": [
+        "n. 超市"
+      ]
+    },
+    {
+      "word": "attack",
+      "definitions": [
+        "n./v. 攻击"
+      ]
+    },
+    {
+      "word": "fail",
+      "definitions": [
+        "v. 失败"
+      ]
+    },
+    {
+      "word": "club",
+      "definitions": [
+        "n. 俱乐部；短棍"
+      ]
+    },
+    {
+      "word": "may",
+      "definitions": [
+        "aux. 可能，可以"
+      ]
+    },
+    {
+      "word": "bat",
+      "definitions": [
+        "n. 球棒；蝙蝠"
+      ]
+    },
+    {
+      "word": "yummy",
+      "definitions": [
+        "adj. 好吃的"
+      ]
+    },
+    {
+      "word": "diamond",
+      "definitions": [
+        "n. 钻石"
+      ]
+    },
+    {
+      "word": "technology",
+      "definitions": [
+        "n. 技术"
+      ]
+    },
+    {
+      "word": "chemistry",
+      "definitions": [
+        "n. 化学"
+      ]
+    },
+    {
+      "word": "only",
+      "definitions": [
+        "adv. 只是",
+        "adj. 唯一的"
+      ]
+    },
+    {
+      "word": "iceberg",
+      "definitions": [
+        "n. 冰山"
+      ]
+    },
+    {
+      "word": "nut",
+      "definitions": [
+        "n. 坚果；傻瓜"
+      ]
+    },
+    {
+      "word": "moon",
+      "definitions": [
+        "n. 月球；卫星"
+      ]
+    },
+    {
+      "word": "back",
+      "definitions": [
+        "n. 背，后面",
+        "v. 后退；支持"
+      ]
+    },
+    {
+      "word": "natural",
+      "definitions": [
+        "adj. 天然的"
+      ]
+    },
+    {
+      "word": "wish",
+      "definitions": [
+        "v. 希望",
+        "n. 愿望"
+      ]
+    },
+    {
+      "word": "invite",
+      "definitions": [
+        "v. 邀请"
+      ]
+    },
+    {
+      "word": "relationship",
+      "definitions": [
+        "n. 关系"
+      ]
+    },
+    {
+      "word": "boat",
+      "definitions": [
+        "n. 小船"
+      ]
+    },
+    {
+      "word": "aim",
+      "definitions": [
+        "n. 目标",
+        "v. 瞄准；企图"
+      ]
+    },
+    {
+      "word": "law",
+      "definitions": [
+        "n. 法律；定律"
+      ]
+    },
+    {
+      "word": "beat",
+      "definitions": [
+        "v. 击打"
+      ]
+    },
+    {
+      "word": "westward",
+      "definitions": [
+        "adj. 向西的"
+      ]
+    },
+    {
+      "word": "chair",
+      "definitions": [
+        "n. 椅子；主席"
+      ]
+    },
+    {
+      "word": "possibly",
+      "definitions": [
+        "adv. 可能"
+      ]
+    },
+    {
+      "word": "Italy",
+      "definitions": [
+        "n. 意大利"
+      ]
+    },
+    {
+      "word": "harm",
+      "definitions": [
+        "n./v. 伤害"
+      ]
+    },
+    {
+      "word": "spring",
+      "definitions": [
+        "v. 突然出现；起源；弹跳",
+        "n. 春天；泉；弹簧"
+      ]
+    },
+    {
+      "word": "farm",
+      "definitions": [
+        "n. 农场",
+        "v. 种植"
+      ]
+    },
+    {
+      "word": "free",
+      "definitions": [
+        "adj. 自由的；免费的"
+      ]
+    },
+    {
+      "word": "traditionally",
+      "definitions": [
+        "adv. 传统上"
+      ]
+    },
+    {
+      "word": "wonderful",
+      "definitions": [
+        "adj. 绝妙的"
+      ]
+    },
+    {
+      "word": "different",
+      "definitions": [
+        "adj. 不同的"
+      ]
+    },
+    {
+      "word": "stranger",
+      "definitions": [
+        "n. 陌生人"
+      ]
+    },
+    {
+      "word": "control",
+      "definitions": [
+        "n./v. 控制"
+      ]
+    },
+    {
+      "word": "pity",
+      "definitions": [
+        "n. 同情；遗憾"
+      ]
+    },
+    {
+      "word": "trash",
+      "definitions": [
+        "n. 垃圾",
+        "v. 破坏"
+      ]
+    },
+    {
+      "word": "outdoor",
+      "definitions": [
+        "adj. 户外的"
+      ]
+    },
+    {
+      "word": "dictionary",
+      "definitions": [
+        "n. 字典"
+      ]
+    },
+    {
+      "word": "luck",
+      "definitions": [
+        "n. 幸运"
+      ]
+    },
+    {
+      "word": "airplane",
+      "definitions": [
+        "n. 飞机"
+      ]
+    },
+    {
+      "word": "famous",
+      "definitions": [
+        "adj. 著名的"
+      ]
+    },
+    {
+      "word": "accident",
+      "definitions": [
+        "n. 意外，偶然"
+      ]
+    },
+    {
+      "word": "member",
+      "definitions": [
+        "n. 成员"
+      ]
+    },
+    {
+      "word": "key",
+      "definitions": [
+        "n. 钥匙；关键",
+        "adj. 关键的"
+      ]
+    },
+    {
+      "word": "sentence",
+      "definitions": [
+        "n. 句子；判决",
+        "v. 判决"
+      ]
+    },
+    {
+      "word": "pool",
+      "definitions": [
+        "n. 水池；储备",
+        "v. 共享"
+      ]
+    },
+    {
+      "word": "neighbor",
+      "definitions": [
+        "n. 邻居"
+      ]
+    },
+    {
+      "word": "advisor",
+      "definitions": [
+        "n. 顾问"
+      ]
+    },
+    {
+      "word": "ready",
+      "definitions": [
+        "adj. 准备好的"
+      ]
+    },
+    {
+      "word": "often",
+      "definitions": [
+        "adv. 经常"
+      ]
+    },
+    {
+      "word": "safe",
+      "definitions": [
+        "adj. 安全的",
+        "n. 保险箱"
+      ]
+    },
+    {
+      "word": "way",
+      "definitions": [
+        "n. 方式；路"
+      ]
+    },
+    {
+      "word": "healthy",
+      "definitions": [
+        "adj. 健康的"
+      ]
+    },
+    {
+      "word": "wing",
+      "definitions": [
+        "n. 翅膀；派系"
+      ]
+    },
+    {
+      "word": "wind",
+      "definitions": [
+        "n. 风；管乐器",
+        "v. 缠绕；蜿蜒；上发条"
+      ]
+    },
+    {
+      "word": "fool",
+      "definitions": [
+        "n. 蠢蛋",
+        "v. 愚弄"
+      ]
+    },
+    {
+      "word": "moment",
+      "definitions": [
+        "n. 片刻"
+      ]
+    },
+    {
+      "word": "rain",
+      "definitions": [
+        "n. 雨"
+      ]
+    },
+    {
+      "word": "garbage",
+      "definitions": [
+        "n. 垃圾"
+      ]
+    },
+    {
+      "word": "because",
+      "definitions": [
+        "conj. 因为"
+      ]
+    },
+    {
+      "word": "certain",
+      "definitions": [
+        "adj. 确定的；某些"
+      ]
+    },
+    {
+      "word": "relax",
+      "definitions": [
+        "v. 放松"
+      ]
+    },
+    {
+      "word": "double",
+      "definitions": [
+        "adj. 两倍的",
+        "v. 翻倍"
+      ]
+    },
+    {
+      "word": "drink",
+      "definitions": [
+        "v. 喝",
+        "n. 饮料"
+      ]
+    },
+    {
+      "word": "either",
+      "definitions": [
+        "adj. 两者中的任一个"
+      ]
+    },
+    {
+      "word": "shoe",
+      "definitions": [
+        "n. 鞋子"
+      ]
+    },
+    {
+      "word": "honest",
+      "definitions": [
+        "adj. 诚实的"
+      ]
+    },
+    {
+      "word": "British",
+      "definitions": [
+        "adj. 英国的"
+      ]
+    },
+    {
+      "word": "Asia",
+      "definitions": [
+        "n. 亚洲"
+      ]
+    },
+    {
+      "word": "population",
+      "definitions": [
+        "n. 人口"
+      ]
+    },
+    {
+      "word": "clever",
+      "definitions": [
+        "adj. 聪明的"
+      ]
+    },
+    {
+      "word": "school",
+      "definitions": [
+        "n. 学校；流派"
+      ]
+    },
+    {
+      "word": "bite",
+      "definitions": [
+        "v. 咬",
+        "n. 叮咬；小吃"
+      ]
+    }
+  ]
+}

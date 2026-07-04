@@ -1,0 +1,624 @@
+{
+  "meta": {
+    "level": 1,
+    "list": 1,
+    "title": "Level 1 · List 1",
+    "updatedAt": "2026-07-04"
+  },
+  "words": [
+    {
+      "word": "angle",
+      "definitions": [
+        "n. 角度"
+      ]
+    },
+    {
+      "word": "never",
+      "definitions": [
+        "adv. 从不"
+      ]
+    },
+    {
+      "word": "man-made",
+      "definitions": [
+        "adj. 人造的"
+      ]
+    },
+    {
+      "word": "need",
+      "definitions": [
+        "n./v. 需要"
+      ]
+    },
+    {
+      "word": "underwater",
+      "definitions": [
+        "adj. 水下的"
+      ]
+    },
+    {
+      "word": "nor",
+      "definitions": [
+        "conj. 也不"
+      ]
+    },
+    {
+      "word": "wet",
+      "definitions": [
+        "adj. 潮湿的",
+        "v. 把……弄湿"
+      ]
+    },
+    {
+      "word": "tax",
+      "definitions": [
+        "n. 税",
+        "v. 征税"
+      ]
+    },
+    {
+      "word": "point",
+      "definitions": [
+        "n. 点；尖头；时刻；意义",
+        "v. 指出"
+      ]
+    },
+    {
+      "word": "wait",
+      "definitions": [
+        "v. 等待；服务"
+      ]
+    },
+    {
+      "word": "possible",
+      "definitions": [
+        "adj. 可能的"
+      ]
+    },
+    {
+      "word": "least",
+      "definitions": [
+        "adj. 最少的"
+      ]
+    },
+    {
+      "word": "traveler",
+      "definitions": [
+        "n. 旅行者"
+      ]
+    },
+    {
+      "word": "farmer",
+      "definitions": [
+        "n. 农民"
+      ]
+    },
+    {
+      "word": "exam",
+      "definitions": [
+        "n. 考试，调查"
+      ]
+    },
+    {
+      "word": "answer",
+      "definitions": [
+        "n. 回答；解决方法",
+        "v. 回答"
+      ]
+    },
+    {
+      "word": "dislike",
+      "definitions": [
+        "v. 不喜欢"
+      ]
+    },
+    {
+      "word": "step",
+      "definitions": [
+        "n. 步",
+        "v. 踩"
+      ]
+    },
+    {
+      "word": "windy",
+      "definitions": [
+        "adj. 多风的"
+      ]
+    },
+    {
+      "word": "truth",
+      "definitions": [
+        "n. 实情；真理"
+      ]
+    },
+    {
+      "word": "lucky",
+      "definitions": [
+        "adj. 幸运的"
+      ]
+    },
+    {
+      "word": "then",
+      "definitions": [
+        "adv. 当时；然后"
+      ]
+    },
+    {
+      "word": "sight",
+      "definitions": [
+        "n. 视力；视野；景观"
+      ]
+    },
+    {
+      "word": "wall",
+      "definitions": [
+        "n. 墙",
+        "v. 用墙围住"
+      ]
+    },
+    {
+      "word": "thin",
+      "definitions": [
+        "adj. 瘦的，稀薄的"
+      ]
+    },
+    {
+      "word": "dollar",
+      "definitions": [
+        "n. 美元"
+      ]
+    },
+    {
+      "word": "helpless",
+      "definitions": [
+        "adj. 无助的"
+      ]
+    },
+    {
+      "word": "reason",
+      "definitions": [
+        "n. 原因；理性"
+      ]
+    },
+    {
+      "word": "huge",
+      "definitions": [
+        "adj. 极大的"
+      ]
+    },
+    {
+      "word": "leaf",
+      "definitions": [
+        "n. 叶子；一页"
+      ]
+    },
+    {
+      "word": "shoulder",
+      "definitions": [
+        "n. 肩膀"
+      ]
+    },
+    {
+      "word": "make",
+      "definitions": [
+        "v. 做；使得"
+      ]
+    },
+    {
+      "word": "certainly",
+      "definitions": [
+        "adv. 当然地"
+      ]
+    },
+    {
+      "word": "aside",
+      "definitions": [
+        "adv. 在旁边"
+      ]
+    },
+    {
+      "word": "happiness",
+      "definitions": [
+        "n. 幸福"
+      ]
+    },
+    {
+      "word": "cash",
+      "definitions": [
+        "n. 现金",
+        "v. 兑现"
+      ]
+    },
+    {
+      "word": "network",
+      "definitions": [
+        "n. 网络"
+      ]
+    },
+    {
+      "word": "accidental",
+      "definitions": [
+        "adj. 意外的"
+      ]
+    },
+    {
+      "word": "part",
+      "definitions": [
+        "n. 部分；职责",
+        "v. 分开"
+      ]
+    },
+    {
+      "word": "actor",
+      "definitions": [
+        "n. 演员"
+      ]
+    },
+    {
+      "word": "always",
+      "definitions": [
+        "adv. 总是"
+      ]
+    },
+    {
+      "word": "lowland",
+      "definitions": [
+        "n. 低地"
+      ]
+    },
+    {
+      "word": "bird",
+      "definitions": [
+        "n. 鸟"
+      ]
+    },
+    {
+      "word": "eastward",
+      "definitions": [
+        "adj. 向东的"
+      ]
+    },
+    {
+      "word": "lock",
+      "definitions": [
+        "n./v. 锁"
+      ]
+    },
+    {
+      "word": "heartbeat",
+      "definitions": [
+        "n. 心跳"
+      ]
+    },
+    {
+      "word": "duty",
+      "definitions": [
+        "n. 职责；税"
+      ]
+    },
+    {
+      "word": "place",
+      "definitions": [
+        "n. 地方；地位",
+        "v. 放置"
+      ]
+    },
+    {
+      "word": "find",
+      "definitions": [
+        "v. 发现"
+      ]
+    },
+    {
+      "word": "less",
+      "definitions": [
+        "adj. 较少的"
+      ]
+    },
+    {
+      "word": "mile",
+      "definitions": [
+        "n. 英里"
+      ]
+    },
+    {
+      "word": "society",
+      "definitions": [
+        "n. 社会"
+      ]
+    },
+    {
+      "word": "sunlight",
+      "definitions": [
+        "n. 日光"
+      ]
+    },
+    {
+      "word": "station",
+      "definitions": [
+        "n. 站；电视台"
+      ]
+    },
+    {
+      "word": "letter",
+      "definitions": [
+        "n. 信件；字母"
+      ]
+    },
+    {
+      "word": "enough",
+      "definitions": [
+        "adj. 足够的"
+      ]
+    },
+    {
+      "word": "lawful",
+      "definitions": [
+        "adj. 合法的"
+      ]
+    },
+    {
+      "word": "skill",
+      "definitions": [
+        "n. 技能"
+      ]
+    },
+    {
+      "word": "soup",
+      "definitions": [
+        "n. 汤"
+      ]
+    },
+    {
+      "word": "rose",
+      "definitions": [
+        "n. 玫瑰"
+      ]
+    },
+    {
+      "word": "pet",
+      "definitions": [
+        "n. 宠物",
+        "v. 宠爱"
+      ]
+    },
+    {
+      "word": "care",
+      "definitions": [
+        "n. 照顾",
+        "v. 关心；想要"
+      ]
+    },
+    {
+      "word": "manager",
+      "definitions": [
+        "n. 经理"
+      ]
+    },
+    {
+      "word": "low",
+      "definitions": [
+        "adj. 低的"
+      ]
+    },
+    {
+      "word": "health",
+      "definitions": [
+        "n. 健康"
+      ]
+    },
+    {
+      "word": "melon",
+      "definitions": [
+        "n. 西瓜"
+      ]
+    },
+    {
+      "word": "recently",
+      "definitions": [
+        "adv. 最近地"
+      ]
+    },
+    {
+      "word": "goal",
+      "definitions": [
+        "n. 目标；进球"
+      ]
+    },
+    {
+      "word": "freedom",
+      "definitions": [
+        "n. 自由"
+      ]
+    },
+    {
+      "word": "develop",
+      "definitions": [
+        "v. 发展；(使)进化，(使)出现，开发"
+      ]
+    },
+    {
+      "word": "dream",
+      "definitions": [
+        "n./v. 梦"
+      ]
+    },
+    {
+      "word": "cafeteria",
+      "definitions": [
+        "n. 自助食堂"
+      ]
+    },
+    {
+      "word": "begin",
+      "definitions": [
+        "v. 开始"
+      ]
+    },
+    {
+      "word": "educator",
+      "definitions": [
+        "n. 教育工作者"
+      ]
+    },
+    {
+      "word": "catch",
+      "definitions": [
+        "v. 抓；赶上"
+      ]
+    },
+    {
+      "word": "set",
+      "definitions": [
+        "v. 放置，设置；树立；落下",
+        "n. 一套；布景"
+      ]
+    },
+    {
+      "word": "north",
+      "definitions": [
+        "n. 北"
+      ]
+    },
+    {
+      "word": "classmate",
+      "definitions": [
+        "n. 同班同学"
+      ]
+    },
+    {
+      "word": "toe",
+      "definitions": [
+        "n. 脚趾"
+      ]
+    },
+    {
+      "word": "path",
+      "definitions": [
+        "n. 小路"
+      ]
+    },
+    {
+      "word": "though",
+      "definitions": [
+        "conj. 尽管"
+      ]
+    },
+    {
+      "word": "field",
+      "definitions": [
+        "n. 场，领域；实地"
+      ]
+    },
+    {
+      "word": "noise",
+      "definitions": [
+        "n. 噪音"
+      ]
+    },
+    {
+      "word": "nearly",
+      "definitions": [
+        "adv. 几乎"
+      ]
+    },
+    {
+      "word": "behind",
+      "definitions": [
+        "prep. 在……之后"
+      ]
+    },
+    {
+      "word": "really",
+      "definitions": [
+        "adv. 真地"
+      ]
+    },
+    {
+      "word": "hotel",
+      "definitions": [
+        "n. 旅馆"
+      ]
+    },
+    {
+      "word": "light",
+      "definitions": [
+        "n. 光",
+        "v. 点亮",
+        "adj. 轻的"
+      ]
+    },
+    {
+      "word": "sea",
+      "definitions": [
+        "n. 海"
+      ]
+    },
+    {
+      "word": "central",
+      "definitions": [
+        "adj. 中央的"
+      ]
+    },
+    {
+      "word": "game",
+      "definitions": [
+        "n. 游戏；猎物"
+      ]
+    },
+    {
+      "word": "bit",
+      "definitions": [
+        "n. 一点点；碎屑；钻头"
+      ]
+    },
+    {
+      "word": "Australia",
+      "definitions": [
+        "n. 澳大利亚"
+      ]
+    },
+    {
+      "word": "miss",
+      "definitions": [
+        "v. 想念；错过"
+      ]
+    },
+    {
+      "word": "usually",
+      "definitions": [
+        "adv. 通常"
+      ]
+    },
+    {
+      "word": "additional",
+      "definitions": [
+        "adj. 额外的"
+      ]
+    },
+    {
+      "word": "cloth",
+      "definitions": [
+        "n. 布料"
+      ]
+    },
+    {
+      "word": "weaken",
+      "definitions": [
+        "v. 削弱"
+      ]
+    },
+    {
+      "word": "electricity",
+      "definitions": [
+        "n. 电"
+      ]
+    },
+    {
+      "word": "sun",
+      "definitions": [
+        "n. 太阳"
+      ]
+    }
+  ]
+}

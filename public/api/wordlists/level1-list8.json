@@ -1,0 +1,636 @@
+{
+  "meta": {
+    "level": 1,
+    "list": 8,
+    "title": "Level 1 · List 8",
+    "updatedAt": "2026-07-04"
+  },
+  "words": [
+    {
+      "word": "cancel",
+      "definitions": [
+        "v. 取消"
+      ]
+    },
+    {
+      "word": "writer",
+      "definitions": [
+        "n. 作者"
+      ]
+    },
+    {
+      "word": "purple",
+      "definitions": [
+        "n. 紫色",
+        "adj. 紫色的"
+      ]
+    },
+    {
+      "word": "fire",
+      "definitions": [
+        "n. 火",
+        "v. 发射；开除"
+      ]
+    },
+    {
+      "word": "follow",
+      "definitions": [
+        "v./n. 跟随；遵照"
+      ]
+    },
+    {
+      "word": "tourist",
+      "definitions": [
+        "n. 游客"
+      ]
+    },
+    {
+      "word": "sleep",
+      "definitions": [
+        "v. 睡觉",
+        "n. 睡眠"
+      ]
+    },
+    {
+      "word": "send",
+      "definitions": [
+        "v. 发送；派遣"
+      ]
+    },
+    {
+      "word": "support",
+      "definitions": [
+        "n./v. 支持"
+      ]
+    },
+    {
+      "word": "history",
+      "definitions": [
+        "n. 历史"
+      ]
+    },
+    {
+      "word": "soccer",
+      "definitions": [
+        "n. 足球"
+      ]
+    },
+    {
+      "word": "amount",
+      "definitions": [
+        "n. 数量",
+        "v. 总计；等同于"
+      ]
+    },
+    {
+      "word": "sport",
+      "definitions": [
+        "n. 体育"
+      ]
+    },
+    {
+      "word": "able",
+      "definitions": [
+        "adj. 能够做；有能力的"
+      ]
+    },
+    {
+      "word": "advice",
+      "definitions": [
+        "n. 意见"
+      ]
+    },
+    {
+      "word": "mailbox",
+      "definitions": [
+        "n. 信箱"
+      ]
+    },
+    {
+      "word": "kilogram",
+      "definitions": [
+        "n. 千克"
+      ]
+    },
+    {
+      "word": "whole",
+      "definitions": [
+        "adj. 全部的；完好无损的",
+        "n. 整体"
+      ]
+    },
+    {
+      "word": "cream",
+      "definitions": [
+        "n. 奶油，乳霜"
+      ]
+    },
+    {
+      "word": "weak",
+      "definitions": [
+        "adj. 虚弱的；不擅长的"
+      ]
+    },
+    {
+      "word": "climb",
+      "definitions": [
+        "v. 攀爬"
+      ]
+    },
+    {
+      "word": "seat",
+      "definitions": [
+        "n. 座位；席位",
+        "v. 就座"
+      ]
+    },
+    {
+      "word": "introduction",
+      "definitions": [
+        "n. 介绍；入门"
+      ]
+    },
+    {
+      "word": "mountain",
+      "definitions": [
+        "n. 山"
+      ]
+    },
+    {
+      "word": "mad",
+      "definitions": [
+        "adj. 疯的"
+      ]
+    },
+    {
+      "word": "before",
+      "definitions": [
+        "prep. 在……之前"
+      ]
+    },
+    {
+      "word": "foot",
+      "definitions": [
+        "n. 脚；英尺"
+      ]
+    },
+    {
+      "word": "cloud",
+      "definitions": [
+        "n. 云"
+      ]
+    },
+    {
+      "word": "surface",
+      "definitions": [
+        "n. 表面",
+        "v. 露出"
+      ]
+    },
+    {
+      "word": "hall",
+      "definitions": [
+        "n. 礼堂"
+      ]
+    },
+    {
+      "word": "quickly",
+      "definitions": [
+        "adv. 快速地"
+      ]
+    },
+    {
+      "word": "brown",
+      "definitions": [
+        "adj. 棕色的"
+      ]
+    },
+    {
+      "word": "interest",
+      "definitions": [
+        "n. 兴趣；利益；利息"
+      ]
+    },
+    {
+      "word": "imagine",
+      "definitions": [
+        "v. 想象"
+      ]
+    },
+    {
+      "word": "Asian",
+      "definitions": [
+        "n. 亚洲人",
+        "adj. 亚洲的"
+      ]
+    },
+    {
+      "word": "ice",
+      "definitions": [
+        "n. 冰"
+      ]
+    },
+    {
+      "word": "underground",
+      "definitions": [
+        "n. 地铁",
+        "adj. 地下的"
+      ]
+    },
+    {
+      "word": "forward",
+      "definitions": [
+        "adv. 向前"
+      ]
+    },
+    {
+      "word": "large",
+      "definitions": [
+        "adj. 大的"
+      ]
+    },
+    {
+      "word": "everywhere",
+      "definitions": [
+        "adv. 到处"
+      ]
+    },
+    {
+      "word": "exercise",
+      "definitions": [
+        "n./v. 训练；行使(权力/权利)，运用(能力)"
+      ]
+    },
+    {
+      "word": "hurry",
+      "definitions": [
+        "n. 匆忙",
+        "v. 匆忙完成"
+      ]
+    },
+    {
+      "word": "know",
+      "definitions": [
+        "v. 知道"
+      ]
+    },
+    {
+      "word": "engineer",
+      "definitions": [
+        "n. 工程师",
+        "v. 设计制造"
+      ]
+    },
+    {
+      "word": "crowd",
+      "definitions": [
+        "v. 挤",
+        "n. 人群"
+      ]
+    },
+    {
+      "word": "dead",
+      "definitions": [
+        "adj. 死的"
+      ]
+    },
+    {
+      "word": "still",
+      "definitions": [
+        "adv. 仍然",
+        "adj. 静止的"
+      ]
+    },
+    {
+      "word": "textbook",
+      "definitions": [
+        "n. 课本"
+      ]
+    },
+    {
+      "word": "exhibition",
+      "definitions": [
+        "n. 展览"
+      ]
+    },
+    {
+      "word": "music",
+      "definitions": [
+        "n. 音乐"
+      ]
+    },
+    {
+      "word": "provide",
+      "definitions": [
+        "v. 提供"
+      ]
+    },
+    {
+      "word": "magic",
+      "definitions": [
+        "n. 魔法"
+      ]
+    },
+    {
+      "word": "dark",
+      "definitions": [
+        "adj. 黑暗的"
+      ]
+    },
+    {
+      "word": "gym",
+      "definitions": [
+        "n. 健身房"
+      ]
+    },
+    {
+      "word": "city",
+      "definitions": [
+        "n. 城市"
+      ]
+    },
+    {
+      "word": "style",
+      "definitions": [
+        "n. 方式；样式；时尚"
+      ]
+    },
+    {
+      "word": "busy",
+      "definitions": [
+        "adj. 繁忙的"
+      ]
+    },
+    {
+      "word": "camera",
+      "definitions": [
+        "n. 照相机"
+      ]
+    },
+    {
+      "word": "glad",
+      "definitions": [
+        "adj. 高兴的"
+      ]
+    },
+    {
+      "word": "bank",
+      "definitions": [
+        "n. 银行；堤岸"
+      ]
+    },
+    {
+      "word": "east",
+      "definitions": [
+        "n. 东"
+      ]
+    },
+    {
+      "word": "mail",
+      "definitions": [
+        "n. 邮件",
+        "v. 邮寄"
+      ]
+    },
+    {
+      "word": "season",
+      "definitions": [
+        "n. 季节",
+        "v. 调味"
+      ]
+    },
+    {
+      "word": "pride",
+      "definitions": [
+        "n. 骄傲；自尊"
+      ]
+    },
+    {
+      "word": "percent",
+      "definitions": [
+        "n. 百分比例"
+      ]
+    },
+    {
+      "word": "say",
+      "definitions": [
+        "v. 说；假如",
+        "n. 发言权"
+      ]
+    },
+    {
+      "word": "usable",
+      "definitions": [
+        "adj. 可用的"
+      ]
+    },
+    {
+      "word": "musician",
+      "definitions": [
+        "n. 音乐家"
+      ]
+    },
+    {
+      "word": "explain",
+      "definitions": [
+        "v. 解释"
+      ]
+    },
+    {
+      "word": "popular",
+      "definitions": [
+        "adj. 流行的；受欢迎的"
+      ]
+    },
+    {
+      "word": "argue",
+      "definitions": [
+        "v. 争论；认为，主张"
+      ]
+    },
+    {
+      "word": "holiday",
+      "definitions": [
+        "n. 假日"
+      ]
+    },
+    {
+      "word": "bottle",
+      "definitions": [
+        "n. 瓶子"
+      ]
+    },
+    {
+      "word": "corner",
+      "definitions": [
+        "n. 角落",
+        "v. 逼入困境"
+      ]
+    },
+    {
+      "word": "forget",
+      "definitions": [
+        "v. 忘记"
+      ]
+    },
+    {
+      "word": "although",
+      "definitions": [
+        "conj. 虽然"
+      ]
+    },
+    {
+      "word": "careful",
+      "definitions": [
+        "adj. 小心的"
+      ]
+    },
+    {
+      "word": "flower",
+      "definitions": [
+        "n. 花",
+        "v. 开花，成熟，繁荣"
+      ]
+    },
+    {
+      "word": "southwest",
+      "definitions": [
+        "n. 西南"
+      ]
+    },
+    {
+      "word": "head",
+      "definitions": [
+        "n. 头",
+        "v. 朝某个方向前进"
+      ]
+    },
+    {
+      "word": "cry",
+      "definitions": [
+        "v. 哭；叫喊",
+        "n. 哭；叫喊声"
+      ]
+    },
+    {
+      "word": "telephone",
+      "definitions": [
+        "n. 电话"
+      ]
+    },
+    {
+      "word": "frog",
+      "definitions": [
+        "n. 青蛙"
+      ]
+    },
+    {
+      "word": "bean",
+      "definitions": [
+        "n. 豆子"
+      ]
+    },
+    {
+      "word": "tired",
+      "definitions": [
+        "adj. 疲惫的；厌倦的"
+      ]
+    },
+    {
+      "word": "potato",
+      "definitions": [
+        "n. 土豆"
+      ]
+    },
+    {
+      "word": "wolf",
+      "definitions": [
+        "n. 狼"
+      ]
+    },
+    {
+      "word": "earth",
+      "definitions": [
+        "n. 地球；泥土"
+      ]
+    },
+    {
+      "word": "self",
+      "definitions": [
+        "n. 自己"
+      ]
+    },
+    {
+      "word": "clean",
+      "definitions": [
+        "adj. 干净的",
+        "v. 清扫干净"
+      ]
+    },
+    {
+      "word": "prepare",
+      "definitions": [
+        "v. 准备"
+      ]
+    },
+    {
+      "word": "sock",
+      "definitions": [
+        "n. 短袜"
+      ]
+    },
+    {
+      "word": "sometimes",
+      "definitions": [
+        "adv. 有时"
+      ]
+    },
+    {
+      "word": "tape",
+      "definitions": [
+        "n. 带子，录音带",
+        "v. 录像"
+      ]
+    },
+    {
+      "word": "location",
+      "definitions": [
+        "n. 位置"
+      ]
+    },
+    {
+      "word": "record",
+      "definitions": [
+        "v. 记录",
+        "n. 记录；唱片；最高纪录"
+      ]
+    },
+    {
+      "word": "upward",
+      "definitions": [
+        "adv. 向上",
+        "adj. 上升的"
+      ]
+    },
+    {
+      "word": "watch",
+      "definitions": [
+        "n. 手表；值班",
+        "v. 看；当心"
+      ]
+    },
+    {
+      "word": "few",
+      "definitions": [
+        "adj. 少数的"
+      ]
+    },
+    {
+      "word": "ease",
+      "definitions": [
+        "n. 容易，自在",
+        "v. 减轻"
+      ]
+    }
+  ]
+}

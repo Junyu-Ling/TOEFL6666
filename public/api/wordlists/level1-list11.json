@@ -1,0 +1,630 @@
+{
+  "meta": {
+    "level": 1,
+    "list": 11,
+    "title": "Level 1 · List 11",
+    "updatedAt": "2026-07-04"
+  },
+  "words": [
+    {
+      "word": "street",
+      "definitions": [
+        "n. 街道"
+      ]
+    },
+    {
+      "word": "notice",
+      "definitions": [
+        "n. 通知；注意",
+        "v. 注意到"
+      ]
+    },
+    {
+      "word": "type",
+      "definitions": [
+        "n. 类型",
+        "v. 打字"
+      ]
+    },
+    {
+      "word": "building",
+      "definitions": [
+        "n. 建筑物"
+      ]
+    },
+    {
+      "word": "trade",
+      "definitions": [
+        "n. 贸易",
+        "v. 交换；买卖"
+      ]
+    },
+    {
+      "word": "appear",
+      "definitions": [
+        "v. 出现；似乎"
+      ]
+    },
+    {
+      "word": "through",
+      "definitions": [
+        "prep. 穿过"
+      ]
+    },
+    {
+      "word": "sure",
+      "definitions": [
+        "adj. 确信的",
+        "adv. 当然"
+      ]
+    },
+    {
+      "word": "quite",
+      "definitions": [
+        "adv. 很"
+      ]
+    },
+    {
+      "word": "railway",
+      "definitions": [
+        "n. 铁路"
+      ]
+    },
+    {
+      "word": "third",
+      "definitions": [
+        "adj. 第三的"
+      ]
+    },
+    {
+      "word": "shut",
+      "definitions": [
+        "v. 关上"
+      ]
+    },
+    {
+      "word": "rich",
+      "definitions": [
+        "adj. 富有的"
+      ]
+    },
+    {
+      "word": "mouse",
+      "definitions": [
+        "n. 老鼠"
+      ]
+    },
+    {
+      "word": "mid",
+      "definitions": [
+        "n. 中"
+      ]
+    },
+    {
+      "word": "save",
+      "definitions": [
+        "v. 挽救；留着；节省；攒"
+      ]
+    },
+    {
+      "word": "buyer",
+      "definitions": [
+        "n. 买主，采购员"
+      ]
+    },
+    {
+      "word": "action",
+      "definitions": [
+        "n. 行动"
+      ]
+    },
+    {
+      "word": "invention",
+      "definitions": [
+        "n. 发明"
+      ]
+    },
+    {
+      "word": "pick",
+      "definitions": [
+        "v. 挑选；采摘；抠，剔",
+        "n. 精选"
+      ]
+    },
+    {
+      "word": "cookie",
+      "definitions": [
+        "n. 曲奇饼"
+      ]
+    },
+    {
+      "word": "fox",
+      "definitions": [
+        "n. 狐"
+      ]
+    },
+    {
+      "word": "cheap",
+      "definitions": [
+        "adj. 便宜的，廉价的；小气的"
+      ]
+    },
+    {
+      "word": "consider",
+      "definitions": [
+        "v. 考虑；认为"
+      ]
+    },
+    {
+      "word": "fact",
+      "definitions": [
+        "n. 事实"
+      ]
+    },
+    {
+      "word": "imagination",
+      "definitions": [
+        "n. 想象力"
+      ]
+    },
+    {
+      "word": "cost",
+      "definitions": [
+        "n./v. 花费，代价"
+      ]
+    },
+    {
+      "word": "university",
+      "definitions": [
+        "n. 大学"
+      ]
+    },
+    {
+      "word": "ride",
+      "definitions": [
+        "v. 骑",
+        "n. 搭乘"
+      ]
+    },
+    {
+      "word": "male",
+      "definitions": [
+        "n. 雄性"
+      ]
+    },
+    {
+      "word": "opinion",
+      "definitions": [
+        "n. 看法"
+      ]
+    },
+    {
+      "word": "hundred",
+      "definitions": [
+        "n. 百"
+      ]
+    },
+    {
+      "word": "nerve",
+      "definitions": [
+        "n. 神经；勇气"
+      ]
+    },
+    {
+      "word": "hit",
+      "definitions": [
+        "v. 击",
+        "n. 流行事物"
+      ]
+    },
+    {
+      "word": "phone",
+      "definitions": [
+        "n. 电话"
+      ]
+    },
+    {
+      "word": "cinema",
+      "definitions": [
+        "n. 影院"
+      ]
+    },
+    {
+      "word": "wine",
+      "definitions": [
+        "n. 葡萄酒"
+      ]
+    },
+    {
+      "word": "kind",
+      "definitions": [
+        "n. 种类",
+        "adj. 善良的"
+      ]
+    },
+    {
+      "word": "live",
+      "definitions": [
+        "v. 生活；居住"
+      ]
+    },
+    {
+      "word": "meal",
+      "definitions": [
+        "n. 一餐"
+      ]
+    },
+    {
+      "word": "ability",
+      "definitions": [
+        "n. 能力"
+      ]
+    },
+    {
+      "word": "write",
+      "definitions": [
+        "v. 写"
+      ]
+    },
+    {
+      "word": "widely",
+      "definitions": [
+        "adv. 广泛地"
+      ]
+    },
+    {
+      "word": "sheep",
+      "definitions": [
+        "n. 绵羊"
+      ]
+    },
+    {
+      "word": "team",
+      "definitions": [
+        "n. 队",
+        "v. 结成一队"
+      ]
+    },
+    {
+      "word": "difficulty",
+      "definitions": [
+        "n. 困难"
+      ]
+    },
+    {
+      "word": "church",
+      "definitions": [
+        "n. 教堂，教会"
+      ]
+    },
+    {
+      "word": "bee",
+      "definitions": [
+        "n. 蜜蜂"
+      ]
+    },
+    {
+      "word": "inch",
+      "definitions": [
+        "n. 英寸"
+      ]
+    },
+    {
+      "word": "news",
+      "definitions": [
+        "n. 消息，新闻"
+      ]
+    },
+    {
+      "word": "stair",
+      "definitions": [
+        "n. 台阶"
+      ]
+    },
+    {
+      "word": "necessary",
+      "definitions": [
+        "adj. 必要的"
+      ]
+    },
+    {
+      "word": "hug",
+      "definitions": [
+        "n./v. 拥抱"
+      ]
+    },
+    {
+      "word": "speak",
+      "definitions": [
+        "v. 说话"
+      ]
+    },
+    {
+      "word": "sheet",
+      "definitions": [
+        "n. 一片；薄片；床单"
+      ]
+    },
+    {
+      "word": "mirror",
+      "definitions": [
+        "n. 镜子",
+        "v. 反映"
+      ]
+    },
+    {
+      "word": "sit",
+      "definitions": [
+        "v. 坐"
+      ]
+    },
+    {
+      "word": "fun",
+      "definitions": [
+        "n. 乐趣",
+        "adj. 有趣的"
+      ]
+    },
+    {
+      "word": "size",
+      "definitions": [
+        "n. 尺寸"
+      ]
+    },
+    {
+      "word": "homework",
+      "definitions": [
+        "n. 作业"
+      ]
+    },
+    {
+      "word": "beautiful",
+      "definitions": [
+        "adj. 美丽的"
+      ]
+    },
+    {
+      "word": "wear",
+      "definitions": [
+        "v. 穿；磨损"
+      ]
+    },
+    {
+      "word": "future",
+      "definitions": [
+        "n. 未来；期货"
+      ]
+    },
+    {
+      "word": "desert",
+      "definitions": [
+        "n. 沙漠",
+        "v. 遗弃"
+      ]
+    },
+    {
+      "word": "chance",
+      "definitions": [
+        "n. 机会；可能性"
+      ]
+    },
+    {
+      "word": "stamp",
+      "definitions": [
+        "n. 印章；邮票",
+        "v. 盖章；踩踏"
+      ]
+    },
+    {
+      "word": "forever",
+      "definitions": [
+        "adv. 永远，常常"
+      ]
+    },
+    {
+      "word": "face",
+      "definitions": [
+        "n. 脸",
+        "v. 面对"
+      ]
+    },
+    {
+      "word": "beside",
+      "definitions": [
+        "prep. 在……旁边"
+      ]
+    },
+    {
+      "word": "weekend",
+      "definitions": [
+        "n. 周末"
+      ]
+    },
+    {
+      "word": "common",
+      "definitions": [
+        "adj. 通常的，共同的"
+      ]
+    },
+    {
+      "word": "flight",
+      "definitions": [
+        "n. 飞翔，航班"
+      ]
+    },
+    {
+      "word": "garden",
+      "definitions": [
+        "n. 花园"
+      ]
+    },
+    {
+      "word": "unpleasant",
+      "definitions": [
+        "adj. 令人不快的"
+      ]
+    },
+    {
+      "word": "bull",
+      "definitions": [
+        "n. 公牛"
+      ]
+    },
+    {
+      "word": "protect",
+      "definitions": [
+        "v. 保护"
+      ]
+    },
+    {
+      "word": "driver",
+      "definitions": [
+        "n. 驾驶员"
+      ]
+    },
+    {
+      "word": "believe",
+      "definitions": [
+        "v. 相信"
+      ]
+    },
+    {
+      "word": "photo",
+      "definitions": [
+        "n. 照片"
+      ]
+    },
+    {
+      "word": "try",
+      "definitions": [
+        "v. 尝试；审判"
+      ]
+    },
+    {
+      "word": "call",
+      "definitions": [
+        "v. 称呼；呼叫",
+        "n. 召唤"
+      ]
+    },
+    {
+      "word": "sugar",
+      "definitions": [
+        "n. 糖"
+      ]
+    },
+    {
+      "word": "want",
+      "definitions": [
+        "v. 要；通缉",
+        "n. 缺乏(lack)"
+      ]
+    },
+    {
+      "word": "bring",
+      "definitions": [
+        "v. 带来"
+      ]
+    },
+    {
+      "word": "read",
+      "definitions": [
+        "v. 读；显示"
+      ]
+    },
+    {
+      "word": "spend",
+      "definitions": [
+        "v. 花费"
+      ]
+    },
+    {
+      "word": "cross",
+      "definitions": [
+        "n. 交叉，十字",
+        "v. 穿过"
+      ]
+    },
+    {
+      "word": "memory",
+      "definitions": [
+        "n. 记忆"
+      ]
+    },
+    {
+      "word": "activity",
+      "definitions": [
+        "n. 活动"
+      ]
+    },
+    {
+      "word": "beach",
+      "definitions": [
+        "n. 海滩"
+      ]
+    },
+    {
+      "word": "smoke",
+      "definitions": [
+        "n. 抽烟"
+      ]
+    },
+    {
+      "word": "ton",
+      "definitions": [
+        "n. 吨，许多"
+      ]
+    },
+    {
+      "word": "world",
+      "definitions": [
+        "n. 世界"
+      ]
+    },
+    {
+      "word": "last",
+      "definitions": [
+        "adj. 最后的；上一次的",
+        "v. 持续"
+      ]
+    },
+    {
+      "word": "custom",
+      "definitions": [
+        "n. 习俗"
+      ]
+    },
+    {
+      "word": "seawater",
+      "definitions": [
+        "n. 海水"
+      ]
+    },
+    {
+      "word": "grade",
+      "definitions": [
+        "n. 级别；分数；年级",
+        "v. 给……评级"
+      ]
+    },
+    {
+      "word": "kitchen",
+      "definitions": [
+        "n. 厨房"
+      ]
+    },
+    {
+      "word": "speed",
+      "definitions": [
+        "n. 速度",
+        "v. 加速"
+      ]
+    },
+    {
+      "word": "spirit",
+      "definitions": [
+        "n. 精神"
+      ]
+    }
+  ]
+}

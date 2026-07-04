@@ -1,0 +1,627 @@
+{
+  "meta": {
+    "level": 2,
+    "list": 2,
+    "title": "Level 2 · List 2",
+    "updatedAt": "2026-07-04"
+  },
+  "words": [
+    {
+      "word": "footstep",
+      "definitions": [
+        "n. 脚步，足迹"
+      ]
+    },
+    {
+      "word": "bone",
+      "definitions": [
+        "n. 骨头"
+      ]
+    },
+    {
+      "word": "hesitate",
+      "definitions": [
+        "v. 犹豫"
+      ]
+    },
+    {
+      "word": "text",
+      "definitions": [
+        "n. 文本；短信"
+      ]
+    },
+    {
+      "word": "production",
+      "definitions": [
+        "n. 生产"
+      ]
+    },
+    {
+      "word": "master",
+      "definitions": [
+        "n. 能手；主人；硕士",
+        "v. 精通"
+      ]
+    },
+    {
+      "word": "purchase",
+      "definitions": [
+        "n./v. 购买"
+      ]
+    },
+    {
+      "word": "pumpkin",
+      "definitions": [
+        "n. 南瓜"
+      ]
+    },
+    {
+      "word": "staff",
+      "definitions": [
+        "n. 工作人员"
+      ]
+    },
+    {
+      "word": "department",
+      "definitions": [
+        "n. 部门；系"
+      ]
+    },
+    {
+      "word": "beggar",
+      "definitions": [
+        "n. 乞丐"
+      ]
+    },
+    {
+      "word": "rooftop",
+      "definitions": [
+        "n. 屋顶"
+      ]
+    },
+    {
+      "word": "eager",
+      "definitions": [
+        "adj. 急切的"
+      ]
+    },
+    {
+      "word": "confusion",
+      "definitions": [
+        "n. 困惑；混淆"
+      ]
+    },
+    {
+      "word": "respect",
+      "definitions": [
+        "v. 尊重",
+        "n. 尊重；方面"
+      ]
+    },
+    {
+      "word": "apology",
+      "definitions": [
+        "n. 道歉；勉强的替代品"
+      ]
+    },
+    {
+      "word": "underneath",
+      "definitions": [
+        "prep. 在……下面"
+      ]
+    },
+    {
+      "word": "wild",
+      "definitions": [
+        "adj. 野生的；无节制的",
+        "adv. 疯狂地"
+      ]
+    },
+    {
+      "word": "trader",
+      "definitions": [
+        "n. 商人"
+      ]
+    },
+    {
+      "word": "era",
+      "definitions": [
+        "n. 时代"
+      ]
+    },
+    {
+      "word": "outgoing",
+      "definitions": [
+        "adj. 离开的；外向的"
+      ]
+    },
+    {
+      "word": "capability",
+      "definitions": [
+        "n. 能力"
+      ]
+    },
+    {
+      "word": "unexplained",
+      "definitions": [
+        "adj. 未经解释的"
+      ]
+    },
+    {
+      "word": "swallow",
+      "definitions": [
+        "v. 吞下；相信"
+      ]
+    },
+    {
+      "word": "moveable",
+      "definitions": [
+        "adj. 可活动的"
+      ]
+    },
+    {
+      "word": "prevent",
+      "definitions": [
+        "v. 阻止"
+      ]
+    },
+    {
+      "word": "wheat",
+      "definitions": [
+        "n. 小麦"
+      ]
+    },
+    {
+      "word": "mainly",
+      "definitions": [
+        "adv. 主要"
+      ]
+    },
+    {
+      "word": "fix",
+      "definitions": [
+        "v. 固定；修理；专注于；安排"
+      ]
+    },
+    {
+      "word": "pad",
+      "definitions": [
+        "n. 垫子"
+      ]
+    },
+    {
+      "word": "creativity",
+      "definitions": [
+        "n. 创造力"
+      ]
+    },
+    {
+      "word": "plant",
+      "definitions": [
+        "n. 工厂，发电站；植物",
+        "v. 安插；种植"
+      ]
+    },
+    {
+      "word": "frozen",
+      "definitions": [
+        "adj. 结冰的，冷冻的"
+      ]
+    },
+    {
+      "word": "relation",
+      "definitions": [
+        "n. 关系"
+      ]
+    },
+    {
+      "word": "grand",
+      "definitions": [
+        "n. 一千元",
+        "adj. 宏大的"
+      ]
+    },
+    {
+      "word": "plain",
+      "definitions": [
+        "adj. 平淡的；清晰的",
+        "n. 平原"
+      ]
+    },
+    {
+      "word": "monk",
+      "definitions": [
+        "n. 修道士"
+      ]
+    },
+    {
+      "word": "clerk",
+      "definitions": [
+        "n. 职员"
+      ]
+    },
+    {
+      "word": "freeze",
+      "definitions": [
+        "n./v. 冻结"
+      ]
+    },
+    {
+      "word": "damage",
+      "definitions": [
+        "n./v. 损害"
+      ]
+    },
+    {
+      "word": "repay",
+      "definitions": [
+        "v. 偿还；报答"
+      ]
+    },
+    {
+      "word": "database",
+      "definitions": [
+        "n. 数据库"
+      ]
+    },
+    {
+      "word": "fellow",
+      "definitions": [
+        "n. 同伴；研究员"
+      ]
+    },
+    {
+      "word": "afford",
+      "definitions": [
+        "v. 负担得起；提供"
+      ]
+    },
+    {
+      "word": "plan",
+      "definitions": [
+        "n. 计划；套餐",
+        "v. 计划"
+      ]
+    },
+    {
+      "word": "company",
+      "definitions": [
+        "n. 陪伴；剧团；公司"
+      ]
+    },
+    {
+      "word": "admirable",
+      "definitions": [
+        "adj. 令人欣赏的"
+      ]
+    },
+    {
+      "word": "highland",
+      "definitions": [
+        "n. 高地"
+      ]
+    },
+    {
+      "word": "lecture",
+      "definitions": [
+        "n./v. 讲座"
+      ]
+    },
+    {
+      "word": "jewelry",
+      "definitions": [
+        "n. 珠宝"
+      ]
+    },
+    {
+      "word": "hence",
+      "definitions": [
+        "adv. 因此"
+      ]
+    },
+    {
+      "word": "billboard",
+      "definitions": [
+        "n. 广告牌"
+      ]
+    },
+    {
+      "word": "mix",
+      "definitions": [
+        "n./v. 混合"
+      ]
+    },
+    {
+      "word": "list",
+      "definitions": [
+        "n. 名单",
+        "v. 列出"
+      ]
+    },
+    {
+      "word": "fear",
+      "definitions": [
+        "n./v. 害怕"
+      ]
+    },
+    {
+      "word": "response",
+      "definitions": [
+        "n. 回应"
+      ]
+    },
+    {
+      "word": "oak",
+      "definitions": [
+        "n. 橡树"
+      ]
+    },
+    {
+      "word": "succeed",
+      "definitions": [
+        "v. 成功；继任"
+      ]
+    },
+    {
+      "word": "pigeon",
+      "definitions": [
+        "n. 鸽子"
+      ]
+    },
+    {
+      "word": "assistance",
+      "definitions": [
+        "n. 帮助，协助"
+      ]
+    },
+    {
+      "word": "foreign",
+      "definitions": [
+        "adj. 国外的；异质的，不相关的"
+      ]
+    },
+    {
+      "word": "tobacco",
+      "definitions": [
+        "n. 烟草"
+      ]
+    },
+    {
+      "word": "diploma",
+      "definitions": [
+        "n. 毕业文凭"
+      ]
+    },
+    {
+      "word": "plenty",
+      "definitions": [
+        "pron. 大量"
+      ]
+    },
+    {
+      "word": "decision",
+      "definitions": [
+        "n. 决定"
+      ]
+    },
+    {
+      "word": "branch",
+      "definitions": [
+        "n. 树枝；分支机构",
+        "v. 分叉"
+      ]
+    },
+    {
+      "word": "design",
+      "definitions": [
+        "n./v. 设计"
+      ]
+    },
+    {
+      "word": "litter",
+      "definitions": [
+        "n. 垃圾",
+        "v. 乱扔"
+      ]
+    },
+    {
+      "word": "vice",
+      "definitions": [
+        "adj. 副的",
+        "n. 恶行"
+      ]
+    },
+    {
+      "word": "laser",
+      "definitions": [
+        "n. 激光"
+      ]
+    },
+    {
+      "word": "disappearance",
+      "definitions": [
+        "n. 消失"
+      ]
+    },
+    {
+      "word": "per",
+      "definitions": [
+        "prep. 每个"
+      ]
+    },
+    {
+      "word": "region",
+      "definitions": [
+        "n. 地区"
+      ]
+    },
+    {
+      "word": "threat",
+      "definitions": [
+        "n. 威胁"
+      ]
+    },
+    {
+      "word": "president",
+      "definitions": [
+        "n. 总统，主席，会长"
+      ]
+    },
+    {
+      "word": "doubt",
+      "definitions": [
+        "n./v. 怀疑"
+      ]
+    },
+    {
+      "word": "steamboat",
+      "definitions": [
+        "n. 汽船"
+      ]
+    },
+    {
+      "word": "arrow",
+      "definitions": [
+        "n. 箭头"
+      ]
+    },
+    {
+      "word": "assure",
+      "definitions": [
+        "v. 向……保证；确保"
+      ]
+    },
+    {
+      "word": "stick",
+      "definitions": [
+        "n. 小棍子；枝条",
+        "v. 粘上；戳入，塞入；卡住，保持不变"
+      ]
+    },
+    {
+      "word": "defeat",
+      "definitions": [
+        "n./v. 击败"
+      ]
+    },
+    {
+      "word": "export",
+      "definitions": [
+        "v./n. 出口"
+      ]
+    },
+    {
+      "word": "meaningful",
+      "definitions": [
+        "adj. 有意义的"
+      ]
+    },
+    {
+      "word": "equal",
+      "definitions": [
+        "adj. 平等的；相同的",
+        "v. 等于",
+        "n. 匹敌之物"
+      ]
+    },
+    {
+      "word": "seashell",
+      "definitions": [
+        "n. 贝类"
+      ]
+    },
+    {
+      "word": "entry",
+      "definitions": [
+        "n. 进入；参赛；条目"
+      ]
+    },
+    {
+      "word": "brand",
+      "definitions": [
+        "n. 品牌",
+        "v. 给……打上烙印"
+      ]
+    },
+    {
+      "word": "diary",
+      "definitions": [
+        "n. 日记"
+      ]
+    },
+    {
+      "word": "reasonable",
+      "definitions": [
+        "adj. 合理的"
+      ]
+    },
+    {
+      "word": "perfume",
+      "definitions": [
+        "n. 香水"
+      ]
+    },
+    {
+      "word": "print",
+      "definitions": [
+        "n. 字体；印刷；印花，印记",
+        "v. 印刷"
+      ]
+    },
+    {
+      "word": "flood",
+      "definitions": [
+        "n. 洪水",
+        "v. 淹没"
+      ]
+    },
+    {
+      "word": "cereal",
+      "definitions": [
+        "n. 谷物，早餐麦片"
+      ]
+    },
+    {
+      "word": "shortage",
+      "definitions": [
+        "n. 缺乏"
+      ]
+    },
+    {
+      "word": "unfair",
+      "definitions": [
+        "adj. 不公平的"
+      ]
+    },
+    {
+      "word": "national",
+      "definitions": [
+        "adj. 国家的"
+      ]
+    },
+    {
+      "word": "hardly",
+      "definitions": [
+        "adv. 几乎不"
+      ]
+    },
+    {
+      "word": "disappointment",
+      "definitions": [
+        "n. 失望"
+      ]
+    },
+    {
+      "word": "dusty",
+      "definitions": [
+        "adj. 满是尘土的"
+      ]
+    },
+    {
+      "word": "improvement",
+      "definitions": [
+        "n. 改善"
+      ]
+    }
+  ]
+}

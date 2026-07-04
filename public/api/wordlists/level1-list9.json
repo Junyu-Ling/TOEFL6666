@@ -1,0 +1,625 @@
+{
+  "meta": {
+    "level": 1,
+    "list": 9,
+    "title": "Level 1 · List 9",
+    "updatedAt": "2026-07-04"
+  },
+  "words": [
+    {
+      "word": "pause",
+      "definitions": [
+        "n./v. 暂停"
+      ]
+    },
+    {
+      "word": "loud",
+      "definitions": [
+        "adj. 大声的"
+      ]
+    },
+    {
+      "word": "youth",
+      "definitions": [
+        "n. 年轻"
+      ]
+    },
+    {
+      "word": "lemon",
+      "definitions": [
+        "n. 柠檬",
+        "adj. 有瑕疵的"
+      ]
+    },
+    {
+      "word": "guess",
+      "definitions": [
+        "n./v. 猜测"
+      ]
+    },
+    {
+      "word": "difference",
+      "definitions": [
+        "n. 不同"
+      ]
+    },
+    {
+      "word": "hurt",
+      "definitions": [
+        "n./v. 伤害"
+      ]
+    },
+    {
+      "word": "sadness",
+      "definitions": [
+        "n. 悲伤"
+      ]
+    },
+    {
+      "word": "voice",
+      "definitions": [
+        "n. 声音",
+        "v. 发表意见"
+      ]
+    },
+    {
+      "word": "bread",
+      "definitions": [
+        "n. 面包"
+      ]
+    },
+    {
+      "word": "away",
+      "definitions": [
+        "adj./adv. 远"
+      ]
+    },
+    {
+      "word": "hero",
+      "definitions": [
+        "n. 英雄；男主角"
+      ]
+    },
+    {
+      "word": "unusual",
+      "definitions": [
+        "adj. 不寻常的"
+      ]
+    },
+    {
+      "word": "customer",
+      "definitions": [
+        "n. 顾客"
+      ]
+    },
+    {
+      "word": "western",
+      "definitions": [
+        "adj. 西方的"
+      ]
+    },
+    {
+      "word": "whether",
+      "definitions": [
+        "conj. 是否；无论"
+      ]
+    },
+    {
+      "word": "convenient",
+      "definitions": [
+        "adj. 方便的"
+      ]
+    },
+    {
+      "word": "stage",
+      "definitions": [
+        "n. 舞台；阶段"
+      ]
+    },
+    {
+      "word": "road",
+      "definitions": [
+        "n. 路"
+      ]
+    },
+    {
+      "word": "center",
+      "definitions": [
+        "n. 中心"
+      ]
+    },
+    {
+      "word": "website",
+      "definitions": [
+        "n. 网址"
+      ]
+    },
+    {
+      "word": "leave",
+      "definitions": [
+        "v. 离开；留下"
+      ]
+    },
+    {
+      "word": "lion",
+      "definitions": [
+        "n. 狮子"
+      ]
+    },
+    {
+      "word": "early",
+      "definitions": [
+        "adj. 早的"
+      ]
+    },
+    {
+      "word": "talk",
+      "definitions": [
+        "v. 说话，讨论",
+        "n. 讲座报告"
+      ]
+    },
+    {
+      "word": "grow",
+      "definitions": [
+        "v. 成长"
+      ]
+    },
+    {
+      "word": "late",
+      "definitions": [
+        "adj. 最晚的；已故的"
+      ]
+    },
+    {
+      "word": "useless",
+      "definitions": [
+        "adj. 无用的"
+      ]
+    },
+    {
+      "word": "result",
+      "definitions": [
+        "n. 结果",
+        "v. 产生"
+      ]
+    },
+    {
+      "word": "lab",
+      "definitions": [
+        "n. 实验室"
+      ]
+    },
+    {
+      "word": "box",
+      "definitions": [
+        "n. 盒子",
+        "v. 拳击"
+      ]
+    },
+    {
+      "word": "fruit",
+      "definitions": [
+        "n. 水果；成果"
+      ]
+    },
+    {
+      "word": "floor",
+      "definitions": [
+        "n. 底部；楼层，地板"
+      ]
+    },
+    {
+      "word": "bet",
+      "definitions": [
+        "v. 打赌；敢确定"
+      ]
+    },
+    {
+      "word": "start",
+      "definitions": [
+        "v. 开始",
+        "n. 开头"
+      ]
+    },
+    {
+      "word": "tennis",
+      "definitions": [
+        "n. 网球"
+      ]
+    },
+    {
+      "word": "rule",
+      "definitions": [
+        "n. 规则；统治",
+        "v. 统治"
+      ]
+    },
+    {
+      "word": "dialogue",
+      "definitions": [
+        "n. 对话"
+      ]
+    },
+    {
+      "word": "tutor",
+      "definitions": [
+        "n. 辅导老师",
+        "v. 辅导"
+      ]
+    },
+    {
+      "word": "date",
+      "definitions": [
+        "n. 日期；约会",
+        "v. 给……确定日期"
+      ]
+    },
+    {
+      "word": "beef",
+      "definitions": [
+        "n. 牛肉"
+      ]
+    },
+    {
+      "word": "actual",
+      "definitions": [
+        "adj. 实际的，真实的"
+      ]
+    },
+    {
+      "word": "clear",
+      "definitions": [
+        "adj. 清楚的，清透的",
+        "v. 理清"
+      ]
+    },
+    {
+      "word": "win",
+      "definitions": [
+        "v. 赢得"
+      ]
+    },
+    {
+      "word": "seem",
+      "definitions": [
+        "v. 好像"
+      ]
+    },
+    {
+      "word": "desire",
+      "definitions": [
+        "n./v. 渴望"
+      ]
+    },
+    {
+      "word": "liquid",
+      "definitions": [
+        "n. 液体",
+        "adj. 液态的"
+      ]
+    },
+    {
+      "word": "group",
+      "definitions": [
+        "n. 群",
+        "v. 成群聚集"
+      ]
+    },
+    {
+      "word": "cheese",
+      "definitions": [
+        "n. 奶酪"
+      ]
+    },
+    {
+      "word": "hand",
+      "definitions": [
+        "n. 手；帮助",
+        "v. 传递"
+      ]
+    },
+    {
+      "word": "until",
+      "definitions": [
+        "prep. 直到"
+      ]
+    },
+    {
+      "word": "breakfast",
+      "definitions": [
+        "n. 早餐"
+      ]
+    },
+    {
+      "word": "lose",
+      "definitions": [
+        "v. 丢失；输掉"
+      ]
+    },
+    {
+      "word": "right",
+      "definitions": [
+        "adj. 对的；右边的",
+        "n. 权利；右边"
+      ]
+    },
+    {
+      "word": "open",
+      "definitions": [
+        "adj./n./v. 开"
+      ]
+    },
+    {
+      "word": "young",
+      "definitions": [
+        "adj. 年轻的；刚开始的"
+      ]
+    },
+    {
+      "word": "come",
+      "definitions": [
+        "v. 来"
+      ]
+    },
+    {
+      "word": "photograph",
+      "definitions": [
+        "n. 照片"
+      ]
+    },
+    {
+      "word": "dot",
+      "definitions": [
+        "n. 点",
+        "v. 散布于"
+      ]
+    },
+    {
+      "word": "clothes",
+      "definitions": [
+        "n. 衣服"
+      ]
+    },
+    {
+      "word": "leg",
+      "definitions": [
+        "n. 腿",
+        "v. 摇晃；行程"
+      ]
+    },
+    {
+      "word": "show",
+      "definitions": [
+        "v. 展示",
+        "n. 表演"
+      ]
+    },
+    {
+      "word": "rabbit",
+      "definitions": [
+        "n. 兔子"
+      ]
+    },
+    {
+      "word": "very",
+      "definitions": [
+        "adv. 非常",
+        "adj. 正是"
+      ]
+    },
+    {
+      "word": "none",
+      "definitions": [
+        "pron. 全无"
+      ]
+    },
+    {
+      "word": "body",
+      "definitions": [
+        "n. 身体，尸体；主体，主要部分"
+      ]
+    },
+    {
+      "word": "bake",
+      "definitions": [
+        "v. 烤"
+      ]
+    },
+    {
+      "word": "end",
+      "definitions": [
+        "n. 结尾，目的；一端",
+        "v. 结束"
+      ]
+    },
+    {
+      "word": "similar",
+      "definitions": [
+        "adj. 相似的"
+      ]
+    },
+    {
+      "word": "realize",
+      "definitions": [
+        "v. 认识到；实现"
+      ]
+    },
+    {
+      "word": "familiar",
+      "definitions": [
+        "adj. 熟悉的"
+      ]
+    },
+    {
+      "word": "fresh",
+      "definitions": [
+        "adj. 新鲜的"
+      ]
+    },
+    {
+      "word": "create",
+      "definitions": [
+        "v. 创造，制造"
+      ]
+    },
+    {
+      "word": "birth",
+      "definitions": [
+        "n. 诞生"
+      ]
+    },
+    {
+      "word": "education",
+      "definitions": [
+        "n. 教育"
+      ]
+    },
+    {
+      "word": "fork",
+      "definitions": [
+        "n. 叉子；分叉"
+      ]
+    },
+    {
+      "word": "fan",
+      "definitions": [
+        "n. 扇子，扇形；狂热的仰慕者"
+      ]
+    },
+    {
+      "word": "politician",
+      "definitions": [
+        "n. 政治家"
+      ]
+    },
+    {
+      "word": "cut",
+      "definitions": [
+        "v. 剪，切"
+      ]
+    },
+    {
+      "word": "stone",
+      "definitions": [
+        "n. 石头"
+      ]
+    },
+    {
+      "word": "snake",
+      "definitions": [
+        "n. 蛇"
+      ]
+    },
+    {
+      "word": "ball",
+      "definitions": [
+        "n. 球；舞会"
+      ]
+    },
+    {
+      "word": "borrow",
+      "definitions": [
+        "v. 借"
+      ]
+    },
+    {
+      "word": "international",
+      "definitions": [
+        "adj. 国际的"
+      ]
+    },
+    {
+      "word": "colorful",
+      "definitions": [
+        "adj. 多彩的"
+      ]
+    },
+    {
+      "word": "officer",
+      "definitions": [
+        "n. 官员"
+      ]
+    },
+    {
+      "word": "keyboard",
+      "definitions": [
+        "n. 键盘"
+      ]
+    },
+    {
+      "word": "near",
+      "definitions": [
+        "prep. 接近"
+      ]
+    },
+    {
+      "word": "temperature",
+      "definitions": [
+        "n. 温度"
+      ]
+    },
+    {
+      "word": "against",
+      "definitions": [
+        "prep. 反对；倚靠"
+      ]
+    },
+    {
+      "word": "ground",
+      "definitions": [
+        "n. 土地",
+        "v. 关禁闭；搁浅",
+        "adj. 磨碎的"
+      ]
+    },
+    {
+      "word": "selfish",
+      "definitions": [
+        "adj. 自私的"
+      ]
+    },
+    {
+      "word": "peach",
+      "definitions": [
+        "n. 桃子"
+      ]
+    },
+    {
+      "word": "weekday",
+      "definitions": [
+        "n. 工作日"
+      ]
+    },
+    {
+      "word": "more",
+      "definitions": [
+        "adj. 更多的"
+      ]
+    },
+    {
+      "word": "within",
+      "definitions": [
+        "prep. 在……里"
+      ]
+    },
+    {
+      "word": "task",
+      "definitions": [
+        "n. 任务"
+      ]
+    },
+    {
+      "word": "violin",
+      "definitions": [
+        "n. 小提琴"
+      ]
+    },
+    {
+      "word": "discuss",
+      "definitions": [
+        "v. 讨论"
+      ]
+    }
+  ]
+}

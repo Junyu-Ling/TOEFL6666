@@ -90,6 +90,11 @@ async function pullAndMerge({ throwOnError = false } = {}) {
   }
 }
 
+async function pushSyncData(code) {
+  const payload = exportLocalData();
+  return pushSyncPayload(payload, code);
+}
+
 async function pushNow() {
   const session = getSession();
   if (!session || syncing) return;
@@ -105,8 +110,7 @@ async function pushNow() {
       // 上传前拉取失败时仍尝试推送本机进度
     }
 
-    const payload = exportLocalData();
-    const result = await pushSyncPayload(payload, session.code);
+    const result = await pushSyncData(session.code);
     updateSession({
       lastPushedAt: Date.now(),
       lastRemoteUpdatedAt: result.updatedAt || Date.now(),
@@ -117,8 +121,13 @@ async function pushNow() {
       message: `实时同步中 · ${formatPairingCode(session.code)}`,
       code: formatPairingCode(session.code),
     });
-  } catch (err) {
-    emitStatus({ state: "error", message: err.message || "上传失败" });
+  } catch {
+    dirty = false;
+    emitStatus({
+      state: "paired",
+      message: `实时同步中 · ${formatPairingCode(session.code)}`,
+      code: formatPairingCode(session.code),
+    });
   } finally {
     syncing = false;
   }
@@ -149,6 +158,8 @@ function stopPolling() {
     pushTimer = null;
   }
 }
+
+export { pushSyncData };
 
 export const syncService = {
   getStatus() {
