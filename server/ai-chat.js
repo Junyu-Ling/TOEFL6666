@@ -8,7 +8,7 @@ const CHAT_SYSTEM_BASE = `你是 TOEFL 6·6·6·6 背单词应用里的英语词
 2. **2026 新托福考试**：结构、时长、四科题型、1–6 分制、CEFR 对照、自适应机制、改革变化、备考方向——必须按 **2026-01-21 及以后的新版** 作答，避免信息差。
 
 回答要求：
-1. 用简洁清晰的中文回答，必要时给出英文例句或短语。
+1. 用清晰的中文充分讲解，把问题讲完整、讲透；不要为了控制篇幅而省略、缩写或中途截断。
 2. 用户搞混近义/形近词时，帮助对比区分。
 3. 不回答与英语学习、托福考试无关的话题；若被问到，礼貌说明职责范围。
 4. 不要编造书上没有的词义或 ETS 未公布的政策；不确定时如实说明并建议查阅 ets.org。
@@ -47,13 +47,15 @@ function buildContextBlock(context) {
   return `\n\n用户当前正在练习的单词：${context.currentWord}${defs ? `\n书上释义：${defs}` : ""}\n若该词读音不符合自然拼读（如不发音字母、特殊元音），回答时可简要提醒正确读法。`;
 }
 
+const CHAT_MAX_TOKENS = 8192;
+
 export async function chatWithDeepSeek(payload, config = {}) {
   const { messages, context } = payload || {};
   const trimmed = prepareChatMessages({ messages });
 
   const reply = await chatCompletion({
     config,
-    maxTokens: 900,
+    maxTokens: CHAT_MAX_TOKENS,
     temperature: 0.5,
     messages: buildChatRequestMessages(trimmed, context),
   });
@@ -93,7 +95,7 @@ export async function* streamChatWithDeepSeek(payload, config = {}) {
 
   for await (const delta of streamChatCompletion({
     config,
-    maxTokens: 900,
+    maxTokens: CHAT_MAX_TOKENS,
     temperature: 0.5,
     messages: requestMessages,
   })) {

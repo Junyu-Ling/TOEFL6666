@@ -10,9 +10,9 @@ const SYSTEM_PROMPT = `你是英语词典助手。用户查询的单词不在本
 
 规则：
 1. definitions 数组列出该词常见词性与中文释义，每条格式为「词性. 释义」，如「n. 获得」「v. 获得，学到」。
-2. 覆盖常见词性，按使用频率排序；专有名词、缩写也需给出简明中文。
+2. 覆盖常见词性，按使用频率排序；专有名词、缩写也需给出简明中文。释义条目控制在 8 条以内，只写核心义项，不要例句或记忆法。
 3. 若输入不是有效英文单词，word 仍返回清理后的输入，definitions 为空数组，并加一条「无法识别该词，请检查拼写」。
-4. 不要输出例句、记忆法或多余字段。`;
+4. 必须一次输出完整、合法的 JSON，不要 markdown 代码块，不要输出到一半中断。`;
 
 function parseAiJson(text) {
   let cleaned = text.trim();
@@ -44,7 +44,7 @@ function normalizeDefinitions(raw) {
   return raw
     .map((item) => String(item || "").trim())
     .filter(Boolean)
-    .slice(0, 12);
+    .slice(0, 8);
 }
 
 export async function lookupWordWithDeepSeek(payload, config = {}) {
@@ -57,7 +57,7 @@ export async function lookupWordWithDeepSeek(payload, config = {}) {
 
   const text = await chatCompletion({
     config,
-    maxTokens: 400,
+    maxTokens: 640,
     temperature: 0.2,
     responseFormat: "json",
     messages: [
