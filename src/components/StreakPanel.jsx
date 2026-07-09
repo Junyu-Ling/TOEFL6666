@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { stopGameKeyBubble } from "../utils/appKeyboard";
 import {
   STREAK_MILESTONES,
   EXAM_TYPES,
@@ -61,7 +62,7 @@ export default function StreakPanel({ open, onClose, streak, onStreakChange }) {
   if (!open) return null;
 
   return (
-    <div className="settings-overlay" onClick={onClose}>
+    <div className="settings-overlay" onClick={onClose} onKeyDown={stopGameKeyBubble}>
       <aside className="streak-panel" onClick={(e) => e.stopPropagation()}>
         <header className="streak-panel__header">
           <div>

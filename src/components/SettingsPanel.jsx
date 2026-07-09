@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo, useRef } from "react";
 import { useSettings } from "../context/SettingsContext";
+import { stopGameKeyBubble } from "../utils/appKeyboard";
 import { formatPairingCode, getSyncSummary, normalizePairingCode } from "../shared/sync";
 import { pushSyncData, syncService, SYNC_STATUS_EVENT } from "../services/syncService";
 import {
@@ -207,7 +208,7 @@ export default function SettingsPanel() {
   if (!settingsOpen) return null;
 
   return (
-    <div className="settings-overlay" onClick={() => setSettingsOpen(false)}>
+    <div className="settings-overlay" onClick={() => setSettingsOpen(false)} onKeyDown={stopGameKeyBubble}>
       <aside
         ref={panelRef}
         tabIndex={-1}

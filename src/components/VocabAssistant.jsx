@@ -11,6 +11,7 @@ import {
   clearChatEntry,
   searchChatHistory,
 } from "../services/aiChatHistory";
+import { stopGameKeyBubble } from "../utils/appKeyboard";
 
 const WELCOME = {
   role: "assistant",
@@ -353,7 +354,7 @@ export default function VocabAssistant({ currentWord, micGranted }) {
   }
 
   return (
-    <div className="vocab-assistant" aria-live="polite">
+    <div className="vocab-assistant" aria-live="polite" onKeyDown={stopGameKeyBubble}>
       {open && (
         <section
           className="vocab-assistant__panel"

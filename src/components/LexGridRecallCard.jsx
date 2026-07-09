@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { useSettings } from "../context/SettingsContext";
+import { shouldIgnoreAppGameKeys } from "../utils/appKeyboard";
 
 export default function LexGridRecallCard({ wordData, recallHint, onKnow, onUnknown }) {
   const { speakWord } = useSettings();
@@ -11,6 +12,7 @@ export default function LexGridRecallCard({ wordData, recallHint, onKnow, onUnkn
 
   useEffect(() => {
     function onKeyDown(e) {
+      if (shouldIgnoreAppGameKeys(e)) return;
       if (e.ctrlKey || e.metaKey || e.altKey) return;
 
       if (e.key === "1") {

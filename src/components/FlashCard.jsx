@@ -10,6 +10,7 @@ import {
 import { evaluatePronunciation } from "../services/pronunciationEvaluate";
 import { getPronunciationAlert } from "../utils/pronunciationAlert";
 import { playAnswerSound } from "../utils/answerSounds";
+import { shouldIgnoreAppGameKeys } from "../utils/appKeyboard";
 import { fetchMemoryTrick } from "../services/memoryTrick";
 import { shouldFetchMemoryTrick } from "../shared/memoryTrick";
 import MemoryTrickBlock from "./MemoryTrickBlock";
@@ -802,16 +803,9 @@ export default function FlashCard({
       return document.activeElement === englishInputRef.current;
     }
 
-    function isInsideVocabAssistant() {
-      return Boolean(document.activeElement?.closest?.(".vocab-assistant"));
-    }
-
-    function isInsideSettingsPanel() {
-      const active = document.activeElement;
-      return Boolean(
-        settingsOpenRef.current ||
-        active?.closest?.(".settings-panel, .settings-overlay")
-      );
+    function isExternalInteractiveContext(event) {
+      if (isTypingInAnswerField()) return false;
+      return shouldIgnoreAppGameKeys(event);
     }
 
     function handleGlobalKeyDown(e) {
@@ -822,10 +816,8 @@ export default function FlashCard({
         }
         return;
       }
-      if (isInsideSettingsPanel()) return;
+      if (isExternalInteractiveContext(e)) return;
       if (e.metaKey || e.ctrlKey || e.altKey) return;
-
-      if (isInsideVocabAssistant()) return;
 
       if (flippedRef.current && backModeRef.current === "ai") {
         const pending = resultRef.current;

@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import LexGridRecallCard from "./LexGridRecallCard";
 import { validateEnglishWord } from "../services/wordValidate";
+import { shouldIgnoreAppGameKeys } from "../utils/appKeyboard";
 import {
   TILE_STATES,
   buildLexGridPool,
@@ -227,6 +228,7 @@ export default function LexGridGame({ words, availableLists }) {
   useEffect(() => {
     function onKeyDown(e) {
       if (round?.status !== "playing") return;
+      if (shouldIgnoreAppGameKeys(e)) return;
       if (e.ctrlKey || e.metaKey || e.altKey) return;
       if (e.key === "Enter") {
         e.preventDefault();
