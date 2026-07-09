@@ -9,6 +9,7 @@ import StreakPanel from "./components/StreakPanel";
 import VocabLoadingScreen from "./components/VocabLoadingScreen";
 import BookReviewScopeBar from "./components/BookReviewScopeBar";
 import VocabularyBank from "./components/VocabularyBank";
+import LexGridGame from "./components/LexGridGame";
 import MottoFooter from "./components/MottoFooter";
 import { recordVisit, refreshStreak } from "./services/streak";
 import { syncService, SYNC_APPLIED_EVENT, SYNC_STATUS_EVENT } from "./services/syncService";
@@ -949,6 +950,10 @@ export default function App() {
               onToggleShuffle={toggleReviewShuffle}
             />
           )
+        )}
+
+        {activeTab === "lexgrid" && (
+          <LexGridGame words={allBankWords} availableLists={availableLists} />
         )}
 
         {activeTab === "unrecognized" && (
