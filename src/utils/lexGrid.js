@@ -117,6 +117,18 @@ export async function validateGuessWord(guess, bankSet, { validateRemote, cache,
   return result;
 }
 
+export function createEmptyGuess(wordLength) {
+  return Array(wordLength).fill("");
+}
+
+export function isGuessComplete(guess) {
+  return Array.isArray(guess) && guess.length > 0 && guess.every((char) => /^[a-zA-Z]$/.test(char));
+}
+
+export function guessToWord(guess) {
+  return guess.join("").toLowerCase();
+}
+
 export function createLexGridRound(pool) {
   const target = pickRandomLexGridWord(pool);
   if (!target) return null;
@@ -127,7 +139,8 @@ export function createLexGridRound(pool) {
     wordLength: word.length,
     maxGuesses: getMaxGuesses(word.length),
     rows: [],
-    currentGuess: "",
+    currentGuess: createEmptyGuess(word.length),
+    cursorIndex: 0,
     status: "playing",
     keyStates: {},
     shake: false,

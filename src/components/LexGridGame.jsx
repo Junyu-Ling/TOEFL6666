@@ -9,6 +9,8 @@ import {
   createLexGridRound,
   evaluateGuess,
   getKeyboardRows,
+  guessToWord,
+  isGuessComplete,
   mergeKeyStates,
   validateGuessWord,
 } from "../utils/lexGrid";
@@ -16,23 +18,40 @@ import {
 const REVEAL_MS_PER_TILE = 320;
 const REVEAL_BASE_MS = 180;
 
-function Tile({ letter, state, filled, flip, settled, delayMs }) {
-  if (settled) {
-    return (
-      <div className={`lexgrid-tile lexgrid-tile--filled lexgrid-tile--${state}`}>
-        {letter}
-      </div>
-    );
-  }
-
+function Tile({ letter, state, filled, flip, settled, selected, selectable, position, onSelect, delayMs }) {
   const className = [
     "lexgrid-tile",
     filled && "lexgrid-tile--filled",
     flip && state !== TILE_STATES.empty && `lexgrid-tile--${state}`,
     flip && "lexgrid-tile--flip",
+    settled && state !== TILE_STATES.empty && `lexgrid-tile--${state}`,
+    selectable && "lexgrid-tile--selectable",
+    selected && "lexgrid-tile--selected",
   ]
     .filter(Boolean)
     .join(" ");
+
+  if (settled) {
+    return <div className={className}>{letter}</div>;
+  }
+
+  if (selectable) {
+    return (
+      <button
+        type="button"
+        className={className}
+        onClick={onSelect}
+        aria-label={
+          letter
+            ? `第 ${position + 1} 格，字母 ${letter.toUpperCase()}`
+            : `选择第 ${position + 1} 格输入字母`
+        }
+        aria-current={selected ? "true" : undefined}
+      >
+        {letter}
+      </button>
+    );
+  }
 
   return (
     <div
@@ -82,8 +101,8 @@ export default function LexGridGame({ words, availableLists }) {
     if (!round || round.status !== "playing" || pendingRef.current) return;
     if (round.revealingRow !== null || round.validating) return;
 
-    const guess = round.currentGuess.toLowerCase();
-    if (guess.length !== round.wordLength) {
+    const guess = guessToWord(round.currentGuess);
+    if (!isGuessComplete(round.currentGuess)) {
       setRound((prev) => ({ ...prev, shake: true, invalidMsg: null }));
       window.setTimeout(() => setRound((prev) => ({ ...prev, shake: false })), 450);
       return;
@@ -131,7 +150,8 @@ export default function LexGridGame({ words, availableLists }) {
       setRound((prev) => ({
         ...prev,
         rows: [...prev.rows, { guess, evaluation }],
-        currentGuess: "",
+        currentGuess: Array(prev.wordLength).fill(""),
+        cursorIndex: 0,
         revealingRow: rowIndex,
         validating: false,
         invalidMsg: null,
@@ -172,6 +192,26 @@ export default function LexGridGame({ words, availableLists }) {
     }
   }, [round, wordBankSet]);
 
+  const handleSelectCell = useCallback(
+    (colIndex) => {
+      if (
+        !round ||
+        round.status !== "playing" ||
+        pendingRef.current ||
+        round.revealingRow !== null ||
+        round.validating
+      ) {
+        return;
+      }
+      setRound((prev) => ({
+        ...prev,
+        cursorIndex: colIndex,
+        invalidMsg: null,
+      }));
+    },
+    [round]
+  );
+
   const handleLetter = useCallback(
     (letter) => {
       if (
@@ -183,12 +223,27 @@ export default function LexGridGame({ words, availableLists }) {
       ) {
         return;
       }
-      if (round.currentGuess.length >= round.wordLength) return;
-      setRound((prev) => ({
-        ...prev,
-        currentGuess: `${prev.currentGuess}${letter}`.slice(0, prev.wordLength),
-        invalidMsg: null,
-      }));
+
+      setRound((prev) => {
+        const guess = [...prev.currentGuess];
+        const index = prev.cursorIndex;
+        guess[index] = letter;
+
+        let nextIndex = index;
+        const nextEmpty = guess.findIndex((char, i) => i > index && !char);
+        if (nextEmpty >= 0) {
+          nextIndex = nextEmpty;
+        } else if (index < prev.wordLength - 1) {
+          nextIndex = index + 1;
+        }
+
+        return {
+          ...prev,
+          currentGuess: guess,
+          cursorIndex: nextIndex,
+          invalidMsg: null,
+        };
+      });
     },
     [round]
   );
@@ -203,12 +258,45 @@ export default function LexGridGame({ words, availableLists }) {
     ) {
       return;
     }
-    setRound((prev) => ({
-      ...prev,
-      currentGuess: prev.currentGuess.slice(0, -1),
-      invalidMsg: null,
-    }));
+
+    setRound((prev) => {
+      const guess = [...prev.currentGuess];
+      let index = prev.cursorIndex;
+
+      if (guess[index]) {
+        guess[index] = "";
+      } else if (index > 0) {
+        index -= 1;
+        guess[index] = "";
+      }
+
+      return {
+        ...prev,
+        currentGuess: guess,
+        cursorIndex: index,
+        invalidMsg: null,
+      };
+    });
   }, [round]);
+
+  const moveCursor = useCallback(
+    (delta) => {
+      if (
+        !round ||
+        round.status !== "playing" ||
+        pendingRef.current ||
+        round.revealingRow !== null ||
+        round.validating
+      ) {
+        return;
+      }
+      setRound((prev) => ({
+        ...prev,
+        cursorIndex: Math.max(0, Math.min(prev.wordLength - 1, prev.cursorIndex + delta)),
+      }));
+    },
+    [round]
+  );
 
   const handleRecallKnow = useCallback(() => {
     setRound((prev) => (prev ? { ...prev, status: "cleared", recallHint: null } : prev));
@@ -240,6 +328,16 @@ export default function LexGridGame({ words, availableLists }) {
         handleBackspace();
         return;
       }
+      if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        moveCursor(-1);
+        return;
+      }
+      if (e.key === "ArrowRight") {
+        e.preventDefault();
+        moveCursor(1);
+        return;
+      }
       if (/^[a-zA-Z]$/.test(e.key)) {
         e.preventDefault();
         handleLetter(e.key.toLowerCase());
@@ -248,7 +346,7 @@ export default function LexGridGame({ words, availableLists }) {
 
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [handleBackspace, handleLetter, round?.status, submitGuess]);
+  }, [handleBackspace, handleLetter, moveCursor, round?.status, submitGuess]);
 
   if (!pool.length) {
     return (
@@ -269,6 +367,7 @@ export default function LexGridGame({ words, availableLists }) {
     maxGuesses,
     rows,
     currentGuess,
+    cursorIndex,
     status,
     keyStates,
     shake,
@@ -282,12 +381,14 @@ export default function LexGridGame({ words, availableLists }) {
   const gridRows = Array.from({ length: maxGuesses }, (_, rowIndex) => {
     const submitted = rows[rowIndex];
     const isActive = rowIndex === activeRow && isPlaying;
-    const guess =
-      submitted?.guess ||
-      (isActive ? currentGuess.padEnd(wordLength, " ") : " ".repeat(wordLength));
+    const guessChars = submitted
+      ? submitted.guess.split("")
+      : isActive
+        ? currentGuess
+        : Array(wordLength).fill("");
     const evaluation = submitted?.evaluation || Array(wordLength).fill(TILE_STATES.empty);
 
-    return { rowIndex, guess, evaluation, isActive };
+    return { rowIndex, guessChars, evaluation, isActive };
   });
 
   const keyboardRows = getKeyboardRows();
@@ -317,10 +418,10 @@ export default function LexGridGame({ words, availableLists }) {
         role="grid"
         aria-label="猜词棋盘"
       >
-        {gridRows.map(({ rowIndex, guess, evaluation }) => (
+        {gridRows.map(({ rowIndex, guessChars, evaluation, isActive }) => (
           <div key={rowIndex} className="lexgrid__row" role="row">
             {Array.from({ length: wordLength }, (_, colIndex) => {
-              const letter = guess[colIndex]?.trim() ? guess[colIndex] : "";
+              const letter = guessChars[colIndex] || "";
               const filled = Boolean(letter);
               const state =
                 rows[rowIndex] || revealingRow === rowIndex
@@ -328,6 +429,8 @@ export default function LexGridGame({ words, availableLists }) {
                   : TILE_STATES.empty;
               const settled = Boolean(rows[rowIndex]) && revealingRow !== rowIndex;
               const flip = revealingRow === rowIndex;
+              const selectable = isActive && !validating && revealingRow === null;
+              const selected = selectable && cursorIndex === colIndex;
               return (
                 <Tile
                   key={colIndex}
@@ -336,6 +439,10 @@ export default function LexGridGame({ words, availableLists }) {
                   filled={filled}
                   flip={flip}
                   settled={settled}
+                  selectable={selectable}
+                  selected={selected}
+                  onSelect={() => handleSelectCell(colIndex)}
+                  position={colIndex}
                   delayMs={colIndex * REVEAL_MS_PER_TILE}
                 />
               );
@@ -446,7 +553,7 @@ export default function LexGridGame({ words, availableLists }) {
 
       {isPlaying && (
         <p className="lexgrid__hint">
-          每次须填真实英文单词（词库有则直接通过，否则 AI 验证）· 绿/黄/灰规则同 Wordle · 猜对后需认词过关
+          点击格子选定位置再输入 · ← → 切换格子 · 每次须填真实英文单词 · 猜对后需认词过关
         </p>
       )}
     </div>

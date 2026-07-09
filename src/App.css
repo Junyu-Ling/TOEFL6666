@@ -4099,6 +4099,30 @@ body {
   font-weight: 700;
 }
 
+.lexgrid-tile--selectable {
+  padding: 0;
+  cursor: pointer;
+  transition: border-color 0.15s, box-shadow 0.15s, transform 0.1s;
+}
+
+.lexgrid-tile--selectable:hover {
+  border-color: var(--accent);
+}
+
+.lexgrid-tile--selectable:active {
+  transform: scale(0.97);
+}
+
+.lexgrid-tile--selectable:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.lexgrid-tile--selected {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 28%, transparent);
+}
+
 .lexgrid-tile--correct {
   background: var(--lexgrid-correct);
   border-color: var(--lexgrid-correct);
