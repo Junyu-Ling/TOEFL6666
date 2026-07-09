@@ -78,7 +78,7 @@ export function mergeKeyStates(current, guess, evaluation) {
   for (let i = 0; i < guess.length; i++) {
     const letter = guess[i].toLowerCase();
     const state = evaluation[i];
-    if (!KEY_RANK[state]) continue;
+    if (!(state in KEY_RANK)) continue;
     if (!next[letter] || KEY_RANK[state] > KEY_RANK[next[letter]]) {
       next[letter] = state;
     }
