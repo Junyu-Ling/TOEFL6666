@@ -1,11 +1,15 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import LexGridRecallCard from "./LexGridRecallCard";
+import { validateEnglishWord } from "../services/wordValidate";
 import {
   TILE_STATES,
   buildLexGridPool,
+  buildWordBankSet,
   createLexGridRound,
   evaluateGuess,
   getKeyboardRows,
   mergeKeyStates,
+  validateGuessWord,
 } from "../utils/lexGrid";
 
 const REVEAL_MS_PER_TILE = 320;
@@ -47,11 +51,16 @@ export default function LexGridGame({ words, availableLists }) {
     () => buildLexGridPool(words, availableLists),
     [words, availableLists]
   );
+  const wordBankSet = useMemo(() => buildWordBankSet(words), [words]);
+  const validationCacheRef = useRef(new Map());
+  const validateAbortRef = useRef(null);
 
   const [round, setRound] = useState(() => createLexGridRound(pool));
   const pendingRef = useRef(false);
 
   const startNewRound = useCallback(() => {
+    validateAbortRef.current?.abort();
+    validateAbortRef.current = null;
     pendingRef.current = false;
     setRound(createLexGridRound(pool));
   }, [pool]);
@@ -62,76 +71,166 @@ export default function LexGridGame({ words, availableLists }) {
     }
   }, [pool, round]);
 
-  const submitGuess = useCallback(() => {
+  useEffect(() => {
+    return () => {
+      validateAbortRef.current?.abort();
+    };
+  }, []);
+
+  const submitGuess = useCallback(async () => {
     if (!round || round.status !== "playing" || pendingRef.current) return;
-    if (round.revealingRow !== null) return;
+    if (round.revealingRow !== null || round.validating) return;
 
     const guess = round.currentGuess.toLowerCase();
     if (guess.length !== round.wordLength) {
-      setRound((prev) => ({ ...prev, shake: true }));
+      setRound((prev) => ({ ...prev, shake: true, invalidMsg: null }));
       window.setTimeout(() => setRound((prev) => ({ ...prev, shake: false })), 450);
       return;
     }
 
-    const evaluation = evaluateGuess(guess, round.target.word);
-    const rowIndex = round.rows.length;
+    validateAbortRef.current?.abort();
+    const controller = new AbortController();
+    validateAbortRef.current = controller;
     pendingRef.current = true;
 
     setRound((prev) => ({
       ...prev,
-      rows: [...prev.rows, { guess, evaluation }],
-      currentGuess: "",
-      revealingRow: rowIndex,
+      validating: true,
+      invalidMsg: null,
       shake: false,
     }));
 
-    const revealDuration = REVEAL_BASE_MS + round.wordLength * REVEAL_MS_PER_TILE;
-    window.setTimeout(() => {
-      setRound((prev) => {
-        if (!prev) return prev;
-        const won = evaluation.every((state) => state === TILE_STATES.correct);
-        const lost = !won && prev.rows.length >= prev.maxGuesses;
-        return {
-          ...prev,
-          revealingRow: null,
-          keyStates: mergeKeyStates(prev.keyStates, guess, evaluation),
-          status: won ? "won" : lost ? "lost" : "playing",
-        };
+    try {
+      const validation = await validateGuessWord(guess, wordBankSet, {
+        cache: validationCacheRef.current,
+        signal: controller.signal,
+        validateRemote: (word, options) => validateEnglishWord(word, options),
       });
+
+      if (controller.signal.aborted) return;
+
+      if (!validation.valid) {
+        setRound((prev) => ({
+          ...prev,
+          validating: false,
+          shake: true,
+          invalidMsg: "不是有效英文单词，请换一个词",
+        }));
+        window.setTimeout(
+          () => setRound((prev) => (prev ? { ...prev, shake: false } : prev)),
+          450
+        );
+        pendingRef.current = false;
+        return;
+      }
+
+      const evaluation = evaluateGuess(guess, round.target.word);
+      const rowIndex = round.rows.length;
+
+      setRound((prev) => ({
+        ...prev,
+        rows: [...prev.rows, { guess, evaluation }],
+        currentGuess: "",
+        revealingRow: rowIndex,
+        validating: false,
+        invalidMsg: null,
+      }));
+
+      const revealDuration = REVEAL_BASE_MS + round.wordLength * REVEAL_MS_PER_TILE;
+      window.setTimeout(() => {
+        setRound((prev) => {
+          if (!prev) return prev;
+          const won = evaluation.every((state) => state === TILE_STATES.correct);
+          const lost = !won && prev.rows.length >= prev.maxGuesses;
+          return {
+            ...prev,
+            revealingRow: null,
+            keyStates: mergeKeyStates(prev.keyStates, guess, evaluation),
+            status: won ? "recall" : lost ? "lost" : "playing",
+            recallHint: won ? null : prev.recallHint,
+          };
+        });
+        pendingRef.current = false;
+      }, revealDuration);
+    } catch (err) {
+      if (err?.name === "AbortError" || controller.signal.aborted) return;
+      setRound((prev) =>
+        prev
+          ? {
+              ...prev,
+              validating: false,
+              invalidMsg: err.message || "单词验证失败，请稍后重试",
+            }
+          : prev
+      );
       pendingRef.current = false;
-    }, revealDuration);
-  }, [round]);
+    } finally {
+      if (validateAbortRef.current === controller) {
+        validateAbortRef.current = null;
+      }
+    }
+  }, [round, wordBankSet]);
 
   const handleLetter = useCallback(
     (letter) => {
-      if (!round || round.status !== "playing" || pendingRef.current || round.revealingRow !== null) {
+      if (
+        !round ||
+        round.status !== "playing" ||
+        pendingRef.current ||
+        round.revealingRow !== null ||
+        round.validating
+      ) {
         return;
       }
       if (round.currentGuess.length >= round.wordLength) return;
       setRound((prev) => ({
         ...prev,
         currentGuess: `${prev.currentGuess}${letter}`.slice(0, prev.wordLength),
+        invalidMsg: null,
       }));
     },
     [round]
   );
 
   const handleBackspace = useCallback(() => {
-    if (!round || round.status !== "playing" || pendingRef.current || round.revealingRow !== null) {
+    if (
+      !round ||
+      round.status !== "playing" ||
+      pendingRef.current ||
+      round.revealingRow !== null ||
+      round.validating
+    ) {
       return;
     }
     setRound((prev) => ({
       ...prev,
       currentGuess: prev.currentGuess.slice(0, -1),
+      invalidMsg: null,
     }));
   }, [round]);
 
+  const handleRecallKnow = useCallback(() => {
+    setRound((prev) => (prev ? { ...prev, status: "cleared", recallHint: null } : prev));
+  }, []);
+
+  const handleRecallUnknown = useCallback(() => {
+    setRound((prev) =>
+      prev
+        ? {
+            ...prev,
+            recallHint: "需要认识这个词才能过关，请再看看释义后再选「认识」",
+          }
+        : prev
+    );
+  }, []);
+
   useEffect(() => {
     function onKeyDown(e) {
+      if (round?.status !== "playing") return;
       if (e.ctrlKey || e.metaKey || e.altKey) return;
       if (e.key === "Enter") {
         e.preventDefault();
-        submitGuess();
+        void submitGuess();
         return;
       }
       if (e.key === "Backspace") {
@@ -147,7 +246,7 @@ export default function LexGridGame({ words, availableLists }) {
 
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [handleBackspace, handleLetter, submitGuess]);
+  }, [handleBackspace, handleLetter, round?.status, submitGuess]);
 
   if (!pool.length) {
     return (
@@ -162,12 +261,25 @@ export default function LexGridGame({ words, availableLists }) {
 
   if (!round) return null;
 
-  const { target, wordLength, maxGuesses, rows, currentGuess, status, keyStates, shake, revealingRow } =
-    round;
+  const {
+    target,
+    wordLength,
+    maxGuesses,
+    rows,
+    currentGuess,
+    status,
+    keyStates,
+    shake,
+    revealingRow,
+    validating,
+    invalidMsg,
+    recallHint,
+  } = round;
   const activeRow = rows.length;
+  const isPlaying = status === "playing";
   const gridRows = Array.from({ length: maxGuesses }, (_, rowIndex) => {
     const submitted = rows[rowIndex];
-    const isActive = rowIndex === activeRow && status === "playing";
+    const isActive = rowIndex === activeRow && isPlaying;
     const guess =
       submitted?.guess ||
       (isActive ? currentGuess.padEnd(wordLength, " ") : " ".repeat(wordLength));
@@ -183,9 +295,17 @@ export default function LexGridGame({ words, availableLists }) {
       <header className="lexgrid__header">
         <div>
           <h2 className="lexgrid__title">LexGrid</h2>
-          <p className="lexgrid__subtitle">词格猜词 · Level 1–4 随机 · {wordLength} 字母 · {maxGuesses} 次机会</p>
+          <p className="lexgrid__subtitle">
+            词格猜词 · Level 1–4 随机 · {wordLength} 字母 · {maxGuesses} 次机会
+            {status === "recall" ? " · 认词过关" : ""}
+          </p>
         </div>
-        <button type="button" className="btn btn--ghost btn--sm" onClick={startNewRound}>
+        <button
+          type="button"
+          className="btn btn--ghost btn--sm"
+          onClick={startNewRound}
+          disabled={validating || revealingRow !== null}
+        >
           换一词
         </button>
       </header>
@@ -222,23 +342,27 @@ export default function LexGridGame({ words, availableLists }) {
         ))}
       </div>
 
-      {status !== "playing" && (
-        <div className={`lexgrid__result lexgrid__result--${status}`} role="status">
-          {status === "won" ? (
-            <>
-              <strong>猜对了！</strong>
-              <span>
-                答案：<em>{target.word}</em> · 用了 {rows.length} / {maxGuesses} 次
-              </span>
-            </>
-          ) : (
-            <>
-              <strong>机会用完了</strong>
-              <span>
-                正确答案：<em>{target.word}</em>
-              </span>
-            </>
-          )}
+      {invalidMsg ? (
+        <p className="lexgrid__invalid" role="alert">
+          {invalidMsg}
+        </p>
+      ) : null}
+
+      {status === "recall" && (
+        <LexGridRecallCard
+          wordData={target}
+          recallHint={recallHint}
+          onKnow={handleRecallKnow}
+          onUnknown={handleRecallUnknown}
+        />
+      )}
+
+      {status === "cleared" && (
+        <div className="lexgrid__result lexgrid__result--won" role="status">
+          <strong>过关！</strong>
+          <span>
+            答案：<em>{target.word}</em> · 用了 {rows.length} / {maxGuesses} 次 · 已确认认识
+          </span>
           {target.definitions?.length > 0 && (
             <p className="lexgrid__defs">{target.definitions.join(" · ")}</p>
           )}
@@ -248,62 +372,81 @@ export default function LexGridGame({ words, availableLists }) {
         </div>
       )}
 
-      <div className="lexgrid__keyboard" aria-label="虚拟键盘">
-        {keyboardRows.map((row, rowIndex) => (
-          <div key={rowIndex} className="lexgrid__keyboard-row">
-            {row.map((key) => {
-              if (key === "enter") {
-                return (
-                  <button
-                    key={key}
-                    type="button"
-                    className="lexgrid-key lexgrid-key--wide"
-                    onClick={submitGuess}
-                    disabled={status !== "playing" || revealingRow !== null}
-                  >
-                    确认
-                  </button>
-                );
-              }
-              if (key === "backspace") {
-                return (
-                  <button
-                    key={key}
-                    type="button"
-                    className="lexgrid-key lexgrid-key--wide"
-                    onClick={handleBackspace}
-                    disabled={status !== "playing" || revealingRow !== null}
-                    aria-label="删除"
-                  >
-                    ⌫
-                  </button>
-                );
-              }
-              const state = keyStates[key] || TILE_STATES.empty;
-              return (
-                <button
-                  key={key}
-                  type="button"
-                  className={[
-                    "lexgrid-key",
-                    state !== TILE_STATES.empty && `lexgrid-key--${state}`,
-                  ]
-                    .filter(Boolean)
-                    .join(" ")}
-                  onClick={() => handleLetter(key)}
-                  disabled={status !== "playing" || revealingRow !== null}
-                >
-                  {key.toUpperCase()}
-                </button>
-              );
-            })}
-          </div>
-        ))}
-      </div>
+      {status === "lost" && (
+        <div className="lexgrid__result lexgrid__result--lost" role="status">
+          <strong>机会用完了</strong>
+          <span>
+            正确答案：<em>{target.word}</em>
+          </span>
+          {target.definitions?.length > 0 && (
+            <p className="lexgrid__defs">{target.definitions.join(" · ")}</p>
+          )}
+          <button type="button" className="btn btn--accent btn--sm" onClick={startNewRound}>
+            再来一局
+          </button>
+        </div>
+      )}
 
-      <p className="lexgrid__hint">
-        绿 = 字母与位置都对 · 黄 = 字母在词中但位置不对 · 灰 = 词中没有该字母
-      </p>
+      {isPlaying && (
+        <div className="lexgrid__keyboard" aria-label="虚拟键盘">
+          {keyboardRows.map((row, rowIndex) => (
+            <div key={rowIndex} className="lexgrid__keyboard-row">
+              {row.map((key) => {
+                if (key === "enter") {
+                  return (
+                    <button
+                      key={key}
+                      type="button"
+                      className="lexgrid-key lexgrid-key--wide"
+                      onClick={() => void submitGuess()}
+                      disabled={revealingRow !== null || validating}
+                    >
+                      {validating ? "验证中…" : "确认"}
+                    </button>
+                  );
+                }
+                if (key === "backspace") {
+                  return (
+                    <button
+                      key={key}
+                      type="button"
+                      className="lexgrid-key lexgrid-key--wide"
+                      onClick={handleBackspace}
+                      disabled={revealingRow !== null || validating}
+                      aria-label="删除"
+                    >
+                      ⌫
+                    </button>
+                  );
+                }
+                const state = keyStates[key] || TILE_STATES.empty;
+                return (
+                  <button
+                    key={key}
+                    type="button"
+                    className={[
+                      "lexgrid-key",
+                      state !== TILE_STATES.empty && `lexgrid-key--${state}`,
+                    ]
+                      .filter(Boolean)
+                      .join(" ")}
+                    onClick={() => handleLetter(key)}
+                    disabled={revealingRow !== null || validating}
+                  >
+                    {key.toUpperCase()}
+                  </button>
+                );
+              })}
+            </div>
+          ))}
+        </div>
+      )}
+
+      {isPlaying && (
+        <p className="lexgrid__hint">
+          每次须填真实英文单词（词库有则直接通过，否则 AI 验证）· 绿/黄/灰规则同 Wordle · 猜对后需认词过关
+        </p>
+      )}
     </div>
   );
 }

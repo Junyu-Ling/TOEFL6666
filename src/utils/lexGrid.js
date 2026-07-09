@@ -86,6 +86,37 @@ export function mergeKeyStates(current, guess, evaluation) {
   return next;
 }
 
+export function buildWordBankSet(words) {
+  const set = new Set();
+  for (const item of words || []) {
+    const word = String(item.word || "").trim().toLowerCase();
+    if (word) set.add(word);
+  }
+  return set;
+}
+
+export async function validateGuessWord(guess, bankSet, { validateRemote, cache, signal } = {}) {
+  const word = String(guess || "").trim().toLowerCase();
+  if (!word) return { valid: false, source: "empty" };
+
+  if (bankSet?.has(word)) {
+    return { valid: true, source: "bank" };
+  }
+
+  if (cache?.has(word)) {
+    return cache.get(word);
+  }
+
+  if (!validateRemote) {
+    return { valid: false, source: "missing" };
+  }
+
+  const remote = await validateRemote(word, { signal });
+  const result = { valid: Boolean(remote?.valid), source: "ai" };
+  cache?.set(word, result);
+  return result;
+}
+
 export function createLexGridRound(pool) {
   const target = pickRandomLexGridWord(pool);
   if (!target) return null;
@@ -101,5 +132,8 @@ export function createLexGridRound(pool) {
     keyStates: {},
     shake: false,
     revealingRow: null,
+    validating: false,
+    invalidMsg: null,
+    recallHint: null,
   };
 }

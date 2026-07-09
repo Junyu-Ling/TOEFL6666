@@ -5,6 +5,7 @@ import { chatWithDeepSeek, streamChatWithDeepSeek } from "./server/ai-chat.js";
 import { generateMemoryTrick } from "./server/ai-memory-trick.js";
 import { evaluatePronunciationWithDeepSeek } from "./server/ai-pronounce-evaluate.js";
 import { lookupWordWithDeepSeek } from "./server/ai-word-lookup.js";
+import { validateWordWithDeepSeek } from "./server/ai-word-validate.js";
 
 function readBody(req) {
   return new Promise((resolve, reject) => {
@@ -60,7 +61,8 @@ export function createAiHandler(getEnvConfig) {
     const isMemoryTrick = matchApiPath(req.url, "/api/ai/memory-trick");
     const isPronounceEvaluate = matchApiPath(req.url, "/api/ai/pronounce-evaluate");
     const isWordLookup = matchApiPath(req.url, "/api/ai/word-lookup");
-    if (!isEvaluate && !isChat && !isMemoryTrick && !isPronounceEvaluate && !isWordLookup) {
+    const isWordValidate = matchApiPath(req.url, "/api/ai/word-validate");
+    if (!isEvaluate && !isChat && !isMemoryTrick && !isPronounceEvaluate && !isWordLookup && !isWordValidate) {
       return next();
     }
 
@@ -89,6 +91,12 @@ export function createAiHandler(getEnvConfig) {
 
       if (isWordLookup) {
         const result = await lookupWordWithDeepSeek(payload, config);
+        sendJson(res, 200, result);
+        return;
+      }
+
+      if (isWordValidate) {
+        const result = await validateWordWithDeepSeek(payload, config);
         sendJson(res, 200, result);
         return;
       }
