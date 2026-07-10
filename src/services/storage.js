@@ -1,4 +1,5 @@
 import { appendBookDefinitions } from "../utils/definitions";
+import { compactWordBookEntry } from "../shared/wordBook";
 
 const RECOGNIZED_KEY = "toefl666_recognized";
 const UNRECOGNIZED_KEY = "toefl666_unrecognized";
@@ -32,12 +33,40 @@ function readList(key) {
   }
 }
 
+function isQuotaExceededError(err) {
+  return (
+    err instanceof DOMException &&
+    (err.name === "QuotaExceededError" || err.code === 22)
+  );
+}
+
 function writeList(key, list) {
-  localStorage.setItem(key, JSON.stringify(list));
+  const payload = JSON.stringify(list);
+  try {
+    localStorage.setItem(key, payload);
+  } catch (err) {
+    if (isQuotaExceededError(err) && key === RECOGNIZED_KEY) {
+      const compact = list.map(compactWordBookEntry);
+      localStorage.setItem(key, JSON.stringify(compact));
+      return;
+    }
+    throw err;
+  }
+}
+
+function migrateRecognizedList(list) {
+  if (!list.some((item) => item.ai_feedback)) return list;
+  const compact = list.map(compactWordBookEntry);
+  try {
+    writeList(RECOGNIZED_KEY, compact);
+  } catch {
+    return list;
+  }
+  return compact;
 }
 
 export function loadRecognized() {
-  return readList(RECOGNIZED_KEY);
+  return migrateRecognizedList(readList(RECOGNIZED_KEY));
 }
 
 export function loadUnrecognized() {
@@ -49,7 +78,7 @@ export function loadUnrecognized() {
 }
 
 export function saveRecognized(list) {
-  writeList(RECOGNIZED_KEY, list);
+  writeList(RECOGNIZED_KEY, list.map(compactWordBookEntry));
 }
 
 export function saveUnrecognized(list) {

@@ -1,6 +1,8 @@
+import { compactWordBookList } from "./wordBook.js";
+
 export const SYNC_PREFIX = "toefl666_";
 export const SYNC_VERSION = 1;
-export const SYNC_MAX_BYTES = 512 * 1024;
+export const SYNC_MAX_BYTES = 1024 * 1024;
 export const RECOGNIZED_STORAGE_KEY = "toefl666_recognized";
 export const PAIRING_CODE_LENGTH = 8;
 export const PAIRING_STORAGE_KEY = "toefl666_pairing";
@@ -46,7 +48,19 @@ export function exportLocalData({ excludeKeys = [] } = {}) {
       !SYNC_EXCLUDED_KEYS.has(key) &&
       !skip.has(key)
     ) {
-      data[key] = localStorage.getItem(key);
+      const raw = localStorage.getItem(key);
+      if (key === RECOGNIZED_STORAGE_KEY || key === "toefl666_unrecognized") {
+        try {
+          const list = raw ? JSON.parse(raw) : [];
+          if (Array.isArray(list)) {
+            data[key] = JSON.stringify(compactWordBookList(list));
+            continue;
+          }
+        } catch {
+          // fall through to raw export
+        }
+      }
+      data[key] = raw;
     }
   }
   return {
