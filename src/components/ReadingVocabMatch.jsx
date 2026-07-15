@@ -4,8 +4,9 @@ import { lookupWordDefinitions } from "../services/wordLookup";
 import { buildWordBankMap } from "../utils/homophoneBank";
 import { playAnswerSound } from "../utils/answerSounds";
 import {
-  buildFullRound,
+  buildSetRound,
   findPairById,
+  getReadingVocabSets,
   getReadingVocabTitle,
   resolveWordData,
 } from "../utils/readingVocabMatch";
@@ -26,8 +27,8 @@ function RevealPanel({ pair, definitions, loading, onContinue }) {
           <p className="rvocab__reveal-loading">正在查询中文释义…</p>
         ) : definitions.length > 0 ? (
           <ul className="rvocab__reveal-list">
-            {definitions.map((definition) => (
-              <li key={definition}>{definition}</li>
+            {definitions.map((definition, index) => (
+              <li key={`${definition}-${index}`}>{definition}</li>
             ))}
           </ul>
         ) : (
@@ -43,10 +44,12 @@ function RevealPanel({ pair, definitions, loading, onContinue }) {
 
 export default function ReadingVocabMatch({ words }) {
   const { settings, speakWord } = useSettings();
+  const sets = useMemo(() => getReadingVocabSets(), []);
   const wordBankMap = useMemo(() => buildWordBankMap(words), [words]);
   const definitionCacheRef = useRef(new Map());
 
-  const [round] = useState(() => buildFullRound());
+  const [setIndex, setSetIndex] = useState(0);
+  const [round, setRound] = useState(() => buildSetRound(sets[0]));
   const [selectedLeft, setSelectedLeft] = useState(null);
   const [selectedRight, setSelectedRight] = useState(null);
   const [completedIds, setCompletedIds] = useState(() => new Set());
@@ -54,8 +57,9 @@ export default function ReadingVocabMatch({ words }) {
   const [revealDefinitions, setRevealDefinitions] = useState([]);
   const [revealLoading, setRevealLoading] = useState(false);
   const [shake, setShake] = useState(false);
-  const [allComplete, setAllComplete] = useState(false);
+  const [setComplete, setSetComplete] = useState(false);
 
+  const currentSet = sets[setIndex];
   const revealPair = revealPairId ? findPairById(round, revealPairId) : null;
   const totalPairs = round.pairs.length;
   const doneCount = completedIds.size;
@@ -69,6 +73,27 @@ export default function ReadingVocabMatch({ words }) {
       });
     },
     [settings.answerSoundCorrect, settings.answerSoundWrong, settings.answerSounds]
+  );
+
+  const resetRoundState = useCallback((nextRound) => {
+    setRound(nextRound);
+    setSelectedLeft(null);
+    setSelectedRight(null);
+    setCompletedIds(new Set());
+    setRevealPairId(null);
+    setRevealDefinitions([]);
+    setRevealLoading(false);
+    setShake(false);
+    setSetComplete(false);
+  }, []);
+
+  const loadSet = useCallback(
+    (index) => {
+      const safeIndex = Math.max(0, Math.min(index, sets.length - 1));
+      setSetIndex(safeIndex);
+      resetRoundState(buildSetRound(sets[safeIndex]));
+    },
+    [resetRoundState, sets]
   );
 
   const getDefinitionsForWord = useCallback(
@@ -173,11 +198,11 @@ export default function ReadingVocabMatch({ words }) {
     setRevealLoading(false);
 
     if (nextDone >= totalPairs) {
-      setAllComplete(true);
+      setSetComplete(true);
     }
   }, [doneCount, revealPairId, totalPairs]);
 
-  if (!round.pairs.length) {
+  if (!sets.length) {
     return <div className="rvocab__empty">暂无阅读词汇题数据</div>;
   }
 
@@ -186,7 +211,27 @@ export default function ReadingVocabMatch({ words }) {
       <header className="rvocab__header">
         <div>
           <h2 className="rvocab__title">{getReadingVocabTitle()}</h2>
-          <p className="rvocab__subtitle">进度 {doneCount}/{totalPairs}</p>
+          <p className="rvocab__subtitle">
+            第 {currentSet.id} 组 · 共 {sets.length} 组 · 进度 {doneCount}/{totalPairs}
+          </p>
+        </div>
+        <div className="rvocab__set-nav">
+          <button
+            type="button"
+            className="btn btn--ghost btn--sm"
+            disabled={setIndex <= 0 || Boolean(revealPairId)}
+            onClick={() => loadSet(setIndex - 1)}
+          >
+            上一组
+          </button>
+          <button
+            type="button"
+            className="btn btn--ghost btn--sm"
+            disabled={setIndex >= sets.length - 1 || Boolean(revealPairId)}
+            onClick={() => loadSet(setIndex + 1)}
+          >
+            下一组
+          </button>
         </div>
       </header>
 
@@ -214,7 +259,7 @@ export default function ReadingVocabMatch({ words }) {
                 ]
                   .filter(Boolean)
                   .join(" ")}
-                disabled={Boolean(revealPairId) || isDone}
+                disabled={Boolean(revealPairId) || isDone || setComplete}
                 onClick={() => handleLeftClick(item.id)}
               >
                 {item.text}
@@ -242,7 +287,7 @@ export default function ReadingVocabMatch({ words }) {
                 ]
                   .filter(Boolean)
                   .join(" ")}
-                disabled={Boolean(revealPairId) || isDone}
+                disabled={Boolean(revealPairId) || isDone || setComplete}
                 onClick={() => handleRightClick(item.id)}
               >
                 {item.text}
@@ -252,7 +297,7 @@ export default function ReadingVocabMatch({ words }) {
         </div>
       </div>
 
-      {revealPair && !allComplete && (
+      {revealPair && !setComplete && (
         <RevealPanel
           pair={revealPair}
           definitions={revealDefinitions}
@@ -261,9 +306,16 @@ export default function ReadingVocabMatch({ words }) {
         />
       )}
 
-      {allComplete && (
+      {setComplete && (
         <div className="rvocab__complete">
-          <p className="rvocab__complete-all">全部 {totalPairs} 题已完成 🎉</p>
+          <p>第 {currentSet.id} 组全部完成！</p>
+          {setIndex < sets.length - 1 ? (
+            <button type="button" className="btn btn--primary" onClick={() => loadSet(setIndex + 1)}>
+              下一组
+            </button>
+          ) : (
+            <p className="rvocab__complete-all">全部 {sets.length} 组已完成 🎉</p>
+          )}
         </div>
       )}
     </div>
