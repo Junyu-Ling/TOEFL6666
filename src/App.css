@@ -4574,6 +4574,32 @@ body {
   color: var(--text-muted);
 }
 
+.rvocab__reveal-body {
+  margin-top: 0.75rem;
+}
+
+.rvocab__reveal-loading,
+.rvocab__reveal-empty {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+
+.rvocab__reveal-list {
+  margin: 0;
+  padding-left: 1.25rem;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+
+.rvocab__reveal-list li + li {
+  margin-top: 0.25rem;
+}
+
+.rvocab__reveal-continue {
+  margin-top: 0.875rem;
+}
+
 .rvocab__complete {
   text-align: center;
   padding: 1.25rem;

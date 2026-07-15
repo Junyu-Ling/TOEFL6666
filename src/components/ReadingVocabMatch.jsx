@@ -1,6 +1,5 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { useSettings } from "../context/SettingsContext";
-import { evaluateAnswer } from "../services/ai";
 import { lookupWordDefinitions } from "../services/wordLookup";
 import { buildWordBankMap } from "../utils/homophoneBank";
 import { playAnswerSound } from "../utils/answerSounds";
@@ -11,21 +10,7 @@ import {
   resolveWordData,
 } from "../utils/readingVocabMatch";
 
-function MeaningPanel({
-  pair,
-  meaningInput,
-  onMeaningInputChange,
-  onSubmit,
-  evaluating,
-  feedback,
-  definitions,
-}) {
-  const inputRef = useRef(null);
-
-  useEffect(() => {
-    inputRef.current?.focus();
-  }, [pair?.id]);
-
+function RevealPanel({ pair, definitions, loading, onContinue }) {
   if (!pair) return null;
 
   return (
@@ -36,36 +21,22 @@ function MeaningPanel({
         <span className="rvocab__meaning-eq">=</span>
         <span className="rvocab__meaning-synonym">{pair.synonym}</span>
       </div>
-      <p className="rvocab__meaning-prompt">请写出 <strong>{pair.word}</strong> 的中文意思</p>
-      <form
-        className="rvocab__meaning-form"
-        onSubmit={(event) => {
-          event.preventDefault();
-          onSubmit();
-        }}
-      >
-        <input
-          ref={inputRef}
-          type="text"
-          className="rvocab__meaning-input"
-          value={meaningInput}
-          onChange={(event) => onMeaningInputChange(event.target.value)}
-          placeholder="输入中文释义…"
-          disabled={evaluating}
-          autoComplete="off"
-        />
-        <button type="submit" className="btn btn--primary" disabled={evaluating || !meaningInput.trim()}>
-          {evaluating ? "批改中…" : "提交"}
-        </button>
-      </form>
-      {feedback && (
-        <p className={`rvocab__meaning-feedback ${feedback.correct ? "rvocab__meaning-feedback--ok" : "rvocab__meaning-feedback--err"}`}>
-          {feedback.message}
-        </p>
-      )}
-      {definitions?.length > 0 && feedback && !feedback.correct && (
-        <p className="rvocab__meaning-hint">参考：{definitions.join("；")}</p>
-      )}
+      <div className="rvocab__reveal-body">
+        {loading ? (
+          <p className="rvocab__reveal-loading">正在查询中文释义…</p>
+        ) : definitions.length > 0 ? (
+          <ul className="rvocab__reveal-list">
+            {definitions.map((definition) => (
+              <li key={definition}>{definition}</li>
+            ))}
+          </ul>
+        ) : (
+          <p className="rvocab__reveal-empty">词库中暂无该词的中文释义</p>
+        )}
+      </div>
+      <button type="button" className="btn btn--primary rvocab__reveal-continue" onClick={onContinue}>
+        继续
+      </button>
     </div>
   );
 }
@@ -78,17 +49,14 @@ export default function ReadingVocabMatch({ words }) {
   const [round] = useState(() => buildFullRound());
   const [selectedLeft, setSelectedLeft] = useState(null);
   const [selectedRight, setSelectedRight] = useState(null);
-  const [matchedIds, setMatchedIds] = useState(() => new Set());
   const [completedIds, setCompletedIds] = useState(() => new Set());
-  const [pendingMeaningId, setPendingMeaningId] = useState(null);
-  const [meaningInput, setMeaningInput] = useState("");
-  const [evaluating, setEvaluating] = useState(false);
-  const [feedback, setFeedback] = useState(null);
+  const [revealPairId, setRevealPairId] = useState(null);
+  const [revealDefinitions, setRevealDefinitions] = useState([]);
+  const [revealLoading, setRevealLoading] = useState(false);
   const [shake, setShake] = useState(false);
   const [allComplete, setAllComplete] = useState(false);
-  const evaluateAbortRef = useRef(null);
 
-  const pendingPair = pendingMeaningId ? findPairById(round, pendingMeaningId) : null;
+  const revealPair = revealPairId ? findPairById(round, revealPairId) : null;
   const totalPairs = round.pairs.length;
   const doneCount = completedIds.size;
 
@@ -102,10 +70,6 @@ export default function ReadingVocabMatch({ words }) {
     },
     [settings.answerSoundCorrect, settings.answerSoundWrong, settings.answerSounds]
   );
-
-  useEffect(() => {
-    return () => evaluateAbortRef.current?.abort();
-  }, []);
 
   const getDefinitionsForWord = useCallback(
     async (word) => {
@@ -132,6 +96,26 @@ export default function ReadingVocabMatch({ words }) {
     [wordBankMap]
   );
 
+  const revealMatch = useCallback(
+    async (pairId) => {
+      const pair = findPairById(round, pairId);
+      if (!pair) return;
+
+      setSelectedLeft(null);
+      setSelectedRight(null);
+      setRevealPairId(pairId);
+      setRevealDefinitions([]);
+      setRevealLoading(true);
+      speakWord(pair.word);
+      notifyAnswerResult(true);
+
+      const definitions = await getDefinitionsForWord(pair.word);
+      setRevealDefinitions(definitions);
+      setRevealLoading(false);
+    },
+    [getDefinitionsForWord, notifyAnswerResult, round, speakWord]
+  );
+
   const handleWrongMatch = useCallback(() => {
     setShake(true);
     setSelectedLeft(null);
@@ -143,25 +127,17 @@ export default function ReadingVocabMatch({ words }) {
   const tryMatch = useCallback(
     (leftId, rightId) => {
       if (leftId === rightId) {
-        const pair = findPairById(round, leftId);
-        setMatchedIds((prev) => new Set(prev).add(leftId));
-        setSelectedLeft(null);
-        setSelectedRight(null);
-        setPendingMeaningId(leftId);
-        setMeaningInput("");
-        setFeedback(null);
-        if (pair?.word) speakWord(pair.word);
-        notifyAnswerResult(true);
+        revealMatch(leftId);
         return;
       }
       handleWrongMatch();
     },
-    [handleWrongMatch, notifyAnswerResult, round, speakWord]
+    [handleWrongMatch, revealMatch]
   );
 
   const handleLeftClick = useCallback(
     (id) => {
-      if (pendingMeaningId || matchedIds.has(id) || completedIds.has(id)) return;
+      if (revealPairId || completedIds.has(id)) return;
       if (selectedLeft === id) {
         setSelectedLeft(null);
         return;
@@ -170,12 +146,12 @@ export default function ReadingVocabMatch({ words }) {
       setSelectedLeft(nextLeft);
       if (selectedRight) tryMatch(nextLeft, selectedRight);
     },
-    [completedIds, matchedIds, pendingMeaningId, selectedLeft, selectedRight, tryMatch]
+    [completedIds, revealPairId, selectedLeft, selectedRight, tryMatch]
   );
 
   const handleRightClick = useCallback(
     (id) => {
-      if (pendingMeaningId || matchedIds.has(id) || completedIds.has(id)) return;
+      if (revealPairId || completedIds.has(id)) return;
       if (selectedRight === id) {
         setSelectedRight(null);
         return;
@@ -184,66 +160,22 @@ export default function ReadingVocabMatch({ words }) {
       setSelectedRight(nextRight);
       if (selectedLeft) tryMatch(selectedLeft, nextRight);
     },
-    [completedIds, matchedIds, pendingMeaningId, selectedLeft, selectedRight, tryMatch]
+    [completedIds, revealPairId, selectedLeft, selectedRight, tryMatch]
   );
 
-  const submitMeaning = useCallback(async () => {
-    if (!pendingPair || !meaningInput.trim() || evaluating) return;
+  const dismissReveal = useCallback(() => {
+    if (!revealPairId) return;
 
-    evaluateAbortRef.current?.abort();
-    const controller = new AbortController();
-    evaluateAbortRef.current = controller;
+    const nextDone = doneCount + 1;
+    setCompletedIds((prev) => new Set(prev).add(revealPairId));
+    setRevealPairId(null);
+    setRevealDefinitions([]);
+    setRevealLoading(false);
 
-    setEvaluating(true);
-    setFeedback(null);
-
-    try {
-      const definitions = await getDefinitionsForWord(pendingPair.word);
-      const wordData = { word: pendingPair.word, definitions };
-      const result = await evaluateAnswer(wordData, meaningInput, {
-        signal: controller.signal,
-        wordBankMap,
-      });
-
-      if (result.is_correct) {
-        notifyAnswerResult(true);
-        setCompletedIds((prev) => new Set(prev).add(pendingPair.id));
-        setPendingMeaningId(null);
-        setMeaningInput("");
-        setFeedback({ correct: true, message: result.ai_feedback || "正确！" });
-
-        if (doneCount + 1 >= totalPairs) {
-          setAllComplete(true);
-        }
-      } else {
-        notifyAnswerResult(false);
-        setFeedback({
-          correct: false,
-          message: result.ai_feedback || "不太对，再试试。",
-        });
-      }
-    } catch (error) {
-      if (error?.name !== "AbortError") {
-        setFeedback({ correct: false, message: error.message || "批改失败，请重试。" });
-      }
-    } finally {
-      if (!controller.signal.aborted) setEvaluating(false);
+    if (nextDone >= totalPairs) {
+      setAllComplete(true);
     }
-  }, [
-    doneCount,
-    evaluating,
-    getDefinitionsForWord,
-    meaningInput,
-    notifyAnswerResult,
-    pendingPair,
-    totalPairs,
-    wordBankMap,
-  ]);
-
-  const pendingDefinitions = useMemo(() => {
-    if (!pendingPair) return [];
-    return resolveWordData(pendingPair.word, wordBankMap).definitions ?? [];
-  }, [pendingPair, wordBankMap]);
+  }, [doneCount, revealPairId, totalPairs]);
 
   if (!round.pairs.length) {
     return <div className="rvocab__empty">暂无阅读词汇题数据</div>;
@@ -259,7 +191,7 @@ export default function ReadingVocabMatch({ words }) {
       </header>
 
       <p className="rvocab__instructions">
-        点击左侧单词与右侧近义词配对；每成功匹配一对，需写出该单词的中文意思。
+        点击左侧单词与右侧近义词配对；每成功匹配一对，会显示该单词的中文意思。
       </p>
 
       <div className={`rvocab__board ${shake ? "rvocab__board--shake" : ""}`}>
@@ -267,9 +199,8 @@ export default function ReadingVocabMatch({ words }) {
           <span className="rvocab__column-label">单词</span>
           {round.leftItems.map((item) => {
             const isDone = completedIds.has(item.id);
-            const isMatched = matchedIds.has(item.id);
             const isSelected = selectedLeft === item.id;
-            const isPending = pendingMeaningId === item.id;
+            const isRevealing = revealPairId === item.id;
             return (
               <button
                 key={`left-${item.id}`}
@@ -278,13 +209,12 @@ export default function ReadingVocabMatch({ words }) {
                   "rvocab__item",
                   "rvocab__item--left",
                   isSelected && "rvocab__item--selected",
-                  isMatched && "rvocab__item--matched",
                   isDone && "rvocab__item--done",
-                  isPending && "rvocab__item--pending",
+                  isRevealing && "rvocab__item--pending",
                 ]
                   .filter(Boolean)
                   .join(" ")}
-                disabled={Boolean(pendingMeaningId) || isDone || isMatched}
+                disabled={Boolean(revealPairId) || isDone}
                 onClick={() => handleLeftClick(item.id)}
               >
                 {item.text}
@@ -297,9 +227,8 @@ export default function ReadingVocabMatch({ words }) {
           <span className="rvocab__column-label">近义词</span>
           {round.rightItems.map((item) => {
             const isDone = completedIds.has(item.id);
-            const isMatched = matchedIds.has(item.id);
             const isSelected = selectedRight === item.id;
-            const isPending = pendingMeaningId === item.id;
+            const isRevealing = revealPairId === item.id;
             return (
               <button
                 key={`right-${item.id}`}
@@ -308,13 +237,12 @@ export default function ReadingVocabMatch({ words }) {
                   "rvocab__item",
                   "rvocab__item--right",
                   isSelected && "rvocab__item--selected",
-                  isMatched && "rvocab__item--matched",
                   isDone && "rvocab__item--done",
-                  isPending && "rvocab__item--pending",
+                  isRevealing && "rvocab__item--pending",
                 ]
                   .filter(Boolean)
                   .join(" ")}
-                disabled={Boolean(pendingMeaningId) || isDone || isMatched}
+                disabled={Boolean(revealPairId) || isDone}
                 onClick={() => handleRightClick(item.id)}
               >
                 {item.text}
@@ -324,15 +252,12 @@ export default function ReadingVocabMatch({ words }) {
         </div>
       </div>
 
-      {pendingPair && !allComplete && (
-        <MeaningPanel
-          pair={pendingPair}
-          meaningInput={meaningInput}
-          onMeaningInputChange={setMeaningInput}
-          onSubmit={submitMeaning}
-          evaluating={evaluating}
-          feedback={feedback}
-          definitions={pendingDefinitions}
+      {revealPair && !allComplete && (
+        <RevealPanel
+          pair={revealPair}
+          definitions={revealDefinitions}
+          loading={revealLoading}
+          onContinue={dismissReveal}
         />
       )}
 
