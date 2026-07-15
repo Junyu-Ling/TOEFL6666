@@ -5,9 +5,8 @@ import { lookupWordDefinitions } from "../services/wordLookup";
 import { buildWordBankMap } from "../utils/homophoneBank";
 import { playAnswerSound } from "../utils/answerSounds";
 import {
-  buildSetRound,
+  buildFullRound,
   findPairById,
-  getReadingVocabSets,
   getReadingVocabTitle,
   resolveWordData,
 } from "../utils/readingVocabMatch";
@@ -73,12 +72,10 @@ function MeaningPanel({
 
 export default function ReadingVocabMatch({ words }) {
   const { settings, speakWord } = useSettings();
-  const sets = useMemo(() => getReadingVocabSets(), []);
   const wordBankMap = useMemo(() => buildWordBankMap(words), [words]);
   const definitionCacheRef = useRef(new Map());
 
-  const [setIndex, setSetIndex] = useState(0);
-  const [round, setRound] = useState(() => buildSetRound(sets[0]));
+  const [round] = useState(() => buildFullRound());
   const [selectedLeft, setSelectedLeft] = useState(null);
   const [selectedRight, setSelectedRight] = useState(null);
   const [matchedIds, setMatchedIds] = useState(() => new Set());
@@ -88,37 +85,22 @@ export default function ReadingVocabMatch({ words }) {
   const [evaluating, setEvaluating] = useState(false);
   const [feedback, setFeedback] = useState(null);
   const [shake, setShake] = useState(false);
-  const [setComplete, setSetComplete] = useState(false);
+  const [allComplete, setAllComplete] = useState(false);
   const evaluateAbortRef = useRef(null);
 
-  const currentSet = sets[setIndex];
   const pendingPair = pendingMeaningId ? findPairById(round, pendingMeaningId) : null;
   const totalPairs = round.pairs.length;
   const doneCount = completedIds.size;
 
-  const resetRoundState = useCallback((nextRound) => {
-    evaluateAbortRef.current?.abort();
-    evaluateAbortRef.current = null;
-    setRound(nextRound);
-    setSelectedLeft(null);
-    setSelectedRight(null);
-    setMatchedIds(new Set());
-    setCompletedIds(new Set());
-    setPendingMeaningId(null);
-    setMeaningInput("");
-    setFeedback(null);
-    setEvaluating(false);
-    setShake(false);
-    setSetComplete(false);
-  }, []);
-
-  const loadSet = useCallback(
-    (index) => {
-      const safeIndex = Math.max(0, Math.min(index, sets.length - 1));
-      setSetIndex(safeIndex);
-      resetRoundState(buildSetRound(sets[safeIndex]));
+  const notifyAnswerResult = useCallback(
+    (isCorrect) => {
+      if (!settings.answerSounds) return;
+      playAnswerSound(isCorrect, {
+        correctId: settings.answerSoundCorrect,
+        wrongId: settings.answerSoundWrong,
+      });
     },
-    [resetRoundState, sets]
+    [settings.answerSoundCorrect, settings.answerSoundWrong, settings.answerSounds]
   );
 
   useEffect(() => {
@@ -154,14 +136,9 @@ export default function ReadingVocabMatch({ words }) {
     setShake(true);
     setSelectedLeft(null);
     setSelectedRight(null);
-    if (settings.answerSounds) {
-      playAnswerSound(false, {
-        correctId: settings.answerSoundCorrect,
-        wrongId: settings.answerSoundWrong,
-      });
-    }
+    notifyAnswerResult(false);
     window.setTimeout(() => setShake(false), 450);
-  }, [settings]);
+  }, [notifyAnswerResult]);
 
   const tryMatch = useCallback(
     (leftId, rightId) => {
@@ -174,16 +151,12 @@ export default function ReadingVocabMatch({ words }) {
         setMeaningInput("");
         setFeedback(null);
         if (pair?.word) speakWord(pair.word);
-        if (settings.answerSounds) {
-          playAnswerSound(true, {
-            correctId: settings.answerSoundCorrect,
-            wrongId: settings.answerSoundWrong,
-          });
-        }
+        notifyAnswerResult(true);
+        return;
       }
       handleWrongMatch();
     },
-    [handleWrongMatch, round, settings, speakWord]
+    [handleWrongMatch, notifyAnswerResult, round, speakWord]
   );
 
   const handleLeftClick = useCallback(
@@ -233,28 +206,17 @@ export default function ReadingVocabMatch({ words }) {
       });
 
       if (result.is_correct) {
-        if (settings.answerSounds) {
-          playAnswerSound(true, {
-            correctId: settings.answerSoundCorrect,
-            wrongId: settings.answerSoundWrong,
-          });
-        }
+        notifyAnswerResult(true);
         setCompletedIds((prev) => new Set(prev).add(pendingPair.id));
         setPendingMeaningId(null);
         setMeaningInput("");
         setFeedback({ correct: true, message: result.ai_feedback || "正确！" });
 
-        const nextDone = doneCount + 1;
-        if (nextDone >= totalPairs) {
-          setSetComplete(true);
+        if (doneCount + 1 >= totalPairs) {
+          setAllComplete(true);
         }
       } else {
-        if (settings.answerSounds) {
-          playAnswerSound(false, {
-            correctId: settings.answerSoundCorrect,
-            wrongId: settings.answerSoundWrong,
-          });
-        }
+        notifyAnswerResult(false);
         setFeedback({
           correct: false,
           message: result.ai_feedback || "不太对，再试试。",
@@ -272,8 +234,8 @@ export default function ReadingVocabMatch({ words }) {
     evaluating,
     getDefinitionsForWord,
     meaningInput,
+    notifyAnswerResult,
     pendingPair,
-    settings,
     totalPairs,
     wordBankMap,
   ]);
@@ -283,7 +245,7 @@ export default function ReadingVocabMatch({ words }) {
     return resolveWordData(pendingPair.word, wordBankMap).definitions ?? [];
   }, [pendingPair, wordBankMap]);
 
-  if (!sets.length) {
+  if (!round.pairs.length) {
     return <div className="rvocab__empty">暂无阅读词汇题数据</div>;
   }
 
@@ -292,27 +254,7 @@ export default function ReadingVocabMatch({ words }) {
       <header className="rvocab__header">
         <div>
           <h2 className="rvocab__title">{getReadingVocabTitle()}</h2>
-          <p className="rvocab__subtitle">
-            第 {currentSet.id} 组 · 共 {sets.length} 组 · 进度 {doneCount}/{totalPairs}
-          </p>
-        </div>
-        <div className="rvocab__set-nav">
-          <button
-            type="button"
-            className="btn btn--ghost btn--sm"
-            disabled={setIndex <= 0}
-            onClick={() => loadSet(setIndex - 1)}
-          >
-            上一组
-          </button>
-          <button
-            type="button"
-            className="btn btn--ghost btn--sm"
-            disabled={setIndex >= sets.length - 1}
-            onClick={() => loadSet(setIndex + 1)}
-          >
-            下一组
-          </button>
+          <p className="rvocab__subtitle">进度 {doneCount}/{totalPairs}</p>
         </div>
       </header>
 
@@ -382,7 +324,7 @@ export default function ReadingVocabMatch({ words }) {
         </div>
       </div>
 
-      {pendingPair && !setComplete && (
+      {pendingPair && !allComplete && (
         <MeaningPanel
           pair={pendingPair}
           meaningInput={meaningInput}
@@ -394,16 +336,9 @@ export default function ReadingVocabMatch({ words }) {
         />
       )}
 
-      {setComplete && (
+      {allComplete && (
         <div className="rvocab__complete">
-          <p>第 {currentSet.id} 组全部完成！</p>
-          {setIndex < sets.length - 1 ? (
-            <button type="button" className="btn btn--primary" onClick={() => loadSet(setIndex + 1)}>
-              下一组
-            </button>
-          ) : (
-            <p className="rvocab__complete-all">全部 {sets.length} 组已完成 🎉</p>
-          )}
+          <p className="rvocab__complete-all">全部 {totalPairs} 题已完成 🎉</p>
         </div>
       )}
     </div>

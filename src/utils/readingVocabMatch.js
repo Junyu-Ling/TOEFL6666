@@ -28,16 +28,20 @@ export function shuffleArray(items) {
   return copy;
 }
 
-export function buildSetRound(set) {
-  const pairs = set.pairs.map((pair, index) => ({
-    ...pair,
-    id: pairKey(set.id, index),
-    pairIndex: index,
-    setId: set.id,
-  }));
+export function getAllReadingVocabPairs() {
+  return readingVocabData.sets.flatMap((set) =>
+    set.pairs.map((pair, index) => ({
+      ...pair,
+      id: pairKey(set.id, index),
+      pairIndex: index,
+      setId: set.id,
+    }))
+  );
+}
 
+export function buildFullRound() {
+  const pairs = getAllReadingVocabPairs();
   return {
-    setId: set.id,
     pairs,
     leftItems: shuffleArray(pairs.map((p) => ({ id: p.id, text: p.word, side: "left" }))),
     rightItems: shuffleArray(pairs.map((p) => ({ id: p.id, text: p.synonym, side: "right" }))),
