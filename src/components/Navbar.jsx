@@ -3,10 +3,10 @@ import { useSettings } from "../context/SettingsContext";
 const TABS = [
   { id: "practice", label: "练习" },
   { id: "bank", label: "词库" },
-  { id: "reading-vocab", label: "阅读词汇" },
   { id: "lexgrid", label: "词格" },
   { id: "unrecognized", label: "生词本" },
   { id: "recognized", label: "熟词本" },
+  { id: "reading-vocab", label: "阅读词汇" },
 ];
 
 export default function Navbar({ activeTab, onTabChange, counts, streak, onStreakClick }) {
