@@ -66,8 +66,11 @@ export default function FlashCard({
   onNext,
   onPrev,
   micGranted,
+  isActive = true,
 }) {
   const { speakWord, settings, settingsOpen } = useSettings();
+  const isActiveRef = useRef(isActive);
+  isActiveRef.current = isActive;
   const settingsOpenRef = useRef(settingsOpen);
   settingsOpenRef.current = settingsOpen;
   const isTypeModeRef = useRef(settings.practiceStyle !== "recall");
@@ -809,6 +812,7 @@ export default function FlashCard({
     }
 
     function handleGlobalKeyDown(e) {
+      if (!isActiveRef.current) return;
       if (loadingRef.current) {
         if (e.key === "Escape") {
           e.preventDefault();

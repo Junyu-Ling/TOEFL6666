@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useSettings } from "../context/SettingsContext";
 import { shouldIgnoreAppGameKeys } from "../utils/appKeyboard";
 
-export default function LexGridRecallCard({ wordData, recallHint, onKnow, onUnknown }) {
+export default function LexGridRecallCard({ wordData, recallHint, onKnow, onUnknown, isActive = true }) {
   const { speakWord } = useSettings();
   const [flipped, setFlipped] = useState(false);
 
@@ -12,6 +12,7 @@ export default function LexGridRecallCard({ wordData, recallHint, onKnow, onUnkn
 
   useEffect(() => {
     function onKeyDown(e) {
+      if (!isActive) return;
       if (shouldIgnoreAppGameKeys(e)) return;
       if (e.ctrlKey || e.metaKey || e.altKey) return;
 
@@ -43,7 +44,7 @@ export default function LexGridRecallCard({ wordData, recallHint, onKnow, onUnkn
 
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [flip, flipped, onKnow, onUnknown]);
+  }, [flip, flipped, isActive, onKnow, onUnknown]);
 
   return (
     <section className="lexgrid-recall" aria-label="认词确认">

@@ -11,6 +11,7 @@ import BookReviewScopeBar from "./components/BookReviewScopeBar";
 import VocabularyBank from "./components/VocabularyBank";
 import LexGridGame from "./components/LexGridGame";
 import ReadingVocabMatch from "./components/ReadingVocabMatch";
+import TabPanel from "./components/TabPanel";
 import MottoFooter from "./components/MottoFooter";
 import { recordVisit, refreshStreak } from "./services/streak";
 import { syncService, SYNC_APPLIED_EVENT, SYNC_STATUS_EVENT } from "./services/syncService";
@@ -854,8 +855,9 @@ export default function App() {
         />
 
         <main className="main">
-        {activeTab === "practice" && (
+        <TabPanel tabId="practice" activeTab={activeTab}>
           <PracticeSession
+            isActive={activeTab === "practice"}
             title={listMeta?.title ?? "单词练习"}
             toolbarExtra={
               availableLists.length > 0 ? (
@@ -909,11 +911,12 @@ export default function App() {
             onPrev={handleListPrev}
             sessionKey={`list-${listWord?.word ?? "empty"}-${listIndex}`}
           />
-        )}
+        </TabPanel>
 
-        {activeTab === "bank" && (
-          bankPracticeActive ? (
+        <TabPanel tabId="bank" activeTab={activeTab}>
+          {bankPracticeActive ? (
             <PracticeSession
+              isActive={activeTab === "bank"}
               title={bankPracticeTitle}
               toolbarExtra={
                 <button
@@ -951,19 +954,24 @@ export default function App() {
               onToggleShuffle={toggleReviewShuffle}
             />
           )
-        )}
+        </TabPanel>
 
-        {activeTab === "reading-vocab" && (
+        <TabPanel tabId="reading-vocab" activeTab={activeTab}>
           <ReadingVocabMatch words={allBankWords} />
-        )}
+        </TabPanel>
 
-        {activeTab === "lexgrid" && (
-          <LexGridGame words={allBankWords} availableLists={availableLists} />
-        )}
+        <TabPanel tabId="lexgrid" activeTab={activeTab}>
+          <LexGridGame
+            words={allBankWords}
+            availableLists={availableLists}
+            isActive={activeTab === "lexgrid"}
+          />
+        </TabPanel>
 
-        {activeTab === "unrecognized" && (
-          unrecognizedPracticeActive ? (
+        <TabPanel tabId="unrecognized" activeTab={activeTab}>
+          {unrecognizedPracticeActive ? (
             <PracticeSession
+              isActive={activeTab === "unrecognized"}
               title={unrecognizedPracticeTitle}
               toolbarExtra={
                 <button
@@ -1031,11 +1039,12 @@ export default function App() {
             }
           />
           )
-        )}
+        </TabPanel>
 
-        {activeTab === "recognized" && (
-          recognizedPracticeActive ? (
+        <TabPanel tabId="recognized" activeTab={activeTab}>
+          {recognizedPracticeActive ? (
             <PracticeSession
+              isActive={activeTab === "recognized"}
               title={recognizedPracticeTitle}
               toolbarExtra={
                 <button
@@ -1111,7 +1120,7 @@ export default function App() {
             }
           />
           )
-        )}
+        </TabPanel>
       </main>
 
       <VocabAssistant

@@ -66,7 +66,7 @@ function Tile({ letter, state, filled, flip, settled, selected, selectable, posi
   );
 }
 
-export default function LexGridGame({ words, availableLists }) {
+export default function LexGridGame({ words, availableLists, isActive = true }) {
   const pool = useMemo(
     () => buildLexGridPool(words, availableLists),
     [words, availableLists]
@@ -315,6 +315,7 @@ export default function LexGridGame({ words, availableLists }) {
 
   useEffect(() => {
     function onKeyDown(e) {
+      if (!isActive) return;
       if (round?.status !== "playing") return;
       if (shouldIgnoreAppGameKeys(e)) return;
       if (e.ctrlKey || e.metaKey || e.altKey) return;
@@ -346,7 +347,7 @@ export default function LexGridGame({ words, availableLists }) {
 
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [handleBackspace, handleLetter, moveCursor, round?.status, submitGuess]);
+  }, [handleBackspace, handleLetter, isActive, moveCursor, round?.status, submitGuess]);
 
   if (!pool.length) {
     return (
@@ -463,6 +464,7 @@ export default function LexGridGame({ words, availableLists }) {
           recallHint={recallHint}
           onKnow={handleRecallKnow}
           onUnknown={handleRecallUnknown}
+          isActive={isActive}
         />
       )}
 

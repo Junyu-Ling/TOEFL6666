@@ -16,6 +16,7 @@ export default function PracticeSession({
   onPrev,
   sessionKey,
   emptyMessage = "本轮练习已完成！",
+  isActive = true,
 }) {
   const progress = queueLength ? Math.round(((currentIndex + 1) / queueLength) * 100) : 0;
 
@@ -39,6 +40,7 @@ export default function PracticeSession({
       {currentWord ? (
         <FlashCard
           key={sessionKey}
+          isActive={isActive}
           wordData={currentWord}
           wordStats={wordStats}
           wordBankMap={wordBankMap}
