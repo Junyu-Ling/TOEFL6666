@@ -1,6 +1,6 @@
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useSettings } from "../context/SettingsContext";
-import { lookupWordDefinitions } from "../services/wordLookup";
+import { resolveReadingVocabDefinitions } from "../services/readingVocabDefinitions";
 import { buildWordBankMap } from "../utils/homophoneBank";
 import { playAnswerSound } from "../utils/answerSounds";
 import {
@@ -8,7 +8,6 @@ import {
   findPairById,
   getReadingVocabSets,
   getReadingVocabTitle,
-  resolveWordData,
 } from "../utils/readingVocabMatch";
 
 function RevealPanel({ pair, definitions, loading, onContinue }) {
@@ -46,7 +45,6 @@ export default function ReadingVocabMatch({ words }) {
   const { settings, speakWord } = useSettings();
   const sets = useMemo(() => getReadingVocabSets(), []);
   const wordBankMap = useMemo(() => buildWordBankMap(words), [words]);
-  const definitionCacheRef = useRef(new Map());
 
   const [setIndex, setSetIndex] = useState(0);
   const [round, setRound] = useState(() => buildSetRound(sets[0]));
@@ -97,27 +95,7 @@ export default function ReadingVocabMatch({ words }) {
   );
 
   const getDefinitionsForWord = useCallback(
-    async (word) => {
-      const key = word.toLowerCase().trim();
-      const cached = definitionCacheRef.current.get(key);
-      if (cached) return cached;
-
-      const fromBank = resolveWordData(word, wordBankMap);
-      if (fromBank.definitions?.length) {
-        definitionCacheRef.current.set(key, fromBank.definitions);
-        return fromBank.definitions;
-      }
-
-      try {
-        const data = await lookupWordDefinitions(word);
-        const definitions = Array.isArray(data.definitions) ? data.definitions : [];
-        definitionCacheRef.current.set(key, definitions);
-        return definitions;
-      } catch {
-        definitionCacheRef.current.set(key, []);
-        return [];
-      }
-    },
+    async (word) => resolveReadingVocabDefinitions(word, wordBankMap),
     [wordBankMap]
   );
 
