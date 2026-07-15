@@ -4382,3 +4382,228 @@ body {
   color: var(--wrong);
   line-height: 1.5;
 }
+
+/* ── Reading Vocab Match · 阅读词汇题 ── */
+.rvocab {
+  max-width: 52rem;
+  margin: 0 auto;
+  padding: 1rem 0.75rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.rvocab__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.rvocab__title {
+  margin: 0;
+  font-family: Lexend, Inter, sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.rvocab__subtitle {
+  margin: 0.25rem 0 0;
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+
+.rvocab__set-nav {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.rvocab__instructions {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.rvocab__board {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.rvocab__board--shake {
+  animation: lexgrid-shake 0.45s ease;
+}
+
+.rvocab__column {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.rvocab__column-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  padding: 0 0.25rem;
+}
+
+.rvocab__item {
+  width: 100%;
+  text-align: left;
+  padding: 0.75rem 0.875rem;
+  border-radius: 0.625rem;
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, transform 0.1s;
+}
+
+.rvocab__item:hover:not(:disabled) {
+  border-color: var(--accent);
+  background: var(--surface-hover, var(--surface));
+}
+
+.rvocab__item--selected {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, var(--surface));
+}
+
+.rvocab__item--matched,
+.rvocab__item--pending {
+  border-color: var(--accent);
+  opacity: 0.55;
+  cursor: default;
+}
+
+.rvocab__item--done {
+  border-color: #6aaa64;
+  background: color-mix(in srgb, #6aaa64 14%, var(--surface));
+  opacity: 0.7;
+  cursor: default;
+}
+
+.rvocab__item:disabled {
+  cursor: default;
+}
+
+.rvocab__meaning-panel {
+  padding: 1rem 1.125rem;
+  border-radius: 0.75rem;
+  border: 1.5px solid var(--accent);
+  background: color-mix(in srgb, var(--accent) 8%, var(--surface));
+}
+
+.rvocab__meaning-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.5rem;
+  font-size: 0.9375rem;
+}
+
+.rvocab__meaning-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.rvocab__meaning-word {
+  font-family: Lexend, Inter, sans-serif;
+}
+
+.rvocab__meaning-eq {
+  color: var(--text-muted);
+}
+
+.rvocab__meaning-synonym {
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.rvocab__meaning-prompt {
+  margin: 0.75rem 0 0.5rem;
+  font-size: 0.875rem;
+}
+
+.rvocab__meaning-form {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.rvocab__meaning-input {
+  flex: 1;
+  padding: 0.625rem 0.75rem;
+  border-radius: 0.5rem;
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.9375rem;
+}
+
+.rvocab__meaning-input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.rvocab__meaning-feedback {
+  margin: 0.625rem 0 0;
+  font-size: 0.875rem;
+}
+
+.rvocab__meaning-feedback--ok {
+  color: #6aaa64;
+}
+
+.rvocab__meaning-feedback--err {
+  color: var(--wrong);
+}
+
+.rvocab__meaning-hint {
+  margin: 0.35rem 0 0;
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+
+.rvocab__complete {
+  text-align: center;
+  padding: 1.25rem;
+  border-radius: 0.75rem;
+  border: 1.5px solid #6aaa64;
+  background: color-mix(in srgb, #6aaa64 10%, var(--surface));
+}
+
+.rvocab__complete p {
+  margin: 0 0 0.75rem;
+  font-size: 1rem;
+}
+
+.rvocab__complete-all {
+  margin: 0 !important;
+  font-weight: 600;
+}
+
+.rvocab__empty {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--text-muted);
+}
+
+@media (max-width: 640px) {
+  .rvocab__board {
+    grid-template-columns: 1fr;
+  }
+
+  .rvocab__meaning-form {
+    flex-direction: column;
+  }
+}

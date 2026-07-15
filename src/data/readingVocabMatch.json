@@ -1,0 +1,177 @@
+{
+  "title": "新托福阅读词汇题",
+  "sets": [
+    {
+      "id": 1,
+      "pairs": [
+        { "word": "feats", "synonym": "achievements" },
+        { "word": "viable", "synonym": "practical" },
+        { "word": "disparities", "synonym": "inequalities" },
+        { "word": "milestone", "synonym": "accomplishment" },
+        { "word": "curating", "synonym": "organizing" },
+        { "word": "cohesion", "synonym": "unity" },
+        { "word": "pivotal", "synonym": "very important" },
+        { "word": "alleviate", "synonym": "ease" }
+      ]
+    },
+    {
+      "id": 2,
+      "pairs": [
+        { "word": "enhance", "synonym": "improve" },
+        { "word": "proliferation", "synonym": "increase" },
+        { "word": "crucial", "synonym": "significant" },
+        { "word": "prevalent", "synonym": "widespread" },
+        { "word": "depict", "synonym": "show" },
+        { "word": "resilience", "synonym": "toughness" },
+        { "word": "emission", "synonym": "production" },
+        { "word": "exaggerating", "synonym": "expanding" }
+      ]
+    },
+    {
+      "id": 3,
+      "pairs": [
+        { "word": "mitigate", "synonym": "alleviate" },
+        { "word": "potentially", "synonym": "possibly" },
+        { "word": "indispensable", "synonym": "essential" },
+        { "word": "reliance", "synonym": "dependence" },
+        { "word": "adhere to", "synonym": "follow" },
+        { "word": "prolonged", "synonym": "extended" },
+        { "word": "dominant", "synonym": "leading" },
+        { "word": "invoke", "synonym": "request" }
+      ]
+    },
+    {
+      "id": 4,
+      "pairs": [
+        { "word": "resurgence", "synonym": "comeback" },
+        { "word": "ingenuity", "synonym": "cleverness" },
+        { "word": "departure", "synonym": "change" },
+        { "word": "mitigate", "synonym": "reduce" },
+        { "word": "innovation", "synonym": "advancement" },
+        { "word": "meticulously", "synonym": "precisely" },
+        { "word": "considerably", "synonym": "significantly" }
+      ]
+    },
+    {
+      "id": 5,
+      "pairs": [
+        { "word": "mantra", "synonym": "a phrase that is repeated often" },
+        { "word": "infancy", "synonym": "early stage" },
+        { "word": "seamlessly", "synonym": "smoothly" },
+        { "word": "groundbreaking", "synonym": "revolutionary" },
+        { "word": "ejecting", "synonym": "forcing out" },
+        { "word": "transformative", "synonym": "groundbreaking" },
+        { "word": "minimizing", "synonym": "lowering" },
+        { "word": "feasibility", "synonym": "workability" }
+      ]
+    },
+    {
+      "id": 6,
+      "pairs": [
+        { "word": "anomalies", "synonym": "inconsistencies" },
+        { "word": "shelter", "synonym": "take protection" },
+        { "word": "grappling", "synonym": "struggling" },
+        { "word": "equanimity", "synonym": "calmness" },
+        { "word": "mimic", "synonym": "imitate" },
+        { "word": "consistent", "synonym": "steady" },
+        { "word": "allocating", "synonym": "distributing" },
+        { "word": "breakthrough", "synonym": "advancement" }
+      ]
+    },
+    {
+      "id": 7,
+      "pairs": [
+        { "word": "mitigate", "synonym": "alleviate" },
+        { "word": "traces", "synonym": "signs" },
+        { "word": "subtle", "synonym": "faint" },
+        { "word": "prophecy", "synonym": "the ability to predict the future" },
+        { "word": "evoke", "synonym": "produce" },
+        { "word": "viable", "synonym": "workable" },
+        { "word": "penetrate", "synonym": "pass through" },
+        { "word": "tailored", "synonym": "personalized" }
+      ]
+    },
+    {
+      "id": 8,
+      "pairs": [
+        { "word": "amplify", "synonym": "increase" },
+        { "word": "impediments", "synonym": "barriers" },
+        { "word": "respite", "synonym": "break" },
+        { "word": "decomposes", "synonym": "breaks down" },
+        { "word": "norms", "synonym": "unwritten rules" },
+        { "word": "cohesive", "synonym": "integrated" },
+        { "word": "harvest", "synonym": "collect" },
+        { "word": "anticipate", "synonym": "expect" }
+      ]
+    },
+    {
+      "id": 9,
+      "pairs": [
+        { "word": "comprehensive", "synonym": "wide-ranging" },
+        { "word": "culminating in", "synonym": "ending with" },
+        { "word": "promoting", "synonym": "supporting" },
+        { "word": "trigger", "synonym": "bring" },
+        { "word": "precarity", "synonym": "insecurity" },
+        { "word": "fundamentally", "synonym": "thoroughly" },
+        { "word": "precipitated", "synonym": "caused" },
+        { "word": "revolutionize", "synonym": "transform" }
+      ]
+    },
+    {
+      "id": 10,
+      "pairs": [
+        { "word": "strive", "synonym": "attempt" },
+        { "word": "compelling", "synonym": "fascinating" },
+        { "word": "resilience", "synonym": "strength" },
+        { "word": "persevere", "synonym": "persist" },
+        { "word": "mitigating", "synonym": "decreasing" },
+        { "word": "collectively", "synonym": "together" },
+        { "word": "vulnerable", "synonym": "at-risk" },
+        { "word": "milieus", "synonym": "environments" }
+      ]
+    },
+    {
+      "id": 11,
+      "pairs": [
+        { "word": "harness", "synonym": "exploit" },
+        { "word": "foster", "synonym": "encourage" },
+        { "word": "synthesis", "synonym": "combination" },
+        { "word": "vulnerable", "synonym": "at risk" },
+        { "word": "formidable", "synonym": "very challenging" },
+        { "word": "subtly", "synonym": "in small barely noticeable ways" },
+        { "word": "anomalies", "synonym": "irregularities" },
+        { "word": "diminish", "synonym": "reduce" },
+        { "word": "fostered", "synonym": "promoted" }
+      ]
+    },
+    {
+      "id": 12,
+      "pairs": [
+        { "word": "unconditional", "synonym": "with no requirements" },
+        { "word": "ensuing", "synonym": "resulting" },
+        { "word": "sophisticated", "synonym": "advanced" },
+        { "word": "in turn", "synonym": "as a later consequence" },
+        { "word": "advocated for", "synonym": "promoted" },
+        { "word": "mimic", "synonym": "imitate" },
+        { "word": "unravel", "synonym": "fall apart" },
+        { "word": "uptake", "synonym": "absorption" },
+        { "word": "deliberately", "synonym": "on purpose" }
+      ]
+    },
+    {
+      "id": 13,
+      "pairs": [
+        { "word": "cautiously", "synonym": "carefully" },
+        { "word": "premature", "synonym": "early" },
+        { "word": "prevailing", "synonym": "dominant" },
+        { "word": "tailor", "synonym": "adapt" },
+        { "word": "vigilant", "synonym": "watchful" },
+        { "word": "impair", "synonym": "weaken" },
+        { "word": "incredibly", "synonym": "extremely" },
+        { "word": "integrates", "synonym": "combines" },
+        { "word": "stewardship", "synonym": "supervision" },
+        { "word": "complimentary", "synonym": "free" }
+      ]
+    }
+  ]
+}

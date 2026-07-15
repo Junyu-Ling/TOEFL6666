@@ -10,6 +10,7 @@ import VocabLoadingScreen from "./components/VocabLoadingScreen";
 import BookReviewScopeBar from "./components/BookReviewScopeBar";
 import VocabularyBank from "./components/VocabularyBank";
 import LexGridGame from "./components/LexGridGame";
+import ReadingVocabMatch from "./components/ReadingVocabMatch";
 import MottoFooter from "./components/MottoFooter";
 import { recordVisit, refreshStreak } from "./services/streak";
 import { syncService, SYNC_APPLIED_EVENT, SYNC_STATUS_EVENT } from "./services/syncService";
@@ -950,6 +951,10 @@ export default function App() {
               onToggleShuffle={toggleReviewShuffle}
             />
           )
+        )}
+
+        {activeTab === "reading-vocab" && (
+          <ReadingVocabMatch words={allBankWords} />
         )}
 
         {activeTab === "lexgrid" && (
