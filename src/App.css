@@ -1345,7 +1345,7 @@ body {
   align-items: center;
   gap: 1.5rem;
   padding: 2rem 1.5rem;
-  width: min(100%, 420px);
+  width: min(100%, 540px);
 }
 
 .vocab-loader__brand {
@@ -1410,12 +1410,12 @@ body {
 }
 
 /* 卡片字号、内边距沿用 .flashcard-scene / .flashcard__face 的默认值，
-   仅缩小整体宽度，避免加载动画里的卡片显得过大。 */
+   加载动画卡片略窄于正式练习，但留足单词展示宽度。 */
 .vocab-loader__scene {
   position: relative;
   z-index: 1;
-  width: min(100%, 26rem);
-  max-width: 26rem;
+  width: min(100%, 32rem);
+  max-width: 32rem;
   animation: vocab-card-float 3.5s ease-in-out infinite;
 }
 
