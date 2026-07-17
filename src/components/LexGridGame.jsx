@@ -1,5 +1,6 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import LexGridRecallCard from "./LexGridRecallCard";
+import { useIsActiveTab } from "../context/ActiveTabContext";
 import { clearLexGridRound, loadLexGridRound, saveLexGridRound } from "../services/lexGridProgress";
 import { validateEnglishWord } from "../services/wordValidate";
 import { shouldIgnoreAppGameKeys } from "../utils/appKeyboard";
@@ -67,7 +68,8 @@ function Tile({ letter, state, filled, flip, settled, selected, selectable, posi
   );
 }
 
-export default function LexGridGame({ words, availableLists, isActive = true }) {
+function LexGridGame({ words, availableLists, tabId }) {
+  const isTabActive = useIsActiveTab(tabId);
   const pool = useMemo(
     () => buildLexGridPool(words, availableLists),
     [words, availableLists]
@@ -322,7 +324,7 @@ export default function LexGridGame({ words, availableLists, isActive = true }) 
 
   useEffect(() => {
     function onKeyDown(e) {
-      if (!isActive) return;
+      if (!isTabActive) return;
       if (round?.status !== "playing") return;
       if (shouldIgnoreAppGameKeys(e)) return;
       if (e.ctrlKey || e.metaKey || e.altKey) return;
@@ -354,7 +356,7 @@ export default function LexGridGame({ words, availableLists, isActive = true }) 
 
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [handleBackspace, handleLetter, isActive, moveCursor, round?.status, submitGuess]);
+  }, [handleBackspace, handleLetter, isTabActive, moveCursor, round?.status, submitGuess]);
 
   if (!pool.length) {
     return (
@@ -471,7 +473,7 @@ export default function LexGridGame({ words, availableLists, isActive = true }) 
           recallHint={recallHint}
           onKnow={handleRecallKnow}
           onUnknown={handleRecallUnknown}
-          isActive={isActive}
+          isActive={isTabActive}
         />
       )}
 
@@ -568,3 +570,5 @@ export default function LexGridGame({ words, availableLists, isActive = true }) 
     </div>
   );
 }
+
+export default memo(LexGridGame);

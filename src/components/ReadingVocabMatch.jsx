@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { useSettings } from "../context/SettingsContext";
 import { resolveReadingVocabDefinitions } from "../services/readingVocabDefinitions";
 import {
@@ -72,7 +72,7 @@ function persistSetState(setId, round, completedIds, setComplete) {
   });
 }
 
-export default function ReadingVocabMatch({ words }) {
+function ReadingVocabMatch({ words }) {
   const { settings, speakWord } = useSettings();
   const sets = useMemo(() => getReadingVocabSets(), []);
   const wordBankMap = useMemo(() => buildWordBankMap(words), [words]);
@@ -340,3 +340,5 @@ export default function ReadingVocabMatch({ words }) {
     </div>
   );
 }
+
+export default memo(ReadingVocabMatch);

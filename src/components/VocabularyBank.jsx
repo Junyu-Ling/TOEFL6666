@@ -1,4 +1,4 @@
-import { useMemo, useState, useDeferredValue, useEffect, useRef, useCallback } from "react";
+import { memo, useMemo, useState, useDeferredValue, useEffect, useRef, useCallback } from "react";
 import {
   BANK_SORT_OPTIONS,
   BANK_VIEW_OPTIONS,
@@ -114,7 +114,7 @@ function BankFamilySection({ group, availableLists, bookStatusByWord }) {
   );
 }
 
-export default function VocabularyBank({
+function VocabularyBank({
   words,
   availableLists,
   wordListIndex,
@@ -388,3 +388,5 @@ export default function VocabularyBank({
     </div>
   );
 }
+
+export default memo(VocabularyBank);

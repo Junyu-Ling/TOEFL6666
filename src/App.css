@@ -1248,15 +1248,65 @@ body {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 20% 20%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 45%),
-    radial-gradient(circle at 80% 75%, color-mix(in srgb, #f97316 14%, transparent), transparent 40%),
-    radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--accent) 8%, transparent), transparent 60%);
-  animation: vocab-loader-glow 6s ease-in-out infinite alternate;
+    radial-gradient(circle at 20% 20%, color-mix(in srgb, var(--accent) 20%, transparent), transparent 45%),
+    radial-gradient(circle at 80% 75%, color-mix(in srgb, #f97316 16%, transparent), transparent 40%),
+    radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 60%),
+    conic-gradient(
+      from 0deg at 50% 50%,
+      color-mix(in srgb, var(--accent) 10%, transparent),
+      transparent 25%,
+      color-mix(in srgb, #f97316 10%, transparent) 50%,
+      transparent 75%,
+      color-mix(in srgb, var(--accent) 10%, transparent) 100%
+    );
+  animation: vocab-loader-glow 6s ease-in-out infinite alternate, vocab-loader-spin 40s linear infinite;
 }
 
 @keyframes vocab-loader-glow {
-  from { opacity: 0.75; transform: scale(1); }
-  to { opacity: 1; transform: scale(1.05); }
+  from { opacity: 0.7; transform: scale(1); }
+  to { opacity: 1; transform: scale(1.06); }
+}
+
+@keyframes vocab-loader-spin {
+  from { filter: hue-rotate(0deg); }
+  to { filter: hue-rotate(20deg); }
+}
+
+.vocab-loader__grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.5;
+  background-image:
+    radial-gradient(color-mix(in srgb, var(--text) 6%, transparent) 1px, transparent 1px);
+  background-size: 26px 26px;
+  mask-image: radial-gradient(circle at 50% 40%, black 0%, transparent 72%);
+}
+
+.vocab-loader__ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(120vw, 640px);
+  height: min(120vw, 640px);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    color-mix(in srgb, var(--accent) 45%, transparent) 40deg,
+    transparent 90deg,
+    transparent 220deg,
+    color-mix(in srgb, #f97316 40%, transparent) 260deg,
+    transparent 320deg
+  );
+  filter: blur(48px);
+  animation: vocab-ring-spin 18s linear infinite;
+  opacity: 0.55;
+}
+
+@keyframes vocab-ring-spin {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
 .vocab-loader__letters {
@@ -1293,23 +1343,78 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.25rem;
+  gap: 1.5rem;
   padding: 2rem 1.5rem;
-  width: min(100%, 420px);
+  width: min(100%, 440px);
 }
 
 .vocab-loader__brand {
-  font-size: 1.125rem;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  color: var(--accent);
   margin: 0;
+  padding: 0.3rem 1rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface) 70%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 25%, var(--border));
+  backdrop-filter: blur(6px);
+}
+
+.vocab-loader__brand-text {
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  background: linear-gradient(
+    100deg,
+    var(--accent) 0%,
+    #f97316 35%,
+    var(--accent) 70%,
+    #f97316 100%
+  );
+  background-size: 220% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: vocab-brand-shimmer 5s linear infinite;
+}
+
+@keyframes vocab-brand-shimmer {
+  from { background-position: 0% 50%; }
+  to { background-position: 220% 50%; }
+}
+
+.vocab-loader__scene-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.vocab-loader__scene-wrap::before {
+  content: "";
+  position: absolute;
+  width: 85%;
+  height: 70%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--accent) 22%, transparent),
+    transparent 70%
+  );
+  filter: blur(28px);
+  z-index: 0;
+  animation: vocab-card-glow 3.5s ease-in-out infinite;
+}
+
+@keyframes vocab-card-glow {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 0.95; transform: scale(1.08); }
 }
 
 /* 复用正式练习卡片（.flashcard）的样式，保持加载动画与真实卡片 UI 一致 */
 .vocab-loader__scene {
-  width: min(100%, 320px);
-  max-width: 320px;
+  position: relative;
+  z-index: 1;
+  width: min(100%, 360px);
+  max-width: 360px;
   animation: vocab-card-float 3.5s ease-in-out infinite;
 }
 
@@ -1318,39 +1423,24 @@ body {
   50% { transform: translateY(-6px); }
 }
 
+.vocab-loader__card {
+  cursor: pointer;
+}
+
+.vocab-loader__card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
 .vocab-loader__scene .flashcard__face {
-  padding: 1.5rem 1.5rem 1.25rem;
+  padding: 1.75rem 1.5rem 1.5rem;
+  box-shadow:
+    0 24px 48px color-mix(in srgb, var(--accent) 16%, transparent),
+    var(--shadow-lg);
 }
 
 .vocab-loader__word {
   font-size: clamp(1.75rem, 8vw, 2.25rem);
-}
-
-.vocab-loader__orbit {
-  position: relative;
-  width: 220px;
-  height: 56px;
-}
-
-.vocab-loader__orbit-word {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  padding: 0.25rem 0.55rem;
-  border-radius: 999px;
-  font-size: 0.6875rem;
-  font-weight: 700;
-  color: var(--accent);
-  background: color-mix(in srgb, var(--accent) 10%, var(--surface));
-  border: 1px solid color-mix(in srgb, var(--accent) 25%, var(--border));
-  white-space: nowrap;
-  animation: vocab-orbit 8s linear infinite;
-  animation-delay: calc(var(--i) * -2s);
-}
-
-@keyframes vocab-orbit {
-  from { transform: rotate(0deg) translateX(70px) rotate(0deg); }
-  to { transform: rotate(360deg) translateX(70px) rotate(-360deg); }
 }
 
 .vocab-loader__message {

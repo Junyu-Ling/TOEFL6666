@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { evaluateAnswer } from "../services/ai";
 import { useSettings } from "../context/SettingsContext";
+import { useIsActiveTab } from "../context/ActiveTabContext";
 import {
   createDictationSession,
   listenOnce,
@@ -66,9 +67,10 @@ export default function FlashCard({
   onNext,
   onPrev,
   micGranted,
-  isActive = true,
+  tabId,
 }) {
   const { speakWord, settings, settingsOpen } = useSettings();
+  const isActive = useIsActiveTab(tabId);
   const isActiveRef = useRef(isActive);
   isActiveRef.current = isActive;
   const settingsOpenRef = useRef(settingsOpen);

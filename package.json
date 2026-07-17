@@ -8,7 +8,8 @@
     "build:pronunciation": "node scripts/build-irregular-pronunciation.mjs",
     "build:families": "node scripts/build-word-families.mjs",
     "build:phonetics": "node scripts/build-phonetics.mjs",
-    "build": "npm run build:pronunciation && npm run build:families && vite build",
+    "build:loading-words": "node scripts/build-loading-words.mjs",
+    "build": "npm run build:pronunciation && npm run build:families && npm run build:loading-words && vite build",
     "lint": "oxlint",
     "preview": "vite preview"
   },

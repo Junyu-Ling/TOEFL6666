@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-07-03",
-  "totalWords": 3231,
-  "count": 69,
+  "generatedAt": "2026-07-17",
+  "totalWords": 5494,
+  "count": 103,
   "entries": [
     {
       "word": "aisle",
@@ -11,6 +11,16 @@
     {
       "word": "align",
       "message": "g 不发音，读 /əˈlaɪn/",
+      "category": "known"
+    },
+    {
+      "word": "although",
+      "message": "含 -ough，读音多变，别按字母硬拼",
+      "category": "ough"
+    },
+    {
+      "word": "answer",
+      "message": "w 不发音，读 /ˈænsər/",
       "category": "known"
     },
     {
@@ -39,13 +49,28 @@
       "category": "known"
     },
     {
+      "word": "business",
+      "message": "i 读 /ɪ/，读 /ˈbɪznəs/",
+      "category": "known"
+    },
+    {
       "word": "bustle",
       "message": "t 不发音，读 /ˈbʌsəl/",
       "category": "known"
     },
     {
+      "word": "busy",
+      "message": "u 读 /ɪ/，读 /ˈbɪzi/",
+      "category": "known"
+    },
+    {
       "word": "campaign",
       "message": "g 不发音，读 /kæmˈpeɪn/",
+      "category": "known"
+    },
+    {
+      "word": "castle",
+      "message": "t 不发音，读 /ˈkæsəl/",
       "category": "known"
     },
     {
@@ -109,13 +134,43 @@
       "category": "known"
     },
     {
+      "word": "climb",
+      "message": "b 不发音，读 /klaɪm/",
+      "category": "known"
+    },
+    {
       "word": "column",
       "message": "n 不发音，读 /ˈkɒləm/",
       "category": "known"
     },
     {
+      "word": "come",
+      "message": "o 读 /ʌ/，读 /kʌm/",
+      "category": "known"
+    },
+    {
+      "word": "comfortable",
+      "message": "o 弱读，读 /ˈkʌmftərbəl/",
+      "category": "known"
+    },
+    {
+      "word": "cough",
+      "message": "ough 读 /ɒf/，读 /kɒf/",
+      "category": "known"
+    },
+    {
       "word": "debris",
       "message": "s 不发音，读 /dəˈbriː/",
+      "category": "known"
+    },
+    {
+      "word": "debt",
+      "message": "b 不发音，读 /det/",
+      "category": "known"
+    },
+    {
+      "word": "design",
+      "message": "g 不发音，读 /dɪˈzaɪn/",
       "category": "known"
     },
     {
@@ -129,6 +184,11 @@
       "category": "known"
     },
     {
+      "word": "doubt",
+      "message": "字母 b 不发音，读 /daʊt/",
+      "category": "known"
+    },
+    {
       "word": "doubtful",
       "message": "沿 doubt 读音，b 不发音，读 /ˈdaʊtfəl/",
       "category": "known"
@@ -136,6 +196,11 @@
     {
       "word": "drought",
       "message": "ough 读 /aʊ/，读 /draʊt/",
+      "category": "known"
+    },
+    {
+      "word": "enough",
+      "message": "ough 读 /ʌf/，读 /ɪˈnʌf/",
       "category": "known"
     },
     {
@@ -154,6 +219,11 @@
       "category": "known"
     },
     {
+      "word": "foreign",
+      "message": "g 不发音，读 /ˈfɔːrən/",
+      "category": "known"
+    },
+    {
       "word": "genre",
       "message": "读 /ˈʒɑːnrə/，g 发 /ʒ/",
       "category": "known"
@@ -169,6 +239,11 @@
       "category": "known"
     },
     {
+      "word": "island",
+      "message": "字母 s 不发音，读 /ˈaɪlənd/",
+      "category": "known"
+    },
+    {
       "word": "isle",
       "message": "s 不发音，读 /aɪl/",
       "category": "known"
@@ -179,7 +254,32 @@
       "category": "silent-k"
     },
     {
+      "word": "knight",
+      "message": "字母 k 不发音，别按自然拼读读 k",
+      "category": "silent-k"
+    },
+    {
       "word": "knit",
+      "message": "字母 k 不发音，别按自然拼读读 k",
+      "category": "silent-k"
+    },
+    {
+      "word": "knock",
+      "message": "k 不发音，读 /nɑːk/",
+      "category": "known"
+    },
+    {
+      "word": "know",
+      "message": "k 不发音，读 /noʊ/",
+      "category": "known"
+    },
+    {
+      "word": "knowledge",
+      "message": "k 不发音，读 /ˈnɑːlɪdʒ/",
+      "category": "known"
+    },
+    {
+      "word": "known",
       "message": "字母 k 不发音，别按自然拼读读 k",
       "category": "silent-k"
     },
@@ -189,8 +289,18 @@
       "category": "known"
     },
     {
+      "word": "listen",
+      "message": "t 不发音，读 /ˈlɪsən/",
+      "category": "known"
+    },
+    {
       "word": "mortgage",
       "message": "t 常不发音，读 /ˈmɔːrɡɪdʒ/",
+      "category": "known"
+    },
+    {
+      "word": "move",
+      "message": "o 读 /uː/，读 /muːv/",
       "category": "known"
     },
     {
@@ -202,6 +312,11 @@
       "word": "numb",
       "message": "b 不发音，读 /nʌm/",
       "category": "known"
+    },
+    {
+      "word": "ought",
+      "message": "含 -ough，读音多变，别按字母硬拼",
+      "category": "ough"
     },
     {
       "word": "plumb",
@@ -279,6 +394,11 @@
       "category": "known"
     },
     {
+      "word": "sign",
+      "message": "g 不发音（-gn），别硬读 g",
+      "category": "silent-g"
+    },
+    {
       "word": "sovereign",
       "message": "g 不发音，读 /ˈsɒvrɪn/",
       "category": "known"
@@ -309,13 +429,48 @@
       "category": "known"
     },
     {
+      "word": "though",
+      "message": "ough 读 /oʊ/，读 /ðoʊ/",
+      "category": "known"
+    },
+    {
+      "word": "thought",
+      "message": "ough 读 /ɔː/，读 /θɔːt/",
+      "category": "known"
+    },
+    {
       "word": "thoughtful",
       "message": "ough 读 /ɔː/，读 /ˈθɔːtfəl/",
       "category": "known"
     },
     {
+      "word": "through",
+      "message": "ough 读 /uː/，读 /θruː/",
+      "category": "known"
+    },
+    {
+      "word": "throughout",
+      "message": "含 -ough，读音多变，别按字母硬拼",
+      "category": "ough"
+    },
+    {
+      "word": "thumb",
+      "message": "b 不发音，读 /θʌm/",
+      "category": "known"
+    },
+    {
+      "word": "tomb",
+      "message": "b 不发音，读 /tuːm/",
+      "category": "known"
+    },
+    {
       "word": "tough",
       "message": "ough 读 /ʌf/，读 /tʌf/",
+      "category": "known"
+    },
+    {
+      "word": "vegetable",
+      "message": "第二个 e 常不发音，读 /ˈvedʒtəbəl/",
       "category": "known"
     },
     {
@@ -346,6 +501,21 @@
     {
       "word": "wrist",
       "message": "w 不发音，读 /rɪst/",
+      "category": "known"
+    },
+    {
+      "word": "write",
+      "message": "w 不发音，读 /raɪt/",
+      "category": "known"
+    },
+    {
+      "word": "writer",
+      "message": "字母 w 不发音，别按自然拼读读 w",
+      "category": "silent-w"
+    },
+    {
+      "word": "wrong",
+      "message": "w 不发音，读 /rɔːŋ/",
       "category": "known"
     }
   ]

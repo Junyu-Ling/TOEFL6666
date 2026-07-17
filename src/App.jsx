@@ -17,6 +17,7 @@ import { recordVisit, refreshStreak } from "./services/streak";
 import { syncService, SYNC_APPLIED_EVENT, SYNC_STATUS_EVENT } from "./services/syncService";
 import { useMicrophone } from "./hooks/useMicrophone";
 import { useSettings } from "./context/SettingsContext";
+import { ActiveTabProvider } from "./context/ActiveTabContext";
 import { fetchWordList, fetchWordListManifest, fetchWordListIndex, fetchAllWordBank } from "./services/wordlist";
 import {
   loadRecognized,
@@ -686,6 +687,7 @@ export default function App() {
     [unrecognized]
   );
   const wordBankMap = useMemo(() => buildWordBankMap(allBankWords), [allBankWords]);
+  const sortedUnrecognizedWords = useMemo(() => sortByWrongCount(unrecognized), [unrecognized]);
 
   const handleRemoveRecognized = useCallback((word) => {
     setRecognized((prev) => {
@@ -807,6 +809,371 @@ export default function App() {
     );
   }, [recognizedPastWrong.length, pastWrongCountByListId]);
 
+  // 每个标签页的内容都缓存为稳定的元素树：切换 activeTab 不在这些依赖列表中，
+  // 因此切换标签时不会重新渲染 / 重新计算未激活标签页（尤其是词格、阅读词汇、
+  // 生熟词本这类渲染量较大的页面），从根本上消除切换卡顿。
+  const practicePanel = useMemo(
+    () => (
+      <PracticeSession
+        tabId="practice"
+        title={listMeta?.title ?? "单词练习"}
+        toolbarExtra={
+          availableLists.length > 0 ? (
+            <div className="practice-toolbar__pickers">
+              {levelNumbers.length > 1 && (
+                <select
+                  className="practice-toolbar__select"
+                  value={activeLevel ?? ""}
+                  onChange={(e) => handleLevelChange(e.target.value)}
+                  aria-label="选择 Level"
+                >
+                  {levelNumbers.map((level) => (
+                    <option key={level} value={level}>
+                      Level {level}
+                    </option>
+                  ))}
+                </select>
+              )}
+              {listsInActiveLevel.length > 1 && (
+                <select
+                  className="practice-toolbar__select"
+                  value={activeListId ?? ""}
+                  onChange={(e) => handleListChange(e.target.value)}
+                  aria-label="选择 List"
+                >
+                  {listsInActiveLevel.map((item) => (
+                    <option key={item.id} value={item.id}>
+                      List {item.list}
+                    </option>
+                  ))}
+                </select>
+              )}
+            </div>
+          ) : null
+        }
+        stats={
+          <>
+            <span className="stat-pill stat-pill--ok">认识 {recognized.length}</span>
+            <span className="stat-pill stat-pill--fail">不认识 {unrecognized.length}</span>
+          </>
+        }
+        queueLength={wordList.length}
+        currentIndex={listIndex}
+        currentWord={listWord}
+        wordStats={getWordStats(listWord)}
+        wordBankMap={wordBankMap}
+        micGranted={mic.isGranted}
+        onResult={handleListResult}
+        onMemoryTrickGenerated={handleMemoryTrickGenerated}
+        onNext={handleListNext}
+        onPrev={handleListPrev}
+        sessionKey={`list-${listWord?.word ?? "empty"}-${listIndex}`}
+      />
+    ),
+    [
+      listMeta,
+      availableLists,
+      levelNumbers,
+      activeLevel,
+      handleLevelChange,
+      listsInActiveLevel,
+      activeListId,
+      handleListChange,
+      recognized.length,
+      unrecognized.length,
+      wordList.length,
+      listIndex,
+      listWord,
+      getWordStats,
+      wordBankMap,
+      mic.isGranted,
+      handleListResult,
+      handleMemoryTrickGenerated,
+      handleListNext,
+      handleListPrev,
+    ]
+  );
+
+  const bankPanel = useMemo(
+    () =>
+      bankPracticeActive ? (
+        <PracticeSession
+          tabId="bank"
+          title={bankPracticeTitle}
+          toolbarExtra={
+            <button type="button" className="btn btn--ghost btn--sm" onClick={pauseBankPractice}>
+              返回列表
+            </button>
+          }
+          queueLength={bankSession.queue.length}
+          currentIndex={bankSession.index}
+          currentWord={bankWord}
+          wordStats={getWordStats(bankWord)}
+          wordBankMap={wordBankMap}
+          micGranted={mic.isGranted}
+          onResult={handleListResult}
+          onMemoryTrickGenerated={handleMemoryTrickGenerated}
+          onNext={() => handleBookNext("bank")}
+          onPrev={() => handleBookPrev("bank")}
+          sessionKey={`bank-${bankWord?.word ?? "empty"}-${bankSession.index}`}
+          emptyMessage="本轮词库练习已完成！"
+        />
+      ) : (
+        <VocabularyBank
+          words={allBankWords}
+          availableLists={availableLists}
+          wordListIndex={wordListIndex}
+          recognizedSet={recognizedWordSet}
+          unrecognizedSet={unrecognizedWordSet}
+          bankSession={bankSession}
+          bankPracticePaused={bookPracticePaused.bank}
+          onResumePractice={resumeBankPractice}
+          reviewShuffle={reviewShuffle}
+          onToggleShuffle={toggleReviewShuffle}
+        />
+      ),
+    [
+      bankPracticeActive,
+      bankPracticeTitle,
+      pauseBankPractice,
+      bankSession,
+      bankWord,
+      getWordStats,
+      wordBankMap,
+      mic.isGranted,
+      handleListResult,
+      handleMemoryTrickGenerated,
+      handleBookNext,
+      handleBookPrev,
+      allBankWords,
+      availableLists,
+      wordListIndex,
+      recognizedWordSet,
+      unrecognizedWordSet,
+      bookPracticePaused.bank,
+      resumeBankPractice,
+      reviewShuffle,
+      toggleReviewShuffle,
+    ]
+  );
+
+  const lexGridPanel = useMemo(
+    () => <LexGridGame words={allBankWords} availableLists={availableLists} tabId="lexgrid" />,
+    [allBankWords, availableLists]
+  );
+
+  const readingVocabPanel = useMemo(
+    () => <ReadingVocabMatch words={allBankWords} />,
+    [allBankWords]
+  );
+
+  const unrecognizedPanel = useMemo(
+    () =>
+      unrecognizedPracticeActive ? (
+        <PracticeSession
+          tabId="unrecognized"
+          title={unrecognizedPracticeTitle}
+          toolbarExtra={
+            <button type="button" className="btn btn--ghost btn--sm" onClick={pauseUnrecognizedPractice}>
+              返回列表
+            </button>
+          }
+          queueLength={unrecognizedSession.queue.length}
+          currentIndex={unrecognizedSession.index}
+          currentWord={unrecognizedWord}
+          wordStats={getWordStats(unrecognizedWord)}
+          wordBankMap={wordBankMap}
+          micGranted={mic.isGranted}
+          onResult={handleUnrecognizedBookResult}
+          onMemoryTrickGenerated={handleMemoryTrickGenerated}
+          onNext={() => handleBookNext("unrecognized")}
+          onPrev={() => handleBookPrev("unrecognized")}
+          sessionKey={`unrec-${unrecognizedWord?.word ?? "empty"}-${unrecognizedSession.index}`}
+          emptyMessage="本轮强化练习已完成！"
+        />
+      ) : (
+        <WordList
+          title="不认识的词"
+          subtitle={
+            reviewShuffle
+              ? `${unrecognized.length} 个 · 按 Level · List 分组 · 乱序仅影响练习`
+              : `${unrecognized.length} 个 · 按 Level · List 分组 · 按错误次数排序`
+          }
+          words={sortedUnrecognizedWords}
+          emptyText="太棒了！目前没有生词，继续保持。"
+          showWrongCount
+          groupByList
+          availableLists={availableLists}
+          wordListIndex={wordListIndex}
+          reviewBar={
+            unrecognized.length > 0 ? (
+              <BookReviewScopeBar
+                title="针对性强化练习"
+                description={`按 Level · List 多选复习范围（共 ${unrecognized.length} 个生词）`}
+                levelNumbers={levelNumbersWithUnrecognized}
+                listsByLevel={listsByLevel}
+                countByListId={unrecognizedCountByListId}
+                selectedListIds={unrecognizedReviewListIds}
+                onSelectedListIdsChange={setUnrecognizedReviewListIds}
+                uncategorizedCount={uncategorizedUnrecognizedCount}
+                reviewShuffle={reviewShuffle}
+                onToggleShuffle={toggleReviewShuffle}
+                primaryLabel={
+                  unrecognizedSession && bookPracticePaused.unrecognized
+                    ? `继续强化（${unrecognizedSession.index + 1}/${unrecognizedSession.queue.length}）`
+                    : unrecognizedReviewListIds.length === 0
+                      ? "开始强化"
+                      : `开始强化（${selectedUnrecognizedCount}）`
+                }
+                onPrimary={resumeUnrecognizedPractice}
+                primaryDisabled={
+                  !(unrecognizedSession && bookPracticePaused.unrecognized) &&
+                  unrecognizedReviewListIds.length === 0
+                }
+              />
+            ) : null
+          }
+        />
+      ),
+    [
+      unrecognizedPracticeActive,
+      unrecognizedPracticeTitle,
+      pauseUnrecognizedPractice,
+      unrecognizedSession,
+      unrecognizedWord,
+      getWordStats,
+      wordBankMap,
+      mic.isGranted,
+      handleUnrecognizedBookResult,
+      handleMemoryTrickGenerated,
+      handleBookNext,
+      handleBookPrev,
+      reviewShuffle,
+      unrecognized.length,
+      sortedUnrecognizedWords,
+      availableLists,
+      wordListIndex,
+      levelNumbersWithUnrecognized,
+      listsByLevel,
+      unrecognizedCountByListId,
+      unrecognizedReviewListIds,
+      uncategorizedUnrecognizedCount,
+      toggleReviewShuffle,
+      bookPracticePaused.unrecognized,
+      selectedUnrecognizedCount,
+      resumeUnrecognizedPractice,
+    ]
+  );
+
+  const recognizedPanel = useMemo(
+    () =>
+      recognizedPracticeActive ? (
+        <PracticeSession
+          tabId="recognized"
+          title={recognizedPracticeTitle}
+          toolbarExtra={
+            <button type="button" className="btn btn--ghost btn--sm" onClick={pauseRecognizedPractice}>
+              返回列表
+            </button>
+          }
+          queueLength={recognizedSession.queue.length}
+          currentIndex={recognizedSession.index}
+          currentWord={recognizedWord}
+          wordStats={getWordStats(recognizedWord)}
+          wordBankMap={wordBankMap}
+          micGranted={mic.isGranted}
+          onResult={handleRecognizedBookResult}
+          onMemoryTrickGenerated={handleMemoryTrickGenerated}
+          onNext={() => handleBookNext("recognized")}
+          onPrev={() => handleBookPrev("recognized")}
+          sessionKey={`rec-${recognizedWord?.word ?? "empty"}-${recognizedSession.index}`}
+          emptyMessage="本轮巩固练习已完成！"
+        />
+      ) : (
+        <WordList
+          title="已认识的词"
+          subtitle={
+            recognizedPastWrong.length > 0
+              ? `${recognized.length} 个 · 按 Level · List 分组 · 曾错 ${recognizedPastWrong.length} 个可巩固`
+              : `${recognized.length} 个 · 按 Level · List 分组 · 本地保存`
+          }
+          words={recognized}
+          emptyText="还没有熟词，去卡片练习场开始吧！"
+          onRemoveWord={handleRemoveRecognized}
+          onClearAll={handleClearRecognized}
+          clearLabel="清空熟词本"
+          showWrongCount
+          wrongCountPast
+          withToolbar
+          groupByList
+          availableLists={availableLists}
+          wordListIndex={wordListIndex}
+          onMemoryTrickSaved={handleRecognizedMemoryTrick}
+          reviewBar={
+            <BookReviewScopeBar
+              title="曾错题巩固"
+              description={
+                recognizedPastWrong.length > 0
+                  ? `按 Level · List 多选巩固范围（共 ${recognizedPastWrong.length} 个曾错题）`
+                  : "暂无曾错题。答错后进熟词本的词会带「曾错 N 次」标记，即可在此巩固"
+              }
+              levelNumbers={levelNumbersWithPastWrong}
+              listsByLevel={listsByLevel}
+              countByListId={pastWrongCountByListId}
+              selectedListIds={recognizedReviewListIds}
+              onSelectedListIdsChange={setRecognizedReviewListIds}
+              uncategorizedCount={uncategorizedPastWrongCount}
+              reviewShuffle={reviewShuffle}
+              onToggleShuffle={toggleReviewShuffle}
+              primaryLabel={
+                recognizedSession && bookPracticePaused.recognized
+                  ? `继续巩固（${recognizedSession.index + 1}/${recognizedSession.queue.length}）`
+                  : recognizedReviewListIds.length === 0
+                    ? "开始巩固"
+                    : `开始巩固（${selectedPastWrongCount}）`
+              }
+              onPrimary={resumeRecognizedPractice}
+              primaryDisabled={
+                !(recognizedSession && bookPracticePaused.recognized) &&
+                recognizedReviewListIds.length === 0
+              }
+            />
+          }
+        />
+      ),
+    [
+      recognizedPracticeActive,
+      recognizedPracticeTitle,
+      pauseRecognizedPractice,
+      recognizedSession,
+      recognizedWord,
+      getWordStats,
+      wordBankMap,
+      mic.isGranted,
+      handleRecognizedBookResult,
+      handleMemoryTrickGenerated,
+      handleBookNext,
+      handleBookPrev,
+      recognizedPastWrong,
+      recognized,
+      handleRemoveRecognized,
+      handleClearRecognized,
+      availableLists,
+      wordListIndex,
+      handleRecognizedMemoryTrick,
+      levelNumbersWithPastWrong,
+      listsByLevel,
+      pastWrongCountByListId,
+      recognizedReviewListIds,
+      uncategorizedPastWrongCount,
+      reviewShuffle,
+      toggleReviewShuffle,
+      bookPracticePaused.recognized,
+      selectedPastWrongCount,
+      resumeRecognizedPractice,
+    ]
+  );
+
   if (wordsError) {
     return (
       <div className="app app--loading">
@@ -828,7 +1195,7 @@ export default function App() {
           <VocabLoadingScreen />
         </div>
       ) : null}
-      <div className="app-shell" inert={settingsOpen || wordsLoading ? "" : undefined}>
+      <div className="app-shell" inert={settingsOpen || wordsLoading}>
         <Navbar
           activeTab={activeTab}
           onTabChange={handleTabChange}
@@ -852,272 +1219,31 @@ export default function App() {
         />
 
         <main className="main">
-        <TabPanel tabId="practice" activeTab={activeTab}>
-          <PracticeSession
-            isActive={activeTab === "practice"}
-            title={listMeta?.title ?? "单词练习"}
-            toolbarExtra={
-              availableLists.length > 0 ? (
-                <div className="practice-toolbar__pickers">
-                  {levelNumbers.length > 1 && (
-                    <select
-                      className="practice-toolbar__select"
-                      value={activeLevel ?? ""}
-                      onChange={(e) => handleLevelChange(e.target.value)}
-                      aria-label="选择 Level"
-                    >
-                      {levelNumbers.map((level) => (
-                        <option key={level} value={level}>
-                          Level {level}
-                        </option>
-                      ))}
-                    </select>
-                  )}
-                  {listsInActiveLevel.length > 1 && (
-                    <select
-                      className="practice-toolbar__select"
-                      value={activeListId ?? ""}
-                      onChange={(e) => handleListChange(e.target.value)}
-                      aria-label="选择 List"
-                    >
-                      {listsInActiveLevel.map((item) => (
-                        <option key={item.id} value={item.id}>
-                          List {item.list}
-                        </option>
-                      ))}
-                    </select>
-                  )}
-                </div>
-              ) : null
-            }
-            stats={
-              <>
-                <span className="stat-pill stat-pill--ok">认识 {recognized.length}</span>
-                <span className="stat-pill stat-pill--fail">不认识 {unrecognized.length}</span>
-              </>
-            }
-            queueLength={wordList.length}
-            currentIndex={listIndex}
-            currentWord={listWord}
-            wordStats={getWordStats(listWord)}
-            wordBankMap={wordBankMap}
-            micGranted={mic.isGranted}
-            onResult={handleListResult}
-            onMemoryTrickGenerated={handleMemoryTrickGenerated}
-            onNext={handleListNext}
-            onPrev={handleListPrev}
-            sessionKey={`list-${listWord?.word ?? "empty"}-${listIndex}`}
-          />
-        </TabPanel>
+        <ActiveTabProvider value={activeTab}>
+          <TabPanel tabId="practice" activeTab={activeTab}>
+            {practicePanel}
+          </TabPanel>
 
-        <TabPanel tabId="bank" activeTab={activeTab}>
-          {bankPracticeActive ? (
-            <PracticeSession
-              isActive={activeTab === "bank"}
-              title={bankPracticeTitle}
-              toolbarExtra={
-                <button
-                  type="button"
-                  className="btn btn--ghost btn--sm"
-                  onClick={pauseBankPractice}
-                >
-                  返回列表
-                </button>
-              }
-              queueLength={bankSession.queue.length}
-              currentIndex={bankSession.index}
-              currentWord={bankWord}
-              wordStats={getWordStats(bankWord)}
-              wordBankMap={wordBankMap}
-              micGranted={mic.isGranted}
-              onResult={handleListResult}
-              onMemoryTrickGenerated={handleMemoryTrickGenerated}
-              onNext={() => handleBookNext("bank")}
-              onPrev={() => handleBookPrev("bank")}
-              sessionKey={`bank-${bankWord?.word ?? "empty"}-${bankSession.index}`}
-              emptyMessage="本轮词库练习已完成！"
-            />
-          ) : (
-            <VocabularyBank
-              words={allBankWords}
-              availableLists={availableLists}
-              wordListIndex={wordListIndex}
-              recognizedSet={recognizedWordSet}
-              unrecognizedSet={unrecognizedWordSet}
-              bankSession={bankSession}
-              bankPracticePaused={bookPracticePaused.bank}
-              onResumePractice={resumeBankPractice}
-              reviewShuffle={reviewShuffle}
-              onToggleShuffle={toggleReviewShuffle}
-            />
-          )}
-        </TabPanel>
+          <TabPanel tabId="bank" activeTab={activeTab}>
+            {bankPanel}
+          </TabPanel>
 
-        <TabPanel tabId="reading-vocab" activeTab={activeTab}>
-          <ReadingVocabMatch words={allBankWords} />
-        </TabPanel>
+          <TabPanel tabId="reading-vocab" activeTab={activeTab}>
+            {readingVocabPanel}
+          </TabPanel>
 
-        <TabPanel tabId="lexgrid" activeTab={activeTab}>
-          <LexGridGame
-            words={allBankWords}
-            availableLists={availableLists}
-            isActive={activeTab === "lexgrid"}
-          />
-        </TabPanel>
+          <TabPanel tabId="lexgrid" activeTab={activeTab}>
+            {lexGridPanel}
+          </TabPanel>
 
-        <TabPanel tabId="unrecognized" activeTab={activeTab}>
-          {unrecognizedPracticeActive ? (
-            <PracticeSession
-              isActive={activeTab === "unrecognized"}
-              title={unrecognizedPracticeTitle}
-              toolbarExtra={
-                <button
-                  type="button"
-                  className="btn btn--ghost btn--sm"
-                  onClick={pauseUnrecognizedPractice}
-                >
-                  返回列表
-                </button>
-              }
-              queueLength={unrecognizedSession.queue.length}
-              currentIndex={unrecognizedSession.index}
-              currentWord={unrecognizedWord}
-              wordStats={getWordStats(unrecognizedWord)}
-              wordBankMap={wordBankMap}
-              micGranted={mic.isGranted}
-              onResult={handleUnrecognizedBookResult}
-              onMemoryTrickGenerated={handleMemoryTrickGenerated}
-              onNext={() => handleBookNext("unrecognized")}
-              onPrev={() => handleBookPrev("unrecognized")}
-              sessionKey={`unrec-${unrecognizedWord?.word ?? "empty"}-${unrecognizedSession.index}`}
-              emptyMessage="本轮强化练习已完成！"
-            />
-          ) : (
-          <WordList
-            title="不认识的词"
-            subtitle={
-              reviewShuffle
-                ? `${unrecognized.length} 个 · 按 Level · List 分组 · 乱序仅影响练习`
-                : `${unrecognized.length} 个 · 按 Level · List 分组 · 按错误次数排序`
-            }
-            words={sortByWrongCount(unrecognized)}
-            emptyText="太棒了！目前没有生词，继续保持。"
-            showWrongCount
-            groupByList
-            availableLists={availableLists}
-            wordListIndex={wordListIndex}
-            reviewBar={
-              unrecognized.length > 0 ? (
-                <BookReviewScopeBar
-                  title="针对性强化练习"
-                  description={`按 Level · List 多选复习范围（共 ${unrecognized.length} 个生词）`}
-                  levelNumbers={levelNumbersWithUnrecognized}
-                  listsByLevel={listsByLevel}
-                  countByListId={unrecognizedCountByListId}
-                  selectedListIds={unrecognizedReviewListIds}
-                  onSelectedListIdsChange={setUnrecognizedReviewListIds}
-                  uncategorizedCount={uncategorizedUnrecognizedCount}
-                  reviewShuffle={reviewShuffle}
-                  onToggleShuffle={toggleReviewShuffle}
-                  primaryLabel={
-                    unrecognizedSession && bookPracticePaused.unrecognized
-                      ? `继续强化（${unrecognizedSession.index + 1}/${unrecognizedSession.queue.length}）`
-                      : unrecognizedReviewListIds.length === 0
-                        ? "开始强化"
-                        : `开始强化（${selectedUnrecognizedCount}）`
-                  }
-                  onPrimary={resumeUnrecognizedPractice}
-                  primaryDisabled={
-                    !(unrecognizedSession && bookPracticePaused.unrecognized) &&
-                    unrecognizedReviewListIds.length === 0
-                  }
-                />
-              ) : null
-            }
-          />
-          )}
-        </TabPanel>
+          <TabPanel tabId="unrecognized" activeTab={activeTab}>
+            {unrecognizedPanel}
+          </TabPanel>
 
-        <TabPanel tabId="recognized" activeTab={activeTab}>
-          {recognizedPracticeActive ? (
-            <PracticeSession
-              isActive={activeTab === "recognized"}
-              title={recognizedPracticeTitle}
-              toolbarExtra={
-                <button
-                  type="button"
-                  className="btn btn--ghost btn--sm"
-                  onClick={pauseRecognizedPractice}
-                >
-                  返回列表
-                </button>
-              }
-              queueLength={recognizedSession.queue.length}
-              currentIndex={recognizedSession.index}
-              currentWord={recognizedWord}
-              wordStats={getWordStats(recognizedWord)}
-              wordBankMap={wordBankMap}
-              micGranted={mic.isGranted}
-              onResult={handleRecognizedBookResult}
-              onMemoryTrickGenerated={handleMemoryTrickGenerated}
-              onNext={() => handleBookNext("recognized")}
-              onPrev={() => handleBookPrev("recognized")}
-              sessionKey={`rec-${recognizedWord?.word ?? "empty"}-${recognizedSession.index}`}
-              emptyMessage="本轮巩固练习已完成！"
-            />
-          ) : (
-          <WordList
-            title="已认识的词"
-            subtitle={
-              recognizedPastWrong.length > 0
-                ? `${recognized.length} 个 · 按 Level · List 分组 · 曾错 ${recognizedPastWrong.length} 个可巩固`
-                : `${recognized.length} 个 · 按 Level · List 分组 · 本地保存`
-            }
-            words={recognized}
-            emptyText="还没有熟词，去卡片练习场开始吧！"
-            onRemoveWord={handleRemoveRecognized}
-            onClearAll={handleClearRecognized}
-            clearLabel="清空熟词本"
-            showWrongCount
-            wrongCountPast
-            withToolbar
-            groupByList
-            availableLists={availableLists}
-            wordListIndex={wordListIndex}
-            onMemoryTrickSaved={handleRecognizedMemoryTrick}
-            reviewBar={
-              <BookReviewScopeBar
-                title="曾错题巩固"
-                description={
-                  recognizedPastWrong.length > 0
-                    ? `按 Level · List 多选巩固范围（共 ${recognizedPastWrong.length} 个曾错题）`
-                    : "暂无曾错题。答错后进熟词本的词会带「曾错 N 次」标记，即可在此巩固"
-                }
-                levelNumbers={levelNumbersWithPastWrong}
-                listsByLevel={listsByLevel}
-                countByListId={pastWrongCountByListId}
-                selectedListIds={recognizedReviewListIds}
-                onSelectedListIdsChange={setRecognizedReviewListIds}
-                uncategorizedCount={uncategorizedPastWrongCount}
-                reviewShuffle={reviewShuffle}
-                onToggleShuffle={toggleReviewShuffle}
-                primaryLabel={
-                  recognizedSession && bookPracticePaused.recognized
-                    ? `继续巩固（${recognizedSession.index + 1}/${recognizedSession.queue.length}）`
-                    : recognizedReviewListIds.length === 0
-                      ? "开始巩固"
-                      : `开始巩固（${selectedPastWrongCount}）`
-                }
-                onPrimary={resumeRecognizedPractice}
-                primaryDisabled={
-                  !(recognizedSession && bookPracticePaused.recognized) &&
-                  recognizedReviewListIds.length === 0
-                }
-              />
-            }
-          />
-          )}
-        </TabPanel>
+          <TabPanel tabId="recognized" activeTab={activeTab}>
+            {recognizedPanel}
+          </TabPanel>
+        </ActiveTabProvider>
       </main>
 
       <VocabAssistant

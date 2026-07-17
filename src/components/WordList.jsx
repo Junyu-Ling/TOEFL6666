@@ -1,4 +1,4 @@
-import { useMemo, useState, useEffect, useRef } from "react";
+import { memo, useMemo, useState, useEffect, useRef } from "react";
 import MemoryTrickBlock from "./MemoryTrickBlock";
 import PronunciationAlert from "./PronunciationAlert";
 import { fetchMemoryTrick } from "../services/memoryTrick";
@@ -214,7 +214,7 @@ function WordGroupSection({
   );
 }
 
-export default function WordList({
+function WordList({
   title,
   subtitle,
   words,
@@ -350,3 +350,5 @@ export default function WordList({
     </div>
   );
 }
+
+export default memo(WordList);

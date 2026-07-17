@@ -1,6 +1,7 @@
+import { memo } from "react";
 import FlashCard from "./FlashCard";
 
-export default function PracticeSession({
+function PracticeSession({
   title,
   toolbarExtra,
   stats,
@@ -16,7 +17,7 @@ export default function PracticeSession({
   onPrev,
   sessionKey,
   emptyMessage = "本轮练习已完成！",
-  isActive = true,
+  tabId,
 }) {
   const progress = queueLength ? Math.round(((currentIndex + 1) / queueLength) * 100) : 0;
 
@@ -40,7 +41,7 @@ export default function PracticeSession({
       {currentWord ? (
         <FlashCard
           key={sessionKey}
-          isActive={isActive}
+          tabId={tabId}
           wordData={currentWord}
           wordStats={wordStats}
           wordBankMap={wordBankMap}
@@ -59,3 +60,5 @@ export default function PracticeSession({
     </section>
   );
 }
+
+export default memo(PracticeSession);
