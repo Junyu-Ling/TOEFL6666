@@ -3,6 +3,7 @@ import LexGridRecallCard from "./LexGridRecallCard";
 import { useIsActiveTab } from "../context/ActiveTabContext";
 import { clearLexGridRound, loadLexGridRound, saveLexGridRound } from "../services/lexGridProgress";
 import { validateEnglishWord } from "../services/wordValidate";
+import { createPersistentValidationCache } from "../services/lexGridWordValidation";
 import { shouldIgnoreAppGameKeys } from "../utils/appKeyboard";
 import {
   TILE_STATES,
@@ -75,7 +76,7 @@ function LexGridGame({ words, availableLists, tabId }) {
     [words, availableLists]
   );
   const wordBankSet = useMemo(() => buildWordBankSet(words), [words]);
-  const validationCacheRef = useRef(new Map());
+  const validationCacheRef = useRef(createPersistentValidationCache());
   const validateAbortRef = useRef(null);
 
   const [round, setRound] = useState(() => loadLexGridRound());
