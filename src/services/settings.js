@@ -1,6 +1,28 @@
 import { normalizeCorrectSoundId, normalizeWrongSoundId } from "../utils/answerSounds.js";
+import {
+  calcSatTotal,
+  calcToeflTotal,
+  normalizeExamScores,
+  normalizeSatTargetTotal,
+  normalizeTargetExam,
+  normalizeToeflTargetTotal,
+} from "../utils/examScores.js";
 
 const SETTINGS_KEY = "toefl666_settings";
+
+const DEFAULT_TOEFL_SCORES = {
+  reading: null,
+  listening: null,
+  speaking: null,
+  writing: null,
+  total: null,
+};
+
+const DEFAULT_SAT_SCORES = {
+  readingWriting: null,
+  math: null,
+  total: null,
+};
 
 const DEFAULT_SETTINGS = {
   theme: "light",
@@ -14,7 +36,22 @@ const DEFAULT_SETTINGS = {
   answerSounds: true,
   answerSoundCorrect: "default",
   answerSoundWrong: "default",
+  targetExam: "toefl",
+  toeflScores: { ...DEFAULT_TOEFL_SCORES },
+  toeflTargetTotal: null,
+  satScores: { ...DEFAULT_SAT_SCORES },
+  satTargetTotal: null,
+  studyPlan: null,
 };
+
+function normalizeStudyPlan(value) {
+  if (!value || typeof value !== "object") return null;
+  const examType = normalizeTargetExam(value.examType);
+  const content = typeof value.content === "string" ? value.content.trim() : "";
+  const generatedAt = typeof value.generatedAt === "number" ? value.generatedAt : null;
+  if (!content) return null;
+  return { examType, content, generatedAt };
+}
 
 export function normalizePracticeStyle(value) {
   return value === "recall" ? "recall" : "type";
@@ -43,6 +80,12 @@ export function loadSettings() {
       answerSounds: parsed.answerSounds !== false,
       answerSoundCorrect: normalizeCorrectSoundId(parsed.answerSoundCorrect),
       answerSoundWrong: normalizeWrongSoundId(parsed.answerSoundWrong),
+      targetExam: normalizeTargetExam(parsed.targetExam),
+      toeflScores: normalizeExamScores("toefl", parsed.toeflScores || {}),
+      toeflTargetTotal: normalizeToeflTargetTotal(parsed.toeflTargetTotal),
+      satScores: normalizeExamScores("sat", parsed.satScores || {}),
+      satTargetTotal: normalizeSatTargetTotal(parsed.satTargetTotal),
+      studyPlan: normalizeStudyPlan(parsed.studyPlan),
     };
     if ("aiApiKey" in parsed) {
       saveSettings(next);
@@ -62,6 +105,36 @@ export function patchSettings(patch) {
   if ("autoAdvanceDelaySec" in patch) {
     next.autoAdvanceDelaySec = clampDelaySec(next.autoAdvanceDelaySec);
   }
+  if ("targetExam" in patch) {
+    next.targetExam = normalizeTargetExam(next.targetExam);
+  }
+  if ("toeflScores" in patch) {
+    next.toeflScores = normalizeExamScores("toefl", { ...next.toeflScores, ...patch.toeflScores });
+  }
+  if ("satScores" in patch) {
+    next.satScores = normalizeExamScores("sat", { ...next.satScores, ...patch.satScores });
+  }
+  if ("toeflTargetTotal" in patch) {
+    next.toeflTargetTotal = normalizeToeflTargetTotal(next.toeflTargetTotal);
+  }
+  if ("satTargetTotal" in patch) {
+    next.satTargetTotal = normalizeSatTargetTotal(next.satTargetTotal);
+  }
+  if ("studyPlan" in patch) {
+    next.studyPlan = normalizeStudyPlan(patch.studyPlan);
+  }
   saveSettings(next);
   return next;
 }
+
+export function updateToeflSectionScore(currentScores, key, value) {
+  const next = normalizeExamScores("toefl", { ...currentScores, [key]: value });
+  return next;
+}
+
+export function updateSatSectionScore(currentScores, key, value) {
+  const next = normalizeExamScores("sat", { ...currentScores, [key]: value });
+  return next;
+}
+
+export { DEFAULT_TOEFL_SCORES, DEFAULT_SAT_SCORES, calcToeflTotal, calcSatTotal };

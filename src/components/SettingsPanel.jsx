@@ -8,6 +8,7 @@ import {
   WRONG_SOUND_OPTIONS,
   previewAnswerSound,
 } from "../utils/answerSounds";
+import ExamScoreSection from "./ExamScoreSection";
 
 const SYNC_SESSION_KEY = "toefl666_last_sync";
 
@@ -410,6 +411,8 @@ export default function SettingsPanel() {
             )}
           </div>
         </details>
+
+        <ExamScoreSection />
 
         <details className="settings-group">
           <summary className="settings-group__summary">

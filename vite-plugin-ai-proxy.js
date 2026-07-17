@@ -6,6 +6,7 @@ import { generateMemoryTrick } from "./server/ai-memory-trick.js";
 import { evaluatePronunciationWithDeepSeek } from "./server/ai-pronounce-evaluate.js";
 import { lookupWordWithDeepSeek } from "./server/ai-word-lookup.js";
 import { validateWordWithDeepSeek } from "./server/ai-word-validate.js";
+import { generateStudyPlan, streamStudyPlan } from "./server/ai-study-plan.js";
 
 function readBody(req) {
   return new Promise((resolve, reject) => {
@@ -62,7 +63,8 @@ export function createAiHandler(getEnvConfig) {
     const isPronounceEvaluate = matchApiPath(req.url, "/api/ai/pronounce-evaluate");
     const isWordLookup = matchApiPath(req.url, "/api/ai/word-lookup");
     const isWordValidate = matchApiPath(req.url, "/api/ai/word-validate");
-    if (!isEvaluate && !isChat && !isMemoryTrick && !isPronounceEvaluate && !isWordLookup && !isWordValidate) {
+    const isStudyPlan = matchApiPath(req.url, "/api/ai/study-plan");
+    if (!isEvaluate && !isChat && !isMemoryTrick && !isPronounceEvaluate && !isWordLookup && !isWordValidate && !isStudyPlan) {
       return next();
     }
 
@@ -97,6 +99,30 @@ export function createAiHandler(getEnvConfig) {
 
       if (isWordValidate) {
         const result = await validateWordWithDeepSeek(payload, config);
+        sendJson(res, 200, result);
+        return;
+      }
+
+      if (isStudyPlan) {
+        if (body.stream) {
+          res.statusCode = 200;
+          res.setHeader("Content-Type", "text/event-stream; charset=utf-8");
+          res.setHeader("Cache-Control", "no-cache, no-transform");
+          res.setHeader("Connection", "keep-alive");
+          try {
+            for await (const delta of streamStudyPlan(payload, config)) {
+              sendSse(res, { delta });
+            }
+            res.write("data: [DONE]\n\n");
+            res.end();
+          } catch (err) {
+            sendSse(res, { error: err.message || "流式输出失败" });
+            res.end();
+          }
+          return;
+        }
+
+        const result = await generateStudyPlan(payload, config);
         sendJson(res, 200, result);
         return;
       }

@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect, useCallback, useMemo } from "react";
-import { loadSettings, patchSettings, clampDelaySec } from "../services/settings";
+import { loadSettings, patchSettings, clampDelaySec, updateToeflSectionScore, updateSatSectionScore } from "../services/settings";
+import { normalizeTargetExam, normalizeToeflTargetTotal, normalizeSatTargetTotal } from "../utils/examScores";
 import { getSystemVoices, speakWord as speak } from "../utils/speech";
 import { normalizeCorrectSoundId, normalizeWrongSoundId } from "../utils/answerSounds";
 
@@ -89,6 +90,50 @@ export function SettingsProvider({ children }) {
     [updateSettings]
   );
 
+  const setTargetExam = useCallback(
+    (targetExam) => updateSettings({ targetExam: normalizeTargetExam(targetExam) }),
+    [updateSettings]
+  );
+
+  const setToeflSectionScore = useCallback(
+    (key, value) => {
+      setSettings((prev) => {
+        const toeflScores = updateToeflSectionScore(prev.toeflScores, key, value);
+        const next = { ...prev, toeflScores };
+        patchSettings({ toeflScores });
+        return next;
+      });
+    },
+    []
+  );
+
+  const setSatSectionScore = useCallback(
+    (key, value) => {
+      setSettings((prev) => {
+        const satScores = updateSatSectionScore(prev.satScores, key, value);
+        const next = { ...prev, satScores };
+        patchSettings({ satScores });
+        return next;
+      });
+    },
+    []
+  );
+
+  const setToeflTargetTotal = useCallback(
+    (toeflTargetTotal) => updateSettings({ toeflTargetTotal: normalizeToeflTargetTotal(toeflTargetTotal) }),
+    [updateSettings]
+  );
+
+  const setSatTargetTotal = useCallback(
+    (satTargetTotal) => updateSettings({ satTargetTotal: normalizeSatTargetTotal(satTargetTotal) }),
+    [updateSettings]
+  );
+
+  const setStudyPlan = useCallback(
+    (studyPlan) => updateSettings({ studyPlan }),
+    [updateSettings]
+  );
+
   const speakWord = useCallback((word) => speak(word, settings), [settings]);
 
   const value = useMemo(
@@ -108,6 +153,12 @@ export function SettingsProvider({ children }) {
       setAnswerSounds,
       setAnswerSoundCorrect,
       setAnswerSoundWrong,
+      setTargetExam,
+      setToeflSectionScore,
+      setSatSectionScore,
+      setToeflTargetTotal,
+      setSatTargetTotal,
+      setStudyPlan,
       speakWord,
     }),
     [
@@ -125,6 +176,12 @@ export function SettingsProvider({ children }) {
       setAnswerSounds,
       setAnswerSoundCorrect,
       setAnswerSoundWrong,
+      setTargetExam,
+      setToeflSectionScore,
+      setSatSectionScore,
+      setToeflTargetTotal,
+      setSatTargetTotal,
+      setStudyPlan,
       speakWord,
     ]
   );
