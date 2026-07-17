@@ -950,7 +950,7 @@ export default function App() {
               reviewShuffle={reviewShuffle}
               onToggleShuffle={toggleReviewShuffle}
             />
-          )
+          )}
         </TabPanel>
 
         <TabPanel tabId="reading-vocab" activeTab={activeTab}>
@@ -1035,7 +1035,7 @@ export default function App() {
               ) : null
             }
           />
-          )
+          )}
         </TabPanel>
 
         <TabPanel tabId="recognized" activeTab={activeTab}>
@@ -1116,7 +1116,7 @@ export default function App() {
               />
             }
           />
-          )
+          )}
         </TabPanel>
       </main>
 
