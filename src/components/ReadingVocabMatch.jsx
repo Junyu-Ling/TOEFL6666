@@ -11,6 +11,7 @@ import { buildWordBankMap } from "../utils/homophoneBank";
 import { playAnswerSound } from "../utils/answerSounds";
 import {
   buildSetRound,
+  buildTestRound,
   findPairById,
   getReadingVocabSets,
   getReadingVocabTitle,
@@ -78,6 +79,7 @@ function ReadingVocabMatch({ words }) {
   const wordBankMap = useMemo(() => buildWordBankMap(words), [words]);
   const [initialState] = useState(() => createInitialState(sets));
 
+  const [viewMode, setViewMode] = useState("sets");
   const [setIndex, setSetIndex] = useState(initialState.setIndex);
   const [round, setRound] = useState(initialState.round);
   const [selectedLeft, setSelectedLeft] = useState(null);
@@ -90,15 +92,16 @@ function ReadingVocabMatch({ words }) {
   const [setComplete, setSetComplete] = useState(initialState.setComplete);
 
   const currentSet = sets[setIndex];
+  const isTestMode = viewMode === "test";
   const revealPair = revealPairId ? findPairById(round, revealPairId) : null;
   const totalPairs = round.pairs.length;
   const doneCount = completedIds.size;
 
   useEffect(() => {
-    if (!currentSet) return;
+    if (isTestMode || !currentSet) return;
     persistSetState(currentSet.id, round, completedIds, setComplete);
     patchReadingVocabSetIndex(setIndex);
-  }, [completedIds, currentSet, round, setComplete, setIndex]);
+  }, [isTestMode, completedIds, currentSet, round, setComplete, setIndex]);
 
   const notifyAnswerResult = useCallback(
     (isCorrect) => {
@@ -111,7 +114,20 @@ function ReadingVocabMatch({ words }) {
     [settings.answerSoundCorrect, settings.answerSoundWrong, settings.answerSounds]
   );
 
+  const resetBoardState = useCallback((nextRound) => {
+    setRound(nextRound);
+    setSelectedLeft(null);
+    setSelectedRight(null);
+    setCompletedIds(new Set());
+    setRevealPairId(null);
+    setRevealDefinitions([]);
+    setRevealLoading(false);
+    setShake(false);
+    setSetComplete(false);
+  }, []);
+
   const applySetState = useCallback((index, set, savedSet) => {
+    setViewMode("sets");
     setSetIndex(index);
     setRound(restoreSetRound(set, savedSet));
     setSelectedLeft(null);
@@ -134,6 +150,24 @@ function ReadingVocabMatch({ words }) {
     },
     [applySetState, sets]
   );
+
+  const restartSet = useCallback(() => {
+    if (!currentSet) return;
+    resetBoardState(buildSetRound(currentSet));
+  }, [currentSet, resetBoardState]);
+
+  const startTest = useCallback(() => {
+    setViewMode("test");
+    resetBoardState(buildTestRound());
+  }, [resetBoardState]);
+
+  const restartTest = useCallback(() => {
+    resetBoardState(buildTestRound());
+  }, [resetBoardState]);
+
+  const exitTest = useCallback(() => {
+    loadSet(setIndex);
+  }, [loadSet, setIndex]);
 
   const getDefinitionsForWord = useCallback(
     async (word) => resolveReadingVocabDefinitions(word, wordBankMap),
@@ -231,31 +265,56 @@ function ReadingVocabMatch({ words }) {
         <div>
           <h2 className="rvocab__title">{getReadingVocabTitle()}</h2>
           <p className="rvocab__subtitle">
-            第 {currentSet.id} 组 · 共 {sets.length} 组 · 进度 {doneCount}/{totalPairs}
+            {isTestMode
+              ? `综合测试 · 随机抽取 ${totalPairs} 题 · 进度 ${doneCount}/${totalPairs}`
+              : `第 ${currentSet.id} 组 · 共 ${sets.length} 组 · 进度 ${doneCount}/${totalPairs}`}
           </p>
         </div>
         <div className="rvocab__set-nav">
-          <button
-            type="button"
-            className="btn btn--ghost btn--sm"
-            disabled={setIndex <= 0 || Boolean(revealPairId)}
-            onClick={() => loadSet(setIndex - 1)}
-          >
-            上一组
-          </button>
-          <button
-            type="button"
-            className="btn btn--ghost btn--sm"
-            disabled={setIndex >= sets.length - 1 || Boolean(revealPairId)}
-            onClick={() => loadSet(setIndex + 1)}
-          >
-            下一组
-          </button>
+          {isTestMode ? (
+            <button
+              type="button"
+              className="btn btn--ghost btn--sm"
+              disabled={Boolean(revealPairId)}
+              onClick={exitTest}
+            >
+              返回分组练习
+            </button>
+          ) : (
+            <>
+              <button
+                type="button"
+                className="btn btn--ghost btn--sm"
+                disabled={setIndex <= 0 || Boolean(revealPairId)}
+                onClick={() => loadSet(setIndex - 1)}
+              >
+                上一组
+              </button>
+              <button
+                type="button"
+                className="btn btn--ghost btn--sm"
+                disabled={setIndex >= sets.length - 1 || Boolean(revealPairId)}
+                onClick={() => loadSet(setIndex + 1)}
+              >
+                下一组
+              </button>
+              <button
+                type="button"
+                className="btn btn--ghost btn--sm"
+                disabled={Boolean(revealPairId)}
+                onClick={startTest}
+              >
+                综合测试
+              </button>
+            </>
+          )}
         </div>
       </header>
 
       <p className="rvocab__instructions">
-        点击左侧单词与右侧近义词配对；每成功匹配一对，会显示该单词的中文意思。
+        {isTestMode
+          ? "综合测试从全部分组中随机抽题，可反复重新抽取练习。"
+          : "点击左侧单词与右侧近义词配对；每成功匹配一对，会显示该单词的中文意思。"}
       </p>
 
       <div className={`rvocab__board ${shake ? "rvocab__board--shake" : ""}`}>
@@ -327,12 +386,30 @@ function ReadingVocabMatch({ words }) {
 
       {setComplete && (
         <div className="rvocab__complete">
-          <p>第 {currentSet.id} 组全部完成！</p>
-          {setIndex < sets.length - 1 ? (
-            <button type="button" className="btn btn--primary" onClick={() => loadSet(setIndex + 1)}>
-              下一组
+          <p>{isTestMode ? "综合测试完成！" : `第 ${currentSet.id} 组全部完成！`}</p>
+          <div className="rvocab__complete-actions">
+            <button
+              type="button"
+              className="btn btn--ghost"
+              onClick={isTestMode ? restartTest : restartSet}
+            >
+              重新来
             </button>
-          ) : (
+            {isTestMode ? (
+              <button type="button" className="btn btn--primary" onClick={exitTest}>
+                返回分组练习
+              </button>
+            ) : setIndex < sets.length - 1 ? (
+              <button type="button" className="btn btn--primary" onClick={() => loadSet(setIndex + 1)}>
+                下一组
+              </button>
+            ) : (
+              <button type="button" className="btn btn--primary" onClick={startTest}>
+                去做综合测试
+              </button>
+            )}
+          </div>
+          {!isTestMode && setIndex >= sets.length - 1 && (
             <p className="rvocab__complete-all">全部 {sets.length} 组已完成 🎉</p>
           )}
         </div>

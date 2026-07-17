@@ -4658,8 +4658,15 @@ body {
   font-size: 1rem;
 }
 
+.rvocab__complete-actions {
+  display: flex;
+  justify-content: center;
+  gap: 0.625rem;
+  flex-wrap: wrap;
+}
+
 .rvocab__complete-all {
-  margin: 0 !important;
+  margin: 0.75rem 0 0 !important;
   font-weight: 600;
 }
 

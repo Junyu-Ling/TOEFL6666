@@ -100,6 +100,19 @@ export function buildFullRound() {
   };
 }
 
+export const READING_VOCAB_TEST_SIZE = 16;
+
+/** 综合测试：从全部题目中随机抽取一批，每次开始/重来都会重新抽取与打乱。 */
+export function buildTestRound(sampleSize = READING_VOCAB_TEST_SIZE) {
+  const allPairs = shuffleArray(getAllReadingVocabPairs());
+  const pairs = allPairs.slice(0, Math.min(sampleSize, allPairs.length));
+  return {
+    pairs,
+    leftItems: shuffleArray(pairs.map((p) => ({ id: p.id, text: p.word, side: "left" }))),
+    rightItems: shuffleArray(pairs.map((p) => ({ id: p.id, text: p.synonym, side: "right" }))),
+  };
+}
+
 export function findPairById(round, pairId) {
   return round.pairs.find((pair) => pair.id === pairId) ?? null;
 }
