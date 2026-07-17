@@ -123,7 +123,7 @@ export default function VocabLoadingScreen() {
                 <div className="flashcard__face flashcard__front">
                   <div className="flashcard__term">
                     <div className="flashcard__term-row">
-                      <h2 className="flashcard__word vocab-loader__word">{current.word}</h2>
+                      <h2 className="flashcard__word">{current.word}</h2>
                     </div>
                   </div>
                   <p className="flashcard__prompt">点击卡片查看释义，顺手认一认这个词</p>

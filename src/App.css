@@ -1345,7 +1345,7 @@ body {
   align-items: center;
   gap: 1.5rem;
   padding: 2rem 1.5rem;
-  width: min(100%, 440px);
+  width: min(100%, calc(var(--fc-width) + 3rem));
 }
 
 .vocab-loader__brand {
@@ -1409,12 +1409,11 @@ body {
   50% { opacity: 0.95; transform: scale(1.08); }
 }
 
-/* 复用正式练习卡片（.flashcard）的样式，保持加载动画与真实卡片 UI 一致 */
+/* 卡片本身完全复用 .flashcard-scene / .flashcard__face 的默认尺寸与内边距，
+   不做任何宽度、字号的覆盖，保证与练习页看到的卡片 1:1 一致。 */
 .vocab-loader__scene {
   position: relative;
   z-index: 1;
-  width: min(100%, 360px);
-  max-width: 360px;
   animation: vocab-card-float 3.5s ease-in-out infinite;
 }
 
@@ -1430,17 +1429,6 @@ body {
 .vocab-loader__card:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
-}
-
-.vocab-loader__scene .flashcard__face {
-  padding: 1.75rem 1.5rem 1.5rem;
-  box-shadow:
-    0 24px 48px color-mix(in srgb, var(--accent) 16%, transparent),
-    var(--shadow-lg);
-}
-
-.vocab-loader__word {
-  font-size: clamp(1.75rem, 8vw, 2.25rem);
 }
 
 .vocab-loader__message {
@@ -4066,7 +4054,7 @@ body {
   --lexgrid-key-absent-text: #e8eaed;
   --lexgrid-tile-size: clamp(2.25rem, 8vw, 3.25rem);
   --lexgrid-gap: clamp(0.3rem, 1.2vw, 0.45rem);
-  max-width: 36rem;
+  max-width: var(--fc-width);
   margin: 0 auto;
   padding: 1rem 0.75rem 2rem;
   display: flex;
@@ -4402,7 +4390,7 @@ body {
 
 .lexgrid-recall {
   width: 100%;
-  max-width: 28rem;
+  max-width: var(--fc-width);
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
