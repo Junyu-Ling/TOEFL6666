@@ -81,15 +81,21 @@ export default function VocabLoadingScreen() {
       <div className="vocab-loader__content">
         <p className="vocab-loader__brand">TOEFL 6·6·6·6</p>
 
-        <div className={`vocab-loader__scene ${flipped ? "vocab-loader__scene--flipped" : ""}`}>
-          <div className="vocab-loader__card">
-            <div className="vocab-loader__face vocab-loader__face--front">
-              <span className="vocab-loader__label">Word</span>
-              <strong>{current.word}</strong>
+        <div className="flashcard-scene vocab-loader__scene">
+          <div className={`flashcard${flipped ? " flashcard--flipped" : ""}`}>
+            <div className="flashcard__face flashcard__front">
+              <div className="flashcard__term">
+                <div className="flashcard__term-row">
+                  <h2 className="flashcard__word vocab-loader__word">{current.word}</h2>
+                </div>
+              </div>
+              <p className="flashcard__prompt">正在加载，先认一个词…</p>
             </div>
-            <div className="vocab-loader__face vocab-loader__face--back">
-              <span className="vocab-loader__label">释义</span>
-              <strong>{current.hint}</strong>
+            <div className="flashcard__face flashcard__back">
+              <div className="flashcard__badge flashcard__badge--neutral">释义</div>
+              <ul className="flashcard__definitions">
+                <li>{current.hint}</li>
+              </ul>
             </div>
           </div>
         </div>

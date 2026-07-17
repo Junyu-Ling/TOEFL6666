@@ -1306,23 +1306,10 @@ body {
   margin: 0;
 }
 
+/* 复用正式练习卡片（.flashcard）的样式，保持加载动画与真实卡片 UI 一致 */
 .vocab-loader__scene {
-  perspective: 900px;
-  width: min(100%, 280px);
-  height: 168px;
-}
-
-.vocab-loader__scene--flipped .vocab-loader__card {
-  transform: rotateY(180deg);
-  animation: none;
-}
-
-.vocab-loader__card {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  transform-style: preserve-3d;
-  transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
+  width: min(100%, 320px);
+  max-width: 320px;
   animation: vocab-card-float 3.5s ease-in-out infinite;
 }
 
@@ -1331,44 +1318,12 @@ body {
   50% { transform: translateY(-6px); }
 }
 
-.vocab-loader__face {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 1.5rem;
-  border-radius: 18px;
-  border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--border));
-  background: color-mix(in srgb, var(--surface) 92%, var(--accent) 8%);
-  box-shadow:
-    0 18px 40px color-mix(in srgb, var(--accent) 15%, transparent),
-    0 0 0 1px color-mix(in srgb, var(--accent) 10%, transparent);
-  backface-visibility: hidden;
+.vocab-loader__scene .flashcard__face {
+  padding: 1.5rem 1.5rem 1.25rem;
 }
 
-.vocab-loader__face--back {
-  transform: rotateY(180deg);
-  background: color-mix(in srgb, var(--surface) 88%, #f97316 12%);
-  border-color: color-mix(in srgb, #f97316 35%, var(--border));
-}
-
-.vocab-loader__label {
-  font-size: 0.6875rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-}
-
-.vocab-loader__face strong {
-  font-size: clamp(1.35rem, 5vw, 1.75rem);
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  text-align: center;
-  color: var(--text);
+.vocab-loader__word {
+  font-size: clamp(1.75rem, 8vw, 2.25rem);
 }
 
 .vocab-loader__orbit {
