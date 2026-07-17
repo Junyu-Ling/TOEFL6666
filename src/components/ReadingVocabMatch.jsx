@@ -1,6 +1,12 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useSettings } from "../context/SettingsContext";
 import { resolveReadingVocabDefinitions } from "../services/readingVocabDefinitions";
+import {
+  getSavedSetProgress,
+  loadReadingVocabProgress,
+  patchReadingVocabSetIndex,
+  patchSavedSetProgress,
+} from "../services/readingVocabProgress";
 import { buildWordBankMap } from "../utils/homophoneBank";
 import { playAnswerSound } from "../utils/answerSounds";
 import {
@@ -8,6 +14,7 @@ import {
   findPairById,
   getReadingVocabSets,
   getReadingVocabTitle,
+  restoreSetRound,
 } from "../utils/readingVocabMatch";
 
 function RevealPanel({ pair, definitions, loading, onContinue }) {
@@ -41,26 +48,57 @@ function RevealPanel({ pair, definitions, loading, onContinue }) {
   );
 }
 
+function createInitialState(sets) {
+  const saved = loadReadingVocabProgress();
+  const setIndex = Math.max(0, Math.min(saved?.setIndex ?? 0, sets.length - 1));
+  const set = sets[setIndex];
+  const savedSet = getSavedSetProgress(set.id);
+  const round = restoreSetRound(set, savedSet);
+
+  return {
+    setIndex,
+    round,
+    completedIds: new Set(savedSet?.completedIds ?? []),
+    setComplete: savedSet?.setComplete === true,
+  };
+}
+
+function persistSetState(setId, round, completedIds, setComplete) {
+  patchSavedSetProgress(setId, {
+    completedIds: [...completedIds],
+    leftItemIds: round.leftItems.map((item) => item.id),
+    rightItemIds: round.rightItems.map((item) => item.id),
+    setComplete,
+  });
+}
+
 export default function ReadingVocabMatch({ words }) {
   const { settings, speakWord } = useSettings();
   const sets = useMemo(() => getReadingVocabSets(), []);
   const wordBankMap = useMemo(() => buildWordBankMap(words), [words]);
+  const [initialState] = useState(() => createInitialState(sets));
 
-  const [setIndex, setSetIndex] = useState(0);
-  const [round, setRound] = useState(() => buildSetRound(sets[0]));
+  const [setIndex, setSetIndex] = useState(initialState.setIndex);
+  const [round, setRound] = useState(initialState.round);
   const [selectedLeft, setSelectedLeft] = useState(null);
   const [selectedRight, setSelectedRight] = useState(null);
-  const [completedIds, setCompletedIds] = useState(() => new Set());
+  const [completedIds, setCompletedIds] = useState(initialState.completedIds);
   const [revealPairId, setRevealPairId] = useState(null);
   const [revealDefinitions, setRevealDefinitions] = useState([]);
   const [revealLoading, setRevealLoading] = useState(false);
   const [shake, setShake] = useState(false);
-  const [setComplete, setSetComplete] = useState(false);
+  const [setComplete, setSetComplete] = useState(initialState.setComplete);
 
   const currentSet = sets[setIndex];
   const revealPair = revealPairId ? findPairById(round, revealPairId) : null;
   const totalPairs = round.pairs.length;
   const doneCount = completedIds.size;
+
+  useEffect(() => {
+    if (!currentSet) return;
+    persistSetState(currentSet.id, round, completedIds, setComplete);
+    patchReadingVocabSetIndex(setIndex);
+  }, [completedIds, currentSet, round, setComplete, setIndex]);
 
   const notifyAnswerResult = useCallback(
     (isCorrect) => {
@@ -73,25 +111,28 @@ export default function ReadingVocabMatch({ words }) {
     [settings.answerSoundCorrect, settings.answerSoundWrong, settings.answerSounds]
   );
 
-  const resetRoundState = useCallback((nextRound) => {
-    setRound(nextRound);
+  const applySetState = useCallback((index, set, savedSet) => {
+    setSetIndex(index);
+    setRound(restoreSetRound(set, savedSet));
     setSelectedLeft(null);
     setSelectedRight(null);
-    setCompletedIds(new Set());
+    setCompletedIds(new Set(savedSet?.completedIds ?? []));
     setRevealPairId(null);
     setRevealDefinitions([]);
     setRevealLoading(false);
     setShake(false);
-    setSetComplete(false);
+    setSetComplete(savedSet?.setComplete === true);
+    patchReadingVocabSetIndex(index);
   }, []);
 
   const loadSet = useCallback(
     (index) => {
       const safeIndex = Math.max(0, Math.min(index, sets.length - 1));
-      setSetIndex(safeIndex);
-      resetRoundState(buildSetRound(sets[safeIndex]));
+      const set = sets[safeIndex];
+      const savedSet = getSavedSetProgress(set.id);
+      applySetState(safeIndex, set, savedSet);
     },
-    [resetRoundState, sets]
+    [applySetState, sets]
   );
 
   const getDefinitionsForWord = useCallback(

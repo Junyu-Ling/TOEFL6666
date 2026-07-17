@@ -807,14 +807,6 @@ export default function App() {
     );
   }, [recognizedPastWrong.length, pastWrongCountByListId]);
 
-  if (wordsLoading) {
-    return (
-      <div className="app app--loading">
-        <VocabLoadingScreen />
-      </div>
-    );
-  }
-
   if (wordsError) {
     return (
       <div className="app app--loading">
@@ -831,7 +823,12 @@ export default function App() {
 
   return (
     <div className="app">
-      <div className="app-shell" inert={settingsOpen ? "" : undefined}>
+      {wordsLoading ? (
+        <div className="app-loading-overlay">
+          <VocabLoadingScreen />
+        </div>
+      ) : null}
+      <div className="app-shell" inert={settingsOpen || wordsLoading ? "" : undefined}>
         <Navbar
           activeTab={activeTab}
           onTabChange={handleTabChange}

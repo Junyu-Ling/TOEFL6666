@@ -2,6 +2,22 @@
   "title": "新托福阅读词汇题",
   "sets": [
     {
+      "id": 0,
+      "pairs": [
+        { "word": "escalating", "synonym": "increasing" },
+        { "word": "profound", "synonym": "fundamental" },
+        { "word": "disparity", "synonym": "difference" },
+        { "word": "overt", "synonym": "direct" },
+        { "word": "scales", "synonym": "plates" },
+        { "word": "static", "synonym": "unchanging" },
+        { "word": "rigorous", "synonym": "thorough" },
+        { "word": "interplay", "synonym": "interaction" },
+        { "word": "pressures", "synonym": "influences" },
+        { "word": "viable", "synonym": "practical" },
+        { "word": "holistic", "synonym": "comprehensive" }
+      ]
+    },
+    {
       "id": 1,
       "pairs": [
         { "word": "feats", "synonym": "achievements" },

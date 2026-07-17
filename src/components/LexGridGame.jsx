@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import LexGridRecallCard from "./LexGridRecallCard";
+import { clearLexGridRound, loadLexGridRound, saveLexGridRound } from "../services/lexGridProgress";
 import { validateEnglishWord } from "../services/wordValidate";
 import { shouldIgnoreAppGameKeys } from "../utils/appKeyboard";
 import {
@@ -75,14 +76,16 @@ export default function LexGridGame({ words, availableLists, isActive = true }) 
   const validationCacheRef = useRef(new Map());
   const validateAbortRef = useRef(null);
 
-  const [round, setRound] = useState(() => createLexGridRound(pool));
+  const [round, setRound] = useState(() => loadLexGridRound());
   const pendingRef = useRef(false);
 
   const startNewRound = useCallback(() => {
     validateAbortRef.current?.abort();
     validateAbortRef.current = null;
     pendingRef.current = false;
-    setRound(createLexGridRound(pool));
+    const nextRound = createLexGridRound(pool);
+    clearLexGridRound();
+    setRound(nextRound);
   }, [pool]);
 
   useEffect(() => {
@@ -90,6 +93,10 @@ export default function LexGridGame({ words, availableLists, isActive = true }) 
       setRound(createLexGridRound(pool));
     }
   }, [pool, round]);
+
+  useEffect(() => {
+    if (round) saveLexGridRound(round);
+  }, [round]);
 
   useEffect(() => {
     return () => {

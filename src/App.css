@@ -1220,6 +1220,17 @@ body {
 }
 
 .app--loading {
+  min-height: 100dvh;
+  background: var(--bg);
+}
+
+.app-loading-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: var(--bg);
 }
 

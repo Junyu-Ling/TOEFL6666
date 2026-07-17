@@ -55,6 +55,42 @@ export function buildSetRound(set) {
   };
 }
 
+export function buildSetRoundFromOrder(set, leftItemIds, rightItemIds) {
+  const pairs = set.pairs.map((pair, index) => ({
+    ...pair,
+    id: pairKey(set.id, index),
+    pairIndex: index,
+    setId: set.id,
+  }));
+  const pairById = new Map(pairs.map((pair) => [pair.id, pair]));
+
+  const leftItems = leftItemIds
+    .map((id) => pairById.get(id))
+    .filter(Boolean)
+    .map((pair) => ({ id: pair.id, text: pair.word, side: "left" }));
+
+  const rightItems = rightItemIds
+    .map((id) => pairById.get(id))
+    .filter(Boolean)
+    .map((pair) => ({ id: pair.id, text: pair.synonym, side: "right" }));
+
+  if (leftItems.length !== pairs.length || rightItems.length !== pairs.length) {
+    return buildSetRound(set);
+  }
+
+  return { setId: set.id, pairs, leftItems, rightItems };
+}
+
+export function restoreSetRound(set, savedSetProgress) {
+  if (
+    savedSetProgress?.leftItemIds?.length &&
+    savedSetProgress?.rightItemIds?.length
+  ) {
+    return buildSetRoundFromOrder(set, savedSetProgress.leftItemIds, savedSetProgress.rightItemIds);
+  }
+  return buildSetRound(set);
+}
+
 export function buildFullRound() {
   const pairs = getAllReadingVocabPairs();
   return {
