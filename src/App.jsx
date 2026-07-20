@@ -19,7 +19,7 @@ import { syncService, SYNC_APPLIED_EVENT, SYNC_STATUS_EVENT } from "./services/s
 import { useMicrophone } from "./hooks/useMicrophone";
 import { useSettings } from "./context/SettingsContext";
 import { ActiveTabProvider } from "./context/ActiveTabContext";
-import { fetchWordList, fetchWordListManifest, fetchWordListIndex, fetchAllWordBank } from "./services/wordlist";
+import { fetchWordList, fetchWordListManifest, fetchWordListIndex, fetchAllWordBank, resolveActiveListId } from "./services/wordlist";
 import {
   loadRecognized,
   loadUnrecognized,
@@ -139,10 +139,11 @@ export default function App() {
     if (progress.activeTab) setActiveTab(progress.activeTab);
     setReviewShuffle(progress.reviewShuffle ?? false);
     setStreakData(refreshStreak());
-    if (activeListId) {
-      setListIndex(getSavedIndex(progress.listProgress, activeListId));
+    if (progress.activeListId) {
+      setActiveListId(progress.activeListId);
+      setListIndex(getSavedIndex(progress.listProgress, progress.activeListId));
     }
-  }, [activeListId, appMode]);
+  }, [appMode]);
 
   useEffect(() => {
     const cleanupFocus = syncService.start();
@@ -188,10 +189,8 @@ export default function App() {
         const [bankWords, listPayload] = await Promise.all([
           fetchAllWordBank(manifest.lists ?? [], appMode),
           (async () => {
-            const listId =
-              savedRef.current.activeListId ??
-              manifest.defaultListId ??
-              manifest.lists?.[0]?.id;
+            const listId = resolveActiveListId(savedRef.current.activeListId, manifest);
+            if (!listId) throw new Error("词库目录为空");
             return fetchWordList(listId, appMode).then((data) => ({ listId, ...data }));
           })(),
         ]);
@@ -200,6 +199,10 @@ export default function App() {
         setAllBankWords(bankWords);
 
         const { listId, meta, words } = listPayload;
+
+        if (savedRef.current.activeListId !== listId) {
+          savedRef.current = { ...savedRef.current, activeListId: listId };
+        }
 
         const savedIndex = getSavedIndex(savedRef.current.listProgress, listId);
         applyList(listId, words, meta, savedIndex);
@@ -247,8 +250,8 @@ export default function App() {
       listProgress,
       bookPractices,
       bookPracticePaused,
-    });
-  }, [activeListId, activeTab, reviewShuffle, listProgress, bookPractices, bookPracticePaused, wordsLoading]);
+    }, appMode);
+  }, [activeListId, activeTab, reviewShuffle, listProgress, bookPractices, bookPracticePaused, wordsLoading, appMode]);
 
   const handleListChange = useCallback(
     async (listId) => {
@@ -268,7 +271,7 @@ export default function App() {
           listProgress: nextProgress,
           bookPractices,
           bookPracticePaused,
-        });
+        }, appMode);
       } catch (err) {
         setWordsError(err.message || "词库切换失败");
       }
@@ -301,6 +304,10 @@ export default function App() {
     );
 
     const { to } = modeTransition;
+    setWordsLoading(true);
+    setWordsDataReady(false);
+    setLoadingWordJudged(false);
+    setWordsError(null);
     setAppMode(to);
     setStorageAppMode(to);
 
@@ -314,6 +321,7 @@ export default function App() {
     setBookPractices(practices);
     setBookPracticePaused(loadBookPracticePaused(progress, practices));
     setActiveTab(progress.activeTab || "practice");
+    setActiveListId(progress.activeListId ?? null);
     setReviewShuffle(progress.reviewShuffle ?? false);
     setUnrecognizedReviewListIds([]);
     setRecognizedReviewListIds([]);
@@ -342,11 +350,11 @@ export default function App() {
           listProgress: next,
           bookPractices,
           bookPracticePaused,
-        });
+        }, appMode);
         return next;
       });
     },
-    [activeListId, bookPracticePaused, bookPractices, listIndex, reviewShuffle]
+    [activeListId, appMode, bookPracticePaused, bookPractices, listIndex, reviewShuffle]
   );
 
   const listWord = useMemo(() => {
@@ -560,10 +568,10 @@ export default function App() {
         listProgress,
         bookPractices,
         bookPracticePaused,
-      });
+      }, appMode);
       return next;
     });
-  }, [activeListId, activeTab, bookPracticePaused, bookPractices, listProgress]);
+  }, [activeListId, activeTab, appMode, bookPracticePaused, bookPractices, listProgress]);
 
   const startReview = useCallback(
     (listIds) => {

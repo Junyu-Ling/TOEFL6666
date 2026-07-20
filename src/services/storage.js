@@ -1,8 +1,9 @@
 import { appendBookDefinitions } from "../utils/definitions";
 import { compactWordBookEntry } from "../shared/wordBook";
 import { normalizeAppMode } from "../utils/appMode";
+import { loadSettings } from "./settings.js";
 
-let currentAppMode = "toefl";
+let currentAppMode = normalizeAppMode(loadSettings().appMode);
 
 export function setStorageAppMode(appMode) {
   currentAppMode = normalizeAppMode(appMode);

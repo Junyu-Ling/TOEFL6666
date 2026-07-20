@@ -50,3 +50,12 @@ export async function fetchAllWordBank(lists, appMode = "toefl") {
   }
   return result;
 }
+
+/** 确保恢复的 listId 属于当前模式词库，避免 TOEFL/SAT 进度串用。 */
+export function resolveActiveListId(savedListId, manifest) {
+  const lists = manifest?.lists ?? [];
+  if (!lists.length) return null;
+  const ids = new Set(lists.map((list) => list.id));
+  if (savedListId && ids.has(savedListId)) return savedListId;
+  return manifest.defaultListId ?? lists[0]?.id ?? null;
+}
