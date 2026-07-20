@@ -1,14 +1,13 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useSettings } from "../context/SettingsContext";
 import { APP_MODE_LABELS } from "../utils/appMode";
 import loadingWordsData from "../data/loadingWords.json";
 
-const MESSAGES = [
+const LOADING_MESSAGES = [
   "正在唤醒词库…",
   "加载高频词汇…",
   "整理闪卡练习…",
   "校准 AI 助教…",
-  "Ready to learn!",
 ];
 
 const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -26,45 +25,46 @@ function pickRandomWord(excludeWord) {
   return next;
 }
 
-export default function VocabLoadingScreen() {
+export default function VocabLoadingScreen({ dataReady = false, onWordJudged }) {
   const { settings } = useSettings();
   const appMode = settings.appMode ?? "toefl";
-  const [current, setCurrent] = useState(() => pickRandomWord(null));
+  const [current] = useState(() => pickRandomWord(null));
   const [flipped, setFlipped] = useState(false);
   const [judged, setJudged] = useState(null);
   const [messageIndex, setMessageIndex] = useState(0);
-  const advanceTimerRef = useRef(null);
-
-  const goToNextWord = useCallback(() => {
-    setFlipped(false);
-    setJudged(null);
-    setCurrent((prev) => pickRandomWord(prev?.word));
-  }, []);
-
-  useEffect(() => {
-    return () => window.clearTimeout(advanceTimerRef.current);
-  }, []);
 
   const handleFlip = useCallback(() => {
+    if (judged) return;
     setFlipped((prev) => !prev);
-  }, []);
+  }, [judged]);
 
   const handleJudge = useCallback(
     (know) => {
       if (judged) return;
       setJudged(know ? "know" : "unknown");
-      window.clearTimeout(advanceTimerRef.current);
-      advanceTimerRef.current = window.setTimeout(goToNextWord, 900);
+      onWordJudged?.();
     },
-    [goToNextWord, judged]
+    [judged, onWordJudged]
   );
 
   useEffect(() => {
+    if (!current) onWordJudged?.();
+  }, [current, onWordJudged]);
+
+  useEffect(() => {
+    if (judged || dataReady) return;
     const msgTimer = setInterval(() => {
-      setMessageIndex((i) => (i + 1) % MESSAGES.length);
+      setMessageIndex((i) => (i + 1) % LOADING_MESSAGES.length);
     }, 2200);
     return () => clearInterval(msgTimer);
-  }, []);
+  }, [dataReady, judged]);
+
+  const statusMessage = useMemo(() => {
+    if (judged && !dataReady) return "词库加载中，请稍候…";
+    if (!judged && dataReady) return "词库已就绪，请选择认识或不认识以继续";
+    if (judged && dataReady) return "即将进入…";
+    return LOADING_MESSAGES[messageIndex];
+  }, [dataReady, judged, messageIndex]);
 
   const particles = useMemo(() => {
     return Array.from({ length: 22 }, (_, i) => ({
@@ -78,9 +78,14 @@ export default function VocabLoadingScreen() {
   }, []);
 
   const cardStateClass = judged === "know" ? "flashcard--correct" : judged === "unknown" ? "flashcard--wrong" : "";
+  const progressClass = dataReady
+    ? judged
+      ? "vocab-loader__progress-bar vocab-loader__progress-bar--done"
+      : "vocab-loader__progress-bar vocab-loader__progress-bar--ready"
+    : "vocab-loader__progress-bar";
 
   return (
-    <div className="vocab-loader" aria-live="polite" aria-busy="true">
+    <div className="vocab-loader" aria-live="polite" aria-busy={!dataReady || !judged}>
       <div className="vocab-loader__bg" aria-hidden />
       <div className="vocab-loader__ring" aria-hidden />
       <div className="vocab-loader__grain" aria-hidden />
@@ -107,12 +112,12 @@ export default function VocabLoadingScreen() {
           <span className="vocab-loader__brand-text">{APP_MODE_LABELS[appMode]}</span>
         </p>
 
-        {current && (
+        {current ? (
           <div className="vocab-loader__scene-wrap">
             <div className="flashcard-scene vocab-loader__scene">
               <div
                 role="button"
-                tabIndex={0}
+                tabIndex={judged ? -1 : 0}
                 className={`flashcard vocab-loader__card ${flipped ? "flashcard--flipped" : ""} ${cardStateClass}`}
                 onClick={judged ? undefined : handleFlip}
                 onKeyDown={(e) => {
@@ -130,7 +135,7 @@ export default function VocabLoadingScreen() {
                       <h2 className="flashcard__word">{current.word}</h2>
                     </div>
                   </div>
-                  <p className="flashcard__prompt">点击卡片查看释义，顺手认一认这个词</p>
+                  <p className="flashcard__prompt">点击卡片查看释义，认一认这个词</p>
                 </div>
 
                 <div className="flashcard__face flashcard__back">
@@ -167,12 +172,16 @@ export default function VocabLoadingScreen() {
               </div>
             </div>
           </div>
+        ) : (
+          <p className="vocab-loader__hint">加载词库中，请稍候…</p>
         )}
 
-        <p className="vocab-loader__message">{MESSAGES[messageIndex]}</p>
+        <p className={`vocab-loader__message ${dataReady && !judged ? "vocab-loader__message--emphasis" : ""}`}>
+          {statusMessage}
+        </p>
 
         <div className="vocab-loader__progress">
-          <div className="vocab-loader__progress-bar" />
+          <div className={progressClass} />
         </div>
       </div>
     </div>

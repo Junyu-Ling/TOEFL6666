@@ -86,6 +86,8 @@ export default function App() {
   const [activeListId, setActiveListId] = useState(savedRef.current.activeListId);
   const [listProgress, setListProgress] = useState(savedRef.current.listProgress);
   const [wordsLoading, setWordsLoading] = useState(true);
+  const [wordsDataReady, setWordsDataReady] = useState(false);
+  const [loadingWordJudged, setLoadingWordJudged] = useState(false);
   const [wordsError, setWordsError] = useState(null);
   const [listIndex, setListIndex] = useState(0);
   const [bookPractices, setBookPractices] = useState(() => loadBookPractices(savedRef.current));
@@ -170,6 +172,8 @@ export default function App() {
 
     async function loadCloudWords() {
       setWordsLoading(true);
+      setWordsDataReady(false);
+      setLoadingWordJudged(false);
       setWordsError(null);
       try {
         const [manifest, index] = await Promise.all([
@@ -202,7 +206,7 @@ export default function App() {
       } catch (err) {
         if (!cancelled) setWordsError(err.message || "词库加载失败");
       } finally {
-        if (!cancelled) setWordsLoading(false);
+        if (!cancelled) setWordsDataReady(true);
       }
     }
 
@@ -211,6 +215,20 @@ export default function App() {
       cancelled = true;
     };
   }, [applyList, appMode]);
+
+  useEffect(() => {
+    if (wordsError) {
+      setWordsLoading(false);
+      return;
+    }
+    if (wordsDataReady && loadingWordJudged) {
+      setWordsLoading(false);
+    }
+  }, [wordsDataReady, loadingWordJudged, wordsError]);
+
+  const handleLoadingWordJudged = useCallback(() => {
+    setLoadingWordJudged(true);
+  }, []);
 
   useEffect(() => {
     if (wordsLoading || !activeListId) return;
@@ -1264,7 +1282,7 @@ export default function App() {
       ) : null}
       {wordsLoading ? (
         <div className="app-loading-overlay">
-          <VocabLoadingScreen />
+          <VocabLoadingScreen dataReady={wordsDataReady} onWordJudged={handleLoadingWordJudged} />
         </div>
       ) : null}
       <div className="app-shell" inert={settingsOpen || wordsLoading || Boolean(modeTransition)}>

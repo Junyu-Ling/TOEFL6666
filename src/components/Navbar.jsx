@@ -25,13 +25,8 @@ export default function Navbar({ activeTab, onTabChange, counts, streak, onStrea
         aria-label={`当前 ${APP_MODE_LABELS[appMode]}，点击切换到 ${APP_MODE_LABELS[alternateMode]}`}
         title={`切换到 ${APP_MODE_LABELS[alternateMode]}`}
       >
-        <span className="navbar__brand-icon" aria-hidden>
-          {appMode === "sat" ? (
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
-              <path d="M12 3a7 7 0 100 14 7 7 0 000-14zm0 16a9 9 0 010-18 9 9 0 010 18z" opacity="0.35" />
-              <path d="M12 2.5a1 1 0 011 1v1.2a1 1 0 11-2 0V3.5a1 1 0 011-1zm0 15.3a1 1 0 011 1v1.2a1 1 0 11-2 0v-1.2a1 1 0 011-1zM4.8 12a1 1 0 011-1h1.2a1 1 0 110 2H5.8a1 1 0 01-1-1zm15.2 0a1 1 0 011-1h1.2a1 1 0 110 2h-1.2a1 1 0 01-1-1zM6.4 6.4a1 1 0 011.4 0l.85.85a1 1 0 11-1.42 1.42l-.85-.85a1 1 0 010-1.42zm10.9 10.9a1 1 0 011.4 0l.85.85a1 1 0 11-1.42 1.42l-.85-.85a1 1 0 010-1.42zM17.6 6.4a1 1 0 010 1.42l-.85.85a1 1 0 11-1.42-1.42l.85-.85a1 1 0 011.42 0zM7.25 17.25a1 1 0 010 1.42l-.85.85a1 1 0 11-1.42-1.42l.85-.85a1 1 0 011.42 0z" />
-            </svg>
-          ) : (
+        <span className="navbar__brand-icon navbar__brand-icon--emoji" aria-hidden>
+          {appMode === "sat" ? "🌙" : (
             <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
               <circle cx="12" cy="12" r="4.5" />
               <path d="M12 1.5v2.2M12 20.3v2.2M4.2 4.2l1.55 1.55M18.25 18.25l1.55 1.55M1.5 12h2.2M20.3 12h2.2M4.2 19.8l1.55-1.55M18.25 5.75l1.55-1.55" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" fill="none" />

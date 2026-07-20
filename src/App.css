@@ -234,6 +234,11 @@ body {
   opacity: 0.9;
 }
 
+.navbar__brand-icon--emoji {
+  font-size: 1.05rem;
+  line-height: 1;
+}
+
 .navbar__brand-hint {
   font-size: 0.75rem;
   font-weight: 700;
@@ -1572,6 +1577,42 @@ body {
     var(--accent)
   );
   animation: vocab-progress-slide 1.6s ease-in-out infinite;
+}
+
+.vocab-loader__progress-bar--ready {
+  width: 100%;
+  animation: none;
+  background: linear-gradient(
+    90deg,
+    var(--accent),
+    color-mix(in srgb, var(--accent) 70%, #f97316),
+    var(--accent)
+  );
+  opacity: 0.55;
+}
+
+.vocab-loader__progress-bar--done {
+  width: 100%;
+  animation: none;
+  background: var(--accent);
+  transition: width 0.35s ease, background 0.35s ease;
+}
+
+.vocab-loader__message--emphasis {
+  color: var(--accent);
+  font-weight: 700;
+  animation: none;
+  opacity: 1;
+}
+
+.vocab-loader__hint {
+  margin: 0;
+  min-height: 8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  font-weight: 600;
 }
 
 @keyframes vocab-progress-slide {
