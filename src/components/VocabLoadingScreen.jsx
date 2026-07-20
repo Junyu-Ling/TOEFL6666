@@ -85,9 +85,15 @@ export default function VocabLoadingScreen({ dataReady = false, onWordJudged }) 
     : "vocab-loader__progress-bar";
 
   return (
-    <div className="vocab-loader" aria-live="polite" aria-busy={!dataReady || !judged}>
+    <div className={`vocab-loader vocab-loader--${appMode}`} aria-live="polite" aria-busy={!dataReady || !judged}>
       <div className="vocab-loader__bg" aria-hidden />
       <div className="vocab-loader__ring" aria-hidden />
+      {appMode === "sat" ? (
+        <>
+          <div className="vocab-loader__aurora" aria-hidden />
+          <div className="vocab-loader__sheen" aria-hidden />
+        </>
+      ) : null}
       <div className="vocab-loader__grain" aria-hidden />
 
       <div className="vocab-loader__letters" aria-hidden>

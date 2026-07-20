@@ -8,7 +8,12 @@ import { normalizeCorrectSoundId, normalizeWrongSoundId } from "../utils/answerS
 const SettingsContext = createContext(null);
 
 export function SettingsProvider({ children }) {
-  const [settings, setSettings] = useState(loadSettings);
+  const [settings, setSettings] = useState(() => {
+    const initial = loadSettings();
+    document.documentElement.dataset.theme = initial.theme;
+    document.documentElement.dataset.exam = initial.appMode ?? "toefl";
+    return initial;
+  });
   const [systemVoices, setSystemVoices] = useState([]);
   const [settingsOpen, setSettingsOpen] = useState(false);
 
