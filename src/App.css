@@ -47,6 +47,8 @@
   --fc-voice-btn: 52px;
   --fc-footer-size: 0.9375rem;
   --fc-btn-size: 1.0625rem;
+  --loader-shimmer: #f97316;
+  --loader-shimmer-alt: #ffd166;
 }
 
 [data-theme="dark"] {
@@ -97,35 +99,35 @@
 [data-exam="toefl"][data-theme="light"] {
   --brand-warm: #f97316;
   --brand-glow: #ffd166;
+  --loader-shimmer: #f97316;
+  --loader-shimmer-alt: #ffd166;
 }
 
 [data-exam="sat"][data-theme="light"] {
   --brand-warm: #a78bfa;
   --brand-glow: #c4b5fd;
+  --loader-shimmer: #8b5cf6;
+  --loader-shimmer-alt: #ddd6fe;
 }
 
-[data-exam="sat"] .vocab-loader__bg {
-  background:
-    radial-gradient(circle at 20% 20%, color-mix(in srgb, var(--accent) 24%, transparent), transparent 45%),
-    radial-gradient(circle at 80% 75%, color-mix(in srgb, #8b5cf6 18%, transparent), transparent 40%),
-    radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 60%),
-    conic-gradient(
-      from 0deg at 50% 50%,
-      color-mix(in srgb, var(--accent) 12%, transparent),
-      transparent 25%,
-      color-mix(in srgb, #8b5cf6 12%, transparent) 50%,
-      transparent 75%,
-      color-mix(in srgb, var(--accent) 12%, transparent) 100%
-    );
+[data-exam="toefl"][data-theme="dark"] {
+  --loader-shimmer: #fdba74;
+  --loader-shimmer-alt: #fde68a;
+}
+
+[data-exam="sat"][data-theme="dark"] {
+  --loader-shimmer: #a78bfa;
+  --loader-shimmer-alt: #e9d5ff;
 }
 
 [data-exam="sat"] .vocab-loader__brand-text {
   background: linear-gradient(
     100deg,
     var(--accent) 0%,
-    #c4b5fd 35%,
+    var(--loader-shimmer-alt) 35%,
+    #c4b5fd 55%,
     var(--accent) 70%,
-    #ddd6fe 100%
+    var(--loader-shimmer) 100%
   );
   background-size: 220% auto;
 }
@@ -1358,17 +1360,63 @@ body {
   inset: 0;
   background:
     radial-gradient(circle at 20% 20%, color-mix(in srgb, var(--accent) 20%, transparent), transparent 45%),
-    radial-gradient(circle at 80% 75%, color-mix(in srgb, #f97316 16%, transparent), transparent 40%),
+    radial-gradient(circle at 80% 75%, color-mix(in srgb, var(--loader-shimmer, #f97316) 16%, transparent), transparent 40%),
     radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 60%),
     conic-gradient(
       from 0deg at 50% 50%,
       color-mix(in srgb, var(--accent) 10%, transparent),
       transparent 25%,
-      color-mix(in srgb, #f97316 10%, transparent) 50%,
+      color-mix(in srgb, var(--loader-shimmer, #f97316) 10%, transparent) 50%,
       transparent 75%,
       color-mix(in srgb, var(--accent) 10%, transparent) 100%
     );
   animation: vocab-loader-glow 6s ease-in-out infinite alternate, vocab-loader-spin 40s linear infinite;
+}
+
+[data-exam="sat"] .vocab-loader__bg {
+  background:
+    radial-gradient(circle at 18% 22%, color-mix(in srgb, var(--accent) 26%, transparent), transparent 44%),
+    radial-gradient(circle at 82% 72%, color-mix(in srgb, var(--loader-shimmer) 22%, transparent), transparent 42%),
+    radial-gradient(circle at 52% 48%, color-mix(in srgb, #6366f1 14%, transparent), transparent 58%),
+    radial-gradient(circle at 68% 28%, color-mix(in srgb, var(--loader-shimmer-alt) 16%, transparent), transparent 38%),
+    conic-gradient(
+      from 0deg at 50% 50%,
+      color-mix(in srgb, var(--accent) 14%, transparent),
+      transparent 20%,
+      color-mix(in srgb, var(--loader-shimmer) 12%, transparent) 42%,
+      transparent 58%,
+      color-mix(in srgb, #6366f1 10%, transparent) 72%,
+      transparent 86%,
+      color-mix(in srgb, var(--loader-shimmer-alt) 12%, transparent) 100%
+    );
+  animation:
+    vocab-loader-glow 6s ease-in-out infinite alternate,
+    vocab-loader-spin-sat 40s linear infinite;
+}
+
+[data-exam="sat"] .vocab-loader::after {
+  content: "";
+  position: absolute;
+  inset: -15%;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 70% 45% at 18% 38%, color-mix(in srgb, var(--loader-shimmer-alt) 32%, transparent), transparent 58%),
+    radial-gradient(ellipse 55% 40% at 84% 62%, color-mix(in srgb, var(--loader-shimmer) 26%, transparent), transparent 52%),
+    radial-gradient(ellipse 48% 35% at 48% 82%, color-mix(in srgb, #6366f1 18%, transparent), transparent 48%);
+  animation: vocab-sat-aurora 9s ease-in-out infinite alternate;
+  mix-blend-mode: screen;
+  opacity: 0.85;
+}
+
+@keyframes vocab-loader-spin-sat {
+  from { filter: hue-rotate(-12deg) saturate(1.05); }
+  to { filter: hue-rotate(16deg) saturate(1.12); }
+}
+
+@keyframes vocab-sat-aurora {
+  from { transform: translate(-2%, -1%) scale(1); opacity: 0.72; }
+  to { transform: translate(2.5%, 2%) scale(1.06); opacity: 1; }
 }
 
 @keyframes vocab-loader-glow {
@@ -1405,12 +1453,29 @@ body {
     color-mix(in srgb, var(--accent) 45%, transparent) 40deg,
     transparent 90deg,
     transparent 220deg,
-    color-mix(in srgb, #f97316 40%, transparent) 260deg,
+    color-mix(in srgb, var(--loader-shimmer, #f97316) 40%, transparent) 260deg,
     transparent 320deg
   );
   filter: blur(48px);
   animation: vocab-ring-spin 18s linear infinite;
   opacity: 0.55;
+}
+
+[data-exam="sat"] .vocab-loader__ring {
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    color-mix(in srgb, var(--accent) 50%, transparent) 32deg,
+    color-mix(in srgb, var(--loader-shimmer-alt) 38%, transparent) 68deg,
+    transparent 110deg,
+    transparent 200deg,
+    color-mix(in srgb, var(--loader-shimmer) 44%, transparent) 248deg,
+    color-mix(in srgb, #6366f1 32%, transparent) 292deg,
+    transparent 340deg
+  );
+  filter: blur(52px);
+  opacity: 0.62;
+  animation: vocab-ring-spin 14s linear infinite reverse;
 }
 
 @keyframes vocab-ring-spin {
@@ -1431,6 +1496,10 @@ body {
   color: color-mix(in srgb, var(--accent) 35%, transparent);
   animation: vocab-letter-rise linear infinite;
   opacity: 0;
+}
+
+[data-exam="sat"] .vocab-loader__letter {
+  color: color-mix(in srgb, var(--loader-shimmer-alt) 42%, var(--accent) 58%);
 }
 
 @keyframes vocab-letter-rise {
@@ -1473,9 +1542,9 @@ body {
   background: linear-gradient(
     100deg,
     var(--accent) 0%,
-    #f97316 35%,
+    var(--loader-shimmer, #f97316) 35%,
     var(--accent) 70%,
-    #f97316 100%
+    var(--loader-shimmer, #f97316) 100%
   );
   background-size: 220% auto;
   -webkit-background-clip: text;
@@ -1511,6 +1580,15 @@ body {
   filter: blur(28px);
   z-index: 0;
   animation: vocab-card-glow 3.5s ease-in-out infinite;
+}
+
+[data-exam="sat"] .vocab-loader__scene-wrap::before {
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--loader-shimmer) 24%, transparent),
+    color-mix(in srgb, var(--accent) 14%, transparent) 42%,
+    transparent 72%
+  );
 }
 
 @keyframes vocab-card-glow {
@@ -1573,7 +1651,7 @@ body {
   background: linear-gradient(
     90deg,
     var(--accent),
-    color-mix(in srgb, #f97316 80%, var(--accent)),
+    color-mix(in srgb, var(--loader-shimmer, #f97316) 80%, var(--accent)),
     var(--accent)
   );
   animation: vocab-progress-slide 1.6s ease-in-out infinite;
@@ -1585,7 +1663,7 @@ body {
   background: linear-gradient(
     90deg,
     var(--accent),
-    color-mix(in srgb, var(--accent) 70%, #f97316),
+    color-mix(in srgb, var(--accent) 70%, var(--loader-shimmer, #f97316)),
     var(--accent)
   );
   opacity: 0.55;
