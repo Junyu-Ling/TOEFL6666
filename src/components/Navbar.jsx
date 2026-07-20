@@ -1,5 +1,5 @@
 import { useSettings } from "../context/SettingsContext";
-import { APP_MODE_LABELS, getAlternateAppMode } from "../utils/appMode";
+import { APP_MODE_LABELS, getAlternateAppMode, isTabAvailableInMode } from "../utils/appMode";
 
 const TABS = [
   { id: "practice", label: "练习" },
@@ -33,7 +33,7 @@ export default function Navbar({ activeTab, onTabChange, counts, streak, onStrea
       </button>
 
       <div className="navbar__tabs">
-        {TABS.map((tab) => (
+        {TABS.filter((tab) => isTabAvailableInMode(tab.id, appMode)).map((tab) => (
           <button
             key={tab.id}
             type="button"

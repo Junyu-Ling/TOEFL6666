@@ -15,3 +15,16 @@ export const APP_MODE_TITLES = {
 export function getAlternateAppMode(mode) {
   return mode === "sat" ? "toefl" : "sat";
 }
+
+const TOEFL_ONLY_TABS = new Set(["reading-vocab"]);
+
+export function isTabAvailableInMode(tabId, appMode = "toefl") {
+  if (normalizeAppMode(appMode) === "sat" && TOEFL_ONLY_TABS.has(tabId)) return false;
+  return true;
+}
+
+export function normalizeActiveTabForMode(tabId, appMode = "toefl") {
+  const fallback = "practice";
+  if (!tabId || !isTabAvailableInMode(tabId, appMode)) return fallback;
+  return tabId;
+}

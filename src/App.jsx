@@ -40,7 +40,7 @@ import {
   sortByWrongCount,
   setStorageAppMode,
 } from "./services/storage";
-import { normalizeAppMode } from "./utils/appMode";
+import { normalizeAppMode, normalizeActiveTabForMode } from "./utils/appMode";
 import {
   UNCategorized_LIST_ID,
   inferSourceListId,
@@ -73,7 +73,14 @@ export default function App() {
     setStorageAppMode(appMode);
   }, [appMode]);
 
-  const [activeTab, setActiveTab] = useState(savedRef.current.activeTab);
+  const [activeTab, setActiveTab] = useState(() =>
+    normalizeActiveTabForMode(savedRef.current.activeTab, appMode)
+  );
+
+  useEffect(() => {
+    setActiveTab((tab) => normalizeActiveTabForMode(tab, appMode));
+  }, [appMode]);
+
   const [recognized, setRecognized] = useState(() => loadRecognized(appMode));
   const [unrecognized, setUnrecognized] = useState(() => loadUnrecognized(appMode));
   const [wordList, setWordList] = useState([]);
@@ -136,7 +143,7 @@ export default function App() {
     const practices = loadBookPractices(progress);
     setBookPractices(practices);
     setBookPracticePaused(loadBookPracticePaused(progress, practices));
-    if (progress.activeTab) setActiveTab(progress.activeTab);
+    if (progress.activeTab) setActiveTab(normalizeActiveTabForMode(progress.activeTab, appMode));
     setReviewShuffle(progress.reviewShuffle ?? false);
     setStreakData(refreshStreak());
     if (progress.activeListId) {
@@ -320,7 +327,7 @@ export default function App() {
     setListProgress(progress.listProgress || {});
     setBookPractices(practices);
     setBookPracticePaused(loadBookPracticePaused(progress, practices));
-    setActiveTab(progress.activeTab || "practice");
+    setActiveTab(normalizeActiveTabForMode(progress.activeTab || "practice", to));
     setActiveListId(progress.activeListId ?? null);
     setReviewShuffle(progress.reviewShuffle ?? false);
     setUnrecognizedReviewListIds([]);
@@ -1327,9 +1334,11 @@ export default function App() {
             {bankPanel}
           </TabPanel>
 
-          <TabPanel tabId="reading-vocab" activeTab={activeTab}>
-            {readingVocabPanel}
-          </TabPanel>
+          {appMode === "toefl" ? (
+            <TabPanel tabId="reading-vocab" activeTab={activeTab}>
+              {readingVocabPanel}
+            </TabPanel>
+          ) : null}
 
           <TabPanel tabId="lexgrid" activeTab={activeTab}>
             {lexGridPanel}
