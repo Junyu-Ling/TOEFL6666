@@ -1548,10 +1548,10 @@ body {
 .vocab-loader__brand {
   margin: 0;
   position: relative;
-  z-index: 1;
+  z-index: 3;
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
+  gap: 0.4rem;
   padding: 0.3rem 1rem;
   border-radius: 999px;
   background: color-mix(in srgb, var(--surface) 70%, transparent);
@@ -1560,7 +1560,16 @@ body {
   -webkit-backdrop-filter: blur(6px);
 }
 
-.vocab-loader__brand-moon {
+.vocab-loader--sat .vocab-loader__brand {
+  padding: 0.38rem 1.15rem 0.38rem 0.95rem;
+  background: color-mix(in srgb, #ffffff 88%, #f5f3ff);
+  border: 1px solid color-mix(in srgb, #7c3aed 20%, #ddd6fe);
+  box-shadow:
+    0 1px 2px rgba(91, 33, 182, 0.06),
+    0 0 28px rgba(167, 139, 250, 0.22);
+}
+
+.vocab-loader__brand-icon {
   font-size: 0.95rem;
   line-height: 1;
   flex-shrink: 0;
@@ -1570,7 +1579,6 @@ body {
   font-size: 1rem;
   font-weight: 800;
   letter-spacing: -0.01em;
-  display: inline-block;
   background: linear-gradient(
     100deg,
     var(--accent) 0%,
@@ -1579,24 +1587,56 @@ body {
     var(--loader-shimmer, #f97316) 100%
   );
   background-size: 220% auto;
-  background-repeat: repeat;
   -webkit-background-clip: text;
   background-clip: text;
-  -webkit-text-fill-color: transparent;
   color: transparent;
   animation: vocab-brand-shimmer 5s linear infinite;
 }
 
-/* SAT：与 TOEFL 相同胶囊 + shimmer 逻辑，仅替换为紫色系渐变 */
 .vocab-loader--sat .vocab-loader__brand-text {
-  background: linear-gradient(
+  background-image: linear-gradient(
     100deg,
     #5b21b6 0%,
-    #c4b5fd 35%,
-    #7c3aed 70%,
-    #ddd6fe 100%
+    #7c3aed 14%,
+    #9333ea 28%,
+    #a78bfa 42%,
+    #ddd6fe 56%,
+    #c4b5fd 68%,
+    #8b5cf6 82%,
+    #6d28d9 100%
   );
-  background-size: 220% auto;
+  background-size: 300% auto;
+  background-repeat: repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: vocab-brand-shimmer-sat 4.2s linear infinite;
+}
+
+[data-theme="dark"] .vocab-loader--sat .vocab-loader__brand {
+  background: color-mix(in srgb, var(--surface) 78%, #2e1065);
+  border-color: color-mix(in srgb, #a78bfa 28%, var(--border));
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.2),
+    0 0 32px rgba(124, 58, 237, 0.28);
+}
+
+[data-theme="dark"] .vocab-loader--sat .vocab-loader__brand-text {
+  background-image: linear-gradient(
+    100deg,
+    #c4b5fd 0%,
+    #a78bfa 16%,
+    #e9d5ff 32%,
+    #ddd6fe 48%,
+    #8b5cf6 64%,
+    #a78bfa 80%,
+    #c4b5fd 100%
+  );
+  background-size: 300% auto;
+  background-repeat: repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 @keyframes vocab-brand-shimmer {
