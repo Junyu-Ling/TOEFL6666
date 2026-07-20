@@ -120,18 +120,6 @@
   --loader-shimmer-alt: #e9d5ff;
 }
 
-[data-exam="sat"] .vocab-loader__brand-text {
-  background: linear-gradient(
-    100deg,
-    var(--accent) 0%,
-    var(--loader-shimmer-alt) 35%,
-    #c4b5fd 55%,
-    var(--accent) 70%,
-    var(--loader-shimmer) 100%
-  );
-  background-size: 220% auto;
-}
-
 *,
 *::before,
 *::after {
@@ -1554,11 +1542,29 @@ body {
 
 .vocab-loader__brand {
   margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
   padding: 0.3rem 1rem;
   border-radius: 999px;
   background: color-mix(in srgb, var(--surface) 70%, transparent);
   border: 1px solid color-mix(in srgb, var(--accent) 25%, var(--border));
   backdrop-filter: blur(6px);
+}
+
+.vocab-loader--sat .vocab-loader__brand {
+  padding: 0.38rem 1.15rem 0.38rem 0.95rem;
+  background: color-mix(in srgb, #ffffff 88%, #f5f3ff);
+  border: 1px solid color-mix(in srgb, #7c3aed 20%, #ddd6fe);
+  box-shadow:
+    0 1px 2px rgba(91, 33, 182, 0.06),
+    0 0 28px rgba(167, 139, 250, 0.22);
+}
+
+.vocab-loader__brand-icon {
+  font-size: 0.95rem;
+  line-height: 1;
+  flex-shrink: 0;
 }
 
 .vocab-loader__brand-text {
@@ -1577,6 +1583,44 @@ body {
   background-clip: text;
   color: transparent;
   animation: vocab-brand-shimmer 5s linear infinite;
+}
+
+.vocab-loader--sat .vocab-loader__brand-text {
+  background: linear-gradient(
+    100deg,
+    #5b21b6 0%,
+    #7c3aed 14%,
+    #9333ea 28%,
+    #a78bfa 42%,
+    #ddd6fe 56%,
+    #c4b5fd 68%,
+    #8b5cf6 82%,
+    #6d28d9 100%
+  );
+  background-size: 300% auto;
+  animation: vocab-brand-shimmer 4.2s linear infinite;
+}
+
+[data-theme="dark"] .vocab-loader--sat .vocab-loader__brand {
+  background: color-mix(in srgb, var(--surface) 78%, #2e1065);
+  border-color: color-mix(in srgb, #a78bfa 28%, var(--border));
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.2),
+    0 0 32px rgba(124, 58, 237, 0.28);
+}
+
+[data-theme="dark"] .vocab-loader--sat .vocab-loader__brand-text {
+  background: linear-gradient(
+    100deg,
+    #c4b5fd 0%,
+    #a78bfa 16%,
+    #e9d5ff 32%,
+    #ddd6fe 48%,
+    #8b5cf6 64%,
+    #a78bfa 80%,
+    #c4b5fd 100%
+  );
+  background-size: 300% auto;
 }
 
 @keyframes vocab-brand-shimmer {
