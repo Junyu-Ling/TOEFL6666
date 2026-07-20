@@ -1346,6 +1346,7 @@ body {
 .vocab-loader__bg {
   position: absolute;
   inset: 0;
+  z-index: 0;
   background:
     radial-gradient(circle at 20% 20%, color-mix(in srgb, var(--accent) 20%, transparent), transparent 45%),
     radial-gradient(circle at 80% 75%, color-mix(in srgb, var(--loader-shimmer, #f97316) 16%, transparent), transparent 40%),
@@ -1501,6 +1502,7 @@ body {
 .vocab-loader__letters {
   position: absolute;
   inset: 0;
+  z-index: 0;
   pointer-events: none;
 }
 
