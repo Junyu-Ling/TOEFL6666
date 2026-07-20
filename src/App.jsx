@@ -7,6 +7,7 @@ import SettingsPanel from "./components/SettingsPanel";
 import VocabAssistant from "./components/VocabAssistant";
 import StreakPanel from "./components/StreakPanel";
 import VocabLoadingScreen from "./components/VocabLoadingScreen";
+import ExamModeTransition from "./components/ExamModeTransition";
 import BookReviewScopeBar from "./components/BookReviewScopeBar";
 import VocabularyBank from "./components/VocabularyBank";
 import LexGridGame from "./components/LexGridGame";
@@ -37,7 +38,9 @@ import {
   appendToBookQueue,
   shuffleArray,
   sortByWrongCount,
+  setStorageAppMode,
 } from "./services/storage";
+import { normalizeAppMode } from "./utils/appMode";
 import {
   UNCategorized_LIST_ID,
   inferSourceListId,
@@ -60,14 +63,19 @@ function clampIndex(index, length) {
 }
 
 export default function App() {
-  const { settingsOpen } = useSettings();
-  const savedRef = useRef(loadProgress());
+  const { settingsOpen, settings, setAppMode } = useSettings();
+  const appMode = normalizeAppMode(settings.appMode);
+  const savedRef = useRef(loadProgress(appMode));
   const mic = useMicrophone();
   const [micPromptVisible, setMicPromptVisible] = useState(true);
 
+  useEffect(() => {
+    setStorageAppMode(appMode);
+  }, [appMode]);
+
   const [activeTab, setActiveTab] = useState(savedRef.current.activeTab);
-  const [recognized, setRecognized] = useState(loadRecognized);
-  const [unrecognized, setUnrecognized] = useState(loadUnrecognized);
+  const [recognized, setRecognized] = useState(() => loadRecognized(appMode));
+  const [unrecognized, setUnrecognized] = useState(() => loadUnrecognized(appMode));
   const [wordList, setWordList] = useState([]);
   const [allBankWords, setAllBankWords] = useState([]);
   const [listMeta, setListMeta] = useState(null);
@@ -89,6 +97,7 @@ export default function App() {
   const [streakOpen, setStreakOpen] = useState(false);
   const [unrecognizedReviewListIds, setUnrecognizedReviewListIds] = useState([]);
   const [recognizedReviewListIds, setRecognizedReviewListIds] = useState([]);
+  const [modeTransition, setModeTransition] = useState(null);
 
   useEffect(() => {
     function syncStreak() {
@@ -117,10 +126,10 @@ export default function App() {
   }, []);
 
   const reloadFromSync = useCallback(() => {
-    const progress = loadProgress();
+    const progress = loadProgress(appMode);
     savedRef.current = progress;
-    setRecognized(loadRecognized());
-    setUnrecognized(loadUnrecognized());
+    setRecognized(loadRecognized(appMode));
+    setUnrecognized(loadUnrecognized(appMode));
     setListProgress(progress.listProgress || {});
     const practices = loadBookPractices(progress);
     setBookPractices(practices);
@@ -131,7 +140,7 @@ export default function App() {
     if (activeListId) {
       setListIndex(getSavedIndex(progress.listProgress, activeListId));
     }
-  }, [activeListId]);
+  }, [activeListId, appMode]);
 
   useEffect(() => {
     const cleanupFocus = syncService.start();
@@ -164,8 +173,8 @@ export default function App() {
       setWordsError(null);
       try {
         const [manifest, index] = await Promise.all([
-          fetchWordListManifest(),
-          fetchWordListIndex(),
+          fetchWordListManifest(appMode),
+          fetchWordListIndex(appMode),
         ]);
         if (cancelled) return;
 
@@ -173,13 +182,13 @@ export default function App() {
         setWordListIndex(index);
 
         const [bankWords, listPayload] = await Promise.all([
-          fetchAllWordBank(manifest.lists ?? []),
+          fetchAllWordBank(manifest.lists ?? [], appMode),
           (async () => {
             const listId =
               savedRef.current.activeListId ??
               manifest.defaultListId ??
               manifest.lists?.[0]?.id;
-            return fetchWordList(listId).then((data) => ({ listId, ...data }));
+            return fetchWordList(listId, appMode).then((data) => ({ listId, ...data }));
           })(),
         ]);
         if (cancelled) return;
@@ -201,7 +210,7 @@ export default function App() {
     return () => {
       cancelled = true;
     };
-  }, [applyList]);
+  }, [applyList, appMode]);
 
   useEffect(() => {
     if (wordsLoading || !activeListId) return;
@@ -231,7 +240,7 @@ export default function App() {
       setListProgress(nextProgress);
 
       try {
-        const { meta, words } = await fetchWordList(listId);
+        const { meta, words } = await fetchWordList(listId, appMode);
         const savedIndex = getSavedIndex(nextProgress, listId);
         applyList(listId, words, meta, savedIndex);
         saveProgress({
@@ -246,8 +255,62 @@ export default function App() {
         setWordsError(err.message || "词库切换失败");
       }
     },
-    [activeListId, activeTab, applyList, bookPracticePaused, bookPractices, listIndex, listProgress, reviewShuffle]
+    [activeListId, activeTab, appMode, applyList, bookPracticePaused, bookPractices, listIndex, listProgress, reviewShuffle]
   );
+
+  const handleExamModeSwitch = useCallback(
+    (targetMode) => {
+      const nextMode = normalizeAppMode(targetMode);
+      if (nextMode === appMode || modeTransition) return;
+      setModeTransition({ from: appMode, to: nextMode });
+    },
+    [appMode, modeTransition]
+  );
+
+  const completeModeTransition = useCallback(() => {
+    if (!modeTransition) return;
+
+    saveProgress(
+      {
+        activeListId,
+        activeTab,
+        reviewShuffle,
+        listProgress,
+        bookPractices,
+        bookPracticePaused,
+      },
+      appMode
+    );
+
+    const { to } = modeTransition;
+    setAppMode(to);
+    setStorageAppMode(to);
+
+    const progress = loadProgress(to);
+    savedRef.current = progress;
+    const practices = loadBookPractices(progress);
+
+    setRecognized(loadRecognized(to));
+    setUnrecognized(loadUnrecognized(to));
+    setListProgress(progress.listProgress || {});
+    setBookPractices(practices);
+    setBookPracticePaused(loadBookPracticePaused(progress, practices));
+    setActiveTab(progress.activeTab || "practice");
+    setReviewShuffle(progress.reviewShuffle ?? false);
+    setUnrecognizedReviewListIds([]);
+    setRecognizedReviewListIds([]);
+    setModeTransition(null);
+  }, [
+    activeListId,
+    activeTab,
+    appMode,
+    bookPracticePaused,
+    bookPractices,
+    listProgress,
+    modeTransition,
+    reviewShuffle,
+    setAppMode,
+  ]);
 
   const handleTabChange = useCallback(
     (tab) => {
@@ -1190,12 +1253,21 @@ export default function App() {
 
   return (
     <div className="app">
+      {modeTransition ? (
+        <div className="app-loading-overlay app-loading-overlay--transition">
+          <ExamModeTransition
+            fromMode={modeTransition.from}
+            toMode={modeTransition.to}
+            onComplete={completeModeTransition}
+          />
+        </div>
+      ) : null}
       {wordsLoading ? (
         <div className="app-loading-overlay">
           <VocabLoadingScreen />
         </div>
       ) : null}
-      <div className="app-shell" inert={settingsOpen || wordsLoading}>
+      <div className="app-shell" inert={settingsOpen || wordsLoading || Boolean(modeTransition)}>
         <Navbar
           activeTab={activeTab}
           onTabChange={handleTabChange}
@@ -1205,6 +1277,7 @@ export default function App() {
             setStreakData(recordVisit());
             setStreakOpen(true);
           }}
+          onExamModeSwitch={handleExamModeSwitch}
         />
 
         {micPromptVisible && (

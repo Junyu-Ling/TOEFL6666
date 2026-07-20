@@ -1,20 +1,27 @@
-const API_BASE = import.meta.env.VITE_WORDLIST_API || "/api/wordlists";
+import { normalizeAppMode } from "../utils/appMode.js";
 
-export async function fetchWordListManifest() {
-  const res = await fetch(`${API_BASE}/manifest.json`);
+const TOEFL_API_BASE = import.meta.env.VITE_WORDLIST_API || "/api/wordlists";
+const SAT_API_BASE = import.meta.env.VITE_SAT_WORDLIST_API || "/api/wordlists-sat";
+
+function getApiBase(appMode = "toefl") {
+  return normalizeAppMode(appMode) === "sat" ? SAT_API_BASE : TOEFL_API_BASE;
+}
+
+export async function fetchWordListManifest(appMode = "toefl") {
+  const res = await fetch(`${getApiBase(appMode)}/manifest.json`);
   if (!res.ok) throw new Error("无法加载词库目录");
   return res.json();
 }
 
-export async function fetchWordListIndex() {
-  const res = await fetch(`${API_BASE}/word-index.json`, { cache: "no-cache" });
+export async function fetchWordListIndex(appMode = "toefl") {
+  const res = await fetch(`${getApiBase(appMode)}/word-index.json`, { cache: "no-cache" });
   if (!res.ok) throw new Error("无法加载词库索引");
   const data = await res.json();
   return data.index ?? data;
 }
 
-export async function fetchWordList(listId) {
-  const res = await fetch(`${API_BASE}/${listId}.json`, { cache: "no-cache" });
+export async function fetchWordList(listId, appMode = "toefl") {
+  const res = await fetch(`${getApiBase(appMode)}/${listId}.json`, { cache: "no-cache" });
   if (!res.ok) throw new Error(`无法加载词库：${listId}`);
   const data = await res.json();
   return {
@@ -23,10 +30,10 @@ export async function fetchWordList(listId) {
   };
 }
 
-export async function fetchAllWordBank(lists) {
+export async function fetchAllWordBank(lists, appMode = "toefl") {
   const batches = await Promise.all(
     lists.map(async (list) => {
-      const { words } = await fetchWordList(list.id);
+      const { words } = await fetchWordList(list.id, appMode);
       return words.map((word, index) => ({ ...word, sourceListId: list.id, listIndex: index }));
     })
   );

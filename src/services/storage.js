@@ -1,9 +1,32 @@
 import { appendBookDefinitions } from "../utils/definitions";
 import { compactWordBookEntry } from "../shared/wordBook";
+import { normalizeAppMode } from "../utils/appMode";
 
-const RECOGNIZED_KEY = "toefl666_recognized";
-const UNRECOGNIZED_KEY = "toefl666_unrecognized";
-const PROGRESS_KEY = "toefl666_progress";
+let currentAppMode = "toefl";
+
+export function setStorageAppMode(appMode) {
+  currentAppMode = normalizeAppMode(appMode);
+}
+
+export function getStorageAppMode() {
+  return currentAppMode;
+}
+
+function storageSuffix(appMode = currentAppMode) {
+  return normalizeAppMode(appMode) === "sat" ? "_sat" : "";
+}
+
+function recognizedKey(appMode = currentAppMode) {
+  return `toefl666${storageSuffix(appMode)}_recognized`;
+}
+
+function unrecognizedKey(appMode = currentAppMode) {
+  return `toefl666${storageSuffix(appMode)}_unrecognized`;
+}
+
+function progressKey(appMode = currentAppMode) {
+  return `toefl666${storageSuffix(appMode)}_progress`;
+}
 
 const DEFAULT_PROGRESS = {
   activeListId: null,
@@ -45,7 +68,7 @@ function writeList(key, list) {
   try {
     localStorage.setItem(key, payload);
   } catch (err) {
-    if (isQuotaExceededError(err) && key === RECOGNIZED_KEY) {
+    if (isQuotaExceededError(err) && key.endsWith("_recognized")) {
       const compact = list.map(compactWordBookEntry);
       localStorage.setItem(key, JSON.stringify(compact));
       return;
@@ -54,40 +77,40 @@ function writeList(key, list) {
   }
 }
 
-function migrateRecognizedList(list) {
+function migrateRecognizedList(list, appMode = currentAppMode) {
   if (!list.some((item) => item.ai_feedback)) return list;
   const compact = list.map(compactWordBookEntry);
   try {
-    writeList(RECOGNIZED_KEY, compact);
+    writeList(recognizedKey(appMode), compact);
   } catch {
     return list;
   }
   return compact;
 }
 
-export function loadRecognized() {
-  return migrateRecognizedList(readList(RECOGNIZED_KEY));
+export function loadRecognized(appMode = currentAppMode) {
+  return migrateRecognizedList(readList(recognizedKey(appMode)), appMode);
 }
 
-export function loadUnrecognized() {
-  const list = readList(UNRECOGNIZED_KEY);
+export function loadUnrecognized(appMode = currentAppMode) {
+  const list = readList(unrecognizedKey(appMode));
   return list.map((item) => ({
     ...item,
     wrongCount: item.wrongCount ?? 1,
   }));
 }
 
-export function saveRecognized(list) {
-  writeList(RECOGNIZED_KEY, list.map(compactWordBookEntry));
+export function saveRecognized(list, appMode = currentAppMode) {
+  writeList(recognizedKey(appMode), list.map(compactWordBookEntry));
 }
 
-export function saveUnrecognized(list) {
-  writeList(UNRECOGNIZED_KEY, list);
+export function saveUnrecognized(list, appMode = currentAppMode) {
+  writeList(unrecognizedKey(appMode), list);
 }
 
-export function loadProgress() {
+export function loadProgress(appMode = currentAppMode) {
   try {
-    const raw = localStorage.getItem(PROGRESS_KEY);
+    const raw = localStorage.getItem(progressKey(appMode));
     if (!raw) return { ...DEFAULT_PROGRESS, listProgress: {} };
     return { ...DEFAULT_PROGRESS, ...JSON.parse(raw) };
   } catch {
@@ -95,8 +118,8 @@ export function loadProgress() {
   }
 }
 
-export function saveProgress(progress) {
-  localStorage.setItem(PROGRESS_KEY, JSON.stringify(progress));
+export function saveProgress(progress, appMode = currentAppMode) {
+  localStorage.setItem(progressKey(appMode), JSON.stringify(progress));
 }
 
 export const EMPTY_BOOK_PRACTICES = {

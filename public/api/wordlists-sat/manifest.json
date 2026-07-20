@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "updatedAt": "2026-07-20",
+  "defaultListId": "level1-list1",
+  "lists": [
+    {
+      "id": "level1-list1",
+      "title": "Level 1 · List 1",
+      "level": 1,
+      "list": 1,
+      "wordCount": 0
+    },
+    {
+      "id": "level2-list1",
+      "title": "Level 2 · List 1",
+      "level": 2,
+      "list": 1,
+      "wordCount": 0
+    }
+  ]
+}

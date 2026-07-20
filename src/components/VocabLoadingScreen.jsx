@@ -1,4 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useSettings } from "../context/SettingsContext";
+import { APP_MODE_LABELS } from "../utils/appMode";
 import loadingWordsData from "../data/loadingWords.json";
 
 const MESSAGES = [
@@ -25,6 +27,8 @@ function pickRandomWord(excludeWord) {
 }
 
 export default function VocabLoadingScreen() {
+  const { settings } = useSettings();
+  const appMode = settings.appMode ?? "toefl";
   const [current, setCurrent] = useState(() => pickRandomWord(null));
   const [flipped, setFlipped] = useState(false);
   const [judged, setJudged] = useState(null);
@@ -100,7 +104,7 @@ export default function VocabLoadingScreen() {
 
       <div className="vocab-loader__content">
         <p className="vocab-loader__brand">
-          <span className="vocab-loader__brand-text">TOEFL 6·6·6·6</span>
+          <span className="vocab-loader__brand-text">{APP_MODE_LABELS[appMode]}</span>
         </p>
 
         {current && (

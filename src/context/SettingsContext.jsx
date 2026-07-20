@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect, useCallback, useMemo } from "react";
 import { loadSettings, patchSettings, clampDelaySec, updateToeflSectionScore, updateSatSectionScore } from "../services/settings";
+import { normalizeAppMode, APP_MODE_TITLES } from "../utils/appMode";
 import { normalizeTargetExam, normalizeToeflTargetTotal, normalizeSatTargetTotal } from "../utils/examScores";
 import { getSystemVoices, speakWord as speak } from "../utils/speech";
 import { normalizeCorrectSoundId, normalizeWrongSoundId } from "../utils/answerSounds";
@@ -14,6 +15,11 @@ export function SettingsProvider({ children }) {
   useEffect(() => {
     document.documentElement.dataset.theme = settings.theme;
   }, [settings.theme]);
+
+  useEffect(() => {
+    document.documentElement.dataset.exam = settings.appMode ?? "toefl";
+    document.title = APP_MODE_TITLES[normalizeAppMode(settings.appMode)];
+  }, [settings.appMode]);
 
   useEffect(() => {
     function refreshVoices() {
@@ -91,7 +97,18 @@ export function SettingsProvider({ children }) {
   );
 
   const setTargetExam = useCallback(
-    (targetExam) => updateSettings({ targetExam: normalizeTargetExam(targetExam) }),
+    (targetExam) => {
+      const mode = normalizeTargetExam(targetExam);
+      updateSettings({ targetExam: mode, appMode: mode });
+    },
+    [updateSettings]
+  );
+
+  const setAppMode = useCallback(
+    (appMode) => {
+      const mode = normalizeAppMode(appMode);
+      updateSettings({ appMode: mode, targetExam: mode });
+    },
     [updateSettings]
   );
 
@@ -154,6 +171,7 @@ export function SettingsProvider({ children }) {
       setAnswerSoundCorrect,
       setAnswerSoundWrong,
       setTargetExam,
+      setAppMode,
       setToeflSectionScore,
       setSatSectionScore,
       setToeflTargetTotal,
@@ -177,6 +195,7 @@ export function SettingsProvider({ children }) {
       setAnswerSoundCorrect,
       setAnswerSoundWrong,
       setTargetExam,
+      setAppMode,
       setToeflSectionScore,
       setSatSectionScore,
       setToeflTargetTotal,

@@ -1,4 +1,5 @@
 import { normalizeCorrectSoundId, normalizeWrongSoundId } from "../utils/answerSounds.js";
+import { normalizeAppMode } from "../utils/appMode.js";
 import {
   calcSatTotal,
   calcToeflTotal,
@@ -36,6 +37,7 @@ const DEFAULT_SETTINGS = {
   answerSounds: true,
   answerSoundCorrect: "default",
   answerSoundWrong: "default",
+  appMode: "toefl",
   targetExam: "toefl",
   toeflScores: { ...DEFAULT_TOEFL_SCORES },
   toeflTargetTotal: null,
@@ -80,7 +82,8 @@ export function loadSettings() {
       answerSounds: parsed.answerSounds !== false,
       answerSoundCorrect: normalizeCorrectSoundId(parsed.answerSoundCorrect),
       answerSoundWrong: normalizeWrongSoundId(parsed.answerSoundWrong),
-      targetExam: normalizeTargetExam(parsed.targetExam),
+      appMode: normalizeAppMode(parsed.appMode ?? parsed.targetExam),
+      targetExam: normalizeTargetExam(parsed.targetExam ?? parsed.appMode),
       toeflScores: normalizeExamScores("toefl", parsed.toeflScores || {}),
       toeflTargetTotal: normalizeToeflTargetTotal(parsed.toeflTargetTotal),
       satScores: normalizeExamScores("sat", parsed.satScores || {}),
@@ -104,6 +107,10 @@ export function patchSettings(patch) {
   const next = { ...loadSettings(), ...patch };
   if ("autoAdvanceDelaySec" in patch) {
     next.autoAdvanceDelaySec = clampDelaySec(next.autoAdvanceDelaySec);
+  }
+  if ("appMode" in patch) {
+    next.appMode = normalizeAppMode(next.appMode);
+    next.targetExam = next.appMode;
   }
   if ("targetExam" in patch) {
     next.targetExam = normalizeTargetExam(next.targetExam);

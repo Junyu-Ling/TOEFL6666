@@ -80,6 +80,56 @@
   --shadow-lg: 0 2px 8px rgba(0, 0, 0, 0.45), 0 20px 48px rgba(0, 0, 0, 0.4);
 }
 
+[data-exam="sat"][data-theme="light"] {
+  --accent: #7c3aed;
+  --accent-hover: #6d28d9;
+  --accent-soft: #f5f3ff;
+  --accent-soft-hover: #ede9fe;
+}
+
+[data-exam="sat"][data-theme="dark"] {
+  --accent: #a78bfa;
+  --accent-hover: #c4b5fd;
+  --accent-soft: rgba(167, 139, 250, 0.16);
+  --accent-soft-hover: rgba(167, 139, 250, 0.26);
+}
+
+[data-exam="toefl"][data-theme="light"] {
+  --brand-warm: #f97316;
+  --brand-glow: #ffd166;
+}
+
+[data-exam="sat"][data-theme="light"] {
+  --brand-warm: #a78bfa;
+  --brand-glow: #c4b5fd;
+}
+
+[data-exam="sat"] .vocab-loader__bg {
+  background:
+    radial-gradient(circle at 20% 20%, color-mix(in srgb, var(--accent) 24%, transparent), transparent 45%),
+    radial-gradient(circle at 80% 75%, color-mix(in srgb, #8b5cf6 18%, transparent), transparent 40%),
+    radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 60%),
+    conic-gradient(
+      from 0deg at 50% 50%,
+      color-mix(in srgb, var(--accent) 12%, transparent),
+      transparent 25%,
+      color-mix(in srgb, #8b5cf6 12%, transparent) 50%,
+      transparent 75%,
+      color-mix(in srgb, var(--accent) 12%, transparent) 100%
+    );
+}
+
+[data-exam="sat"] .vocab-loader__brand-text {
+  background: linear-gradient(
+    100deg,
+    var(--accent) 0%,
+    #c4b5fd 35%,
+    var(--accent) 70%,
+    #ddd6fe 100%
+  );
+  background-size: 220% auto;
+}
+
 *,
 *::before,
 *::after {
@@ -147,11 +197,61 @@ body {
   z-index: 100;
 }
 
+.navbar__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.65rem 0.35rem 0.5rem;
+  margin: -0.35rem -0.5rem;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background var(--transition), transform 0.2s ease, box-shadow var(--transition);
+}
+
+.navbar__brand:hover {
+  background: var(--accent-soft);
+}
+
+.navbar__brand:active {
+  transform: scale(0.98);
+}
+
 .navbar__brand strong {
   font-size: 1rem;
   font-weight: 700;
   letter-spacing: -0.02em;
   color: var(--accent);
+}
+
+.navbar__brand-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  opacity: 0.9;
+}
+
+.navbar__brand-hint {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-light);
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.navbar__brand:hover .navbar__brand-hint,
+.navbar__brand:focus-visible .navbar__brand-hint {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.navbar__brand:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 .navbar__tabs {
@@ -1229,6 +1329,10 @@ body {
   inset: 0;
   z-index: 200;
   background: var(--bg);
+}
+
+.app-loading-overlay--transition {
+  z-index: 300;
 }
 
 /* ── Vocab Loading Screen ── */
@@ -4752,4 +4856,274 @@ body {
   .rvocab__meaning-form {
     flex-direction: column;
   }
+}
+
+/* ── Exam Mode Transition (Sun ↔ Moon) ── */
+.exam-transition {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #fff7ed;
+}
+
+.exam-transition--to-toefl {
+  background: #0f0720;
+}
+
+.exam-transition__sky {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 42%, rgba(255, 209, 102, 0.55), transparent 38%),
+    radial-gradient(circle at 30% 70%, rgba(66, 85, 255, 0.18), transparent 45%),
+    linear-gradient(180deg, #fff7ed 0%, #eef0ff 55%, #fde68a 100%);
+  animation: exam-sky-to-sat 0.9s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.exam-transition--to-toefl .exam-transition__sky {
+  animation-name: exam-sky-to-toefl;
+}
+
+@keyframes exam-sky-to-sat {
+  0% {
+    background:
+      radial-gradient(circle at 50% 42%, rgba(255, 209, 102, 0.55), transparent 38%),
+      radial-gradient(circle at 30% 70%, rgba(66, 85, 255, 0.18), transparent 45%),
+      linear-gradient(180deg, #fff7ed 0%, #eef0ff 55%, #fde68a 100%);
+  }
+  100% {
+    background:
+      radial-gradient(circle at 50% 38%, rgba(167, 139, 250, 0.35), transparent 42%),
+      radial-gradient(circle at 72% 68%, rgba(124, 58, 237, 0.28), transparent 48%),
+      linear-gradient(180deg, #1e1035 0%, #2e1065 52%, #0f0720 100%);
+  }
+}
+
+@keyframes exam-sky-to-toefl {
+  0% {
+    background:
+      radial-gradient(circle at 50% 38%, rgba(167, 139, 250, 0.35), transparent 42%),
+      radial-gradient(circle at 72% 68%, rgba(124, 58, 237, 0.28), transparent 48%),
+      linear-gradient(180deg, #1e1035 0%, #2e1065 52%, #0f0720 100%);
+  }
+  100% {
+    background:
+      radial-gradient(circle at 50% 42%, rgba(255, 209, 102, 0.55), transparent 38%),
+      radial-gradient(circle at 30% 70%, rgba(66, 85, 255, 0.18), transparent 45%),
+      linear-gradient(180deg, #fff7ed 0%, #eef0ff 55%, #fde68a 100%);
+  }
+}
+
+.exam-transition__stars {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  background-image:
+    radial-gradient(circle, rgba(255, 255, 255, 0.95) 1px, transparent 1.5px),
+    radial-gradient(circle, rgba(196, 181, 253, 0.9) 1px, transparent 1.5px);
+  background-size: 120px 120px, 180px 180px;
+  background-position: 20px 30px, 70px 90px;
+  animation: exam-stars-in 0.9s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.exam-transition--to-toefl .exam-transition__stars {
+  animation-name: exam-stars-out;
+}
+
+@keyframes exam-stars-in {
+  0%, 35% { opacity: 0; }
+  100% { opacity: 0.75; }
+}
+
+@keyframes exam-stars-out {
+  0% { opacity: 0.75; }
+  65%, 100% { opacity: 0; }
+}
+
+.exam-transition__ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(120vw, 640px);
+  height: min(120vw, 640px);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    rgba(255, 209, 102, 0.45) 40deg,
+    transparent 90deg,
+    transparent 220deg,
+    rgba(124, 58, 237, 0.5) 260deg,
+    transparent 320deg
+  );
+  filter: blur(48px);
+  opacity: 0.55;
+  animation: exam-ring-spin 0.9s ease-out forwards, vocab-ring-spin 18s linear infinite;
+}
+
+@keyframes exam-ring-spin {
+  from { opacity: 0.2; transform: translate(-50%, -50%) scale(0.85); }
+  50% { opacity: 0.75; transform: translate(-50%, -50%) scale(1.05); }
+  to { opacity: 0.55; transform: translate(-50%, -50%) scale(1); }
+}
+
+.exam-transition__stage {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.exam-transition__celestial {
+  position: relative;
+  width: 7.5rem;
+  height: 7.5rem;
+}
+
+.exam-transition__sun,
+.exam-transition__moon {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.exam-transition__sun {
+  animation: exam-sun-out 0.9s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.exam-transition--to-toefl .exam-transition__sun {
+  animation-name: exam-sun-in;
+}
+
+.exam-transition__moon {
+  opacity: 0;
+  animation: exam-moon-in 0.9s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.exam-transition--to-toefl .exam-transition__moon {
+  animation-name: exam-moon-out;
+}
+
+@keyframes exam-sun-out {
+  0% { opacity: 1; transform: scale(1) rotate(0deg); }
+  100% { opacity: 0; transform: scale(0.55) rotate(45deg); }
+}
+
+@keyframes exam-sun-in {
+  0% { opacity: 0; transform: scale(0.55) rotate(-45deg); }
+  100% { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+
+@keyframes exam-moon-in {
+  0% { opacity: 0; transform: scale(0.5) translateY(12px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes exam-moon-out {
+  0% { opacity: 1; transform: scale(1) translateY(0); }
+  100% { opacity: 0; transform: scale(0.5) translateY(12px); }
+}
+
+.exam-transition__sun-core {
+  width: 4.75rem;
+  height: 4.75rem;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fff7cc 0%, #ffd166 35%, #f97316 100%);
+  box-shadow:
+    0 0 40px rgba(255, 209, 102, 0.75),
+    0 0 80px rgba(249, 115, 22, 0.35);
+}
+
+.exam-transition__sun-rays {
+  position: absolute;
+  inset: -0.75rem;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg 8deg,
+    rgba(255, 209, 102, 0.85) 8deg 12deg,
+    transparent 12deg 28deg,
+    rgba(255, 209, 102, 0.85) 28deg 32deg,
+    transparent 32deg 48deg,
+    rgba(255, 209, 102, 0.85) 48deg 52deg,
+    transparent 52deg 68deg,
+    rgba(255, 209, 102, 0.85) 68deg 72deg,
+    transparent 72deg 88deg,
+    rgba(255, 209, 102, 0.85) 88deg 92deg,
+    transparent 92deg 108deg,
+    rgba(255, 209, 102, 0.85) 108deg 112deg,
+    transparent 112deg 128deg,
+    rgba(255, 209, 102, 0.85) 128deg 132deg,
+    transparent 132deg 148deg,
+    rgba(255, 209, 102, 0.85) 148deg 152deg,
+    transparent 152deg 168deg,
+    rgba(255, 209, 102, 0.85) 168deg 172deg,
+    transparent 172deg 360deg
+  );
+  animation: vocab-ring-spin 24s linear infinite;
+  opacity: 0.85;
+}
+
+.exam-transition__moon-body {
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 68% 28%, transparent 0 0.55rem, rgba(255, 255, 255, 0.08) 0.55rem 0.9rem, transparent 0.9rem),
+    radial-gradient(circle at 35% 72%, rgba(255, 255, 255, 0.06) 0, transparent 28%),
+    radial-gradient(circle at 40% 35%, #ede9fe 0%, #c4b5fd 38%, #7c3aed 100%);
+  box-shadow:
+    0 0 36px rgba(167, 139, 250, 0.65),
+    0 0 72px rgba(124, 58, 237, 0.35),
+    inset -8px -8px 18px rgba(46, 16, 101, 0.25);
+}
+
+.exam-transition__from,
+.exam-transition__to {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.exam-transition__from {
+  color: rgba(26, 31, 54, 0.55);
+  animation: exam-label-out 0.9s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.exam-transition__to {
+  position: absolute;
+  bottom: -0.25rem;
+  color: #ddd6fe;
+  opacity: 0;
+  transform: translateY(8px);
+  animation: exam-label-in 0.9s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.exam-transition--to-toefl .exam-transition__from {
+  color: rgba(221, 214, 254, 0.55);
+}
+
+.exam-transition--to-toefl .exam-transition__to {
+  color: #4255ff;
+}
+
+@keyframes exam-label-out {
+  0%, 20% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-8px); }
+}
+
+@keyframes exam-label-in {
+  0%, 45% { opacity: 0; transform: translateY(8px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
