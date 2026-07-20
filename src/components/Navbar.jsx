@@ -26,7 +26,7 @@ export default function Navbar({ activeTab, onTabChange, counts, streak, onStrea
         title={`切换到 ${APP_MODE_LABELS[alternateMode]}`}
       >
         <span className="navbar__brand-icon navbar__brand-icon--emoji" aria-hidden>
-          {appMode === "sat" ? "🌙" : "☀"}
+          {appMode === "sat" ? "🌙" : "☀️"}
         </span>
         <strong>{APP_MODE_LABELS[appMode]}</strong>
         <span className="navbar__brand-hint" aria-hidden>⇄</span>

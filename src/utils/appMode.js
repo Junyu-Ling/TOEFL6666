@@ -8,7 +8,7 @@ export const APP_MODE_LABELS = {
 };
 
 export const APP_MODE_TITLES = {
-  toefl: "☀ TOEFL 6·6·6·6",
+  toefl: "☀️ TOEFL 6·6·6·6",
   sat: "🌙 SAT 800·800",
 };
 
