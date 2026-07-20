@@ -88,12 +88,6 @@ export default function VocabLoadingScreen({ dataReady = false, onWordJudged }) 
     <div className={`vocab-loader vocab-loader--${appMode}`} aria-live="polite" aria-busy={!dataReady || !judged}>
       <div className="vocab-loader__bg" aria-hidden />
       <div className="vocab-loader__ring" aria-hidden />
-      {appMode === "sat" ? (
-        <>
-          <div className="vocab-loader__aurora" aria-hidden />
-          <div className="vocab-loader__sheen" aria-hidden />
-        </>
-      ) : null}
       <div className="vocab-loader__grain" aria-hidden />
 
       <div className="vocab-loader__letters" aria-hidden>
@@ -115,11 +109,9 @@ export default function VocabLoadingScreen({ dataReady = false, onWordJudged }) 
 
       <div className="vocab-loader__content">
         <p className="vocab-loader__brand">
-          {appMode === "sat" ? (
-            <span className="vocab-loader__brand-moon" aria-hidden>
-              🌙
-            </span>
-          ) : null}
+          <span className="vocab-loader__brand-icon" aria-hidden>
+            {appMode === "sat" ? "🌙" : "☀"}
+          </span>
           <span className="vocab-loader__brand-text">{APP_MODE_LABELS[appMode]}</span>
         </p>
 

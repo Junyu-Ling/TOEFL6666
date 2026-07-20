@@ -1341,6 +1341,15 @@ body {
   justify-content: center;
   overflow: hidden;
   background: var(--bg);
+  --accent: #4255ff;
+  --loader-shimmer: #f97316;
+  --loader-shimmer-alt: #ffd166;
+}
+
+[data-theme="dark"] .vocab-loader {
+  --accent: #7b8cff;
+  --loader-shimmer: #fdba74;
+  --loader-shimmer-alt: #fde68a;
 }
 
 .vocab-loader__bg {
@@ -1360,76 +1369,6 @@ body {
       color-mix(in srgb, var(--accent) 10%, transparent) 100%
     );
   animation: vocab-loader-glow 6s ease-in-out infinite alternate, vocab-loader-spin 40s linear infinite;
-}
-
-.vocab-loader--sat {
-  background: linear-gradient(165deg, #faf5ff 0%, #f3e8ff 42%, #ede9fe 72%, #f8f5ff 100%);
-}
-
-.vocab-loader--sat .vocab-loader__bg {
-  background:
-    radial-gradient(circle at 22% 18%, rgba(124, 58, 237, 0.42), transparent 44%),
-    radial-gradient(circle at 78% 74%, rgba(139, 92, 246, 0.36), transparent 42%),
-    radial-gradient(circle at 52% 48%, rgba(99, 102, 241, 0.26), transparent 56%),
-    radial-gradient(circle at 66% 28%, rgba(196, 181, 253, 0.38), transparent 38%),
-    conic-gradient(
-      from 0deg at 50% 50%,
-      rgba(124, 58, 237, 0.22),
-      transparent 18%,
-      rgba(167, 139, 250, 0.18) 40%,
-      transparent 54%,
-      rgba(99, 102, 241, 0.16) 70%,
-      transparent 84%,
-      rgba(196, 181, 253, 0.2) 100%
-    );
-  animation:
-    vocab-loader-glow 6s ease-in-out infinite alternate,
-    vocab-loader-spin-sat 40s linear infinite;
-}
-
-.vocab-loader__aurora {
-  position: absolute;
-  inset: -18%;
-  pointer-events: none;
-  z-index: 0;
-  background:
-    radial-gradient(ellipse 68% 48% at 16% 36%, rgba(167, 139, 250, 0.58), transparent 58%),
-    radial-gradient(ellipse 58% 42% at 84% 64%, rgba(124, 58, 237, 0.48), transparent 54%),
-    radial-gradient(ellipse 52% 36% at 46% 84%, rgba(99, 102, 241, 0.38), transparent 50%);
-  animation: vocab-sat-aurora 8s ease-in-out infinite alternate;
-  opacity: 0.92;
-}
-
-.vocab-loader__sheen {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  background: linear-gradient(
-    115deg,
-    transparent 0%,
-    rgba(196, 181, 253, 0.16) 32%,
-    rgba(255, 255, 255, 0.42) 50%,
-    rgba(167, 139, 250, 0.16) 68%,
-    transparent 100%
-  );
-  background-size: 220% 220%;
-  animation: vocab-sat-sheen 7s ease-in-out infinite;
-}
-
-@keyframes vocab-sat-sheen {
-  0%, 100% { background-position: 0% 42%; opacity: 0.55; }
-  50% { background-position: 100% 58%; opacity: 0.95; }
-}
-
-@keyframes vocab-loader-spin-sat {
-  from { filter: hue-rotate(-14deg) saturate(1.08); }
-  to { filter: hue-rotate(18deg) saturate(1.15); }
-}
-
-@keyframes vocab-sat-aurora {
-  from { transform: translate(-3%, -2%) scale(1) rotate(0deg); opacity: 0.78; }
-  to { transform: translate(3%, 2.5%) scale(1.08) rotate(3deg); opacity: 1; }
 }
 
 @keyframes vocab-loader-glow {
@@ -1476,24 +1415,6 @@ body {
   opacity: 0.55;
 }
 
-[data-exam="sat"] .vocab-loader__ring,
-.vocab-loader--sat .vocab-loader__ring {
-  background: conic-gradient(
-    from 0deg,
-    transparent 0deg,
-    rgba(124, 58, 237, 0.58) 34deg,
-    rgba(196, 181, 253, 0.48) 72deg,
-    transparent 112deg,
-    transparent 198deg,
-    rgba(139, 92, 246, 0.54) 242deg,
-    rgba(99, 102, 241, 0.46) 288deg,
-    transparent 338deg
-  );
-  filter: blur(56px);
-  opacity: 0.82;
-  animation: vocab-ring-spin 14s linear infinite reverse;
-}
-
 @keyframes vocab-ring-spin {
   from { transform: translate(-50%, -50%) rotate(0deg); }
   to { transform: translate(-50%, -50%) rotate(360deg); }
@@ -1513,11 +1434,6 @@ body {
   color: color-mix(in srgb, var(--accent) 35%, transparent);
   animation: vocab-letter-rise linear infinite;
   opacity: 0;
-}
-
-[data-exam="sat"] .vocab-loader__letter,
-.vocab-loader--sat .vocab-loader__letter {
-  color: color-mix(in srgb, var(--loader-shimmer-alt) 55%, var(--accent) 45%);
 }
 
 @keyframes vocab-letter-rise {
@@ -1560,15 +1476,6 @@ body {
   -webkit-backdrop-filter: blur(6px);
 }
 
-.vocab-loader--sat .vocab-loader__brand {
-  padding: 0.38rem 1.15rem 0.38rem 0.95rem;
-  background: color-mix(in srgb, #ffffff 88%, #f5f3ff);
-  border: 1px solid color-mix(in srgb, #7c3aed 20%, #ddd6fe);
-  box-shadow:
-    0 1px 2px rgba(91, 33, 182, 0.06),
-    0 0 28px rgba(167, 139, 250, 0.22);
-}
-
 .vocab-loader__brand-icon {
   font-size: 0.95rem;
   line-height: 1;
@@ -1591,52 +1498,6 @@ body {
   background-clip: text;
   color: transparent;
   animation: vocab-brand-shimmer 5s linear infinite;
-}
-
-.vocab-loader--sat .vocab-loader__brand-text {
-  background-image: linear-gradient(
-    100deg,
-    #5b21b6 0%,
-    #7c3aed 14%,
-    #9333ea 28%,
-    #a78bfa 42%,
-    #ddd6fe 56%,
-    #c4b5fd 68%,
-    #8b5cf6 82%,
-    #6d28d9 100%
-  );
-  background-size: 300% auto;
-  background-repeat: repeat;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: vocab-brand-shimmer-sat 4.2s linear infinite;
-}
-
-[data-theme="dark"] .vocab-loader--sat .vocab-loader__brand {
-  background: color-mix(in srgb, var(--surface) 78%, #2e1065);
-  border-color: color-mix(in srgb, #a78bfa 28%, var(--border));
-  box-shadow:
-    0 1px 2px rgba(0, 0, 0, 0.2),
-    0 0 32px rgba(124, 58, 237, 0.28);
-}
-
-[data-theme="dark"] .vocab-loader--sat .vocab-loader__brand-text {
-  background-image: linear-gradient(
-    100deg,
-    #c4b5fd 0%,
-    #a78bfa 16%,
-    #e9d5ff 32%,
-    #ddd6fe 48%,
-    #8b5cf6 64%,
-    #a78bfa 80%,
-    #c4b5fd 100%
-  );
-  background-size: 300% auto;
-  background-repeat: repeat;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
 }
 
 @keyframes vocab-brand-shimmer {
@@ -1666,16 +1527,6 @@ body {
   filter: blur(28px);
   z-index: 0;
   animation: vocab-card-glow 3.5s ease-in-out infinite;
-}
-
-[data-exam="sat"] .vocab-loader__scene-wrap::before,
-.vocab-loader--sat .vocab-loader__scene-wrap::before {
-  background: radial-gradient(
-    circle,
-    rgba(139, 92, 246, 0.32),
-    rgba(124, 58, 237, 0.18) 45%,
-    transparent 72%
-  );
 }
 
 @keyframes vocab-card-glow {
@@ -1742,26 +1593,6 @@ body {
     var(--accent)
   );
   animation: vocab-progress-slide 1.6s ease-in-out infinite;
-}
-
-.vocab-loader--sat .vocab-loader__progress-bar {
-  background: linear-gradient(
-    90deg,
-    var(--accent),
-    color-mix(in srgb, var(--loader-shimmer-alt) 85%, var(--accent)),
-    #c4b5fd,
-    color-mix(in srgb, var(--loader-shimmer) 80%, var(--accent)),
-    var(--accent)
-  );
-}
-
-.vocab-loader--sat .vocab-loader__progress-bar--ready {
-  background: linear-gradient(
-    90deg,
-    var(--accent),
-    color-mix(in srgb, var(--loader-shimmer-alt) 75%, var(--accent)),
-    var(--accent)
-  );
 }
 
 .vocab-loader__progress-bar--ready {
@@ -5221,6 +5052,13 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 4.75rem;
+  line-height: 1;
+  filter: drop-shadow(0 0 24px rgba(255, 209, 102, 0.45));
+}
+
+.exam-transition__moon {
+  filter: drop-shadow(0 0 24px rgba(167, 139, 250, 0.5));
 }
 
 .exam-transition__sun {
@@ -5258,60 +5096,6 @@ body {
 @keyframes exam-moon-out {
   0% { opacity: 1; transform: scale(1) translateY(0); }
   100% { opacity: 0; transform: scale(0.5) translateY(12px); }
-}
-
-.exam-transition__sun-core {
-  width: 4.75rem;
-  height: 4.75rem;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, #fff7cc 0%, #ffd166 35%, #f97316 100%);
-  box-shadow:
-    0 0 40px rgba(255, 209, 102, 0.75),
-    0 0 80px rgba(249, 115, 22, 0.35);
-}
-
-.exam-transition__sun-rays {
-  position: absolute;
-  inset: -0.75rem;
-  border-radius: 50%;
-  background: conic-gradient(
-    from 0deg,
-    transparent 0deg 8deg,
-    rgba(255, 209, 102, 0.85) 8deg 12deg,
-    transparent 12deg 28deg,
-    rgba(255, 209, 102, 0.85) 28deg 32deg,
-    transparent 32deg 48deg,
-    rgba(255, 209, 102, 0.85) 48deg 52deg,
-    transparent 52deg 68deg,
-    rgba(255, 209, 102, 0.85) 68deg 72deg,
-    transparent 72deg 88deg,
-    rgba(255, 209, 102, 0.85) 88deg 92deg,
-    transparent 92deg 108deg,
-    rgba(255, 209, 102, 0.85) 108deg 112deg,
-    transparent 112deg 128deg,
-    rgba(255, 209, 102, 0.85) 128deg 132deg,
-    transparent 132deg 148deg,
-    rgba(255, 209, 102, 0.85) 148deg 152deg,
-    transparent 152deg 168deg,
-    rgba(255, 209, 102, 0.85) 168deg 172deg,
-    transparent 172deg 360deg
-  );
-  animation: vocab-ring-spin 24s linear infinite;
-  opacity: 0.85;
-}
-
-.exam-transition__moon-body {
-  width: 4.5rem;
-  height: 4.5rem;
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 68% 28%, transparent 0 0.55rem, rgba(255, 255, 255, 0.08) 0.55rem 0.9rem, transparent 0.9rem),
-    radial-gradient(circle at 35% 72%, rgba(255, 255, 255, 0.06) 0, transparent 28%),
-    radial-gradient(circle at 40% 35%, #ede9fe 0%, #c4b5fd 38%, #7c3aed 100%);
-  box-shadow:
-    0 0 36px rgba(167, 139, 250, 0.65),
-    0 0 72px rgba(124, 58, 237, 0.35),
-    inset -8px -8px 18px rgba(46, 16, 101, 0.25);
 }
 
 .exam-transition__from,

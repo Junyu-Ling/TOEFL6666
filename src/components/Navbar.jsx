@@ -26,12 +26,7 @@ export default function Navbar({ activeTab, onTabChange, counts, streak, onStrea
         title={`切换到 ${APP_MODE_LABELS[alternateMode]}`}
       >
         <span className="navbar__brand-icon navbar__brand-icon--emoji" aria-hidden>
-          {appMode === "sat" ? "🌙" : (
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
-              <circle cx="12" cy="12" r="4.5" />
-              <path d="M12 1.5v2.2M12 20.3v2.2M4.2 4.2l1.55 1.55M18.25 18.25l1.55 1.55M1.5 12h2.2M20.3 12h2.2M4.2 19.8l1.55-1.55M18.25 5.75l1.55-1.55" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" fill="none" />
-            </svg>
-          )}
+          {appMode === "sat" ? "🌙" : "☀"}
         </span>
         <strong>{APP_MODE_LABELS[appMode]}</strong>
         <span className="navbar__brand-hint" aria-hidden>⇄</span>
