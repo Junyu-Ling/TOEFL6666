@@ -8,8 +8,8 @@ export const APP_MODE_LABELS = {
 };
 
 export const APP_MODE_TITLES = {
-  toefl: "TOEFL 6·6·6·6 · 优雅背单词",
-  sat: "SAT 800·800 · 优雅背单词",
+  toefl: "☀ TOEFL 6·6·6·6",
+  sat: "🌙 SAT 800·800",
 };
 
 export function getAlternateAppMode(mode) {
