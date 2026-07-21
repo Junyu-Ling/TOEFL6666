@@ -185,7 +185,7 @@ export default function App() {
       setLoadingWordJudged(false);
       setWordsError(null);
       try {
-        const manifest = await fetchWordListManifest(appMode);
+        const manifest = fetchWordListManifest(appMode);
         if (cancelled) return;
 
         const version = manifest.updatedAt;
@@ -195,15 +195,11 @@ export default function App() {
         const listId = resolveActiveListId(savedRef.current.activeListId, manifest);
         if (!listId) throw new Error("词库目录为空");
 
-        const [index, bankWords, listPayload] = await Promise.all([
-          fetchWordListIndex(appMode, version),
-          fetchWordBank(appMode, version),
-          fetchWordList(listId, appMode, version).then((data) => ({ listId, ...data })),
-        ]);
+        const index = fetchWordListIndex(appMode);
+        const listPayload = await fetchWordList(listId, appMode, version).then((data) => ({ listId, ...data }));
         if (cancelled) return;
 
         setWordListIndex(index);
-        setAllBankWords(bankWords);
 
         const { meta, words } = listPayload;
 
@@ -225,6 +221,17 @@ export default function App() {
       cancelled = true;
     };
   }, [applyList, appMode]);
+
+  useEffect(() => {
+    if (!wordsDataReady) return;
+    let cancelled = false;
+    fetchWordBank(appMode).then((words) => {
+      if (!cancelled) setAllBankWords(words);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [appMode, wordsDataReady]);
 
   useEffect(() => {
     if (wordsError) {

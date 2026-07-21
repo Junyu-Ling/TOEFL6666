@@ -23,7 +23,7 @@
   },
   "headers": [
     {
-      "source": "/api/wordlists/(.*)",
+      "source": "/wordlists/(.*)",
       "headers": [
         {
           "key": "Cache-Control",
@@ -32,29 +32,11 @@
       ]
     },
     {
-      "source": "/api/wordlists-sat/(.*)",
+      "source": "/wordlists-sat/(.*)",
       "headers": [
         {
           "key": "Cache-Control",
           "value": "public, max-age=31536000, immutable"
-        }
-      ]
-    },
-    {
-      "source": "/api/wordlists/manifest.json",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=300, stale-while-revalidate=86400"
-        }
-      ]
-    },
-    {
-      "source": "/api/wordlists-sat/manifest.json",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=300, stale-while-revalidate=86400"
         }
       ]
     },
@@ -66,6 +48,18 @@
           "value": "public, max-age=31536000, immutable"
         }
       ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/api/wordlists/:path*",
+      "destination": "/wordlists/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/api/wordlists-sat/:path*",
+      "destination": "/wordlists-sat/:path*",
+      "permanent": true
     }
   ],
   "rewrites": [

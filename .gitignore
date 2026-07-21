@@ -12,6 +12,11 @@ dist
 dist-ssr
 *.local
 
+# Generated wordlist bundles (created by npm run build:wordlists)
+src/generated/
+public/wordlists/
+public/wordlists-sat/
+
 # Scripts cache and uploads
 scripts/__pycache__/
 scripts/_uploads/

@@ -4,12 +4,12 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "npm run build:wordlists && vite",
     "build:pronunciation": "node scripts/build-irregular-pronunciation.mjs",
     "build:families": "node scripts/build-word-families.mjs",
     "build:phonetics": "node scripts/build-phonetics.mjs",
     "build:loading-words": "node scripts/build-loading-words.mjs",
-    "build:wordlists": "node scripts/build-word-index.mjs && node scripts/build-word-bank.mjs",
+    "build:wordlists": "node scripts/build-word-index.mjs && node scripts/build-word-bank.mjs && node scripts/build-wordlists-bundle.mjs",
     "build": "npm run build:pronunciation && npm run build:families && npm run build:loading-words && npm run build:wordlists && vite build",
     "lint": "oxlint",
     "preview": "vite preview"
