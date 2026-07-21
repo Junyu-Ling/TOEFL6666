@@ -1,15 +1,18 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { APP_MODE_LABELS } from "../utils/appMode";
 
-const DURATION_MS = 900;
+const DURATION_MS = 1100;
 
 export default function ExamModeTransition({ fromMode, toMode, onComplete }) {
+  const onCompleteRef = useRef(onComplete);
+  onCompleteRef.current = onComplete;
+
   useEffect(() => {
     const timer = window.setTimeout(() => {
-      onComplete?.();
+      onCompleteRef.current?.();
     }, DURATION_MS);
     return () => window.clearTimeout(timer);
-  }, [onComplete]);
+  }, [fromMode, toMode]);
 
   const toSat = toMode === "sat";
 
@@ -27,8 +30,8 @@ export default function ExamModeTransition({ fromMode, toMode, onComplete }) {
       <div className="exam-transition__stage">
         <div className="exam-transition__celestial" aria-hidden>
           <div className="exam-transition__sun">
-            <div className="exam-transition__sun-core" />
             <div className="exam-transition__sun-rays" />
+            <div className="exam-transition__sun-core" />
           </div>
           <div className="exam-transition__moon">
             <div className="exam-transition__moon-body" />
