@@ -19,7 +19,7 @@ import { syncService, SYNC_APPLIED_EVENT, SYNC_STATUS_EVENT } from "./services/s
 import { useMicrophone } from "./hooks/useMicrophone";
 import { useSettings } from "./context/SettingsContext";
 import { ActiveTabProvider } from "./context/ActiveTabContext";
-import { fetchWordList, fetchWordListManifest, fetchWordListIndex, fetchAllWordBank, resolveActiveListId } from "./services/wordlist";
+import { fetchWordList, fetchWordListManifest, fetchWordListIndex, fetchWordBank, resolveActiveListId } from "./services/wordlist";
 import {
   loadRecognized,
   loadUnrecognized,
@@ -90,6 +90,7 @@ export default function App() {
   const [wordListIndex, setWordListIndex] = useState(null);
   const wordListIndexRef = useRef(null);
   wordListIndexRef.current = wordListIndex;
+  const wordlistVersionRef = useRef(null);
   const [activeListId, setActiveListId] = useState(savedRef.current.activeListId);
   const [listProgress, setListProgress] = useState(savedRef.current.listProgress);
   const [wordsLoading, setWordsLoading] = useState(true);
@@ -184,28 +185,27 @@ export default function App() {
       setLoadingWordJudged(false);
       setWordsError(null);
       try {
-        const [manifest, index] = await Promise.all([
-          fetchWordListManifest(appMode),
-          fetchWordListIndex(appMode),
-        ]);
+        const manifest = await fetchWordListManifest(appMode);
         if (cancelled) return;
 
+        const version = manifest.updatedAt;
+        wordlistVersionRef.current = version;
         setAvailableLists(manifest.lists ?? []);
-        setWordListIndex(index);
 
-        const [bankWords, listPayload] = await Promise.all([
-          fetchAllWordBank(manifest.lists ?? [], appMode),
-          (async () => {
-            const listId = resolveActiveListId(savedRef.current.activeListId, manifest);
-            if (!listId) throw new Error("词库目录为空");
-            return fetchWordList(listId, appMode).then((data) => ({ listId, ...data }));
-          })(),
+        const listId = resolveActiveListId(savedRef.current.activeListId, manifest);
+        if (!listId) throw new Error("词库目录为空");
+
+        const [index, bankWords, listPayload] = await Promise.all([
+          fetchWordListIndex(appMode, version),
+          fetchWordBank(appMode, version),
+          fetchWordList(listId, appMode, version).then((data) => ({ listId, ...data })),
         ]);
         if (cancelled) return;
 
+        setWordListIndex(index);
         setAllBankWords(bankWords);
 
-        const { listId, meta, words } = listPayload;
+        const { meta, words } = listPayload;
 
         if (savedRef.current.activeListId !== listId) {
           savedRef.current = { ...savedRef.current, activeListId: listId };
@@ -268,7 +268,7 @@ export default function App() {
       setListProgress(nextProgress);
 
       try {
-        const { meta, words } = await fetchWordList(listId, appMode);
+        const { meta, words } = await fetchWordList(listId, appMode, wordlistVersionRef.current);
         const savedIndex = getSavedIndex(nextProgress, listId);
         applyList(listId, words, meta, savedIndex);
         saveProgress({
