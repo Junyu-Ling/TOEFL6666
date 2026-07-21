@@ -162,7 +162,6 @@ export default function VocabLoadingScreen({ dataReady = false, onWordJudged }) 
                   <ul className="flashcard__definitions">
                     <li>{current.meaning}</li>
                   </ul>
-                  <p className="flashcard__mark-prompt">记一记，几秒后自动进入</p>
                 </div>
               </div>
             </div>
