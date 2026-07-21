@@ -10,6 +10,8 @@ const LOADING_MESSAGES = [
   "校准 AI 助教…",
 ];
 
+const AUTO_FLIP_MS = 2800;
+
 const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const ALL_WORDS = loadingWordsData.words ?? [];
 
@@ -50,6 +52,14 @@ export default function VocabLoadingScreen({ dataReady = false, onWordJudged }) 
   useEffect(() => {
     if (!current) onWordJudged?.();
   }, [current, onWordJudged]);
+
+  useEffect(() => {
+    if (!current || judged || flipped) return;
+    const flipTimer = window.setTimeout(() => {
+      setFlipped(true);
+    }, AUTO_FLIP_MS);
+    return () => window.clearTimeout(flipTimer);
+  }, [current, judged, flipped]);
 
   useEffect(() => {
     if (judged || dataReady) return;
@@ -138,7 +148,7 @@ export default function VocabLoadingScreen({ dataReady = false, onWordJudged }) 
                       <h2 className="flashcard__word">{current.word}</h2>
                     </div>
                   </div>
-                  <p className="flashcard__prompt">点击卡片查看释义，认一认这个词</p>
+                  <p className="flashcard__prompt">稍后将自动展示释义，先认一认这个词</p>
                 </div>
 
                 <div className="flashcard__face flashcard__back">
