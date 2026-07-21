@@ -26,8 +26,13 @@ export default function ExamModeTransition({ fromMode, toMode, onComplete }) {
 
       <div className="exam-transition__stage">
         <div className="exam-transition__celestial" aria-hidden>
-          <span className="exam-transition__sun">☀️</span>
-          <span className="exam-transition__moon">🌙</span>
+          <div className="exam-transition__sun">
+            <div className="exam-transition__sun-core" />
+            <div className="exam-transition__sun-rays" />
+          </div>
+          <div className="exam-transition__moon">
+            <div className="exam-transition__moon-body" />
+          </div>
         </div>
 
         <p className="exam-transition__from">{APP_MODE_LABELS[fromMode]}</p>

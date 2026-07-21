@@ -5052,13 +5052,6 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 4.75rem;
-  line-height: 1;
-  filter: drop-shadow(0 0 24px rgba(255, 209, 102, 0.45));
-}
-
-.exam-transition__moon {
-  filter: drop-shadow(0 0 24px rgba(167, 139, 250, 0.5));
 }
 
 .exam-transition__sun {
