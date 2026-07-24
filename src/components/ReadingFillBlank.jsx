@@ -96,10 +96,12 @@ function ReadingFillBlank() {
       const nextArticle = articles[nextIndex];
       if (!nextArticle) return;
       const saved = loadReadingFillBlankProgress(articles);
+      const nextInputs = getArticleInputs(nextArticle, saved.inputsByArticle);
+      const wasChecked = Boolean(saved.checkedByArticle?.[nextArticle.id]);
       setProgress(patchArticleIndex(saved, nextIndex));
-      setInputs(getArticleInputs(nextArticle, saved.inputsByArticle));
-      setChecked(Boolean(saved.checkedByArticle?.[nextArticle.id]));
-      setGrade(null);
+      setInputs(nextInputs);
+      setChecked(wasChecked);
+      setGrade(wasChecked ? gradeArticle(nextArticle, nextInputs) : null);
     },
     [articles]
   );
