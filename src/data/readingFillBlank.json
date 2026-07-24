@@ -614,10 +614,9 @@
   {
     "id": 37,
     "title": "Bone",
-    "raw": "Using bone for the manufacture of tools and other objects has a long history. Many of the wea____ [4] th__ [2] prehi______ [6] people us__ [2] for hun____ [4] were ma__ [2] from t__ [2] bones o_ [1] the ani____ [4] they hun___ [3]. The physical properties of these materials varied greatly. For example, the strength and flexibility of antler were important to the way these tools were utilized. Many early bone tools show distinctive signs of wear and polishing, revealing how they were handled and over time.",
+    "raw": "Using bone for the manufacture of tools and other objects has a long history. Many of the wea____ [4] that prehi______ [6] people us__ [2] for hun____ [4] were ma__ [2] from t__ [2] bones o_ [1] the ani____ [4] they hun___ [3]. The phys____ [4] properties of these materials varied greatly. For example, the strength and flexibility of antler were important to the way these tools were utilized. Many early bone tools show distinctive signs of wear and polishing, revealing how they were handled and over time.",
     "answers": [
       "weapons",
-      "that",
       "prehistoric",
       "used",
       "hunting",
@@ -625,7 +624,8 @@
       "the",
       "of",
       "animals",
-      "hunted"
+      "hunted",
+      "physical"
     ]
   },
   {
