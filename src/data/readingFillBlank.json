@@ -848,8 +848,8 @@
   {
     "id": 65,
     "title": "Museums",
-    "raw": "Museums play a crucial role in preserving and showcasing art, history, and culture. They pro____ [4] a sp___ [3] whe__ [2] peo___ [3] can eng___ [3] with mult____ [4] forms o_ [1] artistic expre_____ [5] and histo_____ [5] artifacts. Ma__ [2] museums al__ [2] offer educational programs and workshops, fostering a deeper understanding of the subjects they display. In addition, digital innovations have enabled museums to reach global audiences through virtual tours and online collections. The patronage of visual arts by individuals and organizations helps support artists and ensures the continued growth and diversity of the cultural landscape.",
-    "answers": ["provide", "space", "where", "people", "engage", "multiple", "of", "expression", "historical", "Many", "also"]
+    "raw": "Museums play a crucial role in preserving and showcasing art, history, and culture. They pro____ [4] a sp___ [3] where peo___ [3] can eng___ [3] with mult____ [4] forms o_ [1] artistic expre_____ [5] and histo_____ [5] artifacts. Ma__ [2] museums al__ [2] offer educational programs and workshops, fostering a deeper understanding of the subjects they display. In addition, digital innovations have enabled museums to reach global audiences through virtual tours and online collections. The patronage of visual arts by individuals and organizations helps support artists and ensures the continued growth and diversity of the cultural landscape.",
+    "answers": ["provide", "space", "people", "engage", "multiple", "of", "expression", "historical", "Many", "also"]
   },
   {
     "id": 66,
