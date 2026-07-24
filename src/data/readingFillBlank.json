@@ -722,8 +722,8 @@
   {
     "id": 44,
     "title": "Transcontinental Railroads",
-    "raw": "The development of transcontinental railroads was a pivotal moment in North American history, fundamentally altering the landscape and economy. By linking the eastern and western coasts, these rail lines facilitated unprecedented movement of goods, people, and ideas. The railroad accel______ [6] national integ______ [6], supported indus_____ [5] growth, a__ [2] contributed to the expa_____ [5] of tr___ [3], transforming t__ [2] United States i___ [3] ____ [1] mo__ [2] interconnected and economically dynamic nation. Advances in engineering, such as the use of steel rails, standardized gauges, and telegraph communication, enabled efficient construction and coordination across vast distances.",
-    "answers": ["accelerated", "integration", "industrial", "and", "expansion", "trade", "the", "into", "a", "more"]
+    "raw": "The development of transcontinental railroads was a pivotal moment in North American history, fundamentally altering the landscape and economy. By linking the eastern and western coasts, these rail lines facilitated unprecedented movement of goods, people, and ideas. The railroad accel______ [6] national integ______ [6], supported indus_____ [5] growth, a__ [2] contributed t_ [1] the expa_____ [5] of tr___ [3], transforming t__ [2] United States i___ [3] a mo__ [2] interconnected and economically dynamic nation. Advances in engineering, such as the use of steel rails, standardized gauges, and telegraph communication, enabled efficient construction and coordination across vast distances.",
+    "answers": ["accelerated", "integration", "industrial", "and", "to", "expansion", "trade", "the", "into", "more"]
   },
   {
     "id": 45,
