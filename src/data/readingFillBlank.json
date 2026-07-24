@@ -896,8 +896,8 @@
   {
     "id": 73,
     "title": "The last Ice Age",
-    "raw": "The last Ice Age sculpted the face of Earth, leaving behind majestic glaciers that continue to shape the landscape even today. These mas____ [4] ice riv___ [3] flow slo___ [3], grinding do__ [2] mountains a__ [2] carving val____ [4] over mill_____ [5]. Compared to other geolo_____ [5] phenomena, t__ [2] movement of glaciers is imperceptible on a human timescale, yet their impact is undeniably profound. Glaciers serve as natural archives of Earth's climatic history, preserving atmospheric data in layers of ice that have accumulated over thousands of years. Studying glaciers allows scientists to analyze past temperature patterns and environmental changes over time.",
-    "answers": ["massive", "rivers", "slowly", "down", "and", "valleys", "millennia", "geological", "the"]
+    "raw": "The last Ice Age sculpted the face of Earth, leaving behind majestic glaciers that continue to shape the landscape even today. These mas____ [4] ice riv___ [3] flow slo___ [3], grinding do__ [2] mountains a__ [2] carving val____ [4] over mill_____ [5]. Compared t_ [1] other geolo_____ [5] phenomena, t__ [2] movement of glaciers is imperceptible on a human timescale, yet their impact is undeniably profound. Glaciers serve as natural archives of Earth's climatic history, preserving atmospheric data in layers of ice that have accumulated over thousands of years. Studying glaciers allows scientists to analyze past temperature patterns and environmental changes over time.",
+    "answers": ["massive", "rivers", "slowly", "down", "and", "valleys", "millennia", "to", "geological", "the"]
   },
   {
     "id": 74,
