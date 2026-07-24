@@ -70,7 +70,7 @@
   {
     "id": 5,
     "title": "Social Organization",
-    "raw": "In the prehistoric era, social organization was intricately linked to the prevailing environmental conditions, which dictated the migratory patterns and settlement choices of early human groups. These commu______ [6] often deve_____ [5] cohesive un___ [3] based o_ [1] kinship ti__ [2], establishing a sim___ [3] social struc____ [4] that facil______ [6] cooperative hun____ [4] and gath_____ [5] o_ [1] food. Leadership roles emerged naturally, typically assumed by individuals possessing superior survival skills or profound knowledge of the terrain. The distribution of resources, particularly food, was a critical factor, often determining the power dynamics within the group.",
+    "raw": "In the prehistoric era, social organization was intricately linked to the prevailing environmental conditions, which dictated the migratory patterns and settlement choices of early human groups. These commu______ [6] often deve_____ [5] cohesive un___ [3] based o_ [1] kinship ti__ [2], establishing a sim___ [3] social struc____ [4] that facil______ [6] cooperative hun____ [4] and gath_____ [5] of food. Leadership roles emerged naturally, typically assumed by individuals possessing superior survival skills or profound knowledge of the terrain. The distribution of resources, particularly food, was a critical factor, often determining the power dynamics within the group.",
     "answers": [
       "communities",
       "developed",
@@ -81,8 +81,7 @@
       "structure",
       "facilitated",
       "hunting",
-      "gathering",
-      "of"
+      "gathering"
     ]
   },
   {
