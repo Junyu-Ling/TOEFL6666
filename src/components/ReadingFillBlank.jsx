@@ -7,8 +7,9 @@ import {
 } from "../utils/readingFillBlank";
 import {
   extractLatinLetter,
-  containsNonLatinText,
+  isBlockedCompositionText,
   shouldBlockBeforeInput,
+  shouldWarnImeBlocked,
 } from "../utils/latinInputGuard";
 import {
   getArticleInputs,
@@ -37,7 +38,7 @@ const BlankInput = forwardRef(function BlankInput(
     (index, value) => {
       const raw = String(value).slice(-1);
       const char = extractLatinLetter(raw);
-      if (raw && !char) {
+      if (shouldWarnImeBlocked(value)) {
         notifyImeBlocked();
         return;
       }
@@ -62,27 +63,42 @@ const BlankInput = forwardRef(function BlankInput(
     }
   };
 
-  const handleCompositionStart = (event) => {
+  const handleCompositionStart = () => {
     composingRef.current = true;
-    event.preventDefault();
-    notifyImeBlocked();
   };
 
   const handleCompositionUpdate = (event) => {
-    event.preventDefault();
-    notifyImeBlocked();
+    if (isBlockedCompositionText(event.data)) {
+      notifyImeBlocked();
+    }
   };
 
   const handleCompositionEnd = (index, event) => {
     composingRef.current = false;
-    event.preventDefault();
-    event.target.value = letters[index] ?? "";
-    notifyImeBlocked();
+    const data = event.data ?? "";
+    if (isBlockedCompositionText(data)) {
+      event.preventDefault();
+      event.target.value = letters[index] ?? "";
+      notifyImeBlocked();
+      return;
+    }
+    const char = extractLatinLetter(data);
+    if (char) {
+      event.preventDefault();
+      applyLetter(index, char);
+    }
   };
 
   const handleChange = (index, value) => {
     if (composingRef.current) {
-      notifyImeBlocked();
+      if (isBlockedCompositionText(value)) {
+        notifyImeBlocked();
+        return;
+      }
+      const char = extractLatinLetter(value);
+      if (char) {
+        applyLetter(index, char);
+      }
       return;
     }
     applyLetter(index, value);
@@ -91,7 +107,7 @@ const BlankInput = forwardRef(function BlankInput(
   const handlePaste = (index, event) => {
     event.preventDefault();
     const text = event.clipboardData.getData("text");
-    if (containsNonLatinText(text) && !extractLatinLetter(text)) {
+    if (shouldWarnImeBlocked(text)) {
       notifyImeBlocked();
       return;
     }
@@ -99,11 +115,6 @@ const BlankInput = forwardRef(function BlankInput(
   };
 
   const handleKeyDown = (index, event) => {
-    if (event.nativeEvent.isComposing || event.key === "Process") {
-      event.preventDefault();
-      notifyImeBlocked();
-      return;
-    }
     if (event.key === "Backspace" && !letters[index] && index > 0) {
       event.preventDefault();
       refs.current[index - 1]?.focus();
@@ -321,7 +332,7 @@ function ReadingFillBlank() {
 
         {imeWarning ? (
           <div className="rfill__ime-alert" role="alert">
-            检测到中文输入法，请切换到英文输入法后再填写（Windows：Win + Space；Mac：Control + Space）。
+            检测到中文输入，请切换到英文模式（微软拼音按 Shift）或选择「英语(美国) / 美式键盘」后再填写。
           </div>
         ) : null}
 
