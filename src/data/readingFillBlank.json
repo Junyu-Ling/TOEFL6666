@@ -189,9 +189,10 @@
   {
     "id": 12,
     "title": "Conservation Ecology",
-    "raw": "Conservation ecology focuses on protecting and restoring natural habitats to preserve biodiversity. Ecologists st___ [3] ecosystems to understand h__ [2] different spe____ [4] interact wi__ [2] their envir______ [6]. This rese____ [4] informs strat_____ [5] for mana____ [4] natural reso_____ [5] and mitigating human impact. Efforts include habitat restoration, species protection, and sustainable practices. Understanding conservation principles is crucial for maintaining ecological balance and ensuring the survival of diverse species. Corridor creation connects fragmented habitats, while captive breeding programs help recover endangered species, and citizen science initiatives engage communities in monitoring local ecosystems and wildlife populations.",
+    "raw": "Conservation ecology focuses on protecting and restoring natural habitats to preserve biodiversity. Ecologists st___ [3] ecosystems t_ [1] understand h__ [2] different spe____ [4] interact wi__ [2] their envir______ [6]. This rese____ [4] informs strat_____ [5] for mana____ [4] natural reso_____ [5] and mitigating human impact. Efforts include habitat restoration, species protection, and sustainable practices. Understanding conservation principles is crucial for maintaining ecological balance and ensuring the survival of diverse species. Corridor creation connects fragmented habitats, while captive breeding programs help recover endangered species, and citizen science initiatives engage communities in monitoring local ecosystems and wildlife populations.",
     "answers": [
       "study",
+      "to",
       "how",
       "species",
       "with",
