@@ -53,11 +53,10 @@
   {
     "id": 4,
     "title": "Foundational Skills for Academic Success",
-    "raw": "What are some foundational skills for academic success? Critical thin____ [4] allows stud____ [4] t_ [1] appr____ [4] problems systema_______ [7], analyze infor______ [6], and ma__ [2] connections bet____ [4] ideas. Al__ [2] important a__ [2] soft skills li__ [2] time management and social skills. Time management is helpful for balancing studies, extracurricular activities, and personal life in an efficient manner. Social skills are good predictors of academic success because those who communicate effectively can form positive relationships with their peers and professors.",
+    "raw": "What are some foundational skills for academic success? Critical thin____ [4] allows stud____ [4] to appr____ [4] problems systema_______ [7], analyze infor______ [6], and ma__ [2] connections bet____ [4] ideas. Al__ [2] important a__ [2] soft skills li__ [2] time management and social skills. Time management is helpful for balancing studies, extracurricular activities, and personal life in an efficient manner. Social skills are good predictors of academic success because those who communicate effectively can form positive relationships with their peers and professors.",
     "answers": [
       "thinking",
       "students",
-      "to",
       "approach",
       "systematically",
       "information",
