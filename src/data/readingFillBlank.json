@@ -1430,9 +1430,9 @@
   {
     "id": 85,
     "title": "3D Printing",
-    "raw": "The advancement of 3D printing technology has revolutionized manufacturing by enabling precise, layer-by-layer fabrication of complex objects. 3D printing can use Div____ [4] materials su__ [2] as pla____ [4], metals, a__ [2] ceramics. Engi_____ [5] are ab__ [2] to fab______ [6] lightweight, str___ [3] components wi__ [2] internal struc_____ [5] that are impossible to produce using traditional methods. In the medical field, 3D printing facilitates the production of patient-specific implants and prosthetics tailored to anatomical data from imaging scans. 3D printing enhances design flexibility and production efficiency by streamlining prototyping and reducing material waste.",
+    "raw": "The advancement of 3D printing technology has revolutionized manufacturing by enabling precise, layer-by-layer fabrication of complex objects. 3D printing can use div____ [4] materials su__ [2] as pla____ [4], metals, a__ [2] ceramics. Engi_____ [5] are ab__ [2] to fab______ [6] lightweight, str___ [3] components wi__ [2] internal struc_____ [5] that are impossible to produce using traditional methods. In the medical field, 3D printing facilitates the production of patient-specific implants and prosthetics tailored to anatomical data from imaging scans. 3D printing enhances design flexibility and production efficiency by streamlining prototyping and reducing material waste.",
     "answers": [
-      "Diverse",
+      "diverse",
       "such",
       "plastic",
       "and",

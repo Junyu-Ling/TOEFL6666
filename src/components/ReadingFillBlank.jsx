@@ -212,13 +212,15 @@ function ReadingFillBlank() {
 
   const handleClearAll = () => {
     if (!window.confirm("确定清除全部作答记录？此操作不可撤销。")) return;
+    const currentIndex = articleIndex;
     const cleared = clearReadingFillBlankProgress();
-    setProgress(cleared);
+    const withIndex = patchArticleIndex(cleared, currentIndex);
+    setProgress(withIndex);
     setViewMode("practice");
-    setSelectedReviewIndex(0);
-    const firstArticle = articles[0];
-    if (!firstArticle) return;
-    setInputs(getArticleInputs(firstArticle, cleared.inputsByArticle));
+    setSelectedReviewIndex(currentIndex);
+    const currentArticle = articles[currentIndex];
+    if (!currentArticle) return;
+    setInputs(getArticleInputs(currentArticle, withIndex.inputsByArticle));
     setChecked(false);
     setGrade(null);
   };
@@ -292,6 +294,10 @@ function ReadingFillBlank() {
             </>
           ) : (
             <>
+              <button type="button" className="rfill__review-btn" onClick={handleOpenReview}>
+                Review
+                <ReviewBookmarkIcon />
+              </button>
               <button
                 type="button"
                 className="rfill__nav-btn"
@@ -299,10 +305,6 @@ function ReadingFillBlank() {
                 disabled={articleIndex <= 0}
               >
                 ‹ Prev
-              </button>
-              <button type="button" className="rfill__review-btn" onClick={handleOpenReview}>
-                Review
-                <ReviewBookmarkIcon />
               </button>
               <button
                 type="button"
