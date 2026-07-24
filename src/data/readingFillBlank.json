@@ -830,8 +830,8 @@
   {
     "id": 62,
     "title": "Human Cognition",
-    "raw": "Human cognition refers to the mental processes involved in acquiring, processing, storing, and using knowledge. These inc____ [4] the wa_ [1] that peo___ [3] interpret sensory sig____ [4] (perception), h__ [2] we st___ [3] and retr____ [4] information (mem___ [3]), how lang____ [4] is prod____ [4] (speech), and how humans analyze and solve problems. Researchers study cognitive functions to uncover how the brain processes information and how these processes influence behavior. Insights from cognitive science can improve educational methods and help develop interventions for cognitive disorders.",
-    "answers": ["include", "way", "people", "signals", "how", "store", "retrieve", "memory", "language", "produced"]
+    "raw": "Human cognition refers to the mental processes involved in acquiring, processing, storing, and using knowledge. These inc____ [4] the wa__ [2] that peo___ [3] interpret sensory sig____ [4] (perception), h__ [2] we st___ [3] and retr____ [4] information (mem___ [3]), how lang____ [4] is prod____ [4] (speech), and how humans analyze and solve problems. Researchers study cognitive functions to uncover how the brain processes information and how these processes influence behavior. Insights from cognitive science can improve educational methods and help develop interventions for cognitive disorders.",
+    "answers": ["include", "ways", "people", "signals", "how", "store", "retrieve", "memory", "language", "produced"]
   },
   {
     "id": 63,
