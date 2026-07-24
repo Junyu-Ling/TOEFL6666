@@ -2,43 +2,434 @@
   {
     "id": 1,
     "title": "Cave Paintings / Drawing in Caves",
-    "raw": "We know from drawings that have been preserved in caves for over 10,000 years that early humans performed dances as a group activity. We might think that prehistoric people concentrated only on the basic wo____ [4] that wa____ [1] required f____ [2] survival: hun________ [4], gather______ [3] fo____ [2], and making weapons and garments. However, it is clear from the record that group dancing was important to them. They made masks and costumes; they used much energy in the process of dancing; they recorded more drawings of dancing than of any other group activity.",
-    "answers": ["work", "was", "for", "hunting", "gathering", "food"]
+    "raw": "We know from drawings that have been preserved in caves for over 10,000 years that early humans performed dances as a group activity. We might think that prehistoric people concentrated only on the basic wo__ [2] that wa_ [1] required f__ [2] survival: hun____ [4], gather___ [3] fo__ [2], and making weapons and garments. However, it is clear from the record that group dancing was important to them. They made masks and costumes; they used much energy in the process of dancing; they recorded more drawings of dancing than of any other group activity.",
+    "answers": [
+      "work",
+      "was",
+      "for",
+      "hunting",
+      "gathering",
+      "food"
+    ]
   },
   {
     "id": 2,
     "title": "Color and Pigment",
-    "raw": "Throughout history, color and pigment have played a central role in art, shaping how we perceive and interpret visual experiences. Artists ha____ [2] long under________ [5] the emot______ [5] and psycho________ [8] power o____ [1] color, util______ [4] it t____ [1] convey mo____ [2], create emph______ [4], and ev______ [3] responses. For example, red often symbolizes passion, while blue can elicit calmness. These symbolic associations can vary across cultures and time periods, allowing artists to communicate deeper layers of meaning through their color choices.",
-    "answers": ["have", "understood", "emotional", "psychological", "of", "utilizing", "to", "mood", "emphasis", "evoke"]
+    "raw": "Throughout history, color and pigment have played a central role in art, shaping how we perceive and interpret visual experiences. Artists ha__ [2] long under_____ [5] the emot_____ [5] and psycho_______ [7] power o_ [1] color, util_____ [5] it t_ [1] convey mo__ [2], create emph____ [4], and ev___ [3] responses. For example, red often symbolizes passion, while blue can elicit calmness. These symbolic associations can vary across cultures and time periods, allowing artists to communicate deeper layers of meaning through their color choices.",
+    "answers": [
+      "have",
+      "understood",
+      "emotional",
+      "psychological",
+      "of",
+      "utilizing",
+      "to",
+      "mood",
+      "emphasis",
+      "evoke"
+    ]
   },
   {
     "id": 3,
     "title": "Atmosphere",
-    "raw": "The atmosphere is a dynamic and complex system, shaped by countless interacting variables such as solar radiation, air pressure, and moisture levels. Meteorologists use advanced mod____ [3] to simu______ [4] these intera________ [5], b____ [2] predi______ [5] weather rem______ [4] a chal______ [5] due t____ [1] t____ [1] inher______ [4] chaotic nat____ [3] o____ [1] atmos________ [6] processes. Small changes in initial conditions can lead to vastly different outcomes, making long-term forecasts especially uncertain. Despite technological progress, the atmosphere's unpredictability continues to pose limits to accurate and consistent weather prediction.",
-    "answers": ["models", "simulate", "interactions", "but", "predicting", "remains", "challenge", "to", "the", "inherently", "nature", "of", "atmospheric"]
+    "raw": "The atmosphere is a dynamic and complex system, shaped by countless interacting variables such as solar radiation, air pressure, and moisture levels. Meteorologists use advanced mod___ [3] to simu____ [4] these intera______ [6], b__ [2] predi_____ [5] weather rem____ [4] a chal_____ [5] due t_ [1] t__ [2] inher_____ [5] chaotic nat___ [3] o_ [1] atmos______ [6] processes. Small changes in initial conditions can lead to vastly different outcomes, making long-term forecasts especially uncertain. Despite technological progress, the atmosphere's unpredictability continues to pose limits to accurate and consistent weather prediction.",
+    "answers": [
+      "models",
+      "simulate",
+      "interactions",
+      "but",
+      "predicting",
+      "remains",
+      "challenge",
+      "to",
+      "the",
+      "inherently",
+      "nature",
+      "of",
+      "atmospheric"
+    ]
   },
   {
     "id": 4,
-    "title": "Technology and Society",
-    "raw": "In recent decades, tech________ [5] adv________ [5] have trans______ [4] nearly every aspect o____ [1] modern society. From communi________ [5] and transpor________ [5] to health care and ed________ [5], digital tools have reshaped how people wo____ [2], learn, and interact. These changes have boosted pro________ [5] and effi________ [5] in many sectors, yet they have also introduced new chal________ [5]: concerns ab____ [2] pri________ [4], data secu________ [4], and the need t____ [1] maintain a bal________ [4] between innovation and human well-being.",
-    "answers": ["technological", "advancements", "transformed", "of", "communication", "transportation", "education", "work", "productivity", "efficiency", "challenges", "about", "privacy", "security", "to", "balance"]
+    "title": "Foundational Skills for Academic Success",
+    "raw": "What are some foundational skills for academic success? Critical thin____ [4] allows stud____ [4] t_ [1] appr____ [4] problems systema_______ [7], analyze infor______ [6], and ma__ [2] connections bet____ [4] ideas. Al__ [2] important a__ [2] soft skills li__ [2] time management and social skills. Time management is helpful for balancing studies, extracurricular activities, and personal life in an efficient manner. Social skills are good predictors of academic success because those who communicate effectively can form positive relationships with their peers and professors.",
+    "answers": [
+      "thinking",
+      "students",
+      "to",
+      "approach",
+      "systematically",
+      "information",
+      "make",
+      "between",
+      "Also",
+      "are",
+      "like"
+    ]
   },
   {
     "id": 5,
-    "title": "Biodiversity",
-    "raw": "Biodiversity refers t____ [1] the va________ [5] o____ [1] life o____ [1] Earth, encom________ [5] the full range o____ [1] species, eco________ [4], and gene________ [4] diversity with____ [2] natural habi________ [4]. Healthy eco________ [4] provide essen________ [5] services—clean air, fertile soil, and stable climate—that sustain human commu________ [5]. However, habi________ [4] loss, pollution, and climate change are driving species exti________ [4] at an alarming rate. Conser________ [5] efforts aim t____ [1] protect endan________ [4] species and preserve the resi________ [4] o____ [1] eco________ [4], which is critical f____ [2] long-term susta________ [5] and the intercon________ [5] web o____ [1] life.",
-    "answers": ["to", "variety", "of", "on", "encompassing", "of", "ecosystems", "genetic", "within", "habitats", "ecosystems", "essential", "communities", "habitat", "extinction", "conservation", "to", "endangered", "resilience", "of", "ecosystems", "for", "sustainability", "interconnected", "of"]
+    "title": "Social Organization",
+    "raw": "In the prehistoric era, social organization was intricately linked to the prevailing environmental conditions, which dictated the migratory patterns and settlement choices of early human groups. These commu______ [6] often deve_____ [5] cohesive un___ [3] based o_ [1] kinship ti__ [2], establishing a sim___ [3] social struc____ [4] that facil______ [6] cooperative hun____ [4] and gath_____ [5] o_ [1] food. Leadership roles emerged naturally, typically assumed by individuals possessing superior survival skills or profound knowledge of the terrain. The distribution of resources, particularly food, was a critical factor, often determining the power dynamics within the group.",
+    "answers": [
+      "communities",
+      "developed",
+      "units",
+      "on",
+      "ties",
+      "simple",
+      "structure",
+      "facilitated",
+      "hunting",
+      "gathering",
+      "of"
+    ]
   },
   {
     "id": 6,
-    "title": "Urbanization",
-    "raw": "Urbanization—the shift o____ [1] populations fr____ [2] rural t____ [1] urban areas—has accelerated rapidly over the past century. Cities offer greater access t____ [1] jobs, ed________ [5], and health care, drawing millions through rural-urban mig________ [5]. Yet rapid growth strains infra________ [5]: roads become congest______ [4], air qual________ [4] declines, and affordable housing grows scarce. Effective urban plann______ [4] requires invest______ [4] in public transit, green spaces, and susta________ [4] infrastructure. When done well, cities can foster vibrant commu________ [5] and improve the qual________ [4] o____ [1] life f____ [2] residents while minimizing environmental impact.",
-    "answers": ["of", "from", "to", "to", "education", "migration", "infrastructure", "congested", "quality", "planning", "investment", "sustainable", "communities", "quality", "of", "for"]
+    "title": "Extraterrestrial Organisms",
+    "raw": "In recent years, the search for extraterrestrial organisms has increasingly focused on water as an important clue. On Earth, water supports biological processes, and its detection on ice-covered moons such as Europa and Enceladus has attracted scientific attention. Evid____ [4] suggests th__ [2] these i__ [2] moons con____ [4] oceans ke__ [2] liquid b_ [1] tidal hea____ [4], a pro____ [4] in wh___ [3] gravitational forces generated by nearby planets produce internal warmth. This energy source may create environments comparable to Earth's deep-sea hydrothermal regions, where biological activity occurs without sunlight.",
+    "answers": [
+      "Evidence",
+      "that",
+      "icy",
+      "contain",
+      "kept",
+      "by",
+      "heating",
+      "process",
+      "which"
+    ]
   },
   {
     "id": 7,
-    "title": "Artificial Intelligence",
-    "raw": "Artificial intelligence (AI) refers t____ [1] computer systems designed t____ [1] perform tasks that typically require human intel________ [5]. Modern AI relies o____ [1] complex algo________ [5] and vast amounts o____ [1] data t____ [1] recognize patterns, make deci________ [4], and even generate creative content. AI has already transformed industries through auto________ [5] and advanced data pro________ [5]. However, its rapid adoption raises ethi________ [4] questions ab____ [2] bias, transpar________ [4], and account________ [4]. Understanding both the poten________ [4] and the limit________ [4] o____ [1] AI is essential f____ [2] ensuring that humans and machines collab________ [5] responsibly in the years ahead.",
-    "answers": ["to", "to", "intelligence", "on", "algorithms", "of", "to", "decisions", "automation", "processing", "ethical", "about", "transparency", "accountability", "potential", "limitations", "of", "for", "collaborate"]
+    "title": "Craftsmanship",
+    "raw": "Craftsmanship has undergone a profound transformation over the centuries, shifting from a demonstration of manual skill t_ [1] an expression of artistic vision and communal identity. In medieval Europe, skilled ma____ [4]—known as arti____ [4]—were highly valued not only for their tech_____ [5] expertise b__ [2] also f__ [2] their abi____ [4] to inf___ [3] their crea_____ [5] with mea____ [4] and repr_____ [5] deeper spir_____ [5] or cult____ [4] themes. The intricate details in wood____ [4], tex_____ [5], and pot____ [4] served a_ [1] a testa____ [4] to the craftsman's mastery and the mo____ [4] prevalent during that era.",
+    "answers": [
+      "to",
+      "makers",
+      "artisans",
+      "technical",
+      "but",
+      "for",
+      "ability",
+      "infuse",
+      "creations",
+      "meaning",
+      "represent",
+      "spiritual",
+      "cultural",
+      "woodwork",
+      "textiles",
+      "pottery",
+      "as",
+      "testament",
+      "motifs"
+    ]
+  },
+  {
+    "id": 8,
+    "title": "Tectonic Plates",
+    "raw": "Tectonic plates are large pieces of Earth's outer shell that move slowly over the planet's surface, and their study is fundamental in understanding Earth's geological activity. These plates fit toge____ [4] much li__ [2] a jig___ [3] puzzle a__ [2] constantly sh___ [3], causing earth______ [6], the form_____ [5] of moun_____ [5], and volc____ [4] eru______ [6]. Scien_____ [5] analyze these movements to better understand natural disasters and how Earth's surface changes over time. Advances in this field have significantly improved our ability to monitor and prepare for natural disasters as well as to mitigate their impacts.",
+    "answers": [
+      "together",
+      "like",
+      "jigsaw",
+      "and",
+      "shift",
+      "earthquakes",
+      "formation",
+      "mountains",
+      "volcanic",
+      "eruptions",
+      "Scientists"
+    ]
+  },
+  {
+    "id": 9,
+    "title": "Glaciers (1)",
+    "raw": "Glaciers are massive, slow-moving bodies of ice that form in areas where snow accumulates over time and compresses into ice. They can cha___ [3] landscapes thr____ [4] processes li__ [2] erosion a__ [2] deposition. A_ [1] glaciers mo__ [2], they ca___ [3] out val____ [4] and fjords, lea____ [4] behind distinct geological features. Scientists study glaciers to understand past climate conditions and predict future changes. Glaciers are of particular concern today because their melting contributes to rising sea levels, impacting coastal communities worldwide.",
+    "answers": [
+      "change",
+      "through",
+      "like",
+      "and",
+      "As",
+      "move",
+      "carve",
+      "valleys",
+      "leaving"
+    ]
+  },
+  {
+    "id": 10,
+    "title": "Mass Extinction",
+    "raw": "Mass extinctions have periodically reshaped the diversity of life on Earth, representing significant biological and ecological shifts. The most famous event, the Cretaceous-Paleogene extinction, occurred approximately 66 million years ago and led to the demise of the dinosaurs. Large-scale los___ [3] of spe____ [4] are o____ [4] caused b_ [1] catastrophic eve___ [3] such a_ [1] volcanic erup_____ [5], asteroid imp____ [4], and cli____ [4] change. T__ [2] resulting damage to biodiversity disrupts ecosystems and alters evolutionary trajectories. Studying past extinctions provides insights into the resilience and adaptability of life, helping scientists predict and mitigate future biodiversity loss.",
+    "answers": [
+      "losses",
+      "species",
+      "often",
+      "by",
+      "events",
+      "as",
+      "eruptions",
+      "impacts",
+      "climate",
+      "The"
+    ]
+  },
+  {
+    "id": 11,
+    "title": "Human History",
+    "raw": "Archaeologists typically study human history and prehistory through the excavation of artifacts buried underground. Sometimes, how____ [4], they disc____ [4] artifacts subm_____ [5] underwater. A stone wall w__ [2] found ben____ [4] the Baltic Sea i_ [1] 2012 th__ [2] dates t_ [1] over 10,000 ye___ [3] ago. Resea______ [6] believe it was used by hunter-gatherer societies to guide and trap reindeer. The wall consists of approximately 1,670 stones and is considered one of the oldest documented hunting structures made by humans.",
+    "answers": [
+      "however",
+      "discover",
+      "submerged",
+      "was",
+      "beneath",
+      "in",
+      "that",
+      "to",
+      "years",
+      "Researchers"
+    ]
+  },
+  {
+    "id": 12,
+    "title": "Conservation Ecology",
+    "raw": "Conservation ecology focuses on protecting and restoring natural habitats to preserve biodiversity. Ecologists st___ [3] ecosystems to understand h__ [2] different spe____ [4] interact wi__ [2] their envir______ [6]. This rese____ [4] informs strat_____ [5] for mana____ [4] natural reso_____ [5] and mitigating human impact. Efforts include habitat restoration, species protection, and sustainable practices. Understanding conservation principles is crucial for maintaining ecological balance and ensuring the survival of diverse species. Corridor creation connects fragmented habitats, while captive breeding programs help recover endangered species, and citizen science initiatives engage communities in monitoring local ecosystems and wildlife populations.",
+    "answers": [
+      "study",
+      "how",
+      "species",
+      "with",
+      "environment",
+      "research",
+      "strategies",
+      "managing",
+      "resources"
+    ]
+  },
+  {
+    "id": 13,
+    "title": "Bisons",
+    "raw": "The Great Plains of North America were once home to vast herds of bison, which played a crucial role in the lives of Indigenous peoples, who made use of bison meat, hides, and bones. These commu______ [6] relied o_ [1] bison f__ [2] food, clot____ [4], and she____ [4]. Hunting prac_____ [5] were o____ [4] sophisticated, invo_____ [5] coordinated eff____ [4] to dr___ [3] bison into traps or over cliffs. The arrival of European settlers dramatically altered the landscape, leading to overhunting and near extinction of bison populations. Conservation efforts in the twentieth century helped restore bison numbers, symbolizing resilience and recovery.",
+    "answers": [
+      "communities",
+      "on",
+      "for",
+      "clothing",
+      "shelter",
+      "practices",
+      "often",
+      "involving",
+      "efforts",
+      "drive"
+    ]
+  },
+  {
+    "id": 14,
+    "title": "Biochemistry",
+    "raw": "Rooted in both biology and chemistry, modern biochemistry has grown into a foundational science that explores the molecular basis of life. I_ [1] emerged fr__ [2] early investi_______ [7] into nat____ [4] processes li__ [2] fermentation a__ [2] digestion a__ [2] n__ [2] encompasses t__ [2] study o_ [1] biomolecules su__ [2] as proteins, carbohydrates, and nucleic acids. Biochemistry plays a vital role in diverse fields including agriculture, environmental science, and pharmacology, contributing to innovations in areas like crop improvement, pollution control, and drug design, for example. Its broad applications continue to shape our understanding of living systems and support solutions to global challenges.",
+    "answers": [
+      "It",
+      "from",
+      "investigations",
+      "natural",
+      "like",
+      "and",
+      "and",
+      "now",
+      "the",
+      "of",
+      "such"
+    ]
+  },
+  {
+    "id": 15,
+    "title": "Plants",
+    "raw": "Plants have tiny holes called stomata on their leaves and stems that allow them to take in carbon dioxide from the air and release oxygen into the air. How____ [4], stomata c__ [2] also l__ [2] water vapor esc___ [3], which cau___ [3] problems i_ [1] dry enviro______ [6]. To man___ [3] this, dur___ [3] hot per____ [4] when water loss is especially severe, some plants close their stomata temporarily. Another special adaptation is thick, waxy coatings on plant leaves that help conserve water.",
+    "answers": [
+      "However",
+      "can",
+      "let",
+      "escape",
+      "causes",
+      "in",
+      "environments",
+      "manage",
+      "during",
+      "periods"
+    ]
+  },
+  {
+    "id": 16,
+    "title": "The Middle Ages",
+    "raw": "The Middle Ages was a period in Europe that spanned roughly between the fifth and fifteenth centuries. This e__ [2] saw signi______ [6] changes, mo__ [2] notably t__ [2] spread o_ [1] Christianity a__ [2] the estab________ [8] of powe____ [4] kingdoms. Des____ [4] being o____ [4] referred to as the \"Dark Ages,\" a name that suggests stagnation and decline, this period also witnessed remarkable achievements in art, architecture, and learning, laying the groundwork for Europe's transition into the Renaissance and the age of discovery.",
+    "answers": [
+      "era",
+      "significant",
+      "most",
+      "the",
+      "of",
+      "and",
+      "establishment",
+      "powerful",
+      "Despite",
+      "often"
+    ]
+  },
+  {
+    "id": 17,
+    "title": "Paleontology",
+    "raw": "Paleontology, the study of ancient life through fossils, provides valuable insights into Earth's biological history. Fossils, incl_____ [5] bones and she___ [3], offer evid____ [4] of orga_____ [5] that li___ [3] millions o_ [1] years a__ [2]. By stud____ [4] these rem____ [4], paleontologists can reconstruct the appearance, behavior, and ecological relationships of extinct species. Techniques such as radiometric dating help determine the age of fossils and the geological context in which they were found. Research in paleontology contributes to our understanding of evolutionary processes, environmental changes, and the development of life on Earth.",
+    "answers": [
+      "including",
+      "shells",
+      "evidence",
+      "organisms",
+      "lived",
+      "of",
+      "ago",
+      "studying",
+      "remains"
+    ]
+  },
+  {
+    "id": 18,
+    "title": "Oceanography",
+    "raw": "Oceanography is the study of the physical, chemical, and biological aspects of the ocean. This fi___ [3] encompasses t__ [2] exploration o_ [1] ocean curr____ [4], marine ecosy_____ [5], and geolo_____ [5] seabed struc_____ [5]. Oceanographers u__ [2] satellites a__ [2] other adva____ [4] technology to monitor and analyze ocean conditions. By tracking sea surface temperatures, currents, salinity, and other features, researchers contribute to our understanding of climate change. Their work is vital for sustaining ocean health and preserving marine biodiversity.",
+    "answers": [
+      "field",
+      "the",
+      "of",
+      "currents",
+      "ecosystems",
+      "geological",
+      "structures",
+      "use",
+      "and",
+      "advanced"
+    ]
+  },
+  {
+    "id": 19,
+    "title": "Art Colonies",
+    "raw": "Art colonies have historically served as vibrant communities where artists gather to share ideas, collaborate, and create. The comm____ [4] environment all___ [3] artists t_ [1] receive feed____ [4] from pe___ [3] and exper_____ [5] with n__ [2] techniques, enri_____ [5] the arti____ [4] practice. Su__ [2] enclaves often emerge in picturesque locations that inspire creativity, such as coastal towns or rural landscapes. Notable art colonies, like those in Montmartre or Taos, have produced influential works and fostered movements such as Impressionism and Modernism. Contemporary art colonies continue this tradition, adapting to new mediums and technologies while maintaining a spirit of collaboration and innovation.",
+    "answers": [
+      "communal",
+      "allows",
+      "to",
+      "feedback",
+      "peers",
+      "experiment",
+      "new",
+      "enriching",
+      "artistic",
+      "Such"
+    ]
+  },
+  {
+    "id": 20,
+    "title": "Spider Silk",
+    "raw": "The unusual properties of spider silk—a remarkable combination of strength and elasticity—have long attracted the attention of many. Spider si__ [2] has a brea____ [4] point f__ [2] greater th__ [2] steel a__ [2] may str____ [4] its fu__ [2] length bef___ [3] breaking: a 0.01 centi_____ [5] diameter strand can support a weight of up to 0.5 grams without snapping.",
+    "answers": [
+      "silk",
+      "breaking",
+      "far",
+      "than",
+      "and",
+      "stretch",
+      "full",
+      "before",
+      "centimeter"
+    ]
+  },
+  {
+    "id": 21,
+    "title": "Medieval European",
+    "raw": "Medieval European history, lasting approximately from 500 C.E. to 1500 C.E., is marked by significant cultural, political, and economic changes. Feudalism domi_____ [5] t__ [2] soc___ [3] structure, wi__ [2] lords gove____ [4] lands a__ [2] vassals prov____ [4] military ser____ [4]. The Church exe____ [4] substantial infl_____ [5] over da___ [3] life and governance. Trade routes expanded, facilitating the exchange of goods and ideas. Art and architecture flourished, exemplified by Gothic cathedrals and illuminated manuscripts. Studying this era involves analyzing historical documents, artifacts, and architectural remains to understand the complexities of medieval society.",
+    "answers": [
+      "dominated",
+      "the",
+      "social",
+      "with",
+      "governed",
+      "and",
+      "provided",
+      "service",
+      "exerted",
+      "influence",
+      "daily"
+    ]
+  },
+  {
+    "id": 22,
+    "title": "Underwater Robotics",
+    "raw": "Advancements in underwater robotics are revolutionizing ocean exploration. These robots, known as autonomous underwater vehicles (AUVs), can navigate deep-sea environments independently. Equipped with sen____ [4] and cam____ [4], AUVs col____ [4] data o_ [1] marine li__ [2], ocean curr____ [4], and under_____ [5] geology. Th__ [2] can re___ [3] depths th__ [2] are inaccessible to human divers, providing valuable insights into uncharted regions. Researchers use AUVs to study the impact of climate change on ocean ecosystems and to explore underwater archaeological sites, enhancing our understanding of the ocean.",
+    "answers": [
+      "sensors",
+      "cameras",
+      "collect",
+      "on",
+      "life",
+      "currents",
+      "underwater",
+      "They",
+      "reach",
+      "that"
+    ]
+  },
+  {
+    "id": 23,
+    "title": "Art",
+    "raw": "Art has long reflected human culture, mirroring society's values and beliefs. Throughout history, artists have expressed emotions, told stories, and challenged norms. During the Renaissance, figures like Leonardo da Vinci and Michelangelo explored ana____ [4] and persp______ [6], echoing t__ [2] era's inte____ [4] in sci____ [4] and nat___ [3]. Later, move_____ [5] such a_ [1] Impressionism a__ [2] Abstract Expressionism rede_____ [5] traditional boundaries. These styles invited viewers to see the world differently, highlighting art's lasting ability to provoke thought, inspire change, and deepen our understanding of human experience.",
+    "answers": [
+      "anatomy",
+      "perspective",
+      "the",
+      "interest",
+      "science",
+      "nature",
+      "movements",
+      "as",
+      "and",
+      "redefined"
+    ]
+  },
+  {
+    "id": 24,
+    "title": "3D Printing",
+    "raw": "The advancement of 3D printing technology has revolutionized manufacturing by enabling precise, layer-by-layer fabrication of complex objects. 3D printing can use div____ [4] materials su__ [2] as plas____ [4], metals, a__ [2] ceramics. Engi_____ [5] are ab__ [2] to fabr_____ [5] lightweight, str___ [3] components wi__ [2] internal struc_____ [5] that are impossible to produce using traditional methods. In the medical field, 3D printing facilitates the production of patient-specific implants and prosthetics tailored to anatomical data from imaging scans. 3D printing enhances design flexibility and production efficiency by streamlining prototyping and reducing material waste.",
+    "answers": [
+      "diverse",
+      "such",
+      "plastics",
+      "and",
+      "Engineers",
+      "able",
+      "fabricate",
+      "strong",
+      "with",
+      "structures"
+    ]
+  },
+  {
+    "id": 25,
+    "title": "Philosophy",
+    "raw": "The field of philosophy of mind delves into the nature of consciousness, thought processes, and the intricate relationship between the mind and body. I_ [1] addresses funda______ [6] questions ab___ [3] perception, iden____ [4], self-awareness, a__ [2] subjective exper_____ [5]. The disci_____ [5] explores h__ [2] and w__ [2] we perc____ [4] the world as we do, examining the mechanisms behind thought, emotion, and awareness. This field is a deeply interdisciplinary one that intersects with psychology, neuroscience, and cognitive science, providing a comprehensive approach to understanding human cognition and consciousness.",
+    "answers": [
+      "It",
+      "fundamental",
+      "about",
+      "identity",
+      "and",
+      "experience",
+      "discipline",
+      "how",
+      "why",
+      "perceive"
+    ]
   }
 ]
