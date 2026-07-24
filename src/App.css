@@ -4841,6 +4841,27 @@ body {
   text-align: left;
   white-space: pre-wrap;
   word-wrap: break-word;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+.rfill__passage ::selection {
+  background: transparent;
+  color: inherit;
+}
+
+.rfill__passage .rfill-blank__box {
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+@media print {
+  .rfill__passage {
+    display: none !important;
+  }
 }
 
 [data-theme="dark"] .rfill__passage {
@@ -4849,6 +4870,8 @@ body {
 
 .rfill__text {
   white-space: inherit;
+  -webkit-user-drag: none;
+  user-drag: none;
 }
 
 .rfill-blank {
@@ -4858,6 +4881,8 @@ body {
 
 .rfill-blank__prefix {
   font-weight: 500;
+  -webkit-user-drag: none;
+  user-drag: none;
 }
 
 .rfill-blank__boxes {

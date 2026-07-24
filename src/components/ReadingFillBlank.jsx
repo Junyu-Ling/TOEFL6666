@@ -12,6 +12,7 @@ import {
   patchArticleIndex,
   patchArticleInputs,
 } from "../services/readingFillBlankProgress";
+import { usePassageContentProtection } from "../hooks/usePassageContentProtection";
 
 const BlankInput = forwardRef(function BlankInput(
   { blank, letters, checked, result, onChange, onFilled, onEnter },
@@ -108,6 +109,7 @@ function ReadingFillBlank() {
   const [checked, setChecked] = useState(() => Boolean(progress.checkedByArticle?.[article?.id]));
   const [grade, setGrade] = useState(null);
   const blankRefs = useRef({});
+  const passageRef = useRef(null);
   const blankIds = useMemo(
     () => article?.segments.filter((segment) => segment.type === "blank").map((segment) => segment.id) ?? [],
     [article]
@@ -124,6 +126,8 @@ function ReadingFillBlank() {
     },
     [blankIds]
   );
+
+  usePassageContentProtection(passageRef);
 
   const syncArticle = useCallback(
     (nextIndex) => {
@@ -246,7 +250,7 @@ function ReadingFillBlank() {
       <div className="rfill__body">
         <p className="rfill__instruction">Fill in the missing letters in the paragraph</p>
 
-        <p className="rfill__passage">
+        <p ref={passageRef} className="rfill__passage">
           {article.segments.map((segment, index) => {
             if (segment.type === "text") {
               return (
