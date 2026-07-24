@@ -184,7 +184,8 @@ body {
   border-bottom: 1px solid var(--border);
   position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: 200;
+  flex-shrink: 0;
 }
 
 .navbar__brand {
@@ -427,7 +428,9 @@ body {
   padding: 0;
   display: flex;
   flex-direction: column;
+  flex: 1;
   min-height: 0;
+  overflow: hidden;
 }
 
 .main--rfill > section[hidden] {
@@ -4699,6 +4702,7 @@ body {
   padding: 0.85rem 1.25rem;
   background: #1f6666;
   color: #fff;
+  flex-shrink: 0;
 }
 
 .rfill__header-left {
@@ -4786,6 +4790,7 @@ body {
   background: #fff;
   font-size: 0.8125rem;
   color: var(--text-muted);
+  flex-shrink: 0;
 }
 
 [data-theme="dark"] .rfill__subbar {

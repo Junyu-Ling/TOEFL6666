@@ -1345,12 +1345,6 @@ export default function App() {
           </TabPanel>
 
           {appMode === "toefl" ? (
-            <TabPanel tabId="reading-fill" activeTab={activeTab}>
-              {readingFillPanel}
-            </TabPanel>
-          ) : null}
-
-          {appMode === "toefl" ? (
             <TabPanel tabId="reading-vocab" activeTab={activeTab}>
               {readingVocabPanel}
             </TabPanel>
@@ -1367,6 +1361,12 @@ export default function App() {
           <TabPanel tabId="recognized" activeTab={activeTab}>
             {recognizedPanel}
           </TabPanel>
+
+          {appMode === "toefl" ? (
+            <TabPanel tabId="reading-fill" activeTab={activeTab}>
+              {readingFillPanel}
+            </TabPanel>
+          ) : null}
         </ActiveTabProvider>
       </main>
 
