@@ -546,12 +546,13 @@
   {
     "id": 33,
     "title": "Modern Bicycle",
-    "raw": "The earliest ancestor of the modern bicycle is probably a machine used in England in the early 1800s called a hobbyhorse. It h__ [2] two whe___ [3] and a pl___ [3] to s__ [2], but no pedals; rid___ [3] would pu__ [2] it al___ [3] with th___ [3] feet. La___ [3], an inventor added pedals directly to the front wheel, like a modern child's tricycle. This version, with a huge front wheel, was faster, but it was unsafe. Riders were high off the ground, and the two wheels were close together, making both balance and stopping difficult.",
+    "raw": "The earliest ancestor of the modern bicycle is probably a machine used in England in the early 1800s called a hobbyhorse. It h__ [2] two whe___ [3] and a pl___ [3] to s__ [2], but n_ [1] pedals; rid___ [3] would pu__ [2] it al___ [3] with th___ [3] feet. La___ [3], an inventor added pedals directly to the front wheel, like a modern child's tricycle. This version, with a huge front wheel, was faster, but it was unsafe. Riders were high off the ground, and the two wheels were close together, making both balance and stopping difficult.",
     "answers": [
       "had",
       "wheels",
       "place",
       "sit",
+      "no",
       "riders",
       "push",
       "along",
