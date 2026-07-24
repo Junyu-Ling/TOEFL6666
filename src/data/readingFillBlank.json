@@ -854,8 +854,8 @@
   {
     "id": 66,
     "title": "Animal Behaviors",
-    "raw": "In studying animal behavior, it becomes apparent that social hierarchies play a significant role in the lives of many terrestrial mammals. These hierarchies, often established through displays of dominance and submission, dictate acc___ [3] to reso_____ [5] suc_ [1] as food, ma___ [3], and she____ [4], thereby influ______ [6] survival a__ [2] reproductive suc____ [4]. Behavioral ecolo_____ [5] have obse____ [4] that such complex social structures can lead to increased group stability, as roles are clearly defined, reducing the frequency of potentially harmful disputes and promoting cooperation among group members.",
-    "answers": ["access", "resources", "such", "mates", "shelter", "influencing", "and", "success", "ecologists", "observed"]
+    "raw": "In studying animal behavior, it becomes apparent that social hierarchies play a significant role in the lives of many terrestrial mammals. These hierarchies, often established through displays of dominance and submission, dictate acc___ [3] to reso_____ [5] such a_ [1] food, ma___ [3], and she____ [4], thereby influ______ [6] survival a__ [2] reproductive suc____ [4]. Behavioral ecolo_____ [5] have obse____ [4] that such complex social structures can lead to increased group stability, as roles are clearly defined, reducing the frequency of potentially harmful disputes and promoting cooperation among group members.",
+    "answers": ["access", "resources", "as", "mates", "shelter", "influencing", "and", "success", "ecologists", "observed"]
   },
   {
     "id": 67,
