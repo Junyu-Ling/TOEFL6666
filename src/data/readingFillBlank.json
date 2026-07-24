@@ -914,8 +914,8 @@
   {
     "id": 76,
     "title": "The Trajectory of Modern History",
-    "raw": "The trajectory of modern history has been profoundly shaped by urbanization and industrialization, which redefined both physical landscapes and social structures. As industrial centers grew, rural populations increasingly abandoned agrarian lifestyles rooted in seasonal labor and subsistence farming for wage-based employment in cities. Urban enviro______ [6] became hu__ [2] of econ____ [4] opport_____ [5] a__ [2] social exch____ [4], where indiv______ [6] from var___ [3] backgrounds inter_____ [5], shared id___ [3], and contr______ [6] to emerging cultural movements. This shift marked a fundamental transformation in how people lived, worked, and connected within society.",
-    "answers": ["environments", "hubs", "economic", "opportunity", "and", "exchange", "individuals", "varied", "interacted", "ideas", "contributed"]
+    "raw": "The trajectory of modern history has been profoundly shaped by urbanization and industrialization, which redefined both physical landscapes and social structures. As industrial centers grew, rural populations increasingly abandoned agrarian lifestyles rooted in seasonal labor and subsistence farming for wage-based employment in cities. Urban enviro______ [6] became hu__ [2] of econ____ [4] opportunity a__ [2] social exch____ [4], where indiv______ [6] from var___ [3] backgrounds inter_____ [5], shared id___ [3], and contr______ [6] to emerging cultural movements. This shift marked a fundamental transformation in how people lived, worked, and connected within society.",
+    "answers": ["environments", "hubs", "economic", "and", "exchange", "individuals", "varied", "interacted", "ideas", "contributed"]
   },
   {
     "id": 77,
