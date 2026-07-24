@@ -1,4 +1,4 @@
-import { memo, useCallback, useMemo, useRef, useState } from "react";
+import { forwardRef, memo, useCallback, useImperativeHandle, useMemo, useRef, useState } from "react";
 import {
   getReadingFillBlankArticles,
   gradeArticle,
@@ -12,8 +12,15 @@ import {
   patchArticleInputs,
 } from "../services/readingFillBlankProgress";
 
-function BlankInput({ blank, letters, checked, result, onChange }) {
+const BlankInput = forwardRef(function BlankInput(
+  { blank, letters, checked, result, onChange, onFilled },
+  ref
+) {
   const refs = useRef([]);
+
+  useImperativeHandle(ref, () => ({
+    focusFirst: () => refs.current[0]?.focus(),
+  }));
 
   const handleChange = (index, value) => {
     const char = value.slice(-1).replace(/[^a-zA-Z]/g, "");
@@ -22,6 +29,10 @@ function BlankInput({ blank, letters, checked, result, onChange }) {
     onChange(next);
     if (char && index < letters.length - 1) {
       refs.current[index + 1]?.focus();
+      return;
+    }
+    if (char && index === letters.length - 1) {
+      onFilled?.();
     }
   };
 
@@ -77,7 +88,7 @@ function BlankInput({ blank, letters, checked, result, onChange }) {
       </span>
     </span>
   );
-}
+});
 
 function ReadingFillBlank() {
   const articles = useMemo(() => getReadingFillBlankArticles(), []);
@@ -90,6 +101,23 @@ function ReadingFillBlank() {
   );
   const [checked, setChecked] = useState(() => Boolean(progress.checkedByArticle?.[article?.id]));
   const [grade, setGrade] = useState(null);
+  const blankRefs = useRef({});
+  const blankIds = useMemo(
+    () => article?.segments.filter((segment) => segment.type === "blank").map((segment) => segment.id) ?? [],
+    [article]
+  );
+
+  const handleBlankFilled = useCallback(
+    (blankId) => {
+      const index = blankIds.indexOf(blankId);
+      if (index < 0 || index >= blankIds.length - 1) return;
+      const nextId = blankIds[index + 1];
+      requestAnimationFrame(() => {
+        blankRefs.current[nextId]?.focusFirst();
+      });
+    },
+    [blankIds]
+  );
 
   const syncArticle = useCallback(
     (nextIndex) => {
@@ -213,11 +241,15 @@ function ReadingFillBlank() {
             return (
               <BlankInput
                 key={segment.id}
+                ref={(node) => {
+                  blankRefs.current[segment.id] = node;
+                }}
                 blank={segment}
                 letters={letters}
                 checked={checked}
                 result={gradeMap.get(segment.id)}
                 onChange={(nextLetters) => handleInputChange(segment.id, nextLetters)}
+                onFilled={() => handleBlankFilled(segment.id)}
               />
             );
           })}
