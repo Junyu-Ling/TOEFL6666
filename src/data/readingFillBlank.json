@@ -138,8 +138,9 @@
   {
     "id": 9,
     "title": "Glaciers (1)",
-    "raw": "Glaciers are massive, slow-moving bodies of ice that form in areas where snow accumulates over time and compresses into ice. They can cha___ [3] landscapes thr____ [4] processes li__ [2] erosion a__ [2] deposition. A_ [1] glaciers mo__ [2], they ca___ [3] out val____ [4] and fjords, lea____ [4] behind distinct geological features. Scientists study glaciers to understand past climate conditions and predict future changes. Glaciers are of particular concern today because their melting contributes to rising sea levels, impacting coastal communities worldwide.",
+    "raw": "Glaciers are massive, slow-moving bodies of ice that form in areas where snow accumulates over time and compresses into ice. Th__ [2] can cha___ [3] landscapes thr____ [4] processes li__ [2] erosion a__ [2] deposition. A_ [1] glaciers mo__ [2], they ca___ [3] out val____ [4] and fjords, lea____ [4] behind distinct geological features. Scientists study glaciers to understand past climate conditions and predict future changes. Glaciers are of particular concern today because their melting contributes to rising sea levels, impacting coastal communities worldwide.",
     "answers": [
+      "They",
       "change",
       "through",
       "like",
