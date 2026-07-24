@@ -1447,9 +1447,9 @@
   {
     "id": 86,
     "title": "Circadian Rhythm",
-    "raw": "The circadian rhythm regulates sleep-wake cycles and other physiological processes, operating on a roughly 24-hour cycle influenced by external cues such as light and temperature. Disruptions to this rhythm, like Irre_____ [5] sleep patt____ [4], can le__ [2] to hea___ [3] issues incl_____ [5] insomnia, exhau_____ [5], and dec______ [6] cognitive func_____ [5]. Some rese_______ [7] are expl_____ [5] the mechanisms of circadian rhythms, aiming to develop treatments for sleep disorders and improve overall health. Understanding these rhythms is crucial for addressing various health concerns.",
+    "raw": "The circadian rhythm regulates sleep-wake cycles and other physiological processes, operating on a roughly 24-hour cycle influenced by external cues such as light and temperature. Disruptions to this rhythm, like irre_____ [5] sleep patt____ [4], can le__ [2] to hea___ [3] issues incl_____ [5] insomnia, exhau_____ [5], and dec______ [6] cognitive func_____ [5]. Some rese_______ [7] are expl_____ [5] the mechanisms of circadian rhythms, aiming to develop treatments for sleep disorders and improve overall health. Understanding these rhythms is crucial for addressing various health concerns.",
     "answers": [
-      "Irregular",
+      "irregular",
       "patterns",
       "lead",
       "health",
