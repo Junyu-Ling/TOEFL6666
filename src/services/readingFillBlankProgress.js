@@ -82,6 +82,16 @@ export function patchArticleChecked(progress, articleId, checked) {
   return next;
 }
 
+export function clearReadingFillBlankProgress() {
+  const empty = {
+    articleIndex: 0,
+    inputsByArticle: {},
+    checkedByArticle: {},
+  };
+  saveReadingFillBlankProgress(empty);
+  return empty;
+}
+
 export function patchArticleIndex(progress, articleIndex) {
   const next = { ...progress, articleIndex };
   saveReadingFillBlankProgress(next);

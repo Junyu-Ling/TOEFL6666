@@ -1,6 +1,12 @@
 import rawArticles from "../data/readingFillBlank.json";
+import { getArticleInputs } from "../services/readingFillBlankProgress";
 
 export const READING_FILL_BLANK_TOTAL = 114;
+export const READING_FILL_BLANK_QUESTION_TOTAL = 1140;
+
+export function getReadingFillBlankQuestionTotal(articles) {
+  return articles.reduce((sum, article) => sum + (article.blankCount ?? 0), 0);
+}
 
 export function parsePassage(raw, answers) {
   const segments = [];
@@ -61,8 +67,8 @@ export function getReadingFillBlankQuestionRange(articles, articleIndex) {
     start += articles[i]?.blankCount ?? 0;
   }
   const blankCount = articles[articleIndex]?.blankCount ?? 0;
-  const end = start + blankCount - 1;
-  return { start, end, total: end };
+  const end = blankCount > 0 ? start + blankCount - 1 : Math.max(start - 1, 0);
+  return { start, end, total: READING_FILL_BLANK_QUESTION_TOTAL };
 }
 
 export function getBlankSegments(article) {
@@ -71,6 +77,40 @@ export function getBlankSegments(article) {
 
 export function buildUserWord(prefix, letters) {
   return `${prefix}${letters.join("")}`.toLowerCase();
+}
+
+export function formatArticleUserAnswers(article, inputs) {
+  const blanks = getBlankSegments(article);
+  const words = blanks
+    .map((blank) => {
+      const letters = inputs[blank.id] ?? Array.from({ length: blank.fillLen }, () => "");
+      if (!letters.some((letter) => letter.trim())) return null;
+      return buildUserWord(blank.prefix, letters);
+    })
+    .filter(Boolean);
+
+  return words.length > 0 ? words.join(", ") : "—";
+}
+
+export function getReadingFillBlankReviewRows(articles, progress) {
+  return articles.map((article, index) => {
+    const range = getReadingFillBlankQuestionRange(articles, index);
+    const inputs = getArticleInputs(article, progress.inputsByArticle);
+    const checked = Boolean(progress.checkedByArticle?.[article.id]);
+    const grade = checked ? gradeArticle(article, inputs) : null;
+
+    return {
+      index,
+      articleId: article.id,
+      numberLabel: range.end >= range.start ? `${range.start}-${range.end}` : "—",
+      title: article.title,
+      type: "单词填空",
+      description: `第 ${article.id} 篇：${article.title}`,
+      userAnswers: formatArticleUserAnswers(article, inputs),
+      checked,
+      scoreLabel: grade ? `${grade.correctCount}/${grade.total}` : null,
+    };
+  });
 }
 
 export function gradeBlank(blank, letters) {
