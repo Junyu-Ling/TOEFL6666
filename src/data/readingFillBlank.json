@@ -631,9 +631,8 @@
   {
     "id": 38,
     "title": "Rock Formation",
-    "raw": "Rock formations offer valuable insights into Earth's history. Sed________ [8] layers, for example, reveal past environments. By analyzing their composition and arrangement, geologists can determine if an area was once underwater or exposed. Over time, pressure trans_____ [5] sediments in__ [2] solid ro__ [2], preserving evid____ [4] of anc____ [4] climates a__ [2] geological eve___ [3]. Fossils wit___ [3] layers sh__ [2] what organisms once lived there. Through such studies, scientists reconstruct Earth's past and gain a deeper understanding of the dynamic processes that continue to shape the planet's surface.",
+    "raw": "Rock formations offer valuable insights into Earth's history. Sedimentary layers, for example, reveal past environments. By analyzing their composition and arrangement, geologists can determine if an area was once underwater or exposed. Over time, pressure trans_____ [5] sediments in__ [2] solid ro__ [2], preserving evid____ [4] of anc____ [4] climates a__ [2] geological eve___ [3]. Fossils wit___ [3] layers sh__ [2] what orga_____ [5] once lived there. Through such studies, scientists reconstruct Earth's past and gain a deeper understanding of the dynamic processes that continue to shape the planet's surface.",
     "answers": [
-      "Sedimentary",
       "transforms",
       "into",
       "rock",
@@ -642,7 +641,8 @@
       "and",
       "events",
       "within",
-      "show"
+      "show",
+      "organisms"
     ]
   },
   {
