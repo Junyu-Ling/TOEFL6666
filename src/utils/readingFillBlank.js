@@ -55,6 +55,16 @@ export function getReadingFillBlankArticle(articleId) {
   return getReadingFillBlankArticles().find((article) => article.id === articleId) ?? null;
 }
 
+export function getReadingFillBlankQuestionRange(articles, articleIndex) {
+  let start = 1;
+  for (let i = 0; i < articleIndex; i += 1) {
+    start += articles[i]?.blankCount ?? 0;
+  }
+  const blankCount = articles[articleIndex]?.blankCount ?? 0;
+  const end = start + blankCount - 1;
+  return { start, end, total: end };
+}
+
 export function getBlankSegments(article) {
   return article.segments.filter((segment) => segment.type === "blank");
 }

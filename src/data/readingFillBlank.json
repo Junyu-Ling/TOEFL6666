@@ -121,7 +121,7 @@
   {
     "id": 8,
     "title": "Tectonic Plates",
-    "raw": "Tectonic plates are large pieces of Earth's outer shell that move slowly over the planet's surface, and their study is fundamental in understanding Earth's geological activity. These plates fit toge____ [4] much li__ [2] a jig___ [3] puzzle a__ [2] constantly sh___ [3], causing earth______ [6], the form_____ [5] of moun_____ [5], and volc____ [4] eru______ [6]. Scien_____ [5] analyze these movements to better understand natural disasters and how Earth's surface changes over time. Advances in this field have significantly improved our ability to monitor and prepare for natural disasters as well as to mitigate their impacts.",
+    "raw": "Tectonic plates are large pieces of Earth's outer shell that move slowly over the planet's surface, and their study is fundamental in understanding Earth's geological activity. These plates fit toge____ [4] much li__ [2] a jig___ [3] puzzle a__ [2] constantly sh___ [3], causing earth______ [6], the form_____ [5] of moun_____ [5], and volc____ [4] eruptions. Scien_____ [5] analyze these movements to better understand natural disasters and how Earth's surface changes over time. Advances in this field have significantly improved our ability to monitor and prepare for natural disasters as well as to mitigate their impacts.",
     "answers": [
       "together",
       "like",
@@ -132,7 +132,6 @@
       "formation",
       "mountains",
       "volcanic",
-      "eruptions",
       "Scientists"
     ]
   },

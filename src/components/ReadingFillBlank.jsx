@@ -1,6 +1,7 @@
 import { forwardRef, memo, useCallback, useImperativeHandle, useMemo, useRef, useState } from "react";
 import {
   getReadingFillBlankArticles,
+  getReadingFillBlankQuestionRange,
   gradeArticle,
   READING_FILL_BLANK_TOTAL,
 } from "../utils/readingFillBlank";
@@ -178,6 +179,7 @@ function ReadingFillBlank() {
   }
 
   const gradeMap = new Map(grade?.results?.map((item) => [item.blank.id, item]) ?? []);
+  const questionRange = getReadingFillBlankQuestionRange(articles, articleIndex);
 
   return (
     <div className="rfill">
@@ -214,7 +216,7 @@ function ReadingFillBlank() {
         <div className="rfill__subbar-left">
           <strong>Reading</strong>
           <span>
-            Question 1-{article.blankCount} of {article.blankCount}
+            Question {questionRange.start}-{questionRange.end} of {questionRange.total}
           </span>
         </div>
         <div className="rfill__subbar-right">
