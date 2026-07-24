@@ -22,15 +22,12 @@ export function parsePassage(raw, answers) {
       throw new Error(`Missing answer for blank #${answerIndex + 1}`);
     }
 
-    const derivedLen = Math.max(0, answer.length - prefix.length);
-    const fillLen = derivedLen > 0 ? derivedLen : bracketLen;
-
     segments.push({
       type: "blank",
       id: `b${answerIndex}`,
-      prefix,
+      prefix: prefix,
       answer,
-      fillLen,
+      fillLen: bracketLen,
       bracketLen,
     });
 
@@ -45,20 +42,14 @@ export function parsePassage(raw, answers) {
   return segments;
 }
 
-let cachedArticles = null;
-
 export function getReadingFillBlankArticles() {
-  if (cachedArticles) return cachedArticles;
-
-  cachedArticles = rawArticles.map((article) => ({
+  return rawArticles.map((article) => ({
     id: article.id,
     title: article.title,
     segments: parsePassage(article.raw, article.answers),
     answers: article.answers,
     blankCount: article.answers.length,
   }));
-
-  return cachedArticles;
 }
 
 export function getReadingFillBlankArticle(articleId) {
@@ -74,10 +65,11 @@ export function buildUserWord(prefix, letters) {
 }
 
 export function gradeBlank(blank, letters) {
-  const userWord = buildUserWord(blank.prefix, letters);
   const expected = blank.answer.toLowerCase();
-  const filledLen = letters.filter((ch) => ch.trim()).length;
-  const isCorrect = filledLen === blank.fillLen && userWord === expected;
+  const requiredLen = Math.max(0, expected.length - blank.prefix.length);
+  const filledPart = letters.join("").trim().toLowerCase();
+  const userWord = buildUserWord(blank.prefix, letters).trim().toLowerCase();
+  const isCorrect = filledPart.length === requiredLen && userWord === expected;
   return { isCorrect, userWord, expected };
 }
 

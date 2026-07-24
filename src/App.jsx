@@ -1334,7 +1334,7 @@ export default function App() {
           onStreakChange={setStreakData}
         />
 
-        <main className="main">
+        <main className={`main${activeTab === "reading-fill" ? " main--rfill" : ""}`}>
         <ActiveTabProvider value={activeTab}>
           <TabPanel tabId="practice" activeTab={activeTab}>
             {practicePanel}
@@ -1375,7 +1375,7 @@ export default function App() {
         micGranted={mic.isGranted}
       />
 
-      <MottoFooter />
+      {activeTab !== "reading-fill" ? <MottoFooter /> : null}
       </div>
 
       <SettingsPanel />

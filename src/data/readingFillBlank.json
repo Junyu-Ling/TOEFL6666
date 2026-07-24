@@ -16,5 +16,29 @@
     "title": "Atmosphere",
     "raw": "The atmosphere is a dynamic and complex system, shaped by countless interacting variables such as solar radiation, air pressure, and moisture levels. Meteorologists use advanced mod____ [3] to simu______ [4] these intera________ [5], b____ [2] predi______ [5] weather rem______ [4] a chal______ [5] due t____ [1] t____ [1] inher______ [4] chaotic nat____ [3] o____ [1] atmos________ [6] processes. Small changes in initial conditions can lead to vastly different outcomes, making long-term forecasts especially uncertain. Despite technological progress, the atmosphere's unpredictability continues to pose limits to accurate and consistent weather prediction.",
     "answers": ["models", "simulate", "interactions", "but", "predicting", "remains", "challenge", "to", "the", "inherently", "nature", "of", "atmospheric"]
+  },
+  {
+    "id": 4,
+    "title": "Technology and Society",
+    "raw": "In recent decades, tech________ [5] adv________ [5] have trans______ [4] nearly every aspect o____ [1] modern society. From communi________ [5] and transpor________ [5] to health care and ed________ [5], digital tools have reshaped how people wo____ [2], learn, and interact. These changes have boosted pro________ [5] and effi________ [5] in many sectors, yet they have also introduced new chal________ [5]: concerns ab____ [2] pri________ [4], data secu________ [4], and the need t____ [1] maintain a bal________ [4] between innovation and human well-being.",
+    "answers": ["technological", "advancements", "transformed", "of", "communication", "transportation", "education", "work", "productivity", "efficiency", "challenges", "about", "privacy", "security", "to", "balance"]
+  },
+  {
+    "id": 5,
+    "title": "Biodiversity",
+    "raw": "Biodiversity refers t____ [1] the va________ [5] o____ [1] life o____ [1] Earth, encom________ [5] the full range o____ [1] species, eco________ [4], and gene________ [4] diversity with____ [2] natural habi________ [4]. Healthy eco________ [4] provide essen________ [5] services—clean air, fertile soil, and stable climate—that sustain human commu________ [5]. However, habi________ [4] loss, pollution, and climate change are driving species exti________ [4] at an alarming rate. Conser________ [5] efforts aim t____ [1] protect endan________ [4] species and preserve the resi________ [4] o____ [1] eco________ [4], which is critical f____ [2] long-term susta________ [5] and the intercon________ [5] web o____ [1] life.",
+    "answers": ["to", "variety", "of", "on", "encompassing", "of", "ecosystems", "genetic", "within", "habitats", "ecosystems", "essential", "communities", "habitat", "extinction", "conservation", "to", "endangered", "resilience", "of", "ecosystems", "for", "sustainability", "interconnected", "of"]
+  },
+  {
+    "id": 6,
+    "title": "Urbanization",
+    "raw": "Urbanization—the shift o____ [1] populations fr____ [2] rural t____ [1] urban areas—has accelerated rapidly over the past century. Cities offer greater access t____ [1] jobs, ed________ [5], and health care, drawing millions through rural-urban mig________ [5]. Yet rapid growth strains infra________ [5]: roads become congest______ [4], air qual________ [4] declines, and affordable housing grows scarce. Effective urban plann______ [4] requires invest______ [4] in public transit, green spaces, and susta________ [4] infrastructure. When done well, cities can foster vibrant commu________ [5] and improve the qual________ [4] o____ [1] life f____ [2] residents while minimizing environmental impact.",
+    "answers": ["of", "from", "to", "to", "education", "migration", "infrastructure", "congested", "quality", "planning", "investment", "sustainable", "communities", "quality", "of", "for"]
+  },
+  {
+    "id": 7,
+    "title": "Artificial Intelligence",
+    "raw": "Artificial intelligence (AI) refers t____ [1] computer systems designed t____ [1] perform tasks that typically require human intel________ [5]. Modern AI relies o____ [1] complex algo________ [5] and vast amounts o____ [1] data t____ [1] recognize patterns, make deci________ [4], and even generate creative content. AI has already transformed industries through auto________ [5] and advanced data pro________ [5]. However, its rapid adoption raises ethi________ [4] questions ab____ [2] bias, transpar________ [4], and account________ [4]. Understanding both the poten________ [4] and the limit________ [4] o____ [1] AI is essential f____ [2] ensuring that humans and machines collab________ [5] responsibly in the years ahead.",
+    "answers": ["to", "to", "intelligence", "on", "algorithms", "of", "to", "decisions", "automation", "processing", "ethical", "about", "transparency", "accountability", "potential", "limitations", "of", "for", "collaborate"]
   }
 ]

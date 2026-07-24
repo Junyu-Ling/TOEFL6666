@@ -193,9 +193,9 @@ function ReadingFillBlank() {
       </div>
 
       <div className="rfill__body">
-        <h2 className="rfill__instruction">Fill in the missing letters in the paragraph</h2>
+        <p className="rfill__instruction">Fill in the missing letters in the paragraph</p>
 
-        <div className="rfill__passage">
+        <p className="rfill__passage">
           {article.segments.map((segment, index) => {
             if (segment.type === "text") {
               return (
@@ -219,7 +219,7 @@ function ReadingFillBlank() {
               />
             );
           })}
-        </div>
+        </p>
 
         <div className="rfill__footer">
           <button type="button" className="rfill__check-btn" onClick={handleCheck}>
