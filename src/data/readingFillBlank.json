@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "title": "Cave Paintings / Drawing in Caves",
+    "raw": "We know from drawings that have been preserved in caves for over 10,000 years that early humans performed dances as a group activity. We might think that prehistoric people concentrated only on the basic wo____ [4] that wa____ [1] required f____ [2] survival: hun________ [4], gather______ [3] fo____ [2], and making weapons and garments. However, it is clear from the record that group dancing was important to them. They made masks and costumes; they used much energy in the process of dancing; they recorded more drawings of dancing than of any other group activity.",
+    "answers": ["work", "was", "for", "hunting", "gathering", "food"]
+  },
+  {
+    "id": 2,
+    "title": "Color and Pigment",
+    "raw": "Throughout history, color and pigment have played a central role in art, shaping how we perceive and interpret visual experiences. Artists ha____ [2] long under________ [5] the emot______ [5] and psycho________ [8] power o____ [1] color, util______ [4] it t____ [1] convey mo____ [2], create emph______ [4], and ev______ [3] responses. For example, red often symbolizes passion, while blue can elicit calmness. These symbolic associations can vary across cultures and time periods, allowing artists to communicate deeper layers of meaning through their color choices.",
+    "answers": ["have", "understood", "emotional", "psychological", "of", "utilizing", "to", "mood", "emphasis", "evoke"]
+  },
+  {
+    "id": 3,
+    "title": "Atmosphere",
+    "raw": "The atmosphere is a dynamic and complex system, shaped by countless interacting variables such as solar radiation, air pressure, and moisture levels. Meteorologists use advanced mod____ [3] to simu______ [4] these intera________ [5], b____ [2] predi______ [5] weather rem______ [4] a chal______ [5] due t____ [1] t____ [1] inher______ [4] chaotic nat____ [3] o____ [1] atmos________ [6] processes. Small changes in initial conditions can lead to vastly different outcomes, making long-term forecasts especially uncertain. Despite technological progress, the atmosphere's unpredictability continues to pose limits to accurate and consistent weather prediction.",
+    "answers": ["models", "simulate", "interactions", "but", "predicting", "remains", "challenge", "to", "the", "inherently", "nature", "of", "atmospheric"]
+  }
+]

@@ -5,6 +5,7 @@ const TABS = [
   { id: "practice", label: "练习" },
   { id: "bank", label: "词库" },
   { id: "lexgrid", label: "词格" },
+  { id: "reading-fill", label: "阅读填词" },
   { id: "unrecognized", label: "生词本" },
   { id: "recognized", label: "熟词本" },
   { id: "reading-vocab", label: "阅读词汇" },

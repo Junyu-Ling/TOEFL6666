@@ -16,7 +16,7 @@ export function getAlternateAppMode(mode) {
   return mode === "sat" ? "toefl" : "sat";
 }
 
-const TOEFL_ONLY_TABS = new Set(["reading-vocab"]);
+const TOEFL_ONLY_TABS = new Set(["reading-vocab", "reading-fill"]);
 
 export function isTabAvailableInMode(tabId, appMode = "toefl") {
   if (normalizeAppMode(appMode) === "sat" && TOEFL_ONLY_TABS.has(tabId)) return false;

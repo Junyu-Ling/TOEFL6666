@@ -12,6 +12,7 @@ import BookReviewScopeBar from "./components/BookReviewScopeBar";
 import VocabularyBank from "./components/VocabularyBank";
 import LexGridGame from "./components/LexGridGame";
 import ReadingVocabMatch from "./components/ReadingVocabMatch";
+import ReadingFillBlank from "./components/ReadingFillBlank";
 import TabPanel from "./components/TabPanel";
 import MottoFooter from "./components/MottoFooter";
 import { recordVisit, refreshStreak } from "./services/streak";
@@ -1070,6 +1071,8 @@ export default function App() {
     [allBankWords]
   );
 
+  const readingFillPanel = useMemo(() => <ReadingFillBlank />, []);
+
   const unrecognizedPanel = useMemo(
     () =>
       unrecognizedPracticeActive ? (
@@ -1340,6 +1343,12 @@ export default function App() {
           <TabPanel tabId="bank" activeTab={activeTab}>
             {bankPanel}
           </TabPanel>
+
+          {appMode === "toefl" ? (
+            <TabPanel tabId="reading-fill" activeTab={activeTab}>
+              {readingFillPanel}
+            </TabPanel>
+          ) : null}
 
           {appMode === "toefl" ? (
             <TabPanel tabId="reading-vocab" activeTab={activeTab}>
