@@ -1,6 +1,6 @@
 import rawArticles from "../data/readingFillBlank.json";
 
-export const READING_FILL_BLANK_TOTAL = 102;
+export const READING_FILL_BLANK_TOTAL = 114;
 
 export function parsePassage(raw, answers) {
   const segments = [];
