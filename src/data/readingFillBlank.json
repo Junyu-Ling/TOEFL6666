@@ -866,8 +866,8 @@
   {
     "id": 68,
     "title": "Glaciers: Role in Earth's Climate and Ecosystems",
-    "raw": "Glaciers play a crucial role in Earth's climate and ecosystems. They store about 70% of the planet's freshwater and help regulate global temperatures by reflecting sunlight. As they move, glaciers shape lands_____ [5], carving val____ [4] and transp______ [6] sediment. Th___ [3] seasonal mel_ [1] feeds riv___ [3] and la___ [3], supporting agric______ [6] and wild____ [4]. Glaciers se___ [3] as indicators of climate change—rapid melting signals shifts in global temperatures. Studying glaciers helps scientists understand past climate patterns and predict future environmental impacts, making them vital to global research.",
-    "answers": ["landscapes", "valleys", "transporting", "Their", "melt", "rivers", "lakes", "agriculture", "wildlife", "serve"]
+    "raw": "Glaciers play a crucial role in Earth's climate and ecosystems. They store about 70% of the planet's freshwater and help regulate global temperatures by reflecting sunlight. As they move, glaciers shape lands_____ [5], carving val____ [4] and transp______ [6] sediment. Th___ [3] seasonal mel____ [4] feeds riv___ [3] and la___ [3], supporting agric______ [6] and wild____ [4]. Glaciers se___ [3] as indicators of climate change—rapid melting signals shifts in global temperatures. Studying glaciers helps scientists understand past climate patterns and predict future environmental impacts, making them vital to global research.",
+    "answers": ["landscapes", "valleys", "transporting", "Their", "melting", "rivers", "lakes", "agriculture", "wildlife", "serve"]
   },
   {
     "id": 69,
