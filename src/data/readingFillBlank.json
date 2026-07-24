@@ -274,7 +274,7 @@
   {
     "id": 17,
     "title": "Paleontology",
-    "raw": "Paleontology, the study of ancient life through fossils, provides valuable insights into Earth's biological history. Fossils, incl_____ [5] bones and she___ [3], offer evid____ [4] of orga_____ [5] that li___ [3] millions o_ [1] years a__ [2]. By stud____ [4] these rem____ [4], paleontologists can reconstruct the appearance, behavior, and ecological relationships of extinct species. Techniques such as radiometric dating help determine the age of fossils and the geological context in which they were found. Research in paleontology contributes to our understanding of evolutionary processes, environmental changes, and the development of life on Earth.",
+    "raw": "Paleontology, the study of ancient life through fossils, provides valuable insights into Earth's biological history. Fossils, incl_____ [5] bones and she___ [3], offer evid____ [4] of orga_____ [5] that li___ [3] millions o_ [1] years a__ [2]. By stud____ [4] these rem____ [4], paleontologists c__ [2] reconstruct the appearance, behavior, and ecological relationships of extinct species. Techniques such as radiometric dating help determine the age of fossils and the geological context in which they were found. Research in paleontology contributes to our understanding of evolutionary processes, environmental changes, and the development of life on Earth.",
     "answers": [
       "including",
       "shells",
@@ -284,7 +284,8 @@
       "of",
       "ago",
       "studying",
-      "remains"
+      "remains",
+      "can"
     ]
   },
   {
