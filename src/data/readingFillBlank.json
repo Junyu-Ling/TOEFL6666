@@ -764,8 +764,8 @@
   {
     "id": 51,
     "title": "Pigments",
-    "raw": "In visual arts, the interplay between color and pigment is fundamental in shaping artistic expression. Pigments, the materials that give color to paint, are der____ [4] from var____ [4] sources, incl_____ [5] minerals, pla___ [3], and synt_____ [5] compounds. Art____ [4] selected mate_____ [5] based on their abi____ [4] to con____ [4] underlying layers (opacity) and resist fading over time. The transformation of pigments into vibrant colors involves the complex interaction of light with the pigment's molecular structure. This interaction determines the color's intensity and luminosity.",
-    "answers": ["derived", "various", "including", "plants", "synthetic", "artists", "materials", "ability", "conceal"]
+    "raw": "In visual arts, the interplay between color and pigment is fundamental in shaping artistic expression. Pigments, the materials that give color to paint, are der____ [4] from var____ [4] sources, incl_____ [5] minerals, pla___ [3], and synt_____ [5] compounds. Art____ [4] selected mate_____ [5] based o_ [1] their abi____ [4] to con____ [4] underlying layers (opacity) and resist fading over time. The transformation of pigments into vibrant colors involves the complex interaction of light with the pigment's molecular structure. This interaction determines the color's intensity and luminosity.",
+    "answers": ["derived", "various", "including", "plants", "synthetic", "artists", "materials", "on", "ability", "conceal"]
   },
   {
     "id": 52,
