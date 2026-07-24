@@ -104,7 +104,7 @@
   {
     "id": 7,
     "title": "Craftsmanship",
-    "raw": "Craftsmanship has undergone a profound transformation over the centuries, shifting from a demonstration of manual skill to an expression of artistic vision and communal identity. In medieval Europe, skilled makers—known as artisans—were highly valued not only for their tech_____ [5] expertise b__ [2] also f__ [2] their abi____ [4] to inf___ [3] their crea_____ [5] with mea____ [4] and repr_____ [5] deeper spir_____ [5] or cult____ [4] themes. The intricate details in woodwork, tex_____ [5], and pottery served as a testament to the craftsman's mastery and the motifs prevalent during that era.",
+    "raw": "Craftsmanship has undergone a profound transformation over the centuries, shifting from a demonstration of manual skill to an expression of artistic vision and communal identity. In medieval Europe, skilled makers—known as artisans—were highly valued not only for their tech_____ [5] expertise b__ [2] also f__ [2] their abi____ [4] to inf___ [3] their crea_____ [5] with mea____ [4] and repr_____ [5] deeper spir_____ [5] or cult____ [4] themes. The intricate details in woodwork, textiles, and pottery served as a testament to the craftsman's mastery and the motifs prevalent during that era.",
     "answers": [
       "technical",
       "but",
@@ -115,8 +115,7 @@
       "meaning",
       "represent",
       "spiritual",
-      "cultural",
-      "textiles"
+      "cultural"
     ]
   },
   {
