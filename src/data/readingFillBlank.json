@@ -716,8 +716,8 @@
   {
     "id": 43,
     "title": "Ravens",
-    "raw": "Ravens are highly intelligent birds known for their problem-solving abilities and complex social behaviors. They use tools, su__ [2] as sti___ [3], to obt___ [3] food a__ [2] have be__ [2] observed enga____ [4] in pla____ [4] behaviors li__ [2] sliding o_ [1] snow. Ravens communicate with a wide range of vocalizations, conveying different messages to their peers. Their adaptability allows them to thrive in various environments, from forests to urban areas. Studying raven behavior provides insights into avian intelligence and the evolutionary mechanisms that support cognitive development.",
-    "answers": ["such", "sticks", "obtain", "and", "been", "engaging", "playful", "like", "on"]
+    "raw": "Ravens are highly intelligent birds known for their problem-solving abilities and complex social behaviors. They u__ [2] tools, su__ [2] as sti___ [3], to obt___ [3] food a__ [2] have be__ [2] observed enga____ [4] in pla____ [4] behaviors li__ [2] sliding o_ [1] snow. Ravens communicate with a wide range of vocalizations, conveying different messages to their peers. Their adaptability allows them to thrive in various environments, from forests to urban areas. Studying raven behavior provides insights into avian intelligence and the evolutionary mechanisms that support cognitive development.",
+    "answers": ["use", "such", "sticks", "obtain", "and", "been", "engaging", "playful", "like", "on"]
   },
   {
     "id": 44,
