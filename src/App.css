@@ -4827,25 +4827,6 @@ body {
   font-family: Georgia, "Times New Roman", serif;
 }
 
-.rfill__ime-alert {
-  max-width: 48rem;
-  margin: 0 auto 1rem;
-  padding: 0.75rem 1rem;
-  border: 1px solid #f59e0b;
-  border-radius: var(--radius-sm);
-  background: #fffbeb;
-  color: #92400e;
-  font-size: 0.875rem;
-  line-height: 1.5;
-  text-align: center;
-}
-
-[data-theme="dark"] .rfill__ime-alert {
-  border-color: #d97706;
-  background: rgba(245, 158, 11, 0.12);
-  color: #fbbf24;
-}
-
 [data-theme="dark"] .rfill__instruction {
   color: var(--text);
 }
