@@ -802,5 +802,23 @@
     "title": "The Pinta Island Tortoise",
     "raw": "The Pinta Island tortoise, a subspecies of giant tortoise native to Ecuador's Galápagos Islands, became extinct with the death of the last known individual, Lonesome George, in 2012. Pinta tortoises were kn___ [3] for th___ [3] domed she___ [3] and lo__ [2] necks ada____ [4] for fee____ [4]; they pla___ [3] a cru____ [4] role i_ [1] shaping veget_____ [5] by grazing on plants and dispersing seeds. The extinction of this subspecies highlights the impact of human activity on isolated ecosystems. Invasive species and habitat destruction were significant factors contributing to its decline.",
     "answers": ["known", "their", "shells", "long", "adapted", "feeding", "played", "crucial", "in", "vegetation"]
+  },
+  {
+    "id": 58,
+    "title": "Philosophy of Mind",
+    "raw": "The field of philosophy of mind delves into the nature of consciousness, thought processes, and the intricate relationship between the mind and body. I_ [1] addresses funda______ [6] questions ab___ [3] perception, iden____ [4], self-awareness, a__ [2] subjective exper_____ [5]. The disci_____ [5] explores h__ [2] and w__ [2] we perc____ [4] the world as we do, examining the mechanisms behind thought, emotion, and awareness. This field is a deeply interdisciplinary one that intersects with psychology, neuroscience, and cognitive science, providing a comprehensive approach to understanding human cognition and consciousness.",
+    "answers": ["It", "fundamental", "about", "identity", "and", "experience", "discipline", "how", "why", "perceive"]
+  },
+  {
+    "id": 59,
+    "title": "Language Development in Children",
+    "raw": "Language development in children is a complex process influenced by both genetics and environment. From bi___ [3], infants be___ [3] to recognize sou___ [3] and patt____ [4] in spe___ [3]. By o__ [2] year o_ [1] age, mo__ [2] can s__ [2] simple wo___ [3] like \"mama\" or \"dada.\" As they grow, their vocabulary expands rapidly. Interacting with caregivers and peers plays a crucial role in this development. Reading to children and engaging in conversations are effective ways to support language acquisition.",
+    "answers": ["birth", "begin", "sounds", "patterns", "speech", "one", "of", "most", "say", "words"]
+  },
+  {
+    "id": 60,
+    "title": "Artificial Intelligence",
+    "raw": "In recent years, the development of artificial intelligence has revolutionized numerous industries, transforming the way businesses operate and interact with their customers. AI technologies, such as machine learning and natural language processing, enable com______ [6] to p______ [6] tasks t___ [3] previously re______ [6] human ju______ [6]. For e______ [6], customer s______ [6] chatbots a__ [2] now c______ [6] of u____________ [12] and responding to queries, providing instant support. Additionally, AI-driven analytics tools offer insights by processing vast amounts of data in real time, helping organizations make informed decisions.",
+    "answers": ["companies", "perform", "that", "required", "judgment", "example", "service", "are", "capable", "understanding"]
   }
 ]
