@@ -342,10 +342,9 @@
   {
     "id": 21,
     "title": "Medieval European",
-    "raw": "Medieval European history, lasting approximately from 500 C.E. to 1500 C.E., is marked by significant cultural, political, and economic changes. Feudalism domi_____ [5] t__ [2] soc___ [3] structure, wi__ [2] lords gove____ [4] lands a__ [2] vassals prov____ [4] military ser____ [4]. The Church exe____ [4] substantial infl_____ [5] over da___ [3] life and governance. Trade routes expanded, facilitating the exchange of goods and ideas. Art and architecture flourished, exemplified by Gothic cathedrals and illuminated manuscripts. Studying this era involves analyzing historical documents, artifacts, and architectural remains to understand the complexities of medieval society.",
+    "raw": "Medieval European history, lasting approximately from 500 C.E. to 1500 C.E., is marked by significant cultural, political, and economic changes. Feudalism domi_____ [5] the soc___ [3] structure, wi__ [2] lords gove____ [4] lands a__ [2] vassals prov____ [4] military ser____ [4]. The Church exe____ [4] substantial infl_____ [5] over da___ [3] life and governance. Trade routes expanded, facilitating the exchange of goods and ideas. Art and architecture flourished, exemplified by Gothic cathedrals and illuminated manuscripts. Studying this era involves analyzing historical documents, artifacts, and architectural remains to understand the complexities of medieval society.",
     "answers": [
       "dominated",
-      "the",
       "social",
       "with",
       "governed",
