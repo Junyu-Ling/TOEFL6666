@@ -1,16 +1,15 @@
 import rawArticles from "../data/readingFillBlank.json";
 
-const BLANK_RE = /([a-zA-Z]*)_+\s*\[(\d+)\]/g;
-
 export const READING_FILL_BLANK_TOTAL = 7;
 
 export function parsePassage(raw, answers) {
   const segments = [];
+  const blankRe = /([a-zA-Z]*)_+\s*\[(\d+)\]/g;
   let lastIndex = 0;
   let answerIndex = 0;
   let match;
 
-  while ((match = BLANK_RE.exec(raw)) !== null) {
+  while ((match = blankRe.exec(raw)) !== null) {
     if (match.index > lastIndex) {
       segments.push({ type: "text", value: raw.slice(lastIndex, match.index) });
     }
@@ -32,7 +31,7 @@ export function parsePassage(raw, answers) {
     });
 
     answerIndex += 1;
-    lastIndex = match.lastIndex;
+    lastIndex = blankRe.lastIndex;
   }
 
   if (lastIndex < raw.length) {
