@@ -1,4 +1,4 @@
-import { forwardRef, memo, useCallback, useImperativeHandle, useMemo, useRef, useState } from "react";
+import { forwardRef, memo, useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from "react";
 import {
   getReadingFillBlankArticles,
   getReadingFillBlankQuestionRange,
@@ -14,7 +14,7 @@ import {
 } from "../services/readingFillBlankProgress";
 
 const BlankInput = forwardRef(function BlankInput(
-  { blank, letters, checked, result, onChange, onFilled },
+  { blank, letters, checked, result, onChange, onFilled, onEnter },
   ref
 ) {
   const refs = useRef([]);
@@ -38,6 +38,11 @@ const BlankInput = forwardRef(function BlankInput(
   };
 
   const handleKeyDown = (index, event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      onEnter?.();
+      return;
+    }
     if (event.key === "Backspace" && !letters[index] && index > 0) {
       event.preventDefault();
       refs.current[index - 1]?.focus();
@@ -158,6 +163,20 @@ function ReadingFillBlank() {
     setProgress(patchArticleChecked(saved, article.id, true));
   }, [article, articles, inputs]);
 
+  useEffect(() => {
+    const handleDocumentKeyDown = (event) => {
+      if (event.key !== "Enter" || event.defaultPrevented) return;
+      const target = event.target;
+      if (target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement) return;
+      if (target instanceof HTMLButtonElement) return;
+      event.preventDefault();
+      handleCheck();
+    };
+
+    document.addEventListener("keydown", handleDocumentKeyDown);
+    return () => document.removeEventListener("keydown", handleDocumentKeyDown);
+  }, [handleCheck]);
+
   const handleHome = () => {
     if (articleIndex !== 0) syncArticle(0);
   };
@@ -252,6 +271,7 @@ function ReadingFillBlank() {
                 result={gradeMap.get(segment.id)}
                 onChange={(nextLetters) => handleInputChange(segment.id, nextLetters)}
                 onFilled={() => handleBlankFilled(segment.id)}
+                onEnter={handleCheck}
               />
             );
           })}

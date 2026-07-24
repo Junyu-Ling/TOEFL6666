@@ -444,7 +444,7 @@
   {
     "id": 27,
     "title": "Grasshoppers",
-    "raw": "Grasshoppers are insects commonly found in dry places with grass and plants. Grasshoppers ha__ [2] several wa__ [2] they pro____ [4] themselves aga____ [4] danger. Th__ [2] have powe____ [4] back leg_ [1], which al___ [3] them to jump aw__ [2] from enemies, such as rodents and snakes. Some grasshoppers can jump twenty times the length of their bodies. By the time they are adults, grasshoppers can also fly. Adult grasshoppers fly very quickly and this helps them avoid danger.",
+    "raw": "Grasshoppers are insects commonly found in dry places with grass and plants. Grasshoppers ha__ [2] several wa__ [2] they pro____ [4] themselves aga____ [4] danger. Th__ [2] have powe____ [4] back le__ [2], which al___ [3] them t_ [1] jump aw__ [2] from enemies, such as rodents and snakes. Some grasshoppers can jump twenty times the length of their bodies. By the time they are adults, grasshoppers can also fly. Adult grasshoppers fly very quickly and this helps them avoid danger.",
     "answers": [
       "have",
       "ways",
@@ -454,6 +454,7 @@
       "powerful",
       "legs",
       "allow",
+      "to",
       "away"
     ]
   },
