@@ -902,8 +902,8 @@
   {
     "id": 74,
     "title": "Geology",
-    "raw": "Geology is the scientific study of our planet, including its composition, structure, and processes. Geolo_____ [5] analyze roc__ [2], min_____ [5], a__ [2] the nat____ [4] forces th__ [2] change t__ [2] outer la____ [4] of Ea___ [3] over ti__ [2]. This kno______ [6] helps scientists understand the planet's history and predict future changes. It is essential for natural resource management, hazard mitigation, and environmental protection. Advances in geologic research—such as satellite-based remote sensing, deep-Earth imaging, and isotopic dating—have greatly improved our ability to monitor earthquakes, track volcanic activity, and assess groundwater resources.",
-    "answers": ["geologists", "rocks", "minerals", "and", "natural", "that", "the", "layers", "Earth", "time", "knowledge"]
+    "raw": "Geology is the scientific study of our planet, including its composition, structure, and processes. Geolo_____ [5] analyze roc__ [2], minerals, a__ [2] the nat____ [4] forces th__ [2] change t__ [2] outer la____ [4] of Ea___ [3] over ti__ [2]. This kno______ [6] helps scientists understand the planet's history and predict future changes. It is essential for natural resource management, hazard mitigation, and environmental protection. Advances in geologic research—such as satellite-based remote sensing, deep-Earth imaging, and isotopic dating—have greatly improved our ability to monitor earthquakes, track volcanic activity, and assess groundwater resources.",
+    "answers": ["geologists", "rocks", "and", "natural", "that", "the", "layers", "Earth", "time", "knowledge"]
   },
   {
     "id": 75,
