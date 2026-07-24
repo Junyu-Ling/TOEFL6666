@@ -423,5 +423,257 @@
       "why",
       "perceive"
     ]
+  },
+  {
+    "id": 26,
+    "title": "Ocean Currents",
+    "raw": "Ocean currents are critical components of Earth's climate system, influencing weather patterns and marine ecosystems. Driven b_ [1] wind, tempe_____ [6] changes, a__ [2] differences i_ [1] salinity, ocean currents distr_____ [5] heat acr___ [3] the glo__ [2]. The Gulf Stream, f__ [2] instance, wa___ [3] the North Atlantic Current, affe_____ [5] climate in Europe. Deep ocean currents, known as thermohaline circulation, play a role in regulating global temperatures and carbon dioxide levels. Research in oceanography continues to reveal the complexities of these dynamic systems.",
+    "answers": [
+      "by",
+      "temperature",
+      "and",
+      "in",
+      "distribute",
+      "across",
+      "globe",
+      "for",
+      "warms",
+      "affecting"
+    ]
+  },
+  {
+    "id": 27,
+    "title": "Grasshoppers",
+    "raw": "Grasshoppers are insects commonly found in dry places with grass and plants. Grasshoppers ha__ [2] several wa__ [2] they pro____ [4] themselves aga____ [4] danger. Th__ [2] have powe____ [4] back leg_ [1], which al___ [3] them to jump aw__ [2] from enemies, such as rodents and snakes. Some grasshoppers can jump twenty times the length of their bodies. By the time they are adults, grasshoppers can also fly. Adult grasshoppers fly very quickly and this helps them avoid danger.",
+    "answers": [
+      "have",
+      "ways",
+      "protect",
+      "against",
+      "They",
+      "powerful",
+      "legs",
+      "allow",
+      "away"
+    ]
+  },
+  {
+    "id": 28,
+    "title": "Cognition",
+    "raw": "Cognition encompasses mental processes involved in acquiring, storing, and using information, including perception, memory, and decision-making. Researchers inves______ [6] the mecha_____ [5] underlying cogn_____ [5] processes, aiming to understand how t__ [2] brain stor__ [2] a__ [2] retrie___ [3] information. Consci_______ [7], the st___ [3] of being aware of one's thoughts and surroundings, remains a particularly elusive aspect of cognition. Theories about this state explore whether it arises from specific brain structures or emerges from the interplay of neural networks. Advances in neuroimaging techniques offer glimpses into the complex workings of the brain.",
+    "answers": [
+      "investigate",
+      "mechanisms",
+      "cognitive",
+      "the",
+      "stores",
+      "and",
+      "retrieves",
+      "Consciousness",
+      "state"
+    ]
+  },
+  {
+    "id": 29,
+    "title": "Mountains",
+    "raw": "Geographical features such as mountains shape the landscape and climate of a region. Mountains c__ [2] act a_ [1] natural barr____ [4]. The Himalayas, f__ [2] example, bl___ [3] cold wi___ [3] coming fr__ [2] Central Asia, kee____ [4] the Indian subcontinent war___ [3]. They al__ [2] cause orographic rainfall, where moist air rises, cools, and precipitates on the windward side, creating lush forests, while the leeward side remains dry. Mountain ranges like the Andes and the Rockies host unique flora and fauna adapted to high altitudes.",
+    "answers": [
+      "can",
+      "as",
+      "barriers",
+      "for",
+      "block",
+      "winds",
+      "from",
+      "keeping",
+      "warmer",
+      "also"
+    ]
+  },
+  {
+    "id": 30,
+    "title": "Respiratory System",
+    "raw": "The respiratory system is essential for delivering oxygen to the body's cells and removing carbon dioxide. In hum___ [3], air ent___ [3] through t__ [2] nose o_ [1] mouth. Inco____ [4] air ge__ [2] warmed u_ [1] and bec____ [4] moist wh___ [3] it tra____ [4] in the nasal passages. Dust and other particles are also filtered out. Then the air goes down the trachea and reaches the lungs. Within the lungs, tiny air sacs shaped like balloons facilitate the exchange of gases with the bloodstream. This process is crucial for cellular respiration, which provides energy for bodily functions.",
+    "answers": [
+      "humans",
+      "enters",
+      "the",
+      "or",
+      "Incoming",
+      "gets",
+      "up",
+      "becomes",
+      "while",
+      "travels"
+    ]
+  },
+  {
+    "id": 31,
+    "title": "Jazz Music",
+    "raw": "The development of jazz music in the United States in the early twentieth century represents a significant cultural milestone. Originating in the African American communities of New Orleans, jazz blended elements of blues, ragtime, and European classical music. Reflecting shi___ [3] in cul____ [4], jazz emp____ [4] innovative techn_____ [5] like improv_______ [7] that chall____ [4] traditional mus____ [4] conventions, allo____ [4] musicians t_ [1] express th___ [3] individuality. Figures like Louis Armstrong and Ella Fitzgerald popularized jazz, playing pivotal roles in advancing its stylistic innovations. The genre's influence extended globally, shaping various musical forms and inspiring new generations of artists.",
+    "answers": [
+      "shifts",
+      "culture",
+      "employs",
+      "techniques",
+      "improvisation",
+      "challenge",
+      "musical",
+      "allowing",
+      "to",
+      "their"
+    ]
+  },
+  {
+    "id": 32,
+    "title": "Earth's Axis",
+    "raw": "Our planet's axis is tilted at an angle of about 23.5 degrees as it orbits the Sun. A_ [1] a res___ [3], the amo___ [3] of sun_____ [5] that hi__ [2] different pa___ [3] of Ea___ [3] is n__ [2] all t__ [2] same, crea____ [4] seasons. When the Sun shines directly on a region, that region tends to have higher temperatures and longer days. The changing seasons affect many aspects of life, including agriculture, wildlife behavior, and human activities.",
+    "answers": [
+      "As",
+      "result",
+      "amount",
+      "sunlight",
+      "hits",
+      "parts",
+      "Earth",
+      "not",
+      "the",
+      "creating"
+    ]
+  },
+  {
+    "id": 33,
+    "title": "Modern Bicycle",
+    "raw": "The earliest ancestor of the modern bicycle is probably a machine used in England in the early 1800s called a hobbyhorse. It h__ [2] two whe___ [3] and a pl___ [3] to s__ [2], but no pedals; rid___ [3] would pu__ [2] it al___ [3] with th___ [3] feet. La___ [3], an inventor added pedals directly to the front wheel, like a modern child's tricycle. This version, with a huge front wheel, was faster, but it was unsafe. Riders were high off the ground, and the two wheels were close together, making both balance and stopping difficult.",
+    "answers": [
+      "had",
+      "wheels",
+      "place",
+      "sit",
+      "riders",
+      "push",
+      "along",
+      "their",
+      "Later"
+    ]
+  },
+  {
+    "id": 34,
+    "title": "Honeybee Social Structure",
+    "raw": "Honeybee social structure is a fascinating example of cooperation and division of labor in the animal kingdom. The main role of the queen bee is to lay thou_____ [5] of eg__ [2] to ke__ [2] the col___ [3] growing. Wor___ [3] bees a__ [2] the bu__ [2] multitaskers; th__ [2] collect nec___ [3] and pol___ [3], feed baby bees, clean the hive, and stand guard against intruders. The only job of the male drones is to mate with a queen from another hive. Each bee plays a unique role, and this organized system of cooperation helps the colony survive and thrive.",
+    "answers": [
+      "thousands",
+      "eggs",
+      "keep",
+      "colony",
+      "Worker",
+      "are",
+      "busy",
+      "they",
+      "nectar",
+      "pollen"
+    ]
+  },
+  {
+    "id": 37,
+    "title": "Bone",
+    "raw": "Using bone for the manufacture of tools and other objects has a long history. Many of the wea____ [4] th__ [2] prehi______ [6] people us__ [2] for hun____ [4] were ma__ [2] from t__ [2] bones o_ [1] the ani____ [4] they hun___ [3]. The physical properties of these materials varied greatly. For example, the strength and flexibility of antler were important to the way these tools were utilized. Many early bone tools show distinctive signs of wear and polishing, revealing how they were handled and over time.",
+    "answers": [
+      "weapons",
+      "that",
+      "prehistoric",
+      "used",
+      "hunting",
+      "made",
+      "the",
+      "of",
+      "animals",
+      "hunted"
+    ]
+  },
+  {
+    "id": 38,
+    "title": "Rock Formation",
+    "raw": "Rock formations offer valuable insights into Earth's history. Sed________ [8] layers, for example, reveal past environments. By analyzing their composition and arrangement, geologists can determine if an area was once underwater or exposed. Over time, pressure trans_____ [5] sediments in__ [2] solid ro__ [2], preserving evid____ [4] of anc____ [4] climates a__ [2] geological eve___ [3]. Fossils wit___ [3] layers sh__ [2] what organisms once lived there. Through such studies, scientists reconstruct Earth's past and gain a deeper understanding of the dynamic processes that continue to shape the planet's surface.",
+    "answers": [
+      "Sedimentary",
+      "transforms",
+      "into",
+      "rock",
+      "evidence",
+      "ancient",
+      "and",
+      "events",
+      "within",
+      "show"
+    ]
+  },
+  {
+    "id": 39,
+    "title": "The Erie Canal",
+    "raw": "The Erie Canal, completed in 1825, is a historic waterway in the United States that linked the Atlantic Ocean to the Great Lakes. Its constr______ [6] was a remar_____ [5] engineering fe__ [2] and pion_____ [5] many innov_____ [5] techniques. T__ [2] canal signif_______ [7] reduced transpo_______ [7] costs a__ [2] time fr__ [2] New York City to the interior of the nation, propelling the city into a major commercial hub. The success of the Erie Canal inspired the building of other canals and infrastructure projects across the United States.",
+    "answers": [
+      "construction",
+      "remarkable",
+      "feat",
+      "pioneered",
+      "innovative",
+      "The",
+      "significantly",
+      "transportation",
+      "and",
+      "from"
+    ]
+  },
+  {
+    "id": 40,
+    "title": "Animal Bones and Plant Remains",
+    "raw": "Animal bones and plant remains discovered in archaeological sites provide valuable insights into the eating habits and lifestyles of early humans. Our ance_____ [5] relied o_ [1] a var___ [3] diet th__ [2] included me__ [2], fruits, nu__ [2], and veget_____ [5]. This i_ [1] no surp____ [4] as th__ [2] followed a hunting-gathering lifestyle. Later in history, the development of agriculture allowed for more stable food sources. It should be noted that, compared to animal bones, plant remains are much less likely to be well preserved, so the abundance of animal bones in archaeological digs does not necessarily mean that early humans ate few plant foods.",
+    "answers": [
+      "ancestors",
+      "on",
+      "varied",
+      "that",
+      "meat",
+      "nuts",
+      "vegetables",
+      "is",
+      "surprise",
+      "they"
+    ]
+  },
+  {
+    "id": 41,
+    "title": "Early Civilization",
+    "raw": "Early civilizations emerged around river valleys, where fertile land and water resources supported agriculture. These commu______ [6] developed com____ [4] social struc_____ [5] that incl____ [4] systems o_ [1] governance a__ [2] religious instit______ [6]. The devel______ [6] of wri____ [4] marked a ma___ [3] milestone, enabling record-keeping, communication, and the transmission of knowledge across generations. Artifacts such as pottery, tools, and writings offer glimpses into the daily lives and cultural practices of ancient peoples and the rise and fall of early societies.",
+    "answers": [
+      "communities",
+      "complex",
+      "structures",
+      "included",
+      "of",
+      "and",
+      "institutions",
+      "development",
+      "writing",
+      "major"
+    ]
+  },
+  {
+    "id": 42,
+    "title": "Crop Rotation",
+    "raw": "Crop rotation is a farming technique that involves growing a series of different types of crops in the same area across a sequence of seasons. Different crops use different nutrients from the soil, so rotating them prevents the soil from becoming depleted. Th__ [2] method he___ [3] to red___ [3] pests a__ [2] diseases; i_ [1] also decr_____ [5] the ne__ [2] for chem____ [4] fertilizers, prom_____ [5] sustainable agric______ [6]. Farmers use this practice to improve crop yields and maintain healthy soil.",
+    "answers": [
+      "This",
+      "helps",
+      "reduce",
+      "and",
+      "it",
+      "decreases",
+      "need",
+      "chemical",
+      "promoting",
+      "agriculture"
+    ]
   }
 ]
