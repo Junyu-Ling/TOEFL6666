@@ -36,20 +36,17 @@
   {
     "id": 3,
     "title": "Atmosphere",
-    "raw": "The atmosphere is a dynamic and complex system, shaped by countless interacting variables such as solar radiation, air pressure, and moisture levels. Meteorologists use advanced mod___ [3] to simu____ [4] these intera______ [6], b__ [2] predi_____ [5] weather rem____ [4] a chal_____ [5] due t_ [1] t__ [2] inher_____ [5] chaotic nat___ [3] o_ [1] atmos______ [6] processes. Small changes in initial conditions can lead to vastly different outcomes, making long-term forecasts especially uncertain. Despite technological progress, the atmosphere's unpredictability continues to pose limits to accurate and consistent weather prediction.",
+    "raw": "The atmosphere is a dynamic and complex system, shaped by countless interacting variables such as solar radiation, air pressure, and moisture levels. Meteorologists use advanced mod___ [3] to simu____ [4] these intera______ [6], but predi_____ [5] weather rem____ [4] a chal_____ [5] due t_ [1] the inher_____ [5] chaotic nat___ [3] of atmos______ [6] processes. Small changes in initial conditions can lead to vastly different outcomes, making long-term forecasts especially uncertain. Despite technological progress, the atmosphere's unpredictability continues to pose limits to accurate and consistent weather prediction.",
     "answers": [
       "models",
       "simulate",
       "interactions",
-      "but",
       "predicting",
       "remains",
       "challenge",
       "to",
-      "the",
       "inherently",
       "nature",
-      "of",
       "atmospheric"
     ]
   },
