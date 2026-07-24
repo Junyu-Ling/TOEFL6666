@@ -1,10 +1,15 @@
-import { forwardRef, memo, useCallback, useImperativeHandle, useMemo, useRef, useState } from "react";
+import { forwardRef, memo, useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from "react";
 import {
   getReadingFillBlankArticles,
   getReadingFillBlankQuestionRange,
   gradeArticle,
   READING_FILL_BLANK_TOTAL,
 } from "../utils/readingFillBlank";
+import {
+  extractLatinLetter,
+  containsNonLatinText,
+  shouldBlockBeforeInput,
+} from "../utils/latinInputGuard";
 import {
   getArticleInputs,
   loadReadingFillBlankProgress,
@@ -14,30 +19,91 @@ import {
 } from "../services/readingFillBlankProgress";
 
 const BlankInput = forwardRef(function BlankInput(
-  { blank, letters, checked, result, onChange, onFilled },
+  { blank, letters, checked, result, onChange, onFilled, onImeBlocked },
   ref
 ) {
   const refs = useRef([]);
+  const composingRef = useRef(false);
 
   useImperativeHandle(ref, () => ({
     focusFirst: () => refs.current[0]?.focus(),
   }));
 
-  const handleChange = (index, value) => {
-    const char = value.slice(-1).replace(/[^a-zA-Z]/g, "");
-    const next = [...letters];
-    next[index] = char;
-    onChange(next);
-    if (char && index < letters.length - 1) {
-      refs.current[index + 1]?.focus();
-      return;
-    }
-    if (char && index === letters.length - 1) {
+  const notifyImeBlocked = useCallback(() => {
+    onImeBlocked?.();
+  }, [onImeBlocked]);
+
+  const applyLetter = useCallback(
+    (index, value) => {
+      const raw = String(value).slice(-1);
+      const char = extractLatinLetter(raw);
+      if (raw && !char) {
+        notifyImeBlocked();
+        return;
+      }
+      if (!char) return;
+
+      const next = [...letters];
+      next[index] = char;
+      onChange(next);
+      if (index < letters.length - 1) {
+        refs.current[index + 1]?.focus();
+        return;
+      }
       onFilled?.();
+    },
+    [letters, notifyImeBlocked, onChange, onFilled]
+  );
+
+  const handleBeforeInput = (index, event) => {
+    if (shouldBlockBeforeInput(event)) {
+      event.preventDefault();
+      notifyImeBlocked();
     }
   };
 
+  const handleCompositionStart = (event) => {
+    composingRef.current = true;
+    event.preventDefault();
+    notifyImeBlocked();
+  };
+
+  const handleCompositionUpdate = (event) => {
+    event.preventDefault();
+    notifyImeBlocked();
+  };
+
+  const handleCompositionEnd = (index, event) => {
+    composingRef.current = false;
+    event.preventDefault();
+    event.target.value = letters[index] ?? "";
+    notifyImeBlocked();
+  };
+
+  const handleChange = (index, value) => {
+    if (composingRef.current) {
+      notifyImeBlocked();
+      return;
+    }
+    applyLetter(index, value);
+  };
+
+  const handlePaste = (index, event) => {
+    event.preventDefault();
+    const text = event.clipboardData.getData("text");
+    if (containsNonLatinText(text) && !extractLatinLetter(text)) {
+      notifyImeBlocked();
+      return;
+    }
+    applyLetter(index, text);
+  };
+
   const handleKeyDown = (index, event) => {
+    if (event.nativeEvent.isComposing || event.key === "Process") {
+      event.preventDefault();
+      notifyImeBlocked();
+      return;
+    }
     if (event.key === "Backspace" && !letters[index] && index > 0) {
       event.preventDefault();
       refs.current[index - 1]?.focus();
@@ -73,7 +139,8 @@ const BlankInput = forwardRef(function BlankInput(
               refs.current[index] = node;
             }}
             type="text"
-            inputMode="text"
+            lang="en"
+            inputMode="latin"
             autoComplete="off"
             autoCapitalize="off"
             autoCorrect="off"
@@ -82,7 +149,12 @@ const BlankInput = forwardRef(function BlankInput(
             className="rfill-blank__box"
             value={letter}
             aria-label={`第 ${index + 1} 个字母`}
+            onBeforeInput={(event) => handleBeforeInput(index, event)}
+            onCompositionStart={handleCompositionStart}
+            onCompositionUpdate={handleCompositionUpdate}
+            onCompositionEnd={(event) => handleCompositionEnd(index, event)}
             onChange={(event) => handleChange(index, event.target.value)}
+            onPaste={(event) => handlePaste(index, event)}
             onKeyDown={(event) => handleKeyDown(index, event)}
           />
         ))}
@@ -103,6 +175,8 @@ function ReadingFillBlank() {
   const [checked, setChecked] = useState(() => Boolean(progress.checkedByArticle?.[article?.id]));
   const [grade, setGrade] = useState(null);
   const blankRefs = useRef({});
+  const imeWarningTimerRef = useRef(null);
+  const [imeWarning, setImeWarning] = useState(false);
   const blankIds = useMemo(
     () => article?.segments.filter((segment) => segment.type === "blank").map((segment) => segment.id) ?? [],
     [article]
@@ -119,6 +193,24 @@ function ReadingFillBlank() {
     },
     [blankIds]
   );
+
+  const showImeWarning = useCallback(() => {
+    setImeWarning(true);
+    if (imeWarningTimerRef.current) {
+      clearTimeout(imeWarningTimerRef.current);
+    }
+    imeWarningTimerRef.current = setTimeout(() => {
+      setImeWarning(false);
+    }, 4500);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (imeWarningTimerRef.current) {
+        clearTimeout(imeWarningTimerRef.current);
+      }
+    };
+  }, []);
 
   const syncArticle = useCallback(
     (nextIndex) => {
@@ -227,6 +319,12 @@ function ReadingFillBlank() {
       <div className="rfill__body">
         <p className="rfill__instruction">Fill in the missing letters in the paragraph</p>
 
+        {imeWarning ? (
+          <div className="rfill__ime-alert" role="alert">
+            检测到中文输入法，请切换到英文输入法后再填写（Windows：Win + Space；Mac：Control + Space）。
+          </div>
+        ) : null}
+
         <p className="rfill__passage">
           {article.segments.map((segment, index) => {
             if (segment.type === "text") {
@@ -252,6 +350,7 @@ function ReadingFillBlank() {
                 result={gradeMap.get(segment.id)}
                 onChange={(nextLetters) => handleInputChange(segment.id, nextLetters)}
                 onFilled={() => handleBlankFilled(segment.id)}
+                onImeBlocked={showImeWarning}
               />
             );
           })}
