@@ -461,14 +461,15 @@
   {
     "id": 28,
     "title": "Cognition",
-    "raw": "Cognition encompasses mental processes involved in acquiring, storing, and using information, including perception, memory, and decision-making. Researchers inves______ [6] the mecha_____ [5] underlying cogn_____ [5] processes, aiming to understand how t__ [2] brain stor__ [2] a__ [2] retrie___ [3] information. Consci_______ [7], the st___ [3] of being aware of one's thoughts and surroundings, remains a particularly elusive aspect of cognition. Theories about this state explore whether it arises from specific brain structures or emerges from the interplay of neural networks. Advances in neuroimaging techniques offer glimpses into the complex workings of the brain.",
+    "raw": "Cognition encompasses mental processes involved in acquiring, storing, and using information, including perception, memory, and decision-making. Researchers inves______ [6] the mecha_____ [5] underlying cogn_____ [5] processes, aim___ [3] to under_____ [5] how t__ [2] brain stor__ [2] and retrie___ [3] information. Consci_______ [7], the st___ [3] of being aware of one's thoughts and surroundings, remains a particularly elusive aspect of cognition. Theories about this state explore whether it arises from specific brain structures or emerges from the interplay of neural networks. Advances in neuroimaging techniques offer glimpses into the complex workings of the brain.",
     "answers": [
       "investigate",
       "mechanisms",
       "cognitive",
+      "aiming",
+      "understand",
       "the",
       "stores",
-      "and",
       "retrieves",
       "Consciousness",
       "state"
