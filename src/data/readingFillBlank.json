@@ -223,14 +223,13 @@
   {
     "id": 14,
     "title": "Biochemistry",
-    "raw": "Rooted in both biology and chemistry, modern biochemistry has grown into a foundational science that explores the molecular basis of life. I_ [1] emerged fr__ [2] early investi_______ [7] into nat____ [4] processes li__ [2] fermentation a__ [2] digestion a__ [2] n__ [2] encompasses t__ [2] study o_ [1] biomolecules su__ [2] as proteins, carbohydrates, and nucleic acids. Biochemistry plays a vital role in diverse fields including agriculture, environmental science, and pharmacology, contributing to innovations in areas like crop improvement, pollution control, and drug design, for example. Its broad applications continue to shape our understanding of living systems and support solutions to global challenges.",
+    "raw": "Rooted in both biology and chemistry, modern biochemistry has grown into a foundational science that explores the molecular basis of life. I_ [1] emerged fr__ [2] early investi_______ [7] into nat____ [4] processes li__ [2] fermentation a__ [2] digestion and n__ [2] encompasses t__ [2] study o_ [1] biomolecules su__ [2] as proteins, carbohydrates, and nucleic acids. Biochemistry plays a vital role in diverse fields including agriculture, environmental science, and pharmacology, contributing to innovations in areas like crop improvement, pollution control, and drug design, for example. Its broad applications continue to shape our understanding of living systems and support solutions to global challenges.",
     "answers": [
       "It",
       "from",
       "investigations",
       "natural",
       "like",
-      "and",
       "and",
       "now",
       "the",
