@@ -712,5 +712,95 @@
       "promoting",
       "agriculture"
     ]
+  },
+  {
+    "id": 43,
+    "title": "Ravens",
+    "raw": "Ravens are highly intelligent birds known for their problem-solving abilities and complex social behaviors. They use tools, su__ [2] as sti___ [3], to obt___ [3] food a__ [2] have be__ [2] observed enga____ [4] in pla____ [4] behaviors li__ [2] sliding o_ [1] snow. Ravens communicate with a wide range of vocalizations, conveying different messages to their peers. Their adaptability allows them to thrive in various environments, from forests to urban areas. Studying raven behavior provides insights into avian intelligence and the evolutionary mechanisms that support cognitive development.",
+    "answers": ["such", "sticks", "obtain", "and", "been", "engaging", "playful", "like", "on"]
+  },
+  {
+    "id": 44,
+    "title": "Transcontinental Railroads",
+    "raw": "The development of transcontinental railroads was a pivotal moment in North American history, fundamentally altering the landscape and economy. By linking the eastern and western coasts, these rail lines facilitated unprecedented movement of goods, people, and ideas. The railroad accel______ [6] national integ______ [6], supported indus_____ [5] growth, a__ [2] contributed to the expa_____ [5] of tr___ [3], transforming t__ [2] United States i___ [3] ____ [1] mo__ [2] interconnected and economically dynamic nation. Advances in engineering, such as the use of steel rails, standardized gauges, and telegraph communication, enabled efficient construction and coordination across vast distances.",
+    "answers": ["accelerated", "integration", "industrial", "and", "expansion", "trade", "the", "into", "a", "more"]
+  },
+  {
+    "id": 45,
+    "title": "Industrialization",
+    "raw": "The advent of industrialization in the late eighteenth and nineteenth centuries dramatically reshaped city architecture across Europe and North America. As urban popu_______ [7] surged, cit___ [3] expanded upw___ [3] with t__ [2] construction o_ [1] multi-story buil_____ [5] and, event_____ [5], steel-framed skysc______ [6] that def____ [4] modern skyl____ [4]. These towering structures reflected new engineering capabilities and the growing demand for centralized workspaces. Within cities, transportation systems like streetcars made commuting more efficient, further fueling urban growth. This architectural transformation marked a shift toward dense, vertical living and working environments, emblematic of the industrial age.",
+    "answers": ["populations", "cities", "upward", "the", "of", "buildings", "eventually", "skyscrapers", "defined", "skylines"]
+  },
+  {
+    "id": 46,
+    "title": "The Landscape of North America",
+    "raw": "During the late nineteenth and early twentieth centuries, the landscape of North American urban centers underwent dramatic transformations as industrialization accelerated. Cities expanded rap____ [4], fueled by th_ [1] arr____ [4] o_ [1] immig_____ [5] and ru___ [3] populations see____ [4] employment i_ [1] factories. This dyn____ [4] era witn_____ [5] th_ [1] ri__ [2] of skyscrapers, symbolizing progress and technological triumph. Architects and planners grappled with the challenges posed by such quick growth, including overcrowding and sanitation issues. Public transit systems, like streetcars, emerged as pivotal solutions to urban congestion, altering the rhythm of daily life.",
+    "answers": ["rapidly", "the", "arrival", "of", "immigrants", "rural", "seeking", "in", "dynamic", "witnessed", "the", "rise"]
+  },
+  {
+    "id": 47,
+    "title": "Comparative Advantage",
+    "raw": "In analyzing global trade dynamics, the principle of comparative advantage plays a foundational role. It suggests that nations should specialize in producing goods they can create most efficiently, thereby enhancing ove____ [4] economic produc______ [6] and fost_____ [5] international interde________ [8]. However, exce_____ [5] reliance o_ [1] this mo___ [3] can exp___ [3] economies t_ [1] significant ri___ [3]. Countries that concentrate on a limited range of exports may become vulnerable to market volatility, such as shifts in global demand or price fluctuations. While comparative advantage can stimulate growth, it must be strategically managed to ensure long-term economic sustainability.",
+    "answers": ["overall", "productivity", "fostering", "interdependence", "excessive", "on", "model", "expose", "to", "risks"]
+  },
+  {
+    "id": 48,
+    "title": "Moons",
+    "raw": "The discovery of water and volcanic activity on moons like Europa and Enceladus has sparked interest in the potential for extraterrestrial life. These moons, orbi____ [4] the pla____ [4] Jupiter a__ [2] Saturn, ha__ [2] ice-covered surf____ [4] with oce___ [3] lying under_____ [5]. Volcanic acti____ [4], in th_ [1] form o_ [1] hydrothermal vents, provides heat and nutrients, creating environments where microbial life could potentially thrive. Missions by spacecraft such as the Galileo and Cassini have gathered valuable data on these moons.",
+    "answers": ["orbiting", "planets", "and", "have", "surfaces", "oceans", "underneath", "activity", "the", "of"]
+  },
+  {
+    "id": 49,
+    "title": "Glassblowing",
+    "raw": "Glassblowing began in the Roman Empire around the first century B.C.E. It involves shaping molten glass by blowing air into it through a tube, allowing artisans to create different shapes. Roman glass______ [6] crafted every___ [3] items li__ [2] cups, bot____ [4], and decor_____ [5] vases, mak___ [3] glass mo__ [2] widely avai_____ [5]. Glassblowing i_ [1] still carr___ [3] out today for both artistic and functional purposes—creating everything from colorful sculptures and ornaments to custom lighting and scientific glassware.",
+    "answers": ["glassmakers", "everyday", "like", "bottles", "decorative", "making", "more", "available", "is", "carried"]
+  },
+  {
+    "id": 50,
+    "title": "Circadian Rhythms",
+    "raw": "Circadian rhythms are natural cycles that help regulate key functions in the body over a roughly 24-hour period. These rhythms respond to external cues like light and temperature, aligning sleep, alertness, and hormone levels with the environment. Disruption of circadian rhythms, often due to irre_____ [5] sleep patt____ [4], can le__ [2] to nega____ [4] effects o_ [1] health, incl_____ [5] impaired cogn_____ [5] function, mo__ [2] disorders, a__ [2] metabolic distur______ [6]. Understanding the molecular mechanisms underlying these rhythms is crucial for developing therapeutic strategies for disorders related to circadian disruption.",
+    "answers": ["irregular", "patterns", "lead", "negative", "on", "including", "cognitive", "mood", "and", "disturbances"]
+  },
+  {
+    "id": 51,
+    "title": "Pigments",
+    "raw": "In visual arts, the interplay between color and pigment is fundamental in shaping artistic expression. Pigments, the materials that give color to paint, are der____ [4] from var____ [4] sources, incl_____ [5] minerals, pla___ [3], and synt_____ [5] compounds. Art____ [4] selected mate_____ [5] based on their abi____ [4] to con____ [4] underlying layers (opacity) and resist fading over time. The transformation of pigments into vibrant colors involves the complex interaction of light with the pigment's molecular structure. This interaction determines the color's intensity and luminosity.",
+    "answers": ["derived", "various", "including", "plants", "synthetic", "artists", "materials", "ability", "conceal"]
+  },
+  {
+    "id": 52,
+    "title": "Maps",
+    "raw": "Maps are tools that help us understand the world around us. They sh__ [2] the loca_____ [5] of pla___ [3] like cit___ [3], rivers, a__ [2] mountains. Th___ [3] visual gu____ [4] can al__ [2] display different ty___ [3] of infor______ [6], such as climate or population. There are many kinds, including physical, political, and thematic versions. The study of maps and cartography, the process by which they are made, can teach us about the geography of our planet and how people live in different regions.",
+    "answers": ["show", "locations", "places", "cities", "and", "these", "guides", "also", "types", "information"]
+  },
+  {
+    "id": 53,
+    "title": "Child Development",
+    "raw": "Child development milestones are key indicators of a child's growth. They enco_____ [5] various asp____ [4] of development, incl_____ [5] language acqui______ [6], motor ski___ [3], and soc___ [3] interactions. O__ [2] example i_ [1] taking a fi___ [3] step, wh___ [3] typically occurs around the age of twelve months. These milestones are useful in helping parents and caretakers monitor a child's progress. It is important to remember, however, that these milestones on__ [2] provide a general guide, and each child develops at their own pace.",
+    "answers": ["encompass", "aspects", "including", "acquisition", "skills", "social", "One", "is", "first", "which", "only"]
+  },
+  {
+    "id": 54,
+    "title": "Aquariums",
+    "raw": "Aquariums provide an opportunity to observe a variety of fish and other aquatic organisms in a controlled environment. These facilities carefully repli____ [4] natural habi____ [4], allowing visi____ [4] to le___ [3] about mar___ [3] life wit____ [4] venturing i___ [3] the oc___ [3]. Exhibits o____ [4] include coral reefs, kelp forests, and freshwater streams, showcasing the diversity of aquatic ecosystems. Educational programs and guided tours enhance the experience, offering insights into the behavior, diet, and conservation of these organisms. Maintaining an aquarium requires expertise in water chemistry, filtration systems, and species compatibility.",
+    "answers": ["replicate", "habitats", "visitors", "learn", "marine", "without", "into", "ocean", "often"]
+  },
+  {
+    "id": 55,
+    "title": "Logical Reasoning",
+    "raw": "Logical reasoning is a cornerstone of academic methodology, providing a structured approach to analyzing arguments and evidence. Deductive reas_____ [5] starts wi__ [2] general princ_____ [5] and der____ [4] specific concl______ [6], while indu_____ [5] thinking invo____ [4] drawing br___ [3] generalizations fr__ [2] specific observ______ [6]. Critical thinking skills enable scholars to identify logical fallacies, assess the credibility of sources, and construct coherent arguments. The application of logic extends across disciplines, from mathematics to philosophy to the natural sciences. Developing proficiency in logical reasoning enhances the ability to solve complex problems and communicate effectively, fostering intellectual rigor and innovation.",
+    "answers": ["reasoning", "with", "principles", "derives", "conclusions", "inductive", "involves", "broad", "from", "observations"]
+  },
+  {
+    "id": 56,
+    "title": "Theater",
+    "raw": "Theater has been an integral part of human culture for centuries, providing a medium for storytelling and artistic expression. Many feat____ [4] of Anc____ [4] Greek theater a__ [2] still fo___ [3] in mod___ [3] theater, such a_ [1] wearing m____ [4] and us___ [3] a chorus. Dur___ [3] the Renaissance, theater flour_____ [5] as playwrights, like Shakespeare, created enduring works. Modern theater continues to evolve, incorporating technology and diverse narratives. The communal experience of live performance remains a powerful way to explore human emotions and societal issues.",
+    "answers": ["features", "ancient", "are", "found", "modern", "as", "masks", "using", "during", "flourished"]
+  },
+  {
+    "id": 57,
+    "title": "The Pinta Island Tortoise",
+    "raw": "The Pinta Island tortoise, a subspecies of giant tortoise native to Ecuador's Galápagos Islands, became extinct with the death of the last known individual, Lonesome George, in 2012. Pinta tortoises were kn___ [3] for th___ [3] domed she___ [3] and lo__ [2] necks ada____ [4] for fee____ [4]; they pla___ [3] a cru____ [4] role i_ [1] shaping veget_____ [5] by grazing on plants and dispersing seeds. The extinction of this subspecies highlights the impact of human activity on isolated ecosystems. Invasive species and habitat destruction were significant factors contributing to its decline.",
+    "answers": ["known", "their", "shells", "long", "adapted", "feeding", "played", "crucial", "in", "vegetation"]
   }
 ]
