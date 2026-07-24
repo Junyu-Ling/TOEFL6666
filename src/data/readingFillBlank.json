@@ -734,8 +734,8 @@
   {
     "id": 46,
     "title": "The Landscape of North America",
-    "raw": "During the late nineteenth and early twentieth centuries, the landscape of North American urban centers underwent dramatic transformations as industrialization accelerated. Cities expanded rap____ [4], fueled by th_ [1] arr____ [4] o_ [1] immig_____ [5] and ru___ [3] populations see____ [4] employment i_ [1] factories. This dyn____ [4] era witn_____ [5] th_ [1] ri__ [2] of skyscrapers, symbolizing progress and technological triumph. Architects and planners grappled with the challenges posed by such quick growth, including overcrowding and sanitation issues. Public transit systems, like streetcars, emerged as pivotal solutions to urban congestion, altering the rhythm of daily life.",
-    "answers": ["rapidly", "the", "arrival", "of", "immigrants", "rural", "seeking", "in", "dynamic", "witnessed", "the", "rise"]
+    "raw": "During the late nineteenth and early twentieth centuries, the landscape of North American urban centers underwent dramatic transformations as industrialization accelerated. Cities expanded rap____ [4], fueled b_ [1] the arr____ [4] o_ [1] immig_____ [5] and ru___ [3] populations see____ [4] employment i_ [1] factories. This dyn____ [4] era witn_____ [5] th_ [1] ri__ [2] of skyscrapers, symbolizing progress and technological triumph. Architects and planners grappled with the challenges posed by such quick growth, including overcrowding and sanitation issues. Public transit systems, like streetcars, emerged as pivotal solutions to urban congestion, altering the rhythm of daily life.",
+    "answers": ["rapidly", "by", "arrival", "of", "immigrants", "rural", "seeking", "in", "dynamic", "witnessed", "the", "rise"]
   },
   {
     "id": 47,
