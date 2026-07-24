@@ -578,6 +578,40 @@
     ]
   },
   {
+    "id": 35,
+    "title": "Sanitation Practice in 19th Century",
+    "raw": "The introduction of sanitation practices in urban areas during the nineteenth century significantly improved public health. Innovations such as sew___ [3] systems a__ [2] clean wat__ [2] supplies deve_____ [5] from t__ [2] growing awar_____ [5] of the conne_____ [5] between po__ [2] hygiene and ill____ [4], and reduced the spre__ [2] of infectious diseases like cholera and typhoid. Public health campaigns, supported by local governments and medical professionals, educated communities on the importance of hygiene. These efforts were instrumental in decreasing mortality rates and enhancing quality of life.",
+    "answers": [
+      "sewage",
+      "and",
+      "water",
+      "developed",
+      "the",
+      "awareness",
+      "connection",
+      "poor",
+      "illness",
+      "spread"
+    ]
+  },
+  {
+    "id": 36,
+    "title": "The Human Nervous System",
+    "raw": "The human nervous system is responsible for coordinating actions and processing sensory information by transmitting signals between different parts of the body. This comp___ [3] network ena____ [4] essential func_____ [5] such a_ [1] sensation, move____ [4], and thou___ [3]. The cel__ [2] in t__ [2] nervous sys___ [3] (neurons) comm_______ [7] through electrical impulses and chemical signals. This system controls voluntary actions like movement by sending messages from the brain to muscles, and it also controls involuntary functions such as heart rate, breathing, and digestion.",
+    "answers": [
+      "complex",
+      "enables",
+      "functions",
+      "as",
+      "movement",
+      "thought",
+      "cells",
+      "the",
+      "system",
+      "communicate"
+    ]
+  },
+  {
     "id": 37,
     "title": "Bone",
     "raw": "Using bone for the manufacture of tools and other objects has a long history. Many of the wea____ [4] th__ [2] prehi______ [6] people us__ [2] for hun____ [4] were ma__ [2] from t__ [2] bones o_ [1] the ani____ [4] they hun___ [3]. The physical properties of these materials varied greatly. For example, the strength and flexibility of antler were important to the way these tools were utilized. Many early bone tools show distinctive signs of wear and polishing, revealing how they were handled and over time.",
