@@ -1600,15 +1600,14 @@
   {
     "id": 95,
     "title": "European Middle Ages",
-    "raw": "The Middle Ages was a period in Europe that spanned roughly between the fifth and fifteenth centuries. This E__ [2] saw signif_____ [5] changes, mo__ [2] notably t__ [2] spread o_ [1] Christianity a__ [2] t__ [2] estab________ [8] of pow_____ [5] kingdoms. Des____ [4] being of___ [3] referred to as the \"Dark Ages,\" a name that suggests stagnation and decline, this period also witnessed remarkable achievements in art, architecture, and learning, laying the groundwork for Europe's transition into the Renaissance and the age of discovery.",
+    "raw": "The Middle Ages was a period in Europe that spanned roughly between the fifth and fifteenth centuries. This e__ [2] saw signif_____ [5] changes, mo__ [2] notably t__ [2] spread o_ [1] Christianity a__ [2] the estab________ [8] of pow_____ [5] kingdoms. Des____ [4] being of___ [3] referred to as the \"Dark Ages,\" a name that suggests stagnation and decline, this period also witnessed remarkable achievements in art, architecture, and learning, laying the groundwork for Europe's transition into the Renaissance and the age of discovery.",
     "answers": [
-      "Era",
+      "era",
       "significant",
       "most",
       "the",
       "of",
       "and",
-      "the",
       "establishment",
       "powerful",
       "Despite",
