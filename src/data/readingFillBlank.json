@@ -859,7 +859,7 @@
       "including",
       "plants",
       "synthetic",
-      "artists",
+      "Artists",
       "materials",
       "on",
       "ability",
@@ -876,7 +876,7 @@
       "places",
       "cities",
       "and",
-      "these",
+      "These",
       "guides",
       "also",
       "types",
@@ -937,7 +937,7 @@
   {
     "id": 56,
     "title": "Theater",
-    "raw": "Theater has been an integral part of human culture for centuries, providing a medium for storytelling and artistic expression. Many feat____ [4] of Anc____ [4] Greek theater a__ [2] still fo___ [3] in mod___ [3] theater, such a_ [1] wearing m____ [4] and us___ [3] a chorus. Dur___ [3] the Renaissance, theater flour_____ [5] as playwrights, like Shakespeare, created enduring works. Modern theater continues to evolve, incorporating technology and diverse narratives. The communal experience of live performance remains a powerful way to explore human emotions and societal issues.",
+    "raw": "Theater has been an integral part of human culture for centuries, providing a medium for storytelling and artistic expression. Many feat____ [4] of anc____ [4] Greek theater a__ [2] still fo___ [3] in mod___ [3] theater, such a_ [1] wearing m____ [4] and us___ [3] a chorus. Dur___ [3] the Renaissance, theater flour_____ [5] as playwrights, like Shakespeare, created enduring works. Modern theater continues to evolve, incorporating technology and diverse narratives. The communal experience of live performance remains a powerful way to explore human emotions and societal issues.",
     "answers": [
       "features",
       "ancient",
@@ -947,7 +947,7 @@
       "as",
       "masks",
       "using",
-      "during",
+      "During",
       "flourished"
     ]
   },
@@ -1211,7 +1211,7 @@
     "title": "Music",
     "raw": "Music has long served as a powerful tool for cultural expression and social change. Comp_____ [5] and musi_____ [5] have us__ [2] their wo___ [3] to chal_____ [5] norms a__ [2] reflect poli_____ [5] realities. Beethoven's symph_____ [5], for exa____ [4], echoed t__ [2] revolutionary spirit of his time. In the twentieth century, protest songs became anthems for civil rights and anti-war movements, helping to mobilize public sentiment. These examples show how music can influence thought and action. Studying these intersections reveals music's lasting role in shaping cultural and ideological shifts throughout history.",
     "answers": [
-      "composers",
+      "Composers",
       "musicians",
       "used",
       "works",
@@ -1245,7 +1245,7 @@
     "title": "Geology",
     "raw": "Geology is the scientific study of our planet, including its composition, structure, and processes. Geolo_____ [5] analyze roc__ [2], minerals, a__ [2] the nat____ [4] forces th__ [2] change t__ [2] outer la____ [4] of Ea___ [3] over ti__ [2]. This kno______ [6] helps scientists understand the planet's history and predict future changes. It is essential for natural resource management, hazard mitigation, and environmental protection. Advances in geologic research—such as satellite-based remote sensing, deep-Earth imaging, and isotopic dating—have greatly improved our ability to monitor earthquakes, track volcanic activity, and assess groundwater resources.",
     "answers": [
-      "geologists",
+      "Geologists",
       "rocks",
       "and",
       "natural",
@@ -1651,9 +1651,9 @@
   {
     "id": 98,
     "title": "Ocean Overview",
-    "raw": "Oceanography is the study of the physical, chemical, and biological aspects of the ocean. This Fi___ [3] encompasses t__ [2] exploration o_ [1] ocean curr____ [4], marine ecos______ [6], and geolo_____ [5] seabed struc_____ [5]. Oceanographers u__ [2] satellites a__ [2] other adva____ [4] technology to monitor and analyze ocean conditions. By tracking sea surface temperatures, currents, salinity, and other features, researchers contribute to our understanding of climate change. Their work is vital for sustaining ocean health and preserving marine biodiversity.",
+    "raw": "Oceanography is the study of the physical, chemical, and biological aspects of the ocean. This fi___ [3] encompasses t__ [2] exploration o_ [1] ocean curr____ [4], marine ecos______ [6], and geolo_____ [5] seabed struc_____ [5]. Oceanographers u__ [2] satellites a__ [2] other adva____ [4] technology to monitor and analyze ocean conditions. By tracking sea surface temperatures, currents, salinity, and other features, researchers contribute to our understanding of climate change. Their work is vital for sustaining ocean health and preserving marine biodiversity.",
     "answers": [
-      "Field",
+      "field",
       "the",
       "of",
       "currents",
@@ -1668,9 +1668,9 @@
   {
     "id": 99,
     "title": "Grasshopper",
-    "raw": "Grasshoppers are insects commonly found in dry places with grass and plants. Grasshoppers Ha__ [2] several wa__ [2] they pro____ [4] themselves aga____ [4] danger. Th__ [2] ha__ [2] pow_____ [5] back le__ [2], which al___ [3] them t_ [1] jump aw__ [2] from enemies, such as rodents and snakes. Some grasshoppers can jump twenty times the length of their bodies. By the time they are adults, grasshoppers can also fly. Adult grasshoppers fly very quickly and this helps them avoid danger.",
+    "raw": "Grasshoppers are insects commonly found in dry places with grass and plants. Grasshoppers ha__ [2] several wa__ [2] they pro____ [4] themselves aga____ [4] danger. Th__ [2] ha__ [2] pow_____ [5] back le__ [2], which al___ [3] them t_ [1] jump aw__ [2] from enemies, such as rodents and snakes. Some grasshoppers can jump twenty times the length of their bodies. By the time they are adults, grasshoppers can also fly. Adult grasshoppers fly very quickly and this helps them avoid danger.",
     "answers": [
-      "Have",
+      "have",
       "ways",
       "protect",
       "against",
@@ -1686,9 +1686,9 @@
   {
     "id": 100,
     "title": "Climate Change",
-    "raw": "Global temperatures and weather patterns are experiencing notable shifts, which scientific research strongly associates with human-related factors. Activities Su__ [2] as t__ [2] u__ [2] of fossil fu___ [3], changes i_ [1] land u__ [2], and industrial produ_____ [5] contribute t_ [1] the accumu_______ [7] of green_____ [5] gases in the atmosphere. These gases retain heat, gradually increasing the Earth's average temperature. If emissions continue at current levels, potential outcomes may include more frequent extreme weather events, rising sea levels, and disruptions to ecosystems. Experts emphasize that timely and coordinated efforts are essential to reduce risks and promote long-term environmental stability.",
+    "raw": "Global temperatures and weather patterns are experiencing notable shifts, which scientific research strongly associates with human-related factors. Activities su__ [2] as t__ [2] u__ [2] of fossil fu___ [3], changes i_ [1] land u__ [2], and industrial produ_____ [5] contribute t_ [1] the accumu_______ [7] of green_____ [5] gases in the atmosphere. These gases retain heat, gradually increasing the Earth's average temperature. If emissions continue at current levels, potential outcomes may include more frequent extreme weather events, rising sea levels, and disruptions to ecosystems. Experts emphasize that timely and coordinated efforts are essential to reduce risks and promote long-term environmental stability.",
     "answers": [
-      "Such",
+      "such",
       "the",
       "use",
       "fuels",
@@ -1703,9 +1703,9 @@
   {
     "id": 101,
     "title": "Atmospheric Pressure",
-    "raw": "Atmospheric pressure plays a critical role in weather systems. High-pressure zones bring clear, calm conditions due to descending air that inhibits cloud formation. In low-pressure systems, warm air rises, cools, and condenses into clouds, Wh___ [3] can le__ [2] to precip_______ [7]. Barometric pressure varia_____ [5] help meteor________ [8] improve fore_____ [5], as ra___ [3] fluctuations o_ [1] pressure signal appro______ [6] storms. Adva____ [4] models use atmospheric force gradients, temperature, and humidity to predict storm movement and intensity, providing vital information for both short-term weather outlooks and long-term climate assessments.",
+    "raw": "Atmospheric pressure plays a critical role in weather systems. High-pressure zones bring clear, calm conditions due to descending air that inhibits cloud formation. In low-pressure systems, warm air rises, cools, and condenses into clouds, wh___ [3] can le__ [2] to precip_______ [7]. Barometric pressure varia_____ [5] help meteor________ [8] improve fore_____ [5], as ra___ [3] fluctuations o_ [1] pressure signal appro______ [6] storms. Adva____ [4] models use atmospheric force gradients, temperature, and humidity to predict storm movement and intensity, providing vital information for both short-term weather outlooks and long-term climate assessments.",
     "answers": [
-      "Which",
+      "which",
       "lead",
       "precipitation",
       "variations",
@@ -1720,9 +1720,9 @@
   {
     "id": 102,
     "title": "Film Technology",
-    "raw": "The evolution of the film industry has been shaped by major technological shifts, especially the move from silent films to movies with sound. In the silent era, filmmakers relied entirely on visual storytelling, using expressive acting and title cards to convey dialogue and emotion. The Introd______ [6] of synchronized so___ [3]—where au___ [3] was mat____ [4] precisely wi__ [2] t__ [2] mov___ [3] image—all____ [4] audiences t_ [1] hear act___ [3] speak f__ [2] the first time, transforming the cinematic experience. This breakthrough laid the foundation for later innovations like CGI and immersive sound design, expanding how stories could be told on screen.",
+    "raw": "The evolution of the film industry has been shaped by major technological shifts, especially the move from silent films to movies with sound. In the silent era, filmmakers relied entirely on visual storytelling, using expressive acting and title cards to convey dialogue and emotion. The introd______ [6] of synchronized so___ [3]—where au___ [3] was mat____ [4] precisely wi__ [2] t__ [2] mov___ [3] image—all____ [4] audiences t_ [1] hear act___ [3] speak f__ [2] the first time, transforming the cinematic experience. This breakthrough laid the foundation for later innovations like CGI and immersive sound design, expanding how stories could be told on screen.",
     "answers": [
-      "Introduction",
+      "introduction",
       "sound",
       "audio",
       "matched",
