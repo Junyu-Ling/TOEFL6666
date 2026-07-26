@@ -1702,7 +1702,7 @@
   {
     "id": 101,
     "title": "Atmospheric Pressure",
-    "raw": "Atmospheric pressure plays a critical role in weather systems. High-pressure zones bring clear, calm conditions due to descending air that inhibits cloud formation. In low-pressure systems, warm air rises, cools, and condenses into clouds, wh___ [3] can le__ [2] to precip_______ [7]. Barometric pressure varia_____ [5] help meteoro_______ [7] improve fore_____ [5], as ra___ [3] fluctuations of pres____ [4] signal appro______ [6] storms. Adva____ [4] models use atmospheric force gradients, temperature, and humidity to predict storm movement and intensity, providing vital information for both short-term weather outlooks and long-term climate assessments.",
+    "raw": "Atmospheric pressure plays a critical role in weather systems. High-pressure zones bring clear, calm conditions due to descending air that inhibits cloud formation. In low-pressure systems, warm air rises, cools, and condenses into clouds, wh___ [3] can le__ [2] to precip_______ [7]. Barometric pressure varia_____ [5] help meteoro_______ [7] improve fore_____ [5], as ra___ [3] fluctuations of pre_____ [5] signal appro______ [6] storms. Adva____ [4] models use atmospheric force gradients, temperature, and humidity to predict storm movement and intensity, providing vital information for both short-term weather outlooks and long-term climate assessments.",
     "answers": [
       "which",
       "lead",
