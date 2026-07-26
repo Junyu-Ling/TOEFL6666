@@ -1583,7 +1583,7 @@
   {
     "id": 94,
     "title": "Cognition and Consciousness",
-    "raw": "Understanding the relationship between cognition and consciousness is pivotal for unraveling the complexities of human thinking and behavior, as both are fundamental activities of the brain. Cognition is the men___ [3] process b_ [1] which indiv______ [6] acquire know_____ [5] and under________ [8] through tho____ [4], experience, a__ [2] t__ [2] sen___ [3]. Consciousness ref___ [3] to t__ [2] state of being aware of and responsive to one's surroundings. The advancements of neuroimaging technologies have provided insights into how consciousness arises from neural networks and how cognitive processes can occur both with and without conscious awareness.",
+    "raw": "Understanding the relationship between cognition and consciousness is pivotal for unraveling the complexities of human thinking and behavior, as both are fundamental activities of the brain. Cognition is the men___ [3] process b_ [1] which indiv______ [6] acquire know_____ [5] and under________ [8] through tho____ [4], experience, a__ [2] the sen___ [3]. Consciousness ref___ [3] to the state of being aware of and responsive to one's surroundings. The advancements of neuroimaging technologies have provided insights into how consciousness arises from neural networks and how cognitive processes can occur both with and without conscious awareness.",
     "answers": [
       "mental",
       "by",
@@ -1592,10 +1592,8 @@
       "understanding",
       "thought",
       "and",
-      "the",
       "senses",
-      "refers",
-      "the"
+      "refers"
     ]
   },
   {
