@@ -4699,7 +4699,7 @@ body {
   align-items: flex-start;
   justify-content: space-between;
   gap: 1rem;
-  padding: 0.85rem 1.25rem;
+  padding: 0.85rem 1rem;
   background: #1f6666;
   color: #fff;
   flex-shrink: 0;
@@ -4835,7 +4835,7 @@ body {
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  padding: 0.65rem 1.25rem;
+  padding: 0.65rem 1rem;
   border-bottom: 1px solid var(--border);
   background: #fff;
   font-size: 0.8125rem;
@@ -4860,7 +4860,7 @@ body {
 .rfill__body {
   flex: 1;
   overflow-y: auto;
-  padding: 1.75rem clamp(1.25rem, 4vw, 3rem) 2.5rem;
+  padding: 1.25rem 1rem 2rem;
   background: #fff;
 }
 
@@ -4883,8 +4883,8 @@ body {
 
 .rfill__passage {
   width: 100%;
-  max-width: 48rem;
-  margin: 0 auto;
+  max-width: none;
+  margin: 0;
   font-size: 1.0625rem;
   line-height: 2.15;
   color: #334155;
