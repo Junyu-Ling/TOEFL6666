@@ -1668,14 +1668,13 @@
   {
     "id": 99,
     "title": "Grasshopper",
-    "raw": "Grasshoppers are insects commonly found in dry places with grass and plants. Grasshoppers ha__ [2] several wa__ [2] they pro____ [4] themselves aga____ [4] danger. Th__ [2] ha__ [2] pow_____ [5] back le__ [2], which al___ [3] them t_ [1] jump aw__ [2] from enemies, such as rodents and snakes. Some grasshoppers can jump twenty times the length of their bodies. By the time they are adults, grasshoppers can also fly. Adult grasshoppers fly very quickly and this helps them avoid danger.",
+    "raw": "Grasshoppers are insects commonly found in dry places with grass and plants. Grasshoppers ha__ [2] several wa__ [2] they pro____ [4] themselves aga____ [4] danger. Th__ [2] have powe____ [4] back le__ [2], which al___ [3] them t_ [1] jump aw__ [2] from enemies, such as rodents and snakes. Some grasshoppers can jump twenty times the length of their bodies. By the time they are adults, grasshoppers can also fly. Adult grasshoppers fly very quickly and this helps them avoid danger.",
     "answers": [
       "have",
       "ways",
       "protect",
       "against",
       "They",
-      "have",
       "powerful",
       "legs",
       "allow",
@@ -1686,14 +1685,14 @@
   {
     "id": 100,
     "title": "Climate Change",
-    "raw": "Global temperatures and weather patterns are experiencing notable shifts, which scientific research strongly associates with human-related factors. Activities su__ [2] as t__ [2] u__ [2] of fossil fu___ [3], changes i_ [1] land u__ [2], and industrial produ_____ [5] contribute t_ [1] the accumu_______ [7] of green_____ [5] gases in the atmosphere. These gases retain heat, gradually increasing the Earth's average temperature. If emissions continue at current levels, potential outcomes may include more frequent extreme weather events, rising sea levels, and disruptions to ecosystems. Experts emphasize that timely and coordinated efforts are essential to reduce risks and promote long-term environmental stability.",
+    "raw": "Global temperatures and weather patterns are experiencing notable shifts, which scientific research strongly associates with human-related factors. Activities su__ [2] as t__ [2] us_ [1] of fossil fu___ [3], ch_____ [5] i_ [1] land use, and industrial produ_____ [5] contribute t_ [1] the accumu_______ [7] of green_____ [5] gases in the atmosphere. These gases retain heat, gradually increasing the Earth's average temperature. If emissions continue at current levels, potential outcomes may include more frequent extreme weather events, rising sea levels, and disruptions to ecosystems. Experts emphasize that timely and coordinated efforts are essential to reduce risks and promote long-term environmental stability.",
     "answers": [
       "such",
       "the",
       "use",
       "fuels",
+      "changes",
       "in",
-      "use",
       "production",
       "to",
       "accumulations",
@@ -1703,7 +1702,7 @@
   {
     "id": 101,
     "title": "Atmospheric Pressure",
-    "raw": "Atmospheric pressure plays a critical role in weather systems. High-pressure zones bring clear, calm conditions due to descending air that inhibits cloud formation. In low-pressure systems, warm air rises, cools, and condenses into clouds, wh___ [3] can le__ [2] to precip_______ [7]. Barometric pressure varia_____ [5] help meteor________ [8] improve fore_____ [5], as ra___ [3] fluctuations o_ [1] pressure signal appro______ [6] storms. Adva____ [4] models use atmospheric force gradients, temperature, and humidity to predict storm movement and intensity, providing vital information for both short-term weather outlooks and long-term climate assessments.",
+    "raw": "Atmospheric pressure plays a critical role in weather systems. High-pressure zones bring clear, calm conditions due to descending air that inhibits cloud formation. In low-pressure systems, warm air rises, cools, and condenses into clouds, wh___ [3] can le__ [2] to precip_______ [7]. Barometric pressure varia_____ [5] help meteoro_______ [7] improve fore_____ [5], as ra___ [3] fluctuations of pres____ [4] signal appro______ [6] storms. Adva____ [4] models use atmospheric force gradients, temperature, and humidity to predict storm movement and intensity, providing vital information for both short-term weather outlooks and long-term climate assessments.",
     "answers": [
       "which",
       "lead",
@@ -1712,7 +1711,7 @@
       "meteorologists",
       "forecasts",
       "rapid",
-      "of",
+      "pressure",
       "approaching",
       "Advanced"
     ]

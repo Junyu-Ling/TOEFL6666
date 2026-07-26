@@ -2,7 +2,7 @@ import rawArticles from "../data/readingFillBlank.json";
 import { getArticleInputs } from "../services/readingFillBlankProgress";
 
 export const READING_FILL_BLANK_TOTAL = 114;
-export const READING_FILL_BLANK_QUESTION_TOTAL = 1140;
+export const READING_FILL_BLANK_QUESTION_TOTAL = 1139;
 
 export function getReadingFillBlankQuestionTotal(articles) {
   return articles.reduce((sum, article) => sum + (article.blankCount ?? 0), 0);
