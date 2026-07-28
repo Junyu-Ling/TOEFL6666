@@ -17,6 +17,27 @@ export function getListReviewLabel(listId, availableLists) {
   return meta?.title || listId;
 }
 
+export function getListDisplayLabel(item) {
+  if (!item) return "";
+  return item.title || `List ${item.list}`;
+}
+
+export function getLevelDisplayLabel(level, lists = []) {
+  const title = lists[0]?.title;
+  if (!title) return `Level ${level}`;
+  const parts = title.split("·").map((part) => part.trim());
+  if (parts.length >= 3) return `${parts[0]} · ${parts[1]}`;
+  return parts[0] || `Level ${level}`;
+}
+
+export function shouldShowLevelPicker(levelNumbers, listsByLevel) {
+  if (levelNumbers.length > 1) return true;
+  if (levelNumbers.length !== 1) return false;
+  const level = levelNumbers[0];
+  const lists = listsByLevel.get(level) ?? [];
+  return getLevelDisplayLabel(level, lists) !== `Level ${level}`;
+}
+
 export function countWordsByListId(words, wordListIndex = null) {
   const counts = new Map();
   for (const item of words) {

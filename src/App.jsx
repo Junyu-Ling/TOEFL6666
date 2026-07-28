@@ -55,6 +55,9 @@ import {
   getSessionListIds,
   matchesBookPracticeListId,
   sameListIdSet,
+  getLevelDisplayLabel,
+  getListDisplayLabel,
+  shouldShowLevelPicker,
 } from "./utils/wordListGrouping";
 import { buildWordBankMap } from "./utils/homophoneBank";
 import "./App.css";
@@ -837,6 +840,11 @@ export default function App() {
     [listsByLevel, activeLevel]
   );
 
+  const showLevelPicker = useMemo(
+    () => shouldShowLevelPicker(levelNumbers, listsByLevel),
+    [levelNumbers, listsByLevel]
+  );
+
   const handleLevelChange = useCallback(
     (levelValue) => {
       const level = Number(levelValue);
@@ -921,11 +929,15 @@ export default function App() {
     () => (
       <PracticeSession
         tabId="practice"
-        title={listMeta?.title ?? "单词练习"}
+        title={
+          listMeta?.title ??
+          availableLists.find((item) => item.id === activeListId)?.title ??
+          "单词练习"
+        }
         toolbarExtra={
           availableLists.length > 0 ? (
             <div className="practice-toolbar__pickers">
-              {levelNumbers.length > 1 && (
+              {showLevelPicker && (
                 <select
                   className="practice-toolbar__select"
                   value={activeLevel ?? ""}
@@ -934,7 +946,7 @@ export default function App() {
                 >
                   {levelNumbers.map((level) => (
                     <option key={level} value={level}>
-                      Level {level}
+                      {getLevelDisplayLabel(level, listsByLevel.get(level) ?? [])}
                     </option>
                   ))}
                 </select>
@@ -948,7 +960,7 @@ export default function App() {
                 >
                   {listsInActiveLevel.map((item) => (
                     <option key={item.id} value={item.id}>
-                      List {item.list}
+                      {getListDisplayLabel(item)}
                     </option>
                   ))}
                 </select>
@@ -978,7 +990,7 @@ export default function App() {
     [
       listMeta,
       availableLists,
-      levelNumbers,
+      showLevelPicker,
       activeLevel,
       handleLevelChange,
       listsInActiveLevel,

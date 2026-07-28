@@ -1,4 +1,4 @@
-import { UNCategorized_LIST_ID } from "../utils/wordListGrouping";
+import { UNCategorized_LIST_ID, getLevelDisplayLabel, getListDisplayLabel } from "../utils/wordListGrouping";
 
 function toggleListId(selectedListIds, listId) {
   if (selectedListIds.includes(listId)) {
@@ -70,7 +70,7 @@ export default function BookReviewScopeBar({
                   }}
                   onChange={() => toggleLevel(level)}
                 />
-                <span>Level {level}</span>
+                <span>{getLevelDisplayLabel(level, lists)}</span>
               </label>
               <div className="word-list-review-scope__lists">
                 {lists.map((item) => (
@@ -83,7 +83,7 @@ export default function BookReviewScopeBar({
                       }
                     />
                     <span>
-                      List {item.list}（{countByListId.get(item.id) || 0}）
+                      {getListDisplayLabel(item)}（{countByListId.get(item.id) || 0}）
                     </span>
                   </label>
                 ))}
