@@ -20,12 +20,12 @@ function splitMessages(messages) {
 function resolveChatCompletionsUrl(baseUrl, providerId = "") {
   let clean = baseUrl.replace(/\/$/, "");
   if (clean.endsWith("/chat/completions")) return clean;
-  if (
-    providerId === "deepseek" ||
-    (/deepseek\.com/i.test(clean) && !/\/v\d+$/i.test(clean))
-  ) {
+
+  const isDeepseek = providerId === "deepseek" || /deepseek\.com/i.test(clean);
+  if (isDeepseek && !/\/v\d+$/i.test(clean)) {
     clean = `${clean}/v1`;
   }
+
   return `${clean}/chat/completions`;
 }
 
