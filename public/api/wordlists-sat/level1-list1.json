@@ -3,7 +3,629 @@
     "level": 1,
     "list": 1,
     "title": "Level 1 · List 1",
-    "updatedAt": "2026-07-20"
+    "updatedAt": "2026-07-28"
   },
-  "words": []
+  "words": [
+    {
+      "word": "approach",
+      "definitions": [
+        "v. 靠近；处理",
+        "n. 途径"
+      ]
+    },
+    {
+      "word": "trial",
+      "definitions": [
+        "n. 试验；审判"
+      ]
+    },
+    {
+      "word": "appeal",
+      "definitions": [
+        "v. 呼吁，恳求；吸引"
+      ]
+    },
+    {
+      "word": "alternative",
+      "definitions": [
+        "adj. 供选择的",
+        "n. 供替代的选择"
+      ]
+    },
+    {
+      "word": "institution",
+      "definitions": [
+        "n. 设立"
+      ]
+    },
+    {
+      "word": "procedure",
+      "definitions": [
+        "n. 工序，过程"
+      ]
+    },
+    {
+      "word": "appropriate",
+      "definitions": [
+        "adj. /ə'proupriət/ 合适的",
+        "v. /ə'prouprieɪt/ 侵占"
+      ]
+    },
+    {
+      "word": "associate",
+      "definitions": [
+        "v. 联系"
+      ]
+    },
+    {
+      "word": "assume",
+      "definitions": [
+        "v. 猜想"
+      ]
+    },
+    {
+      "word": "reference",
+      "definitions": [
+        "n. 提及",
+        "v. 为…附参考资料"
+      ]
+    },
+    {
+      "word": "credit",
+      "definitions": [
+        "n. 信用；学分",
+        "v. 把…归给，归功于"
+      ]
+    },
+    {
+      "word": "presence",
+      "definitions": [
+        "n. 存在；风度"
+      ]
+    },
+    {
+      "word": "emerge",
+      "definitions": [
+        "v. 出现"
+      ]
+    },
+    {
+      "word": "critical",
+      "definitions": [
+        "adj. 关键的；批评的"
+      ]
+    },
+    {
+      "word": "component",
+      "definitions": [
+        "n. 组成"
+      ]
+    },
+    {
+      "word": "suspect",
+      "definitions": [
+        "v. 怀疑"
+      ]
+    },
+    {
+      "word": "perspective",
+      "definitions": [
+        "n. 观点，视角"
+      ]
+    },
+    {
+      "word": "troop",
+      "definitions": [
+        "n. 部队；一群，一队，大量，许多"
+      ]
+    },
+    {
+      "word": "commitment",
+      "definitions": [
+        "n. 承诺；责任感"
+      ]
+    },
+    {
+      "word": "acquire",
+      "definitions": [
+        "v. 获得；习得"
+      ]
+    },
+    {
+      "word": "capacity",
+      "definitions": [
+        "n. 能力；容纳的能力，容量，功率"
+      ]
+    },
+    {
+      "word": "insurance",
+      "definitions": [
+        "n. 保险；预防措施"
+      ]
+    },
+    {
+      "word": "objective",
+      "definitions": [
+        "adj. 客观的",
+        "n. 目标"
+      ]
+    },
+    {
+      "word": "assess",
+      "definitions": [
+        "v. 评价"
+      ]
+    },
+    {
+      "word": "row",
+      "definitions": [
+        "n. 一排",
+        "v. 划"
+      ]
+    },
+    {
+      "word": "internal",
+      "definitions": [
+        "adj. 里面的"
+      ]
+    },
+    {
+      "word": "chain",
+      "definitions": [
+        "n. 链；一连串；连锁"
+      ]
+    },
+    {
+      "word": "abuse",
+      "definitions": [
+        "n./v. 虐待；辱骂；滥用"
+      ]
+    },
+    {
+      "word": "principal",
+      "definitions": [
+        "adj. 最重要的",
+        "n. 校长"
+      ]
+    },
+    {
+      "word": "commission",
+      "definitions": [
+        "n. 委员会"
+      ]
+    },
+    {
+      "word": "cast",
+      "definitions": [
+        "v. 扔，抛；浇铸"
+      ]
+    },
+    {
+      "word": "conservative",
+      "definitions": [
+        "adj. 保守的"
+      ]
+    },
+    {
+      "word": "proportion",
+      "definitions": [
+        "n. 部分，比例"
+      ]
+    },
+    {
+      "word": "constant",
+      "definitions": [
+        "adj. 稳定的",
+        "n. 常数"
+      ]
+    },
+    {
+      "word": "reserve",
+      "definitions": [
+        "v./n. 储备",
+        "v. 保留；预订"
+      ]
+    },
+    {
+      "word": "phase",
+      "definitions": [
+        "n. 阶段"
+      ]
+    },
+    {
+      "word": "protest",
+      "definitions": [
+        "n./v. 抗议"
+      ]
+    },
+    {
+      "word": "impose",
+      "definitions": [
+        "v. 强制实行"
+      ]
+    },
+    {
+      "word": "yield",
+      "definitions": [
+        "n. 产量",
+        "v. 屈服，投降"
+      ]
+    },
+    {
+      "word": "implement",
+      "definitions": [
+        "n. /'ɪmplɪmənt/ 工具",
+        "v. /'ɪmplɪment/ 实施"
+      ]
+    },
+    {
+      "word": "attach",
+      "definitions": [
+        "v. 附属"
+      ]
+    },
+    {
+      "word": "acknowledge",
+      "definitions": [
+        "v. 承认；认可；确认收到"
+      ]
+    },
+    {
+      "word": "estate",
+      "definitions": [
+        "n. 庄园，地产；遗产"
+      ]
+    },
+    {
+      "word": "expose",
+      "definitions": [
+        "v. 使显露；揭露"
+      ]
+    },
+    {
+      "word": "variable",
+      "definitions": [
+        "n. 可变因素",
+        "adj. 变化无常的"
+      ]
+    },
+    {
+      "word": "resolution",
+      "definitions": [
+        "n. 决心；解决；决议"
+      ]
+    },
+    {
+      "word": "accompany",
+      "definitions": [
+        "v. 陪伴；伴随"
+      ]
+    },
+    {
+      "word": "motion",
+      "definitions": [
+        "n. 运动",
+        "v. 示意"
+      ]
+    },
+    {
+      "word": "plastic",
+      "definitions": [
+        "n./adj. 塑料（的）",
+        "adj. 可塑的；（样子或味道）令人不满的"
+      ]
+    },
+    {
+      "word": "mechanism",
+      "definitions": [
+        "n. 机械装置；机制"
+      ]
+    },
+    {
+      "word": "collapse",
+      "definitions": [
+        "n./v. 坍塌"
+      ]
+    },
+    {
+      "word": "distinguish",
+      "definitions": [
+        "v. 区分"
+      ]
+    },
+    {
+      "word": "substantial",
+      "definitions": [
+        "adj. 重要的，大量的；实质的"
+      ]
+    },
+    {
+      "word": "core",
+      "definitions": [
+        "n. 核心"
+      ]
+    },
+    {
+      "word": "encounter",
+      "definitions": [
+        "v. 遭遇"
+      ]
+    },
+    {
+      "word": "split",
+      "definitions": [
+        "v. 切开，分裂"
+      ]
+    },
+    {
+      "word": "swing",
+      "definitions": [
+        "v. 摆动"
+      ]
+    },
+    {
+      "word": "consistent",
+      "definitions": [
+        "adj. 一致的"
+      ]
+    },
+    {
+      "word": "prospect",
+      "definitions": [
+        "n. 希望"
+      ]
+    },
+    {
+      "word": "plot",
+      "definitions": [
+        "n. 情节；阴谋",
+        "v. 谋划"
+      ]
+    },
+    {
+      "word": "criterion",
+      "definitions": [
+        "n. 准则"
+      ]
+    },
+    {
+      "word": "integrate",
+      "definitions": [
+        "v. 构成整体；使融入"
+      ]
+    },
+    {
+      "word": "convention",
+      "definitions": [
+        "n. 传统；会议"
+      ]
+    },
+    {
+      "word": "retain",
+      "definitions": [
+        "v. 保持"
+      ]
+    },
+    {
+      "word": "sequence",
+      "definitions": [
+        "n. 顺序"
+      ]
+    },
+    {
+      "word": "lean",
+      "definitions": [
+        "adj. 倾斜的；瘦的"
+      ]
+    },
+    {
+      "word": "crucial",
+      "definitions": [
+        "adj. 关键的"
+      ]
+    },
+    {
+      "word": "minority",
+      "definitions": [
+        "n. 少数，少数民族"
+      ]
+    },
+    {
+      "word": "dominate",
+      "definitions": [
+        "v. 控制，主导"
+      ]
+    },
+    {
+      "word": "peer",
+      "definitions": [
+        "n. 同等地位的人，同龄人",
+        "v. 仔细看"
+      ]
+    },
+    {
+      "word": "variation",
+      "definitions": [
+        "n. 变化"
+      ]
+    },
+    {
+      "word": "undertake",
+      "definitions": [
+        "v. 承担，从事，着手做"
+      ]
+    },
+    {
+      "word": "equivalent",
+      "definitions": [
+        "adj. 等价的，相等的"
+      ]
+    },
+    {
+      "word": "enterprise",
+      "definitions": [
+        "n. 事业；企业"
+      ]
+    },
+    {
+      "word": "pitch",
+      "definitions": [
+        "n. 强度；音调；场地"
+      ]
+    },
+    {
+      "word": "contemporary",
+      "definitions": [
+        "adj. 同时代的；当代的"
+      ]
+    },
+    {
+      "word": "episode",
+      "definitions": [
+        "n. 事件；集，一段情节"
+      ]
+    },
+    {
+      "word": "symptom",
+      "definitions": [
+        "n. 症状，征兆"
+      ]
+    },
+    {
+      "word": "eliminate",
+      "definitions": [
+        "v. 消除"
+      ]
+    },
+    {
+      "word": "recruit",
+      "definitions": [
+        "v. 征募",
+        "n./v. 招聘，聘用"
+      ]
+    },
+    {
+      "word": "exclude",
+      "definitions": [
+        "v. 排除"
+      ]
+    },
+    {
+      "word": "restore",
+      "definitions": [
+        "v. 恢复"
+      ]
+    },
+    {
+      "word": "alter",
+      "definitions": [
+        "v. 改变"
+      ]
+    },
+    {
+      "word": "perceive",
+      "definitions": [
+        "v. 察觉，感知"
+      ]
+    },
+    {
+      "word": "convert",
+      "definitions": [
+        "v. 转变，变换",
+        "n. 皈依者，热衷…的人"
+      ]
+    },
+    {
+      "word": "justify",
+      "definitions": [
+        "v. 证明…是正当的"
+      ]
+    },
+    {
+      "word": "vital",
+      "definitions": [
+        "adj. 极其重要的"
+      ]
+    },
+    {
+      "word": "external",
+      "definitions": [
+        "adj. 外在的"
+      ]
+    },
+    {
+      "word": "depression",
+      "definitions": [
+        "n. 坑；抑郁；经济大萧条"
+      ]
+    },
+    {
+      "word": "underlie",
+      "definitions": [
+        "v. 位于…之下；构成…的基础"
+      ]
+    },
+    {
+      "word": "incorporate",
+      "definitions": [
+        "v. 包含，体现；组成公司，合并"
+      ]
+    },
+    {
+      "word": "perception",
+      "definitions": [
+        "n. 看法，洞察力；感知，感觉"
+      ]
+    },
+    {
+      "word": "strain",
+      "definitions": [
+        "n. 品种，类型；拉紧，拉力",
+        "v. 扭伤"
+      ]
+    },
+    {
+      "word": "innovation",
+      "definitions": [
+        "n. 革新"
+      ]
+    },
+    {
+      "word": "trail",
+      "definitions": [
+        "n. 痕迹",
+        "v. 追踪"
+      ]
+    },
+    {
+      "word": "extension",
+      "definitions": [
+        "n. 延长部分，延期"
+      ]
+    },
+    {
+      "word": "remarkable",
+      "definitions": [
+        "adj. 卓越的"
+      ]
+    },
+    {
+      "word": "extensive",
+      "definitions": [
+        "adj. 广泛的"
+      ]
+    },
+    {
+      "word": "strip",
+      "definitions": [
+        "v. 除去，脱去衣服"
+      ]
+    },
+    {
+      "word": "intervention",
+      "definitions": [
+        "n. 干涉，妨碍"
+      ]
+    }
+  ]
 }
