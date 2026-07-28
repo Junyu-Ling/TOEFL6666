@@ -6,18 +6,8 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const dir = path.join(__dirname, "../public/api/wordlists-sat");
 const defaultSourcePath = path.join(__dirname, "raw/sat-level1-list1.txt");
 
-const LEVEL_SUBTITLES = {
-  1: "预热级",
-  2: "基本级",
-  3: "提高级",
-  4: "全能级",
-};
-
 function formatListTitle(level, list) {
-  const subtitle = LEVEL_SUBTITLES[level];
-  return subtitle
-    ? `Level ${level}${subtitle} · List ${list}`
-    : `Level ${level} · List ${list}`;
+  return `Level ${level} · List ${list}`;
 }
 
 const POS_START =
