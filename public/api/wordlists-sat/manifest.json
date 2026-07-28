@@ -5,35 +5,35 @@
   "lists": [
     {
       "id": "level1-list1",
-      "title": "Level 1 · 预热级 · List 1",
+      "title": "Level 1预热级 · List 1",
       "level": 1,
       "list": 1,
       "wordCount": 100
     },
     {
       "id": "level1-list2",
-      "title": "Level 1 · 预热级 · List 2",
+      "title": "Level 1预热级 · List 2",
       "level": 1,
       "list": 2,
       "wordCount": 100
     },
     {
       "id": "level1-list3",
-      "title": "Level 1 · 预热级 · List 3",
+      "title": "Level 1预热级 · List 3",
       "level": 1,
       "list": 3,
       "wordCount": 100
     },
     {
       "id": "level1-list4",
-      "title": "Level 1 · 预热级 · List 4",
+      "title": "Level 1预热级 · List 4",
       "level": 1,
       "list": 4,
       "wordCount": 100
     },
     {
       "id": "level1-list5",
-      "title": "Level 1 · 预热级 · List 5",
+      "title": "Level 1预热级 · List 5",
       "level": 1,
       "list": 5,
       "wordCount": 100

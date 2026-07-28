@@ -16,7 +16,7 @@ const LEVEL_SUBTITLES = {
 function formatListTitle(level, list) {
   const subtitle = LEVEL_SUBTITLES[level];
   return subtitle
-    ? `Level ${level} · ${subtitle} · List ${list}`
+    ? `Level ${level}${subtitle} · List ${list}`
     : `Level ${level} · List ${list}`;
 }
 
