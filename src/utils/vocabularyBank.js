@@ -1,5 +1,6 @@
 import { groupWordsByList, getListReviewLabel } from "./wordListGrouping";
 import { groupBankWordsByFamily } from "./wordFamilies";
+import { normalizeAppMode } from "./appMode";
 import familyData from "../data/wordFamilies.json";
 
 const familyRootByWord = new Map(Object.entries(familyData.wordToRoot || {}));
@@ -16,6 +17,19 @@ export const BANK_VIEW_OPTIONS = [
   { value: "irregular-pronunciation", label: "特殊发音" },
   { value: "word-family", label: "词族" },
 ];
+
+const SAT_HIDDEN_BANK_VIEWS = new Set(["irregular-pronunciation", "word-family"]);
+
+export function getBankViewOptions(appMode = "toefl") {
+  if (normalizeAppMode(appMode) === "sat") {
+    return BANK_VIEW_OPTIONS.filter((option) => !SAT_HIDDEN_BANK_VIEWS.has(option.value));
+  }
+  return BANK_VIEW_OPTIONS;
+}
+
+export function shouldResetBankViewForMode(viewMode, appMode = "toefl") {
+  return normalizeAppMode(appMode) === "sat" && SAT_HIDDEN_BANK_VIEWS.has(viewMode);
+}
 
 export function getWordFamilyStats() {
   return {

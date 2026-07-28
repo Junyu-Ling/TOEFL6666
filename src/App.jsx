@@ -1035,6 +1035,7 @@ export default function App() {
           onResumePractice={resumeBankPractice}
           reviewShuffle={reviewShuffle}
           onToggleShuffle={toggleReviewShuffle}
+          appMode={appMode}
         />
       ),
     [
@@ -1059,6 +1060,7 @@ export default function App() {
       resumeBankPractice,
       reviewShuffle,
       toggleReviewShuffle,
+      appMode,
     ]
   );
 

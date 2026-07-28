@@ -1,15 +1,16 @@
 import { memo, useMemo, useState, useDeferredValue, useEffect, useRef, useCallback } from "react";
 import {
   BANK_SORT_OPTIONS,
-  BANK_VIEW_OPTIONS,
   filterBankWords,
   filterBankFamilyWords,
   sortBankWords,
   groupBankWords,
   groupBankFamilyWords,
   getBankWordLabel,
+  getBankViewOptions,
   getWordFamilyStats,
   isEnglishWordQuery,
+  shouldResetBankViewForMode,
   isWordInBank,
 } from "../utils/vocabularyBank";
 import PronunciationAlert from "./PronunciationAlert";
@@ -125,6 +126,7 @@ function VocabularyBank({
   onResumePractice,
   reviewShuffle,
   onToggleShuffle,
+  appMode = "toefl",
 }) {
   const [query, setQuery] = useState("");
   const deferredQuery = useDeferredValue(query);
@@ -136,8 +138,15 @@ function VocabularyBank({
   const lookupAbortRef = useRef(null);
   const isSearchPending = query !== deferredQuery;
 
+  const isSatMode = appMode === "sat";
+  const bankViewOptions = useMemo(() => getBankViewOptions(appMode), [appMode]);
   const irregularStats = useMemo(() => getIrregularPronunciationStats(), []);
   const familyStats = useMemo(() => getWordFamilyStats(), []);
+
+  useEffect(() => {
+    if (!shouldResetBankViewForMode(viewMode, appMode)) return;
+    setViewMode("all");
+  }, [appMode, viewMode]);
 
   const bookStatusByWord = useMemo(() => {
     const map = new Map();
@@ -231,7 +240,9 @@ function VocabularyBank({
                 ? `特殊发音 ${displayedWords.length} 个（已扫描词库 ${irregularStats.totalWords} 词）`
                 : isFiltering || sortMode !== "level-list"
                   ? `显示 ${displayedWords.length} / ${words.length} 个`
-                  : `共 ${words.length} 个单词 · 网站全部词书 · 特殊发音 ${irregularStats.count} 个 · 词族 ${familyStats.familyCount} 组`}
+                  : isSatMode
+                    ? `共 ${words.length} 个单词`
+                    : `共 ${words.length} 个单词 · 网站全部词书 · 特殊发音 ${irregularStats.count} 个 · 词族 ${familyStats.familyCount} 组`}
           </p>
         </div>
         <div className="word-list-view__header-actions">
@@ -269,18 +280,20 @@ function VocabularyBank({
           onChange={(e) => setQuery(e.target.value)}
           aria-label="搜索单词"
         />
-        <select
-          className="word-list-view__sort"
-          value={viewMode}
-          onChange={(e) => setViewMode(e.target.value)}
-          aria-label="词库视图"
-        >
-          {BANK_VIEW_OPTIONS.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </select>
+        {bankViewOptions.length > 1 && (
+          <select
+            className="word-list-view__sort"
+            value={viewMode}
+            onChange={(e) => setViewMode(e.target.value)}
+            aria-label="词库视图"
+          >
+            {bankViewOptions.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+        )}
         <select
           className="word-list-view__sort"
           value={sortMode}
