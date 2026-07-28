@@ -13,6 +13,7 @@ import VocabularyBank from "./components/VocabularyBank";
 import LexGridGame from "./components/LexGridGame";
 import ReadingVocabMatch from "./components/ReadingVocabMatch";
 import ReadingFillBlank from "./components/ReadingFillBlank";
+import FamiliarObscureMeanings from "./components/FamiliarObscureMeanings";
 import TabPanel from "./components/TabPanel";
 import MottoFooter from "./components/MottoFooter";
 import { recordVisit, refreshStreak } from "./services/streak";
@@ -1073,6 +1074,8 @@ export default function App() {
 
   const readingFillPanel = useMemo(() => <ReadingFillBlank />, []);
 
+  const familiarObscurePanel = useMemo(() => <FamiliarObscureMeanings />, []);
+
   const unrecognizedPanel = useMemo(
     () =>
       unrecognizedPracticeActive ? (
@@ -1361,6 +1364,12 @@ export default function App() {
           <TabPanel tabId="recognized" activeTab={activeTab}>
             {recognizedPanel}
           </TabPanel>
+
+          {appMode === "sat" ? (
+            <TabPanel tabId="familiar-obscure" activeTab={activeTab}>
+              {familiarObscurePanel}
+            </TabPanel>
+          ) : null}
 
           {appMode === "toefl" ? (
             <TabPanel tabId="reading-fill" activeTab={activeTab}>
