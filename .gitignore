@@ -11,6 +11,9 @@ node_modules
 dist
 dist-ssr
 *.local
+.env
+.env.*
+!.env.example
 
 # Generated wordlist bundles (created by npm run build:wordlists)
 src/generated/

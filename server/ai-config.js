@@ -2,7 +2,7 @@ export function resolveApiConfig(envConfig = {}) {
   return {
     apiKey: envConfig.apiKey || "",
     baseUrl: (envConfig.baseUrl || "https://api.deepseek.com/v1").replace(/\/$/, ""),
-    model: envConfig.model || "deepseek-chat",
+    model: envConfig.model || "deepseek-v4-flash",
     providerId: envConfig.providerId || "deepseek",
     apiStyle: "openai",
     source: "env",

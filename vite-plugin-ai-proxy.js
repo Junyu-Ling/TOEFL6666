@@ -143,7 +143,7 @@ export function createAiHandler(getEnvConfig) {
 export function aiProxyPlugin() {
   let envConfig = {
     apiKey: "",
-    model: "deepseek-chat",
+    model: "deepseek-v4-flash",
     baseUrl: "https://api.deepseek.com/v1",
     providerId: "deepseek",
   };
@@ -154,7 +154,7 @@ export function aiProxyPlugin() {
       const env = loadEnv(config.mode, config.root, "");
       envConfig = {
         apiKey: env.DEEPSEEK_API_KEY || "",
-        model: env.DEEPSEEK_MODEL || "deepseek-chat",
+        model: env.DEEPSEEK_MODEL || "deepseek-v4-flash",
         baseUrl: (env.DEEPSEEK_API_BASE || "https://api.deepseek.com/v1").replace(/\/$/, ""),
         providerId: "deepseek",
       };
