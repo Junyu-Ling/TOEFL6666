@@ -181,9 +181,98 @@ function parseEntries(text) {
   return entries;
 }
 
+const POS_MARK = "(?:v\\.|n\\.|adj\\.|adv\\.|prep\\.|num\\.|conj\\.)";
+
+function findPosSegmentStarts(text) {
+  const re = new RegExp(`(?:^|[\\s；;])(${POS_MARK})\\s`, "g");
+  const starts = [];
+  let match;
+  while ((match = re.exec(text)) !== null) {
+    starts.push(match.index + match[0].indexOf(match[1]));
+  }
+  return starts;
+}
+
+function fixObscureSplit(entry) {
+  if (entry.obscureMeaning?.trim()) return entry;
+
+  const text = entry.commonMeaning.trim();
+  if (!text) return entry;
+
+  const rareIdx = text.search(/生僻含义[:：]/);
+  if (rareIdx >= 0) {
+    return {
+      ...entry,
+      commonMeaning: text.slice(0, rareIdx).trim(),
+      obscureMeaning: text.slice(rareIdx).replace(/^生僻含义[:：]\s*/, "").trim(),
+    };
+  }
+
+  const numberedIdx = text.search(/[①②]/);
+  if (numberedIdx > 0) {
+    return {
+      ...entry,
+      commonMeaning: text.slice(0, numberedIdx).trim(),
+      obscureMeaning: text.slice(numberedIdx).trim(),
+    };
+  }
+
+  const starts = findPosSegmentStarts(text);
+  if (starts.length > 0) {
+    for (let i = starts.length - 1; i >= 0; i -= 1) {
+      const segStart = starts[i];
+      const segEnd = starts[i + 1] ?? text.length;
+      const segment = text.slice(segStart, segEnd);
+      if (!/[=（(]/.test(segment)) continue;
+      const common = text.slice(0, segStart).trim();
+      const obscure = text.slice(segStart).trim();
+      if (common && obscure) {
+        return { ...entry, commonMeaning: common, obscureMeaning: obscure };
+      }
+    }
+  }
+
+  const bareMatch = text.match(
+    new RegExp(`^(.+?\\s)(?=${POS_MARK}\\s[^；;]*[=（(])`)
+  );
+  if (bareMatch) {
+    return {
+      ...entry,
+      commonMeaning: bareMatch[1].trim(),
+      obscureMeaning: text.slice(bareMatch[1].length).trim(),
+    };
+  }
+
+  return entry;
+}
+
+function fixExampleZh(entry) {
+  const zh = entry.exampleZh?.trim() ?? "";
+  const tip = entry.memoryTip?.trim() ?? "";
+  if (!zh || !tip) return entry;
+  if (/[。！？.!?]$/.test(zh)) return entry;
+
+  const periodIdx = tip.search(/[。！？]/);
+  if (periodIdx < 0) return entry;
+
+  const continuation = tip.slice(0, periodIdx + 1).trim();
+  const restTip = tip.slice(periodIdx + 1).trim();
+  if (!continuation) return entry;
+
+  return {
+    ...entry,
+    exampleZh: `${zh}${continuation}`.replace(/\s+/g, " ").trim(),
+    memoryTip: restTip,
+  };
+}
+
+function normalizeEntry(entry) {
+  return fixExampleZh(fixObscureSplit(entry));
+}
+
 const buffer = readFileSync(PDF_PATH);
 const parsed = await pdfParse(buffer);
-const entries = parseEntries(parsed.text);
+const entries = parseEntries(parsed.text).map(normalizeEntry);
 
 const missingTips = entries.filter((e) => !e.memoryTip);
 const missingObscure = entries.filter((e) => !e.obscureMeaning);

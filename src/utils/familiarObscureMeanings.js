@@ -12,6 +12,22 @@ export function getFamiliarObscureEntry(id) {
   return data.entries.find((entry) => entry.id === id) ?? null;
 }
 
+export function getObscureDefinitions(entry) {
+  const obscure = entry.obscureMeaning?.trim();
+  if (!obscure) return [];
+  return obscure
+    .split(/[①②]/)
+    .map((part) => part.trim())
+    .filter(Boolean);
+}
+
+export function buildFamiliarObscureWordData(entry) {
+  return {
+    word: entry.word,
+    definitions: getObscureDefinitions(entry),
+  };
+}
+
 export function filterFamiliarObscureEntries(entries, query) {
   const q = String(query || "").trim().toLowerCase();
   if (!q) return entries;
