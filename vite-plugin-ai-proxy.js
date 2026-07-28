@@ -1,5 +1,5 @@
 import { loadEnv } from "vite";
-import { resolveApiConfig, stripApiConfigFromBody } from "./server/ai-config.js";
+import { resolveApiConfig, DEFAULT_DEEPSEEK_MODEL, normalizeDeepSeekModel, stripApiConfigFromBody } from "./server/ai-config.js";
 import { evaluateWithDeepSeek } from "./server/ai-evaluate.js";
 import { chatWithDeepSeek, streamChatWithDeepSeek } from "./server/ai-chat.js";
 import { generateMemoryTrick } from "./server/ai-memory-trick.js";
@@ -143,7 +143,7 @@ export function createAiHandler(getEnvConfig) {
 export function aiProxyPlugin() {
   let envConfig = {
     apiKey: "",
-    model: "deepseek-v4-flash",
+    model: DEFAULT_DEEPSEEK_MODEL,
     baseUrl: "https://api.deepseek.com/v1",
     providerId: "deepseek",
   };
@@ -154,7 +154,7 @@ export function aiProxyPlugin() {
       const env = loadEnv(config.mode, config.root, "");
       envConfig = {
         apiKey: env.DEEPSEEK_API_KEY || "",
-        model: env.DEEPSEEK_MODEL || "deepseek-v4-flash",
+        model: normalizeDeepSeekModel(env.DEEPSEEK_MODEL),
         baseUrl: (env.DEEPSEEK_API_BASE || "https://api.deepseek.com/v1").replace(/\/$/, ""),
         providerId: "deepseek",
       };

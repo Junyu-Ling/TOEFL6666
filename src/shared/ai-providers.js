@@ -43,7 +43,7 @@ export const AI_PROVIDERS = [
     id: "deepseek",
     name: "DeepSeek",
     baseUrl: "https://api.deepseek.com/v1",
-    defaultModel: "deepseek-chat",
+    defaultModel: "deepseek-v4-flash",
     detect: (key, url) => /deepseek\.com/i.test(url || ""),
   },
   {
