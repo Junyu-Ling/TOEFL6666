@@ -2,393 +2,629 @@
   "meta": {
     "level": 1,
     "list": 1,
-    "title": "Level 1 · 预热级 · List 1",
+    "title": "Level 1 · List 1",
     "updatedAt": "2026-07-28"
   },
   "words": [
     {
-      "word": "proutjl",
+      "word": "approach",
       "definitions": [
-        "痄近"
+        "v. 靠近；处理",
+        "n. 途径"
       ]
     },
     {
-      "word": "collegeontheleit",
+      "word": "trial",
       "definitions": [
-        "处理"
+        "n. 试验；审判"
       ]
     },
     {
-      "word": "problem",
+      "word": "appeal",
       "definitions": [
-        "途径",
-        "联系"
+        "v. 呼吁，恳求；吸引"
       ]
     },
     {
-      "word": "jasum",
+      "word": "alternative",
       "definitions": [
-        "猜想"
+        "adj. 供选择的",
+        "n. 供替代的选择"
       ]
     },
     {
-      "word": "refrans",
+      "word": "institution",
       "definitions": [
-        "提及",
-        "为+附参考资料"
+        "n. 设立"
       ]
     },
     {
-      "word": "kredit",
+      "word": "procedure",
       "definitions": [
-        "信用"
+        "n. 工序，过程"
       ]
     },
     {
-      "word": "yourbillsinthepast",
+      "word": "appropriate",
       "definitions": [
-        "学分"
+        "adj. /ə'proupriət/ 合适的",
+        "v. /ə'prouprieɪt/ 侵占"
       ]
     },
     {
-      "word": "traral",
+      "word": "associate",
       "definitions": [
-        "试验"
+        "v. 联系"
       ]
     },
     {
-      "word": "bytmalanderror",
+      "word": "assume",
       "definitions": [
-        "审判"
+        "v. 猜想"
       ]
     },
     {
-      "word": "comelorard",
+      "word": "reference",
       "definitions": [
-        "吸引"
+        "n. 提及",
+        "v. 为…附参考资料"
       ]
     },
     {
-      "word": "cholce",
+      "word": "credit",
       "definitions": [
-        "供替代的选择"
+        "n. 信用；学分",
+        "v. 把…归给，归功于"
       ]
     },
     {
-      "word": "institujn",
+      "word": "presence",
       "definitions": [
-        "设立"
+        "n. 存在；风度"
       ]
     },
     {
-      "word": "presewce",
+      "word": "emerge",
       "definitions": [
-        "存在"
+        "v. 出现"
       ]
     },
     {
-      "word": "eierye",
+      "word": "critical",
       "definitions": [
-        "出现"
+        "adj. 关键的；批评的"
       ]
     },
     {
-      "word": "tkrtkl",
+      "word": "component",
       "definitions": [
-        "adj. 关钽的"
+        "n. 组成"
       ]
     },
     {
-      "word": "akwalarl",
+      "word": "suspect",
       "definitions": [
-        "获得"
+        "v. 怀疑"
       ]
     },
     {
-      "word": "relinquish",
+      "word": "perspective",
       "definitions": [
-        "习得"
+        "n. 观点，视角"
       ]
     },
     {
-      "word": "jintrnl",
+      "word": "troop",
+      "definitions": [
+        "n. 部队；一群，一队，大量，许多"
+      ]
+    },
+    {
+      "word": "commitment",
+      "definitions": [
+        "n. 承诺；责任感"
+      ]
+    },
+    {
+      "word": "acquire",
+      "definitions": [
+        "v. 获得；习得"
+      ]
+    },
+    {
+      "word": "capacity",
+      "definitions": [
+        "n. 能力；容纳的能力，容量，功率"
+      ]
+    },
+    {
+      "word": "insurance",
+      "definitions": [
+        "n. 保险；预防措施"
+      ]
+    },
+    {
+      "word": "objective",
+      "definitions": [
+        "adj. 客观的",
+        "n. 目标"
+      ]
+    },
+    {
+      "word": "assess",
+      "definitions": [
+        "v. 评价"
+      ]
+    },
+    {
+      "word": "row",
+      "definitions": [
+        "n. 一排",
+        "v. 划"
+      ]
+    },
+    {
+      "word": "internal",
       "definitions": [
         "adj. 里面的"
       ]
     },
     {
-      "word": "iern",
+      "word": "chain",
       "definitions": [
-        "链"
+        "n. 链；一连串；连锁"
       ]
     },
     {
-      "word": "serlessuccesslonsequence",
+      "word": "abuse",
       "definitions": [
-        "连锁"
+        "n./v. 虐待；辱骂；滥用"
       ]
     },
     {
-      "word": "line",
+      "word": "principal",
       "definitions": [
-        "v. 划"
+        "adj. 最重要的",
+        "n. 校长"
       ]
     },
     {
-      "word": "thenile",
+      "word": "commission",
       "definitions": [
-        "浇铸"
+        "n. 委员会"
       ]
     },
     {
-      "word": "cowsemvatlye",
+      "word": "cast",
+      "definitions": [
+        "v. 扔，抛；浇铸"
+      ]
+    },
+    {
+      "word": "conservative",
       "definitions": [
         "adj. 保守的"
       ]
     },
     {
-      "word": "fetz",
+      "word": "proportion",
       "definitions": [
-        "阶段"
+        "n. 部分，比例"
       ]
     },
     {
-      "word": "timdouz",
+      "word": "constant",
       "definitions": [
-        "强制实行"
+        "adj. 稳定的",
+        "n. 常数"
       ]
     },
     {
-      "word": "goalkeeper",
+      "word": "reserve",
       "definitions": [
-        "确认收到"
+        "v./n. 储备",
+        "v. 保留；预订"
       ]
     },
     {
-      "word": "jiksdouzi",
+      "word": "phase",
       "definitions": [
-        "使显蠹"
+        "n. 阶段"
       ]
     },
     {
-      "word": "ariabll",
+      "word": "protest",
       "definitions": [
-        "可娈因素"
+        "n./v. 抗议"
       ]
     },
     {
-      "word": "anyolhervarable",
+      "word": "impose",
       "definitions": [
-        "adj. 娈化无常的"
+        "v. 强制实行"
       ]
     },
     {
-      "word": "rezalufnl",
+      "word": "yield",
       "definitions": [
-        "决心",
-        "解决"
+        "n. 产量",
+        "v. 屈服，投降"
       ]
     },
     {
-      "word": "akampani",
+      "word": "implement",
       "definitions": [
-        "陪伴",
-        "v. 伴随"
+        "n. /'ɪmplɪmənt/ 工具",
+        "v. /'ɪmplɪment/ 实施"
       ]
     },
     {
-      "word": "ikjt",
+      "word": "attach",
       "definitions": [
-        "n. 核心"
+        "v. 附属"
       ]
     },
     {
-      "word": "moujn",
+      "word": "acknowledge",
       "definitions": [
-        "运动"
+        "v. 承认；认可；确认收到"
       ]
     },
     {
-      "word": "drstingwrjl",
+      "word": "estate",
+      "definitions": [
+        "n. 庄园，地产；遗产"
+      ]
+    },
+    {
+      "word": "expose",
+      "definitions": [
+        "v. 使显露；揭露"
+      ]
+    },
+    {
+      "word": "variable",
+      "definitions": [
+        "n. 可变因素",
+        "adj. 变化无常的"
+      ]
+    },
+    {
+      "word": "resolution",
+      "definitions": [
+        "n. 决心；解决；决议"
+      ]
+    },
+    {
+      "word": "accompany",
+      "definitions": [
+        "v. 陪伴；伴随"
+      ]
+    },
+    {
+      "word": "motion",
+      "definitions": [
+        "n. 运动",
+        "v. 示意"
+      ]
+    },
+    {
+      "word": "plastic",
+      "definitions": [
+        "n./adj. 塑料（的）",
+        "adj. 可塑的；（样子或味道）令人不满的"
+      ]
+    },
+    {
+      "word": "mechanism",
+      "definitions": [
+        "n. 机械装置；机制"
+      ]
+    },
+    {
+      "word": "collapse",
+      "definitions": [
+        "n./v. 坍塌"
+      ]
+    },
+    {
+      "word": "distinguish",
       "definitions": [
         "v. 区分"
       ]
     },
     {
-      "word": "conspracy",
+      "word": "substantial",
       "definitions": [
-        "谋划"
+        "adj. 重要的，大量的；实质的"
       ]
     },
     {
-      "word": "ikrartrrian",
+      "word": "core",
       "definitions": [
-        "准则"
+        "n. 核心"
       ]
     },
     {
-      "word": "intigrert",
+      "word": "encounter",
       "definitions": [
-        "构成整体"
+        "v. 遭遇"
       ]
     },
     {
-      "word": "withenergypolicy",
+      "word": "split",
       "definitions": [
-        "v. 使融入"
+        "v. 切开，分裂"
       ]
     },
     {
-      "word": "kanvenjnl",
+      "word": "swing",
       "definitions": [
-        "传统"
+        "v. 摆动"
       ]
     },
     {
-      "word": "titein",
+      "word": "consistent",
       "definitions": [
-        "保持"
+        "adj. 一致的"
       ]
     },
     {
-      "word": "tsikwans",
+      "word": "prospect",
       "definitions": [
-        "顺序"
+        "n. 希望"
       ]
     },
     {
-      "word": "tin",
+      "word": "plot",
       "definitions": [
-        "adj. 倾斜的"
+        "n. 情节；阴谋",
+        "v. 谋划"
       ]
     },
     {
-      "word": "specifedperson",
+      "word": "criterion",
       "definitions": [
-        "仔细看"
+        "n. 准则"
       ]
     },
     {
-      "word": "verrerjn",
+      "word": "integrate",
       "definitions": [
-        "变化"
+        "v. 构成整体；使融入"
       ]
     },
     {
-      "word": "andarterk",
+      "word": "convention",
       "definitions": [
-        "承担.从事.着手儆"
+        "n. 传统；会议"
       ]
     },
     {
-      "word": "iikwrvalant",
+      "word": "retain",
       "definitions": [
-        "adj. 等价的.相等的"
+        "v. 保持"
       ]
     },
     {
-      "word": "ientarprarz",
+      "word": "sequence",
       "definitions": [
-        "事业"
+        "n. 顺序"
       ]
     },
     {
-      "word": "event",
+      "word": "lean",
       "definitions": [
-        "企业"
+        "adj. 倾斜的；瘦的"
       ]
     },
     {
-      "word": "iprtf",
+      "word": "crucial",
       "definitions": [
-        "强度",
-        "音调",
-        "场地"
+        "adj. 关键的"
       ]
     },
     {
-      "word": "kantempareril",
+      "word": "minority",
       "definitions": [
-        "adj. 同时代的"
+        "n. 少数，少数民族"
       ]
     },
     {
-      "word": "concurrenl",
+      "word": "dominate",
       "definitions": [
-        "adj. 当代的"
+        "v. 控制，主导"
       ]
     },
     {
-      "word": "episoud",
+      "word": "peer",
       "definitions": [
-        "事件"
+        "n. 同等地位的人，同龄人",
+        "v. 仔细看"
       ]
     },
     {
-      "word": "incidentoccurrence",
+      "word": "variation",
       "definitions": [
-        "段情节"
+        "n. 变化"
       ]
     },
     {
-      "word": "ccioe",
+      "word": "undertake",
+      "definitions": [
+        "v. 承担，从事，着手做"
+      ]
+    },
+    {
+      "word": "equivalent",
+      "definitions": [
+        "adj. 等价的，相等的"
+      ]
+    },
+    {
+      "word": "enterprise",
+      "definitions": [
+        "n. 事业；企业"
+      ]
+    },
+    {
+      "word": "pitch",
+      "definitions": [
+        "n. 强度；音调；场地"
+      ]
+    },
+    {
+      "word": "contemporary",
+      "definitions": [
+        "adj. 同时代的；当代的"
+      ]
+    },
+    {
+      "word": "episode",
+      "definitions": [
+        "n. 事件；集，一段情节"
+      ]
+    },
+    {
+      "word": "symptom",
+      "definitions": [
+        "n. 症状，征兆"
+      ]
+    },
+    {
+      "word": "eliminate",
+      "definitions": [
+        "v. 消除"
+      ]
+    },
+    {
+      "word": "recruit",
+      "definitions": [
+        "v. 征募",
+        "n./v. 招聘，聘用"
+      ]
+    },
+    {
+      "word": "exclude",
       "definitions": [
         "v. 排除"
       ]
     },
     {
-      "word": "itistr",
+      "word": "restore",
       "definitions": [
         "v. 恢复"
       ]
     },
     {
-      "word": "vltar",
+      "word": "alter",
       "definitions": [
-        "改娈"
+        "v. 改变"
       ]
     },
     {
-      "word": "idrpreln",
+      "word": "perceive",
       "definitions": [
-        "坑"
+        "v. 察觉，感知"
       ]
     },
     {
-      "word": "gepresslons",
+      "word": "convert",
       "definitions": [
-        "抑郁"
+        "v. 转变，变换",
+        "n. 皈依者，热衷…的人"
       ]
     },
     {
-      "word": "nndarlar",
+      "word": "justify",
       "definitions": [
-        "v. 位于.之下",
-        "的基础"
+        "v. 证明…是正当的"
       ]
     },
     {
-      "word": "iparsepjn",
+      "word": "vital",
       "definitions": [
-        "看法.洞察力"
+        "adj. 极其重要的"
       ]
     },
     {
-      "word": "inaverjn",
+      "word": "external",
       "definitions": [
-        "革新"
+        "adj. 外在的"
       ]
     },
     {
-      "word": "jtrerl",
+      "word": "depression",
       "definitions": [
-        "痕迹"
+        "n. 坑；抑郁；经济大萧条"
       ]
     },
     {
-      "word": "iralloiblood",
+      "word": "underlie",
       "definitions": [
-        "追踪"
+        "v. 位于…之下；构成…的基础"
+      ]
+    },
+    {
+      "word": "incorporate",
+      "definitions": [
+        "v. 包含，体现；组成公司，合并"
+      ]
+    },
+    {
+      "word": "perception",
+      "definitions": [
+        "n. 看法，洞察力；感知，感觉"
+      ]
+    },
+    {
+      "word": "strain",
+      "definitions": [
+        "n. 品种，类型；拉紧，拉力",
+        "v. 扭伤"
+      ]
+    },
+    {
+      "word": "innovation",
+      "definitions": [
+        "n. 革新"
+      ]
+    },
+    {
+      "word": "trail",
+      "definitions": [
+        "n. 痕迹",
+        "v. 追踪"
+      ]
+    },
+    {
+      "word": "extension",
+      "definitions": [
+        "n. 延长部分，延期"
+      ]
+    },
+    {
+      "word": "remarkable",
+      "definitions": [
+        "adj. 卓越的"
+      ]
+    },
+    {
+      "word": "extensive",
+      "definitions": [
+        "adj. 广泛的"
+      ]
+    },
+    {
+      "word": "strip",
+      "definitions": [
+        "v. 除去，脱去衣服"
+      ]
+    },
+    {
+      "word": "intervention",
+      "definitions": [
+        "n. 干涉，妨碍"
       ]
     }
   ]

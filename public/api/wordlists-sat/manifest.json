@@ -5,101 +5,10 @@
   "lists": [
     {
       "id": "level1-list1",
-      "title": "Level 1 · 预热级 · List 1",
+      "title": "Level 1 · List 1",
       "level": 1,
       "list": 1,
-      "wordCount": 63
-    },
-    {
-      "id": "level1-list2",
-      "title": "Level 1 · 预热级 · List 2",
-      "level": 1,
-      "list": 2,
-      "wordCount": 69
-    },
-    {
-      "id": "level1-list3",
-      "title": "Level 1 · 预热级 · List 3",
-      "level": 1,
-      "list": 3,
-      "wordCount": 48
-    },
-    {
-      "id": "level1-list4",
-      "title": "Level 1 · 预热级 · List 4",
-      "level": 1,
-      "list": 4,
-      "wordCount": 48
-    },
-    {
-      "id": "level1-list5",
-      "title": "Level 1 · 预热级 · List 5",
-      "level": 1,
-      "list": 5,
-      "wordCount": 50
-    },
-    {
-      "id": "level2-list8",
-      "title": "Level 2 · 基本级 · List 8",
-      "level": 2,
-      "list": 8,
-      "wordCount": 51
-    },
-    {
-      "id": "level2-list9",
-      "title": "Level 2 · 基本级 · List 9",
-      "level": 2,
-      "list": 9,
-      "wordCount": 38
-    },
-    {
-      "id": "level2-list10",
-      "title": "Level 2 · 基本级 · List 10",
-      "level": 2,
-      "list": 10,
-      "wordCount": 70
-    },
-    {
-      "id": "level3-list2",
-      "title": "Level 3 · 提高级 · List 2",
-      "level": 3,
-      "list": 2,
-      "wordCount": 68
-    },
-    {
-      "id": "level3-list4",
-      "title": "Level 3 · 提高级 · List 4",
-      "level": 3,
-      "list": 4,
-      "wordCount": 44
-    },
-    {
-      "id": "level3-list5",
-      "title": "Level 3 · 提高级 · List 5",
-      "level": 3,
-      "list": 5,
-      "wordCount": 50
-    },
-    {
-      "id": "level4-list7",
-      "title": "Level 4 · 全能级 · List 7",
-      "level": 4,
-      "list": 7,
-      "wordCount": 29
-    },
-    {
-      "id": "level4-list8",
-      "title": "Level 4 · 全能级 · List 8",
-      "level": 4,
-      "list": 8,
-      "wordCount": 24
-    },
-    {
-      "id": "level4-list9",
-      "title": "Level 4 · 全能级 · List 9",
-      "level": 4,
-      "list": 9,
-      "wordCount": 89
+      "wordCount": 100
     }
   ]
 }
