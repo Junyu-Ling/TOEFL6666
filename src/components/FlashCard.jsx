@@ -24,6 +24,9 @@ const TAP_MAX_DURATION_MS = 350;
 const SWIPE_EXIT_MS = 300;
 const SWIPE_SNAP_MS = 320;
 
+/** 跨单词卡片 remount 保持「练习读音」开关，直到用户再次关闭 */
+let pronouncePracticePreferred = false;
+
 function isMobileLayout() {
   return window.matchMedia("(max-width: 640px)").matches;
 }
@@ -93,7 +96,7 @@ export default function FlashCard({
   const [result, setResult] = useState(null);
   const [dictating, setDictating] = useState(false);
   const [dictationHint, setDictationHint] = useState("");
-  const [pronounceEnabled, setPronounceEnabled] = useState(false);
+  const [pronounceEnabled, setPronounceEnabled] = useState(pronouncePracticePreferred);
   const [pronouncePhase, setPronouncePhase] = useState(null);
   const [pronounceResult, setPronounceResult] = useState(null);
   const pronounceAbortRef = useRef(null);
@@ -1142,7 +1145,9 @@ export default function FlashCard({
                       type="checkbox"
                       checked={pronounceEnabled}
                       onChange={(e) => {
-                        setPronounceEnabled(e.target.checked);
+                        const next = e.target.checked;
+                        pronouncePracticePreferred = next;
+                        setPronounceEnabled(next);
                         setPronounceResult(null);
                       }}
                     />
