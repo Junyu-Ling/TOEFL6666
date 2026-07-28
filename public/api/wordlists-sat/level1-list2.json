@@ -1,0 +1,634 @@
+{
+  "meta": {
+    "level": 1,
+    "list": 2,
+    "title": "Level 1 · List 2",
+    "updatedAt": "2026-07-28"
+  },
+  "words": [
+    {
+      "word": "radical",
+      "definitions": [
+        "adj. 根本的；激进的"
+      ]
+    },
+    {
+      "word": "subsequent",
+      "definitions": [
+        "adj. 随后的"
+      ]
+    },
+    {
+      "word": "resort",
+      "definitions": [
+        "v. 诉诸于",
+        "n. 度假胜地；招数，手段"
+      ]
+    },
+    {
+      "word": "ally",
+      "definitions": [
+        "v./n. 结盟，同盟"
+      ]
+    },
+    {
+      "word": "sustain",
+      "definitions": [
+        "v. 维持；遭受"
+      ]
+    },
+    {
+      "word": "parallel",
+      "definitions": [
+        "adj. 平行的"
+      ]
+    },
+    {
+      "word": "sponsor",
+      "definitions": [
+        "v. 赞助"
+      ]
+    },
+    {
+      "word": "tap",
+      "definitions": [
+        "v. 汲取液体；开发"
+      ]
+    },
+    {
+      "word": "attribute",
+      "definitions": [
+        "v. /ǝ'trıbju:t/ 归于",
+        "n. /'ætribju:t/ 特点，属性"
+      ]
+    },
+    {
+      "word": "grab",
+      "definitions": [
+        "v./n. 抓住",
+        "v. 吸引"
+      ]
+    },
+    {
+      "word": "exposure",
+      "definitions": [
+        "n. 暴露；报道"
+      ]
+    },
+    {
+      "word": "deposit",
+      "definitions": [
+        "v./n. 沉积（物）",
+        "n. 存款；押金"
+      ]
+    },
+    {
+      "word": "seal",
+      "definitions": [
+        "n. 海豹",
+        "v. 密封",
+        "n. 象征，标志；印章"
+      ]
+    },
+    {
+      "word": "spin",
+      "definitions": [
+        "v. 快速转动"
+      ]
+    },
+    {
+      "word": "mount",
+      "definitions": [
+        "v. 增加；安装，固定",
+        "n. 山"
+      ]
+    },
+    {
+      "word": "precisely",
+      "definitions": [
+        "adv. 精确地"
+      ]
+    },
+    {
+      "word": "rival",
+      "definitions": [
+        "adj. 对抗的",
+        "n. 对手"
+      ]
+    },
+    {
+      "word": "moderate",
+      "definitions": [
+        "adj. /'ma:dərət/ 温和的，适量的",
+        "v. /'ma:dǝrext/ 缓和"
+      ]
+    },
+    {
+      "word": "constitute",
+      "definitions": [
+        "v. 组成"
+      ]
+    },
+    {
+      "word": "consultant",
+      "definitions": [
+        "n. 顾问"
+      ]
+    },
+    {
+      "word": "prompt",
+      "definitions": [
+        "v. 导致",
+        "adj. 及时的"
+      ]
+    },
+    {
+      "word": "venture",
+      "definitions": [
+        "v. 冒险"
+      ]
+    },
+    {
+      "word": "compound",
+      "definitions": [
+        "adj. 复合的",
+        "n. 复合词；混合物"
+      ]
+    },
+    {
+      "word": "mess",
+      "definitions": [
+        "n. 脏乱；混乱"
+      ]
+    },
+    {
+      "word": "comprehensive",
+      "definitions": [
+        "adj. 全面的"
+      ]
+    },
+    {
+      "word": "incentive",
+      "definitions": [
+        "n. 激励"
+      ]
+    },
+    {
+      "word": "compromise",
+      "definitions": [
+        "v. 妥协；危及，连累"
+      ]
+    },
+    {
+      "word": "margin",
+      "definitions": [
+        "n. 边缘；缺陷；幅度"
+      ]
+    },
+    {
+      "word": "stroke",
+      "definitions": [
+        "n. 一击；笔画，一挥"
+      ]
+    },
+    {
+      "word": "passion",
+      "definitions": [
+        "n. 热情，激情"
+      ]
+    },
+    {
+      "word": "champion",
+      "definitions": [
+        "v. 支持",
+        "n. 倡导者；冠军"
+      ]
+    },
+    {
+      "word": "dismiss",
+      "definitions": [
+        "v. 解散；解雇，开除；不予理会，不予考虑"
+      ]
+    },
+    {
+      "word": "literary",
+      "definitions": [
+        "adj. 文学的"
+      ]
+    },
+    {
+      "word": "pump",
+      "definitions": [
+        "n. 泵",
+        "v. 用泵输送"
+      ]
+    },
+    {
+      "word": "deficit",
+      "definitions": [
+        "n. 赤字"
+      ]
+    },
+    {
+      "word": "assign",
+      "definitions": [
+        "v. 指派"
+      ]
+    },
+    {
+      "word": "twist",
+      "definitions": [
+        "v. 缠绕",
+        "n./v. 扭转；扭动"
+      ]
+    },
+    {
+      "word": "exceed",
+      "definitions": [
+        "v. 超过"
+      ]
+    },
+    {
+      "word": "expenditure",
+      "definitions": [
+        "n. 开支"
+      ]
+    },
+    {
+      "word": "gear",
+      "definitions": [
+        "v. 使……适合",
+        "n. 装置，工具；齿轮"
+      ]
+    },
+    {
+      "word": "stake",
+      "definitions": [
+        "v. 支持；下赌注"
+      ]
+    },
+    {
+      "word": "chamber",
+      "definitions": [
+        "n. 房间；洞穴"
+      ]
+    },
+    {
+      "word": "possession",
+      "definitions": [
+        "n. 拥有"
+      ]
+    },
+    {
+      "word": "democratic",
+      "definitions": [
+        "adj. 民主的"
+      ]
+    },
+    {
+      "word": "constraint",
+      "definitions": [
+        "n. 限制"
+      ]
+    },
+    {
+      "word": "undergo",
+      "definitions": [
+        "v. 经历"
+      ]
+    },
+    {
+      "word": "inquiry",
+      "definitions": [
+        "n. 查问，质询"
+      ]
+    },
+    {
+      "word": "distinct",
+      "definitions": [
+        "adj. 分开的"
+      ]
+    },
+    {
+      "word": "compose",
+      "definitions": [
+        "v. 组成；创作；镇定"
+      ]
+    },
+    {
+      "word": "regulate",
+      "definitions": [
+        "v. 调节；控制"
+      ]
+    },
+    {
+      "word": "trigger",
+      "definitions": [
+        "v. 引发",
+        "n. 扳机"
+      ]
+    },
+    {
+      "word": "rear",
+      "definitions": [
+        "v. 饲养；（指马）后腿直立",
+        "n. 后部"
+      ]
+    },
+    {
+      "word": "composition",
+      "definitions": [
+        "n. 作品，作曲；组成"
+      ]
+    },
+    {
+      "word": "racial",
+      "definitions": [
+        "adj. 种族的"
+      ]
+    },
+    {
+      "word": "stimulate",
+      "definitions": [
+        "v. 刺激，激励"
+      ]
+    },
+    {
+      "word": "narrative",
+      "definitions": [
+        "n./adj. 叙事（的）"
+      ]
+    },
+    {
+      "word": "interior",
+      "definitions": [
+        "n. 内部"
+      ]
+    },
+    {
+      "word": "excess",
+      "definitions": [
+        "n. 过量"
+      ]
+    },
+    {
+      "word": "extract",
+      "definitions": [
+        "v. 取出"
+      ]
+    },
+    {
+      "word": "implementation",
+      "definitions": [
+        "n. 实施"
+      ]
+    },
+    {
+      "word": "catalog",
+      "definitions": [
+        "n. 目录；一系列",
+        "v. 将……编入目录"
+      ]
+    },
+    {
+      "word": "reflection",
+      "definitions": [
+        "n. 深思；反射；倒影"
+      ]
+    },
+    {
+      "word": "cluster",
+      "definitions": [
+        "v. 聚集",
+        "n. 群，簇"
+      ]
+    },
+    {
+      "word": "controversial",
+      "definitions": [
+        "adj. 有争议的"
+      ]
+    },
+    {
+      "word": "panic",
+      "definitions": [
+        "n. 恐慌"
+      ]
+    },
+    {
+      "word": "genuine",
+      "definitions": [
+        "adj. 真的；真诚的"
+      ]
+    },
+    {
+      "word": "vessel",
+      "definitions": [
+        "n. 容器；船"
+      ]
+    },
+    {
+      "word": "reckon",
+      "definitions": [
+        "v. 估计，估算；期望"
+      ]
+    },
+    {
+      "word": "theoretical",
+      "definitions": [
+        "adj. 假设的；理论的"
+      ]
+    },
+    {
+      "word": "curtain",
+      "definitions": [
+        "n. 帘幕；窗帘",
+        "v. 遮蔽"
+      ]
+    },
+    {
+      "word": "grin",
+      "definitions": [
+        "n./v. 露齿笑"
+      ]
+    },
+    {
+      "word": "regime",
+      "definitions": [
+        "n. 政权；管理体制"
+      ]
+    },
+    {
+      "word": "acid",
+      "definitions": [
+        "n. 酸",
+        "adj. 酸的；尖刻的"
+      ]
+    },
+    {
+      "word": "transaction",
+      "definitions": [
+        "n. 交易"
+      ]
+    },
+    {
+      "word": "dynamic",
+      "definitions": [
+        "n./adj. 动态（的）",
+        "adj. 有活力的"
+      ]
+    },
+    {
+      "word": "innocent",
+      "definitions": [
+        "adj. 无辜的"
+      ]
+    },
+    {
+      "word": "filter",
+      "definitions": [
+        "v. 过滤"
+      ]
+    },
+    {
+      "word": "stir",
+      "definitions": [
+        "v. 搅动，搅拌；激起，激怒"
+      ]
+    },
+    {
+      "word": "qualification",
+      "definitions": [
+        "n. 资格；限制条件"
+      ]
+    },
+    {
+      "word": "suspend",
+      "definitions": [
+        "v. 悬挂；暂停；延期，推迟"
+      ]
+    },
+    {
+      "word": "hypothesis",
+      "definitions": [
+        "n. 假设"
+      ]
+    },
+    {
+      "word": "sophisticate",
+      "definitions": [
+        "v. 使变得世故，使复杂",
+        "n. 久经世故的人"
+      ]
+    },
+    {
+      "word": "domain",
+      "definitions": [
+        "n. 领土；（学问、活动等的）领域"
+      ]
+    },
+    {
+      "word": "prominent",
+      "definitions": [
+        "adj. 杰出的，卓越的；突出的"
+      ]
+    },
+    {
+      "word": "exploit",
+      "definitions": [
+        "v. 压榨；开发，利用"
+      ]
+    },
+    {
+      "word": "seminar",
+      "definitions": [
+        "n. 研讨会"
+      ]
+    },
+    {
+      "word": "integration",
+      "definitions": [
+        "n. 整合"
+      ]
+    },
+    {
+      "word": "dose",
+      "definitions": [
+        "n. 一次的剂量"
+      ]
+    },
+    {
+      "word": "conscious",
+      "definitions": [
+        "adj. 清醒的，有意识的；意识到的"
+      ]
+    },
+    {
+      "word": "interval",
+      "definitions": [
+        "n. 间隔"
+      ]
+    },
+    {
+      "word": "scenario",
+      "definitions": [
+        "n. 情况；剧情"
+      ]
+    },
+    {
+      "word": "render",
+      "definitions": [
+        "v. 提供"
+      ]
+    },
+    {
+      "word": "scatter",
+      "definitions": [
+        "v. 分散"
+      ]
+    },
+    {
+      "word": "alliance",
+      "definitions": [
+        "n. 联合"
+      ]
+    },
+    {
+      "word": "virtue",
+      "definitions": [
+        "n. 美德；优点"
+      ]
+    },
+    {
+      "word": "entity",
+      "definitions": [
+        "n. 实体"
+      ]
+    },
+    {
+      "word": "facilitate",
+      "definitions": [
+        "v. 促进；使容易，使便利"
+      ]
+    },
+    {
+      "word": "beam",
+      "definitions": [
+        "n. 横梁；光线",
+        "v. 绽放笑容"
+      ]
+    },
+    {
+      "word": "consensus",
+      "definitions": [
+        "n. 一致"
+      ]
+    },
+    {
+      "word": "gross",
+      "definitions": [
+        "adj. 粗俗的；重大的"
+      ]
+    }
+  ]
+}

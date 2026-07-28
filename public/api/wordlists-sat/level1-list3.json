@@ -1,0 +1,616 @@
+{
+  "meta": {
+    "level": 1,
+    "list": 3,
+    "title": "Level 1 · List 3",
+    "updatedAt": "2026-07-28"
+  },
+  "words": [
+    {
+      "word": "reinforce",
+      "definitions": [
+        "v. 加强；巩固"
+      ]
+    },
+    {
+      "word": "valid",
+      "definitions": [
+        "adj. 有根据的；有效的"
+      ]
+    },
+    {
+      "word": "collective",
+      "definitions": [
+        "adj. 集体的"
+      ]
+    },
+    {
+      "word": "confine",
+      "definitions": [
+        "v./n. 限制"
+      ]
+    },
+    {
+      "word": "physician",
+      "definitions": [
+        "n. 医生，内科医生"
+      ]
+    },
+    {
+      "word": "elaborate",
+      "definitions": [
+        "adj. /1'læbərət/ 复杂的",
+        "v. /r'læbərext/ 详细说明"
+      ]
+    },
+    {
+      "word": "manual",
+      "definitions": [
+        "n. 使用手册",
+        "adj. 体力的，手工的"
+      ]
+    },
+    {
+      "word": "particle",
+      "definitions": [
+        "n. 颗粒；极小量"
+      ]
+    },
+    {
+      "word": "fiber",
+      "definitions": [
+        "n. 纤维"
+      ]
+    },
+    {
+      "word": "elite",
+      "definitions": [
+        "n. 精英"
+      ]
+    },
+    {
+      "word": "parameter",
+      "definitions": [
+        "n. 界限；参数"
+      ]
+    },
+    {
+      "word": "initiate",
+      "definitions": [
+        "v. 开始"
+      ]
+    },
+    {
+      "word": "clip",
+      "definitions": [
+        "v. 修剪；夹住"
+      ]
+    },
+    {
+      "word": "spectrum",
+      "definitions": [
+        "n. 光谱；范围"
+      ]
+    },
+    {
+      "word": "ritual",
+      "definitions": [
+        "n. 仪式"
+      ]
+    },
+    {
+      "word": "intensity",
+      "definitions": [
+        "n. 强度"
+      ]
+    },
+    {
+      "word": "objection",
+      "definitions": [
+        "n. 反对"
+      ]
+    },
+    {
+      "word": "adolescent",
+      "definitions": [
+        "n./adj. 青少年（的）"
+      ]
+    },
+    {
+      "word": "slot",
+      "definitions": [
+        "n. 狭缝；槽沟；投币口；时间段"
+      ]
+    },
+    {
+      "word": "linguistic",
+      "definitions": [
+        "adj. 语言的"
+      ]
+    },
+    {
+      "word": "discourse",
+      "definitions": [
+        "n. /'disko:rs/ 辩论；论文",
+        "v. /dis'ko:rs/ 论述"
+      ]
+    },
+    {
+      "word": "partial",
+      "definitions": [
+        "adj. 部分的；偏袒的"
+      ]
+    },
+    {
+      "word": "resemble",
+      "definitions": [
+        "v. 像，类似"
+      ]
+    },
+    {
+      "word": "undermine",
+      "definitions": [
+        "v. 逐渐破坏；削弱"
+      ]
+    },
+    {
+      "word": "subtle",
+      "definitions": [
+        "adj. 微妙的"
+      ]
+    },
+    {
+      "word": "fraction",
+      "definitions": [
+        "n. 部分；分数"
+      ]
+    },
+    {
+      "word": "merge",
+      "definitions": [
+        "v. 合并"
+      ]
+    },
+    {
+      "word": "depict",
+      "definitions": [
+        "v. 描绘"
+      ]
+    },
+    {
+      "word": "bulk",
+      "definitions": [
+        "n. 体积，容量；大块，大部分"
+      ]
+    },
+    {
+      "word": "bundle",
+      "definitions": [
+        "n. 束，捆"
+      ]
+    },
+    {
+      "word": "defect",
+      "definitions": [
+        "n. 缺陷"
+      ]
+    },
+    {
+      "word": "explicit",
+      "definitions": [
+        "adj. 明确的，清楚的"
+      ]
+    },
+    {
+      "word": "projection",
+      "definitions": [
+        "n. 放映；预期，预测"
+      ]
+    },
+    {
+      "word": "progressive",
+      "definitions": [
+        "adj. 逐步的；前进的；先进的"
+      ]
+    },
+    {
+      "word": "interfere",
+      "definitions": [
+        "v. 干涉"
+      ]
+    },
+    {
+      "word": "transmit",
+      "definitions": [
+        "v. 传播"
+      ]
+    },
+    {
+      "word": "nasty",
+      "definitions": [
+        "adj. 令人难受的"
+      ]
+    },
+    {
+      "word": "portray",
+      "definitions": [
+        "v. 描绘"
+      ]
+    },
+    {
+      "word": "thread",
+      "definitions": [
+        "n. 线；螺纹",
+        "v. 穿过"
+      ]
+    },
+    {
+      "word": "spray",
+      "definitions": [
+        "v. 喷涂，喷射"
+      ]
+    },
+    {
+      "word": "barrel",
+      "definitions": [
+        "n. 桶"
+      ]
+    },
+    {
+      "word": "radiation",
+      "definitions": [
+        "n. 辐射"
+      ]
+    },
+    {
+      "word": "donor",
+      "definitions": [
+        "n. 捐赠者"
+      ]
+    },
+    {
+      "word": "commodity",
+      "definitions": [
+        "n. 商品"
+      ]
+    },
+    {
+      "word": "loop",
+      "definitions": [
+        "n. 环形"
+      ]
+    },
+    {
+      "word": "obscure",
+      "definitions": [
+        "v. 遮掩，隐藏",
+        "adj. 模糊的，复杂难懂的；无名的，鲜为人知的"
+      ]
+    },
+    {
+      "word": "compensate",
+      "definitions": [
+        "v. 补偿"
+      ]
+    },
+    {
+      "word": "embed",
+      "definitions": [
+        "v. 使嵌入，使插入"
+      ]
+    },
+    {
+      "word": "aggregate",
+      "definitions": [
+        "v. /'ægrigext/ 聚集",
+        "n. /'ægrigǝt/ 合计；集合体；总计"
+      ]
+    },
+    {
+      "word": "conceive",
+      "definitions": [
+        "v. 想出"
+      ]
+    },
+    {
+      "word": "manipulate",
+      "definitions": [
+        "v. 操作；操纵，控制"
+      ]
+    },
+    {
+      "word": "sensation",
+      "definitions": [
+        "n. 感觉；知觉"
+      ]
+    },
+    {
+      "word": "trait",
+      "definitions": [
+        "n. 特点"
+      ]
+    },
+    {
+      "word": "compact",
+      "definitions": [
+        "adj. 紧密的；简洁的"
+      ]
+    },
+    {
+      "word": "commentary",
+      "definitions": [
+        "n. 评论"
+      ]
+    },
+    {
+      "word": "configuration",
+      "definitions": [
+        "n. 安排，格局"
+      ]
+    },
+    {
+      "word": "metaphor",
+      "definitions": [
+        "n. 暗喻"
+      ]
+    },
+    {
+      "word": "dilemma",
+      "definitions": [
+        "n. 困境"
+      ]
+    },
+    {
+      "word": "colonial",
+      "definitions": [
+        "adj. 殖民地的"
+      ]
+    },
+    {
+      "word": "nucleus",
+      "definitions": [
+        "n. (原子或细胞)核"
+      ]
+    },
+    {
+      "word": "adjacent",
+      "definitions": [
+        "adj. 邻近的"
+      ]
+    },
+    {
+      "word": "specimen",
+      "definitions": [
+        "n. 标本；样本"
+      ]
+    },
+    {
+      "word": "empirical",
+      "definitions": [
+        "adj. 实证的"
+      ]
+    },
+    {
+      "word": "magnetic",
+      "definitions": [
+        "adj. 有磁性的；有吸引力的"
+      ]
+    },
+    {
+      "word": "complement",
+      "definitions": [
+        "v. 补充"
+      ]
+    },
+    {
+      "word": "immune",
+      "definitions": [
+        "adj. 免疫的"
+      ]
+    },
+    {
+      "word": "crude",
+      "definitions": [
+        "adj. 粗糙的；天然的；粗略的"
+      ]
+    },
+    {
+      "word": "sphere",
+      "definitions": [
+        "n. 领域；球体；球形"
+      ]
+    },
+    {
+      "word": "diagnose",
+      "definitions": [
+        "v. 诊断；断定"
+      ]
+    },
+    {
+      "word": "invade",
+      "definitions": [
+        "v. 侵略，入侵"
+      ]
+    },
+    {
+      "word": "reproduce",
+      "definitions": [
+        "v. 繁殖"
+      ]
+    },
+    {
+      "word": "bizarre",
+      "definitions": [
+        "adj. 古怪的"
+      ]
+    },
+    {
+      "word": "vague",
+      "definitions": [
+        "adj. 模糊的"
+      ]
+    },
+    {
+      "word": "conceptual",
+      "definitions": [
+        "adj. 概念的；想法上的"
+      ]
+    },
+    {
+      "word": "magnitude",
+      "definitions": [
+        "n. 巨大；规模"
+      ]
+    },
+    {
+      "word": "circulation",
+      "definitions": [
+        "n. 发行量"
+      ]
+    },
+    {
+      "word": "layout",
+      "definitions": [
+        "n. 布局"
+      ]
+    },
+    {
+      "word": "viable",
+      "definitions": [
+        "adj. 能存活的；有望成功的"
+      ]
+    },
+    {
+      "word": "decay",
+      "definitions": [
+        "v./n. 腐烂；衰败"
+      ]
+    },
+    {
+      "word": "impulse",
+      "definitions": [
+        "n. 冲动；动力；脉冲"
+      ]
+    },
+    {
+      "word": "aesthetic",
+      "definitions": [
+        "adj. 美学的"
+      ]
+    },
+    {
+      "word": "irrelevant",
+      "definitions": [
+        "adj. 不相关的"
+      ]
+    },
+    {
+      "word": "protocol",
+      "definitions": [
+        "n. 礼仪；协议，草案"
+      ]
+    },
+    {
+      "word": "primitive",
+      "definitions": [
+        "adj. 原始的，远古的"
+      ]
+    },
+    {
+      "word": "problematic",
+      "definitions": [
+        "adj. 造成困难的；值得怀疑的"
+      ]
+    },
+    {
+      "word": "cord",
+      "definitions": [
+        "n. 线；绳"
+      ]
+    },
+    {
+      "word": "static",
+      "definitions": [
+        "adj. 静止的"
+      ]
+    },
+    {
+      "word": "dialect",
+      "definitions": [
+        "n. 方言"
+      ]
+    },
+    {
+      "word": "fringe",
+      "definitions": [
+        "n. 边缘"
+      ]
+    },
+    {
+      "word": "spontaneous",
+      "definitions": [
+        "adj. 自发的；自然的"
+      ]
+    },
+    {
+      "word": "fusion",
+      "definitions": [
+        "n. 融合"
+      ]
+    },
+    {
+      "word": "onset",
+      "definitions": [
+        "n. (尤指不愉快事情的)开始"
+      ]
+    },
+    {
+      "word": "aluminum",
+      "definitions": [
+        "n. 铝"
+      ]
+    },
+    {
+      "word": "syllable",
+      "definitions": [
+        "n. 音节"
+      ]
+    },
+    {
+      "word": "analogy",
+      "definitions": [
+        "n. 类比"
+      ]
+    },
+    {
+      "word": "implicit",
+      "definitions": [
+        "adj. 含蓄的"
+      ]
+    },
+    {
+      "word": "indigenous",
+      "definitions": [
+        "adj. 本土的"
+      ]
+    },
+    {
+      "word": "basin",
+      "definitions": [
+        "n. 盆地；流域"
+      ]
+    },
+    {
+      "word": "rotate",
+      "definitions": [
+        "v. 转动"
+      ]
+    },
+    {
+      "word": "coherent",
+      "definitions": [
+        "adj. 连贯一致的"
+      ]
+    }
+  ]
+}

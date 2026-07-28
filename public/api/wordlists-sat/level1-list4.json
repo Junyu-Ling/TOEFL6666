@@ -1,0 +1,620 @@
+{
+  "meta": {
+    "level": 1,
+    "list": 4,
+    "title": "Level 1 · List 4",
+    "updatedAt": "2026-07-28"
+  },
+  "words": [
+    {
+      "word": "reservoir",
+      "definitions": [
+        "n. 水库；蓄水池；蓄积"
+      ]
+    },
+    {
+      "word": "gauge",
+      "definitions": [
+        "v. 测量"
+      ]
+    },
+    {
+      "word": "velocity",
+      "definitions": [
+        "n. 速度"
+      ]
+    },
+    {
+      "word": "chunk",
+      "definitions": [
+        "n. 大块"
+      ]
+    },
+    {
+      "word": "derivative",
+      "definitions": [
+        "n. 衍生物"
+      ]
+    },
+    {
+      "word": "predator",
+      "definitions": [
+        "n. 捕食性动物；掠夺者"
+      ]
+    },
+    {
+      "word": "replicate",
+      "definitions": [
+        "v. 复制；重做"
+      ]
+    },
+    {
+      "word": "infinite",
+      "definitions": [
+        "adj. 无限的"
+      ]
+    },
+    {
+      "word": "synthesis",
+      "definitions": [
+        "n. 合成"
+      ]
+    },
+    {
+      "word": "mediate",
+      "definitions": [
+        "v. 调解，调停"
+      ]
+    },
+    {
+      "word": "degrade",
+      "definitions": [
+        "v. 恶化；使丢脸；降解"
+      ]
+    },
+    {
+      "word": "trivial",
+      "definitions": [
+        "adj. 不重要的"
+      ]
+    },
+    {
+      "word": "arbitrary",
+      "definitions": [
+        "adj. 任意的；武断的"
+      ]
+    },
+    {
+      "word": "approximate",
+      "definitions": [
+        "adj. 大约的"
+      ]
+    },
+    {
+      "word": "plausible",
+      "definitions": [
+        "adj. 看似合理的"
+      ]
+    },
+    {
+      "word": "optical",
+      "definitions": [
+        "adj. 视力的；光学的"
+      ]
+    },
+    {
+      "word": "contradict",
+      "definitions": [
+        "v. 与……矛盾；反驳"
+      ]
+    },
+    {
+      "word": "atomic",
+      "definitions": [
+        "adj. 原子的"
+      ]
+    },
+    {
+      "word": "fracture",
+      "definitions": [
+        "v. 破裂，折断；骨折"
+      ]
+    },
+    {
+      "word": "formulation",
+      "definitions": [
+        "n. 配方；制定；表达"
+      ]
+    },
+    {
+      "word": "residual",
+      "definitions": [
+        "adj. 剩余的，残留的"
+      ]
+    },
+    {
+      "word": "altitude",
+      "definitions": [
+        "n. 高度"
+      ]
+    },
+    {
+      "word": "emit",
+      "definitions": [
+        "v. 散发"
+      ]
+    },
+    {
+      "word": "elimination",
+      "definitions": [
+        "n. 消除，淘汰"
+      ]
+    },
+    {
+      "word": "thermal",
+      "definitions": [
+        "adj. 热的",
+        "n. 上升热气流"
+      ]
+    },
+    {
+      "word": "fungus",
+      "definitions": [
+        "n. 真菌，霉菌，菌类"
+      ]
+    },
+    {
+      "word": "terminology",
+      "definitions": [
+        "n. 术语"
+      ]
+    },
+    {
+      "word": "contradictory",
+      "definitions": [
+        "adj. 互相矛盾的"
+      ]
+    },
+    {
+      "word": "pesticide",
+      "definitions": [
+        "n. 杀虫剂"
+      ]
+    },
+    {
+      "word": "sediment",
+      "definitions": [
+        "n. 沉淀物"
+      ]
+    },
+    {
+      "word": "radius",
+      "definitions": [
+        "n. 半径；半径范围"
+      ]
+    },
+    {
+      "word": "acceleration",
+      "definitions": [
+        "n. 加速"
+      ]
+    },
+    {
+      "word": "friction",
+      "definitions": [
+        "n. 摩擦；矛盾"
+      ]
+    },
+    {
+      "word": "uplift",
+      "definitions": [
+        "n. /'Aplift/ 振奋；(地壳)上升"
+      ]
+    },
+    {
+      "word": "proton",
+      "definitions": [
+        "n. 质子"
+      ]
+    },
+    {
+      "word": "priest",
+      "definitions": [
+        "n. 牧师"
+      ]
+    },
+    {
+      "word": "founder",
+      "definitions": [
+        "n. 创建者",
+        "v. 沉没；失败"
+      ]
+    },
+    {
+      "word": "shed",
+      "definitions": [
+        "v. 流；去除",
+        "n. 小棚屋"
+      ]
+    },
+    {
+      "word": "secrete",
+      "definitions": [
+        "v. 分泌"
+      ]
+    },
+    {
+      "word": "attorney",
+      "definitions": [
+        "n. 代理人；出庭律师"
+      ]
+    },
+    {
+      "word": "reception",
+      "definitions": [
+        "n. 接待处，服务台；招待会；接待"
+      ]
+    },
+    {
+      "word": "desperate",
+      "definitions": [
+        "adj. 绝望的；极渴望的"
+      ]
+    },
+    {
+      "word": "prayer",
+      "definitions": [
+        "n. 祈求，祈祷"
+      ]
+    },
+    {
+      "word": "conviction",
+      "definitions": [
+        "n. 坚定的信仰；定罪"
+      ]
+    },
+    {
+      "word": "compel",
+      "definitions": [
+        "v. 强迫"
+      ]
+    },
+    {
+      "word": "grave",
+      "definitions": [
+        "adj. 严重的；严肃的",
+        "n. 墓"
+      ]
+    },
+    {
+      "word": "overlook",
+      "definitions": [
+        "v. 忽略"
+      ]
+    },
+    {
+      "word": "ongoing",
+      "definitions": [
+        "adj. 连续的"
+      ]
+    },
+    {
+      "word": "vulnerable",
+      "definitions": [
+        "adj. 易受伤害的"
+      ]
+    },
+    {
+      "word": "resume",
+      "definitions": [
+        "v. 重新开始"
+      ]
+    },
+    {
+      "word": "distress",
+      "definitions": [
+        "n. 痛苦"
+      ]
+    },
+    {
+      "word": "flee",
+      "definitions": [
+        "v. 逃离"
+      ]
+    },
+    {
+      "word": "patch",
+      "definitions": [
+        "n. 块，片；补丁",
+        "v. 修补"
+      ]
+    },
+    {
+      "word": "anniversary",
+      "definitions": [
+        "n. 周年纪念日"
+      ]
+    },
+    {
+      "word": "inevitable",
+      "definitions": [
+        "adj. 必然的，不可避免的",
+        "n. 必然发生的事"
+      ]
+    },
+    {
+      "word": "foster",
+      "definitions": [
+        "v. 培养；寄养"
+      ]
+    },
+    {
+      "word": "prevail",
+      "definitions": [
+        "v. 盛行；战胜"
+      ]
+    },
+    {
+      "word": "withdrawal",
+      "definitions": [
+        "n. 撤退，收回"
+      ]
+    },
+    {
+      "word": "exclusive",
+      "definitions": [
+        "adj. 独有的，排外的；唯一的"
+      ]
+    },
+    {
+      "word": "torture",
+      "definitions": [
+        "n./v. 酷刑；折磨"
+      ]
+    },
+    {
+      "word": "stun",
+      "definitions": [
+        "v. 使震惊"
+      ]
+    },
+    {
+      "word": "installation",
+      "definitions": [
+        "n. 安装；就职"
+      ]
+    },
+    {
+      "word": "cease",
+      "definitions": [
+        "v. 停止，结束"
+      ]
+    },
+    {
+      "word": "generous",
+      "definitions": [
+        "adj. 慷慨的"
+      ]
+    },
+    {
+      "word": "bare",
+      "definitions": [
+        "adj. 裸露的"
+      ]
+    },
+    {
+      "word": "ingredient",
+      "definitions": [
+        "n. 要素；(食物)配料"
+      ]
+    },
+    {
+      "word": "enclose",
+      "definitions": [
+        "v. 围绕"
+      ]
+    },
+    {
+      "word": "halt",
+      "definitions": [
+        "n./v. 停止"
+      ]
+    },
+    {
+      "word": "rage",
+      "definitions": [
+        "n./v. 愤怒"
+      ]
+    },
+    {
+      "word": "authorize",
+      "definitions": [
+        "v. 授权"
+      ]
+    },
+    {
+      "word": "assemble",
+      "definitions": [
+        "v. 集合；装配"
+      ]
+    },
+    {
+      "word": "retailer",
+      "definitions": [
+        "n. 零售商"
+      ]
+    },
+    {
+      "word": "accommodate",
+      "definitions": [
+        "v. 容纳；提供住宿；适应"
+      ]
+    },
+    {
+      "word": "blast",
+      "definitions": [
+        "n./v. 爆炸"
+      ]
+    },
+    {
+      "word": "companion",
+      "definitions": [
+        "n. 朋友"
+      ]
+    },
+    {
+      "word": "merchant",
+      "definitions": [
+        "n. 商人"
+      ]
+    },
+    {
+      "word": "endorse",
+      "definitions": [
+        "v. 认可，支持"
+      ]
+    },
+    {
+      "word": "violate",
+      "definitions": [
+        "v. 违反"
+      ]
+    },
+    {
+      "word": "diminish",
+      "definitions": [
+        "v. 减少，缩小"
+      ]
+    },
+    {
+      "word": "retreat",
+      "definitions": [
+        "n./v. 退出；撤退"
+      ]
+    },
+    {
+      "word": "dawn",
+      "definitions": [
+        "n./v. 黎明，破晓"
+      ]
+    },
+    {
+      "word": "designate",
+      "definitions": [
+        "v. 指定，指派；把……命名为；标出"
+      ]
+    },
+    {
+      "word": "obstacle",
+      "definitions": [
+        "n. 障碍"
+      ]
+    },
+    {
+      "word": "pursuit",
+      "definitions": [
+        "n. 追逐；爱好"
+      ]
+    },
+    {
+      "word": "descend",
+      "definitions": [
+        "v. 起源；下降"
+      ]
+    },
+    {
+      "word": "intrigue",
+      "definitions": [
+        "v. 激起兴趣；密谋",
+        "n. 阴谋"
+      ]
+    },
+    {
+      "word": "tactic",
+      "definitions": [
+        "n. 策略"
+      ]
+    },
+    {
+      "word": "sculpture",
+      "definitions": [
+        "n. 雕塑"
+      ]
+    },
+    {
+      "word": "devastate",
+      "definitions": [
+        "v. 使压垮，使痛苦；毁坏"
+      ]
+    },
+    {
+      "word": "integrity",
+      "definitions": [
+        "n. 正直；诚实；完整"
+      ]
+    },
+    {
+      "word": "steer",
+      "definitions": [
+        "v. 引导，带领"
+      ]
+    },
+    {
+      "word": "innovative",
+      "definitions": [
+        "adj. 有创意的"
+      ]
+    },
+    {
+      "word": "patent",
+      "definitions": [
+        "n./v. (获得)专利(权)；执照"
+      ]
+    },
+    {
+      "word": "remedy",
+      "definitions": [
+        "n. 治疗药物；改进措施",
+        "v. 纠正"
+      ]
+    },
+    {
+      "word": "provoke",
+      "definitions": [
+        "v. 引起"
+      ]
+    },
+    {
+      "word": "counterpart",
+      "definitions": [
+        "n. 对应的人或物"
+      ]
+    },
+    {
+      "word": "eligible",
+      "definitions": [
+        "adj. 合格的，合适的"
+      ]
+    },
+    {
+      "word": "deem",
+      "definitions": [
+        "v. 认为，视作"
+      ]
+    },
+    {
+      "word": "mainstream",
+      "definitions": [
+        "n./adj. /'meinstri:m/ 主流（的）",
+        "v. 使为多数人接受"
+      ]
+    },
+    {
+      "word": "spark",
+      "definitions": [
+        "v. 引发",
+        "n. 火花，闪光；一点"
+      ]
+    }
+  ]
+}

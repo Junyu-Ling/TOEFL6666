@@ -1,0 +1,622 @@
+{
+  "meta": {
+    "level": 1,
+    "list": 5,
+    "title": "Level 1 · List 5",
+    "updatedAt": "2026-07-28"
+  },
+  "words": [
+    {
+      "word": "bounce",
+      "definitions": [
+        "v. 反弹；跳动"
+      ]
+    },
+    {
+      "word": "chop",
+      "definitions": [
+        "v. 砍；剁碎",
+        "n. 排骨"
+      ]
+    },
+    {
+      "word": "entrepreneur",
+      "definitions": [
+        "n. 企业家"
+      ]
+    },
+    {
+      "word": "testify",
+      "definitions": [
+        "v. 证实"
+      ]
+    },
+    {
+      "word": "genre",
+      "definitions": [
+        "n. 种类，风格"
+      ]
+    },
+    {
+      "word": "cathedral",
+      "definitions": [
+        "n. 大教堂"
+      ]
+    },
+    {
+      "word": "intimate",
+      "definitions": [
+        "adj. 亲密的"
+      ]
+    },
+    {
+      "word": "worship",
+      "definitions": [
+        "v. 崇拜"
+      ]
+    },
+    {
+      "word": "hostile",
+      "definitions": [
+        "adj. 有敌意的"
+      ]
+    },
+    {
+      "word": "guilt",
+      "definitions": [
+        "n. 负罪感；罪行"
+      ]
+    },
+    {
+      "word": "delicate",
+      "definitions": [
+        "adj. 精美的；易碎的"
+      ]
+    },
+    {
+      "word": "devise",
+      "definitions": [
+        "v. 设计；发明"
+      ]
+    },
+    {
+      "word": "spill",
+      "definitions": [
+        "v. 溢出",
+        "n. 跌倒，摔下"
+      ]
+    },
+    {
+      "word": "dash",
+      "definitions": [
+        "v./n. 猛冲；冲击",
+        "n. 破折号"
+      ]
+    },
+    {
+      "word": "parade",
+      "definitions": [
+        "n./v. 游行；阅兵"
+      ]
+    },
+    {
+      "word": "soar",
+      "definitions": [
+        "v. 猛增；升入高空"
+      ]
+    },
+    {
+      "word": "lawn",
+      "definitions": [
+        "n. 草地，草坪"
+      ]
+    },
+    {
+      "word": "excessive",
+      "definitions": [
+        "adj. 过度的"
+      ]
+    },
+    {
+      "word": "disclose",
+      "definitions": [
+        "v. 显露；透露"
+      ]
+    },
+    {
+      "word": "receipt",
+      "definitions": [
+        "n. 收据；收到"
+      ]
+    },
+    {
+      "word": "exotic",
+      "definitions": [
+        "adj. 来自异国的；吸引人的"
+      ]
+    },
+    {
+      "word": "glimpse",
+      "definitions": [
+        "n. 一瞥"
+      ]
+    },
+    {
+      "word": "vanish",
+      "definitions": [
+        "v. 突然消失"
+      ]
+    },
+    {
+      "word": "smash",
+      "definitions": [
+        "v. 击碎"
+      ]
+    },
+    {
+      "word": "chaos",
+      "definitions": [
+        "n. 混乱，混沌"
+      ]
+    },
+    {
+      "word": "furnish",
+      "definitions": [
+        "v. 提供；装饰"
+      ]
+    },
+    {
+      "word": "fierce",
+      "definitions": [
+        "adj. 激烈的，猛烈的"
+      ]
+    },
+    {
+      "word": "recipient",
+      "definitions": [
+        "n. 接受者"
+      ]
+    },
+    {
+      "word": "tribute",
+      "definitions": [
+        "n. 颂词；赞颂"
+      ]
+    },
+    {
+      "word": "biography",
+      "definitions": [
+        "n. 传记"
+      ]
+    },
+    {
+      "word": "dwell",
+      "definitions": [
+        "v. 居住；沉湎于"
+      ]
+    },
+    {
+      "word": "flaw",
+      "definitions": [
+        "n. 瑕疵"
+      ]
+    },
+    {
+      "word": "timber",
+      "definitions": [
+        "n. 木材"
+      ]
+    },
+    {
+      "word": "exaggerate",
+      "definitions": [
+        "v. 夸大"
+      ]
+    },
+    {
+      "word": "intact",
+      "definitions": [
+        "adj. 完好无缺的"
+      ]
+    },
+    {
+      "word": "postpone",
+      "definitions": [
+        "v. 推迟；延期"
+      ]
+    },
+    {
+      "word": "hybrid",
+      "definitions": [
+        "n. 混合物",
+        "adj. 杂交的"
+      ]
+    },
+    {
+      "word": "arch",
+      "definitions": [
+        "n. 拱形，拱门"
+      ]
+    },
+    {
+      "word": "disposal",
+      "definitions": [
+        "n. 处理，支配"
+      ]
+    },
+    {
+      "word": "penetrate",
+      "definitions": [
+        "v. 穿透"
+      ]
+    },
+    {
+      "word": "stiff",
+      "definitions": [
+        "adj. 僵硬的"
+      ]
+    },
+    {
+      "word": "expedition",
+      "definitions": [
+        "n. 远征；探险队"
+      ]
+    },
+    {
+      "word": "hop",
+      "definitions": [
+        "v. 跳跃"
+      ]
+    },
+    {
+      "word": "respective",
+      "definitions": [
+        "adj. 各自的"
+      ]
+    },
+    {
+      "word": "endeavor",
+      "definitions": [
+        "n./v. 努力"
+      ]
+    },
+    {
+      "word": "suspicious",
+      "definitions": [
+        "adj. 怀疑的"
+      ]
+    },
+    {
+      "word": "flush",
+      "definitions": [
+        "v. 冲刷；脸红"
+      ]
+    },
+    {
+      "word": "drown",
+      "definitions": [
+        "v. 淹没"
+      ]
+    },
+    {
+      "word": "anchor",
+      "definitions": [
+        "v. 使固定",
+        "n. 新闻主持人；锚"
+      ]
+    },
+    {
+      "word": "haul",
+      "definitions": [
+        "v. 拖运；拖拉"
+      ]
+    },
+    {
+      "word": "ferry",
+      "definitions": [
+        "n./v. (乘)渡船"
+      ]
+    },
+    {
+      "word": "summon",
+      "definitions": [
+        "v. 召唤"
+      ]
+    },
+    {
+      "word": "predecessor",
+      "definitions": [
+        "n. 前任"
+      ]
+    },
+    {
+      "word": "contend",
+      "definitions": [
+        "v. 斗争；主张"
+      ]
+    },
+    {
+      "word": "exceptional",
+      "definitions": [
+        "adj. 不同寻常的"
+      ]
+    },
+    {
+      "word": "fetch",
+      "definitions": [
+        "v. 取来"
+      ]
+    },
+    {
+      "word": "appall",
+      "definitions": [
+        "v. 使胆寒"
+      ]
+    },
+    {
+      "word": "inspect",
+      "definitions": [
+        "v. 检查"
+      ]
+    },
+    {
+      "word": "fatal",
+      "definitions": [
+        "adj. 致命的"
+      ]
+    },
+    {
+      "word": "compile",
+      "definitions": [
+        "v. 汇编"
+      ]
+    },
+    {
+      "word": "distract",
+      "definitions": [
+        "v. 使分心"
+      ]
+    },
+    {
+      "word": "speculate",
+      "definitions": [
+        "v. 猜测"
+      ]
+    },
+    {
+      "word": "cling",
+      "definitions": [
+        "v. 坚持，固执；忠于；紧贴；附着"
+      ]
+    },
+    {
+      "word": "grind",
+      "definitions": [
+        "v. 磨碎",
+        "n. 艰苦的工作"
+      ]
+    },
+    {
+      "word": "deliberate",
+      "definitions": [
+        "adj. /dılıbərət/ 故意的；深思熟虑的"
+      ]
+    },
+    {
+      "word": "bolt",
+      "definitions": [
+        "n. 闪电，雷电；螺栓，螺钉",
+        "v. 冲出，跳出"
+      ]
+    },
+    {
+      "word": "unfold",
+      "definitions": [
+        "v. 展开，伸展；显露，表明"
+      ]
+    },
+    {
+      "word": "succession",
+      "definitions": [
+        "n. [生态]演替；继任；连续"
+      ]
+    },
+    {
+      "word": "offset",
+      "definitions": [
+        "v. 抵消"
+      ]
+    },
+    {
+      "word": "shatter",
+      "definitions": [
+        "v./n. 粉碎"
+      ]
+    },
+    {
+      "word": "immense",
+      "definitions": [
+        "adj. 巨大的"
+      ]
+    },
+    {
+      "word": "sacred",
+      "definitions": [
+        "adj. 神圣的"
+      ]
+    },
+    {
+      "word": "trunk",
+      "definitions": [
+        "n. 树干；躯干"
+      ]
+    },
+    {
+      "word": "inherent",
+      "definitions": [
+        "adj. 内在的，固有的"
+      ]
+    },
+    {
+      "word": "soak",
+      "definitions": [
+        "v. 浸泡"
+      ]
+    },
+    {
+      "word": "erect",
+      "definitions": [
+        "adj. 竖立的，笔直的",
+        "v. 建造"
+      ]
+    },
+    {
+      "word": "illuminate",
+      "definitions": [
+        "v. 阐明；照亮"
+      ]
+    },
+    {
+      "word": "flock",
+      "definitions": [
+        "n. 群",
+        "v. 群集"
+      ]
+    },
+    {
+      "word": "conjunction",
+      "definitions": [
+        "n. 结合；[语]连接词"
+      ]
+    },
+    {
+      "word": "interference",
+      "definitions": [
+        "n. 干扰，妨碍"
+      ]
+    },
+    {
+      "word": "alternate",
+      "definitions": [
+        "adj. 交替的"
+      ]
+    },
+    {
+      "word": "clutch",
+      "definitions": [
+        "v. 抓住，紧握",
+        "n. 离合器"
+      ]
+    },
+    {
+      "word": "wit",
+      "definitions": [
+        "n. 风趣；智慧"
+      ]
+    },
+    {
+      "word": "spur",
+      "definitions": [
+        "v. 刺激",
+        "n. 马刺"
+      ]
+    },
+    {
+      "word": "verdict",
+      "definitions": [
+        "n. 裁决，裁定"
+      ]
+    },
+    {
+      "word": "chant",
+      "definitions": [
+        "v. 吟唱，诵扬"
+      ]
+    },
+    {
+      "word": "cautious",
+      "definitions": [
+        "adj. 谨慎的"
+      ]
+    },
+    {
+      "word": "persistent",
+      "definitions": [
+        "adj. 坚持不懈的"
+      ]
+    },
+    {
+      "word": "accusation",
+      "definitions": [
+        "n. 指控"
+      ]
+    },
+    {
+      "word": "frontier",
+      "definitions": [
+        "n. 边界"
+      ]
+    },
+    {
+      "word": "restraint",
+      "definitions": [
+        "n. 限制"
+      ]
+    },
+    {
+      "word": "verify",
+      "definitions": [
+        "v. 证实"
+      ]
+    },
+    {
+      "word": "confrontation",
+      "definitions": [
+        "n. 对抗"
+      ]
+    },
+    {
+      "word": "passionate",
+      "definitions": [
+        "adj. 热情的"
+      ]
+    },
+    {
+      "word": "distort",
+      "definitions": [
+        "v. 扭曲"
+      ]
+    },
+    {
+      "word": "maneuver",
+      "definitions": [
+        "n. 巧计，花招；熟练的动作"
+      ]
+    },
+    {
+      "word": "wreck",
+      "definitions": [
+        "v. 毁坏",
+        "n. 沉船；失事"
+      ]
+    },
+    {
+      "word": "divert",
+      "definitions": [
+        "v. 使偏离"
+      ]
+    },
+    {
+      "word": "aspiration",
+      "definitions": [
+        "n. 渴望"
+      ]
+    },
+    {
+      "word": "clarity",
+      "definitions": [
+        "n. 清楚"
+      ]
+    }
+  ]
+}
