@@ -124,6 +124,7 @@ export default function FlashCard({
   const handleManualMarkRef = useRef(null);
   const touchStartRef = useRef(null);
   const memoryFetchRef = useRef(false);
+  const memoryFetchTokenRef = useRef(0);
   const pendingMemoryTrickRef = useRef(null);
   const mobileInputFocusRef = useRef(false);
   const swipeLockRef = useRef(false);
@@ -147,6 +148,14 @@ export default function FlashCard({
     });
   }
 
+  const dismissMemoryTrickFetch = useCallback(() => {
+    memoryFetchTokenRef.current += 1;
+    memoryFetchRef.current = false;
+    pendingMemoryTrickRef.current = null;
+    setMemoryLoading(false);
+    setMemoryTrickError("");
+  }, []);
+
   const fetchMemoryTrickBackground = useCallback(
     async (baseResult) => {
       const priorWrongCount = wordStats?.wrongCount ?? 0;
@@ -168,14 +177,17 @@ export default function FlashCard({
       }
       if (memoryFetchRef.current) return;
 
+      const fetchToken = memoryFetchTokenRef.current;
       memoryFetchRef.current = true;
       setMemoryLoading(true);
       setMemoryTrickError("");
 
       let lastError = null;
       for (let attempt = 0; attempt < 2; attempt += 1) {
+        if (fetchToken !== memoryFetchTokenRef.current) break;
         try {
           const memory_trick = await fetchMemoryTrick(wordData);
+          if (fetchToken !== memoryFetchTokenRef.current) break;
           pendingMemoryTrickRef.current = memory_trick;
           setResult((prev) =>
             prev && prev.is_correct === false ? { ...prev, memory_trick } : prev
@@ -188,12 +200,14 @@ export default function FlashCard({
         }
       }
 
-      if (lastError) {
+      if (fetchToken === memoryFetchTokenRef.current && lastError) {
         setMemoryTrickError(lastError.message || "记忆法生成失败，请稍后重试");
       }
 
-      memoryFetchRef.current = false;
-      setMemoryLoading(false);
+      if (fetchToken === memoryFetchTokenRef.current) {
+        memoryFetchRef.current = false;
+        setMemoryLoading(false);
+      }
     },
     [wordData, wordStats?.wrongCount, wordStats?.memory_trick, onMemoryTrickGenerated]
   );
@@ -336,9 +350,8 @@ export default function FlashCard({
     setMemoryTrickError("");
     setBackMode("manual");
     setFlipped(true);
-    void fetchMemoryTrickBackground({ is_correct: false });
     requestAnimationFrame(focusCard);
-  }, [stopDictation, focusCard, fetchMemoryTrickBackground]);
+  }, [stopDictation, focusCard]);
 
   const handleBlankTap = useCallback(() => {
     if (loadingRef.current || settingsOpenRef.current) return;
@@ -435,6 +448,7 @@ export default function FlashCard({
           };
 
       if (isTypo) {
+        dismissMemoryTrickFetch();
         setResult(finalResult);
         notifyAnswerResult(true);
         onResult?.(wordData, finalResult);
@@ -450,7 +464,7 @@ export default function FlashCard({
         { playSound: true, persist: true }
       );
     },
-    [result, wordData, onResult, focusCard, showWrongAnswer]
+    [result, wordData, onResult, focusCard, showWrongAnswer, dismissMemoryTrickFetch]
   );
 
   useEffect(() => {
@@ -598,6 +612,7 @@ export default function FlashCard({
   const handleManualMark = useCallback(
     async (isCorrect) => {
       if (isCorrect) {
+        dismissMemoryTrickFetch();
         notifyAnswerResult(true);
         onResult?.(wordData, {
           is_correct: true,
@@ -616,7 +631,7 @@ export default function FlashCard({
         ai_feedback: "你已标记为需加强",
       });
     },
-    [wordData, onResult, onNext, stopDictation, showWrongAnswer]
+    [wordData, onResult, onNext, stopDictation, showWrongAnswer, dismissMemoryTrickFetch]
   );
 
   useEffect(() => {
@@ -751,6 +766,7 @@ export default function FlashCard({
     setResult(null);
     setError(null);
     setMemoryTrickError("");
+    memoryFetchTokenRef.current += 1;
     pendingMemoryTrickRef.current = null;
     memoryFetchRef.current = false;
     setMemoryLoading(false);
