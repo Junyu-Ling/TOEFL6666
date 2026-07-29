@@ -7,8 +7,13 @@ import satWordIndex from "../generated/wordlists/sat/word-index.json";
 
 const TOEFL_LIST_BASE = import.meta.env.VITE_WORDLIST_API || "/wordlists";
 const SAT_LIST_BASE = import.meta.env.VITE_SAT_WORDLIST_API || "/wordlists-sat";
-const CACHE_NAME = "toefl666-wordlists-v4";
-const LEGACY_CACHE_NAMES = ["toefl666-wordlists-v1", "toefl666-wordlists-v2", "toefl666-wordlists-v3"];
+const CACHE_NAME = "toefl666-wordlists-v5";
+const LEGACY_CACHE_NAMES = [
+  "toefl666-wordlists-v1",
+  "toefl666-wordlists-v2",
+  "toefl666-wordlists-v3",
+  "toefl666-wordlists-v4",
+];
 
 if (typeof caches !== "undefined") {
   Promise.all(LEGACY_CACHE_NAMES.map((name) => caches.delete(name))).catch(() => {});

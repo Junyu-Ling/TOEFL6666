@@ -3,13 +3,20 @@
     "level": 1,
     "list": 10,
     "title": "Level 1 · List 10",
-    "updatedAt": "2026-07-29.2"
+    "updatedAt": "2026-07-29.3"
   },
   "words": [
     {
       "word": "feeble",
       "definitions": [
-        "adj. 微弱的"
+        "adj. 微弱的；站不住脚的"
+      ]
+    },
+    {
+      "word": "alight",
+      "definitions": [
+        "adj. 点亮着的；点燃的",
+        "v. 飞落，下来"
       ]
     },
     {
@@ -19,15 +26,33 @@
       ]
     },
     {
+      "word": "meticulous",
+      "definitions": [
+        "adj. 细致的，一丝不苟的"
+      ]
+    },
+    {
       "word": "improbable",
       "definitions": [
         "adj. 不太可能的"
       ]
     },
     {
+      "word": "dormant",
+      "definitions": [
+        "adj. 不活跃的，休眠的"
+      ]
+    },
+    {
       "word": "reptile",
       "definitions": [
         "n. 爬行动物"
+      ]
+    },
+    {
+      "word": "tranquil",
+      "definitions": [
+        "adj. 平静的，安静的"
       ]
     },
     {
@@ -40,6 +65,12 @@
       "word": "chronology",
       "definitions": [
         "n. 年代顺序"
+      ]
+    },
+    {
+      "word": "fidelity",
+      "definitions": [
+        "n. 忠诚；保真度，精确性"
       ]
     },
     {
@@ -70,13 +101,13 @@
     {
       "word": "increment",
       "definitions": [
-        "n. 增加"
+        "n. 增加，增量"
       ]
     },
     {
       "word": "leftover",
       "definitions": [
-        "n. 残留物，剩饭剩菜",
+        "n. 残留物，剩饭菜",
         "adj. 残留的，吃剩的"
       ]
     },
@@ -95,7 +126,7 @@
     {
       "word": "smother",
       "definitions": [
-        "v. 使窒息，抑制"
+        "v. 使窒息；抑制"
       ]
     },
     {
@@ -113,7 +144,7 @@
     {
       "word": "delineate",
       "definitions": [
-        "v. 描绘"
+        "v. 描绘，勾勒"
       ]
     },
     {
@@ -141,41 +172,10 @@
       ]
     },
     {
-      "word": "alight",
-      "definitions": [
-        "adj. 点亮着的，点燃的",
-        "v. 飞落，下来"
-      ]
-    },
-    {
-      "word": "meticulous",
-      "definitions": [
-        "adj. 细致的，一丝不苟的"
-      ]
-    },
-    {
-      "word": "dormant",
-      "definitions": [
-        "adj. 不活跃的"
-      ]
-    },
-    {
-      "word": "tranquil",
-      "definitions": [
-        "adj. 平静的，安静的"
-      ]
-    },
-    {
-      "word": "fidelity",
-      "definitions": [
-        "n. 忠诚；保真度，精确性"
-      ]
-    },
-    {
       "word": "scribe",
       "definitions": [
-        "n. 抄写员",
-        "v. 写下"
+        "v. 写下",
+        "n. 抄写员"
       ]
     },
     {
@@ -188,12 +188,6 @@
       "word": "temperate",
       "definitions": [
         "adj. 温带的；适度的，有节制的"
-      ]
-    },
-    {
-      "word": "colossal",
-      "definitions": [
-        "adj. 巨大的"
       ]
     },
     {
@@ -251,15 +245,21 @@
       ]
     },
     {
-      "word": "exemplary",
-      "definitions": [
-        "adj. 典范的，可仿效的"
-      ]
-    },
-    {
       "word": "beak",
       "definitions": [
         "n. 鸟喙"
+      ]
+    },
+    {
+      "word": "immortal",
+      "definitions": [
+        "adj. 不死的；不朽的"
+      ]
+    },
+    {
+      "word": "colossal",
+      "definitions": [
+        "adj. 巨大的"
       ]
     },
     {
@@ -295,7 +295,7 @@
     {
       "word": "glossary",
       "definitions": [
-        "n. 术语，词汇表"
+        "n. 术语表，词汇表"
       ]
     },
     {
@@ -355,7 +355,7 @@
     {
       "word": "downplay",
       "definitions": [
-        "v. 不予重视，轻描淡写"
+        "v. 不予重视，轻描渐写"
       ]
     },
     {
@@ -384,15 +384,15 @@
       ]
     },
     {
-      "word": "clam",
-      "definitions": [
-        "n. 蛤蜊"
-      ]
-    },
-    {
       "word": "decimal",
       "definitions": [
         "n. 小数"
+      ]
+    },
+    {
+      "word": "clam",
+      "definitions": [
+        "n. 蛤蜊"
       ]
     },
     {
@@ -432,15 +432,15 @@
       ]
     },
     {
-      "word": "flashy",
-      "definitions": [
-        "adj. 俗丽的"
-      ]
-    },
-    {
       "word": "unforeseen",
       "definitions": [
         "adj. 未预料到的"
+      ]
+    },
+    {
+      "word": "flashy",
+      "definitions": [
+        "adj. 闪光的；俗丽的"
       ]
     },
     {
@@ -472,6 +472,114 @@
       "word": "pictorial",
       "definitions": [
         "adj. 绘画的，图示的"
+      ]
+    },
+    {
+      "word": "arduous",
+      "definitions": [
+        "adj. 费力的"
+      ]
+    },
+    {
+      "word": "mystify",
+      "definitions": [
+        "v. 使困惑"
+      ]
+    },
+    {
+      "word": "aria",
+      "definitions": [
+        "n. 咏叹调，独唱曲"
+      ]
+    },
+    {
+      "word": "reassess",
+      "definitions": [
+        "v. 重新考虑"
+      ]
+    },
+    {
+      "word": "entangle",
+      "definitions": [
+        "v. 纠缠；卷入"
+      ]
+    },
+    {
+      "word": "mutate",
+      "definitions": [
+        "v. 改变；基因突变"
+      ]
+    },
+    {
+      "word": "gist",
+      "definitions": [
+        "n. 主旨，要点"
+      ]
+    },
+    {
+      "word": "fragrant",
+      "definitions": [
+        "adj. 芳香的"
+      ]
+    },
+    {
+      "word": "perpendicular",
+      "definitions": [
+        "adj. 陡峭的；成直角的，直立的"
+      ]
+    },
+    {
+      "word": "inconclusive",
+      "definitions": [
+        "adj. 不能肯定下结论的"
+      ]
+    },
+    {
+      "word": "encroach",
+      "definitions": [
+        "v. 蚕食，侵占"
+      ]
+    },
+    {
+      "word": "germinate",
+      "definitions": [
+        "v. 使发芽，使生长"
+      ]
+    },
+    {
+      "word": "grandiose",
+      "definitions": [
+        "adj. 宏伟的，堂皇的"
+      ]
+    },
+    {
+      "word": "diligent",
+      "definitions": [
+        "adj. 勤勉的"
+      ]
+    },
+    {
+      "word": "aromatic",
+      "definitions": [
+        "adj. 芳香的"
+      ]
+    },
+    {
+      "word": "painstaking",
+      "definitions": [
+        "adj. 勤勉的，小心仔细的"
+      ]
+    },
+    {
+      "word": "embellish",
+      "definitions": [
+        "v. 修饰，装饰"
+      ]
+    },
+    {
+      "word": "durability",
+      "definitions": [
+        "n. 耐用，持久"
       ]
     }
   ]

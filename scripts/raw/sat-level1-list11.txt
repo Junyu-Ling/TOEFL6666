@@ -1,56 +1,10 @@
 === LEVEL 1 LIST 11 ===
-arduous
-adj. 费力的
-horizontal
-adj. 水平的
-coerce
-v. 强迫
-mystify
-v. 使困惑
-surmise
-v./n. 猜测
-aria
-n. 咏叹调，独唱曲
-reassess
-v. 重新考虑，重新计算
-exhale
-v. 呼气
-hind
-adj. 后面的
-mutate
-v. 改变；基因突变
-gist
-n. 主旨，要点
-fragrant
-adj. 芳香的
-perpendicular
-adj. 陡峭的；成直角的，直立的
-entangle
-v. 纠缠；卷入
-inconclusive
-adj. 不能肯定下结论的
-encroach
-v. 蚕食，侵占
-germinate
-v. 使发芽，使生长
-grandiose
-adj. 宏伟的，堂皇的
-diligent
-adj. 坚持不懈的，勤勉的
-aromatic
-adj. 芳香的
-embellish
-v. 修饰，装饰
-painstaking
-adj. 勤勉的，小心仔细的
-durability
-n. 耐用，持久
 orbital
 adj. 轨道的；眼窝的，眼眶的
 forerunner
 n. 先驱
 idealist
-n. 理想主义者，空想家
+n. 理想主义者；空想家
 enigma
 n. 谜
 unbiased
@@ -70,7 +24,9 @@ n. 脆弱
 binder
 n. 活页夹；黏合剂
 adrift
-adj. 漂浮着；漂泊的，茫然的
+adj. 漂浮着的；漂泊的，茫然的
+foresight
+n. 先见
 constrict
 v. 缩小，收缩
 undisputed
@@ -89,17 +45,17 @@ v. 玷污，损害，弄脏
 reciprocate
 v. 同等回应，回报
 inquisitive
-adj. 好奇的，爱钻研的，好打听的
+adj. 好奇的；爱钻研的；好打听的
 nomad
 n. 游牧民，流浪者
 frigid
 adj. 寒冷的，严寒的
 inferiority
 n. 低等
-conflate
-v. 合并；搞混
 nourishment
 n. 营养食物，营养提供
+conflate
+v. 合并；搞混
 overuse
 v. 过度使用
 asymmetrical
@@ -153,7 +109,7 @@ n. 变色，污点
 conductive
 adj. 可传导的
 airtight
-adj. 密封的
+adj. 密封的；无懈可击的
 accomplished
 adj. 精通的，有修养的；成立的
 oversimplification
@@ -175,7 +131,7 @@ adj. 干旱的
 artificial
 adj. 人造的；做作的
 devastate
-v. 使压垮，不知所措；毁坏
+v. 使压垮（痛苦而）不知所措，毁坏
 biased
 adj. 有偏见的
 devoted
@@ -199,44 +155,44 @@ n. 恶化；堕落
 fixed
 adj. 固定的，牢固的
 deprive of
-v. 剥夺，失去
+剥夺，失去
 give away
-v. 出卖，泄露；分发
+出卖，泄露；分发
 deserted
 adj. 荒芜的；被遗弃的
 give rise to
-v. 使发生，引起
+使发生，引起
 guarded
 adj. 谨慎的
 put up with
-v. 忍受
-refer to
-v. 指的是；参考
+忍受
 in favor of
-prep. 支持
+支持
+refer to
+指的是；参考
 in terms of
-prep. 在…方面
-interconnected
-adj. 互相连接的，有联系的
-life span
-n. 寿命
-make up
-v. 组成；弥补；化妆品
-malnourishment
-n. 营养不良
-overwhelming
-adj. 压倒性的，强大的；难以承受的
-pile up
-v. 堆积
+在…方面
 restrained
 adj. 克制的，拘谨的
+interconnected
+adj. 互相连接的；有联系的
 slip into
-v. 陷入，渐渐养成
+陷入，渐渐养成
+life span
+寿命
 and so forth
-phr. 等等
+等等
+make up
+组成；弥补；化妆品
 striking
 adj. 惊人的，显著的；惊艳的
+malnourishment
+n. 营养不良
 take into account
-v. 考虑，顾及
+考虑，顾及
+overwhelming
+adj. 压倒性的，强大的；难以承受的
 telling
 adj. 说明问题的；有效的，有力的
+pile up
+堆积

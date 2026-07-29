@@ -3,147 +3,9 @@
     "level": 1,
     "list": 11,
     "title": "Level 1 · List 11",
-    "updatedAt": "2026-07-29.2"
+    "updatedAt": "2026-07-29.3"
   },
   "words": [
-    {
-      "word": "arduous",
-      "definitions": [
-        "adj. 费力的"
-      ]
-    },
-    {
-      "word": "horizontal",
-      "definitions": [
-        "adj. 水平的"
-      ]
-    },
-    {
-      "word": "coerce",
-      "definitions": [
-        "v. 强迫"
-      ]
-    },
-    {
-      "word": "mystify",
-      "definitions": [
-        "v. 使困惑"
-      ]
-    },
-    {
-      "word": "surmise",
-      "definitions": [
-        "v./n. 猜测"
-      ]
-    },
-    {
-      "word": "aria",
-      "definitions": [
-        "n. 咏叹调，独唱曲"
-      ]
-    },
-    {
-      "word": "reassess",
-      "definitions": [
-        "v. 重新考虑，重新计算"
-      ]
-    },
-    {
-      "word": "exhale",
-      "definitions": [
-        "v. 呼气"
-      ]
-    },
-    {
-      "word": "hind",
-      "definitions": [
-        "adj. 后面的"
-      ]
-    },
-    {
-      "word": "mutate",
-      "definitions": [
-        "v. 改变；基因突变"
-      ]
-    },
-    {
-      "word": "gist",
-      "definitions": [
-        "n. 主旨，要点"
-      ]
-    },
-    {
-      "word": "fragrant",
-      "definitions": [
-        "adj. 芳香的"
-      ]
-    },
-    {
-      "word": "perpendicular",
-      "definitions": [
-        "adj. 陡峭的；成直角的，直立的"
-      ]
-    },
-    {
-      "word": "entangle",
-      "definitions": [
-        "v. 纠缠；卷入"
-      ]
-    },
-    {
-      "word": "inconclusive",
-      "definitions": [
-        "adj. 不能肯定下结论的"
-      ]
-    },
-    {
-      "word": "encroach",
-      "definitions": [
-        "v. 蚕食，侵占"
-      ]
-    },
-    {
-      "word": "germinate",
-      "definitions": [
-        "v. 使发芽，使生长"
-      ]
-    },
-    {
-      "word": "grandiose",
-      "definitions": [
-        "adj. 宏伟的，堂皇的"
-      ]
-    },
-    {
-      "word": "diligent",
-      "definitions": [
-        "adj. 坚持不懈的，勤勉的"
-      ]
-    },
-    {
-      "word": "aromatic",
-      "definitions": [
-        "adj. 芳香的"
-      ]
-    },
-    {
-      "word": "embellish",
-      "definitions": [
-        "v. 修饰，装饰"
-      ]
-    },
-    {
-      "word": "painstaking",
-      "definitions": [
-        "adj. 勤勉的，小心仔细的"
-      ]
-    },
-    {
-      "word": "durability",
-      "definitions": [
-        "n. 耐用，持久"
-      ]
-    },
     {
       "word": "orbital",
       "definitions": [
@@ -159,7 +21,7 @@
     {
       "word": "idealist",
       "definitions": [
-        "n. 理想主义者，空想家"
+        "n. 理想主义者；空想家"
       ]
     },
     {
@@ -219,7 +81,13 @@
     {
       "word": "adrift",
       "definitions": [
-        "adj. 漂浮着；漂泊的，茫然的"
+        "adj. 漂浮着的；漂泊的，茫然的"
+      ]
+    },
+    {
+      "word": "foresight",
+      "definitions": [
+        "n. 先见"
       ]
     },
     {
@@ -274,7 +142,7 @@
     {
       "word": "inquisitive",
       "definitions": [
-        "adj. 好奇的，爱钻研的，好打听的"
+        "adj. 好奇的；爱钻研的；好打听的"
       ]
     },
     {
@@ -296,15 +164,15 @@
       ]
     },
     {
-      "word": "conflate",
-      "definitions": [
-        "v. 合并；搞混"
-      ]
-    },
-    {
       "word": "nourishment",
       "definitions": [
         "n. 营养食物，营养提供"
+      ]
+    },
+    {
+      "word": "conflate",
+      "definitions": [
+        "v. 合并；搞混"
       ]
     },
     {
@@ -466,7 +334,7 @@
     {
       "word": "airtight",
       "definitions": [
-        "adj. 密封的"
+        "adj. 密封的；无懈可击的"
       ]
     },
     {
@@ -532,7 +400,7 @@
     {
       "word": "devastate",
       "definitions": [
-        "v. 使压垮，不知所措；毁坏"
+        "v. 使压垮（痛苦而）不知所措，毁坏"
       ]
     },
     {
@@ -604,13 +472,13 @@
     {
       "word": "deprive of",
       "definitions": [
-        "v. 剥夺，失去"
+        "剥夺，失去"
       ]
     },
     {
       "word": "give away",
       "definitions": [
-        "v. 出卖，泄露；分发"
+        "出卖，泄露；分发"
       ]
     },
     {
@@ -622,7 +490,7 @@
     {
       "word": "give rise to",
       "definitions": [
-        "v. 使发生，引起"
+        "使发生，引起"
       ]
     },
     {
@@ -634,61 +502,25 @@
     {
       "word": "put up with",
       "definitions": [
-        "v. 忍受"
-      ]
-    },
-    {
-      "word": "refer to",
-      "definitions": [
-        "v. 指的是；参考"
+        "忍受"
       ]
     },
     {
       "word": "in favor of",
       "definitions": [
-        "prep. 支持"
+        "支持"
+      ]
+    },
+    {
+      "word": "refer to",
+      "definitions": [
+        "指的是；参考"
       ]
     },
     {
       "word": "in terms of",
       "definitions": [
-        "prep. 在…方面"
-      ]
-    },
-    {
-      "word": "interconnected",
-      "definitions": [
-        "adj. 互相连接的，有联系的"
-      ]
-    },
-    {
-      "word": "life span",
-      "definitions": [
-        "n. 寿命"
-      ]
-    },
-    {
-      "word": "make up",
-      "definitions": [
-        "v. 组成；弥补；化妆品"
-      ]
-    },
-    {
-      "word": "malnourishment",
-      "definitions": [
-        "n. 营养不良"
-      ]
-    },
-    {
-      "word": "overwhelming",
-      "definitions": [
-        "adj. 压倒性的，强大的；难以承受的"
-      ]
-    },
-    {
-      "word": "pile up",
-      "definitions": [
-        "v. 堆积"
+        "在…方面"
       ]
     },
     {
@@ -698,15 +530,33 @@
       ]
     },
     {
+      "word": "interconnected",
+      "definitions": [
+        "adj. 互相连接的；有联系的"
+      ]
+    },
+    {
       "word": "slip into",
       "definitions": [
-        "v. 陷入，渐渐养成"
+        "陷入，渐渐养成"
+      ]
+    },
+    {
+      "word": "life span",
+      "definitions": [
+        "寿命"
       ]
     },
     {
       "word": "and so forth",
       "definitions": [
-        "phr. 等等"
+        "等等"
+      ]
+    },
+    {
+      "word": "make up",
+      "definitions": [
+        "组成；弥补；化妆品"
       ]
     },
     {
@@ -716,15 +566,33 @@
       ]
     },
     {
+      "word": "malnourishment",
+      "definitions": [
+        "n. 营养不良"
+      ]
+    },
+    {
       "word": "take into account",
       "definitions": [
-        "v. 考虑，顾及"
+        "考虑，顾及"
+      ]
+    },
+    {
+      "word": "overwhelming",
+      "definitions": [
+        "adj. 压倒性的，强大的；难以承受的"
       ]
     },
     {
       "word": "telling",
       "definitions": [
         "adj. 说明问题的；有效的，有力的"
+      ]
+    },
+    {
+      "word": "pile up",
+      "definitions": [
+        "堆积"
       ]
     }
   ]

@@ -1,0 +1,658 @@
+{
+  "meta": {
+    "level": 2,
+    "list": 2,
+    "title": "Level 2 · List 2",
+    "updatedAt": "2026-07-29.3"
+  },
+  "words": [
+    {
+      "word": "caution",
+      "definitions": [
+        "v./n. 警告",
+        "n. 小小心，谨慎"
+      ]
+    },
+    {
+      "word": "confess",
+      "definitions": [
+        "v. 供认，坦白"
+      ]
+    },
+    {
+      "word": "vendor",
+      "definitions": [
+        "n. 小贩卖主"
+      ]
+    },
+    {
+      "word": "warrant",
+      "definitions": [
+        "v. 证明……正当；为……作担保",
+        "n. 授权令；许可证"
+      ]
+    },
+    {
+      "word": "thrust",
+      "definitions": [
+        "n. 推力，动力",
+        "v. 猛推"
+      ]
+    },
+    {
+      "word": "clash",
+      "definitions": [
+        "v. 发生冲突"
+      ]
+    },
+    {
+      "word": "tenant",
+      "definitions": [
+        "n. 租户，承租人"
+      ]
+    },
+    {
+      "word": "breach",
+      "definitions": [
+        "n./v. 违反；破裂",
+        "n./v. 突破，打破"
+      ]
+    },
+    {
+      "word": "mandate",
+      "definitions": [
+        "n./v. 授权",
+        "n. 情绪",
+        "n. 在任期",
+        "v. 强制执行"
+      ]
+    },
+    {
+      "word": "patrol",
+      "definitions": [
+        "n./v. 巡逻"
+      ]
+    },
+    {
+      "word": "prohibit",
+      "definitions": [
+        "v. 禁止；阻止"
+      ]
+    },
+    {
+      "word": "landlord",
+      "definitions": [
+        "n. 房东；店主；老板"
+      ]
+    },
+    {
+      "word": "superb",
+      "definitions": [
+        "adj. 极好的；华丽的，豪华的"
+      ]
+    },
+    {
+      "word": "heritage",
+      "definitions": [
+        "n. 遗产；继承物"
+      ]
+    },
+    {
+      "word": "demographic",
+      "definitions": [
+        "adj. 人口学的"
+      ]
+    },
+    {
+      "word": "opt",
+      "definitions": [
+        "v. 选择"
+      ]
+    },
+    {
+      "word": "haunt",
+      "definitions": [
+        "v. 经常出没于",
+        "v. 鬼魂(出没)",
+        "n. 常去的地方；栖息地"
+      ]
+    },
+    {
+      "word": "insult",
+      "definitions": [
+        "n./v. 辱骂"
+      ]
+    },
+    {
+      "word": "amend",
+      "definitions": [
+        "v./n. 补偿",
+        "v. 修订，改善"
+      ]
+    },
+    {
+      "word": "casualty",
+      "definitions": [
+        "n. 伤亡人员，死伤者"
+      ]
+    },
+    {
+      "word": "affection",
+      "definitions": [
+        "n. 喜爱"
+      ]
+    },
+    {
+      "word": "concede",
+      "definitions": [
+        "v. (勉强)承认",
+        "v. 赋予"
+      ]
+    },
+    {
+      "word": "grief",
+      "definitions": [
+        "n. 悲伤；伤心事"
+      ]
+    },
+    {
+      "word": "exile",
+      "definitions": [
+        "n./v. 流放(者)；排除"
+      ]
+    },
+    {
+      "word": "archive",
+      "definitions": [
+        "n. 档案文件；档案馆"
+      ]
+    },
+    {
+      "word": "despair",
+      "definitions": [
+        "n./v. 绝望"
+      ]
+    },
+    {
+      "word": "deploy",
+      "definitions": [
+        "v. 部署",
+        "v. 有效利用"
+      ]
+    },
+    {
+      "word": "contemplate",
+      "definitions": [
+        "v. 凝视；沉思"
+      ]
+    },
+    {
+      "word": "flourish",
+      "definitions": [
+        "n./v. 茂盛",
+        "n./v. 繁荣，兴旺",
+        "v. 挥舞"
+      ]
+    },
+    {
+      "word": "hazard",
+      "definitions": [
+        "n./v. (使陷入)危险"
+      ]
+    },
+    {
+      "word": "disclosure",
+      "definitions": [
+        "n. 揭露，披露"
+      ]
+    },
+    {
+      "word": "roar",
+      "definitions": [
+        "n./v. 咆哮"
+      ]
+    },
+    {
+      "word": "bureau",
+      "definitions": [
+        "n. 局，处"
+      ]
+    },
+    {
+      "word": "anonymous",
+      "definitions": [
+        "adj. 匿名的",
+        "adj. 无特色的"
+      ]
+    },
+    {
+      "word": "miserable",
+      "definitions": [
+        "adj. 痛苦的，悲惨的",
+        "adj. 少得可怜的"
+      ]
+    },
+    {
+      "word": "vocal",
+      "definitions": [
+        "adj. 发声的，声音的",
+        "adj. 直言不讳的"
+      ]
+    },
+    {
+      "word": "jurisdiction",
+      "definitions": [
+        "n. 司法权；管辖权"
+      ]
+    },
+    {
+      "word": "doctrine",
+      "definitions": [
+        "n. 信条；主义",
+        "n. 正式声明"
+      ]
+    },
+    {
+      "word": "pharmaceutical",
+      "definitions": [
+        "adj. 药物的；制药(学)的"
+      ]
+    },
+    {
+      "word": "splendid",
+      "definitions": [
+        "adj. 壮丽的；极好的"
+      ]
+    },
+    {
+      "word": "utter",
+      "definitions": [
+        "v. 发出(声音)；说(say or make a sound)",
+        "adj. 完全的；彻底的"
+      ]
+    },
+    {
+      "word": "startle",
+      "definitions": [
+        "v. 惊吓"
+      ]
+    },
+    {
+      "word": "outrage",
+      "definitions": [
+        "n./v. 激怒；愤慨",
+        "n. 暴行"
+      ]
+    },
+    {
+      "word": "warranty",
+      "definitions": [
+        "n. 保证；保修期；保修单"
+      ]
+    },
+    {
+      "word": "betray",
+      "definitions": [
+        "v. 背叛",
+        "v. 泄露"
+      ]
+    },
+    {
+      "word": "miser",
+      "definitions": [
+        "(注: 见文中上下文词义)"
+      ]
+    },
+    {
+      "word": "crawl",
+      "definitions": [
+        "v. 匍匐"
+      ]
+    },
+    {
+      "word": "affiliate",
+      "definitions": [
+        "n./v. 使附属；使紧密联系"
+      ]
+    },
+    {
+      "word": "illuminate",
+      "definitions": [
+        "v. 阐明",
+        "v. 照亮"
+      ]
+    },
+    {
+      "word": "batter",
+      "definitions": [
+        "v. 殴打，连续猛击"
+      ]
+    },
+    {
+      "word": "irritate",
+      "definitions": [
+        "v. 使恼怒；刺激"
+      ]
+    },
+    {
+      "word": "oversee",
+      "definitions": [
+        "v. 监督"
+      ]
+    },
+    {
+      "word": "placement",
+      "definitions": [
+        "n. 放置，布置",
+        "n. 实习"
+      ]
+    },
+    {
+      "word": "persistent",
+      "definitions": [
+        "adj. 坚持不懈的"
+      ]
+    },
+    {
+      "word": "cult",
+      "definitions": [
+        "n. 教派",
+        "n. 狂热"
+      ]
+    },
+    {
+      "word": "mock",
+      "definitions": [
+        "v. 嘲笑，嘲弄；戏谑地模仿",
+        "adj. 仿制的，假装的，模拟的"
+      ]
+    },
+    {
+      "word": "disguise",
+      "definitions": [
+        "v. 掩盖",
+        "v./n. 伪装"
+      ]
+    },
+    {
+      "word": "albeit",
+      "definitions": [
+        "conj. 尽管"
+      ]
+    },
+    {
+      "word": "divine",
+      "definitions": [
+        "adj. 神的，神赐予的"
+      ]
+    },
+    {
+      "word": "stagger",
+      "definitions": [
+        "v./n. 蹒跚",
+        "v. 使震惊",
+        "v. 使交错；使……错开"
+      ]
+    },
+    {
+      "word": "animate",
+      "definitions": [
+        "v. 使有生气，使活泼",
+        "adj. 有生命的"
+      ]
+    },
+    {
+      "word": "faction",
+      "definitions": [
+        "n. 派系"
+      ]
+    },
+    {
+      "word": "enact",
+      "definitions": [
+        "v. 将……制定成法律",
+        "v. 演绎"
+      ]
+    },
+    {
+      "word": "spit",
+      "definitions": [
+        "v. 喷出；吐出；吐口水",
+        "n. 口水"
+      ]
+    },
+    {
+      "word": "dread",
+      "definitions": [
+        "v./n. 恐惧，担心"
+      ]
+    },
+    {
+      "word": "weep",
+      "definitions": [
+        "v./n. 哭泣"
+      ]
+    },
+    {
+      "word": "assertion",
+      "definitions": [
+        "n. 断言",
+        "n. 主张"
+      ]
+    },
+    {
+      "word": "partisan",
+      "definitions": [
+        "adj. 有倾向性的",
+        "n. 拥护者"
+      ]
+    },
+    {
+      "word": "fluctuate",
+      "definitions": [
+        "v. 波动"
+      ]
+    },
+    {
+      "word": "compliment",
+      "definitions": [
+        "v. 擦伤",
+        "n./v. 赞扬；致意"
+      ]
+    },
+    {
+      "word": "dim",
+      "definitions": [
+        "v. 使减小",
+        "adj. 昏暗的"
+      ]
+    },
+    {
+      "word": "temptation",
+      "definitions": [
+        "n. 诱惑，引诱"
+      ]
+    },
+    {
+      "word": "subscription",
+      "definitions": [
+        "n. 订购，订阅",
+        "n. 认捐，捐款"
+      ]
+    },
+    {
+      "word": "generic",
+      "definitions": [
+        "adj. 普通的；通用的",
+        "adj. 无注册商标的",
+        "adj. [生物]属的"
+      ]
+    },
+    {
+      "word": "reconcile",
+      "definitions": [
+        "v. 使和解，调停"
+      ]
+    },
+    {
+      "word": "contingent",
+      "definitions": [
+        "adj. 视情况而定的",
+        "n. 一组；分遣队"
+      ]
+    },
+    {
+      "word": "arc",
+      "definitions": [
+        "n. 弧(度)",
+        "v. 做弧形运动"
+      ]
+    },
+    {
+      "word": "commence",
+      "definitions": [
+        "v. 开始，着手"
+      ]
+    },
+    {
+      "word": "grim",
+      "definitions": [
+        "adj. 严肃的；令人沮丧的"
+      ]
+    },
+    {
+      "word": "bruise",
+      "definitions": [
+        "n. 青肿；碰伤",
+        "v. 使……出现伤痕"
+      ]
+    },
+    {
+      "word": "graze",
+      "definitions": [
+        "v. 放牧"
+      ]
+    },
+    {
+      "word": "benchmark",
+      "definitions": [
+        "n. 基准"
+      ]
+    },
+    {
+      "word": "escort",
+      "definitions": [
+        "n./v. 护送；护卫"
+      ]
+    },
+    {
+      "word": "heir",
+      "definitions": [
+        "n. 继承人"
+      ]
+    },
+    {
+      "word": "brutal",
+      "definitions": [
+        "adj. 野蛮的"
+      ]
+    },
+    {
+      "word": "premature",
+      "definitions": [
+        "adj. 过早的；早产的",
+        "adj. 未经深思熟虑的，不成熟的"
+      ]
+    },
+    {
+      "word": "precedent",
+      "definitions": [
+        "n. 前例"
+      ]
+    },
+    {
+      "word": "memoir",
+      "definitions": [
+        "n. 回忆录"
+      ]
+    },
+    {
+      "word": "slaughter",
+      "definitions": [
+        "n./v. 屠杀",
+        "n./v. 彻底击败"
+      ]
+    },
+    {
+      "word": "contempt",
+      "definitions": [
+        "n. 蔑视，轻视"
+      ]
+    },
+    {
+      "word": "accountable",
+      "definitions": [
+        "adj. 有责任的"
+      ]
+    },
+    {
+      "word": "bob",
+      "definitions": [
+        "v. 上下快速移动",
+        "v. 点头"
+      ]
+    },
+    {
+      "word": "mighty",
+      "definitions": [
+        "adj. 强大的"
+      ]
+    },
+    {
+      "word": "glorious",
+      "definitions": [
+        "adj. 宏伟的",
+        "adj. 令人快乐的"
+      ]
+    },
+    {
+      "word": "vicious",
+      "definitions": [
+        "adj. 邪恶的"
+      ]
+    },
+    {
+      "word": "bypass",
+      "definitions": [
+        "n. 旁路；[公路]支路",
+        "v. 越过；绕行",
+        "n./v. (做)搭桥手术"
+      ]
+    },
+    {
+      "word": "verge",
+      "definitions": [
+        "n. 边缘，界限",
+        "v. 接近"
+      ]
+    },
+    {
+      "word": "intimidate",
+      "definitions": [
+        "v. 威吓"
+      ]
+    },
+    {
+      "word": "impair",
+      "definitions": [
+        "v. 削弱(尤指感官)"
+      ]
+    },
+    {
+      "word": "aftermath",
+      "definitions": [
+        "n. 后果"
+      ]
+    }
+  ]
+}

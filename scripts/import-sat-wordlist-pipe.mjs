@@ -11,37 +11,79 @@ function formatListTitle(level, list) {
   return `Level ${level} · List ${list}`;
 }
 
-function parsePipeDefinitions(raw) {
-  return parseChineseDefinitions(String(raw || "").replace(/；/g, ";"));
+function normalizeDefinitionText(raw) {
+  return String(raw || "")
+    .replace(/；/g, ";")
+    .replace(/\s+\/\s*(?=(n\.|v\.|adj\.|adv\.|prep\.|conj\.|pron\.))/gi, "; ");
 }
 
-function parsePipeBody(text) {
-  const sections = [];
-  const parts = text.split(/^Word List\s+(\d+)\s*$/im);
+function parseDefinitions(raw) {
+  return parseChineseDefinitions(normalizeDefinitionText(raw));
+}
 
-  for (let i = 1; i < parts.length; i += 2) {
-    const list = Number(parts[i]);
-    const lines = parts[i + 1]
-      .split("\n")
-      .map((line) => line.trim())
-      .filter(Boolean);
+function parsePipeLine(line) {
+  const segments = line.split(/\s*\|\s*/);
+  if (segments.length < 3) return null;
 
-    const words = [];
-    for (const line of lines) {
-      const segments = line.split(/\s*\|\s*/);
-      if (segments.length < 3) continue;
+  const word = segments[0].trim().toLowerCase();
+  const definitions = parseDefinitions(segments.slice(2).join(" | "));
+  if (!word || !definitions.length) return null;
 
-      const word = segments[0].trim().toLowerCase();
-      const definitions = parsePipeDefinitions(segments.slice(2).join(" | "));
-      if (!word || !definitions.length) continue;
+  return { word, definitions };
+}
 
-      words.push({ word, definitions });
+function parseDashLine(line) {
+  const marker = " — 释: ";
+  const idx = line.indexOf(marker);
+  if (idx === -1) return null;
+
+  const left = line.slice(0, idx).trim();
+  const definitions = parseDefinitions(line.slice(idx + marker.length).trim());
+  const word = left.replace(/\s+\/[^/]*\/\s*$/, "").trim().toLowerCase();
+
+  if (!word || !definitions.length) return null;
+  return { word, definitions };
+}
+
+export function parseSatWordlistText(text) {
+  let currentLevel = 1;
+  let currentList = null;
+  const sectionMap = new Map();
+
+  for (const rawLine of text.split("\n")) {
+    const line = rawLine.trim();
+    if (!line) continue;
+
+    const levelMatch = line.match(/^Level\s+(\d+)\s*$/i);
+    if (levelMatch) {
+      currentLevel = Number(levelMatch[1]);
+      continue;
     }
 
-    sections.push({ level: 1, list, words });
+    const listMatch = line.match(/^Word List\s+(\d+)\s*$/i);
+    if (listMatch) {
+      currentList = Number(listMatch[1]);
+      continue;
+    }
+
+    if (currentList == null) continue;
+
+    const parsed = line.includes(" — 释: ")
+      ? parseDashLine(line)
+      : line.includes("|")
+        ? parsePipeLine(line)
+        : null;
+
+    if (!parsed) continue;
+
+    const key = `${currentLevel}-${currentList}`;
+    if (!sectionMap.has(key)) {
+      sectionMap.set(key, { level: currentLevel, list: currentList, words: [] });
+    }
+    sectionMap.get(key).words.push(parsed);
   }
 
-  return sections;
+  return [...sectionMap.values()].sort((a, b) => a.level - b.level || a.list - b.list);
 }
 
 function toRawText(level, list, words) {
@@ -53,8 +95,7 @@ function toRawText(level, list, words) {
   return `${lines.join("\n")}\n`;
 }
 
-function writeSections(sections) {
-  const updatedAt = new Date().toISOString().slice(0, 10);
+function writeSections(sections, updatedAt = new Date().toISOString().slice(0, 10)) {
   const manifestPath = path.join(outDir, "manifest.json");
   const manifest = JSON.parse(fs.readFileSync(manifestPath, "utf8"));
 
@@ -73,12 +114,18 @@ function writeSections(sections) {
     };
 
     fs.writeFileSync(path.join(outDir, `${id}.json`), `${JSON.stringify(data, null, 2)}\n`);
-    fs.writeFileSync(path.join(rawDir, `sat-level1-list${list}.txt`), toRawText(level, list, words), "utf8");
+    fs.writeFileSync(
+      path.join(rawDir, `sat-level${level}-list${list}.txt`),
+      toRawText(level, list, words),
+      "utf8"
+    );
 
     const existing = manifest.lists.find((entry) => entry.id === id);
     if (existing) {
       existing.wordCount = words.length;
       existing.title = data.meta.title;
+      existing.level = level;
+      existing.list = list;
     } else {
       manifest.lists.push({
         id,
@@ -105,19 +152,21 @@ function isMainModule() {
 }
 
 if (isMainModule()) {
-  const inputPath = process.argv[2]
-    ? path.resolve(process.argv[2])
-    : path.join(rawDir, "sat-level1-list6-11-latest.txt");
+  const inputPaths = process.argv.slice(2).length
+    ? process.argv.slice(2).map((p) => path.resolve(p))
+    : [path.join(rawDir, "sat-level1-list6-11-latest.txt")];
 
-  if (!fs.existsSync(inputPath)) {
-    throw new Error(`找不到文件：${inputPath}`);
-  }
+  const sections = inputPaths.flatMap((inputPath) => {
+    if (!fs.existsSync(inputPath)) {
+      throw new Error(`找不到文件：${inputPath}`);
+    }
+    const text = fs.readFileSync(inputPath, "utf8").replace(/^\uFEFF/, "");
+    return parseSatWordlistText(text);
+  });
 
-  const text = fs.readFileSync(inputPath, "utf8").replace(/^\uFEFF/, "");
-  const sections = parsePipeBody(text);
   if (!sections.length) {
     throw new Error("未解析到任何 Word List");
   }
 
-  writeSections(sections);
+  writeSections(sections, "2026-07-29.3");
 }

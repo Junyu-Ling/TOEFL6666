@@ -1,0 +1,642 @@
+{
+  "meta": {
+    "level": 2,
+    "list": 3,
+    "title": "Level 2 · List 3",
+    "updatedAt": "2026-07-29.3"
+  },
+  "words": [
+    {
+      "word": "resent",
+      "definitions": [
+        "v. 憎恨"
+      ]
+    },
+    {
+      "word": "redeem",
+      "definitions": [
+        "v. 挽回",
+        "v. 兑现"
+      ]
+    },
+    {
+      "word": "mourn",
+      "definitions": [
+        "v. 哀悼；表示遗憾",
+        "v. 戴孝，服丧",
+        "v. 呜咽；哀鸣"
+      ]
+    },
+    {
+      "word": "curb",
+      "definitions": [
+        "v./n. 控制，抑制"
+      ]
+    },
+    {
+      "word": "immunity",
+      "definitions": [
+        "n. 免疫力",
+        "n. 豁免权；不受影响"
+      ]
+    },
+    {
+      "word": "confidential",
+      "definitions": [
+        "adj. 机密的"
+      ]
+    },
+    {
+      "word": "prosecution",
+      "definitions": [
+        "(注: 见文中上下文词义)"
+      ]
+    },
+    {
+      "word": "sober",
+      "definitions": [
+        "adj. 冷静的，清醒的；未醉的",
+        "v. 变得冷静；醒酒"
+      ]
+    },
+    {
+      "word": "congress",
+      "definitions": [
+        "n. 国会；代表大会"
+      ]
+    },
+    {
+      "word": "soothe",
+      "definitions": [
+        "v. 抚慰；缓和"
+      ]
+    },
+    {
+      "word": "cynical",
+      "definitions": [
+        "adj. 愤世嫉俗的"
+      ]
+    },
+    {
+      "word": "aspire",
+      "definitions": [
+        "v. 渴望"
+      ]
+    },
+    {
+      "word": "prestigious",
+      "definitions": [
+        "adj. 有威望的"
+      ]
+    },
+    {
+      "word": "dissent",
+      "definitions": [
+        "v./n. (持)异议"
+      ]
+    },
+    {
+      "word": "proximity",
+      "definitions": [
+        "n. 接近"
+      ]
+    },
+    {
+      "word": "altar",
+      "definitions": [
+        "n. 祭坛"
+      ]
+    },
+    {
+      "word": "hover",
+      "definitions": [
+        "v. 盘旋",
+        "v. 处于不稳定状态"
+      ]
+    },
+    {
+      "word": "decree",
+      "definitions": [
+        "n. 判决，裁定",
+        "n. 法令；规定"
+      ]
+    },
+    {
+      "word": "confer",
+      "definitions": [
+        "v. 授予，给予",
+        "v. 协商"
+      ]
+    },
+    {
+      "word": "wedge",
+      "definitions": [
+        "n. 楔子",
+        "v. 楔入；强行挤入"
+      ]
+    },
+    {
+      "word": "deter",
+      "definitions": [
+        "v. 威慑",
+        "v. (发动机等)低速空转",
+        "v. 防止，阻止"
+      ]
+    },
+    {
+      "word": "temperament",
+      "definitions": [
+        "n. 性情，性格",
+        "n. 喜怒无常"
+      ]
+    },
+    {
+      "word": "redundant",
+      "definitions": [
+        "adj. 多余的，过剩的",
+        "adj. 被解雇的，失业的"
+      ]
+    },
+    {
+      "word": "rim",
+      "definitions": [
+        "n. 外缘；外框",
+        "v. 形成外沿"
+      ]
+    },
+    {
+      "word": "imminent",
+      "definitions": [
+        "adj. 临近的"
+      ]
+    },
+    {
+      "word": "gratitude",
+      "definitions": [
+        "n. 感激之情"
+      ]
+    },
+    {
+      "word": "flatter",
+      "definitions": [
+        "v. 恭维"
+      ]
+    },
+    {
+      "word": "wicked",
+      "definitions": [
+        "adj. 恶毒的，有害的"
+      ]
+    },
+    {
+      "word": "sprawl",
+      "definitions": [
+        "v./n. 蔓延；伸展"
+      ]
+    },
+    {
+      "word": "turmoil",
+      "definitions": [
+        "n. 混乱"
+      ]
+    },
+    {
+      "word": "idle",
+      "definitions": [
+        "adj. 无工作的；懒惰的"
+      ]
+    },
+    {
+      "word": "alley",
+      "definitions": [
+        "n. 小巷"
+      ]
+    },
+    {
+      "word": "moan",
+      "definitions": [
+        "v./n. 呻吟",
+        "v./n. 抱怨"
+      ]
+    },
+    {
+      "word": "bait",
+      "definitions": [
+        "v. 引诱；在……中放诱饵",
+        "n. 诱饵"
+      ]
+    },
+    {
+      "word": "manifestation",
+      "definitions": [
+        "n. 表现形式"
+      ]
+    },
+    {
+      "word": "tier",
+      "definitions": [
+        "n. 一排；一行",
+        "n. 级别"
+      ]
+    },
+    {
+      "word": "menace",
+      "definitions": [
+        "v./n. 威胁"
+      ]
+    },
+    {
+      "word": "demolish",
+      "definitions": [
+        "v. 摧毁"
+      ]
+    },
+    {
+      "word": "wary",
+      "definitions": [
+        "adj. 谨慎的"
+      ]
+    },
+    {
+      "word": "baseline",
+      "definitions": [
+        "n. 底线；起点"
+      ]
+    },
+    {
+      "word": "shuffle",
+      "definitions": [
+        "n./v. 拖着脚走，慢吞吞地走",
+        "v. 挪动，拖拽",
+        "n./v. 洗牌"
+      ]
+    },
+    {
+      "word": "souvenir",
+      "definitions": [
+        "n. 纪念品"
+      ]
+    },
+    {
+      "word": "dismay",
+      "definitions": [
+        "n./v. (使)惊愕"
+      ]
+    },
+    {
+      "word": "hypothetical",
+      "definitions": [
+        "adj. 假设的，假定的"
+      ]
+    },
+    {
+      "word": "gleam",
+      "definitions": [
+        "n./v. 微光；闪光"
+      ]
+    },
+    {
+      "word": "hypothesis",
+      "definitions": [
+        "(注: 见文中上下文词义)"
+      ]
+    },
+    {
+      "word": "tangible",
+      "definitions": [
+        "adj. 摸得着的"
+      ]
+    },
+    {
+      "word": "therapeutic",
+      "definitions": [
+        "adj. 有益健康的",
+        "adj. 治疗的"
+      ]
+    },
+    {
+      "word": "skepticism",
+      "definitions": [
+        "n. 怀疑态度"
+      ]
+    },
+    {
+      "word": "excavation",
+      "definitions": [
+        "n. 挖掘，开凿"
+      ]
+    },
+    {
+      "word": "cumulative",
+      "definitions": [
+        "adj. 累积的"
+      ]
+    },
+    {
+      "word": "literal",
+      "definitions": [
+        "adj. 字面上的",
+        "adj. 完完全全的"
+      ]
+    },
+    {
+      "word": "recollection",
+      "definitions": [
+        "n. 记忆，回忆"
+      ]
+    },
+    {
+      "word": "vault",
+      "definitions": [
+        "n. 金库",
+        "n. 穹顶",
+        "v. 跳跃"
+      ]
+    },
+    {
+      "word": "supplementary",
+      "definitions": [
+        "adj. 补充的，额外的"
+      ]
+    },
+    {
+      "word": "ponder",
+      "definitions": [
+        "v. 仔细考虑"
+      ]
+    },
+    {
+      "word": "asylum",
+      "definitions": [
+        "n. 避难；庇护",
+        "n. 精神病院；收容所，救济院"
+      ]
+    },
+    {
+      "word": "stationary",
+      "definitions": [
+        "n. 静止不动的"
+      ]
+    },
+    {
+      "word": "acclaim",
+      "definitions": [
+        "n./v. 称赞"
+      ]
+    },
+    {
+      "word": "catastrophe",
+      "definitions": [
+        "n. 灾难；劫难"
+      ]
+    },
+    {
+      "word": "discrepancy",
+      "definitions": [
+        "n. 差异"
+      ]
+    },
+    {
+      "word": "console",
+      "definitions": [
+        "v. 安慰"
+      ]
+    },
+    {
+      "word": "charitable",
+      "definitions": [
+        "adj. 慈善的",
+        "adj. 宽容的，体谅的"
+      ]
+    },
+    {
+      "word": "linkage",
+      "definitions": [
+        "n. 联系"
+      ]
+    },
+    {
+      "word": "demise",
+      "definitions": [
+        "n. 死亡",
+        "n. 终止；失败"
+      ]
+    },
+    {
+      "word": "caravan",
+      "definitions": [
+        "n. 大篷车；旅行队"
+      ]
+    },
+    {
+      "word": "ascend",
+      "definitions": [
+        "v. 攀登；升高"
+      ]
+    },
+    {
+      "word": "badge",
+      "definitions": [
+        "n./v. (授予)徽章"
+      ]
+    },
+    {
+      "word": "despise",
+      "definitions": [
+        "v. 鄙视，轻视"
+      ]
+    },
+    {
+      "word": "paralyze",
+      "definitions": [
+        "v. 使瘫痪，麻痹"
+      ]
+    },
+    {
+      "word": "intercept",
+      "definitions": [
+        "v./n. 拦截",
+        "n. 窃听"
+      ]
+    },
+    {
+      "word": "abide",
+      "definitions": [
+        "v. 忍受，容忍",
+        "v. 遵守",
+        "v. 停留，逗留"
+      ]
+    },
+    {
+      "word": "sensor",
+      "definitions": [
+        "n. 传感器"
+      ]
+    },
+    {
+      "word": "eccentric",
+      "definitions": [
+        "adj. 古怪的"
+      ]
+    },
+    {
+      "word": "upbringing",
+      "definitions": [
+        "n. 教养；养育；抚育"
+      ]
+    },
+    {
+      "word": "speculative",
+      "definitions": [
+        "adj. 推测的",
+        "adj. 投机性的"
+      ]
+    },
+    {
+      "word": "daunt",
+      "definitions": [
+        "v. 使畏惧"
+      ]
+    },
+    {
+      "word": "liaison",
+      "definitions": [
+        "n. 联络；联络员",
+        "n. 私通"
+      ]
+    },
+    {
+      "word": "relish",
+      "definitions": [
+        "n. 喜爱；享受",
+        "v. 期待，盼望"
+      ]
+    },
+    {
+      "word": "gloomy",
+      "definitions": [
+        "adj. 阴暗的",
+        "adj. 令人悲伤的"
+      ]
+    },
+    {
+      "word": "sob",
+      "definitions": [
+        "v. 啜泣"
+      ]
+    },
+    {
+      "word": "segregate",
+      "definitions": [
+        "v. 使……分开，使孤立"
+      ]
+    },
+    {
+      "word": "insane",
+      "definitions": [
+        "adj. 精神失常的",
+        "adj. 愚蠢的",
+        "adj. 疯狂的，发怒的"
+      ]
+    },
+    {
+      "word": "intuition",
+      "definitions": [
+        "n. 直觉"
+      ]
+    },
+    {
+      "word": "glamorous",
+      "definitions": [
+        "adj. 富有魅力的"
+      ]
+    },
+    {
+      "word": "dire",
+      "definitions": [
+        "adj. 严峻的；可怕的"
+      ]
+    },
+    {
+      "word": "larva",
+      "definitions": [
+        "n. 幼虫"
+      ]
+    },
+    {
+      "word": "mortar",
+      "definitions": [
+        "n. 迫击炮",
+        "n. 砂浆；胶泥",
+        "n. 钵；臼"
+      ]
+    },
+    {
+      "word": "preoccupy",
+      "definitions": [
+        "v. 使入神，使全神贯注"
+      ]
+    },
+    {
+      "word": "nuance",
+      "definitions": [
+        "n. 细微差别"
+      ]
+    },
+    {
+      "word": "petty",
+      "definitions": [
+        "adj. 琐碎的；次要的"
+      ]
+    },
+    {
+      "word": "bald",
+      "definitions": [
+        "adj. 秃头的；裸露的",
+        "adj. 直白的"
+      ]
+    },
+    {
+      "word": "convene",
+      "definitions": [
+        "v. 召开；开会"
+      ]
+    },
+    {
+      "word": "canopy",
+      "definitions": [
+        "n. 树冠，华盖"
+      ]
+    },
+    {
+      "word": "remnant",
+      "definitions": [
+        "n. 剩余部分"
+      ]
+    },
+    {
+      "word": "rehearse",
+      "definitions": [
+        "v. 排练；预演"
+      ]
+    },
+    {
+      "word": "reiterate",
+      "definitions": [
+        "v. 重申"
+      ]
+    },
+    {
+      "word": "exclaim",
+      "definitions": [
+        "v. 呼喊"
+      ]
+    },
+    {
+      "word": "affluent",
+      "definitions": [
+        "adj. 富裕的"
+      ]
+    }
+  ]
+}

@@ -1,16 +1,27 @@
 === LEVEL 1 LIST 10 ===
 feeble
-adj. 微弱的
+adj. 微弱的；站不住脚的
+alight
+adj. 点亮着的；点燃的
+v. 飞落，下来
 grandeur
 n. 壮丽，庄严，宏伟
+meticulous
+adj. 细致的，一丝不苟的
 improbable
 adj. 不太可能的
+dormant
+adj. 不活跃的，休眠的
 reptile
 n. 爬行动物
+tranquil
+adj. 平静的，安静的
 emblem
 n. 象征，符号
 chronology
 n. 年代顺序
+fidelity
+n. 忠诚；保真度，精确性
 candid
 adj. 率直的
 pristine
@@ -21,22 +32,22 @@ illiterate
 adj. 文盲的，不识字的
 n. 文盲，无知的人
 increment
-n. 增加
+n. 增加，增量
 leftover
-n. 残留物，剩饭剩菜
+n. 残留物，剩饭菜
 adj. 残留的，吃剩的
 deficient
 adj. 不足的，缺乏的；有缺陷的
 intertwine
 v. 缠绕，缠结
 smother
-v. 使窒息，抑制
+v. 使窒息；抑制
 brittle
 adj. 易碎的；脆弱的
 perplex
 v. 使困惑
 delineate
-v. 描绘
+v. 描绘，勾勒
 terrestrial
 adj. 陆地的；类地的，地球的
 eject
@@ -45,26 +56,13 @@ alloy
 n. 合金
 sporadic
 adj. 零星的，偶发的
-alight
-adj. 点亮着的，点燃的
-v. 飞落，下来
-meticulous
-adj. 细致的，一丝不苟的
-dormant
-adj. 不活跃的
-tranquil
-adj. 平静的，安静的
-fidelity
-n. 忠诚；保真度，精确性
 scribe
-n. 抄写员
 v. 写下
+n. 抄写员
 abdomen
 n. 腹部
 temperate
 adj. 温带的；适度的，有节制的
-colossal
-adj. 巨大的
 starch
 n. 淀粉
 deviate
@@ -83,10 +81,12 @@ edible
 adj. 可食用的
 ancestry
 n. 祖先
-exemplary
-adj. 典范的，可仿效的
 beak
 n. 鸟喙
+immortal
+adj. 不死的；不朽的
+colossal
+adj. 巨大的
 divisive
 adj. 有分歧的
 avalanche
@@ -98,7 +98,7 @@ adj. 混杂的，由不同成分组成的
 impulsive
 adj. 冲动的
 glossary
-n. 术语，词汇表
+n. 术语表，词汇表
 heyday
 n. 全盛时期
 intermittent
@@ -118,7 +118,7 @@ v. 分解，腐烂
 carbonate
 n. 碳酸盐
 downplay
-v. 不予重视，轻描淡写
+v. 不予重视，轻描渐写
 neurological
 adj. 神经学上的，神经病学的
 nibble
@@ -128,10 +128,10 @@ v. (使)发酵
 v./n. (挑起)动乱
 cohesive
 adj. 凝聚的
-clam
-n. 蛤蜊
 decimal
 n. 小数
+clam
+n. 蛤蜊
 luminous
 adj. 发光的，明亮的
 tyrant
@@ -144,10 +144,10 @@ amphibian
 n. 两栖动物
 cello
 n. 大提琴
-flashy
-adj. 俗丽的
 unforeseen
 adj. 未预料到的
+flashy
+adj. 闪光的；俗丽的
 drench
 v. 使湿透
 n. 滂沱大雨
@@ -159,3 +159,39 @@ exertion
 n. 费力，努力
 pictorial
 adj. 绘画的，图示的
+arduous
+adj. 费力的
+mystify
+v. 使困惑
+aria
+n. 咏叹调，独唱曲
+reassess
+v. 重新考虑
+entangle
+v. 纠缠；卷入
+mutate
+v. 改变；基因突变
+gist
+n. 主旨，要点
+fragrant
+adj. 芳香的
+perpendicular
+adj. 陡峭的；成直角的，直立的
+inconclusive
+adj. 不能肯定下结论的
+encroach
+v. 蚕食，侵占
+germinate
+v. 使发芽，使生长
+grandiose
+adj. 宏伟的，堂皇的
+diligent
+adj. 勤勉的
+aromatic
+adj. 芳香的
+painstaking
+adj. 勤勉的，小心仔细的
+embellish
+v. 修饰，装饰
+durability
+n. 耐用，持久

@@ -1,0 +1,622 @@
+{
+  "meta": {
+    "level": 2,
+    "list": 4,
+    "title": "Level 2 · List 4",
+    "updatedAt": "2026-07-29.3"
+  },
+  "words": [
+    {
+      "word": "apt",
+      "definitions": [
+        "adj. 倾向于的",
+        "adj. 合适的",
+        "adj. 迅速学习或领会的"
+      ]
+    },
+    {
+      "word": "ethnicity",
+      "definitions": [
+        "n. 种族特点；种族渊源"
+      ]
+    },
+    {
+      "word": "parachute",
+      "definitions": [
+        "n. 降落伞",
+        "v. 伞投，空降；突然派到"
+      ]
+    },
+    {
+      "word": "lament",
+      "definitions": [
+        "n./v. (表达)悲痛，痛惜",
+        "n. 悲歌，挽歌"
+      ]
+    },
+    {
+      "word": "plight",
+      "definitions": [
+        "n. 困境"
+      ]
+    },
+    {
+      "word": "anguish",
+      "definitions": [
+        "n. 极度痛苦"
+      ]
+    },
+    {
+      "word": "prominence",
+      "definitions": [
+        "n. 显赫；显眼"
+      ]
+    },
+    {
+      "word": "anecdote",
+      "definitions": [
+        "n. 轶事"
+      ]
+    },
+    {
+      "word": "usher",
+      "definitions": [
+        "v. 迎接，引座",
+        "n. 传递员，领座员"
+      ]
+    },
+    {
+      "word": "subdue",
+      "definitions": [
+        "v. 克制，抑制",
+        "v. 征服，制服"
+      ]
+    },
+    {
+      "word": "pertain",
+      "definitions": [
+        "v. 有关；从属"
+      ]
+    },
+    {
+      "word": "solicit",
+      "definitions": [
+        "v. 恳求；征集"
+      ]
+    },
+    {
+      "word": "lavish",
+      "definitions": [
+        "adj. 奢华的；丰富的",
+        "v. 慷慨地将……给予某人"
+      ]
+    },
+    {
+      "word": "prophet",
+      "definitions": [
+        "n. 先知"
+      ]
+    },
+    {
+      "word": "bolster",
+      "definitions": [
+        "n. 垫枕",
+        "v. 支持"
+      ]
+    },
+    {
+      "word": "stipulate",
+      "definitions": [
+        "v. 规定"
+      ]
+    },
+    {
+      "word": "bewilder",
+      "definitions": [
+        "v. 使迷惑"
+      ]
+    },
+    {
+      "word": "navigation",
+      "definitions": [
+        "n. 导航"
+      ]
+    },
+    {
+      "word": "disgrace",
+      "definitions": [
+        "n. 羞耻；丢脸的事",
+        "v. 使……蒙受耻辱"
+      ]
+    },
+    {
+      "word": "affinity",
+      "definitions": [
+        "n. 类同",
+        "n. 喜爱",
+        "n. 密切关系"
+      ]
+    },
+    {
+      "word": "mend",
+      "definitions": [
+        "v. 缝补；改进",
+        "n. 修补处"
+      ]
+    },
+    {
+      "word": "churn",
+      "definitions": [
+        "v. 搅拌，搅动；翻腾",
+        "n. (制黄油的)搅乳器"
+      ]
+    },
+    {
+      "word": "exquisite",
+      "definitions": [
+        "adj. 姣好的；精致的"
+      ]
+    },
+    {
+      "word": "reckless",
+      "definitions": [
+        "adj. 鲁莽的"
+      ]
+    },
+    {
+      "word": "hype",
+      "definitions": [
+        "n./v. 不实宣传，大肆宣传"
+      ]
+    },
+    {
+      "word": "underscore",
+      "definitions": [
+        "v. 突出",
+        "v. 在……下面划线"
+      ]
+    },
+    {
+      "word": "allegiance",
+      "definitions": [
+        "n. 忠诚"
+      ]
+    },
+    {
+      "word": "climax",
+      "definitions": [
+        "n./v. (达到)高潮"
+      ]
+    },
+    {
+      "word": "zoom",
+      "definitions": [
+        "v. 疾行，急速上升",
+        "n. 变焦摄影"
+      ]
+    },
+    {
+      "word": "syndicate",
+      "definitions": [
+        "n. 企业联合；财团；辛迪加",
+        "v. 联合成辛迪加；组成企业联合组织"
+      ]
+    },
+    {
+      "word": "deduct",
+      "definitions": [
+        "v. 扣除"
+      ]
+    },
+    {
+      "word": "monumental",
+      "definitions": [
+        "adj. 极大的",
+        "adj. 意义深远的"
+      ]
+    },
+    {
+      "word": "scrutinize",
+      "definitions": [
+        "v. 仔细检查"
+      ]
+    },
+    {
+      "word": "transcend",
+      "definitions": [
+        "v. 超越"
+      ]
+    },
+    {
+      "word": "augment",
+      "definitions": [
+        "v. 加强"
+      ]
+    },
+    {
+      "word": "tentative",
+      "definitions": [
+        "adj. 暂定的；犹豫不决的"
+      ]
+    },
+    {
+      "word": "relic",
+      "definitions": [
+        "n. 遗迹，废墟"
+      ]
+    },
+    {
+      "word": "thump",
+      "definitions": [
+        "n./v. 重击；重击声"
+      ]
+    },
+    {
+      "word": "nostalgia",
+      "definitions": [
+        "n. 怀旧；怀旧之情"
+      ]
+    },
+    {
+      "word": "acquaint",
+      "definitions": [
+        "v. 使了解"
+      ]
+    },
+    {
+      "word": "alleviate",
+      "definitions": [
+        "v. 减轻"
+      ]
+    },
+    {
+      "word": "mingle",
+      "definitions": [
+        "v. 使混合；混合"
+      ]
+    },
+    {
+      "word": "glossy",
+      "definitions": [
+        "adj. 有光泽的；光滑的",
+        "adj. 用亮光纸印刷的"
+      ]
+    },
+    {
+      "word": "benign",
+      "definitions": [
+        "adj. 良性的"
+      ]
+    },
+    {
+      "word": "obstruction",
+      "definitions": [
+        "n. 妨碍；阻碍",
+        "n. 堵塞，障碍"
+      ]
+    },
+    {
+      "word": "weld",
+      "definitions": [
+        "v. 焊接；统一，团结"
+      ]
+    },
+    {
+      "word": "purport",
+      "definitions": [
+        "n./v. 意图；打算"
+      ]
+    },
+    {
+      "word": "huddle",
+      "definitions": [
+        "v. 挤成一团",
+        "v. (暗中)碰头",
+        "n. 挤在一起的一群人或东西"
+      ]
+    },
+    {
+      "word": "amenity",
+      "definitions": [
+        "n. 便利设施",
+        "n. (环境等的)舒适",
+        "n. 礼仪"
+      ]
+    },
+    {
+      "word": "precursor",
+      "definitions": [
+        "n. 先驱，前导"
+      ]
+    },
+    {
+      "word": "cerebral",
+      "definitions": [
+        "adj. 理智的",
+        "adj. 大脑的"
+      ]
+    },
+    {
+      "word": "baffle",
+      "definitions": [
+        "v. 使困惑",
+        "n. 隔板，挡板"
+      ]
+    },
+    {
+      "word": "tedious",
+      "definitions": [
+        "adj. 单调乏味的"
+      ]
+    },
+    {
+      "word": "aggravate",
+      "definitions": [
+        "v. 加重",
+        "v. 激怒，惹恼"
+      ]
+    },
+    {
+      "word": "provisional",
+      "definitions": [
+        "adj. 暂时性的"
+      ]
+    },
+    {
+      "word": "emulate",
+      "definitions": [
+        "v. 效仿，模仿"
+      ]
+    },
+    {
+      "word": "hymn",
+      "definitions": [
+        "n. 圣歌"
+      ]
+    },
+    {
+      "word": "rhetorical",
+      "definitions": [
+        "adj. 修辞的",
+        "adj. 雄辩的"
+      ]
+    },
+    {
+      "word": "thwart",
+      "definitions": [
+        "v. 挫败，使受挫",
+        "n. 独木舟的横梁"
+      ]
+    },
+    {
+      "word": "assimilate",
+      "definitions": [
+        "v. 吸收，使同化"
+      ]
+    },
+    {
+      "word": "prudent",
+      "definitions": [
+        "adj. 精明的，深谋远虑的"
+      ]
+    },
+    {
+      "word": "hilarious",
+      "definitions": [
+        "adj. 极有趣的，滑稽的"
+      ]
+    },
+    {
+      "word": "herald",
+      "definitions": [
+        "n./v. 预示",
+        "n./v. 传令(官)；宣告(人)"
+      ]
+    },
+    {
+      "word": "protagonist",
+      "definitions": [
+        "n. 主角"
+      ]
+    },
+    {
+      "word": "afflict",
+      "definitions": [
+        "v. 使痛苦"
+      ]
+    },
+    {
+      "word": "harass",
+      "definitions": [
+        "v. 不断骚扰；烦扰"
+      ]
+    },
+    {
+      "word": "succumb",
+      "definitions": [
+        "v. 屈服",
+        "v. 不治而死"
+      ]
+    },
+    {
+      "word": "confide",
+      "definitions": [
+        "v. 吐露"
+      ]
+    },
+    {
+      "word": "retrospect",
+      "definitions": [
+        "n. 回顾；追忆"
+      ]
+    },
+    {
+      "word": "pilgrim",
+      "definitions": [
+        "n. 朝圣者"
+      ]
+    },
+    {
+      "word": "unleash",
+      "definitions": [
+        "v. 解开；释放"
+      ]
+    },
+    {
+      "word": "relentless",
+      "definitions": [
+        "adj. 不间断的"
+      ]
+    },
+    {
+      "word": "determinant",
+      "definitions": [
+        "n. 决定性的(因素)"
+      ]
+    },
+    {
+      "word": "jeopardize",
+      "definitions": [
+        "v. 危及"
+      ]
+    },
+    {
+      "word": "filthy",
+      "definitions": [
+        "adj. 肮脏的",
+        "adj. 淫秽的"
+      ]
+    },
+    {
+      "word": "versatile",
+      "definitions": [
+        "adj. 多用途的；通用的"
+      ]
+    },
+    {
+      "word": "topple",
+      "definitions": [
+        "v. 倒下，跌倒",
+        "v. 推倒，推翻，颠覆"
+      ]
+    },
+    {
+      "word": "contentious",
+      "definitions": [
+        "adj. 有争议的"
+      ]
+    },
+    {
+      "word": "brink",
+      "definitions": [
+        "n. 边缘"
+      ]
+    },
+    {
+      "word": "peril",
+      "definitions": [
+        "n. 危险；危害"
+      ]
+    },
+    {
+      "word": "ordeal",
+      "definitions": [
+        "n. 磨难；严酷的考验"
+      ]
+    },
+    {
+      "word": "construe",
+      "definitions": [
+        "v. 把……理解为，认为"
+      ]
+    },
+    {
+      "word": "renovation",
+      "definitions": [
+        "n. 翻新，整修"
+      ]
+    },
+    {
+      "word": "mundane",
+      "definitions": [
+        "adj. 普通的，平凡的"
+      ]
+    },
+    {
+      "word": "dangling",
+      "definitions": [
+        "v. 悬荡"
+      ]
+    },
+    {
+      "word": "cliche",
+      "definitions": [
+        "n. 陈词滥调"
+      ]
+    },
+    {
+      "word": "symmetry",
+      "definitions": [
+        "n. 对称性",
+        "n. 相等"
+      ]
+    },
+    {
+      "word": "astound",
+      "definitions": [
+        "v. 使震惊"
+      ]
+    },
+    {
+      "word": "myriad",
+      "definitions": [
+        "n./v. 无数(的)，大量(的)"
+      ]
+    },
+    {
+      "word": "seduce",
+      "definitions": [
+        "v. 引诱，诱惑"
+      ]
+    },
+    {
+      "word": "salvage",
+      "definitions": [
+        "n./v. 抢救；挽回",
+        "n./v. 回收利用"
+      ]
+    },
+    {
+      "word": "incompatible",
+      "definitions": [
+        "adj. 有冲突的",
+        "adj. 不兼容的，互斥的"
+      ]
+    },
+    {
+      "word": "melancholy",
+      "definitions": [
+        "n. 忧伤",
+        "adj. 悲伤的，忧郁的"
+      ]
+    },
+    {
+      "word": "insulate",
+      "definitions": [
+        "v. 使绝缘；使隔热"
+      ]
+    },
+    {
+      "word": "breathtaking",
+      "definitions": [
+        "adj. 惊人的"
+      ]
+    },
+    {
+      "word": "placebo",
+      "definitions": [
+        "n. 安慰剂；使人宽慰的东西"
+      ]
+    }
+  ]
+}
