@@ -11,6 +11,7 @@
     "build:loading-words": "node scripts/build-loading-words.mjs",
     "build:familiar-obscure": "node scripts/build-familiar-obscure.mjs",
     "import:sat-wordlist": "node scripts/import-sat-wordlist.mjs",
+    "import:sat-wordlist-xlsx": "node scripts/import-sat-wordlist-xlsx.mjs",
     "build:wordlists": "node scripts/build-word-index.mjs && node scripts/build-word-bank.mjs && node scripts/build-wordlists-bundle.mjs",
     "build": "npm run build:pronunciation && npm run build:families && npm run build:loading-words && npm run build:wordlists && vite build",
     "lint": "oxlint",
@@ -33,6 +34,7 @@
     "@vitejs/plugin-react": "^6.0.2",
     "oxlint": "^1.69.0",
     "pdf-parse": "^1.1.1",
-    "vite": "^8.1.0"
+    "vite": "^8.1.0",
+    "xlsx": "^0.18.5"
   }
 }
