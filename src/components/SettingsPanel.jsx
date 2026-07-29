@@ -70,6 +70,7 @@ export default function SettingsPanel() {
   const [syncError, setSyncError] = useState("");
   const [pairingCode, setPairingCode] = useState(() => syncService.getPairingCode());
   const [syncStatus, setSyncStatus] = useState(() => syncService.getStatus());
+  const isPaired = Boolean(pairingCode);
   const panelRef = useRef(null);
 
   const syncSummary = useMemo(() => getSyncSummary(), [settingsOpen, syncStatus.state]);
@@ -169,10 +170,11 @@ export default function SettingsPanel() {
     try {
       const merged = await syncService.linkDevice(code);
       setPairingCode(formatPairingCode(code));
+      setPullCode("");
       setSyncMessage(
         merged
-          ? "已与云端进度合并，正在实时同步"
-          : "已连接配对码，两台设备进度将自动双向同步"
+          ? "已与另一台设备合并进度，之后将自动双向同步"
+          : "已连接配对码，两台设备进度已统一，之后将自动双向同步"
       );
     } catch (err) {
       const host = window.location.host;
@@ -192,9 +194,17 @@ export default function SettingsPanel() {
   }
 
   function handleUnlink() {
+    if (
+      !window.confirm(
+        "解除配对后，本机将不再与另一台设备自动同步进度。另一台设备不受影响，如需停止同步也请在那一台解除配对。"
+      )
+    ) {
+      return;
+    }
     syncService.unlink();
     setPairingCode("");
-    setSyncMessage("已解除实时同步");
+    setPullCode("");
+    setSyncMessage("已解除配对，本机不再自动同步");
     setSyncError("");
   }
 
@@ -423,10 +433,10 @@ export default function SettingsPanel() {
           </summary>
           <div className="settings-group__body">
             <p className="settings-hint settings-hint--compact">
-              电脑与手机须打开同一网址（如 toefl-6666.vercel.app）。配对后两台设备会每 5 秒自动双向合并进度，无需刷新页面。
+              电脑与手机须打开同一网址（如 toefl-6666.vercel.app）。输入配对码后会先合并两边进度，之后自动双向同步；只有点击「解除配对」才会停止本机同步。
             </p>
 
-            {pairingCode ? (
+            {isPaired ? (
               <div className="settings-sync-card settings-sync-card--active">
                 <div className="settings-sync-card__head">
                   <strong>实时同步中</strong>
@@ -442,6 +452,9 @@ export default function SettingsPanel() {
                     复制
                   </button>
                 </p>
+                <p className="settings-hint settings-hint--compact">
+                  本机与另一台设备已绑定。任意一端学习进度会自动合并上传，无需手动刷新。
+                </p>
                 <button
                   type="button"
                   className="settings-action-btn settings-action-btn--block"
@@ -451,8 +464,8 @@ export default function SettingsPanel() {
                   解除配对
                 </button>
               </div>
-            ) : null}
-
+            ) : (
+              <>
             <div className="settings-sync-card">
               <div className="settings-sync-card__head">
                 <strong>生成配对码</strong>
@@ -466,7 +479,7 @@ export default function SettingsPanel() {
               >
                 {syncBusy ? "处理中…" : "生成配对码"}
               </button>
-              {uploadedCode && !pairingCode ? (
+              {uploadedCode ? (
                 <p className="settings-sync-code">
                   <span className="sync-code-badge">{uploadedCode}</span>
                   <button
@@ -486,7 +499,7 @@ export default function SettingsPanel() {
             <div className="settings-sync-card">
               <div className="settings-sync-card__head">
                 <strong>连接配对码</strong>
-                <span>输入另一台设备的配对码，合并并持续同步</span>
+                <span>输入另一台设备的配对码，先合并进度再持续同步</span>
               </div>
               <input
                 className="settings-sync-input"
@@ -507,6 +520,8 @@ export default function SettingsPanel() {
                 输入配对码并实时同步
               </button>
             </div>
+              </>
+            )}
 
             {syncMessage && <p className="settings-status settings-status--ok">{syncMessage}</p>}
             {syncError && <p className="settings-status settings-status--error">{syncError}</p>}

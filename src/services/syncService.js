@@ -7,14 +7,16 @@ import {
   mergeSyncBundles,
   normalizePairingCode,
   savePairingSession,
+  SYNC_EXCLUDED_KEYS,
+  SYNC_PREFIX,
 } from "../shared/sync";
 import { pullSyncPayload, pushSyncPayload } from "./syncApi";
 
 export const SYNC_APPLIED_EVENT = "toefl666-sync-applied";
 export const SYNC_STATUS_EVENT = "toefl666-sync-status";
 
-const POLL_MS = 5000;
-const PUSH_DEBOUNCE_MS = 2000;
+const POLL_MS = 3000;
+const PUSH_DEBOUNCE_MS = 1500;
 
 let pollTimer = null;
 let pushTimer = null;
@@ -22,6 +24,7 @@ let dirty = false;
 let suppressDirty = false;
 let syncing = false;
 let started = false;
+let storageHookInstalled = false;
 let lastStatus = { state: "idle", message: "" };
 
 function emitStatus(patch) {
@@ -45,6 +48,34 @@ function updateSession(patch) {
   return next;
 }
 
+function schedulePush() {
+  if (!getSession()) return;
+  dirty = true;
+  if (pushTimer) clearTimeout(pushTimer);
+  pushTimer = setTimeout(() => {
+    pushTimer = null;
+    if (dirty) pushNow();
+  }, PUSH_DEBOUNCE_MS);
+}
+
+function installStorageHook() {
+  if (storageHookInstalled || typeof window === "undefined" || !window.localStorage) return;
+  storageHookInstalled = true;
+
+  const originalSetItem = localStorage.setItem.bind(localStorage);
+  localStorage.setItem = function patchedSetItem(key, value) {
+    originalSetItem(key, value);
+    if (
+      !suppressDirty &&
+      typeof key === "string" &&
+      key.startsWith(SYNC_PREFIX) &&
+      !SYNC_EXCLUDED_KEYS.has(key)
+    ) {
+      schedulePush();
+    }
+  };
+}
+
 async function applyRemotePayload(result) {
   const session = getSession();
   if (!session) return false;
@@ -61,6 +92,7 @@ async function applyRemotePayload(result) {
   suppressDirty = false;
 
   updateSession({ lastRemoteUpdatedAt: remoteUpdatedAt });
+  if (changed) schedulePush();
   return changed;
 }
 
@@ -121,30 +153,23 @@ async function pushNow() {
       message: `实时同步中 · ${formatPairingCode(session.code)}`,
       code: formatPairingCode(session.code),
     });
-  } catch {
-    dirty = false;
+  } catch (err) {
     emitStatus({
-      state: "paired",
-      message: `实时同步中 · ${formatPairingCode(session.code)}`,
+      state: "error",
+      message: err.message || "上传失败，将自动重试",
       code: formatPairingCode(session.code),
     });
   } finally {
     syncing = false;
+    if (dirty) schedulePush();
   }
-}
-
-function schedulePush() {
-  if (pushTimer) clearTimeout(pushTimer);
-  pushTimer = setTimeout(() => {
-    pushTimer = null;
-    if (dirty) pushNow();
-  }, PUSH_DEBOUNCE_MS);
 }
 
 function startPolling() {
   if (pollTimer) return;
-  pollTimer = setInterval(() => {
-    pullAndMerge();
+  pollTimer = setInterval(async () => {
+    await pullAndMerge();
+    if (dirty) await pushNow();
   }, POLL_MS);
 }
 
@@ -177,7 +202,6 @@ export const syncService = {
 
   markDirty() {
     if (suppressDirty || !getSession()) return;
-    dirty = true;
     schedulePush();
   },
 
@@ -195,10 +219,12 @@ export const syncService = {
       message: `实时同步中 · ${formatPairingCode(normalized)}`,
       code: formatPairingCode(normalized),
     });
+    startPolling();
     if (push) {
       await pushNow();
+    } else {
+      await pullAndMerge();
     }
-    startPolling();
   },
 
   async linkDevice(code) {
@@ -212,12 +238,10 @@ export const syncService = {
     });
 
     try {
-      const changed = await pullAndMerge({ throwOnError: true });
-      if (!changed) {
-        await pushNow();
-      }
+      await pullAndMerge({ throwOnError: true });
+      await pushNow();
       startPolling();
-      return changed;
+      return true;
     } catch (err) {
       clearPairingSession();
       throw err;
@@ -234,6 +258,7 @@ export const syncService = {
   start() {
     if (started) return;
     started = true;
+    installStorageHook();
 
     const session = getSession();
     if (session) {

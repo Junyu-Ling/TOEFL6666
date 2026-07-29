@@ -4,6 +4,7 @@ import { normalizeAppMode, APP_MODE_TITLES } from "../utils/appMode";
 import { normalizeTargetExam, normalizeToeflTargetTotal, normalizeSatTargetTotal } from "../utils/examScores";
 import { getSystemVoices, speakWord as speak } from "../utils/speech";
 import { normalizeCorrectSoundId, normalizeWrongSoundId } from "../utils/answerSounds";
+import { SYNC_APPLIED_EVENT } from "../services/syncService";
 
 const SettingsContext = createContext(null);
 
@@ -39,6 +40,17 @@ export function SettingsProvider({ children }) {
         window.speechSynthesis.onvoiceschanged = null;
       }
     };
+  }, []);
+
+  useEffect(() => {
+    function onSyncApplied() {
+      const next = loadSettings();
+      setSettings(next);
+      document.documentElement.dataset.theme = next.theme;
+      document.documentElement.dataset.exam = next.appMode ?? "toefl";
+    }
+    window.addEventListener(SYNC_APPLIED_EVENT, onSyncApplied);
+    return () => window.removeEventListener(SYNC_APPLIED_EVENT, onSyncApplied);
   }, []);
 
   const updateSettings = useCallback((patch) => {

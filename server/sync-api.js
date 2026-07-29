@@ -2,6 +2,7 @@ import {
   formatPairingCode,
   generatePairingCode,
   isValidPairingCode,
+  mergeSyncBundles,
   normalizePairingCode,
   SYNC_VERSION,
 } from "../src/shared/sync.js";
@@ -34,17 +35,28 @@ export async function handleSyncPush(body = {}) {
     code = normalizePairingCode(generatePairingCode());
   }
 
-  const expiresAt = Date.now() + 7 * 24 * 3600 * 1000;
+  let mergedPayload = payload;
+  try {
+    const { entry } = await loadSyncEntry(code);
+    if (entry?.payload) {
+      mergedPayload = mergeSyncBundles(entry.payload, payload);
+    }
+  } catch {
+    // 首次上传该配对码，直接使用本机数据
+  }
+
+  const updatedAt = Date.now();
+  const expiresAt = updatedAt + 7 * 24 * 3600 * 1000;
   const { backend } = await saveSyncEntry(code, {
-    payload,
+    payload: mergedPayload,
     expiresAt,
-    updatedAt: Date.now(),
+    updatedAt,
   });
 
   return {
     code: formatPairingCode(code),
     expiresAt,
-    updatedAt: Date.now(),
+    updatedAt,
     backend,
   };
 }
