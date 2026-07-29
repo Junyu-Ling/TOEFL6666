@@ -1,40 +1,15 @@
 import { useState, useEffect, useMemo, useRef } from "react";
 import { useSettings } from "../context/SettingsContext";
+import { useAuth } from "../context/AuthContext";
 import { stopGameKeyBubble } from "../utils/appKeyboard";
-import { formatPairingCode, getSyncSummary, normalizePairingCode } from "../shared/sync";
-import { pushSyncData, syncService, SYNC_STATUS_EVENT } from "../services/syncService";
+import { getSyncSummary } from "../shared/sync";
+import { syncService, SYNC_STATUS_EVENT } from "../services/syncService";
 import {
   CORRECT_SOUND_OPTIONS,
   WRONG_SOUND_OPTIONS,
   previewAnswerSound,
 } from "../utils/answerSounds";
 import ExamScoreSection from "./ExamScoreSection";
-
-const SYNC_SESSION_KEY = "toefl666_last_sync";
-
-function readLastSync() {
-  try {
-    return JSON.parse(sessionStorage.getItem(SYNC_SESSION_KEY) || "null");
-  } catch {
-    return null;
-  }
-}
-
-function writeLastSync({ code, host, backend }) {
-  sessionStorage.setItem(
-    SYNC_SESSION_KEY,
-    JSON.stringify({ code, host, backend, at: Date.now() })
-  );
-}
-
-async function copyText(text) {
-  try {
-    await navigator.clipboard.writeText(text);
-    return true;
-  } catch {
-    return false;
-  }
-}
 
 function clampDelayInput(value) {
   const n = Number(String(value).trim());
@@ -60,17 +35,13 @@ export default function SettingsPanel() {
     setAnswerSoundCorrect,
     setAnswerSoundWrong,
   } = useSettings();
+  const { user, loading: authLoading, isConfigured, signInWithGoogle, signOut } = useAuth();
 
   const [delayDraft, setDelayDraft] = useState(String(settings.autoAdvanceDelaySec));
-  const [pullCode, setPullCode] = useState("");
-  const [uploadedCode, setUploadedCode] = useState("");
-  const [uploadedHost, setUploadedHost] = useState("");
   const [syncBusy, setSyncBusy] = useState(false);
   const [syncMessage, setSyncMessage] = useState("");
   const [syncError, setSyncError] = useState("");
-  const [pairingCode, setPairingCode] = useState(() => syncService.getPairingCode());
   const [syncStatus, setSyncStatus] = useState(() => syncService.getStatus());
-  const isPaired = Boolean(pairingCode);
   const panelRef = useRef(null);
 
   const syncSummary = useMemo(() => getSyncSummary(), [settingsOpen, syncStatus.state]);
@@ -78,32 +49,24 @@ export default function SettingsPanel() {
   useEffect(() => {
     function onStatus(event) {
       setSyncStatus(event.detail || syncService.getStatus());
-      const code = event.detail?.code || syncService.getPairingCode();
-      if (code) setPairingCode(code);
     }
     window.addEventListener(SYNC_STATUS_EVENT, onStatus);
     return () => window.removeEventListener(SYNC_STATUS_EVENT, onStatus);
   }, []);
 
   useEffect(() => {
-    if (!settingsOpen || !panelRef.current) return;
-    panelRef.current.focus({ preventScroll: true });
-  }, [settingsOpen]);
-
-  useEffect(() => {
     if (settingsOpen) {
       setDelayDraft(String(settings.autoAdvanceDelaySec));
       setSyncError("");
-      setPullCode("");
-      setPairingCode(syncService.getPairingCode());
+      setSyncMessage("");
       setSyncStatus(syncService.getStatus());
-      const last = readLastSync();
-      if (last?.code) {
-        setUploadedCode(last.code);
-        setUploadedHost(last.host || "");
-      }
     }
   }, [settings.autoAdvanceDelaySec, settingsOpen]);
+
+  useEffect(() => {
+    if (!settingsOpen || !panelRef.current) return;
+    panelRef.current.focus({ preventScroll: true });
+  }, [settingsOpen]);
 
   function commitDelayDraft() {
     const trimmed = delayDraft.trim();
@@ -122,99 +85,34 @@ export default function SettingsPanel() {
     }
   }
 
-  async function handleUploadSync() {
+  async function handleGoogleSignIn() {
     setSyncBusy(true);
     setSyncError("");
     setSyncMessage("");
     try {
-      const result = await pushSyncData();
-      const host = window.location.host;
-      setUploadedCode(result.code);
-      setUploadedHost(host);
-      writeLastSync({ code: result.code, host, backend: result.backend });
-      await syncService.establishHost(result.code, {
-        push: false,
-        remoteUpdatedAt: result.updatedAt || Date.now(),
-      });
-      setPairingCode(formatPairingCode(result.code));
-      const expires = new Date(result.expiresAt).toLocaleString("zh-CN");
-      const copied = await copyText(result.code);
-      if (result.backend === "memory") {
-        setSyncMessage(
-          `配对码 ${result.code}（仅 ${host} 开发环境有效）· 至 ${expires}${
-            copied ? " · 已复制" : ""
-          } · 本机已开启实时同步`
-        );
-      } else {
-        setSyncMessage(
-          `配对码 ${result.code} · 至 ${expires}${copied ? " · 已复制" : ""} · 另一台设备输入此码即可双向实时同步`
-        );
-      }
+      await signInWithGoogle();
     } catch (err) {
-      setSyncError(err.message || "上传失败，请稍后重试");
+      setSyncError(err.message || "Google 登录失败");
     } finally {
       setSyncBusy(false);
     }
   }
 
-  async function handleLinkSync() {
-    const code = normalizePairingCode(pullCode);
-    if (code.length !== 8) {
-      setSyncError("请输入 8 位配对码");
-      return;
-    }
-
+  async function handleSignOut() {
     setSyncBusy(true);
     setSyncError("");
     setSyncMessage("");
     try {
-      const merged = await syncService.linkDevice(code);
-      setPairingCode(formatPairingCode(code));
-      setPullCode("");
-      setSyncMessage(
-        merged
-          ? "已与另一台设备合并进度，之后将自动双向同步"
-          : "已连接配对码，两台设备进度已统一，之后将自动双向同步"
-      );
+      await signOut();
+      setSyncMessage("已退出登录，本机进度仍保留在本地");
     } catch (err) {
-      const host = window.location.host;
-      const last = readLastSync();
-      const hints = [
-        "请确认源设备已点击「生成配对码」",
-        `两台设备须打开同一网址（当前 ${host}）`,
-        "请核对配对码是否抄写正确",
-      ];
-      if (last?.host && last.host !== host) {
-        hints.unshift(`本机曾从 ${last.host} 上传，与当前 ${host} 不一致`);
-      }
-      setSyncError(`${err.message || "连接失败"}。${hints.join("；")}。`);
+      setSyncError(err.message || "退出登录失败");
     } finally {
       setSyncBusy(false);
     }
   }
 
-  function handleUnlink() {
-    if (
-      !window.confirm(
-        "解除配对后，本机将不再与另一台设备自动同步进度。另一台设备不受影响，如需停止同步也请在那一台解除配对。"
-      )
-    ) {
-      return;
-    }
-    syncService.unlink();
-    setPairingCode("");
-    setPullCode("");
-    setSyncMessage("已解除配对，本机不再自动同步");
-    setSyncError("");
-  }
-
-  async function handleCopyCode() {
-    const code = pairingCode || uploadedCode;
-    if (!code) return;
-    const ok = await copyText(code);
-    setSyncMessage(ok ? `已复制 ${code}` : "复制失败，请手动复制");
-    setSyncError("");
-  }
+  const accountLabel = user?.email || syncStatus.email || "";
 
   if (!settingsOpen) return null;
 
@@ -433,94 +331,49 @@ export default function SettingsPanel() {
           </summary>
           <div className="settings-group__body">
             <p className="settings-hint settings-hint--compact">
-              电脑与手机须打开同一网址（如 toefl-6666.vercel.app）。输入配对码后会先合并两边进度，之后自动双向同步；只有点击「解除配对」才会停止本机同步。
+              使用 Google 账号登录后，学习进度会保存到云端并随账号同步。若本机已有进度，首次登录会自动合并到该账号。
             </p>
 
-            {isPaired ? (
+            {!isConfigured ? (
+              <p className="settings-status settings-status--error">
+                未配置 Google 登录（需在环境变量中设置 Supabase）。
+              </p>
+            ) : user ? (
               <div className="settings-sync-card settings-sync-card--active">
                 <div className="settings-sync-card__head">
-                  <strong>实时同步中</strong>
-                  <span>{syncStatus.message || `配对码 ${pairingCode}`}</span>
+                  <strong>已登录</strong>
+                  <span>{syncStatus.message || accountLabel}</span>
                 </div>
                 <p className="settings-sync-code">
-                  <span className="sync-code-badge">{pairingCode}</span>
-                  <button
-                    type="button"
-                    className="settings-action-btn settings-action-btn--inline"
-                    onClick={handleCopyCode}
-                  >
-                    复制
-                  </button>
+                  <span className="sync-code-badge">{accountLabel}</span>
                 </p>
                 <p className="settings-hint settings-hint--compact">
-                  本机与另一台设备已绑定。任意一端学习进度会自动合并上传，无需手动刷新。
+                  任意设备用同一 Google 账号登录即可共享进度，无需配对码。
                 </p>
                 <button
                   type="button"
                   className="settings-action-btn settings-action-btn--block"
-                  onClick={handleUnlink}
-                  disabled={syncBusy}
+                  onClick={handleSignOut}
+                  disabled={syncBusy || authLoading}
                 >
-                  解除配对
+                  退出登录
                 </button>
               </div>
             ) : (
-              <>
-            <div className="settings-sync-card">
-              <div className="settings-sync-card__head">
-                <strong>生成配对码</strong>
-                <span>在本机上传进度并开启实时同步</span>
+              <div className="settings-sync-card">
+                <div className="settings-sync-card__head">
+                  <strong>Google 登录</strong>
+                  <span>登录后进度随账号走</span>
+                </div>
+                <button
+                  type="button"
+                  className="settings-action-btn settings-action-btn--primary settings-action-btn--block"
+                  onClick={handleGoogleSignIn}
+                  disabled={syncBusy || authLoading}
+                >
+                  {syncBusy || authLoading ? "处理中…" : "使用 Google 登录"}
+                </button>
               </div>
-              <button
-                type="button"
-                className="settings-action-btn settings-action-btn--primary settings-action-btn--block"
-                onClick={handleUploadSync}
-                disabled={syncBusy}
-              >
-                {syncBusy ? "处理中…" : "生成配对码"}
-              </button>
-              {uploadedCode ? (
-                <p className="settings-sync-code">
-                  <span className="sync-code-badge">{uploadedCode}</span>
-                  <button
-                    type="button"
-                    className="settings-action-btn settings-action-btn--inline"
-                    onClick={handleCopyCode}
-                  >
-                    复制
-                  </button>
-                </p>
-              ) : null}
-              {uploadedHost ? (
-                <p className="settings-hint settings-hint--compact">上次上传站点：{uploadedHost}</p>
-              ) : null}
-            </div>
-
-            <div className="settings-sync-card">
-              <div className="settings-sync-card__head">
-                <strong>连接配对码</strong>
-                <span>输入另一台设备的配对码，先合并进度再持续同步</span>
-              </div>
-              <input
-                className="settings-sync-input"
-                type="text"
-                value={pullCode}
-                onChange={(e) => setPullCode(formatPairingCode(e.target.value))}
-                placeholder="XXXX-XXXX"
-                autoComplete="off"
-                spellCheck={false}
-                maxLength={9}
-              />
-              <button
-                type="button"
-                className="settings-action-btn settings-action-btn--block"
-                onClick={handleLinkSync}
-                disabled={syncBusy}
-              >
-                输入配对码并实时同步
-              </button>
-            </div>
-              </>
             )}
 
             {syncMessage && <p className="settings-status settings-status--ok">{syncMessage}</p>}

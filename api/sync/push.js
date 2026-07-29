@@ -1,3 +1,4 @@
+import { authenticateRequest } from "../../server/auth.js";
 import { handleSyncPush } from "../../server/sync-api.js";
 
 function sendJson(res, status, payload) {
@@ -20,7 +21,8 @@ export default async function handler(req, res) {
   }
 
   try {
-    const result = await handleSyncPush(parseBody(req));
+    const user = await authenticateRequest(req);
+    const result = await handleSyncPush(parseBody(req), { userId: user.id });
     sendJson(res, 200, result);
   } catch (err) {
     sendJson(res, err.status || 500, { error: err.message || "服务器错误" });

@@ -1,16 +1,15 @@
 import {
-  clearPairingSession,
+  clearLegacyPairingSession,
+  clearSyncMeta,
   exportLocalData,
-  formatPairingCode,
   importLocalData,
-  loadPairingSession,
+  loadSyncMeta,
   mergeSyncBundles,
-  normalizePairingCode,
-  savePairingSession,
+  saveSyncMeta,
   SYNC_EXCLUDED_KEYS,
   SYNC_PREFIX,
 } from "../shared/sync";
-import { pullSyncPayload, pushSyncPayload } from "./syncApi";
+import { isCloudEmptyError, pullSyncPayload, pushSyncPayload } from "./syncApi";
 
 export const SYNC_APPLIED_EVENT = "toefl666-sync-applied";
 export const SYNC_STATUS_EVENT = "toefl666-sync-status";
@@ -25,6 +24,9 @@ let suppressDirty = false;
 let syncing = false;
 let started = false;
 let storageHookInstalled = false;
+let accessToken = "";
+let userId = "";
+let userEmail = "";
 let lastStatus = { state: "idle", message: "" };
 
 function emitStatus(patch) {
@@ -36,20 +38,12 @@ function emitApplied() {
   window.dispatchEvent(new CustomEvent(SYNC_APPLIED_EVENT));
 }
 
-function getSession() {
-  return loadPairingSession();
-}
-
-function updateSession(patch) {
-  const current = getSession();
-  if (!current) return null;
-  const next = { ...current, ...patch };
-  savePairingSession(next);
-  return next;
+function isSignedIn() {
+  return Boolean(accessToken && userId);
 }
 
 function schedulePush() {
-  if (!getSession()) return;
+  if (!isSignedIn()) return;
   dirty = true;
   if (pushTimer) clearTimeout(pushTimer);
   pushTimer = setTimeout(() => {
@@ -77,11 +71,11 @@ function installStorageHook() {
 }
 
 async function applyRemotePayload(result) {
-  const session = getSession();
-  if (!session) return false;
+  if (!isSignedIn()) return false;
 
+  const meta = loadSyncMeta();
   const remoteUpdatedAt = result.updatedAt || result.payload?.exportedAt || 0;
-  if (remoteUpdatedAt <= session.lastRemoteUpdatedAt) return false;
+  if (remoteUpdatedAt <= meta.lastRemoteUpdatedAt) return false;
 
   const localBundle = exportLocalData();
   const merged = mergeSyncBundles(localBundle, result.payload);
@@ -91,30 +85,37 @@ async function applyRemotePayload(result) {
   importLocalData(merged);
   suppressDirty = false;
 
-  updateSession({ lastRemoteUpdatedAt: remoteUpdatedAt });
+  saveSyncMeta({ userId, lastRemoteUpdatedAt: remoteUpdatedAt });
   if (changed) schedulePush();
   return changed;
 }
 
 async function pullAndMerge({ throwOnError = false } = {}) {
-  const session = getSession();
-  if (!session || syncing) return false;
+  if (!isSignedIn() || syncing) return false;
 
   syncing = true;
-  emitStatus({ state: "pulling", message: "正在同步云端进度…" });
+  emitStatus({ state: "pulling", message: "正在同步云端进度…", email: userEmail });
   try {
-    const result = await pullSyncPayload(session.code);
+    const result = await pullSyncPayload(accessToken);
     const changed = await applyRemotePayload(result);
 
     emitStatus({
-      state: "paired",
-      message: `实时同步中 · ${formatPairingCode(session.code)}`,
-      code: formatPairingCode(session.code),
+      state: "signed_in",
+      message: `进度已同步 · ${userEmail}`,
+      email: userEmail,
     });
     if (changed) emitApplied();
     return changed;
   } catch (err) {
-    emitStatus({ state: "error", message: err.message || "同步失败" });
+    if (isCloudEmptyError(err)) {
+      emitStatus({
+        state: "signed_in",
+        message: `已登录 · ${userEmail}`,
+        email: userEmail,
+      });
+      return false;
+    }
+    emitStatus({ state: "error", message: err.message || "同步失败", email: userEmail });
     if (throwOnError) throw err;
     return false;
   } finally {
@@ -122,42 +123,38 @@ async function pullAndMerge({ throwOnError = false } = {}) {
   }
 }
 
-async function pushSyncData(code) {
-  const payload = exportLocalData();
-  return pushSyncPayload(payload, code);
-}
-
 async function pushNow() {
-  const session = getSession();
-  if (!session || syncing) return;
+  if (!isSignedIn() || syncing) return;
 
   syncing = true;
-  emitStatus({ state: "pushing", message: "正在上传进度…" });
+  emitStatus({ state: "pushing", message: "正在上传进度…", email: userEmail });
   try {
     try {
-      const result = await pullSyncPayload(session.code);
+      const result = await pullSyncPayload(accessToken);
       const changed = await applyRemotePayload(result);
       if (changed) emitApplied();
-    } catch {
-      // 上传前拉取失败时仍尝试推送本机进度
+    } catch (err) {
+      if (!isCloudEmptyError(err)) {
+        // 上传前拉取失败时仍尝试推送本机进度
+      }
     }
 
-    const result = await pushSyncData(session.code);
-    updateSession({
-      lastPushedAt: Date.now(),
+    const result = await pushSyncPayload(exportLocalData(), accessToken);
+    saveSyncMeta({
+      userId,
       lastRemoteUpdatedAt: result.updatedAt || Date.now(),
     });
     dirty = false;
     emitStatus({
-      state: "paired",
-      message: `实时同步中 · ${formatPairingCode(session.code)}`,
-      code: formatPairingCode(session.code),
+      state: "signed_in",
+      message: `进度已同步 · ${userEmail}`,
+      email: userEmail,
     });
   } catch (err) {
     emitStatus({
       state: "error",
       message: err.message || "上传失败，将自动重试",
-      code: formatPairingCode(session.code),
+      email: userEmail,
     });
   } finally {
     syncing = false;
@@ -184,75 +181,101 @@ function stopPolling() {
   }
 }
 
-export { pushSyncData };
+async function mergeLocalIntoAccount() {
+  emitStatus({ state: "syncing", message: "正在将本机进度合并到账号…", email: userEmail });
+
+  let cloudPayload = null;
+  let remoteUpdatedAt = 0;
+  try {
+    const result = await pullSyncPayload(accessToken);
+    cloudPayload = result.payload;
+    remoteUpdatedAt = result.updatedAt || result.payload?.exportedAt || 0;
+  } catch (err) {
+    if (!isCloudEmptyError(err)) throw err;
+  }
+
+  const localBundle = exportLocalData();
+  const merged = cloudPayload ? mergeSyncBundles(localBundle, cloudPayload) : localBundle;
+  const changed =
+    !cloudPayload || JSON.stringify(merged.data) !== JSON.stringify(localBundle.data);
+
+  suppressDirty = true;
+  importLocalData(merged);
+  suppressDirty = false;
+
+  if (changed) emitApplied();
+
+  await pushSyncPayload(merged, accessToken);
+  saveSyncMeta({
+    userId,
+    lastRemoteUpdatedAt: Math.max(remoteUpdatedAt, Date.now()),
+  });
+  dirty = false;
+}
 
 export const syncService = {
   getStatus() {
     return lastStatus;
   },
 
-  getPairingCode() {
-    const session = getSession();
-    return session ? formatPairingCode(session.code) : "";
-  },
-
-  isPaired() {
-    return Boolean(getSession());
+  isSignedIn() {
+    return isSignedIn();
   },
 
   markDirty() {
-    if (suppressDirty || !getSession()) return;
+    if (suppressDirty || !isSignedIn()) return;
     schedulePush();
   },
 
-  async establishHost(code, { push = true, remoteUpdatedAt = 0 } = {}) {
-    const normalized = normalizePairingCode(code);
-    savePairingSession({
-      code: normalized,
-      role: "host",
-      linkedAt: Date.now(),
-      lastPushedAt: push ? 0 : Date.now(),
-      lastRemoteUpdatedAt: remoteUpdatedAt || 0,
-    });
-    emitStatus({
-      state: "paired",
-      message: `实时同步中 · ${formatPairingCode(normalized)}`,
-      code: formatPairingCode(normalized),
-    });
-    startPolling();
-    if (push) {
-      await pushNow();
+  updateAccessToken(session) {
+    if (!session?.access_token || !session.user?.id) return;
+    if (userId && session.user.id !== userId) return;
+    accessToken = session.access_token;
+    userId = session.user.id;
+    userEmail = session.user.email || session.user.user_metadata?.full_name || userEmail;
+  },
+
+  async bindUser(session, { mergeLocal = false } = {}) {
+    if (!session?.user?.id || !session.access_token) return;
+
+    const nextUserId = session.user.id;
+    const nextEmail =
+      session.user.email || session.user.user_metadata?.full_name || "Google 账号";
+    const switchingAccount = userId && userId !== nextUserId;
+
+    accessToken = session.access_token;
+    userId = nextUserId;
+    userEmail = nextEmail;
+    clearLegacyPairingSession();
+
+    if (switchingAccount || mergeLocal) {
+      saveSyncMeta({ userId, lastRemoteUpdatedAt: 0 });
+      await mergeLocalIntoAccount();
     } else {
-      await pullAndMerge();
+      const meta = loadSyncMeta();
+      if (meta.userId !== userId) {
+        saveSyncMeta({ userId, lastRemoteUpdatedAt: 0 });
+        await mergeLocalIntoAccount();
+      }
     }
-  },
 
-  async linkDevice(code) {
-    const normalized = normalizePairingCode(code);
-    savePairingSession({
-      code: normalized,
-      role: "linked",
-      linkedAt: Date.now(),
-      lastPushedAt: 0,
-      lastRemoteUpdatedAt: 0,
+    startPolling();
+    emitStatus({
+      state: "signed_in",
+      message: `已登录 · ${userEmail}`,
+      email: userEmail,
     });
-
-    try {
-      await pullAndMerge({ throwOnError: true });
-      await pushNow();
-      startPolling();
-      return true;
-    } catch (err) {
-      clearPairingSession();
-      throw err;
-    }
+    await pullAndMerge();
   },
 
-  unlink() {
+  unbindUser() {
     dirty = false;
     stopPolling();
-    clearPairingSession();
-    emitStatus({ state: "idle", message: "", code: "" });
+    accessToken = "";
+    userId = "";
+    userEmail = "";
+    clearSyncMeta();
+    emitStatus({ state: "idle", message: "", email: "" });
   },
 
   start() {
@@ -260,22 +283,11 @@ export const syncService = {
     started = true;
     installStorageHook();
 
-    const session = getSession();
-    if (session) {
-      emitStatus({
-        state: "paired",
-        message: `实时同步中 · ${formatPairingCode(session.code)}`,
-        code: formatPairingCode(session.code),
-      });
-      startPolling();
-      pullAndMerge();
-    }
-
     const onFocus = () => {
-      if (getSession()) pullAndMerge();
+      if (isSignedIn()) pullAndMerge();
     };
     const onVisibility = () => {
-      if (document.visibilityState === "visible" && getSession()) pullAndMerge();
+      if (document.visibilityState === "visible" && isSignedIn()) pullAndMerge();
     };
 
     window.addEventListener("focus", onFocus);
