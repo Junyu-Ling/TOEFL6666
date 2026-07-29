@@ -7,293 +7,596 @@
   },
   "words": [
     {
-      "word": "drawback",
+      "word": "proliferation",
       "definitions": [
-        "n. 缺陷"
+        "n. 激增"
       ]
     },
     {
-      "word": "blur",
+      "word": "blink",
       "definitions": [
-        "v. 模糊",
-        "n. 模糊不清的事物"
+        "v./n. 闪烁；眨眼"
       ]
     },
     {
-      "word": "landmark",
+      "word": "stove",
       "definitions": [
-        "n. 里程碑；地标"
+        "n. 火炉，灶台"
       ]
     },
     {
-      "word": "patron",
+      "word": "apparatus",
       "definitions": [
-        "n. 资助人；顾客"
+        "n. 设备，仪器"
       ]
     },
     {
-      "word": "cargo",
+      "word": "empower",
       "definitions": [
-        "n. 货物，船货"
+        "v. 授权"
       ]
     },
     {
-      "word": "sparkle",
+      "word": "void",
       "definitions": [
-        "v./n. 发光，闪耀；表现抢眼"
+        "adj. 空的；无效的"
       ]
     },
     {
-      "word": "absurd",
+      "word": "unveil",
       "definitions": [
-        "adj. 荒唐的"
+        "v. 揭幕，揭露"
       ]
     },
     {
-      "word": "bulb",
+      "word": "nurture",
       "definitions": [
-        "n. 电灯泡；球茎"
+        "v. 培育，养育"
       ]
     },
     {
-      "word": "successive",
+      "word": "diplomacy",
       "definitions": [
-        "adj. 连续的"
+        "n. 外交"
       ]
     },
     {
-      "word": "hatch",
+      "word": "census",
       "definitions": [
-        "v. 孵化，破壳而出"
+        "n. 人口普查"
       ]
     },
     {
-      "word": "rib",
+      "word": "ditch",
       "definitions": [
-        "n. 肋骨"
+        "v. 抛弃",
+        "n. 沟"
       ]
     },
     {
-      "word": "sore",
+      "word": "eternal",
       "definitions": [
-        "adj. 感到疼痛的",
-        "n. 疮，痛处"
+        "adj. 永恒的"
       ]
     },
     {
-      "word": "optimism",
+      "word": "ample",
       "definitions": [
-        "n. 乐观"
+        "adj. 丰富的；宽敞的"
       ]
     },
     {
-      "word": "sway",
+      "word": "formidable",
       "definitions": [
-        "v./n. 摇晃，摆动"
+        "adj. 强大的；可怕的"
       ]
     },
     {
-      "word": "choke",
+      "word": "solitary",
       "definitions": [
-        "v. 窒息；阻塞"
+        "adj. 孤独的"
       ]
     },
     {
-      "word": "fertilizer",
+      "word": "parasite",
       "definitions": [
-        "n. 肥料"
+        "n. 寄生虫"
       ]
     },
     {
-      "word": "crisp",
+      "word": "definitive",
       "definitions": [
-        "adj. 松脆的",
-        "n. 炸薯片"
+        "adj. 决定性的；最佳的"
       ]
     },
     {
-      "word": "feasible",
+      "word": "stereo",
       "definitions": [
-        "adj. 可行的"
+        "n. 立体声(音响)"
       ]
     },
     {
-      "word": "envy",
+      "word": "enlist",
       "definitions": [
-        "n./v. 羡慕，嫉妒"
+        "v. (使)入伍；征募"
       ]
     },
     {
-      "word": "buffer",
+      "word": "commute",
       "definitions": [
-        "v. 缓冲",
-        "n. 缓冲器"
+        "v. 通勤；代替，交换"
       ]
     },
     {
-      "word": "indulge",
+      "word": "autonomous",
       "definitions": [
-        "v. 纵容，放纵"
+        "adj. 自主的"
       ]
     },
     {
-      "word": "plow",
+      "word": "prototype",
       "definitions": [
-        "n. 犁",
-        "v. 耕地"
+        "n. 原型，样板"
       ]
     },
     {
-      "word": "chorus",
+      "word": "transit",
       "definitions": [
-        "n. 合唱队"
+        "n. 运输"
       ]
     },
     {
-      "word": "cushion",
+      "word": "excerpt",
       "definitions": [
-        "n. 垫子",
-        "v. 保护，缓和冲击"
+        "n./v. 摘录"
       ]
     },
     {
-      "word": "revival",
+      "word": "erupt",
       "definitions": [
-        "n. 复活，再生"
+        "v. 爆发"
       ]
     },
     {
-      "word": "wrestle",
+      "word": "collision",
       "definitions": [
-        "v. 扭打，搏斗"
+        "n. 碰撞；冲突"
       ]
     },
     {
-      "word": "expire",
+      "word": "liberate",
       "definitions": [
-        "v. 到期，终止"
+        "v. 释放"
       ]
     },
     {
-      "word": "excursion",
+      "word": "applaud",
       "definitions": [
-        "n. 远足"
+        "v. 鼓掌，喝彩；赞扬"
       ]
     },
     {
-      "word": "obsession",
+      "word": "contaminate",
       "definitions": [
-        "n. 痴迷"
+        "v. 污染"
       ]
     },
     {
-      "word": "disastrous",
+      "word": "harness",
       "definitions": [
-        "adj. 灾难性的"
+        "v. 利用",
+        "n. 马具，保护带"
       ]
     },
     {
-      "word": "tablet",
+      "word": "defy",
       "definitions": [
-        "n. 刻写板；平板电脑；药片"
+        "v. 反抗"
       ]
     },
     {
-      "word": "ceramic",
+      "word": "nun",
       "definitions": [
-        "n. 陶瓷",
-        "adj. 陶瓷的"
+        "n. 修女"
       ]
     },
     {
-      "word": "civic",
+      "word": "gasp",
       "definitions": [
-        "adj. 城市的，市民的"
+        "v. 喘气"
       ]
     },
     {
-      "word": "supreme",
+      "word": "descendant",
       "definitions": [
-        "adj. 至高无上的，卓越的"
+        "n. 后裔，子孙"
       ]
     },
     {
-      "word": "insignificant",
+      "word": "narrator",
       "definitions": [
-        "adj. 微不足道的"
+        "n. 叙述者"
       ]
     },
     {
-      "word": "scrape",
+      "word": "dinosaur",
       "definitions": [
-        "n./v. 刮擦"
+        "n. 恐龙"
       ]
     },
     {
-      "word": "denounce",
+      "word": "expel",
       "definitions": [
-        "v. 谴责"
+        "v. 驱逐"
       ]
     },
     {
-      "word": "vacant",
+      "word": "duplicate",
       "definitions": [
-        "adj. 空着的，空缺的；心不在焉的"
+        "v./n. 复制(品)"
       ]
     },
     {
-      "word": "volatile",
+      "word": "pedestrian",
       "definitions": [
-        "adj. 多变的；易挥发的"
+        "n. 行人",
+        "adj. 平庸乏味的"
       ]
     },
     {
-      "word": "elicit",
+      "word": "submarine",
       "definitions": [
-        "v. 引出"
+        "adj. 海底的",
+        "n. 潜水艇"
       ]
     },
     {
-      "word": "recount",
+      "word": "foam",
       "definitions": [
-        "v. 详细叙述"
+        "n. 泡沫",
+        "v. 起泡沫"
       ]
     },
     {
-      "word": "prone",
+      "word": "theatrical",
       "definitions": [
-        "adj. 倾向于；俯卧的"
+        "adj. 戏剧性的，夸张的"
       ]
     },
     {
-      "word": "mansion",
+      "word": "erode",
       "definitions": [
-        "n. 宅第"
+        "v. 腐蚀，侵蚀"
       ]
     },
     {
-      "word": "terrain",
+      "word": "gravel",
       "definitions": [
-        "n. 地形"
+        "n. 碎石，砂砾"
       ]
     },
     {
-      "word": "pirate",
+      "word": "stark",
       "definitions": [
-        "n. 海盗",
-        "v./n. 盗版"
+        "adj. 完全的；荒凉的"
       ]
     },
     {
-      "word": "intensify",
+      "word": "mimic",
       "definitions": [
-        "v. 加强"
+        "v. 模仿"
       ]
     },
     {
-      "word": "notorious",
+      "word": "dismantle",
       "definitions": [
-        "adj. 臭名昭著的"
+        "v. 拆除"
+      ]
+    },
+    {
+      "word": "thriller",
+      "definitions": [
+        "n. 使人毛骨悚然的东西(惊悚作品)"
+      ]
+    },
+    {
+      "word": "veil",
+      "definitions": [
+        "n. 面纱",
+        "v. 遮掩，掩饰"
+      ]
+    },
+    {
+      "word": "enlighten",
+      "definitions": [
+        "v. 启迪；阐明"
+      ]
+    },
+    {
+      "word": "cripple",
+      "definitions": [
+        "v. 削弱；使残废",
+        "n. 瘸子"
+      ]
+    },
+    {
+      "word": "cramp",
+      "definitions": [
+        "n. 痉挛",
+        "v. 束缚，限制"
+      ]
+    },
+    {
+      "word": "fume",
+      "definitions": [
+        "n. 气体"
+      ]
+    },
+    {
+      "word": "potent",
+      "definitions": [
+        "adj. 强有力的"
+      ]
+    },
+    {
+      "word": "swamp",
+      "definitions": [
+        "n. 沼泽",
+        "v. 使陷入(困境等)"
+      ]
+    },
+    {
+      "word": "bleak",
+      "definitions": [
+        "adj. 阴冷的；荒凉的；黯淡的，无希望的"
+      ]
+    },
+    {
+      "word": "odor",
+      "definitions": [
+        "n. 气味"
+      ]
+    },
+    {
+      "word": "overtake",
+      "definitions": [
+        "v. 超过"
+      ]
+    },
+    {
+      "word": "freight",
+      "definitions": [
+        "n. 货物"
+      ]
+    },
+    {
+      "word": "archaeologist",
+      "definitions": [
+        "n. 考古学家"
+      ]
+    },
+    {
+      "word": "compartment",
+      "definitions": [
+        "n. 车厢；隔间"
+      ]
+    },
+    {
+      "word": "trademark",
+      "definitions": [
+        "n. 商标；特征"
+      ]
+    },
+    {
+      "word": "blossom",
+      "definitions": [
+        "v. 开花，兴旺"
+      ]
+    },
+    {
+      "word": "stationary",
+      "definitions": [
+        "adj. 静止不动的"
+      ]
+    },
+    {
+      "word": "discern",
+      "definitions": [
+        "v. 辨别"
+      ]
+    },
+    {
+      "word": "moisture",
+      "definitions": [
+        "n. 水汽"
+      ]
+    },
+    {
+      "word": "prevalent",
+      "definitions": [
+        "adj. 流行的"
+      ]
+    },
+    {
+      "word": "fertile",
+      "definitions": [
+        "adj. 肥沃的"
+      ]
+    },
+    {
+      "word": "shepherd",
+      "definitions": [
+        "n. 牧羊人",
+        "v. 引领，指导"
+      ]
+    },
+    {
+      "word": "sovereign",
+      "definitions": [
+        "n. 君主",
+        "adj. 具有独立主权的"
+      ]
+    },
+    {
+      "word": "compress",
+      "definitions": [
+        "v. 压缩"
+      ]
+    },
+    {
+      "word": "tangle",
+      "definitions": [
+        "v./n. 缠结"
+      ]
+    },
+    {
+      "word": "congestion",
+      "definitions": [
+        "n. 堵塞"
+      ]
+    },
+    {
+      "word": "humiliate",
+      "definitions": [
+        "v. 羞辱"
+      ]
+    },
+    {
+      "word": "advent",
+      "definitions": [
+        "n. 到来，出现"
+      ]
+    },
+    {
+      "word": "comprehend",
+      "definitions": [
+        "v. 理解"
+      ]
+    },
+    {
+      "word": "prosperous",
+      "definitions": [
+        "adj. 繁荣的"
+      ]
+    },
+    {
+      "word": "bustle",
+      "definitions": [
+        "v./n. 喧闹，忙乱"
+      ]
+    },
+    {
+      "word": "resemblance",
+      "definitions": [
+        "n. 相似"
+      ]
+    },
+    {
+      "word": "intimacy",
+      "definitions": [
+        "n. 亲密"
+      ]
+    },
+    {
+      "word": "alienate",
+      "definitions": [
+        "v. 使疏远，离间"
+      ]
+    },
+    {
+      "word": "novelty",
+      "definitions": [
+        "n. 新奇，新颖"
+      ]
+    },
+    {
+      "word": "autobiography",
+      "definitions": [
+        "n. 自传"
+      ]
+    },
+    {
+      "word": "categorize",
+      "definitions": [
+        "v. 分类"
+      ]
+    },
+    {
+      "word": "frost",
+      "definitions": [
+        "n. 霜冻"
+      ]
+    },
+    {
+      "word": "equate",
+      "definitions": [
+        "v. 使等同，相同"
+      ]
+    },
+    {
+      "word": "recur",
+      "definitions": [
+        "v. 反复出现"
+      ]
+    },
+    {
+      "word": "dispense",
+      "definitions": [
+        "v. 分发"
+      ]
+    },
+    {
+      "word": "hamper",
+      "definitions": [
+        "v. 阻碍"
+      ]
+    },
+    {
+      "word": "crust",
+      "definitions": [
+        "n. 地壳；坚硬外皮"
+      ]
+    },
+    {
+      "word": "indifferent",
+      "definitions": [
+        "adj. 漠不关心的；很一般的"
+      ]
+    },
+    {
+      "word": "clan",
+      "definitions": [
+        "n. 宗族"
+      ]
+    },
+    {
+      "word": "coral",
+      "definitions": [
+        "n. 珊瑚"
+      ]
+    },
+    {
+      "word": "solidarity",
+      "definitions": [
+        "n. 团结一致"
+      ]
+    },
+    {
+      "word": "culminate",
+      "definitions": [
+        "v. 达到顶点"
+      ]
+    },
+    {
+      "word": "drastic",
+      "definitions": [
+        "adj. 剧烈的"
+      ]
+    },
+    {
+      "word": "extinction",
+      "definitions": [
+        "n. 灭绝"
       ]
     }
   ]

@@ -1,106 +1,161 @@
 === LEVEL 1 LIST 10 ===
-humiliate
-v. 羞辱
-advent
-n. 到来，出现
-comprehend
-v. 理解
-bustle
-v./n. 喧闹，忙乱
-prosperous
-adj. 繁荣的
-resemblance
-n. 相似
-intimacy
-n. 亲密
-alienate
-v. 使疏远，离间
-novelty
-n. 新奇，新颖
-autobiography
-n. 自传
-categorize
-v. 分类
-frost
-n. 霜冻
-equate
-v. 使等同
-recur
-v. 反复出现
-dispense
-v. 分发
-hamper
-v. 阻碍
-crust
-n. 地壳；坚硬外皮
-indifferent
-adj. 漠不关心的；一般的
-clan
-n. 宗族
-coral
-n. 珊瑚
-solidarity
-n. 团结一致
-culminate
-v. 达到顶点
-drastic
-adj. 剧烈的
-extinction
-n. 灭绝
-roam
-v. 闲逛，漫游
-apprentice
-n. 学徒
-inclination
-n. 倾向；斜度
-envision
-v. 想象
-coil
-v. 盘起
-n. 线圈
-shortcoming
-n. 缺点
-backdrop
-n. 背景
-withstand
-v. 承受住
-mute
-adj. 缄默的
-ornament
-n. 装饰品
-v. 装饰
-vibrant
-adj. 充满生机的
-hazardous
-adj. 有危险的
-earnest
-adj./n. 认真(的)
-vicinity
-n. 邻近，附近
-elusive
-adj. 难懂的；易逃避的
-simultaneous
-adj. 同时发生的
-frenzy
-n. 狂暴，狂乱
-inhale
-v. 吸入
-superiority
-n. 优越
-visualize
-v. 使形象化，预想
-tame
-adj. 驯服的
-granite
-n. 花岗岩
-evaporate
-v. 蒸发
-chore
-n. 家庭杂务；累人工作
-decease
-n. 死亡
-hinder
-v. 阻碍
-trickle
-v. 缓缓移动
-n. 细流
+feeble
+adj. 微弱的
+grandeur
+n. 壮丽，庄严，宏伟
+improbable
+adj. 不太可能的
+reptile
+n. 爬行动物
+emblem
+n. 象征，符号
+chronology
+n. 年代顺序
+candid
+adj. 率直的
+pristine
+adj. 原始的；崭新的
+fabricate
+v. 伪造；制造
+illiterate
+adj. 文盲的，不识字的
+n. 文盲，无知的人
+increment
+n. 增加
+leftover
+n. 残留物，剩饭剩菜
+adj. 残留的，吃剩的
+deficient
+adj. 不足的，缺乏的；有缺陷的
+intertwine
+v. 缠绕，缠结
+smother
+v. 使窒息，抑制
+brittle
+adj. 易碎的；脆弱的
+perplex
+v. 使困惑
+delineate
+v. 描绘
+terrestrial
+adj. 陆地的；类地的，地球的
+eject
+v. 喷射，弹出；驱逐
+alloy
+n. 合金
+sporadic
+adj. 零星的，偶发的
+alight
+adj. 点亮着的，点燃的
+v. 飞落，下来
+meticulous
+adj. 细致的，一丝不苟的
+dormant
+adj. 不活跃的
+tranquil
+adj. 平静的，安静的
+fidelity
+n. 忠诚；保真度，精确性
+scribe
+n. 抄写员
+v. 写下
+abdomen
+n. 腹部
+temperate
+adj. 温带的；适度的，有节制的
+colossal
+adj. 巨大的
+starch
+n. 淀粉
+deviate
+v. 偏离
+diverge
+v. 相异；分叉，偏离
+celestial
+adj. 天上的，天空的
+allusion
+n. 暗示
+repel
+v. 排斥，击退；使厌恶
+decipher
+v. 破译
+edible
+adj. 可食用的
+ancestry
+n. 祖先
+exemplary
+adj. 典范的，可仿效的
+beak
+n. 鸟喙
+divisive
+adj. 有分歧的
+avalanche
+n./v. 雪崩
+feudal
+adj. 封建制度的
+heterogeneous
+adj. 混杂的，由不同成分组成的
+impulsive
+adj. 冲动的
+glossary
+n. 术语，词汇表
+heyday
+n. 全盛时期
+intermittent
+adj. 间歇的，断断续续的
+helium
+n. 氦
+desolate
+adj. 荒凉的
+insightful
+adj. 有洞察力的
+crystallize
+v. 使结晶
+recital
+n. 朗诵会，演奏会
+decompose
+v. 分解，腐烂
+carbonate
+n. 碳酸盐
+downplay
+v. 不予重视，轻描淡写
+neurological
+adj. 神经学上的，神经病学的
+nibble
+v. 小口地吃，啃
+ferment
+v. (使)发酵
+v./n. (挑起)动乱
+cohesive
+adj. 凝聚的
+clam
+n. 蛤蜊
+decimal
+n. 小数
+luminous
+adj. 发光的，明亮的
+tyrant
+n. 暴君；专横的人
+proverb
+n. 谚语
+rudimentary
+adj. 早期的，原始的；基本的
+amphibian
+n. 两栖动物
+cello
+n. 大提琴
+flashy
+adj. 俗丽的
+unforeseen
+adj. 未预料到的
+drench
+v. 使湿透
+n. 滂沱大雨
+atlas
+n. 地图册
+percussion
+n. 打击乐器；碰撞，冲击
+exertion
+n. 费力，努力
+pictorial
+adj. 绘画的，图示的

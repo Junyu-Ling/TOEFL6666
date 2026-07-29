@@ -1,105 +1,199 @@
 === LEVEL 1 LIST 9 ===
-applaud
-v. 鼓掌，喝彩；赞扬
-contaminate
-v. 污染
-harness
-v. 利用
-n. 马具，保护带
-defy
-v. 反抗
-nun
-n. 修女
-gasp
-v. 喘气
-descendant
-n. 后裔，子孙
-narrator
-n. 叙述者
-dinosaur
-n. 恐龙
-expel
-v. 驱逐
-duplicate
-v./n. 复制(品)
-pedestrian
-n. 行人
-adj. 平庸乏味的
-submarine
-n. 潜水艇
-adj. 海底的
-foam
-n. 泡沫
-v. 起泡沫
-theatrical
-adj. 戏剧性的，夸张的
-erode
-v. 腐蚀，侵蚀
-gravel
-n. 碎石，砂砾
-stark
-adj. 完全的；荒凉的，朴实无华的
-mimic
-v. 模仿
-dismantle
-v. 拆除
-thriller
-n. 惊悚片，使人毛骨悚然的东西
-veil
-n. 面纱
-v. 遮掩，掩饰
-enlighten
-v. 启迪；阐明
-cripple
-v. 削弱；使跛，使残废
-n. 残疾人
-cramp
-n. 痉挛
-v. 束缚，限制
-fume
-n. 气体，烟雾
-spacious
-adj. 宽敞的
-potent
-adj. 强有力的
-swamp
-n. 沼泽
-v. 使陷入困境，淹没
-bleak
-adj. 阴冷的；荒凉的；黯淡的
-odor
-n. 气味
-freight
-n. 货物
-overtake
-v. 超过
-archaeologist
-n. 考古学家
-compartment
-n. 车厢；隔间
-trademark
-n. 商标；特征
-blossom
-v. 开花；兴旺
-stationary
-adj. 静止不动的
-discern
-v. 辨别
-moisture
-n. 水汽
-fertile
-adj. 肥沃的
-prevalent
-adj. 流行的
-shepherd
-n. 牧羊人
-v. 引领，指导
-sovereign
-n. 君主
-adj. 具有独立主权的
-compress
-v. 压缩
-tangle
-v./n. 缠结
-congestion
-n. 堵塞
+touchdown
+n. 着陆；触地得分
+latitude
+n. 纬度；(言论、行为等的)自由度
+longitude
+n. 经度
+hasten
+v. 加快；催促
+resonate
+v. 回响；引起共鸣；共振
+ridicule
+v./n. 嘲弄
+feminism
+n. 女权主义
+improvise
+v. 即兴创作、表演；临时凑合做
+perimeter
+n. 周长；边界，边缘
+courageous
+adj. 勇敢的
+transient
+adj. 短暂的；路过的
+myriad
+n. 无数，极大数量
+clog
+v./n. 阻塞
+fortify
+v. 增强；鼓励；设防加固
+overshadow
+v. 给…蒙上阴影；使…黯然失色；遮蔽
+visionary
+adj. 有远见的；幻想的，不切实际的
+additive
+adj. 增加的
+n. 添加剂
+plumb
+adj. 垂直的
+v. 探究；铺设水管
+insulate
+v. 绝缘，隔热
+agitate
+v. 使激动；煽动
+analogous
+adj. 类似的
+cosmic
+adj. 宇宙的；广阔的
+wane
+v. 衰退，减弱
+n. 月亏
+agreeable
+adj. 讨人喜欢的，怡人的
+repress
+v. 压抑，抑制
+pessimistic
+adj. 悲观的
+endow
+v. 捐赠；天生具有
+outspoken
+adj. 坦率的
+incompetent
+adj. 不胜任的，无能力的
+petal
+n. 花瓣
+bland
+adj. 乏味的；清淡的
+submerge
+v. 淹没
+toxin
+n. 毒素
+encyclopedia
+n. 百科全书
+numb
+adj. 失去知觉的，麻木的
+impoverish
+v. 使贫穷；使枯竭
+tidal
+adj. 潮汐的
+deplete
+v. 消耗
+gracious
+adj. 亲切的，仁慈的
+thaw
+v. 融化，融解
+culprit
+n. 犯人，罪犯
+explanatory
+adj. 起解释作用的
+vigor
+n. 活力，精力；气魄
+pivotal
+adj. 关键的
+sterile
+adj. 贫瘠的；不育的；无菌的
+constellation
+n. 星座；群集
+neutralize
+v. 使无效，抵消；中和
+overhear
+v. 无意中听到
+deduce
+v. 推断
+negligible
+adj. 可忽略不计的
+burrow
+n. 洞穴，藏身处
+sparse
+adj. 稀疏的
+dissolution
+n. 解除，解散；溶解
+cosmopolitan
+adj. 世界性的
+engender
+v. 使产生，造成
+converse
+adj. 相反的，逆向的
+v. 交谈，谈话
+formative
+adj. 有助发展的
+recourse
+n. 求助，手段
+rectangular
+adj. 长方形的
+furnace
+n. 火炉，熔炉
+disarm
+v. 缴…的械；消除(某人)的怒气
+hallmark
+n. 特点；(金银上的)标记证明
+devour
+v. 吞食，狼吞虎咽地吃；急切地读
+perish
+v. 死亡，枯萎
+asteroid
+n. 小行星
+feasibility
+n. 可行性
+prolific
+adj. 多产的
+carnival
+n. 狂欢节，嘉年华
+enrichment
+n. 丰富，充实；富集，浓缩
+intrude
+v. 闯入，侵入
+paraphrase
+n./v. 意译
+conformity
+n. 遵守，一致
+obstruct
+v. 阻碍
+chronological
+adj. 按年代顺序排列的
+retard
+v. 减缓，妨碍
+seep
+v. 渗出
+camouflage
+n./v. 伪装
+distill
+v. 蒸馏
+intersect
+v. 横穿，贯穿；相交
+requisite
+adj. 必要的
+barren
+adj. 贫瘠的；不育的；沉闷无趣的
+opaque
+adj. 不透明的；晦涩难懂的
+engulf
+v. 吞没，吞食
+shun
+v. 避开
+colonize
+v. 殖民；大批生长
+dignify
+v. 使显贵，抬高…的身价
+shroud
+v. 掩盖
+refute
+v. 驳斥
+intruder
+n. 入侵者
+permeate
+v. 渗透，弥漫
+shady
+adj. 有树荫的；名声不好的，见不得人的
+mania
+n. 狂热
+integer
+n. 整数
+nourish
+v. 养育
+synchronize
+v. 同步
+aquatic
+adj. 水生的
+hardy
+adj. 强壮的

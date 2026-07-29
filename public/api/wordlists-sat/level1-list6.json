@@ -9,20 +9,14 @@
     {
       "word": "purse",
       "definitions": [
-        "n. 手提包，钱包",
-        "v. 撅起，皱起"
-      ]
-    },
-    {
-      "word": "entail",
-      "definitions": [
-        "v. 使需要，必需；牵涉"
+        "v. 撅起，皱起",
+        "n. 手提包，钱包"
       ]
     },
     {
       "word": "pursuit",
       "definitions": [
-        "n. 追求，寻找；营生"
+        "n. 追求，寻找"
       ]
     },
     {
@@ -86,41 +80,40 @@
       ]
     },
     {
+      "word": "plague",
+      "definitions": [
+        "n. 瘟疫",
+        "v. 折磨，使苦恼"
+      ]
+    },
+    {
       "word": "fragile",
       "definitions": [
         "adj. 易碎的"
       ]
     },
     {
-      "word": "plague",
-      "definitions": [
-        "n. 瘟疫",
-        "v. 折磨；使苦恼"
-      ]
-    },
-    {
       "word": "gorgeous",
       "definitions": [
-        "adj. 美丽动人的，灿烂的"
+        "adj. 美丽动人的"
       ]
     },
     {
       "word": "invoke",
       "definitions": [
-        "v. 祈求；引用，援引；实施"
+        "v. 祈求；引用，援引；施加"
       ]
     },
     {
       "word": "splash",
       "definitions": [
-        "v./n. 溅起"
+        "v. 溅起"
       ]
     },
     {
       "word": "spiral",
       "definitions": [
-        "adj. 螺旋形的",
-        "n. 螺旋"
+        "adj. 螺旋形的"
       ]
     },
     {
@@ -132,14 +125,7 @@
     {
       "word": "heap",
       "definitions": [
-        "n. 堆",
-        "v. 堆积"
-      ]
-    },
-    {
-      "word": "align",
-      "definitions": [
-        "v. 使结盟；排成一行"
+        "n. 堆"
       ]
     },
     {
@@ -149,28 +135,34 @@
       ]
     },
     {
+      "word": "align",
+      "definitions": [
+        "v. 使结盟；排成一行"
+      ]
+    },
+    {
       "word": "vest",
       "definitions": [
-        "n. 背心",
-        "v. 授予，归于"
+        "n. 背心，马甲",
+        "v. 授予"
       ]
     },
     {
       "word": "canvas",
       "definitions": [
-        "n. 帆布；画布"
-      ]
-    },
-    {
-      "word": "skeptical",
-      "definitions": [
-        "adj. 怀疑的"
+        "n. 帆布；画布；油画"
       ]
     },
     {
       "word": "evoke",
       "definitions": [
         "v. 引起，唤起"
+      ]
+    },
+    {
+      "word": "skeptical",
+      "definitions": [
+        "adj. 怀疑的"
       ]
     },
     {
@@ -182,27 +174,27 @@
     {
       "word": "exert",
       "definitions": [
-        "v. 施加，运用；尽力"
+        "v. 运用；施加"
       ]
     },
     {
       "word": "stab",
       "definitions": [
-        "v./n. 刺，戳"
+        "v. 刺，戳"
       ]
     },
     {
       "word": "glare",
       "definitions": [
-        "v. 发出强光；怒视",
-        "n. 刺眼强光；怒视"
+        "v. 发出强光",
+        "n. 怒视；光辉"
       ]
     },
     {
       "word": "foul",
       "definitions": [
-        "adj. 邪恶的，污秽的",
-        "v. 犯规"
+        "v. 犯规",
+        "adj. 邪恶的，污秽的"
       ]
     },
     {
@@ -237,16 +229,16 @@
       ]
     },
     {
-      "word": "deteriorate",
+      "word": "blaze",
       "definitions": [
-        "v. 恶化"
+        "n. 烈火；光辉",
+        "v. 公开宣布"
       ]
     },
     {
-      "word": "blaze",
+      "word": "deteriorate",
       "definitions": [
-        "n. 烈火，光辉",
-        "v. 公开宣布"
+        "v. 恶化"
       ]
     },
     {
@@ -277,7 +269,361 @@
     {
       "word": "exaggerate",
       "definitions": [
-        "v. 夸大，夸张"
+        "v. 夸大"
+      ]
+    },
+    {
+      "word": "drawback",
+      "definitions": [
+        "n. 缺陷"
+      ]
+    },
+    {
+      "word": "blur",
+      "definitions": [
+        "v. 使模糊"
+      ]
+    },
+    {
+      "word": "cargo",
+      "definitions": [
+        "n. 货物，船货"
+      ]
+    },
+    {
+      "word": "landmark",
+      "definitions": [
+        "n. 里程碑；地标"
+      ]
+    },
+    {
+      "word": "patron",
+      "definitions": [
+        "n. 资助人；顾客"
+      ]
+    },
+    {
+      "word": "sparkle",
+      "definitions": [
+        "v./n. (发)光；(表现)抢眼"
+      ]
+    },
+    {
+      "word": "absurd",
+      "definitions": [
+        "adj. 荒唐的"
+      ]
+    },
+    {
+      "word": "bulb",
+      "definitions": [
+        "n. 电灯泡；球茎"
+      ]
+    },
+    {
+      "word": "successive",
+      "definitions": [
+        "adj. 连续的"
+      ]
+    },
+    {
+      "word": "hatch",
+      "definitions": [
+        "v. 孵出"
+      ]
+    },
+    {
+      "word": "rib",
+      "definitions": [
+        "n. 肋骨"
+      ]
+    },
+    {
+      "word": "sway",
+      "definitions": [
+        "v. 摇晃"
+      ]
+    },
+    {
+      "word": "sore",
+      "definitions": [
+        "adj. 感到疼痛的",
+        "n. 疮，痛处"
+      ]
+    },
+    {
+      "word": "optimism",
+      "definitions": [
+        "n. 乐观"
+      ]
+    },
+    {
+      "word": "choke",
+      "definitions": [
+        "v. 窒息；阻塞"
+      ]
+    },
+    {
+      "word": "fertilizer",
+      "definitions": [
+        "n. 肥料"
+      ]
+    },
+    {
+      "word": "crisp",
+      "definitions": [
+        "adj. 松脆的",
+        "n. 炸薯片"
+      ]
+    },
+    {
+      "word": "feasible",
+      "definitions": [
+        "adj. 可行的"
+      ]
+    },
+    {
+      "word": "envy",
+      "definitions": [
+        "n./v. 羡慕，嫉妒"
+      ]
+    },
+    {
+      "word": "buffer",
+      "definitions": [
+        "v./n. 缓冲"
+      ]
+    },
+    {
+      "word": "indulge",
+      "definitions": [
+        "v. 纵容，放纵"
+      ]
+    },
+    {
+      "word": "plow",
+      "definitions": [
+        "n. 犁",
+        "v. 耕地"
+      ]
+    },
+    {
+      "word": "chorus",
+      "definitions": [
+        "n. 合唱队"
+      ]
+    },
+    {
+      "word": "cushion",
+      "definitions": [
+        "n. 垫子",
+        "v. 保护"
+      ]
+    },
+    {
+      "word": "revival",
+      "definitions": [
+        "n. 复活，再生"
+      ]
+    },
+    {
+      "word": "wrestle",
+      "definitions": [
+        "v. 扭打"
+      ]
+    },
+    {
+      "word": "expire",
+      "definitions": [
+        "v. 到期，终止"
+      ]
+    },
+    {
+      "word": "excursion",
+      "definitions": [
+        "n. 远足"
+      ]
+    },
+    {
+      "word": "obsession",
+      "definitions": [
+        "n. 痴迷"
+      ]
+    },
+    {
+      "word": "disastrous",
+      "definitions": [
+        "adj. 灾难的"
+      ]
+    },
+    {
+      "word": "tablet",
+      "definitions": [
+        "n. 刻写板；平板电脑"
+      ]
+    },
+    {
+      "word": "ceramic",
+      "definitions": [
+        "n. 陶瓷"
+      ]
+    },
+    {
+      "word": "civic",
+      "definitions": [
+        "adj. 城市的"
+      ]
+    },
+    {
+      "word": "supreme",
+      "definitions": [
+        "adj. 卓越的"
+      ]
+    },
+    {
+      "word": "scrape",
+      "definitions": [
+        "n./v. 刮擦"
+      ]
+    },
+    {
+      "word": "denounce",
+      "definitions": [
+        "v. 谴责"
+      ]
+    },
+    {
+      "word": "vacant",
+      "definitions": [
+        "adj. 空着的；心不在焉的"
+      ]
+    },
+    {
+      "word": "fuss",
+      "definitions": [
+        "n. 激动，大惊小怪"
+      ]
+    },
+    {
+      "word": "volatile",
+      "definitions": [
+        "adj. 多变的；易挥发的"
+      ]
+    },
+    {
+      "word": "elicit",
+      "definitions": [
+        "v. 引出"
+      ]
+    },
+    {
+      "word": "recount",
+      "definitions": [
+        "v. 详细叙述"
+      ]
+    },
+    {
+      "word": "prone",
+      "definitions": [
+        "adj. 倾向于；俯卧的"
+      ]
+    },
+    {
+      "word": "mansion",
+      "definitions": [
+        "n. 宅第"
+      ]
+    },
+    {
+      "word": "pirate",
+      "definitions": [
+        "n. 海盗",
+        "v./n. 盗版(物)"
+      ]
+    },
+    {
+      "word": "terrain",
+      "definitions": [
+        "n. 地形"
+      ]
+    },
+    {
+      "word": "intensify",
+      "definitions": [
+        "v. 加强"
+      ]
+    },
+    {
+      "word": "notorious",
+      "definitions": [
+        "adj. 臭名昭著的"
+      ]
+    },
+    {
+      "word": "disperse",
+      "definitions": [
+        "v. 分散，使散开"
+      ]
+    },
+    {
+      "word": "shrine",
+      "definitions": [
+        "n. 圣地"
+      ]
+    },
+    {
+      "word": "adhere",
+      "definitions": [
+        "v. 粘附"
+      ]
+    },
+    {
+      "word": "brew",
+      "definitions": [
+        "v./n. 酿制；冲泡；酝酿"
+      ]
+    },
+    {
+      "word": "debris",
+      "definitions": [
+        "n. 碎片，残骸"
+      ]
+    },
+    {
+      "word": "prose",
+      "definitions": [
+        "n./v. 写散文",
+        "n. 枯燥无味的话"
+      ]
+    },
+    {
+      "word": "frown",
+      "definitions": [
+        "v. 皱眉"
+      ]
+    },
+    {
+      "word": "resent",
+      "definitions": [
+        "v. 憎恨"
+      ]
+    },
+    {
+      "word": "bud",
+      "definitions": [
+        "n./v. (发)芽"
+      ]
+    },
+    {
+      "word": "posture",
+      "definitions": [
+        "n. 姿势"
+      ]
+    },
+    {
+      "word": "ensue",
+      "definitions": [
+        "v. 跟着发生，接着发生"
       ]
     }
   ]

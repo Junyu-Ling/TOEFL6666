@@ -7,295 +7,589 @@
   },
   "words": [
     {
-      "word": "applaud",
+      "word": "touchdown",
       "definitions": [
-        "v. 鼓掌，喝彩；赞扬"
+        "n. 着陆；触地得分"
       ]
     },
     {
-      "word": "contaminate",
+      "word": "latitude",
       "definitions": [
-        "v. 污染"
+        "n. 纬度；(言论、行为等的)自由度"
       ]
     },
     {
-      "word": "harness",
+      "word": "longitude",
       "definitions": [
-        "v. 利用",
-        "n. 马具，保护带"
+        "n. 经度"
       ]
     },
     {
-      "word": "defy",
+      "word": "hasten",
       "definitions": [
-        "v. 反抗"
+        "v. 加快；催促"
       ]
     },
     {
-      "word": "nun",
+      "word": "resonate",
       "definitions": [
-        "n. 修女"
+        "v. 回响；引起共鸣；共振"
       ]
     },
     {
-      "word": "gasp",
+      "word": "ridicule",
       "definitions": [
-        "v. 喘气"
+        "v./n. 嘲弄"
       ]
     },
     {
-      "word": "descendant",
+      "word": "feminism",
       "definitions": [
-        "n. 后裔，子孙"
+        "n. 女权主义"
       ]
     },
     {
-      "word": "narrator",
+      "word": "improvise",
       "definitions": [
-        "n. 叙述者"
+        "v. 即兴创作、表演；临时凑合做"
       ]
     },
     {
-      "word": "dinosaur",
+      "word": "perimeter",
       "definitions": [
-        "n. 恐龙"
+        "n. 周长；边界，边缘"
       ]
     },
     {
-      "word": "expel",
+      "word": "courageous",
       "definitions": [
-        "v. 驱逐"
+        "adj. 勇敢的"
       ]
     },
     {
-      "word": "duplicate",
+      "word": "transient",
       "definitions": [
-        "v./n. 复制(品)"
+        "adj. 短暂的；路过的"
       ]
     },
     {
-      "word": "pedestrian",
+      "word": "myriad",
       "definitions": [
-        "n. 行人",
-        "adj. 平庸乏味的"
+        "n. 无数，极大数量"
       ]
     },
     {
-      "word": "submarine",
+      "word": "clog",
       "definitions": [
-        "n. 潜水艇",
-        "adj. 海底的"
+        "v./n. 阻塞"
       ]
     },
     {
-      "word": "foam",
+      "word": "fortify",
       "definitions": [
-        "n. 泡沫",
-        "v. 起泡沫"
+        "v. 增强；鼓励；设防加固"
       ]
     },
     {
-      "word": "theatrical",
+      "word": "overshadow",
       "definitions": [
-        "adj. 戏剧性的，夸张的"
+        "v. 给…蒙上阴影；使…黯然失色；遮蔽"
       ]
     },
     {
-      "word": "erode",
+      "word": "visionary",
       "definitions": [
-        "v. 腐蚀，侵蚀"
+        "adj. 有远见的；幻想的，不切实际的"
       ]
     },
     {
-      "word": "gravel",
+      "word": "additive",
       "definitions": [
-        "n. 碎石，砂砾"
+        "adj. 增加的",
+        "n. 添加剂"
       ]
     },
     {
-      "word": "stark",
+      "word": "plumb",
       "definitions": [
-        "adj. 完全的；荒凉的，朴实无华的"
+        "adj. 垂直的",
+        "v. 探究；铺设水管"
       ]
     },
     {
-      "word": "mimic",
+      "word": "insulate",
       "definitions": [
-        "v. 模仿"
+        "v. 绝缘，隔热"
       ]
     },
     {
-      "word": "dismantle",
+      "word": "agitate",
       "definitions": [
-        "v. 拆除"
+        "v. 使激动；煽动"
       ]
     },
     {
-      "word": "thriller",
+      "word": "analogous",
       "definitions": [
-        "n. 惊悚片，使人毛骨悚然的东西"
+        "adj. 类似的"
       ]
     },
     {
-      "word": "veil",
+      "word": "cosmic",
       "definitions": [
-        "n. 面纱",
-        "v. 遮掩，掩饰"
+        "adj. 宇宙的；广阔的"
       ]
     },
     {
-      "word": "enlighten",
+      "word": "wane",
       "definitions": [
-        "v. 启迪；阐明"
+        "v. 衰退，减弱",
+        "n. 月亏"
       ]
     },
     {
-      "word": "cripple",
+      "word": "agreeable",
       "definitions": [
-        "v. 削弱；使跛，使残废",
-        "n. 残疾人"
+        "adj. 讨人喜欢的，怡人的"
       ]
     },
     {
-      "word": "cramp",
+      "word": "repress",
       "definitions": [
-        "n. 痉挛",
-        "v. 束缚，限制"
+        "v. 压抑，抑制"
       ]
     },
     {
-      "word": "fume",
+      "word": "pessimistic",
       "definitions": [
-        "n. 气体，烟雾"
+        "adj. 悲观的"
       ]
     },
     {
-      "word": "spacious",
+      "word": "endow",
       "definitions": [
-        "adj. 宽敞的"
+        "v. 捐赠；天生具有"
       ]
     },
     {
-      "word": "potent",
+      "word": "outspoken",
       "definitions": [
-        "adj. 强有力的"
+        "adj. 坦率的"
       ]
     },
     {
-      "word": "swamp",
+      "word": "incompetent",
       "definitions": [
-        "n. 沼泽",
-        "v. 使陷入困境，淹没"
+        "adj. 不胜任的，无能力的"
       ]
     },
     {
-      "word": "bleak",
+      "word": "petal",
       "definitions": [
-        "adj. 阴冷的；荒凉的；黯淡的"
+        "n. 花瓣"
       ]
     },
     {
-      "word": "odor",
+      "word": "bland",
       "definitions": [
-        "n. 气味"
+        "adj. 乏味的；清淡的"
       ]
     },
     {
-      "word": "freight",
+      "word": "submerge",
       "definitions": [
-        "n. 货物"
+        "v. 淹没"
       ]
     },
     {
-      "word": "overtake",
+      "word": "toxin",
       "definitions": [
-        "v. 超过"
+        "n. 毒素"
       ]
     },
     {
-      "word": "archaeologist",
+      "word": "encyclopedia",
       "definitions": [
-        "n. 考古学家"
+        "n. 百科全书"
       ]
     },
     {
-      "word": "compartment",
+      "word": "numb",
       "definitions": [
-        "n. 车厢；隔间"
+        "adj. 失去知觉的，麻木的"
       ]
     },
     {
-      "word": "trademark",
+      "word": "impoverish",
       "definitions": [
-        "n. 商标；特征"
+        "v. 使贫穷；使枯竭"
       ]
     },
     {
-      "word": "blossom",
+      "word": "tidal",
       "definitions": [
-        "v. 开花；兴旺"
+        "adj. 潮汐的"
       ]
     },
     {
-      "word": "stationary",
+      "word": "deplete",
       "definitions": [
-        "adj. 静止不动的"
+        "v. 消耗"
       ]
     },
     {
-      "word": "discern",
+      "word": "gracious",
       "definitions": [
-        "v. 辨别"
+        "adj. 亲切的，仁慈的"
       ]
     },
     {
-      "word": "moisture",
+      "word": "thaw",
       "definitions": [
-        "n. 水汽"
+        "v. 融化，融解"
       ]
     },
     {
-      "word": "fertile",
+      "word": "culprit",
       "definitions": [
-        "adj. 肥沃的"
+        "n. 犯人，罪犯"
       ]
     },
     {
-      "word": "prevalent",
+      "word": "explanatory",
       "definitions": [
-        "adj. 流行的"
+        "adj. 起解释作用的"
       ]
     },
     {
-      "word": "shepherd",
+      "word": "vigor",
       "definitions": [
-        "n. 牧羊人",
-        "v. 引领，指导"
+        "n. 活力，精力；气魄"
       ]
     },
     {
-      "word": "sovereign",
+      "word": "pivotal",
       "definitions": [
-        "n. 君主",
-        "adj. 具有独立主权的"
+        "adj. 关键的"
       ]
     },
     {
-      "word": "compress",
+      "word": "sterile",
       "definitions": [
-        "v. 压缩"
+        "adj. 贫瘠的；不育的；无菌的"
       ]
     },
     {
-      "word": "tangle",
+      "word": "constellation",
       "definitions": [
-        "v./n. 缠结"
+        "n. 星座；群集"
       ]
     },
     {
-      "word": "congestion",
+      "word": "neutralize",
       "definitions": [
-        "n. 堵塞"
+        "v. 使无效，抵消；中和"
+      ]
+    },
+    {
+      "word": "overhear",
+      "definitions": [
+        "v. 无意中听到"
+      ]
+    },
+    {
+      "word": "deduce",
+      "definitions": [
+        "v. 推断"
+      ]
+    },
+    {
+      "word": "negligible",
+      "definitions": [
+        "adj. 可忽略不计的"
+      ]
+    },
+    {
+      "word": "burrow",
+      "definitions": [
+        "n. 洞穴，藏身处"
+      ]
+    },
+    {
+      "word": "sparse",
+      "definitions": [
+        "adj. 稀疏的"
+      ]
+    },
+    {
+      "word": "dissolution",
+      "definitions": [
+        "n. 解除，解散；溶解"
+      ]
+    },
+    {
+      "word": "cosmopolitan",
+      "definitions": [
+        "adj. 世界性的"
+      ]
+    },
+    {
+      "word": "engender",
+      "definitions": [
+        "v. 使产生，造成"
+      ]
+    },
+    {
+      "word": "converse",
+      "definitions": [
+        "adj. 相反的，逆向的",
+        "v. 交谈，谈话"
+      ]
+    },
+    {
+      "word": "formative",
+      "definitions": [
+        "adj. 有助发展的"
+      ]
+    },
+    {
+      "word": "recourse",
+      "definitions": [
+        "n. 求助，手段"
+      ]
+    },
+    {
+      "word": "rectangular",
+      "definitions": [
+        "adj. 长方形的"
+      ]
+    },
+    {
+      "word": "furnace",
+      "definitions": [
+        "n. 火炉，熔炉"
+      ]
+    },
+    {
+      "word": "disarm",
+      "definitions": [
+        "v. 缴…的械；消除(某人)的怒气"
+      ]
+    },
+    {
+      "word": "hallmark",
+      "definitions": [
+        "n. 特点；(金银上的)标记证明"
+      ]
+    },
+    {
+      "word": "devour",
+      "definitions": [
+        "v. 吞食，狼吞虎咽地吃；急切地读"
+      ]
+    },
+    {
+      "word": "perish",
+      "definitions": [
+        "v. 死亡，枯萎"
+      ]
+    },
+    {
+      "word": "asteroid",
+      "definitions": [
+        "n. 小行星"
+      ]
+    },
+    {
+      "word": "feasibility",
+      "definitions": [
+        "n. 可行性"
+      ]
+    },
+    {
+      "word": "prolific",
+      "definitions": [
+        "adj. 多产的"
+      ]
+    },
+    {
+      "word": "carnival",
+      "definitions": [
+        "n. 狂欢节，嘉年华"
+      ]
+    },
+    {
+      "word": "enrichment",
+      "definitions": [
+        "n. 丰富，充实；富集，浓缩"
+      ]
+    },
+    {
+      "word": "intrude",
+      "definitions": [
+        "v. 闯入，侵入"
+      ]
+    },
+    {
+      "word": "paraphrase",
+      "definitions": [
+        "n./v. 意译"
+      ]
+    },
+    {
+      "word": "conformity",
+      "definitions": [
+        "n. 遵守，一致"
+      ]
+    },
+    {
+      "word": "obstruct",
+      "definitions": [
+        "v. 阻碍"
+      ]
+    },
+    {
+      "word": "chronological",
+      "definitions": [
+        "adj. 按年代顺序排列的"
+      ]
+    },
+    {
+      "word": "retard",
+      "definitions": [
+        "v. 减缓，妨碍"
+      ]
+    },
+    {
+      "word": "seep",
+      "definitions": [
+        "v. 渗出"
+      ]
+    },
+    {
+      "word": "camouflage",
+      "definitions": [
+        "n./v. 伪装"
+      ]
+    },
+    {
+      "word": "distill",
+      "definitions": [
+        "v. 蒸馏"
+      ]
+    },
+    {
+      "word": "intersect",
+      "definitions": [
+        "v. 横穿，贯穿；相交"
+      ]
+    },
+    {
+      "word": "requisite",
+      "definitions": [
+        "adj. 必要的"
+      ]
+    },
+    {
+      "word": "barren",
+      "definitions": [
+        "adj. 贫瘠的；不育的；沉闷无趣的"
+      ]
+    },
+    {
+      "word": "opaque",
+      "definitions": [
+        "adj. 不透明的；晦涩难懂的"
+      ]
+    },
+    {
+      "word": "engulf",
+      "definitions": [
+        "v. 吞没，吞食"
+      ]
+    },
+    {
+      "word": "shun",
+      "definitions": [
+        "v. 避开"
+      ]
+    },
+    {
+      "word": "colonize",
+      "definitions": [
+        "v. 殖民；大批生长"
+      ]
+    },
+    {
+      "word": "dignify",
+      "definitions": [
+        "v. 使显贵，抬高…的身价"
+      ]
+    },
+    {
+      "word": "shroud",
+      "definitions": [
+        "v. 掩盖"
+      ]
+    },
+    {
+      "word": "refute",
+      "definitions": [
+        "v. 驳斥"
+      ]
+    },
+    {
+      "word": "intruder",
+      "definitions": [
+        "n. 入侵者"
+      ]
+    },
+    {
+      "word": "permeate",
+      "definitions": [
+        "v. 渗透，弥漫"
+      ]
+    },
+    {
+      "word": "shady",
+      "definitions": [
+        "adj. 有树荫的；名声不好的，见不得人的"
+      ]
+    },
+    {
+      "word": "mania",
+      "definitions": [
+        "n. 狂热"
+      ]
+    },
+    {
+      "word": "integer",
+      "definitions": [
+        "n. 整数"
+      ]
+    },
+    {
+      "word": "nourish",
+      "definitions": [
+        "v. 养育"
+      ]
+    },
+    {
+      "word": "synchronize",
+      "definitions": [
+        "v. 同步"
+      ]
+    },
+    {
+      "word": "aquatic",
+      "definitions": [
+        "adj. 水生的"
+      ]
+    },
+    {
+      "word": "hardy",
+      "definitions": [
+        "adj. 强壮的"
       ]
     }
   ]

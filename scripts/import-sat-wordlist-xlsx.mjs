@@ -25,10 +25,10 @@ function normalizeDefinitionSegment(segment) {
 
   const match = part.match(/^([a-z./]+\.\s*)(.+)$/i);
   if (match) {
-    return `${match[1]}${match[2].replace(/,/g, "，")}`;
+    return `${match[1]}${match[2].replace(/,\s*/g, "，")}`;
   }
 
-  return part.replace(/,/g, "，");
+  return part.replace(/,\s*/g, "，");
 }
 
 export function parseChineseDefinitions(raw) {
@@ -157,7 +157,15 @@ function writeSections(sections) {
   console.log("Updated manifest.json");
 }
 
-const inputPath =
-  process.argv[2] || "C:/Users/LingJ/Downloads/美国高考3000词_分类整理.xlsx";
-const sections = importSatWordlistsFromXlsx(inputPath);
-writeSections(sections);
+function isMainModule() {
+  const entry = process.argv[1];
+  if (!entry) return false;
+  return path.resolve(entry) === fileURLToPath(import.meta.url);
+}
+
+if (isMainModule()) {
+  const inputPath =
+    process.argv[2] || "C:/Users/LingJ/Downloads/美国高考3000词_分类整理.xlsx";
+  const sections = importSatWordlistsFromXlsx(inputPath);
+  writeSections(sections);
+}

@@ -12,6 +12,7 @@
     "build:familiar-obscure": "node scripts/build-familiar-obscure.mjs",
     "import:sat-wordlist": "node scripts/import-sat-wordlist.mjs",
     "import:sat-wordlist-xlsx": "node scripts/import-sat-wordlist-xlsx.mjs",
+    "import:sat-wordlist-pipe": "node scripts/import-sat-wordlist-pipe.mjs",
     "build:wordlists": "node scripts/build-word-index.mjs && node scripts/build-word-bank.mjs && node scripts/build-wordlists-bundle.mjs",
     "build": "npm run build:pronunciation && npm run build:families && npm run build:loading-words && npm run build:wordlists && vite build",
     "lint": "oxlint",

@@ -1,83 +1,211 @@
 === LEVEL 1 LIST 8 ===
-disperse
-v. 分散，使散开
-shrine
-n. 圣地
-adhere
-v. 粘附
-brew
-v./n. 酿造；冲泡；酝酿
-debris
-n. 碎片，残骸
-prose
-n. 散文；枯燥无味的话
-frown
-v. 皱眉
-resent
-v. 憎恨
-bud
-n./v. 发芽
-posture
-n. 姿势
-ensue
-v. 紧接着发生
-proliferation
-n. 激增
-blink
-v./n. 闪烁；眨眼
-stove
-n. 火炉，灶台
-apparatus
-n. 设备，仪器
-empower
-v. 授权
-void
-adj. 空的；无效的
-n. 真空，空白
-nurture
-v. 培育，养育
-unveil
-v. 揭幕，揭露
-diplomacy
-n. 外交
-census
-n. 人口普查
-ditch
-n. 沟
-v. 抛弃
-eternal
-adj. 永恒的
-ample
-adj. 丰富的；宽敞的
-formidable
-adj. 强大的；可怕的
-solitary
-adj. 孤独的
-parasite
-n. 寄生虫
-quarterback
-n./v. 四分卫
-definitive
-adj. 决定性的；最佳的
-exploitation
-n. 开发，开采；剥削
-commute
-v. 通勤；代替，交换
-stereo
-n. 立体声音响
-enlist
-v. (使)入伍；谋取...的帮助
-autonomous
-adj. 自主的
-prototype
-n. 原型，样板
-transit
-n. 运输
-excerpt
-n./v. 摘录
-erupt
-v. 爆发
-collision
-n. 碰撞；冲突
-liberate
-v. 释放
+roam
+v. 闲逛，漫游
+apprentice
+n. 学徒
+inclination
+n. 倾向；斜度，倾斜度
+envision
+v. 想象
+coil
+v. 盘起
+shortcoming
+n. 缺点
+backdrop
+n. 背景
+ornament
+n. 装饰品
+v. 装饰
+vibrant
+adj. 充满生机的
+withstand
+v. 承受住
+mute
+adj. 缄默的
+ripe
+adj. 成熟的
+carbohydrate
+n. 碳水化合物
+hazardous
+adj. 有危险的
+earnest
+adj./n. 认真(的)
+vicinity
+n. 邻近，附近
+elusive
+adj. 难懂的；易逃避的
+simultaneous
+adj. 同时发生的
+frenzy
+n. 狂暴，狂乱
+inhale
+v. 吸入
+superiority
+n. 优越
+tame
+adj. 驯服的
+visualize
+v. 使形象化；预想
+granite
+n. 花岗岩
+chore
+n. 家庭杂务；讨厌或累人的工作
+evaporate
+v. 蒸发
+decease
+n. (人的)死亡
+contamination
+n. 污染
+hinder
+v. 阻碍
+trickle
+v. 缓缓移动
+inclusive
+adj. 全包括的；首末项包含在内的
+communal
+adj. 公共的
+cache
+n. 贮存物，隐藏处
+anomaly
+n. 异常
+chaotic
+adj. 混乱的
+reclaim
+v. 开垦土地，开拓土地
+anatomy
+n. 解剖，解剖学
+slender
+adj. 细长的，苗条的
+surpass
+v. 超越，胜过
+adjoin
+v. 靠近
+metropolitan
+adj. 大都市的
+amplify
+v. 放大，扩大；详述
+intrinsic
+adj. 本质的，必要的
+famine
+n. 饥荒
+recreational
+adj. 娱乐的
+propel
+v. 推进
+condense
+v. 使浓缩
+credential
+n. 证书，凭据
+diffuse
+v. 扩散
+occupant
+n. 居住者
+capsule
+n. 胶囊；航天舱
+certification
+n. 证明
+deception
+n. 欺骗
+perennial
+adj. 多年生的；长期存在的
+n. 多年生植物
+indispensable
+adj. 必不可少的
+eclipse
+v. 使黯然失色
+n. 日蚀，月蚀
+commend
+v. 称赞，表扬
+flake
+n. 小薄片
+v. 使…成薄片
+crater
+n. 坑，火山口
+geometric
+adj. 几何学的
+greed
+n. 贪婪
+deterioration
+n. 恶化
+mitigate
+v. 缓解，减轻
+comet
+n. 彗星
+catalyst
+n. 催化剂
+commonplace
+n. 普通的东西
+adj. 平凡的
+brood
+n. 一窝
+v. 沉思
+bleach
+v. 使漂白
+n. 漂白剂
+eradicate
+v. 根除，根绝
+compass
+n. 指南针
+coarse
+adj. 粗糙的；粗俗的，下等的
+attic
+n. 阁楼
+ruthless
+adj. 无情的，残忍的
+gigantic
+adj. 巨大的，庞大的
+lava
+n. 熔岩
+obdurate
+adj. 固执的
+pinpoint
+adj. 精确的
+v. 精确定位
+imprint
+n./v. 铭刻
+recede
+v. 后退，撤回
+conquest
+n. 征服
+canyon
+n. 峡谷
+glacier
+n. 冰川
+gland
+n. 腺
+dwindle
+v. 减少，变小
+excavate
+v. 挖掘，开凿
+immerse
+v. 浸泡；陷入
+discredit
+v. 使不可信
+unravel
+v. 解开；揭开
+abrupt
+adj. 突然的
+sprout
+v. 发芽
+showcase
+v. 展示
+impetus
+n. 动力
+auxiliary
+adj. 辅助的
+heed
+n./v. 注意，留意
+entice
+v. 诱使，怂恿
+renewable
+adj. 可再生的
+ubiquitous
+adj. 普遍存在的
+authoritative
+adj. 专断的；权威性的
+attest
+v. 证明
+flop
+v. 失败；扑通放下，重重地坐下
+allude
+v. 暗指

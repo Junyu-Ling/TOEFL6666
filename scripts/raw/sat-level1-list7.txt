@@ -1,103 +1,206 @@
 === LEVEL 1 LIST 7 ===
-drawback
-n. 缺陷
-blur
-v. 模糊
-n. 模糊不清的事物
-landmark
-n. 里程碑；地标
-patron
-n. 资助人；顾客
-cargo
-n. 货物，船货
-sparkle
-v./n. 发光，闪耀；表现抢眼
-absurd
-adj. 荒唐的
-bulb
-n. 电灯泡；球茎
-successive
-adj. 连续的
-hatch
-v. 孵化，破壳而出
-rib
-n. 肋骨
-sore
-adj. 感到疼痛的
-n. 疮，痛处
-optimism
-n. 乐观
-sway
-v./n. 摇晃，摆动
-choke
-v. 窒息；阻塞
-fertilizer
-n. 肥料
-crisp
-adj. 松脆的
-n. 炸薯片
-feasible
-adj. 可行的
-envy
-n./v. 羡慕，嫉妒
-buffer
-v. 缓冲
-n. 缓冲器
-indulge
-v. 纵容，放纵
-plow
-n. 犁
-v. 耕地
-chorus
-n. 合唱队
-cushion
-n. 垫子
-v. 保护，缓和冲击
-revival
-n. 复活，再生
-wrestle
-v. 扭打，搏斗
-expire
-v. 到期，终止
-excursion
-n. 远足
-obsession
-n. 痴迷
-disastrous
-adj. 灾难性的
-tablet
-n. 刻写板；平板电脑；药片
-ceramic
-n. 陶瓷
-adj. 陶瓷的
-civic
-adj. 城市的，市民的
-supreme
-adj. 至高无上的，卓越的
-insignificant
-adj. 微不足道的
-scrape
-n./v. 刮擦
-denounce
-v. 谴责
-vacant
-adj. 空着的，空缺的；心不在焉的
-volatile
-adj. 多变的；易挥发的
-elicit
-v. 引出
-recount
-v. 详细叙述
-prone
-adj. 倾向于；俯卧的
-mansion
-n. 宅第
-terrain
-n. 地形
-pirate
-n. 海盗
-v./n. 盗版
-intensify
-v. 加强
-notorious
-adj. 臭名昭著的
+proliferation
+n. 激增
+blink
+v./n. 闪烁；眨眼
+stove
+n. 火炉，灶台
+apparatus
+n. 设备，仪器
+empower
+v. 授权
+void
+adj. 空的；无效的
+unveil
+v. 揭幕，揭露
+nurture
+v. 培育，养育
+diplomacy
+n. 外交
+census
+n. 人口普查
+ditch
+v. 抛弃
+n. 沟
+eternal
+adj. 永恒的
+ample
+adj. 丰富的；宽敞的
+formidable
+adj. 强大的；可怕的
+solitary
+adj. 孤独的
+parasite
+n. 寄生虫
+definitive
+adj. 决定性的；最佳的
+stereo
+n. 立体声(音响)
+enlist
+v. (使)入伍；征募
+commute
+v. 通勤；代替，交换
+autonomous
+adj. 自主的
+prototype
+n. 原型，样板
+transit
+n. 运输
+excerpt
+n./v. 摘录
+erupt
+v. 爆发
+collision
+n. 碰撞；冲突
+liberate
+v. 释放
+applaud
+v. 鼓掌，喝彩；赞扬
+contaminate
+v. 污染
+harness
+v. 利用
+n. 马具，保护带
+defy
+v. 反抗
+nun
+n. 修女
+gasp
+v. 喘气
+descendant
+n. 后裔，子孙
+narrator
+n. 叙述者
+dinosaur
+n. 恐龙
+expel
+v. 驱逐
+duplicate
+v./n. 复制(品)
+pedestrian
+n. 行人
+adj. 平庸乏味的
+submarine
+adj. 海底的
+n. 潜水艇
+foam
+n. 泡沫
+v. 起泡沫
+theatrical
+adj. 戏剧性的，夸张的
+erode
+v. 腐蚀，侵蚀
+gravel
+n. 碎石，砂砾
+stark
+adj. 完全的；荒凉的
+mimic
+v. 模仿
+dismantle
+v. 拆除
+thriller
+n. 使人毛骨悚然的东西(惊悚作品)
+veil
+n. 面纱
+v. 遮掩，掩饰
+enlighten
+v. 启迪；阐明
+cripple
+v. 削弱；使残废
+n. 瘸子
+cramp
+n. 痉挛
+v. 束缚，限制
+fume
+n. 气体
+potent
+adj. 强有力的
+swamp
+n. 沼泽
+v. 使陷入(困境等)
+bleak
+adj. 阴冷的；荒凉的；黯淡的，无希望的
+odor
+n. 气味
+overtake
+v. 超过
+freight
+n. 货物
+archaeologist
+n. 考古学家
+compartment
+n. 车厢；隔间
+trademark
+n. 商标；特征
+blossom
+v. 开花，兴旺
+stationary
+adj. 静止不动的
+discern
+v. 辨别
+moisture
+n. 水汽
+prevalent
+adj. 流行的
+fertile
+adj. 肥沃的
+shepherd
+n. 牧羊人
+v. 引领，指导
+sovereign
+n. 君主
+adj. 具有独立主权的
+compress
+v. 压缩
+tangle
+v./n. 缠结
+congestion
+n. 堵塞
+humiliate
+v. 羞辱
+advent
+n. 到来，出现
+comprehend
+v. 理解
+prosperous
+adj. 繁荣的
+bustle
+v./n. 喧闹，忙乱
+resemblance
+n. 相似
+intimacy
+n. 亲密
+alienate
+v. 使疏远，离间
+novelty
+n. 新奇，新颖
+autobiography
+n. 自传
+categorize
+v. 分类
+frost
+n. 霜冻
+equate
+v. 使等同，相同
+recur
+v. 反复出现
+dispense
+v. 分发
+hamper
+v. 阻碍
+crust
+n. 地壳；坚硬外皮
+indifferent
+adj. 漠不关心的；很一般的
+clan
+n. 宗族
+coral
+n. 珊瑚
+solidarity
+n. 团结一致
+culminate
+v. 达到顶点
+drastic
+adj. 剧烈的
+extinction
+n. 灭绝

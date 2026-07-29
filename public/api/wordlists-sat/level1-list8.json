@@ -7,245 +7,617 @@
   },
   "words": [
     {
-      "word": "disperse",
+      "word": "roam",
       "definitions": [
-        "v. 分散，使散开"
+        "v. 闲逛，漫游"
       ]
     },
     {
-      "word": "shrine",
+      "word": "apprentice",
       "definitions": [
-        "n. 圣地"
+        "n. 学徒"
       ]
     },
     {
-      "word": "adhere",
+      "word": "inclination",
       "definitions": [
-        "v. 粘附"
+        "n. 倾向；斜度，倾斜度"
       ]
     },
     {
-      "word": "brew",
+      "word": "envision",
       "definitions": [
-        "v./n. 酿造；冲泡；酝酿"
+        "v. 想象"
       ]
     },
     {
-      "word": "debris",
+      "word": "coil",
       "definitions": [
-        "n. 碎片，残骸"
+        "v. 盘起"
       ]
     },
     {
-      "word": "prose",
+      "word": "shortcoming",
       "definitions": [
-        "n. 散文；枯燥无味的话"
+        "n. 缺点"
       ]
     },
     {
-      "word": "frown",
+      "word": "backdrop",
       "definitions": [
-        "v. 皱眉"
+        "n. 背景"
       ]
     },
     {
-      "word": "resent",
+      "word": "ornament",
       "definitions": [
-        "v. 憎恨"
+        "n. 装饰品",
+        "v. 装饰"
       ]
     },
     {
-      "word": "bud",
+      "word": "vibrant",
       "definitions": [
-        "n./v. 发芽"
+        "adj. 充满生机的"
       ]
     },
     {
-      "word": "posture",
+      "word": "withstand",
       "definitions": [
-        "n. 姿势"
+        "v. 承受住"
       ]
     },
     {
-      "word": "ensue",
+      "word": "mute",
       "definitions": [
-        "v. 紧接着发生"
+        "adj. 缄默的"
       ]
     },
     {
-      "word": "proliferation",
+      "word": "ripe",
       "definitions": [
-        "n. 激增"
+        "adj. 成熟的"
       ]
     },
     {
-      "word": "blink",
+      "word": "carbohydrate",
       "definitions": [
-        "v./n. 闪烁；眨眼"
+        "n. 碳水化合物"
       ]
     },
     {
-      "word": "stove",
+      "word": "hazardous",
       "definitions": [
-        "n. 火炉，灶台"
+        "adj. 有危险的"
       ]
     },
     {
-      "word": "apparatus",
+      "word": "earnest",
       "definitions": [
-        "n. 设备，仪器"
+        "adj./n. 认真(的)"
       ]
     },
     {
-      "word": "empower",
+      "word": "vicinity",
       "definitions": [
-        "v. 授权"
+        "n. 邻近，附近"
       ]
     },
     {
-      "word": "void",
+      "word": "elusive",
       "definitions": [
-        "adj. 空的；无效的",
-        "n. 真空，空白"
+        "adj. 难懂的；易逃避的"
       ]
     },
     {
-      "word": "nurture",
+      "word": "simultaneous",
       "definitions": [
-        "v. 培育，养育"
+        "adj. 同时发生的"
       ]
     },
     {
-      "word": "unveil",
+      "word": "frenzy",
       "definitions": [
-        "v. 揭幕，揭露"
+        "n. 狂暴，狂乱"
       ]
     },
     {
-      "word": "diplomacy",
+      "word": "inhale",
       "definitions": [
-        "n. 外交"
+        "v. 吸入"
       ]
     },
     {
-      "word": "census",
+      "word": "superiority",
       "definitions": [
-        "n. 人口普查"
+        "n. 优越"
       ]
     },
     {
-      "word": "ditch",
+      "word": "tame",
       "definitions": [
-        "n. 沟",
-        "v. 抛弃"
+        "adj. 驯服的"
       ]
     },
     {
-      "word": "eternal",
+      "word": "visualize",
       "definitions": [
-        "adj. 永恒的"
+        "v. 使形象化；预想"
       ]
     },
     {
-      "word": "ample",
+      "word": "granite",
       "definitions": [
-        "adj. 丰富的；宽敞的"
+        "n. 花岗岩"
       ]
     },
     {
-      "word": "formidable",
+      "word": "chore",
       "definitions": [
-        "adj. 强大的；可怕的"
+        "n. 家庭杂务；讨厌或累人的工作"
       ]
     },
     {
-      "word": "solitary",
+      "word": "evaporate",
       "definitions": [
-        "adj. 孤独的"
+        "v. 蒸发"
       ]
     },
     {
-      "word": "parasite",
+      "word": "decease",
       "definitions": [
-        "n. 寄生虫"
+        "n. (人的)死亡"
       ]
     },
     {
-      "word": "quarterback",
+      "word": "contamination",
       "definitions": [
-        "n./v. 四分卫"
+        "n. 污染"
       ]
     },
     {
-      "word": "definitive",
+      "word": "hinder",
       "definitions": [
-        "adj. 决定性的；最佳的"
+        "v. 阻碍"
       ]
     },
     {
-      "word": "exploitation",
+      "word": "trickle",
       "definitions": [
-        "n. 开发，开采；剥削"
+        "v. 缓缓移动"
       ]
     },
     {
-      "word": "commute",
+      "word": "inclusive",
       "definitions": [
-        "v. 通勤；代替，交换"
+        "adj. 全包括的；首末项包含在内的"
       ]
     },
     {
-      "word": "stereo",
+      "word": "communal",
       "definitions": [
-        "n. 立体声音响"
+        "adj. 公共的"
       ]
     },
     {
-      "word": "enlist",
+      "word": "cache",
       "definitions": [
-        "v. (使)入伍；谋取...的帮助"
+        "n. 贮存物，隐藏处"
       ]
     },
     {
-      "word": "autonomous",
+      "word": "anomaly",
       "definitions": [
-        "adj. 自主的"
+        "n. 异常"
       ]
     },
     {
-      "word": "prototype",
+      "word": "chaotic",
       "definitions": [
-        "n. 原型，样板"
+        "adj. 混乱的"
       ]
     },
     {
-      "word": "transit",
+      "word": "reclaim",
       "definitions": [
-        "n. 运输"
+        "v. 开垦土地，开拓土地"
       ]
     },
     {
-      "word": "excerpt",
+      "word": "anatomy",
       "definitions": [
-        "n./v. 摘录"
+        "n. 解剖，解剖学"
       ]
     },
     {
-      "word": "erupt",
+      "word": "slender",
       "definitions": [
-        "v. 爆发"
+        "adj. 细长的，苗条的"
       ]
     },
     {
-      "word": "collision",
+      "word": "surpass",
       "definitions": [
-        "n. 碰撞；冲突"
+        "v. 超越，胜过"
       ]
     },
     {
-      "word": "liberate",
+      "word": "adjoin",
       "definitions": [
-        "v. 释放"
+        "v. 靠近"
+      ]
+    },
+    {
+      "word": "metropolitan",
+      "definitions": [
+        "adj. 大都市的"
+      ]
+    },
+    {
+      "word": "amplify",
+      "definitions": [
+        "v. 放大，扩大；详述"
+      ]
+    },
+    {
+      "word": "intrinsic",
+      "definitions": [
+        "adj. 本质的，必要的"
+      ]
+    },
+    {
+      "word": "famine",
+      "definitions": [
+        "n. 饥荒"
+      ]
+    },
+    {
+      "word": "recreational",
+      "definitions": [
+        "adj. 娱乐的"
+      ]
+    },
+    {
+      "word": "propel",
+      "definitions": [
+        "v. 推进"
+      ]
+    },
+    {
+      "word": "condense",
+      "definitions": [
+        "v. 使浓缩"
+      ]
+    },
+    {
+      "word": "credential",
+      "definitions": [
+        "n. 证书，凭据"
+      ]
+    },
+    {
+      "word": "diffuse",
+      "definitions": [
+        "v. 扩散"
+      ]
+    },
+    {
+      "word": "occupant",
+      "definitions": [
+        "n. 居住者"
+      ]
+    },
+    {
+      "word": "capsule",
+      "definitions": [
+        "n. 胶囊；航天舱"
+      ]
+    },
+    {
+      "word": "certification",
+      "definitions": [
+        "n. 证明"
+      ]
+    },
+    {
+      "word": "deception",
+      "definitions": [
+        "n. 欺骗"
+      ]
+    },
+    {
+      "word": "perennial",
+      "definitions": [
+        "adj. 多年生的；长期存在的",
+        "n. 多年生植物"
+      ]
+    },
+    {
+      "word": "indispensable",
+      "definitions": [
+        "adj. 必不可少的"
+      ]
+    },
+    {
+      "word": "eclipse",
+      "definitions": [
+        "v. 使黯然失色",
+        "n. 日蚀，月蚀"
+      ]
+    },
+    {
+      "word": "commend",
+      "definitions": [
+        "v. 称赞，表扬"
+      ]
+    },
+    {
+      "word": "flake",
+      "definitions": [
+        "n. 小薄片",
+        "v. 使…成薄片"
+      ]
+    },
+    {
+      "word": "crater",
+      "definitions": [
+        "n. 坑，火山口"
+      ]
+    },
+    {
+      "word": "geometric",
+      "definitions": [
+        "adj. 几何学的"
+      ]
+    },
+    {
+      "word": "greed",
+      "definitions": [
+        "n. 贪婪"
+      ]
+    },
+    {
+      "word": "deterioration",
+      "definitions": [
+        "n. 恶化"
+      ]
+    },
+    {
+      "word": "mitigate",
+      "definitions": [
+        "v. 缓解，减轻"
+      ]
+    },
+    {
+      "word": "comet",
+      "definitions": [
+        "n. 彗星"
+      ]
+    },
+    {
+      "word": "catalyst",
+      "definitions": [
+        "n. 催化剂"
+      ]
+    },
+    {
+      "word": "commonplace",
+      "definitions": [
+        "n. 普通的东西",
+        "adj. 平凡的"
+      ]
+    },
+    {
+      "word": "brood",
+      "definitions": [
+        "n. 一窝",
+        "v. 沉思"
+      ]
+    },
+    {
+      "word": "bleach",
+      "definitions": [
+        "v. 使漂白",
+        "n. 漂白剂"
+      ]
+    },
+    {
+      "word": "eradicate",
+      "definitions": [
+        "v. 根除，根绝"
+      ]
+    },
+    {
+      "word": "compass",
+      "definitions": [
+        "n. 指南针"
+      ]
+    },
+    {
+      "word": "coarse",
+      "definitions": [
+        "adj. 粗糙的；粗俗的，下等的"
+      ]
+    },
+    {
+      "word": "attic",
+      "definitions": [
+        "n. 阁楼"
+      ]
+    },
+    {
+      "word": "ruthless",
+      "definitions": [
+        "adj. 无情的，残忍的"
+      ]
+    },
+    {
+      "word": "gigantic",
+      "definitions": [
+        "adj. 巨大的，庞大的"
+      ]
+    },
+    {
+      "word": "lava",
+      "definitions": [
+        "n. 熔岩"
+      ]
+    },
+    {
+      "word": "obdurate",
+      "definitions": [
+        "adj. 固执的"
+      ]
+    },
+    {
+      "word": "pinpoint",
+      "definitions": [
+        "adj. 精确的",
+        "v. 精确定位"
+      ]
+    },
+    {
+      "word": "imprint",
+      "definitions": [
+        "n./v. 铭刻"
+      ]
+    },
+    {
+      "word": "recede",
+      "definitions": [
+        "v. 后退，撤回"
+      ]
+    },
+    {
+      "word": "conquest",
+      "definitions": [
+        "n. 征服"
+      ]
+    },
+    {
+      "word": "canyon",
+      "definitions": [
+        "n. 峡谷"
+      ]
+    },
+    {
+      "word": "glacier",
+      "definitions": [
+        "n. 冰川"
+      ]
+    },
+    {
+      "word": "gland",
+      "definitions": [
+        "n. 腺"
+      ]
+    },
+    {
+      "word": "dwindle",
+      "definitions": [
+        "v. 减少，变小"
+      ]
+    },
+    {
+      "word": "excavate",
+      "definitions": [
+        "v. 挖掘，开凿"
+      ]
+    },
+    {
+      "word": "immerse",
+      "definitions": [
+        "v. 浸泡；陷入"
+      ]
+    },
+    {
+      "word": "discredit",
+      "definitions": [
+        "v. 使不可信"
+      ]
+    },
+    {
+      "word": "unravel",
+      "definitions": [
+        "v. 解开；揭开"
+      ]
+    },
+    {
+      "word": "abrupt",
+      "definitions": [
+        "adj. 突然的"
+      ]
+    },
+    {
+      "word": "sprout",
+      "definitions": [
+        "v. 发芽"
+      ]
+    },
+    {
+      "word": "showcase",
+      "definitions": [
+        "v. 展示"
+      ]
+    },
+    {
+      "word": "impetus",
+      "definitions": [
+        "n. 动力"
+      ]
+    },
+    {
+      "word": "auxiliary",
+      "definitions": [
+        "adj. 辅助的"
+      ]
+    },
+    {
+      "word": "heed",
+      "definitions": [
+        "n./v. 注意，留意"
+      ]
+    },
+    {
+      "word": "entice",
+      "definitions": [
+        "v. 诱使，怂恿"
+      ]
+    },
+    {
+      "word": "renewable",
+      "definitions": [
+        "adj. 可再生的"
+      ]
+    },
+    {
+      "word": "ubiquitous",
+      "definitions": [
+        "adj. 普遍存在的"
+      ]
+    },
+    {
+      "word": "authoritative",
+      "definitions": [
+        "adj. 专断的；权威性的"
+      ]
+    },
+    {
+      "word": "attest",
+      "definitions": [
+        "v. 证明"
+      ]
+    },
+    {
+      "word": "flop",
+      "definitions": [
+        "v. 失败；扑通放下，重重地坐下"
+      ]
+    },
+    {
+      "word": "allude",
+      "definitions": [
+        "v. 暗指"
       ]
     }
   ]
