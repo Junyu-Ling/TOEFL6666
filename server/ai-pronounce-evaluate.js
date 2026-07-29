@@ -1,10 +1,11 @@
 import { chatCompletion } from "./ai-client.js";
+import { parseAiJson } from "./parse-ai-json.js";
 
 const SYSTEM_PROMPT = `你是英语发音批改专家。根据目标单词、标准音节/重音/音标，以及语音识别转写结果，严格判断用户读音是否合格。
 
-必须只返回 json：
+必须只返回 json（布尔字段只能是 true 或 false）：
 {
-  "is_correct": true或false,
+  "is_correct": true,
   "expected_syllables": ["音节1", "音节2"],
   "stress_index": 0,
   "expected_ipa": "/音标/",
@@ -21,25 +22,6 @@ const SYSTEM_PROMPT = `你是英语发音批改专家。根据目标单词、标
 6. 某音节元音明显错误必判 false（如 recipe 读成 /riː/ 开头）。
 7. issues 列出所有问题；is_correct=true 时 issues 为空数组。
 8. feedback 要指出应对准哪个音节、重音在哪，便于用户改正。`;
-
-function parseAiJson(text) {
-  let cleaned = text.trim();
-  cleaned = cleaned.replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/i, "");
-
-  try {
-    return JSON.parse(cleaned);
-  } catch {
-    const match = cleaned.match(/\{[\s\S]*\}/);
-    if (!match) throw new Error("AI 返回格式无效");
-
-    const candidate = match[0]
-      .replace(/,\s*([}\]])/g, "$1")
-      .replace(/[\u201c\u201d]/g, '"')
-      .replace(/[\u2018\u2019]/g, "'");
-
-    return JSON.parse(candidate);
-  }
-}
 
 function createConfigError(message, status = 500) {
   const err = new Error(message);

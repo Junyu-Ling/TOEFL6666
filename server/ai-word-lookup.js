@@ -1,4 +1,5 @@
 import { chatCompletion } from "./ai-client.js";
+import { parseAiJson } from "./parse-ai-json.js";
 
 const SYSTEM_PROMPT = `你是英语词典助手。用户查询的单词不在本地词库中，请给出该词的常见中文释义。
 
@@ -13,25 +14,6 @@ const SYSTEM_PROMPT = `你是英语词典助手。用户查询的单词不在本
 2. 覆盖常见词性，按使用频率排序；专有名词、缩写也需给出简明中文。释义条目控制在 8 条以内，只写核心义项，不要例句或记忆法。
 3. 若输入不是有效英文单词，word 仍返回清理后的输入，definitions 为空数组，并加一条「无法识别该词，请检查拼写」。
 4. 必须一次输出完整、合法的 JSON，不要 markdown 代码块，不要输出到一半中断。`;
-
-function parseAiJson(text) {
-  let cleaned = text.trim();
-  cleaned = cleaned.replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/i, "");
-
-  try {
-    return JSON.parse(cleaned);
-  } catch {
-    const match = cleaned.match(/\{[\s\S]*\}/);
-    if (!match) throw new Error("AI 返回格式无效");
-
-    const candidate = match[0]
-      .replace(/,\s*([}\]])/g, "$1")
-      .replace(/[\u201c\u201d]/g, '"')
-      .replace(/[\u2018\u2019]/g, "'");
-
-    return JSON.parse(candidate);
-  }
-}
 
 function createConfigError(message, status = 500) {
   const err = new Error(message);
