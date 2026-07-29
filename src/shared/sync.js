@@ -97,15 +97,68 @@ function mergeWordEntry(a, b) {
   };
 }
 
-function mergeWordLists(localList, remoteList) {
-  const map = new Map();
-  for (const item of localList) map.set(item.word, item);
-  for (const item of remoteList) {
-    const existing = map.get(item.word);
-    map.set(item.word, existing ? mergeWordEntry(existing, item) : item);
-  }
-  return [...map.values()];
+function countWordBooks(recognized, unrecognized) {
+  return (recognized?.length || 0) + (unrecognized?.length || 0);
 }
+
+/** 合并生词本+熟词本：以两边总词数更多的一方为主，再并入另一端的词。 */
+function mergeWordBookPair(localRecognized, localUnrecognized, remoteRecognized, remoteUnrecognized) {
+  const localTotal = countWordBooks(localRecognized, localUnrecognized);
+  const remoteTotal = countWordBooks(remoteRecognized, remoteUnrecognized);
+  const remoteWins = remoteTotal > localTotal;
+
+  const [primaryRec, primaryUnrec, secondaryRec, secondaryUnrec] = remoteWins
+    ? [remoteRecognized, remoteUnrecognized, localRecognized, localUnrecognized]
+    : [localRecognized, localUnrecognized, remoteRecognized, remoteUnrecognized];
+
+  const recognizedMap = new Map();
+  const unrecognizedMap = new Map();
+
+  for (const item of primaryRec) recognizedMap.set(item.word, item);
+  for (const item of primaryUnrec) {
+    if (!recognizedMap.has(item.word)) unrecognizedMap.set(item.word, item);
+  }
+
+  function absorbSecondary(recList, unrecList) {
+    for (const item of recList) {
+      const word = item.word;
+      if (recognizedMap.has(word)) {
+        recognizedMap.set(word, mergeWordEntry(recognizedMap.get(word), item));
+      } else if (unrecognizedMap.has(word)) {
+        const merged = mergeWordEntry(unrecognizedMap.get(word), item);
+        unrecognizedMap.delete(word);
+        recognizedMap.set(word, merged);
+      } else {
+        recognizedMap.set(word, item);
+      }
+    }
+
+    for (const item of unrecList) {
+      const word = item.word;
+      if (recognizedMap.has(word)) {
+        recognizedMap.set(word, mergeWordEntry(recognizedMap.get(word), item));
+        continue;
+      }
+      if (unrecognizedMap.has(word)) {
+        unrecognizedMap.set(word, mergeWordEntry(unrecognizedMap.get(word), item));
+      } else {
+        unrecognizedMap.set(word, item);
+      }
+    }
+  }
+
+  absorbSecondary(secondaryRec, secondaryUnrec);
+
+  return {
+    recognized: [...recognizedMap.values()],
+    unrecognized: [...unrecognizedMap.values()],
+  };
+}
+
+const WORD_BOOK_PAIRS = [
+  ["toefl666_recognized", "toefl666_unrecognized"],
+  ["toefl666_sat_recognized", "toefl666_sat_unrecognized"],
+];
 
 function mergeBookSession(localSession, remoteSession) {
   if (!localSession) return remoteSession || null;
@@ -229,17 +282,26 @@ export function mergeSyncBundles(localBundle, remoteBundle) {
 
   const mergedData = { ...localBundle.data };
   const remoteData = remoteBundle.data;
+  const processedWordBookKeys = new Set();
+
+  for (const [recognizedKey, unrecognizedKey] of WORD_BOOK_PAIRS) {
+    processedWordBookKeys.add(recognizedKey);
+    processedWordBookKeys.add(unrecognizedKey);
+
+    const merged = mergeWordBookPair(
+      parseJson(mergedData[recognizedKey], []),
+      parseJson(mergedData[unrecognizedKey], []),
+      parseJson(remoteData[recognizedKey], []),
+      parseJson(remoteData[unrecognizedKey], [])
+    );
+    mergedData[recognizedKey] = JSON.stringify(merged.recognized);
+    mergedData[unrecognizedKey] = JSON.stringify(merged.unrecognized);
+  }
 
   for (const [key, remoteValue] of Object.entries(remoteData)) {
     if (!key.startsWith(SYNC_PREFIX) || SYNC_EXCLUDED_KEYS.has(key)) continue;
+    if (processedWordBookKeys.has(key)) continue;
     const localValue = mergedData[key];
-
-    if (key === "toefl666_recognized" || key === "toefl666_unrecognized") {
-      mergedData[key] = JSON.stringify(
-        mergeWordLists(parseJson(localValue, []), parseJson(remoteValue, []))
-      );
-      continue;
-    }
 
     if (key === "toefl666_progress") {
       mergedData[key] = JSON.stringify(
