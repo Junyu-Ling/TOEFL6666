@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-07-29.4",
+  "updatedAt": "2026-07-29.5",
   "defaultListId": "level1-list1",
   "lists": [
     {
@@ -107,6 +107,13 @@
       "level": 2,
       "list": 4,
       "wordCount": 96
+    },
+    {
+      "id": "level2-list5",
+      "title": "Level 2 · List 5",
+      "level": 2,
+      "list": 5,
+      "wordCount": 100
     },
     {
       "id": "level2-list6",
