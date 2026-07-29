@@ -12,6 +12,8 @@ import {
   createLexGridRound,
   evaluateGuess,
   getKeyboardRows,
+  getLexGridLevelLabel,
+  getLexGridLevels,
   guessToWord,
   isGuessComplete,
   mergeKeyStates,
@@ -69,13 +71,15 @@ function Tile({ letter, state, filled, flip, settled, selected, selectable, posi
   );
 }
 
-function LexGridGame({ words, availableLists, tabId }) {
+function LexGridGame({ words, availableLists, tabId, appMode = "toefl" }) {
   const isTabActive = useIsActiveTab(tabId);
+  const levels = useMemo(() => getLexGridLevels(appMode), [appMode]);
+  const levelLabel = useMemo(() => getLexGridLevelLabel(appMode), [appMode]);
   const pool = useMemo(
-    () => buildLexGridPool(words, availableLists),
-    [words, availableLists]
+    () => buildLexGridPool(words, availableLists, levels),
+    [words, availableLists, levels]
   );
-  const wordBankSet = useMemo(() => buildWordBankSet(words), [words]);
+  const wordBankSet = useMemo(() => buildWordBankSet(pool), [pool]);
   const validationCacheRef = useRef(createPersistentValidationCache());
   const validateAbortRef = useRef(null);
 
@@ -92,10 +96,17 @@ function LexGridGame({ words, availableLists, tabId }) {
   }, [pool]);
 
   useEffect(() => {
-    if (!round && pool.length) {
-      setRound(createLexGridRound(pool));
-    }
-  }, [pool, round]);
+    if (!pool.length) return;
+    setRound((prev) => {
+      if (!prev) return createLexGridRound(pool);
+      const stillValid = pool.some(
+        (item) => item.word.toLowerCase() === prev.target?.word?.toLowerCase()
+      );
+      if (stillValid) return prev;
+      clearLexGridRound();
+      return createLexGridRound(pool);
+    });
+  }, [pool]);
 
   useEffect(() => {
     if (round) saveLexGridRound(round);
@@ -364,7 +375,7 @@ function LexGridGame({ words, availableLists, tabId }) {
       <div className="lexgrid">
         <div className="lexgrid__empty">
           <span className="empty-icon">🎮</span>
-          <p>Level 1–4 词库暂无可用单词（需 4–8 个纯字母单词）</p>
+          <p>{levelLabel} 词库暂无可用单词（需 4–8 个纯字母单词）</p>
         </div>
       </div>
     );
@@ -410,7 +421,7 @@ function LexGridGame({ words, availableLists, tabId }) {
         <div>
           <h2 className="lexgrid__title">LexGrid</h2>
           <p className="lexgrid__subtitle">
-            词格猜词 · Level 1–4 随机 · {wordLength} 字母 · {maxGuesses} 次机会
+            词格猜词 · {levelLabel} 随机 · {wordLength} 字母 · {maxGuesses} 次机会
             {status === "recall" ? " · 认词过关" : ""}
           </p>
         </div>

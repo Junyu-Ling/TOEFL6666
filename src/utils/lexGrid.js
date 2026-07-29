@@ -1,4 +1,5 @@
 export const LEXGRID_LEVELS = [1, 2, 3, 4];
+export const SAT_LEXGRID_LEVELS = [1];
 export const LEXGRID_MIN_LEN = 4;
 export const LEXGRID_MAX_LEN = 8;
 
@@ -23,6 +24,14 @@ export function getKeyboardRows() {
 
 export function getMaxGuesses(wordLength) {
   return Math.max(6, wordLength + 1);
+}
+
+export function getLexGridLevels(appMode) {
+  return appMode === "sat" ? SAT_LEXGRID_LEVELS : LEXGRID_LEVELS;
+}
+
+export function getLexGridLevelLabel(appMode) {
+  return appMode === "sat" ? "Level 1" : "Level 1–4";
 }
 
 export function buildLexGridPool(words, availableLists, levels = LEXGRID_LEVELS) {

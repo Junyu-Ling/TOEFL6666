@@ -1065,8 +1065,15 @@ export default function App() {
   );
 
   const lexGridPanel = useMemo(
-    () => <LexGridGame words={allBankWords} availableLists={availableLists} tabId="lexgrid" />,
-    [allBankWords, availableLists]
+    () => (
+      <LexGridGame
+        words={allBankWords}
+        availableLists={availableLists}
+        tabId="lexgrid"
+        appMode={appMode}
+      />
+    ),
+    [allBankWords, availableLists, appMode]
   );
 
   const readingVocabPanel = useMemo(
