@@ -1,199 +1,215 @@
 === LEVEL 1 LIST 9 ===
-touchdown
-n. 着陆；触地得分
-latitude
-n. 纬度；(言论、行为等的)自由度
-longitude
-n. 经度
-hasten
-v. 加快；催促
-resonate
-v. 回响；引起共鸣；共振
-ridicule
-v./n. 嘲弄
-feminism
-n. 女权主义
-improvise
-v. 即兴创作、表演；临时凑合做
-perimeter
-n. 周长；边界，边缘
-courageous
-adj. 勇敢的
-transient
-adj. 短暂的；路过的
-myriad
-n. 无数，极大数量
-clog
-v./n. 阻塞
-fortify
-v. 增强；鼓励；设防加固
-overshadow
-v. 给…蒙上阴影；使…黯然失色；遮蔽
-visionary
-adj. 有远见的；幻想的，不切实际的
-additive
-adj. 增加的
-n. 添加剂
-plumb
-adj. 垂直的
-v. 探究；铺设水管
-insulate
-v. 绝缘，隔热
-agitate
-v. 使激动；煽动
-analogous
-adj. 类似的
-cosmic
-adj. 宇宙的；广阔的
-wane
-v. 衰退，减弱
-n. 月亏
-agreeable
-adj. 讨人喜欢的，怡人的
-repress
-v. 压抑，抑制
-pessimistic
-adj. 悲观的
-endow
-v. 捐赠；天生具有
-outspoken
-adj. 坦率的
-incompetent
-adj. 不胜任的，无能力的
-petal
-n. 花瓣
-bland
-adj. 乏味的；清淡的
-submerge
-v. 淹没
-toxin
-n. 毒素
-encyclopedia
-n. 百科全书
-numb
-adj. 失去知觉的，麻木的
-impoverish
-v. 使贫穷；使枯竭
-tidal
-adj. 潮汐的
-deplete
-v. 消耗
-gracious
-adj. 亲切的，仁慈的
-thaw
-v. 融化，融解
-culprit
-n. 犯人，罪犯
-explanatory
-adj. 起解释作用的
-vigor
-n. 活力，精力；气魄
-pivotal
-adj. 关键的
-sterile
-adj. 贫瘠的；不育的；无菌的
-constellation
-n. 星座；群集
-neutralize
-v. 使无效，抵消；中和
-overhear
-v. 无意中听到
-deduce
-v. 推断
-negligible
-adj. 可忽略不计的
-burrow
-n. 洞穴，藏身处
-sparse
-adj. 稀疏的
-dissolution
-n. 解除，解散；溶解
-cosmopolitan
-adj. 世界性的
-engender
-v. 使产生，造成
-converse
-adj. 相反的，逆向的
-v. 交谈，谈话
-formative
-adj. 有助发展的
-recourse
-n. 求助，手段
-rectangular
-adj. 长方形的
-furnace
-n. 火炉，熔炉
-disarm
-v. 缴…的械；消除(某人)的怒气
-hallmark
-n. 特点；(金银上的)标记证明
-devour
-v. 吞食，狼吞虎咽地吃；急切地读
-perish
-v. 死亡，枯萎
-asteroid
-n. 小行星
-feasibility
-n. 可行性
-prolific
-adj. 多产的
-carnival
-n. 狂欢节，嘉年华
-enrichment
-n. 丰富，充实；富集，浓缩
-intrude
-v. 闯入，侵入
-paraphrase
-n./v. 意译
-conformity
-n. 遵守，一致
-obstruct
-v. 阻碍
-chronological
-adj. 按年代顺序排列的
-retard
-v. 减缓，妨碍
-seep
-v. 渗出
-camouflage
-n./v. 伪装
-distill
-v. 蒸馏
-intersect
-v. 横穿，贯穿；相交
-requisite
-adj. 必要的
-barren
-adj. 贫瘠的；不育的；沉闷无趣的
-opaque
-adj. 不透明的；晦涩难懂的
-engulf
-v. 吞没，吞食
-shun
-v. 避开
-colonize
-v. 殖民；大批生长
-dignify
-v. 使显贵，抬高…的身价
-shroud
-v. 掩盖
-refute
-v. 驳斥
-intruder
-n. 入侵者
-permeate
-v. 渗透，弥漫
-shady
-adj. 有树荫的；名声不好的，见不得人的
-mania
-n. 狂热
-integer
-n. 整数
-nourish
-v. 养育
-synchronize
-v. 同步
-aquatic
-adj. 水生的
-hardy
-adj. 强壮的
+gloat
+v. 得意扬扬
+extravagance
+n. 挥霍；奢侈 (lack of restraint in spending money or use of resources)
+n. 夸张的举动；放肆的言行 (excessive elaboration)
+sardonic
+adj. 讥讽的 (grimly mocking or cynical)
+exorbitant
+adj. 过高的 (unreasonably high)
+audacious
+adj. 大胆的 (showing a willingness to take surprisingly bold risks)
+wistful
+adj. 渴望的；留恋的 (having or showing a feeling of vague or regretful longing)
+perturb
+v. 使不安 (make (someone) anxious or unsettled)
+oscillate
+v. 使动摇，使震荡 (move or swing from side to side regularly)
+colloquial
+adj. 口语的 (language used in ordinary or familiar conversation)
+malign
+adj. 恶意的；有害的
+v. 诽谤
+rover
+n. 漫游者
+egregious
+adj. 极坏的；极严重的
+insurmountable
+adj. 无法克服的；无法逾越的
+observant
+adj. 善于观察的；敏锐的
+adj. 严格遵守的
+enmity
+n. 敌意
+crevice
+n. 裂缝 (a narrow crack or gap，especially in a rock)
+rejuvenate
+v. 使年轻，使有活力
+illusory
+adj. 虚幻的；虚假的 (based on illusion；not real)
+unanimity
+n. 同意，全体一致 (agreement by all people involved)
+opulent
+adj. 豪华的 (ostentatiously rich or lavish)
+hyperbole
+n. 夸张
+succinct
+adj. 简明的
+fickle
+adj. 易变的 (changing frequently)
+hypnotize
+v. 对……施催眠术
+v. 使着迷
+indelible
+adj. 难以去除的 (not able to be forgotten or removed)
+convoluted
+adj. 错综复杂的 (very complicated and difficult to understand)
+adj. 盘绕的，弯曲的 (having many twists and curves)
+brevity
+n. 简洁
+n. 短暂
+despicable
+adj. 卑鄙的 (deserving hatred and contempt)
+paucity
+n. 不足
+chastise
+v. 责备；体罚 (punish，as for wrongdoing)
+sensuous
+adj. 愉悦感官的
+adj. 性感的；令人着迷的
+extraterrestrial
+n./adj. 地外的(生物)
+belittle
+v. 贬低 (make seem unimportant)
+cajole
+v. 劝诱
+acumen
+n. 精明
+panacea
+n. 灵丹妙药；万能药
+posthumous
+adj. 死后获得的 (occurring，awarded，or appearing after the death of the originator)
+didactic
+adj. 教导的
+tinge
+n. 淡色；些许味道 (a small amount of a color incorporated or added)
+v. 染上少许颜色 (apply a trace of color to)
+demarcation
+n. 界限，边界
+n. 区分，划分
+governess
+n. 女家庭教师
+assuage
+v. 缓解 (make (an unpleasant feeling) less intense)
+v. 满足 (satisfy (thirst))
+extrinsic
+adj. 外在的；外部的
+capricious
+adj. 变化无常的；突发奇想的 (impulsive or unpredictable)
+regal
+adj. 帝王的 (of or fit for a monarch)
+steadfast
+adj. 坚定的 (resolutely or dutifully firm and unwavering)
+adj. 忠实的
+abhor
+v. 憎恶 (regard with disgust and hatred)
+prosaic
+adj. 枯燥的 (lacking poetic beauty)
+balm
+n. 香气，香味，芳香
+n. 慰藉物，安慰物
+vandalize
+v. 蓄意破坏
+hubris
+n. 傲慢自大 (excessive pride or self-confidence)
+aberrant
+adj. 反常的 (straying from the right or normal way)
+juggernaut
+n. 不可抗拒的力量
+n. 大型载重车辆(尤指卡车)
+sustenance
+n. 食物，生计 (food and drink)
+n. 维持
+oratory
+n. 演讲术
+n. 雄辩的言辞；华丽的词藻
+formulaic
+adj. 刻板的
+digression
+n. 离题
+diminution
+n. 减少，降低
+extrovert
+n./adj. 性格外向的(人)
+transitory
+adj. 短暂的
+irrevocable
+adj. 不可撤回的 (not able to be changed，reversed，or recovered)
+heretic
+n. 异教徒；离经叛道者
+flagrant
+adj. 骇人听闻的；丑恶可耻的
+abridge
+v. 删节 (shorten without losing the sense)
+salutary
+adj. 有益的 (producing good effects)
+immutable
+adj. 不可改变的
+fluster
+n./v. (使)慌乱
+equivocal
+adj. 模棱两可的 (open to more than one interpretation)
+horoscope
+n. 星象；占星术
+sedative
+n./adj. 镇静剂(的)
+whirlpool
+n. 旋涡 (a powerful circular current of water)
+harbinger
+n. 预告者 (a person or thing that announces or signals the approach of another)
+realign
+v. 调整……的位置
+v. 重新结盟
+reverie
+n. 遐想 (a state of being pleasantly lost in one's thoughts)
+annul
+v. 宣告……无效；废除
+automaton
+n. 动作机械的人 (someone who acts or responds in a mechanical or apathetic way)
+n. 机器人
+jubilant
+adj. 欣喜若狂的 (feeling or expressing great happiness and triumph)
+vehement
+adj. 强烈的 (showing strong feeling；forceful，passionate，or intense)
+opacity
+n. 不透明；浑浊
+n. 无法理解；难懂
+transgress
+v. 违背；侵犯 (infringe or go beyond the bounds of)
+succulent
+adj. 鲜美多汁的；肉质的 ((of food) tender，juicy，and tasty)
+n. 肉质植物
+omnipresent
+adj. 无处不在的 (widely or constantly encountered)
+auspicious
+adj. 吉利的 (conducive to success)
+connote
+v. 意味着；含言外之意 (make you think about (something) in addition to the word's meaning)
+imitator
+n. 模仿者；仿制品
+circumspect
+adj. 慎重的，细心的 (wary and unwilling to take risks)
+serpentine
+adj. 蜿蜒的；弯弯曲曲的 (curving and winding in shape，like a snake when it moves)
+ceaseless
+adj. 不停的 (seeming to never stop)
+inexhaustible
+adj. 用之不竭的 (impossible to use up completely)
+adj. 不知疲倦的
+unfathomable
+adj. 深不可测的
+adj. 不可理解的；难以捉摸的
+omniscient
+adj. 全能的，无所不知的
+infinitesimal
+adj. 极小的，无穷小的 (extremely small)
+abominable
+adj. 恶劣的 (causing moral revulsion)
+tyrannical
+adj. 专制的；残暴的 (exercising power in a cruel or arbitrary way)
+ungainly
+adj. 笨拙的 (moving in a way that is not smooth or elegant)
+ruminate
+v. 沉思 (think deeply about something)
+v. 反刍

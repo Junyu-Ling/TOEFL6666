@@ -1,217 +1,209 @@
 === LEVEL 1 LIST 6 ===
-purse
-v. 撅起，皱起
-n. 手提包，钱包
-pursuit
-n. 追求，寻找
-authentic
-adj. 真实的，可信的
-robust
-adj. 强壮的；坚定的
-unprecedented
-adj. 空前的，史无前例的
-portable
-adj. 便于携带的
-embody
-v. 体现，使具体化
-abolish
-v. 废除
-skull
-n. 颅骨
-saint
-n. 圣徒
-discard
-v. 抛弃，放弃
-furious
-adj. 狂怒的
-plague
-n. 瘟疫
-v. 折磨，使苦恼
-fragile
-adj. 易碎的
-gorgeous
-adj. 美丽动人的
-invoke
-v. 祈求；引用，援引；施加
-splash
-v. 溅起
-spiral
-adj. 螺旋形的
-compatible
-adj. 兼容的；相符的
-heap
-n. 堆
-endanger
-v. 危害
-align
-v. 使结盟；排成一行
-vest
-n. 背心，马甲
-v. 授予
-canvas
-n. 帆布；画布；油画
-evoke
-v. 引起，唤起
-skeptical
-adj. 怀疑的
-transparent
-adj. 透明的；易懂的
-exert
-v. 运用；施加
-stab
-v. 刺，戳
-glare
-v. 发出强光
-n. 怒视；光辉
-foul
-v. 犯规
-adj. 邪恶的，污秽的
-provincial
-adj. 省的，地方性的；偏狭的
-imperative
-adj. 必要的
-n. 必要的事
-descent
-n. 下降；血统，出身
-municipal
-adj. 市政的
-consecutive
-adj. 连续的
-blaze
-n. 烈火；光辉
-v. 公开宣布
-deteriorate
-v. 恶化
-hail
-v. 致敬，招呼
-n. 冰雹
-lid
-n./v. 盖子；眼睑
-intake
-n. 摄取量
-underestimate
-v. 低估
-exaggerate
-v. 夸大
-drawback
-n. 缺陷
-blur
-v. 使模糊
-cargo
-n. 货物，船货
-landmark
-n. 里程碑；地标
-patron
-n. 资助人；顾客
-sparkle
-v./n. (发)光；(表现)抢眼
-absurd
-adj. 荒唐的
-bulb
-n. 电灯泡；球茎
-successive
-adj. 连续的
-hatch
-v. 孵出
-rib
-n. 肋骨
-sway
-v. 摇晃
-sore
-adj. 感到疼痛的
-n. 疮，痛处
-optimism
-n. 乐观
-choke
-v. 窒息；阻塞
-fertilizer
-n. 肥料
-crisp
-adj. 松脆的
-n. 炸薯片
-feasible
-adj. 可行的
-envy
-n./v. 羡慕，嫉妒
-buffer
-v./n. 缓冲
-indulge
-v. 纵容，放纵
-plow
-n. 犁
-v. 耕地
-chorus
-n. 合唱队
-cushion
-n. 垫子
-v. 保护
-revival
-n. 复活，再生
-wrestle
-v. 扭打
-expire
-v. 到期，终止
-excursion
-n. 远足
-obsession
-n. 痴迷
-disastrous
-adj. 灾难的
-tablet
-n. 刻写板；平板电脑
-ceramic
-n. 陶瓷
-civic
-adj. 城市的
-supreme
-adj. 卓越的
-scrape
-n./v. 刮擦
-denounce
-v. 谴责
-vacant
-adj. 空着的；心不在焉的
-fuss
-n. 激动，大惊小怪
-volatile
-adj. 多变的；易挥发的
-elicit
-v. 引出
-recount
-v. 详细叙述
-prone
-adj. 倾向于；俯卧的
-mansion
-n. 宅第
-pirate
-n. 海盗
-v./n. 盗版(物)
-terrain
-n. 地形
-intensify
-v. 加强
-notorious
-adj. 臭名昭著的
-disperse
-v. 分散，使散开
-shrine
-n. 圣地
-adhere
-v. 粘附
-brew
-v./n. 酿制；冲泡；酝酿
-debris
-n. 碎片，残骸
-prose
-n./v. 写散文
-n. 枯燥无味的话
-frown
-v. 皱眉
-resent
-v. 憎恨
-bud
-n./v. (发)芽
-posture
-n. 姿势
-ensue
-v. 跟着发生，接着发生
+blatant
+adj. 明显的(conspicuous or obtrusive)
+adj. 吵闹的(unpleasantly loud and noisy)
+veer
+v./n. 转向(a sudden change of direction)
+repercussion
+n. 反响(a movement back from an impact)
+miraculous
+adj. 奇迹般的(highly improbable and extraordinary)
+delve
+v. 探索，挖掘，搜寻
+pavilion
+n. 装饰性建筑，亭子(a temporary building used at public events)
+tapestry
+n. 挂毯
+ornate
+adj. 华美的；(词藻)华丽的
+brim
+n. (帽)沿
+v. 充盈，满溢(be full of fluid)
+nobility
+n. 高贵；贵族
+liken
+v. 把某人/某事物比作
+airborne
+adj. 空气传播的；航空的(transported by air)
+deport
+v. 驱逐
+brag
+v. 吹嘘(say in a boastful manner)
+synchronize
+v. 同步(occur at the same time)
+vernacular
+n./adj. 方言(的)，本地化(的)
+floral
+adj. 植物的；花的(relating to flowers)
+captivate
+v. 迷住，迷惑(attract)
+savvy
+n. 常识
+adj. 精明的；有见识的(shrewd and knowledgeable)
+espouse
+n./v. 支持(adopt or support)
+allure
+n./v. 吸引(the quality of being attractive or fascinating)
+fragrance
+n. 香味
+defiant
+adj. 挑衅的(openly refusing to obey)
+vulgar
+adj. 庸俗的；粗鲁的(lacking sophistication or good taste)
+deplore
+v. 悲悼；反对(feel or express strong disapproval)
+elongate
+v. 拉长(make long)
+harmonic
+adj. 和声的
+n. [物理]谐波
+abort
+v. 中止；取消；使……流产
+avid
+adj. 热衷的；热心的(marked by keen interest and enthusiasm)
+brook
+v. 容忍，忍受(put up with something or somebody unpleasant)
+n. 小溪(a small stream)
+haste
+n. 匆忙(excessive speed or urgency)
+blockbuster
+n. 了不起的人或事(an usually successful hit)
+sneer
+v./n. 冷笑；讥笑(a mocking smile)
+decency
+n. 得体；礼仪(behavior that conforms to accepted standards)
+aristocracy
+n. 贵族
+treacherous
+adj. 奸诈的；危险的
+neutrality
+n. 中立
+remorse
+n. 懊悔(deep regret)
+charisma
+n. 个人魅力
+gape
+n./v. 张口结舌地瞪着
+v. 裂开；张大
+coax
+v. 哄劝，劝诱(persuade sb. by flattery)
+reimburse
+v. 偿付(repay)
+varnish
+n./v. (涂)清漆
+eclectic
+n./v. 兼收并蓄(的)(deriving ideas from a broad range of sources)
+carcass
+n. 尸体；残骸
+creed
+n. 信条；原则(a system of Christian or other religious belief)
+hysteria
+n. 歇斯底里
+idiosyncratic
+adj. 独特的
+mediocre
+adj. 普通的(of only moderate quality)
+detour
+n./v. 绕道(而行)(a roundabout road)
+intangible
+adj. 无形的
+impartial
+adj. 公正的
+illiterate
+adj. 不识字的；外行的
+n. 文盲
+galvanize
+v. 刺激；激励(shock or excite into taking action)；给……镀锌；通电
+resurgence
+n. 复兴；再现(an increase or revival)
+counterfeit
+v./adj./n. 伪造(的)(东西)
+immaculate
+adj. 无瑕疵的(free from flaws)
+accentuate
+v. 强调(make more noticeable or prominent)
+containment
+n. 抑制；牵制
+blight
+n./v. 破坏，毁坏；阻碍发展(的东西)
+heady
+adj. (酒)上头的；浓烈的
+adj. 令人兴奋的
+garrison
+n./v. 驻防；守卫(部队)
+assort
+v. 分类(classify)
+sublime
+adj. 很棒的，卓越的；极致的，极端的
+dreary
+adj. 枯燥的(dull，bleak，and lifeless)
+hereditary
+adj. 世袭的；遗传的
+kinship
+n. [法]亲属关系
+vindicate
+v. 辩护(clear sb. of blame or suspicion)
+subversive
+adj./n. 颠覆性的(人)
+sloppy
+adj. 邋遢的；马虎的；宽松的
+ardent
+adj. 热烈的；热情的
+legislate
+v. 立法
+detract
+v. 减损；转移；使分心
+respite
+n./v. 喘息；暂缓(a short period of rest)
+erroneous
+adj. 错误的
+resurrect
+v. 使复活(restore to life)
+disclaimer
+n. 免责声明(a statement that denies sth.)
+culinary
+adj. 烹饪的；厨房的
+epoch
+n. 时代(a period marked by distinctive character)
+desolate
+adj. 荒凉的(empty and without people)
+crumple
+v. 弄皱；垮台，崩溃
+delinquency
+n. (少年)违法犯罪
+improvisation
+n. 即兴表演；即兴创作
+aversion
+n. 厌恶
+attire
+n./v. (穿上)盛装
+reprimand
+n. 惩戒(censure severely or angrily)
+cumbersome
+adj. 笨重的；累赘的；不方便的
+apprehend
+v. 逮捕；理解；意识到
+acronym
+n. 首字母缩略词
+flimsy
+adj. 劣质的；薄的；不足信的
+reproach
+n./v. 责备；(使感到)耻辱
+choreographer
+n. 编舞者；舞蹈指导
+prerogative
+n. 特权
+circumvent
+v. 包围；回避
+bounty
+n. 慷慨；赏金
+complacent
+adj. 自满的(satisfied with a situation that you feel it needs no change)
+rendezvous
+v./n. 约会，会面
+compulsive
+adj. 难以控制的；吸引人的
+flamboyant
+adj. 艳丽的
+fervor
+n. 热忱

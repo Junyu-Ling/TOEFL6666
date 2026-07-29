@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-07-29.3",
+  "updatedAt": "2026-07-29.4",
   "defaultListId": "level1-list1",
   "lists": [
     {
@@ -43,7 +43,7 @@
       "title": "Level 1 · List 6",
       "level": 1,
       "list": 6,
-      "wordCount": 101
+      "wordCount": 100
     },
     {
       "id": "level1-list7",
@@ -57,21 +57,21 @@
       "title": "Level 1 · List 8",
       "level": 1,
       "list": 8,
-      "wordCount": 101
+      "wordCount": 100
     },
     {
       "id": "level1-list9",
       "title": "Level 1 · List 9",
       "level": 1,
       "list": 9,
-      "wordCount": 97
+      "wordCount": 96
     },
     {
       "id": "level1-list10",
       "title": "Level 1 · List 10",
       "level": 1,
       "list": 10,
-      "wordCount": 95
+      "wordCount": 148
     },
     {
       "id": "level1-list11",
