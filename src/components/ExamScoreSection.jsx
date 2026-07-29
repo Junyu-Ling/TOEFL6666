@@ -6,6 +6,8 @@ import {
   formatSatScore,
   formatToeflScore,
 } from "../utils/examScores";
+import { normalizeAppMode } from "../utils/appMode";
+import { getStudyPlanForExam } from "../services/settings";
 import { getSyncSummary } from "../shared/sync";
 import { loadStreak, daysUntil } from "../services/streak";
 import { streamStudyPlan } from "../services/studyPlan";
@@ -15,8 +17,8 @@ function scoreInputValue(value) {
   return value == null ? "" : String(value);
 }
 
-function examScoreMeta(settings) {
-  if (settings.targetExam === "sat") {
+function examScoreMeta(settings, examType) {
+  if (examType === "sat") {
     const total = settings.satScores?.total;
     const target = settings.satTargetTotal;
     if (total != null && target != null) return `SAT ${total} → ${target}`;
@@ -34,7 +36,6 @@ function examScoreMeta(settings) {
 export default function ExamScoreSection() {
   const {
     settings,
-    setTargetExam,
     setToeflSectionScore,
     setSatSectionScore,
     setToeflTargetTotal,
@@ -42,21 +43,23 @@ export default function ExamScoreSection() {
     setStudyPlan,
   } = useSettings();
 
-  const [planDraft, setPlanDraft] = useState(settings.studyPlan?.content || "");
+  const examType = normalizeAppMode(settings.appMode);
+  const isToefl = examType === "toefl";
+  const savedPlan = useMemo(() => getStudyPlanForExam(settings, examType), [settings, examType]);
+
+  const [planDraft, setPlanDraft] = useState(savedPlan?.content || "");
   const [planBusy, setPlanBusy] = useState(false);
   const [planError, setPlanError] = useState("");
   const abortRef = useRef(null);
 
   useEffect(() => {
     if (!planBusy) {
-      setPlanDraft(settings.studyPlan?.content || "");
+      setPlanDraft(savedPlan?.content || "");
     }
-  }, [settings.studyPlan, planBusy]);
+  }, [savedPlan, planBusy]);
 
-  const isToefl = settings.targetExam !== "sat";
   const examContext = useMemo(() => {
     const streak = loadStreak();
-    const examType = settings.targetExam;
     const marks = (streak.examMarks || []).filter((m) => m.type === examType);
     const sorted = [...marks].sort((a, b) => a.dateKey.localeCompare(b.dateKey));
     const upcoming = sorted.find((m) => daysUntil(m.dateKey) >= 0);
@@ -64,15 +67,15 @@ export default function ExamScoreSection() {
       examDates: sorted.map((m) => m.dateKey),
       daysUntilExam: upcoming ? daysUntil(upcoming.dateKey) : null,
     };
-  }, [settings.targetExam]);
+  }, [examType]);
 
   const canGenerate = isToefl
     ? settings.toeflScores?.total != null && settings.toeflTargetTotal != null
     : settings.satScores?.total != null && settings.satTargetTotal != null;
 
-  function handleSectionBlur(examType, key, raw) {
+  function handleSectionBlur(exam, key, raw) {
     const trimmed = raw.trim();
-    if (examType === "toefl") {
+    if (exam === "toefl") {
       setToeflSectionScore(key, trimmed === "" ? null : trimmed);
       return;
     }
@@ -101,7 +104,7 @@ export default function ExamScoreSection() {
 
     const syncSummary = getSyncSummary();
     const payload = {
-      examType: settings.targetExam,
+      examType,
       currentScores: isToefl ? settings.toeflScores : settings.satScores,
       targetTotal: isToefl ? settings.toeflTargetTotal : settings.satTargetTotal,
       vocabProgress: {
@@ -119,12 +122,11 @@ export default function ExamScoreSection() {
         onDelta: (_delta, full) => setPlanDraft(full),
       });
 
-      const saved = {
-        examType: settings.targetExam,
+      setStudyPlan({
+        examType,
         content: plan,
         generatedAt: Date.now(),
-      };
-      setStudyPlan(saved);
+      });
       setPlanDraft(plan);
     } catch (err) {
       if (err.name !== "AbortError") {
@@ -141,41 +143,20 @@ export default function ExamScoreSection() {
     setPlanBusy(false);
   }
 
-  const displayedPlan = planDraft || settings.studyPlan?.content || "";
-  const planStale =
-    settings.studyPlan?.content &&
-    settings.studyPlan.examType !== settings.targetExam;
+  const displayedPlan = planDraft || savedPlan?.content || "";
+  const sectionTitle = isToefl ? "托福分数与提分计划" : "SAT 分数与提分计划";
+  const sectionHint = isToefl
+    ? "填写托福实考分数与目标分，AI 将分析薄弱科目并生成个性化提分计划。采用 2026 新格式（四门各 1–6 分，总分为四科平均）。"
+    : "填写 SAT 实考分数与目标分，AI 将分析薄弱科目并生成个性化提分计划（阅读文法 + 数学，总分 400–1600）。";
 
   return (
     <details className="settings-group">
       <summary className="settings-group__summary">
-        <span className="settings-group__title">考试分数与提分计划</span>
-        <span className="settings-group__meta">{examScoreMeta(settings)}</span>
+        <span className="settings-group__title">{sectionTitle}</span>
+        <span className="settings-group__meta">{examScoreMeta(settings, examType)}</span>
       </summary>
       <div className="settings-group__body">
-        <p className="settings-hint settings-hint--compact">
-          填写实考分数与目标分，AI 将分析薄弱科目并生成个性化提分计划。托福采用 2026 新格式（四门各 1–6 分，总分为四科平均）。
-        </p>
-
-        <div className="settings-field">
-          <span>考试类型</span>
-          <div className="theme-toggle">
-            <button
-              type="button"
-              className={`theme-toggle__btn ${isToefl ? "theme-toggle__btn--active" : ""}`}
-              onClick={() => setTargetExam("toefl")}
-            >
-              托福
-            </button>
-            <button
-              type="button"
-              className={`theme-toggle__btn ${!isToefl ? "theme-toggle__btn--active" : ""}`}
-              onClick={() => setTargetExam("sat")}
-            >
-              SAT
-            </button>
-          </div>
-        </div>
+        <p className="settings-hint settings-hint--compact">{sectionHint}</p>
 
         {isToefl ? (
           <>
@@ -266,7 +247,7 @@ export default function ExamScoreSection() {
             onClick={handleGeneratePlan}
             disabled={!canGenerate || planBusy}
           >
-            {planBusy ? "正在生成计划…" : "AI 生成提分计划"}
+            {planBusy ? "正在生成计划…" : isToefl ? "AI 生成托福提分计划" : "AI 生成 SAT 提分计划"}
           </button>
           {planBusy ? (
             <button type="button" className="settings-action-btn" onClick={handleCancelPlan}>
@@ -281,17 +262,11 @@ export default function ExamScoreSection() {
 
         {planError ? <p className="settings-status settings-status--error">{planError}</p> : null}
 
-        {planStale ? (
-          <p className="settings-hint settings-hint--compact">
-            当前显示的是另一种考试类型的计划，重新生成可更新。
-          </p>
-        ) : null}
-
         {displayedPlan ? (
           <div className="settings-study-plan">
-            {settings.studyPlan?.generatedAt && !planBusy ? (
+            {savedPlan?.generatedAt && !planBusy ? (
               <p className="settings-study-plan__meta">
-                生成于 {new Date(settings.studyPlan.generatedAt).toLocaleString("zh-CN")}
+                生成于 {new Date(savedPlan.generatedAt).toLocaleString("zh-CN")}
               </p>
             ) : null}
             <RichAiContent content={displayedPlan} />

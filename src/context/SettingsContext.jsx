@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect, useCallback, useMemo } from "react";
-import { loadSettings, patchSettings, clampDelaySec, updateToeflSectionScore, updateSatSectionScore } from "../services/settings";
+import { loadSettings, patchSettings, clampDelaySec, updateToeflSectionScore, updateSatSectionScore, normalizeStudyPlans } from "../services/settings";
 import { normalizeAppMode, APP_MODE_TITLES } from "../utils/appMode";
 import { normalizeTargetExam, normalizeToeflTargetTotal, normalizeSatTargetTotal } from "../utils/examScores";
 import { getSystemVoices, speakWord as speak } from "../utils/speech";
@@ -152,8 +152,25 @@ export function SettingsProvider({ children }) {
   );
 
   const setStudyPlan = useCallback(
-    (studyPlan) => updateSettings({ studyPlan }),
-    [updateSettings]
+    (studyPlan) => {
+      const examType = normalizeTargetExam(studyPlan?.examType);
+      const content = typeof studyPlan?.content === "string" ? studyPlan.content.trim() : "";
+      if (!content) return;
+
+      setSettings((prev) => {
+        const studyPlans = {
+          ...normalizeStudyPlans(prev),
+          [examType]: {
+            content,
+            generatedAt: typeof studyPlan?.generatedAt === "number" ? studyPlan.generatedAt : Date.now(),
+          },
+        };
+        const next = { ...prev, studyPlans, studyPlan: null };
+        patchSettings({ studyPlans });
+        return next;
+      });
+    },
+    []
   );
 
   const speakWord = useCallback((word) => speak(word, settings), [settings]);

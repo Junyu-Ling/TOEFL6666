@@ -44,15 +44,41 @@ const DEFAULT_SETTINGS = {
   satScores: { ...DEFAULT_SAT_SCORES },
   satTargetTotal: null,
   studyPlan: null,
+  studyPlans: { toefl: null, sat: null },
 };
+
+function normalizeStudyPlanEntry(value) {
+  if (!value || typeof value !== "object") return null;
+  const content = typeof value.content === "string" ? value.content.trim() : "";
+  const generatedAt = typeof value.generatedAt === "number" ? value.generatedAt : null;
+  if (!content) return null;
+  return { content, generatedAt };
+}
 
 function normalizeStudyPlan(value) {
   if (!value || typeof value !== "object") return null;
   const examType = normalizeTargetExam(value.examType);
-  const content = typeof value.content === "string" ? value.content.trim() : "";
-  const generatedAt = typeof value.generatedAt === "number" ? value.generatedAt : null;
-  if (!content) return null;
-  return { examType, content, generatedAt };
+  const entry = normalizeStudyPlanEntry(value);
+  if (!entry) return null;
+  return { examType, ...entry };
+}
+
+export function normalizeStudyPlans(parsed) {
+  const legacy = normalizeStudyPlan(parsed?.studyPlan);
+  const raw = parsed?.studyPlans && typeof parsed.studyPlans === "object" ? parsed.studyPlans : {};
+  const toefl =
+    normalizeStudyPlanEntry(raw.toefl) ??
+    (legacy?.examType === "toefl" ? { content: legacy.content, generatedAt: legacy.generatedAt } : null);
+  const sat =
+    normalizeStudyPlanEntry(raw.sat) ??
+    (legacy?.examType === "sat" ? { content: legacy.content, generatedAt: legacy.generatedAt } : null);
+  return { toefl, sat };
+}
+
+export function getStudyPlanForExam(settings, examType) {
+  const mode = normalizeTargetExam(examType);
+  const plans = normalizeStudyPlans(settings);
+  return plans[mode];
 }
 
 export function normalizePracticeStyle(value) {
@@ -88,7 +114,8 @@ export function loadSettings() {
       toeflTargetTotal: normalizeToeflTargetTotal(parsed.toeflTargetTotal),
       satScores: normalizeExamScores("sat", parsed.satScores || {}),
       satTargetTotal: normalizeSatTargetTotal(parsed.satTargetTotal),
-      studyPlan: normalizeStudyPlan(parsed.studyPlan),
+      studyPlan: null,
+      studyPlans: normalizeStudyPlans(parsed),
     };
     if ("aiApiKey" in parsed) {
       saveSettings(next);
@@ -128,7 +155,20 @@ export function patchSettings(patch) {
     next.satTargetTotal = normalizeSatTargetTotal(next.satTargetTotal);
   }
   if ("studyPlan" in patch) {
-    next.studyPlan = normalizeStudyPlan(patch.studyPlan);
+    const legacy = normalizeStudyPlan(patch.studyPlan);
+    if (legacy) {
+      next.studyPlans = {
+        ...normalizeStudyPlans(next),
+        [legacy.examType]: {
+          content: legacy.content,
+          generatedAt: legacy.generatedAt,
+        },
+      };
+    }
+    next.studyPlan = null;
+  }
+  if ("studyPlans" in patch) {
+    next.studyPlans = normalizeStudyPlans({ ...next, studyPlans: patch.studyPlans });
   }
   saveSettings(next);
   return next;
