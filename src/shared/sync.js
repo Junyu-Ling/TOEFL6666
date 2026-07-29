@@ -4,16 +4,40 @@ export const SYNC_PREFIX = "toefl666_";
 export const SYNC_VERSION = 1;
 export const SYNC_MAX_BYTES = 1024 * 1024;
 export const RECOGNIZED_STORAGE_KEY = "toefl666_recognized";
-export const SYNC_META_KEY = "toefl666_sync_meta";
-/** @deprecated 旧版配对码，登录后会被清除 */
+export const PAIRING_CODE_LENGTH = 8;
 export const PAIRING_STORAGE_KEY = "toefl666_pairing";
 
 /** 不参与云端同步的本地键 */
 export const SYNC_EXCLUDED_KEYS = new Set([
-  SYNC_META_KEY,
   PAIRING_STORAGE_KEY,
   "toefl666_last_sync",
+  "toefl666_sync_meta",
 ]);
+
+const CODE_CHARS = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+
+export function normalizePairingCode(input = "") {
+  return String(input).replace(/[\s-]/g, "").toUpperCase();
+}
+
+export function formatPairingCode(input = "") {
+  const code = normalizePairingCode(input);
+  if (code.length !== PAIRING_CODE_LENGTH) return code;
+  return `${code.slice(0, 4)}-${code.slice(4)}`;
+}
+
+export function isValidPairingCode(input = "") {
+  const code = normalizePairingCode(input);
+  return code.length === PAIRING_CODE_LENGTH && /^[A-Z0-9]+$/.test(code);
+}
+
+export function generatePairingCode() {
+  let raw = "";
+  for (let i = 0; i < PAIRING_CODE_LENGTH; i++) {
+    raw += CODE_CHARS[Math.floor(Math.random() * CODE_CHARS.length)];
+  }
+  return formatPairingCode(raw);
+}
 
 export function exportLocalData({ excludeKeys = [] } = {}) {
   const skip = new Set(excludeKeys);
@@ -321,36 +345,51 @@ export function mergeSyncBundles(localBundle, remoteBundle) {
   };
 }
 
-export function loadSyncMeta() {
+export function loadPairingSession() {
   try {
-    const raw = localStorage.getItem(SYNC_META_KEY);
-    if (!raw) return { userId: "", lastRemoteUpdatedAt: 0 };
+    const raw = localStorage.getItem(PAIRING_STORAGE_KEY);
+    if (!raw) return null;
     const parsed = JSON.parse(raw);
+    const code = normalizePairingCode(parsed.code || "");
+    if (!isValidPairingCode(code)) return null;
     return {
-      userId: String(parsed.userId || ""),
-      lastRemoteUpdatedAt: Number(parsed.lastRemoteUpdatedAt) || 0,
+      code,
+      role: parsed.role === "host" ? "host" : "linked",
+      linkedAt: parsed.linkedAt || Date.now(),
+      lastPushedAt: parsed.lastPushedAt || 0,
+      lastRemoteUpdatedAt: parsed.lastRemoteUpdatedAt || 0,
+      expiresAt: parsed.expiresAt || 0,
     };
   } catch {
-    return { userId: "", lastRemoteUpdatedAt: 0 };
+    return null;
   }
 }
 
-export function saveSyncMeta(meta) {
+export function savePairingSession(session) {
+  if (!session?.code || !isValidPairingCode(session.code)) {
+    localStorage.removeItem(PAIRING_STORAGE_KEY);
+    return;
+  }
   localStorage.setItem(
-    SYNC_META_KEY,
+    PAIRING_STORAGE_KEY,
     JSON.stringify({
-      userId: String(meta?.userId || ""),
-      lastRemoteUpdatedAt: Number(meta?.lastRemoteUpdatedAt) || 0,
+      code: normalizePairingCode(session.code),
+      role: session.role === "host" ? "host" : "linked",
+      linkedAt: session.linkedAt || Date.now(),
+      lastPushedAt: session.lastPushedAt || 0,
+      lastRemoteUpdatedAt: session.lastRemoteUpdatedAt || 0,
+      expiresAt: session.expiresAt || 0,
     })
   );
 }
 
-export function clearSyncMeta() {
-  localStorage.removeItem(SYNC_META_KEY);
+export function clearPairingSession() {
+  localStorage.removeItem(PAIRING_STORAGE_KEY);
 }
 
-export function clearLegacyPairingSession() {
-  localStorage.removeItem(PAIRING_STORAGE_KEY);
+/** 清除旧版 Google 登录同步元数据 */
+export function clearLegacySyncMeta() {
+  localStorage.removeItem("toefl666_sync_meta");
 }
 
 export function importLocalData(bundle) {

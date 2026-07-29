@@ -1,10 +1,12 @@
 import { Redis } from "@upstash/redis";
-import { SYNC_MAX_BYTES } from "../src/shared/sync.js";
+import { isValidPairingCode, normalizePairingCode, SYNC_MAX_BYTES } from "../src/shared/sync.js";
 
-const TTL_SEC = 365 * 24 * 3600;
+const TTL_SEC = 30 * 24 * 3600;
 const MAX_BYTES = SYNC_MAX_BYTES;
 
-const memory = globalThis.__toefl666SyncStore ?? new Map();
+const memory =
+  globalThis.__toefl666SyncStore ??
+  new Map();
 globalThis.__toefl666SyncStore = memory;
 
 function getRedis() {
@@ -14,18 +16,22 @@ function getRedis() {
   return new Redis({ url, token });
 }
 
-function storageKey(userId) {
-  return `toefl666:user:${String(userId).trim()}`;
+function storageKey(code) {
+  return `toefl666:sync:${normalizePairingCode(code)}`;
 }
 
-function normalizeUserId(userId) {
-  const id = String(userId || "").trim();
-  if (!id) throw createError("无效的用户 ID", 400);
-  return id;
+function pruneMemory() {
+  const now = Date.now();
+  for (const [key, entry] of memory.entries()) {
+    if (entry.expiresAt <= now) memory.delete(key);
+  }
 }
 
-export async function saveSyncEntry(userId, entry) {
-  const normalized = normalizeUserId(userId);
+export async function saveSyncEntry(code, entry) {
+  const normalized = normalizePairingCode(code);
+  if (!isValidPairingCode(normalized)) {
+    throw createError("配对码格式无效", 400);
+  }
 
   const serialized = JSON.stringify(entry);
   if (serialized.length > MAX_BYTES) {
@@ -35,32 +41,39 @@ export async function saveSyncEntry(userId, entry) {
   const redis = getRedis();
   if (!redis && process.env.VERCEL) {
     throw createError(
-      "服务端未配置 Redis，无法云端同步。请在 Vercel 添加 UPSTASH_REDIS_REST_URL 与 UPSTASH_REDIS_REST_TOKEN 后重新部署。",
+      "服务端未配置 Redis，无法跨设备同步。请在 Vercel 添加 UPSTASH_REDIS_REST_URL 与 UPSTASH_REDIS_REST_TOKEN 后重新部署。",
       503
     );
   }
-
   if (redis) {
     await redis.set(storageKey(normalized), entry, { ex: TTL_SEC });
-    return { backend: "redis" };
+    return { backend: "redis", expiresAt: entry.expiresAt };
   }
 
-  memory.set(storageKey(normalized), entry);
-  return { backend: "memory" };
+  pruneMemory();
+  memory.set(normalized, entry);
+  return { backend: "memory", expiresAt: entry.expiresAt };
 }
 
-export async function loadSyncEntry(userId) {
-  const normalized = normalizeUserId(userId);
+export async function loadSyncEntry(code) {
+  const normalized = normalizePairingCode(code);
+  if (!isValidPairingCode(normalized)) {
+    throw createError("配对码格式无效", 400);
+  }
 
   const redis = getRedis();
   if (redis) {
     const entry = await redis.get(storageKey(normalized));
-    if (!entry) throw createError("云端暂无进度", 404);
+    if (!entry) throw createError("配对码无效或已过期", 404);
     return { entry, backend: "redis" };
   }
 
-  const entry = memory.get(storageKey(normalized));
-  if (!entry) throw createError("云端暂无进度", 404);
+  pruneMemory();
+  const entry = memory.get(normalized);
+  if (!entry || entry.expiresAt <= Date.now()) {
+    if (entry) memory.delete(normalized);
+    throw createError("配对码无效或已过期", 404);
+  }
   return { entry, backend: "memory" };
 }
 

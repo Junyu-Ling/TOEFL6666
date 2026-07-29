@@ -1,22 +1,72 @@
 import { useState, useEffect, useMemo, useRef } from "react";
 import { useSettings } from "../context/SettingsContext";
-import { useAuth } from "../context/AuthContext";
 import { stopGameKeyBubble } from "../utils/appKeyboard";
-import { getSyncSummary } from "../shared/sync";
-import { getUserProfile } from "../utils/userProfile";
-import { syncService, SYNC_STATUS_EVENT } from "../services/syncService";
+import { formatPairingCode, getSyncSummary, isValidPairingCode, normalizePairingCode } from "../shared/sync";
+import { pushSyncData, syncService, SYNC_STATUS_EVENT } from "../services/syncService";
 import {
   CORRECT_SOUND_OPTIONS,
   WRONG_SOUND_OPTIONS,
   previewAnswerSound,
 } from "../utils/answerSounds";
 import ExamScoreSection from "./ExamScoreSection";
-import UserAvatar from "./UserAvatar";
+
+const SYNC_SESSION_KEY = "toefl666_last_sync";
+
+function readLastSync() {
+  try {
+    return JSON.parse(sessionStorage.getItem(SYNC_SESSION_KEY) || "null");
+  } catch {
+    return null;
+  }
+}
+
+function writeLastSync({ code, host, backend }) {
+  sessionStorage.setItem(
+    SYNC_SESSION_KEY,
+    JSON.stringify({ code, host, backend, at: Date.now() })
+  );
+}
+
+async function copyText(text) {
+  try {
+    await navigator.clipboard.writeText(text);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+function formatExpiry(expiresAt) {
+  if (!expiresAt) return "";
+  return new Date(expiresAt).toLocaleString("zh-CN", {
+    month: "numeric",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
 
 function clampDelayInput(value) {
   const n = Number(String(value).trim());
   if (!Number.isFinite(n)) return null;
   return Math.min(60, Math.max(0, Math.round(n)));
+}
+
+function PairingCodeDisplay({ code, onCopy, busy }) {
+  if (!code) return null;
+  return (
+    <div className="pairing-code-display">
+      <span className="pairing-code-display__code">{code}</span>
+      <button
+        type="button"
+        className="settings-action-btn pairing-code-display__copy"
+        onClick={onCopy}
+        disabled={busy}
+      >
+        复制
+      </button>
+    </div>
+  );
 }
 
 export default function SettingsPanel() {
@@ -37,39 +87,58 @@ export default function SettingsPanel() {
     setAnswerSoundCorrect,
     setAnswerSoundWrong,
   } = useSettings();
-  const { user, loading: authLoading, isConfigured, signInWithGoogle, signOut } = useAuth();
 
   const [delayDraft, setDelayDraft] = useState(String(settings.autoAdvanceDelaySec));
-  const [authBusy, setAuthBusy] = useState(false);
-  const [authMessage, setAuthMessage] = useState("");
-  const [authError, setAuthError] = useState("");
+  const [pullCode, setPullCode] = useState("");
+  const [uploadedCode, setUploadedCode] = useState("");
+  const [uploadedHost, setUploadedHost] = useState("");
+  const [syncBusy, setSyncBusy] = useState(false);
+  const [syncMessage, setSyncMessage] = useState("");
+  const [syncError, setSyncError] = useState("");
+  const [pairingCode, setPairingCode] = useState(() => syncService.getPairingCode());
   const [syncStatus, setSyncStatus] = useState(() => syncService.getStatus());
+  const [expiresAt, setExpiresAt] = useState(() => syncService.getExpiresAt());
+  const isPaired = Boolean(pairingCode);
   const panelRef = useRef(null);
+  const pullInputRef = useRef(null);
 
-  const profile = useMemo(() => getUserProfile(user), [user]);
   const syncSummary = useMemo(() => getSyncSummary(), [settingsOpen, syncStatus.state]);
+  const expiryLabel = formatExpiry(expiresAt);
+  const syncState = syncStatus.state;
 
   useEffect(() => {
     function onStatus(event) {
-      setSyncStatus(event.detail || syncService.getStatus());
+      const detail = event.detail || syncService.getStatus();
+      setSyncStatus(detail);
+      const code = detail.code || syncService.getPairingCode();
+      if (code) setPairingCode(code);
+      setExpiresAt(syncService.getExpiresAt());
     }
     window.addEventListener(SYNC_STATUS_EVENT, onStatus);
     return () => window.removeEventListener(SYNC_STATUS_EVENT, onStatus);
   }, []);
 
   useEffect(() => {
-    if (settingsOpen) {
-      setDelayDraft(String(settings.autoAdvanceDelaySec));
-      setAuthError("");
-      setAuthMessage("");
-      setSyncStatus(syncService.getStatus());
-    }
-  }, [settings.autoAdvanceDelaySec, settingsOpen]);
-
-  useEffect(() => {
     if (!settingsOpen || !panelRef.current) return;
     panelRef.current.focus({ preventScroll: true });
   }, [settingsOpen]);
+
+  useEffect(() => {
+    if (settingsOpen) {
+      setDelayDraft(String(settings.autoAdvanceDelaySec));
+      setSyncError("");
+      setSyncMessage("");
+      setPullCode("");
+      setPairingCode(syncService.getPairingCode());
+      setSyncStatus(syncService.getStatus());
+      setExpiresAt(syncService.getExpiresAt());
+      const last = readLastSync();
+      if (last?.code) {
+        setUploadedCode(last.code);
+        setUploadedHost(last.host || "");
+      }
+    }
+  }, [settings.autoAdvanceDelaySec, settingsOpen]);
 
   function commitDelayDraft() {
     const trimmed = delayDraft.trim();
@@ -88,31 +157,116 @@ export default function SettingsPanel() {
     }
   }
 
-  async function handleGoogleSignIn() {
-    setAuthBusy(true);
-    setAuthError("");
-    setAuthMessage("");
+  async function handleCopyCode() {
+    const code = pairingCode || uploadedCode;
+    if (!code) return;
+    const ok = await copyText(code.replace(/-/g, ""));
+    setSyncMessage(ok ? `已复制配对码 ${code}` : "复制失败，请手动复制");
+    setSyncError("");
+  }
+
+  async function handlePasteCode() {
+    setSyncError("");
     try {
-      await signInWithGoogle();
-    } catch (err) {
-      setAuthError(err.message || "Google 登录失败");
-    } finally {
-      setAuthBusy(false);
+      const text = await navigator.clipboard.readText();
+      const normalized = normalizePairingCode(text);
+      if (!isValidPairingCode(normalized)) {
+        setSyncError("剪贴板内容不是有效的 8 位配对码");
+        return;
+      }
+      setPullCode(formatPairingCode(normalized));
+      setSyncMessage("已从剪贴板粘贴配对码");
+    } catch {
+      setSyncError("无法读取剪贴板，请手动输入");
     }
   }
 
-  async function handleSignOut() {
-    setAuthBusy(true);
-    setAuthError("");
-    setAuthMessage("");
+  async function handleUploadSync() {
+    setSyncBusy(true);
+    setSyncError("");
+    setSyncMessage("");
     try {
-      await signOut();
-      setAuthMessage("已退出登录，本机进度仍保留在本地");
+      const result = await pushSyncData();
+      const host = window.location.host;
+      const formatted = formatPairingCode(result.code);
+      setUploadedCode(formatted);
+      setUploadedHost(host);
+      writeLastSync({ code: formatted, host, backend: result.backend });
+      await syncService.establishHost(result.code, {
+        push: false,
+        remoteUpdatedAt: result.updatedAt || Date.now(),
+        expiresAt: result.expiresAt || 0,
+      });
+      setPairingCode(formatted);
+      setExpiresAt(result.expiresAt || 0);
+      const expires = formatExpiry(result.expiresAt);
+      const copied = await copyText(formatted.replace(/-/g, ""));
+      if (result.backend === "memory") {
+        setSyncMessage(
+          `配对码已生成（仅 ${host} 开发环境有效）· 有效期至 ${expires}${
+            copied ? " · 已复制" : ""
+          } · 本机已开启实时同步`
+        );
+      } else {
+        setSyncMessage(
+          `配对码已生成 · 有效期至 ${expires}${copied ? " · 已复制" : ""} · 请在另一台设备输入此码`
+        );
+      }
     } catch (err) {
-      setAuthError(err.message || "退出登录失败");
+      setSyncError(err.message || "生成失败，请稍后重试");
     } finally {
-      setAuthBusy(false);
+      setSyncBusy(false);
     }
+  }
+
+  async function handleLinkSync() {
+    const code = normalizePairingCode(pullCode);
+    if (!isValidPairingCode(code)) {
+      setSyncError("请输入完整的 8 位配对码");
+      pullInputRef.current?.focus();
+      return;
+    }
+
+    setSyncBusy(true);
+    setSyncError("");
+    setSyncMessage("");
+    try {
+      await syncService.linkDevice(code);
+      setPairingCode(formatPairingCode(code));
+      setPullCode("");
+      setExpiresAt(syncService.getExpiresAt());
+      setSyncMessage("已与另一台设备合并进度，之后将自动双向同步");
+    } catch (err) {
+      const host = window.location.host;
+      const last = readLastSync();
+      const hints = [
+        "请确认源设备已点击「生成配对码」",
+        `两台设备须打开同一网址（当前 ${host}）`,
+        "请核对配对码是否抄写正确",
+      ];
+      if (last?.host && last.host !== host) {
+        hints.unshift(`本机曾从 ${last.host} 上传，与当前 ${host} 不一致`);
+      }
+      setSyncError(`${err.message || "连接失败"}。${hints.join("；")}。`);
+    } finally {
+      setSyncBusy(false);
+    }
+  }
+
+  function handleUnlink() {
+    if (
+      !window.confirm(
+        "解除配对后，本机将不再与另一台设备自动同步进度。另一台设备不受影响，如需停止同步也请在那一台解除配对。"
+      )
+    ) {
+      return;
+    }
+    syncService.unlink();
+    setPairingCode("");
+    setPullCode("");
+    setExpiresAt(0);
+    setSyncMessage("已解除配对，本机不再自动同步");
+    setSyncError("");
   }
 
   if (!settingsOpen) return null;
@@ -122,310 +276,360 @@ export default function SettingsPanel() {
       <aside
         ref={panelRef}
         tabIndex={-1}
-        className="settings-panel account-panel"
+        className="settings-panel"
         onClick={(e) => e.stopPropagation()}
       >
-        <header className="settings-panel__header account-panel__header">
-          <h2>{profile ? "我的账号" : "登录 / 注册"}</h2>
+        <header className="settings-panel__header">
+          <h2>设置</h2>
           <button type="button" className="settings-panel__close" onClick={() => setSettingsOpen(false)}>
             ×
           </button>
         </header>
 
-        <section className="account-panel__profile">
-          {profile ? (
-            <>
-              <div className="account-panel__identity">
-                <UserAvatar
-                  name={profile.name}
-                  avatarUrl={profile.avatarUrl}
-                  size={56}
-                  className="account-panel__avatar"
-                />
-                <div className="account-panel__meta">
-                  <strong className="account-panel__name">{profile.name}</strong>
-                  <span className="account-panel__email">{profile.email}</span>
-                  <span className="account-panel__sync">
-                    {syncStatus.message || "进度已绑定到此 Google 账号"}
-                  </span>
-                </div>
-              </div>
-              <button
-                type="button"
-                className="settings-action-btn settings-action-btn--block"
-                onClick={handleSignOut}
-                disabled={authBusy || authLoading}
-              >
-                退出登录
-              </button>
-            </>
-          ) : (
-            <>
-              <div className="account-panel__guest">
-                <UserAvatar name="登录" avatarUrl="" size={56} className="account-panel__avatar" />
-                <div className="account-panel__meta">
-                  <strong className="account-panel__name">登录后即可同步进度</strong>
-                  <span className="account-panel__email">
-                    首次使用 Google 登录会自动完成注册；若本机已有学习记录，会自动合并到账号。
-                  </span>
-                </div>
-              </div>
-              {!isConfigured ? (
-                <p className="settings-status settings-status--error">
-                  未配置 Google 登录（需在环境变量中设置 Supabase）。
-                </p>
-              ) : (
-                <button
-                  type="button"
-                  className="settings-action-btn settings-action-btn--primary settings-action-btn--block account-panel__google-btn"
-                  onClick={handleGoogleSignIn}
-                  disabled={authBusy || authLoading}
-                >
-                  {authBusy || authLoading ? "处理中…" : "使用 Google 登录 / 注册"}
-                </button>
-              )}
-            </>
-          )}
-
-          {authMessage && <p className="settings-status settings-status--ok">{authMessage}</p>}
-          {authError && <p className="settings-status settings-status--error">{authError}</p>}
+        <section className="settings-section settings-section--compact">
+          <h3>外观</h3>
+          <div className="theme-toggle">
+            <button
+              type="button"
+              className={`theme-toggle__btn ${settings.theme === "light" ? "theme-toggle__btn--active" : ""}`}
+              onClick={() => setTheme("light")}
+            >
+              浅色
+            </button>
+            <button
+              type="button"
+              className={`theme-toggle__btn ${settings.theme === "dark" ? "theme-toggle__btn--active" : ""}`}
+              onClick={() => setTheme("dark")}
+            >
+              深色
+            </button>
+          </div>
         </section>
 
-        {profile ? (
-          <>
-            <p className="account-panel__settings-lead">账号设置</p>
-
-            <section className="settings-section settings-section--compact">
-              <h3>外观</h3>
+        <details className="settings-group" open>
+          <summary className="settings-group__summary">
+            <span className="settings-group__title">练习</span>
+            <span className="settings-group__meta">
+              {settings.hideWordFirst && settings.practiceStyle !== "recall"
+                ? "听写后写释义"
+                : settings.practiceStyle === "recall"
+                  ? "默念核对"
+                  : "输入批改"}
+            </span>
+          </summary>
+          <div className="settings-group__body">
+            <div className="settings-field">
+              <span>练习方式</span>
               <div className="theme-toggle">
                 <button
                   type="button"
-                  className={`theme-toggle__btn ${settings.theme === "light" ? "theme-toggle__btn--active" : ""}`}
-                  onClick={() => setTheme("light")}
+                  className={`theme-toggle__btn ${settings.practiceStyle !== "recall" ? "theme-toggle__btn--active" : ""}`}
+                  onClick={() => setPracticeStyle("type")}
                 >
-                  浅色
+                  输入批改
                 </button>
                 <button
                   type="button"
-                  className={`theme-toggle__btn ${settings.theme === "dark" ? "theme-toggle__btn--active" : ""}`}
-                  onClick={() => setTheme("dark")}
+                  className={`theme-toggle__btn ${settings.practiceStyle === "recall" ? "theme-toggle__btn--active" : ""}`}
+                  onClick={() => setPracticeStyle("recall")}
                 >
-                  深色
+                  默念核对
                 </button>
               </div>
-            </section>
-
-            <details className="settings-group" open>
-              <summary className="settings-group__summary">
-                <span className="settings-group__title">练习</span>
-                <span className="settings-group__meta">
-                  {settings.hideWordFirst && settings.practiceStyle !== "recall"
-                    ? "听写后写释义"
-                    : settings.practiceStyle === "recall"
-                      ? "默念核对"
-                      : "输入批改"}
+            </div>
+            {settings.practiceStyle !== "recall" ? (
+              <label className="settings-toggle-row">
+                <span className="settings-toggle-row__text">
+                  <strong>先隐藏单词</strong>
+                  <small>听音默写英文后再写中文释义</small>
                 </span>
-              </summary>
-              <div className="settings-group__body">
-                <div className="settings-field">
-                  <span>练习方式</span>
-                  <div className="theme-toggle">
+                <span className="toggle-switch">
+                  <input
+                    type="checkbox"
+                    checked={settings.hideWordFirst}
+                    onChange={(e) => setHideWordFirst(e.target.checked)}
+                  />
+                  <span className="toggle-switch__track" aria-hidden="true" />
+                </span>
+              </label>
+            ) : null}
+            <label className="settings-toggle-row">
+              <span className="settings-toggle-row__text">
+                <strong>答对 / 答错音效</strong>
+              </span>
+              <span className="toggle-switch">
+                <input
+                  type="checkbox"
+                  checked={settings.answerSounds}
+                  onChange={(e) => setAnswerSounds(e.target.checked)}
+                />
+                <span className="toggle-switch__track" aria-hidden="true" />
+              </span>
+            </label>
+            {settings.answerSounds ? (
+              <>
+                <div className="settings-field settings-field--spaced">
+                  <span>答对音效</span>
+                  <div className="settings-sound-row">
+                    <select
+                      value={settings.answerSoundCorrect}
+                      onChange={(e) => setAnswerSoundCorrect(e.target.value)}
+                    >
+                      {CORRECT_SOUND_OPTIONS.map((opt) => (
+                        <option key={opt.id} value={opt.id}>
+                          {opt.label}
+                        </option>
+                      ))}
+                    </select>
                     <button
                       type="button"
-                      className={`theme-toggle__btn ${settings.practiceStyle !== "recall" ? "theme-toggle__btn--active" : ""}`}
-                      onClick={() => setPracticeStyle("type")}
+                      className="settings-action-btn settings-sound-row__preview"
+                      onClick={() => previewAnswerSound(true, settings.answerSoundCorrect)}
                     >
-                      输入批改
-                    </button>
-                    <button
-                      type="button"
-                      className={`theme-toggle__btn ${settings.practiceStyle === "recall" ? "theme-toggle__btn--active" : ""}`}
-                      onClick={() => setPracticeStyle("recall")}
-                    >
-                      默念核对
+                      试听
                     </button>
                   </div>
                 </div>
-                {settings.practiceStyle !== "recall" ? (
-                  <label className="settings-toggle-row">
-                    <span className="settings-toggle-row__text">
-                      <strong>先隐藏单词</strong>
-                      <small>听音默写英文后再写中文释义</small>
-                    </span>
-                    <span className="toggle-switch">
-                      <input
-                        type="checkbox"
-                        checked={settings.hideWordFirst}
-                        onChange={(e) => setHideWordFirst(e.target.checked)}
-                      />
-                      <span className="toggle-switch__track" aria-hidden="true" />
-                    </span>
-                  </label>
-                ) : null}
-                <label className="settings-toggle-row">
-                  <span className="settings-toggle-row__text">
-                    <strong>答对 / 答错音效</strong>
-                  </span>
-                  <span className="toggle-switch">
-                    <input
-                      type="checkbox"
-                      checked={settings.answerSounds}
-                      onChange={(e) => setAnswerSounds(e.target.checked)}
-                    />
-                    <span className="toggle-switch__track" aria-hidden="true" />
-                  </span>
-                </label>
-                {settings.answerSounds ? (
-                  <>
-                    <div className="settings-field settings-field--spaced">
-                      <span>答对音效</span>
-                      <div className="settings-sound-row">
-                        <select
-                          value={settings.answerSoundCorrect}
-                          onChange={(e) => setAnswerSoundCorrect(e.target.value)}
-                        >
-                          {CORRECT_SOUND_OPTIONS.map((opt) => (
-                            <option key={opt.id} value={opt.id}>
-                              {opt.label}
-                            </option>
-                          ))}
-                        </select>
-                        <button
-                          type="button"
-                          className="settings-action-btn settings-sound-row__preview"
-                          onClick={() => previewAnswerSound(true, settings.answerSoundCorrect)}
-                        >
-                          试听
-                        </button>
-                      </div>
-                    </div>
-                    <div className="settings-field settings-field--spaced">
-                      <span>答错音效</span>
-                      <div className="settings-sound-row">
-                        <select
-                          value={settings.answerSoundWrong}
-                          onChange={(e) => setAnswerSoundWrong(e.target.value)}
-                        >
-                          {WRONG_SOUND_OPTIONS.map((opt) => (
-                            <option key={opt.id} value={opt.id}>
-                              {opt.label}
-                            </option>
-                          ))}
-                        </select>
-                        <button
-                          type="button"
-                          className="settings-action-btn settings-sound-row__preview"
-                          onClick={() => previewAnswerSound(false, settings.answerSoundWrong)}
-                        >
-                          试听
-                        </button>
-                      </div>
-                    </div>
-                  </>
-                ) : null}
-                <label className="settings-toggle-row">
-                  <span className="settings-toggle-row__text">
-                    <strong>切换单词时自动朗读</strong>
-                  </span>
-                  <span className="toggle-switch">
-                    <input
-                      type="checkbox"
-                      checked={settings.autoReadOnNewWord}
-                      onChange={(e) => setAutoReadOnNewWord(e.target.checked)}
-                    />
-                    <span className="toggle-switch__track" aria-hidden="true" />
-                  </span>
-                </label>
-                <label className="settings-toggle-row">
-                  <span className="settings-toggle-row__text">
-                    <strong>切换单词时自动开麦</strong>
-                  </span>
-                  <span className="toggle-switch">
-                    <input
-                      type="checkbox"
-                      checked={settings.autoDictateOnNewWord}
-                      onChange={(e) => setAutoDictateOnNewWord(e.target.checked)}
-                    />
-                    <span className="toggle-switch__track" aria-hidden="true" />
-                  </span>
-                </label>
-                <label className="settings-toggle-row">
-                  <span className="settings-toggle-row__text">
-                    <strong>翻面后自动下一个</strong>
-                  </span>
-                  <span className="toggle-switch">
-                    <input
-                      type="checkbox"
-                      checked={settings.autoAdvanceAfterFlip}
-                      onChange={(e) => setAutoAdvanceAfterFlip(e.target.checked)}
-                    />
-                    <span className="toggle-switch__track" aria-hidden="true" />
-                  </span>
-                </label>
-                {settings.autoAdvanceAfterFlip && (
-                  <label className="settings-field">
-                    <span>翻面后停留（秒）</span>
-                    <input
-                      type="text"
-                      inputMode="numeric"
-                      value={delayDraft}
-                      onChange={(e) => setDelayDraft(e.target.value)}
-                      onBlur={commitDelayDraft}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter") {
-                          e.preventDefault();
-                          commitDelayDraft();
-                          e.currentTarget.blur();
-                        }
-                      }}
-                    />
-                  </label>
-                )}
-              </div>
-            </details>
+                <div className="settings-field settings-field--spaced">
+                  <span>答错音效</span>
+                  <div className="settings-sound-row">
+                    <select
+                      value={settings.answerSoundWrong}
+                      onChange={(e) => setAnswerSoundWrong(e.target.value)}
+                    >
+                      {WRONG_SOUND_OPTIONS.map((opt) => (
+                        <option key={opt.id} value={opt.id}>
+                          {opt.label}
+                        </option>
+                      ))}
+                    </select>
+                    <button
+                      type="button"
+                      className="settings-action-btn settings-sound-row__preview"
+                      onClick={() => previewAnswerSound(false, settings.answerSoundWrong)}
+                    >
+                      试听
+                    </button>
+                  </div>
+                </div>
+              </>
+            ) : null}
+            <label className="settings-toggle-row">
+              <span className="settings-toggle-row__text">
+                <strong>切换单词时自动朗读</strong>
+              </span>
+              <span className="toggle-switch">
+                <input
+                  type="checkbox"
+                  checked={settings.autoReadOnNewWord}
+                  onChange={(e) => setAutoReadOnNewWord(e.target.checked)}
+                />
+                <span className="toggle-switch__track" aria-hidden="true" />
+              </span>
+            </label>
+            <label className="settings-toggle-row">
+              <span className="settings-toggle-row__text">
+                <strong>切换单词时自动开麦</strong>
+              </span>
+              <span className="toggle-switch">
+                <input
+                  type="checkbox"
+                  checked={settings.autoDictateOnNewWord}
+                  onChange={(e) => setAutoDictateOnNewWord(e.target.checked)}
+                />
+                <span className="toggle-switch__track" aria-hidden="true" />
+              </span>
+            </label>
+            <label className="settings-toggle-row">
+              <span className="settings-toggle-row__text">
+                <strong>翻面后自动下一个</strong>
+              </span>
+              <span className="toggle-switch">
+                <input
+                  type="checkbox"
+                  checked={settings.autoAdvanceAfterFlip}
+                  onChange={(e) => setAutoAdvanceAfterFlip(e.target.checked)}
+                />
+                <span className="toggle-switch__track" aria-hidden="true" />
+              </span>
+            </label>
+            {settings.autoAdvanceAfterFlip && (
+              <label className="settings-field">
+                <span>翻面后停留（秒）</span>
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  value={delayDraft}
+                  onChange={(e) => setDelayDraft(e.target.value)}
+                  onBlur={commitDelayDraft}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      commitDelayDraft();
+                      e.currentTarget.blur();
+                    }
+                  }}
+                />
+              </label>
+            )}
+          </div>
+        </details>
 
-            <ExamScoreSection />
+        <ExamScoreSection />
 
-            <details className="settings-group">
-              <summary className="settings-group__summary">
-                <span className="settings-group__title">云端进度</span>
-                <span className="settings-group__meta">
-                  熟词 {syncSummary.recognized} · 生词 {syncSummary.unrecognized}
-                </span>
-              </summary>
-              <div className="settings-group__body">
+        <details className="settings-group" open>
+          <summary className="settings-group__summary">
+            <span className="settings-group__title">进度同步</span>
+            <span className="settings-group__meta">
+              {isPaired
+                ? `已配对 · ${pairingCode}`
+                : `熟词 ${syncSummary.recognized} · 生词 ${syncSummary.unrecognized}`}
+            </span>
+          </summary>
+          <div className="settings-group__body">
+            <p className="settings-hint settings-hint--compact">
+              电脑与手机须打开<strong>同一网址</strong>。一台生成配对码，另一台输入即可合并进度并持续双向同步。
+            </p>
+
+            {isPaired ? (
+              <div className="settings-sync-card settings-sync-card--active">
+                <div className="settings-sync-card__head">
+                  <strong className="settings-sync-card__status">
+                    <span
+                      className={`sync-live-dot ${
+                        syncState === "error" || syncState === "expired"
+                          ? "sync-live-dot--error"
+                          : syncState === "pushing" || syncState === "pulling"
+                            ? "sync-live-dot--busy"
+                            : ""
+                      }`}
+                      aria-hidden
+                    />
+                    {syncState === "expired" ? "配对码已过期" : "实时同步中"}
+                  </strong>
+                  {expiryLabel ? <span>有效期至 {expiryLabel}</span> : null}
+                </div>
+                <PairingCodeDisplay code={pairingCode} onCopy={handleCopyCode} busy={syncBusy} />
                 <p className="settings-hint settings-hint--compact">
-                  学习进度会自动同步到当前 Google 账号，换设备登录同一账号即可继续。
+                  任意一端学习进度会自动合并上传。每次同步会续期 30 天。
                 </p>
-              </div>
-            </details>
-
-            <details className="settings-group">
-              <summary className="settings-group__summary">
-                <span className="settings-group__title">朗读</span>
-                <span className="settings-group__meta">
-                  {settings.systemVoiceURI ? "已选音色" : "自动选择"}
-                </span>
-              </summary>
-              <div className="settings-group__body">
-                <label className="settings-field">
-                  <span>朗读音色</span>
-                  <select
-                    value={settings.systemVoiceURI}
-                    onChange={(e) => setSystemVoiceURI(e.target.value)}
+                {syncState === "expired" ? (
+                  <button
+                    type="button"
+                    className="settings-action-btn settings-action-btn--primary settings-action-btn--block"
+                    onClick={handleUploadSync}
+                    disabled={syncBusy}
                   >
-                    <option value="">自动选择（推荐）</option>
-                    {systemVoices.map((voice) => (
-                      <option key={voice.voiceURI} value={voice.voiceURI}>
-                        {voice.name} ({voice.lang})
-                      </option>
-                    ))}
-                  </select>
-                </label>
+                    重新生成配对码
+                  </button>
+                ) : null}
+                <button
+                  type="button"
+                  className="settings-action-btn settings-action-btn--block"
+                  onClick={handleUnlink}
+                  disabled={syncBusy}
+                >
+                  解除配对
+                </button>
               </div>
-            </details>
-          </>
-        ) : null}
+            ) : (
+              <>
+                <div className="settings-sync-card">
+                  <div className="settings-sync-card__head">
+                    <strong>
+                      <span className="pairing-step">1</span>
+                      在本机生成配对码
+                    </strong>
+                    <span>上传进度并开启实时同步</span>
+                  </div>
+                  <button
+                    type="button"
+                    className="settings-action-btn settings-action-btn--primary settings-action-btn--block"
+                    onClick={handleUploadSync}
+                    disabled={syncBusy}
+                  >
+                    {syncBusy ? "处理中…" : "生成配对码"}
+                  </button>
+                  {uploadedCode ? (
+                    <PairingCodeDisplay code={uploadedCode} onCopy={handleCopyCode} busy={syncBusy} />
+                  ) : null}
+                  {uploadedHost ? (
+                    <p className="settings-hint settings-hint--compact">上次生成站点：{uploadedHost}</p>
+                  ) : null}
+                </div>
+
+                <div className="settings-sync-card">
+                  <div className="settings-sync-card__head">
+                    <strong>
+                      <span className="pairing-step">2</span>
+                      在另一台设备输入配对码
+                    </strong>
+                    <span>先合并两边进度，再持续同步</span>
+                  </div>
+                  <div className="settings-sync-input-row">
+                    <input
+                      ref={pullInputRef}
+                      className="settings-sync-input"
+                      type="text"
+                      value={pullCode}
+                      onChange={(e) => setPullCode(formatPairingCode(e.target.value))}
+                      placeholder="XXXX-XXXX"
+                      autoComplete="off"
+                      spellCheck={false}
+                      maxLength={9}
+                      inputMode="text"
+                      autoCapitalize="characters"
+                    />
+                    <button
+                      type="button"
+                      className="settings-action-btn settings-sync-input-row__paste"
+                      onClick={handlePasteCode}
+                      disabled={syncBusy}
+                    >
+                      粘贴
+                    </button>
+                  </div>
+                  <button
+                    type="button"
+                    className="settings-action-btn settings-action-btn--block"
+                    onClick={handleLinkSync}
+                    disabled={syncBusy || !isValidPairingCode(normalizePairingCode(pullCode))}
+                  >
+                    {syncBusy ? "连接中…" : "连接并实时同步"}
+                  </button>
+                </div>
+              </>
+            )}
+
+            {syncMessage && <p className="settings-status settings-status--ok">{syncMessage}</p>}
+            {syncError && <p className="settings-status settings-status--error">{syncError}</p>}
+          </div>
+        </details>
+
+        <details className="settings-group">
+          <summary className="settings-group__summary">
+            <span className="settings-group__title">朗读</span>
+            <span className="settings-group__meta">
+              {settings.systemVoiceURI ? "已选音色" : "自动选择"}
+            </span>
+          </summary>
+          <div className="settings-group__body">
+            <label className="settings-field">
+              <span>朗读音色</span>
+              <select
+                value={settings.systemVoiceURI}
+                onChange={(e) => setSystemVoiceURI(e.target.value)}
+              >
+                <option value="">自动选择（推荐）</option>
+                {systemVoices.map((voice) => (
+                  <option key={voice.voiceURI} value={voice.voiceURI}>
+                    {voice.name} ({voice.lang})
+                  </option>
+                ))}
+              </select>
+            </label>
+          </div>
+        </details>
       </aside>
     </div>
   );

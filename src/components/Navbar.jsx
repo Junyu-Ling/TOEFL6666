@@ -1,9 +1,7 @@
-import { useMemo } from "react";
+import { useEffect, useState } from "react";
 import { useSettings } from "../context/SettingsContext";
-import { useAuth } from "../context/AuthContext";
 import { APP_MODE_LABELS, getAlternateAppMode, isTabAvailableInMode } from "../utils/appMode";
-import { getUserProfile } from "../utils/userProfile";
-import UserAvatar from "./UserAvatar";
+import { syncService, SYNC_STATUS_EVENT } from "../services/syncService";
 
 const TABS = [
   { id: "practice", label: "练习" },
@@ -18,11 +16,25 @@ const TABS = [
 
 export default function Navbar({ activeTab, onTabChange, counts, streak, onStreakClick, onExamModeSwitch }) {
   const { settings, setSettingsOpen } = useSettings();
-  const { user, loading: authLoading } = useAuth();
-  const profile = useMemo(() => getUserProfile(user), [user]);
   const appMode = settings.appMode ?? "toefl";
   const alternateMode = getAlternateAppMode(appMode);
   const loggedInToday = streak?.loggedInToday;
+  const [paired, setPaired] = useState(() => syncService.isPaired());
+  const [pairingCode, setPairingCode] = useState(() => syncService.getPairingCode());
+
+  useEffect(() => {
+    function onStatus(event) {
+      const detail = event.detail || syncService.getStatus();
+      setPaired(syncService.isPaired());
+      setPairingCode(detail.code || syncService.getPairingCode());
+    }
+    window.addEventListener(SYNC_STATUS_EVENT, onStatus);
+    return () => window.removeEventListener(SYNC_STATUS_EVENT, onStatus);
+  }, []);
+
+  const settingsTitle = paired
+    ? `打开设置 · 已配对 ${pairingCode}`
+    : "打开设置";
 
   return (
     <nav className="navbar">
@@ -75,20 +87,15 @@ export default function Navbar({ activeTab, onTabChange, counts, streak, onStrea
 
         <button
           type="button"
-          className={`navbar__account ${profile ? "navbar__account--signed-in" : ""}`}
+          className={`navbar__settings ${paired ? "navbar__settings--synced" : ""}`}
           onClick={() => setSettingsOpen(true)}
-          aria-label={profile ? `打开账号：${profile.name}` : "登录或注册"}
-          title={profile ? profile.name : "登录 / 注册"}
+          aria-label={settingsTitle}
+          title={settingsTitle}
         >
-          <UserAvatar
-            name={profile?.name || "登录"}
-            avatarUrl={profile?.avatarUrl}
-            size={32}
-            className="navbar__account-avatar"
-          />
-          <span className="navbar__account-name">
-            {authLoading ? "…" : profile?.name || "登录"}
-          </span>
+          {paired ? <span className="navbar__settings-dot" aria-hidden /> : null}
+          <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+            <path d="M12 8a4 4 0 100 8 4 4 0 000-8zm9.4 4a7.4 7.4 0 01-.1 1l2 1.5-2 3.5-2.3-.9a7.6 7.6 0 01-2.6 1.5l-.4 2.5H9.9l-.4-2.5a7.6 7.6 0 01-2.6-1.5l-2.3.9-2-3.5 2-1.5a7.4 7.4 0 010-2l-2-1.5 2-3.5 2.3.9a7.6 7.6 0 012.6-1.5l.4-2.5h4.2l.4 2.5a7.6 7.6 0 012.6 1.5l2.3-.9 2 3.5-2 1.5c.07.3.1.7.1 1z" />
+          </svg>
         </button>
       </div>
     </nav>

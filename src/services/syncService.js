@@ -1,15 +1,17 @@
 import {
-  clearLegacyPairingSession,
-  clearSyncMeta,
+  clearLegacySyncMeta,
+  clearPairingSession,
   exportLocalData,
+  formatPairingCode,
   importLocalData,
-  loadSyncMeta,
+  loadPairingSession,
   mergeSyncBundles,
-  saveSyncMeta,
+  normalizePairingCode,
+  savePairingSession,
   SYNC_EXCLUDED_KEYS,
   SYNC_PREFIX,
 } from "../shared/sync";
-import { isCloudEmptyError, pullSyncPayload, pushSyncPayload } from "./syncApi";
+import { pullSyncPayload, pushSyncPayload } from "./syncApi";
 
 export const SYNC_APPLIED_EVENT = "toefl666-sync-applied";
 export const SYNC_STATUS_EVENT = "toefl666-sync-status";
@@ -24,9 +26,6 @@ let suppressDirty = false;
 let syncing = false;
 let started = false;
 let storageHookInstalled = false;
-let accessToken = "";
-let userId = "";
-let userEmail = "";
 let lastStatus = { state: "idle", message: "" };
 
 function emitStatus(patch) {
@@ -38,12 +37,20 @@ function emitApplied() {
   window.dispatchEvent(new CustomEvent(SYNC_APPLIED_EVENT));
 }
 
-function isSignedIn() {
-  return Boolean(accessToken && userId);
+function getSession() {
+  return loadPairingSession();
+}
+
+function updateSession(patch) {
+  const current = getSession();
+  if (!current) return null;
+  const next = { ...current, ...patch };
+  savePairingSession(next);
+  return next;
 }
 
 function schedulePush() {
-  if (!isSignedIn()) return;
+  if (!getSession()) return;
   dirty = true;
   if (pushTimer) clearTimeout(pushTimer);
   pushTimer = setTimeout(() => {
@@ -71,11 +78,11 @@ function installStorageHook() {
 }
 
 async function applyRemotePayload(result) {
-  if (!isSignedIn()) return false;
+  const session = getSession();
+  if (!session) return false;
 
-  const meta = loadSyncMeta();
   const remoteUpdatedAt = result.updatedAt || result.payload?.exportedAt || 0;
-  if (remoteUpdatedAt <= meta.lastRemoteUpdatedAt) return false;
+  if (remoteUpdatedAt <= session.lastRemoteUpdatedAt) return false;
 
   const localBundle = exportLocalData();
   const merged = mergeSyncBundles(localBundle, result.payload);
@@ -85,37 +92,37 @@ async function applyRemotePayload(result) {
   importLocalData(merged);
   suppressDirty = false;
 
-  saveSyncMeta({ userId, lastRemoteUpdatedAt: remoteUpdatedAt });
+  updateSession({ lastRemoteUpdatedAt: remoteUpdatedAt });
+  if (result.expiresAt) updateSession({ expiresAt: result.expiresAt });
   if (changed) schedulePush();
   return changed;
 }
 
 async function pullAndMerge({ throwOnError = false } = {}) {
-  if (!isSignedIn() || syncing) return false;
+  const session = getSession();
+  if (!session || syncing) return false;
 
   syncing = true;
-  emitStatus({ state: "pulling", message: "正在同步云端进度…", email: userEmail });
+  emitStatus({ state: "pulling", message: "正在同步云端进度…" });
   try {
-    const result = await pullSyncPayload(accessToken);
+    const result = await pullSyncPayload(session.code);
     const changed = await applyRemotePayload(result);
 
     emitStatus({
-      state: "signed_in",
-      message: `进度已同步 · ${userEmail}`,
-      email: userEmail,
+      state: "paired",
+      message: `实时同步中 · ${formatPairingCode(session.code)}`,
+      code: formatPairingCode(session.code),
     });
     if (changed) emitApplied();
     return changed;
   } catch (err) {
-    if (isCloudEmptyError(err)) {
-      emitStatus({
-        state: "signed_in",
-        message: `已登录 · ${userEmail}`,
-        email: userEmail,
-      });
-      return false;
-    }
-    emitStatus({ state: "error", message: err.message || "同步失败", email: userEmail });
+    const expired = /无效或已过期/.test(err.message || "");
+    emitStatus({
+      state: expired ? "expired" : "error",
+      message: expired
+        ? "配对码已过期，请在本机重新生成并在另一台设备重新连接"
+        : err.message || "同步失败",
+    });
     if (throwOnError) throw err;
     return false;
   } finally {
@@ -123,38 +130,43 @@ async function pullAndMerge({ throwOnError = false } = {}) {
   }
 }
 
+async function pushSyncData(code) {
+  const payload = exportLocalData();
+  return pushSyncPayload(payload, code);
+}
+
 async function pushNow() {
-  if (!isSignedIn() || syncing) return;
+  const session = getSession();
+  if (!session || syncing) return;
 
   syncing = true;
-  emitStatus({ state: "pushing", message: "正在上传进度…", email: userEmail });
+  emitStatus({ state: "pushing", message: "正在上传进度…" });
   try {
     try {
-      const result = await pullSyncPayload(accessToken);
+      const result = await pullSyncPayload(session.code);
       const changed = await applyRemotePayload(result);
       if (changed) emitApplied();
-    } catch (err) {
-      if (!isCloudEmptyError(err)) {
-        // 上传前拉取失败时仍尝试推送本机进度
-      }
+    } catch {
+      // 上传前拉取失败时仍尝试推送本机进度
     }
 
-    const result = await pushSyncPayload(exportLocalData(), accessToken);
-    saveSyncMeta({
-      userId,
+    const result = await pushSyncData(session.code);
+    updateSession({
+      lastPushedAt: Date.now(),
       lastRemoteUpdatedAt: result.updatedAt || Date.now(),
+      expiresAt: result.expiresAt || session.expiresAt || 0,
     });
     dirty = false;
     emitStatus({
-      state: "signed_in",
-      message: `进度已同步 · ${userEmail}`,
-      email: userEmail,
+      state: "paired",
+      message: `实时同步中 · ${formatPairingCode(session.code)}`,
+      code: formatPairingCode(session.code),
     });
   } catch (err) {
     emitStatus({
       state: "error",
       message: err.message || "上传失败，将自动重试",
-      email: userEmail,
+      code: formatPairingCode(session.code),
     });
   } finally {
     syncing = false;
@@ -181,113 +193,104 @@ function stopPolling() {
   }
 }
 
-async function mergeLocalIntoAccount() {
-  emitStatus({ state: "syncing", message: "正在将本机进度合并到账号…", email: userEmail });
-
-  let cloudPayload = null;
-  let remoteUpdatedAt = 0;
-  try {
-    const result = await pullSyncPayload(accessToken);
-    cloudPayload = result.payload;
-    remoteUpdatedAt = result.updatedAt || result.payload?.exportedAt || 0;
-  } catch (err) {
-    if (!isCloudEmptyError(err)) throw err;
-  }
-
-  const localBundle = exportLocalData();
-  const merged = cloudPayload ? mergeSyncBundles(localBundle, cloudPayload) : localBundle;
-  const changed =
-    !cloudPayload || JSON.stringify(merged.data) !== JSON.stringify(localBundle.data);
-
-  suppressDirty = true;
-  importLocalData(merged);
-  suppressDirty = false;
-
-  if (changed) emitApplied();
-
-  await pushSyncPayload(merged, accessToken);
-  saveSyncMeta({
-    userId,
-    lastRemoteUpdatedAt: Math.max(remoteUpdatedAt, Date.now()),
-  });
-  dirty = false;
-}
+export { pushSyncData };
 
 export const syncService = {
   getStatus() {
     return lastStatus;
   },
 
-  isSignedIn() {
-    return isSignedIn();
+  getPairingCode() {
+    const session = getSession();
+    return session ? formatPairingCode(session.code) : "";
+  },
+
+  isPaired() {
+    return Boolean(getSession());
   },
 
   markDirty() {
-    if (suppressDirty || !isSignedIn()) return;
+    if (suppressDirty || !getSession()) return;
     schedulePush();
   },
 
-  updateAccessToken(session) {
-    if (!session?.access_token || !session.user?.id) return;
-    if (userId && session.user.id !== userId) return;
-    accessToken = session.access_token;
-    userId = session.user.id;
-    userEmail = session.user.email || session.user.user_metadata?.full_name || userEmail;
-  },
-
-  async bindUser(session, { mergeLocal = false } = {}) {
-    if (!session?.user?.id || !session.access_token) return;
-
-    const nextUserId = session.user.id;
-    const nextEmail =
-      session.user.email || session.user.user_metadata?.full_name || "Google 账号";
-    const switchingAccount = userId && userId !== nextUserId;
-
-    accessToken = session.access_token;
-    userId = nextUserId;
-    userEmail = nextEmail;
-    clearLegacyPairingSession();
-
-    if (switchingAccount || mergeLocal) {
-      saveSyncMeta({ userId, lastRemoteUpdatedAt: 0 });
-      await mergeLocalIntoAccount();
-    } else {
-      const meta = loadSyncMeta();
-      if (meta.userId !== userId) {
-        saveSyncMeta({ userId, lastRemoteUpdatedAt: 0 });
-        await mergeLocalIntoAccount();
-      }
-    }
-
-    startPolling();
-    emitStatus({
-      state: "signed_in",
-      message: `已登录 · ${userEmail}`,
-      email: userEmail,
+  async establishHost(code, { push = true, remoteUpdatedAt = 0, expiresAt = 0 } = {}) {
+    const normalized = normalizePairingCode(code);
+    savePairingSession({
+      code: normalized,
+      role: "host",
+      linkedAt: Date.now(),
+      lastPushedAt: push ? 0 : Date.now(),
+      lastRemoteUpdatedAt: remoteUpdatedAt || 0,
+      expiresAt: expiresAt || 0,
     });
-    await pullAndMerge();
+    emitStatus({
+      state: "paired",
+      message: `实时同步中 · ${formatPairingCode(normalized)}`,
+      code: formatPairingCode(normalized),
+    });
+    startPolling();
+    if (push) {
+      await pushNow();
+    } else {
+      await pullAndMerge();
+    }
   },
 
-  unbindUser() {
+  async linkDevice(code) {
+    const normalized = normalizePairingCode(code);
+    savePairingSession({
+      code: normalized,
+      role: "linked",
+      linkedAt: Date.now(),
+      lastPushedAt: 0,
+      lastRemoteUpdatedAt: 0,
+    });
+
+    try {
+      await pullAndMerge({ throwOnError: true });
+      await pushNow();
+      startPolling();
+      return true;
+    } catch (err) {
+      clearPairingSession();
+      throw err;
+    }
+  },
+
+  unlink() {
     dirty = false;
     stopPolling();
-    accessToken = "";
-    userId = "";
-    userEmail = "";
-    clearSyncMeta();
-    emitStatus({ state: "idle", message: "", email: "" });
+    clearPairingSession();
+    emitStatus({ state: "idle", message: "", code: "" });
+  },
+
+  getExpiresAt() {
+    return getSession()?.expiresAt || 0;
   },
 
   start() {
     if (started) return;
     started = true;
+    clearLegacySyncMeta();
     installStorageHook();
 
+    const session = getSession();
+    if (session) {
+      emitStatus({
+        state: "paired",
+        message: `实时同步中 · ${formatPairingCode(session.code)}`,
+        code: formatPairingCode(session.code),
+      });
+      startPolling();
+      pullAndMerge();
+    }
+
     const onFocus = () => {
-      if (isSignedIn()) pullAndMerge();
+      if (getSession()) pullAndMerge();
     };
     const onVisibility = () => {
-      if (document.visibilityState === "visible" && isSignedIn()) pullAndMerge();
+      if (document.visibilityState === "visible" && getSession()) pullAndMerge();
     };
 
     window.addEventListener("focus", onFocus);

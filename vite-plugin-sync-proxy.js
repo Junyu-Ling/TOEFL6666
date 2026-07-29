@@ -1,4 +1,3 @@
-import { authenticateRequest } from "./server/auth.js";
 import { handleSyncPull, handleSyncPush } from "./server/sync-api.js";
 
 function readBody(req) {
@@ -32,10 +31,7 @@ export function createSyncHandler() {
 
     try {
       const body = JSON.parse(await readBody(req));
-      const user = await authenticateRequest(req);
-      const result = isPush
-        ? await handleSyncPush(body, { userId: user.id })
-        : await handleSyncPull(body, { userId: user.id });
+      const result = isPush ? await handleSyncPush(body) : await handleSyncPull(body);
       sendJson(res, 200, result);
     } catch (err) {
       sendJson(res, err.status || 500, { error: err.message || "服务器错误" });

@@ -1,4 +1,11 @@
-import { mergeSyncBundles, SYNC_VERSION } from "../src/shared/sync.js";
+import {
+  formatPairingCode,
+  generatePairingCode,
+  isValidPairingCode,
+  mergeSyncBundles,
+  normalizePairingCode,
+  SYNC_VERSION,
+} from "../src/shared/sync.js";
 import { loadSyncEntry, saveSyncEntry } from "./sync-store.js";
 
 function createError(message, status = 500) {
@@ -16,38 +23,56 @@ function validatePayload(payload) {
   }
 }
 
-export async function handleSyncPush(body = {}, { userId }) {
+export async function handleSyncPush(body = {}) {
   const payload = body.payload;
   validatePayload(payload);
-  if (!userId) throw createError("请先登录 Google 账号", 401);
+
+  let code = normalizePairingCode(body.code || "");
+  if (code && !isValidPairingCode(code)) {
+    throw createError("配对码须为 8 位字母或数字", 400);
+  }
+  if (!code) {
+    code = normalizePairingCode(generatePairingCode());
+  }
 
   let mergedPayload = payload;
   try {
-    const { entry } = await loadSyncEntry(userId);
+    const { entry } = await loadSyncEntry(code);
     if (entry?.payload) {
       mergedPayload = mergeSyncBundles(entry.payload, payload);
     }
-  } catch (err) {
-    if (err.status !== 404) throw err;
+  } catch {
+    // 首次上传该配对码，直接使用本机数据
   }
 
   const updatedAt = Date.now();
-  const { backend } = await saveSyncEntry(userId, {
+  const expiresAt = updatedAt + 30 * 24 * 3600 * 1000;
+  const { backend } = await saveSyncEntry(code, {
     payload: mergedPayload,
+    expiresAt,
     updatedAt,
   });
 
-  return { updatedAt, backend };
+  return {
+    code: formatPairingCode(code),
+    expiresAt,
+    updatedAt,
+    backend,
+  };
 }
 
-export async function handleSyncPull(_body = {}, { userId }) {
-  if (!userId) throw createError("请先登录 Google 账号", 401);
+export async function handleSyncPull(body = {}) {
+  const code = normalizePairingCode(body.code || "");
+  if (!isValidPairingCode(code)) {
+    throw createError("请输入 8 位配对码", 400);
+  }
 
-  const { entry, backend } = await loadSyncEntry(userId);
+  const { entry, backend } = await loadSyncEntry(code);
   return {
     payload: entry.payload,
     exportedAt: entry.payload.exportedAt,
     updatedAt: entry.updatedAt || entry.payload.exportedAt,
+    expiresAt: entry.expiresAt,
     backend,
   };
 }
