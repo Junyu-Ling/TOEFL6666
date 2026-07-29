@@ -13,7 +13,7 @@ import {
   enrichResultWithDefinitionCoverage,
 } from "../src/services/localMatch.js";
 
-const SYSTEM_PROMPT = `你是托福词汇批改助手。只批改对错，不生成记忆法。
+const SYSTEM_PROMPT = `你是托福词汇批改助手。只批改对错，不生成记忆法（答错后系统会另行调用记忆法接口）。
 
 必须只返回 json（布尔字段只能是 true 或 false，不要输出中文「或」）：
 {

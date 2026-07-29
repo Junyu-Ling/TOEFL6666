@@ -101,6 +101,7 @@ export default function FlashCard({
   const [pronounceResult, setPronounceResult] = useState(null);
   const pronounceAbortRef = useRef(null);
   const [memoryLoading, setMemoryLoading] = useState(false);
+  const [memoryTrickError, setMemoryTrickError] = useState("");
   const [swipeVisual, setSwipeVisual] = useState(null);
   const inputRef = useRef(null);
   const englishInputRef = useRef(null);
@@ -123,6 +124,7 @@ export default function FlashCard({
   const handleManualMarkRef = useRef(null);
   const touchStartRef = useRef(null);
   const memoryFetchRef = useRef(false);
+  const pendingMemoryTrickRef = useRef(null);
   const mobileInputFocusRef = useRef(false);
   const swipeLockRef = useRef(false);
   const swipeDraggingRef = useRef(false);
@@ -148,7 +150,11 @@ export default function FlashCard({
   const fetchMemoryTrickBackground = useCallback(
     async (baseResult) => {
       const priorWrongCount = wordStats?.wrongCount ?? 0;
-      const existingTrick = wordStats?.memory_trick ?? baseResult.memory_trick ?? null;
+      const existingTrick =
+        wordStats?.memory_trick ??
+        baseResult?.memory_trick ??
+        pendingMemoryTrickRef.current ??
+        null;
 
       if (
         existingTrick ||
@@ -164,18 +170,30 @@ export default function FlashCard({
 
       memoryFetchRef.current = true;
       setMemoryLoading(true);
-      try {
-        const memory_trick = await fetchMemoryTrick(wordData);
-        setResult((prev) =>
-          prev && prev.is_correct === false ? { ...prev, memory_trick } : prev
-        );
-        onMemoryTrickGenerated?.(wordData, memory_trick);
-      } catch {
-        // ignore background fetch errors
-      } finally {
-        memoryFetchRef.current = false;
-        setMemoryLoading(false);
+      setMemoryTrickError("");
+
+      let lastError = null;
+      for (let attempt = 0; attempt < 2; attempt += 1) {
+        try {
+          const memory_trick = await fetchMemoryTrick(wordData);
+          pendingMemoryTrickRef.current = memory_trick;
+          setResult((prev) =>
+            prev && prev.is_correct === false ? { ...prev, memory_trick } : prev
+          );
+          onMemoryTrickGenerated?.(wordData, memory_trick);
+          lastError = null;
+          break;
+        } catch (err) {
+          lastError = err;
+        }
       }
+
+      if (lastError) {
+        setMemoryTrickError(lastError.message || "记忆法生成失败，请稍后重试");
+      }
+
+      memoryFetchRef.current = false;
+      setMemoryLoading(false);
     },
     [wordData, wordStats?.wrongCount, wordStats?.memory_trick, onMemoryTrickGenerated]
   );
@@ -274,16 +292,20 @@ export default function FlashCard({
 
   const showWrongAnswer = useCallback(
     (aiResult, { playSound = true, persist = true } = {}) => {
-      const existingTrick = wordStats?.memory_trick ?? aiResult.memory_trick ?? null;
+      const pendingTrick = pendingMemoryTrickRef.current;
+      pendingMemoryTrickRef.current = null;
+      const existingTrick =
+        wordStats?.memory_trick ?? aiResult.memory_trick ?? pendingTrick ?? null;
       const nextResult = {
         ...aiResult,
         is_correct: false,
-        ...(existingTrick && !aiResult.memory_trick ? { memory_trick: existingTrick } : {}),
+        ...(existingTrick ? { memory_trick: existingTrick } : {}),
       };
 
       setResult(nextResult);
       setBackMode("ai");
       setFlipped(true);
+      setMemoryTrickError("");
       if (playSound) notifyAnswerResult(false);
       if (persist) onResult?.(wordData, nextResult);
       requestAnimationFrame(focusCard);
@@ -311,10 +333,12 @@ export default function FlashCard({
     if (hideWordFirstRef.current && recallStepRef.current === "english") return;
     stopDictation();
     setError(null);
+    setMemoryTrickError("");
     setBackMode("manual");
     setFlipped(true);
+    void fetchMemoryTrickBackground({ is_correct: false });
     requestAnimationFrame(focusCard);
-  }, [stopDictation, focusCard]);
+  }, [stopDictation, focusCard, fetchMemoryTrickBackground]);
 
   const handleBlankTap = useCallback(() => {
     if (loadingRef.current || settingsOpenRef.current) return;
@@ -726,6 +750,10 @@ export default function FlashCard({
     setEnglishRecallHint("");
     setResult(null);
     setError(null);
+    setMemoryTrickError("");
+    pendingMemoryTrickRef.current = null;
+    memoryFetchRef.current = false;
+    setMemoryLoading(false);
     setLoading(false);
     setDictating(false);
     setDictationHint("");
@@ -1371,6 +1399,12 @@ export default function FlashCard({
                 </p>
               )}
 
+              {!result.is_correct && memoryTrickError && !result.memory_trick && !memoryLoading && (
+                <p className="flashcard__memory-status flashcard__memory-status--error" role="alert">
+                  {memoryTrickError}
+                </p>
+              )}
+
               {!result.is_correct && result.memory_trick && (
                 <MemoryTrickBlock trick={result.memory_trick} />
               )}
@@ -1393,6 +1427,13 @@ export default function FlashCard({
                   <li key={i}>{def}</li>
                 ))}
               </ul>
+
+              {memoryLoading && !wordStats?.memory_trick && (
+                <p className="flashcard__memory-status">
+                  <span className="spinner spinner--inline" />
+                  记忆法准备中…
+                </p>
+              )}
 
               <p className="flashcard__mark-prompt">看完释义后，你认识这个词吗？</p>
               <div className="flashcard__mark-actions">
