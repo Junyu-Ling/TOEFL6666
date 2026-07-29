@@ -1,0 +1,627 @@
+{
+  "meta": {
+    "level": 2,
+    "list": 8,
+    "title": "Level 2 · List 8",
+    "updatedAt": "2026-07-29.4"
+  },
+  "words": [
+    {
+      "word": "understatement",
+      "definitions": [
+        "n. 低调的说法；轻描淡写"
+      ]
+    },
+    {
+      "word": "calamity",
+      "definitions": [
+        "n. 灾难 (terrible loss)"
+      ]
+    },
+    {
+      "word": "purr",
+      "definitions": [
+        "v. 发出轰鸣声"
+      ]
+    },
+    {
+      "word": "indignant",
+      "definitions": [
+        "adj. 义愤的 (feeling anger or annoyance)"
+      ]
+    },
+    {
+      "word": "onerous",
+      "definitions": [
+        "adj. 沉重的；繁重的"
+      ]
+    },
+    {
+      "word": "carefree",
+      "definitions": [
+        "adj. 无忧无虑的 (having no worries or responsibilities)"
+      ]
+    },
+    {
+      "word": "sarcasm",
+      "definitions": [
+        "n. 讽刺 (the use of irony to convey contempt)"
+      ]
+    },
+    {
+      "word": "bequeath",
+      "definitions": [
+        "v. 遗赠 (leave to a person by a will)"
+      ]
+    },
+    {
+      "word": "demean",
+      "definitions": [
+        "v. 贬低 (reduce in worth)"
+      ]
+    },
+    {
+      "word": "vestige",
+      "definitions": [
+        "n. 残留",
+        "n. 丝毫"
+      ]
+    },
+    {
+      "word": "pelt",
+      "definitions": [
+        "v. 攻击或投掷",
+        "v. 飞跑"
+      ]
+    },
+    {
+      "word": "chide",
+      "definitions": [
+        "v. 呵斥"
+      ]
+    },
+    {
+      "word": "pseudonym",
+      "definitions": [
+        "n. 假名"
+      ]
+    },
+    {
+      "word": "aloft",
+      "definitions": [
+        "adv. 在高处 (up in or into the air)"
+      ]
+    },
+    {
+      "word": "deride",
+      "definitions": [
+        "v. 嘲笑 (ridicule)"
+      ]
+    },
+    {
+      "word": "hinterland",
+      "definitions": [
+        "n. 偏僻地区"
+      ]
+    },
+    {
+      "word": "cryptic",
+      "definitions": [
+        "adj. 隐晦的"
+      ]
+    },
+    {
+      "word": "unequivocal",
+      "definitions": [
+        "adj. 毫不含糊的"
+      ]
+    },
+    {
+      "word": "comprehensible",
+      "definitions": [
+        "adj. 可理解的"
+      ]
+    },
+    {
+      "word": "serenity",
+      "definitions": [
+        "n. 静谧 (the quality of being calm and peaceful)"
+      ]
+    },
+    {
+      "word": "inept",
+      "definitions": [
+        "adj. 无能的"
+      ]
+    },
+    {
+      "word": "juxtapose",
+      "definitions": [
+        "v. 把……并列 (place or deal with close together for contrasting effect)"
+      ]
+    },
+    {
+      "word": "hypocritical",
+      "definitions": [
+        "adj. 虚伪的"
+      ]
+    },
+    {
+      "word": "surmount",
+      "definitions": [
+        "v. 居于……之上 (stand or be placed on top of)",
+        "v. 克服 (overcome)"
+      ]
+    },
+    {
+      "word": "haphazard",
+      "definitions": [
+        "adj. 无计划的 (lacking any obvious principle of organization)"
+      ]
+    },
+    {
+      "word": "genteel",
+      "definitions": [
+        "adj. 有教养的，体面的 (polite，refined，or respectable)"
+      ]
+    },
+    {
+      "word": "feign",
+      "definitions": [
+        "v. 假装 (pretend to be affected by)"
+      ]
+    },
+    {
+      "word": "elate",
+      "definitions": [
+        "v. 使高兴 (make (someone) ecstatically happy)"
+      ]
+    },
+    {
+      "word": "coalesce",
+      "definitions": [
+        "v. 合并 (come together and form one mass or whole)"
+      ]
+    },
+    {
+      "word": "reminisce",
+      "definitions": [
+        "v. 缅怀往事 (think about or tell of past experiences or events)"
+      ]
+    },
+    {
+      "word": "figurative",
+      "definitions": [
+        "adj. 比喻的 (metaphorical)",
+        "adj. 具象的 (representing forms that are derived from life)"
+      ]
+    },
+    {
+      "word": "euphemism",
+      "definitions": [
+        "n. 委婉语"
+      ]
+    },
+    {
+      "word": "tact",
+      "definitions": [
+        "n. (为人处事)圆滑"
+      ]
+    },
+    {
+      "word": "banal",
+      "definitions": [
+        "adj. 平庸的 (so lacking in originality as to be boring)"
+      ]
+    },
+    {
+      "word": "forestall",
+      "definitions": [
+        "v. 预先阻止 (prevent ahead of time)"
+      ]
+    },
+    {
+      "word": "partake",
+      "definitions": [
+        "v. 参与，分享 (join in)",
+        "v. (~of) 享用 (eat or drink)"
+      ]
+    },
+    {
+      "word": "quintessential",
+      "definitions": [
+        "adj. 典型的"
+      ]
+    },
+    {
+      "word": "arcane",
+      "definitions": [
+        "adj. 神秘的，难解的"
+      ]
+    },
+    {
+      "word": "agile",
+      "definitions": [
+        "adj. 敏捷的 (able to move quickly and easily)"
+      ]
+    },
+    {
+      "word": "condescend",
+      "definitions": [
+        "v. 屈尊；高人一等 (be patronizing)"
+      ]
+    },
+    {
+      "word": "consternation",
+      "definitions": [
+        "n. 惊愕 (feelings of anxiety or dismay)"
+      ]
+    },
+    {
+      "word": "nozzle",
+      "definitions": [
+        "n. 喷嘴；管口；鼻"
+      ]
+    },
+    {
+      "word": "evasive",
+      "definitions": [
+        "adj. 含糊其辞的 (tending to avoid commitment)"
+      ]
+    },
+    {
+      "word": "laud",
+      "definitions": [
+        "v./n. 赞美 (praise highly)"
+      ]
+    },
+    {
+      "word": "ephemeral",
+      "definitions": [
+        "adj. 短暂的 (short-lived)"
+      ]
+    },
+    {
+      "word": "scrawl",
+      "definitions": [
+        "n./v. 写字潦草 (write in a hurried，careless way)"
+      ]
+    },
+    {
+      "word": "corrosion",
+      "definitions": [
+        "n. 腐蚀"
+      ]
+    },
+    {
+      "word": "profusion",
+      "definitions": [
+        "n. 大量"
+      ]
+    },
+    {
+      "word": "conundrum",
+      "definitions": [
+        "n. 谜 (a confusing and difficult problem or question)"
+      ]
+    },
+    {
+      "word": "supposition",
+      "definitions": [
+        "n. 推测 (an uncertain belief)"
+      ]
+    },
+    {
+      "word": "tumultuous",
+      "definitions": [
+        "adj. 喧闹的 (making an uproar or loud noise)",
+        "adj. 动荡的；混乱的 (excited or disorderly)"
+      ]
+    },
+    {
+      "word": "connoisseur",
+      "definitions": [
+        "n. 鉴赏家 (an expert judge in matters of taste)"
+      ]
+    },
+    {
+      "word": "prodigy",
+      "definitions": [
+        "n. 奇才 (an unusually gifted or intelligent (young) person)"
+      ]
+    },
+    {
+      "word": "dilapidate",
+      "definitions": [
+        "v. (使)荒废 (cause to fall into disrepair or ruin)"
+      ]
+    },
+    {
+      "word": "vignette",
+      "definitions": [
+        "n. 片段"
+      ]
+    },
+    {
+      "word": "incongruous",
+      "definitions": [
+        "adj. 不一致的 (lacking in harmony or compatibility)"
+      ]
+    },
+    {
+      "word": "amalgamate",
+      "definitions": [
+        "v. 合并"
+      ]
+    },
+    {
+      "word": "laborious",
+      "definitions": [
+        "adj. 费力的 (requiring considerable effort and time)"
+      ]
+    },
+    {
+      "word": "delude",
+      "definitions": [
+        "v. 欺骗(自己) (impose a misleading belief upon)"
+      ]
+    },
+    {
+      "word": "archetypal",
+      "definitions": [
+        "adj. 原型的"
+      ]
+    },
+    {
+      "word": "dearth",
+      "definitions": [
+        "n. 缺乏 (a scarcity or lack of something)"
+      ]
+    },
+    {
+      "word": "exonerate",
+      "definitions": [
+        "v. 免除……的责任；宣布……无罪"
+      ]
+    },
+    {
+      "word": "commotion",
+      "definitions": [
+        "n. 骚动 (a state of confused and noisy disturbance)",
+        "n. 喧闹声"
+      ]
+    },
+    {
+      "word": "admonish",
+      "definitions": [
+        "v. 告诫 (warn or reprimand someone firmly)"
+      ]
+    },
+    {
+      "word": "foreshadow",
+      "definitions": [
+        "v. 预示 (be a warning or indication of (a future event))"
+      ]
+    },
+    {
+      "word": "indiscriminate",
+      "definitions": [
+        "adj. 不加区别的；不加选择的 (action is done without thought)"
+      ]
+    },
+    {
+      "word": "stagnate",
+      "definitions": [
+        "v. 因不流动而变得污浊",
+        "v. 停滞，不进步"
+      ]
+    },
+    {
+      "word": "revisionist",
+      "definitions": [
+        "n./adj. 修正主义者；修正主义的"
+      ]
+    },
+    {
+      "word": "caustic",
+      "definitions": [
+        "adj. 尖刻的",
+        "adj. 腐蚀性的"
+      ]
+    },
+    {
+      "word": "antipathy",
+      "definitions": [
+        "n. 强烈的厌恶 (a deep-seated feeling of dislike)"
+      ]
+    },
+    {
+      "word": "defunct",
+      "definitions": [
+        "adj. 不复存在的；已废除的"
+      ]
+    },
+    {
+      "word": "bigotry",
+      "definitions": [
+        "n. 偏执"
+      ]
+    },
+    {
+      "word": "incessant",
+      "definitions": [
+        "adj. 持续不断的 (continuing without pause)"
+      ]
+    },
+    {
+      "word": "palatable",
+      "definitions": [
+        "adj. 可接受的",
+        "adj. 可口的"
+      ]
+    },
+    {
+      "word": "commendable",
+      "definitions": [
+        "adj. 值得称赞的"
+      ]
+    },
+    {
+      "word": "catalyze",
+      "definitions": [
+        "v. 催化"
+      ]
+    },
+    {
+      "word": "devious",
+      "definitions": [
+        "adj. 狡诈的",
+        "adj. 迂回的；弯曲的"
+      ]
+    },
+    {
+      "word": "pester",
+      "definitions": [
+        "v. 打扰；使烦恼"
+      ]
+    },
+    {
+      "word": "placid",
+      "definitions": [
+        "adj. 平和的 (not easily upset or excited)",
+        "adj. 平静的"
+      ]
+    },
+    {
+      "word": "sullen",
+      "definitions": [
+        "adj. 郁郁寡欢的 (bad-tempered and unpleasant)",
+        "adj. (天气)阴沉的"
+      ]
+    },
+    {
+      "word": "brazen",
+      "definitions": [
+        "adj. 厚颜无耻的 (bold and without shame)",
+        "adj. 黄铜制的"
+      ]
+    },
+    {
+      "word": "antagonize",
+      "definitions": [
+        "v. 产生敌意"
+      ]
+    },
+    {
+      "word": "insatiable",
+      "definitions": [
+        "adj. 贪得无厌的 (impossible to satisfy)"
+      ]
+    },
+    {
+      "word": "voluminous",
+      "definitions": [
+        "adj. 宽大的；宽松的",
+        "adj. 冗长的；长篇的 (very lengthy and full)"
+      ]
+    },
+    {
+      "word": "commemoration",
+      "definitions": [
+        "n. 纪念(仪式)"
+      ]
+    },
+    {
+      "word": "implausible",
+      "definitions": [
+        "adj. 不合情理的 (not seeming reasonable)"
+      ]
+    },
+    {
+      "word": "industrious",
+      "definitions": [
+        "adj. 勤奋的 (diligent and hard-working)"
+      ]
+    },
+    {
+      "word": "fragmentary",
+      "definitions": [
+        "adj. 支离破碎的 (consisting of small disconnected parts)"
+      ]
+    },
+    {
+      "word": "twine",
+      "definitions": [
+        "v. 盘绕；使交织 (cause to wind or spiral round something)"
+      ]
+    },
+    {
+      "word": "deft",
+      "definitions": [
+        "adj. 灵巧的 (quick in one's movements)"
+      ]
+    },
+    {
+      "word": "annihilate",
+      "definitions": [
+        "v. 歼灭；彻底击败"
+      ]
+    },
+    {
+      "word": "rebuttal",
+      "definitions": [
+        "n. 反驳 (proving a criticism is false)"
+      ]
+    },
+    {
+      "word": "tectonic",
+      "definitions": [
+        "adj. 地壳构造的"
+      ]
+    },
+    {
+      "word": "circumscribe",
+      "definitions": [
+        "v. 约束 (restrict within limits)"
+      ]
+    },
+    {
+      "word": "tenacity",
+      "definitions": [
+        "n. 坚韧 (the quality or fact of being able to grip something firmly)"
+      ]
+    },
+    {
+      "word": "introvert",
+      "definitions": [
+        "n./adj. 内向的(人)"
+      ]
+    },
+    {
+      "word": "interminable",
+      "definitions": [
+        "adj. 无休止的 (endless)"
+      ]
+    },
+    {
+      "word": "assail",
+      "definitions": [
+        "v. 困扰 (disturb somebody severely)",
+        "v. 攻击 (attack violently)"
+      ]
+    },
+    {
+      "word": "scavenge",
+      "definitions": [
+        "v. (在垃圾中)捡拾 (search and collect from discarded waste)",
+        "n. (scavenger)食腐动物；拾荒者"
+      ]
+    },
+    {
+      "word": "tantamount",
+      "definitions": [
+        "adj. 同等的；相当于……的"
+      ]
+    }
+  ]
+}

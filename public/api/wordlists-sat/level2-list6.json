@@ -1,0 +1,618 @@
+{
+  "meta": {
+    "level": 2,
+    "list": 6,
+    "title": "Level 2 · List 6",
+    "updatedAt": "2026-07-29.4"
+  },
+  "words": [
+    {
+      "word": "blatant",
+      "definitions": [
+        "adj. 明显的(conspicuous or obtrusive)",
+        "adj. 吵闹的(unpleasantly loud and noisy)"
+      ]
+    },
+    {
+      "word": "veer",
+      "definitions": [
+        "v./n. 转向(a sudden change of direction)"
+      ]
+    },
+    {
+      "word": "repercussion",
+      "definitions": [
+        "n. 反响(a movement back from an impact)"
+      ]
+    },
+    {
+      "word": "miraculous",
+      "definitions": [
+        "adj. 奇迹般的(highly improbable and extraordinary)"
+      ]
+    },
+    {
+      "word": "delve",
+      "definitions": [
+        "v. 探索，挖掘，搜寻"
+      ]
+    },
+    {
+      "word": "pavilion",
+      "definitions": [
+        "n. 装饰性建筑，亭子(a temporary building used at public events)"
+      ]
+    },
+    {
+      "word": "tapestry",
+      "definitions": [
+        "n. 挂毯"
+      ]
+    },
+    {
+      "word": "ornate",
+      "definitions": [
+        "adj. 华美的；(词藻)华丽的"
+      ]
+    },
+    {
+      "word": "brim",
+      "definitions": [
+        "n. (帽)沿",
+        "v. 充盈，满溢(be full of fluid)"
+      ]
+    },
+    {
+      "word": "nobility",
+      "definitions": [
+        "n. 高贵；贵族"
+      ]
+    },
+    {
+      "word": "liken",
+      "definitions": [
+        "v. 把某人/某事物比作"
+      ]
+    },
+    {
+      "word": "airborne",
+      "definitions": [
+        "adj. 空气传播的；航空的(transported by air)"
+      ]
+    },
+    {
+      "word": "deport",
+      "definitions": [
+        "v. 驱逐"
+      ]
+    },
+    {
+      "word": "brag",
+      "definitions": [
+        "v. 吹嘘(say in a boastful manner)"
+      ]
+    },
+    {
+      "word": "synchronize",
+      "definitions": [
+        "v. 同步(occur at the same time)"
+      ]
+    },
+    {
+      "word": "vernacular",
+      "definitions": [
+        "n./adj. 方言(的)，本地化(的)"
+      ]
+    },
+    {
+      "word": "floral",
+      "definitions": [
+        "adj. 植物的；花的(relating to flowers)"
+      ]
+    },
+    {
+      "word": "captivate",
+      "definitions": [
+        "v. 迷住，迷惑(attract)"
+      ]
+    },
+    {
+      "word": "savvy",
+      "definitions": [
+        "n. 常识",
+        "adj. 精明的；有见识的(shrewd and knowledgeable)"
+      ]
+    },
+    {
+      "word": "espouse",
+      "definitions": [
+        "n./v. 支持(adopt or support)"
+      ]
+    },
+    {
+      "word": "allure",
+      "definitions": [
+        "n./v. 吸引(the quality of being attractive or fascinating)"
+      ]
+    },
+    {
+      "word": "fragrance",
+      "definitions": [
+        "n. 香味"
+      ]
+    },
+    {
+      "word": "defiant",
+      "definitions": [
+        "adj. 挑衅的(openly refusing to obey)"
+      ]
+    },
+    {
+      "word": "vulgar",
+      "definitions": [
+        "adj. 庸俗的；粗鲁的(lacking sophistication or good taste)"
+      ]
+    },
+    {
+      "word": "deplore",
+      "definitions": [
+        "v. 悲悼；反对(feel or express strong disapproval)"
+      ]
+    },
+    {
+      "word": "elongate",
+      "definitions": [
+        "v. 拉长(make long)"
+      ]
+    },
+    {
+      "word": "harmonic",
+      "definitions": [
+        "adj. 和声的",
+        "n. [物理]谐波"
+      ]
+    },
+    {
+      "word": "abort",
+      "definitions": [
+        "v. 中止；取消；使……流产"
+      ]
+    },
+    {
+      "word": "avid",
+      "definitions": [
+        "adj. 热衷的；热心的(marked by keen interest and enthusiasm)"
+      ]
+    },
+    {
+      "word": "brook",
+      "definitions": [
+        "v. 容忍，忍受(put up with something or somebody unpleasant)",
+        "n. 小溪(a small stream)"
+      ]
+    },
+    {
+      "word": "haste",
+      "definitions": [
+        "n. 匆忙(excessive speed or urgency)"
+      ]
+    },
+    {
+      "word": "blockbuster",
+      "definitions": [
+        "n. 了不起的人或事(an usually successful hit)"
+      ]
+    },
+    {
+      "word": "sneer",
+      "definitions": [
+        "v./n. 冷笑；讥笑(a mocking smile)"
+      ]
+    },
+    {
+      "word": "decency",
+      "definitions": [
+        "n. 得体；礼仪(behavior that conforms to accepted standards)"
+      ]
+    },
+    {
+      "word": "aristocracy",
+      "definitions": [
+        "n. 贵族"
+      ]
+    },
+    {
+      "word": "treacherous",
+      "definitions": [
+        "adj. 奸诈的；危险的"
+      ]
+    },
+    {
+      "word": "neutrality",
+      "definitions": [
+        "n. 中立"
+      ]
+    },
+    {
+      "word": "remorse",
+      "definitions": [
+        "n. 懊悔(deep regret)"
+      ]
+    },
+    {
+      "word": "charisma",
+      "definitions": [
+        "n. 个人魅力"
+      ]
+    },
+    {
+      "word": "gape",
+      "definitions": [
+        "n./v. 张口结舌地瞪着",
+        "v. 裂开；张大"
+      ]
+    },
+    {
+      "word": "coax",
+      "definitions": [
+        "v. 哄劝，劝诱(persuade sb. by flattery)"
+      ]
+    },
+    {
+      "word": "reimburse",
+      "definitions": [
+        "v. 偿付(repay)"
+      ]
+    },
+    {
+      "word": "varnish",
+      "definitions": [
+        "n./v. (涂)清漆"
+      ]
+    },
+    {
+      "word": "eclectic",
+      "definitions": [
+        "n./v. 兼收并蓄(的)(deriving ideas from a broad range of sources)"
+      ]
+    },
+    {
+      "word": "carcass",
+      "definitions": [
+        "n. 尸体；残骸"
+      ]
+    },
+    {
+      "word": "creed",
+      "definitions": [
+        "n. 信条；原则(a system of Christian or other religious belief)"
+      ]
+    },
+    {
+      "word": "hysteria",
+      "definitions": [
+        "n. 歇斯底里"
+      ]
+    },
+    {
+      "word": "idiosyncratic",
+      "definitions": [
+        "adj. 独特的"
+      ]
+    },
+    {
+      "word": "mediocre",
+      "definitions": [
+        "adj. 普通的(of only moderate quality)"
+      ]
+    },
+    {
+      "word": "detour",
+      "definitions": [
+        "n./v. 绕道(而行)(a roundabout road)"
+      ]
+    },
+    {
+      "word": "intangible",
+      "definitions": [
+        "adj. 无形的"
+      ]
+    },
+    {
+      "word": "impartial",
+      "definitions": [
+        "adj. 公正的"
+      ]
+    },
+    {
+      "word": "illiterate",
+      "definitions": [
+        "adj. 不识字的；外行的",
+        "n. 文盲"
+      ]
+    },
+    {
+      "word": "galvanize",
+      "definitions": [
+        "v. 刺激；激励(shock or excite into taking action)；给……镀锌；通电"
+      ]
+    },
+    {
+      "word": "resurgence",
+      "definitions": [
+        "n. 复兴；再现(an increase or revival)"
+      ]
+    },
+    {
+      "word": "counterfeit",
+      "definitions": [
+        "v./adj./n. 伪造(的)(东西)"
+      ]
+    },
+    {
+      "word": "immaculate",
+      "definitions": [
+        "adj. 无瑕疵的(free from flaws)"
+      ]
+    },
+    {
+      "word": "accentuate",
+      "definitions": [
+        "v. 强调(make more noticeable or prominent)"
+      ]
+    },
+    {
+      "word": "containment",
+      "definitions": [
+        "n. 抑制；牵制"
+      ]
+    },
+    {
+      "word": "blight",
+      "definitions": [
+        "n./v. 破坏，毁坏；阻碍发展(的东西)"
+      ]
+    },
+    {
+      "word": "heady",
+      "definitions": [
+        "adj. (酒)上头的；浓烈的",
+        "adj. 令人兴奋的"
+      ]
+    },
+    {
+      "word": "garrison",
+      "definitions": [
+        "n./v. 驻防；守卫(部队)"
+      ]
+    },
+    {
+      "word": "assort",
+      "definitions": [
+        "v. 分类(classify)"
+      ]
+    },
+    {
+      "word": "sublime",
+      "definitions": [
+        "adj. 很棒的，卓越的；极致的，极端的"
+      ]
+    },
+    {
+      "word": "dreary",
+      "definitions": [
+        "adj. 枯燥的(dull，bleak，and lifeless)"
+      ]
+    },
+    {
+      "word": "hereditary",
+      "definitions": [
+        "adj. 世袭的；遗传的"
+      ]
+    },
+    {
+      "word": "kinship",
+      "definitions": [
+        "n. [法]亲属关系"
+      ]
+    },
+    {
+      "word": "vindicate",
+      "definitions": [
+        "v. 辩护(clear sb. of blame or suspicion)"
+      ]
+    },
+    {
+      "word": "subversive",
+      "definitions": [
+        "adj./n. 颠覆性的(人)"
+      ]
+    },
+    {
+      "word": "sloppy",
+      "definitions": [
+        "adj. 邋遢的；马虎的；宽松的"
+      ]
+    },
+    {
+      "word": "ardent",
+      "definitions": [
+        "adj. 热烈的；热情的"
+      ]
+    },
+    {
+      "word": "legislate",
+      "definitions": [
+        "v. 立法"
+      ]
+    },
+    {
+      "word": "detract",
+      "definitions": [
+        "v. 减损；转移；使分心"
+      ]
+    },
+    {
+      "word": "respite",
+      "definitions": [
+        "n./v. 喘息；暂缓(a short period of rest)"
+      ]
+    },
+    {
+      "word": "erroneous",
+      "definitions": [
+        "adj. 错误的"
+      ]
+    },
+    {
+      "word": "resurrect",
+      "definitions": [
+        "v. 使复活(restore to life)"
+      ]
+    },
+    {
+      "word": "disclaimer",
+      "definitions": [
+        "n. 免责声明(a statement that denies sth.)"
+      ]
+    },
+    {
+      "word": "culinary",
+      "definitions": [
+        "adj. 烹饪的；厨房的"
+      ]
+    },
+    {
+      "word": "epoch",
+      "definitions": [
+        "n. 时代(a period marked by distinctive character)"
+      ]
+    },
+    {
+      "word": "desolate",
+      "definitions": [
+        "adj. 荒凉的(empty and without people)"
+      ]
+    },
+    {
+      "word": "crumple",
+      "definitions": [
+        "v. 弄皱；垮台，崩溃"
+      ]
+    },
+    {
+      "word": "delinquency",
+      "definitions": [
+        "n. (少年)违法犯罪"
+      ]
+    },
+    {
+      "word": "improvisation",
+      "definitions": [
+        "n. 即兴表演；即兴创作"
+      ]
+    },
+    {
+      "word": "aversion",
+      "definitions": [
+        "n. 厌恶"
+      ]
+    },
+    {
+      "word": "attire",
+      "definitions": [
+        "n./v. (穿上)盛装"
+      ]
+    },
+    {
+      "word": "reprimand",
+      "definitions": [
+        "n. 惩戒(censure severely or angrily)"
+      ]
+    },
+    {
+      "word": "cumbersome",
+      "definitions": [
+        "adj. 笨重的；累赘的；不方便的"
+      ]
+    },
+    {
+      "word": "apprehend",
+      "definitions": [
+        "v. 逮捕；理解；意识到"
+      ]
+    },
+    {
+      "word": "acronym",
+      "definitions": [
+        "n. 首字母缩略词"
+      ]
+    },
+    {
+      "word": "flimsy",
+      "definitions": [
+        "adj. 劣质的；薄的；不足信的"
+      ]
+    },
+    {
+      "word": "reproach",
+      "definitions": [
+        "n./v. 责备；(使感到)耻辱"
+      ]
+    },
+    {
+      "word": "choreographer",
+      "definitions": [
+        "n. 编舞者；舞蹈指导"
+      ]
+    },
+    {
+      "word": "prerogative",
+      "definitions": [
+        "n. 特权"
+      ]
+    },
+    {
+      "word": "circumvent",
+      "definitions": [
+        "v. 包围；回避"
+      ]
+    },
+    {
+      "word": "bounty",
+      "definitions": [
+        "n. 慷慨；赏金"
+      ]
+    },
+    {
+      "word": "complacent",
+      "definitions": [
+        "adj. 自满的(satisfied with a situation that you feel it needs no change)"
+      ]
+    },
+    {
+      "word": "rendezvous",
+      "definitions": [
+        "v./n. 约会，会面"
+      ]
+    },
+    {
+      "word": "compulsive",
+      "definitions": [
+        "adj. 难以控制的；吸引人的"
+      ]
+    },
+    {
+      "word": "flamboyant",
+      "definitions": [
+        "adj. 艳丽的"
+      ]
+    },
+    {
+      "word": "fervor",
+      "definitions": [
+        "n. 热忱"
+      ]
+    }
+  ]
+}

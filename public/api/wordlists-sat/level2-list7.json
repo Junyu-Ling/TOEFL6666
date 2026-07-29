@@ -1,0 +1,627 @@
+{
+  "meta": {
+    "level": 2,
+    "list": 7,
+    "title": "Level 2 · List 7",
+    "updatedAt": "2026-07-29.4"
+  },
+  "words": [
+    {
+      "word": "iconic",
+      "definitions": [
+        "adj. 偶像的"
+      ]
+    },
+    {
+      "word": "ferment",
+      "definitions": [
+        "v. (使)发酵",
+        "n. (挑起)动乱"
+      ]
+    },
+    {
+      "word": "corroborate",
+      "definitions": [
+        "v. 确证 (confirm or give support to)"
+      ]
+    },
+    {
+      "word": "synergy",
+      "definitions": [
+        "n. 协同增效作用"
+      ]
+    },
+    {
+      "word": "etiquette",
+      "definitions": [
+        "n. 礼节"
+      ]
+    },
+    {
+      "word": "vex",
+      "definitions": [
+        "v. 使恼火 (make (someone) feel frustrated)"
+      ]
+    },
+    {
+      "word": "trespass",
+      "definitions": [
+        "n./v. 擅自闯入",
+        "v./n. 犯罪"
+      ]
+    },
+    {
+      "word": "aptitude",
+      "definitions": [
+        "n. 天资"
+      ]
+    },
+    {
+      "word": "fledgling",
+      "definitions": [
+        "n./adj. 无经验的(人)；幼鸟 (new participant in some activity)"
+      ]
+    },
+    {
+      "word": "frivolous",
+      "definitions": [
+        "adj. 轻浮的 (superficial)",
+        "adj. 无聊的",
+        "adj. 愚蠢的 (inappropriately silly)"
+      ]
+    },
+    {
+      "word": "backfire",
+      "definitions": [
+        "n./v. 事与愿违 (produce an undesired result)",
+        "n./v. (引擎)逆火 (undergo a mistimed explosion)"
+      ]
+    },
+    {
+      "word": "idyllic",
+      "definitions": [
+        "adj. 闲适恬静的 (extremely pleasant and peaceful)"
+      ]
+    },
+    {
+      "word": "emphatic",
+      "definitions": [
+        "adj. 明确坚决的 (expressed or performed with emphasis)"
+      ]
+    },
+    {
+      "word": "tantalize",
+      "definitions": [
+        "v. 逗弄，使干着急"
+      ]
+    },
+    {
+      "word": "vigilant",
+      "definitions": [
+        "adj. 警惕的"
+      ]
+    },
+    {
+      "word": "dismissive",
+      "definitions": [
+        "adj. 轻蔑的"
+      ]
+    },
+    {
+      "word": "bask",
+      "definitions": [
+        "v. 享受；晒太阳 (derive or receive pleasure from)"
+      ]
+    },
+    {
+      "word": "embroidery",
+      "definitions": [
+        "n. 刺绣；刺绣品；粉饰"
+      ]
+    },
+    {
+      "word": "exuberant",
+      "definitions": [
+        "adj. 热情洋溢的 (filled with a lively energy and excitement)"
+      ]
+    },
+    {
+      "word": "egalitarian",
+      "definitions": [
+        "adj. 平等主义的",
+        "n. 平等主义者"
+      ]
+    },
+    {
+      "word": "defuse",
+      "definitions": [
+        "v. 拆除",
+        "v. 平息"
+      ]
+    },
+    {
+      "word": "dogma",
+      "definitions": [
+        "n. 教义；信条"
+      ]
+    },
+    {
+      "word": "consummate",
+      "definitions": [
+        "adj. 完整的，完美无缺的，无比的",
+        "v. 完成 (bring to completion)",
+        "v. 圆房 (make complete by having sexual intercourse)"
+      ]
+    },
+    {
+      "word": "apathy",
+      "definitions": [
+        "n. 冷淡"
+      ]
+    },
+    {
+      "word": "bribery",
+      "definitions": [
+        "n. 贿赂；受贿；行贿"
+      ]
+    },
+    {
+      "word": "epitomize",
+      "definitions": [
+        "v. 成为……的典范"
+      ]
+    },
+    {
+      "word": "engross",
+      "definitions": [
+        "v. 使全神贯注 (absorb all the attention or interest of)"
+      ]
+    },
+    {
+      "word": "derail",
+      "definitions": [
+        "v. 使……脱轨"
+      ]
+    },
+    {
+      "word": "benevolent",
+      "definitions": [
+        "adj. 仁爱的 (well-meaning and kindly)"
+      ]
+    },
+    {
+      "word": "labyrinth",
+      "definitions": [
+        "n. 迷宫"
+      ]
+    },
+    {
+      "word": "clandestine",
+      "definitions": [
+        "adj. 秘密的 (kept secret or done secretively)"
+      ]
+    },
+    {
+      "word": "suffrage",
+      "definitions": [
+        "n. 选举权 (the right to vote)"
+      ]
+    },
+    {
+      "word": "antidote",
+      "definitions": [
+        "n. 解毒药",
+        "n. 矫正方法，对抗手段 (anything that takes away the effects of something unpleasant)"
+      ]
+    },
+    {
+      "word": "gratification",
+      "definitions": [
+        "n. 感激",
+        "n. 满足"
+      ]
+    },
+    {
+      "word": "austere",
+      "definitions": [
+        "adj. 朴素的，简朴的 (plain in style and without decoration)",
+        "adj. 严厉的，苛刻的 (strict or severe in discipline)"
+      ]
+    },
+    {
+      "word": "palpable",
+      "definitions": [
+        "adj. 明显的 (so intense as to seem almost tangible)"
+      ]
+    },
+    {
+      "word": "negligent",
+      "definitions": [
+        "adj. 疏忽的；粗心大意的 (failing to take proper care)"
+      ]
+    },
+    {
+      "word": "expedient",
+      "definitions": [
+        "adj. 适宜的",
+        "n. 应急的手段"
+      ]
+    },
+    {
+      "word": "intoxicate",
+      "definitions": [
+        "v. 使喝醉 (make drunk)",
+        "v. 使陶醉 (have an intoxicating effect on)"
+      ]
+    },
+    {
+      "word": "impeccable",
+      "definitions": [
+        "adj. 无缺点的"
+      ]
+    },
+    {
+      "word": "grueling",
+      "definitions": [
+        "adj. 使人筋疲力尽的"
+      ]
+    },
+    {
+      "word": "oblique",
+      "definitions": [
+        "adj. 倾斜的"
+      ]
+    },
+    {
+      "word": "bloodshed",
+      "definitions": [
+        "n. 杀戮"
+      ]
+    },
+    {
+      "word": "pious",
+      "definitions": [
+        "adj. 虔诚的 (devoutly religious)",
+        "adj. 道貌岸然的，伪善的"
+      ]
+    },
+    {
+      "word": "sieve",
+      "definitions": [
+        "n./v. (用)筛子(筛)；(用)滤网(过滤)"
+      ]
+    },
+    {
+      "word": "archaic",
+      "definitions": [
+        "adj. 古老的 (very old or old-fashioned)"
+      ]
+    },
+    {
+      "word": "calibrate",
+      "definitions": [
+        "v. 校正；调整"
+      ]
+    },
+    {
+      "word": "superfluous",
+      "definitions": [
+        "adj. 多余的 (being more than enough)"
+      ]
+    },
+    {
+      "word": "congest",
+      "definitions": [
+        "v. 拥挤；堵塞"
+      ]
+    },
+    {
+      "word": "penchant",
+      "definitions": [
+        "n. 爱好 (a habitual liking or tendency)"
+      ]
+    },
+    {
+      "word": "estrange",
+      "definitions": [
+        "v. 使疏远；离间"
+      ]
+    },
+    {
+      "word": "fathom",
+      "definitions": [
+        "n. 英寻(水深度量单位)",
+        "v. 弄懂 (understand after much thought)"
+      ]
+    },
+    {
+      "word": "consign",
+      "definitions": [
+        "v. 把……托付给，把……委托给 (give over to another for care or safekeeping)",
+        "v. 托运 (give or send something to someone)",
+        "v. 丢弃 (throw away)"
+      ]
+    },
+    {
+      "word": "recoil",
+      "definitions": [
+        "v./n. 退缩，畏缩 (suddenly spring or flinch back)",
+        "v./n. 反冲；弹回 (a movement back from an impact)"
+      ]
+    },
+    {
+      "word": "monotonous",
+      "definitions": [
+        "adj. 乏味的",
+        "adj. 单调的，无抑扬顿挫的"
+      ]
+    },
+    {
+      "word": "legitimize",
+      "definitions": [
+        "v. 使合法；使合理"
+      ]
+    },
+    {
+      "word": "totalitarian",
+      "definitions": [
+        "adj. 极权主义的",
+        "n. 极权主义者"
+      ]
+    },
+    {
+      "word": "aloof",
+      "definitions": [
+        "adj. 冷漠的 (not friendly or forthcoming)",
+        "adj. 超然的 (cool and distant)"
+      ]
+    },
+    {
+      "word": "categorical",
+      "definitions": [
+        "adj. 绝对的 (unambiguously explicit and direct)"
+      ]
+    },
+    {
+      "word": "enthrall",
+      "definitions": [
+        "v. 吸引住"
+      ]
+    },
+    {
+      "word": "fervent",
+      "definitions": [
+        "adj. 热情的 (having a passionate intensity)"
+      ]
+    },
+    {
+      "word": "courteous",
+      "definitions": [
+        "adj. 有礼貌的 (polite)"
+      ]
+    },
+    {
+      "word": "enumerate",
+      "definitions": [
+        "v. 列举；枚举 (mention one by one)"
+      ]
+    },
+    {
+      "word": "contagious",
+      "definitions": [
+        "adj. 有传染性的 (spread from one person or organism to another)"
+      ]
+    },
+    {
+      "word": "phobia",
+      "definitions": [
+        "n. 恐惧症"
+      ]
+    },
+    {
+      "word": "gimmick",
+      "definitions": [
+        "n. 花招；骗人的玩意",
+        "n. 别出心裁的想象 (a fanciful expression in writing or speech)"
+      ]
+    },
+    {
+      "word": "forgery",
+      "definitions": [
+        "n. 伪造(品)"
+      ]
+    },
+    {
+      "word": "layman",
+      "definitions": [
+        "n. 平信徒",
+        "n. 外行；非专业人员"
+      ]
+    },
+    {
+      "word": "conceit",
+      "definitions": [
+        "n. 自负 (excessive pride in oneself)",
+        "n. 幻想，狂想"
+      ]
+    },
+    {
+      "word": "ambience",
+      "definitions": [
+        "n. 周围环境 (environment)",
+        "n. 气氛，格调"
+      ]
+    },
+    {
+      "word": "topography",
+      "definitions": [
+        "n. 地形"
+      ]
+    },
+    {
+      "word": "unscrupulous",
+      "definitions": [
+        "adj. 不道德的 (showing no moral principles)"
+      ]
+    },
+    {
+      "word": "wager",
+      "definitions": [
+        "v./n. 打赌"
+      ]
+    },
+    {
+      "word": "flashback",
+      "definitions": [
+        "n. 倒叙",
+        "n. 往事突然重现，回忆闪现 (living through the experience again)"
+      ]
+    },
+    {
+      "word": "peddle",
+      "definitions": [
+        "v. 兜售 (sell by going from place to place)",
+        "v. 宣扬；散布 (try very hard to get people to accept)"
+      ]
+    },
+    {
+      "word": "ameliorate",
+      "definitions": [
+        "v. 改善 (make it better)"
+      ]
+    },
+    {
+      "word": "abate",
+      "definitions": [
+        "v. (某种威胁)减退 (become less intense or widespread)"
+      ]
+    },
+    {
+      "word": "crux",
+      "definitions": [
+        "n. 关键"
+      ]
+    },
+    {
+      "word": "translucent",
+      "definitions": [
+        "adj. 半透明的 (allowing light to pass through)"
+      ]
+    },
+    {
+      "word": "forgo",
+      "definitions": [
+        "v. 放弃"
+      ]
+    },
+    {
+      "word": "barter",
+      "definitions": [
+        "v./n. 以物换物 (exchange goods for goods)"
+      ]
+    },
+    {
+      "word": "cadence",
+      "definitions": [
+        "n. 抑扬顿挫 (a modulation or inflection of the voice)"
+      ]
+    },
+    {
+      "word": "quirk",
+      "definitions": [
+        "n. 怪癖",
+        "n. 巧合"
+      ]
+    },
+    {
+      "word": "oddity",
+      "definitions": [
+        "n. 奇异；古怪",
+        "n. 怪人"
+      ]
+    },
+    {
+      "word": "thrift",
+      "definitions": [
+        "n. 节俭",
+        "n. [植物]海石竹"
+      ]
+    },
+    {
+      "word": "mire",
+      "definitions": [
+        "n./v. (陷入)泥潭；(陷入)困境 (cause to become stuck in mud)"
+      ]
+    },
+    {
+      "word": "impasse",
+      "definitions": [
+        "n. 僵局；死路"
+      ]
+    },
+    {
+      "word": "deflate",
+      "definitions": [
+        "v. 释放掉……的气",
+        "v. 使泄气",
+        "v. 紧缩"
+      ]
+    },
+    {
+      "word": "hallucination",
+      "definitions": [
+        "n. 幻觉"
+      ]
+    },
+    {
+      "word": "pretentious",
+      "definitions": [
+        "adj. 做作的 (trying to be something that you are not，in order to impress)"
+      ]
+    },
+    {
+      "word": "imbue",
+      "definitions": [
+        "v. 使充满 (inspire or permeate with a feeling or quality)"
+      ]
+    },
+    {
+      "word": "zigzag",
+      "definitions": [
+        "n. 之字形",
+        "v. 曲折前进"
+      ]
+    },
+    {
+      "word": "disparage",
+      "definitions": [
+        "v. 贬低 (regard as being of little worth)"
+      ]
+    },
+    {
+      "word": "callous",
+      "definitions": [
+        "adj. 冷酷无情的 (showing cruel disregard for others)"
+      ]
+    },
+    {
+      "word": "intricacy",
+      "definitions": [
+        "n. 错综复杂 (the quality of being intricate)"
+      ]
+    },
+    {
+      "word": "impromptu",
+      "definitions": [
+        "adj. 即兴的 (done without being planned)",
+        "n. 即兴曲"
+      ]
+    },
+    {
+      "word": "rife",
+      "definitions": [
+        "adj. 普遍的；猖獗的"
+      ]
+    }
+  ]
+}
