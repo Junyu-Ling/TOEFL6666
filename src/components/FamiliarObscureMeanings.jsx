@@ -143,16 +143,15 @@ function FamiliarObscureQuiz({ entries, onExit, wordBankMap, micGranted }) {
       tabId="familiar-obscure"
       title="僻义测试"
       toolbarExtra={
-        <div className="fobs__quiz-toolbar">
+        <>
           <button type="button" className="btn btn--ghost btn--sm" onClick={restartQuiz}>
             打乱重测
           </button>
           <button type="button" className="btn btn--ghost btn--sm" onClick={onExit}>
             返回词表
           </button>
-        </div>
+        </>
       }
-      stats={<span className="stat-pill">SAT 僻义</span>}
       queueLength={total}
       currentIndex={index}
       currentWord={currentWord}
