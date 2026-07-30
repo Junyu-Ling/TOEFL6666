@@ -1,5 +1,7 @@
 const PROGRESS_KEY = "toefl666_familiar_obscure_progress";
 
+export const FOBS_PROGRESS_EVENT = "toefl666-fobs-progress";
+
 function loadRaw() {
   try {
     const raw = localStorage.getItem(PROGRESS_KEY);
@@ -11,14 +13,31 @@ function loadRaw() {
   }
 }
 
+export function normalizeEntryId(id) {
+  const n = Number(id);
+  return Number.isFinite(n) ? n : null;
+}
+
+function normalizeIdList(list) {
+  if (!Array.isArray(list)) return [];
+  const ids = list.map(normalizeEntryId).filter((id) => id != null);
+  return [...new Set(ids)];
+}
+
+function emitProgressChange() {
+  if (typeof window !== "undefined") {
+    window.dispatchEvent(new CustomEvent(FOBS_PROGRESS_EVENT));
+  }
+}
+
 export function loadFamiliarObscureProgress() {
   const saved = loadRaw();
   return {
     quizIndex: Number.isFinite(saved?.quizIndex) ? saved.quizIndex : 0,
     quizOrder: Array.isArray(saved?.quizOrder) ? saved.quizOrder : [],
     quizScopeKey: typeof saved?.quizScopeKey === "string" ? saved.quizScopeKey : "",
-    masteredIds: Array.isArray(saved?.masteredIds) ? saved.masteredIds : [],
-    unknownIds: Array.isArray(saved?.unknownIds) ? saved.unknownIds : [],
+    masteredIds: normalizeIdList(saved?.masteredIds),
+    unknownIds: normalizeIdList(saved?.unknownIds),
     lastScope: normalizeScope(saved?.lastScope),
   };
 }
@@ -45,7 +64,12 @@ export function saveFamiliarObscureProgress(progress) {
 
 export function patchFamiliarObscureProgress(patch) {
   const next = { ...loadFamiliarObscureProgress(), ...patch };
+  if ("masteredIds" in patch) next.masteredIds = normalizeIdList(next.masteredIds);
+  if ("unknownIds" in patch) next.unknownIds = normalizeIdList(next.unknownIds);
   saveFamiliarObscureProgress(next);
+  if ("unknownIds" in patch || "masteredIds" in patch) {
+    emitProgressChange();
+  }
   return next;
 }
 
@@ -64,7 +88,8 @@ export function buildQuizScopeKey(scope, entryCount) {
   return `${fromId}-${toId}-${scope.onlyReview ? 1 : 0}-${scope.onlyUnmastered ? 1 : 0}-${entryCount}`;
 }
 
-export function applyFamiliarObscureQuizResult(entryId, aiResult) {
+export function applyFamiliarObscureQuizResult(entryIdRaw, aiResult) {
+  const entryId = normalizeEntryId(entryIdRaw);
   if (!entryId || !aiResult) return loadFamiliarObscureProgress();
 
   const progress = loadFamiliarObscureProgress();
@@ -82,4 +107,10 @@ export function applyFamiliarObscureQuizResult(entryId, aiResult) {
     masteredIds: [...masteredIds],
     unknownIds: [...unknownIds],
   });
+}
+
+export function isFamiliarObscureReviewEntry(entryId, progress = loadFamiliarObscureProgress()) {
+  const id = normalizeEntryId(entryId);
+  if (id == null) return false;
+  return new Set(progress.unknownIds).has(id);
 }

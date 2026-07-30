@@ -6295,44 +6295,87 @@ body {
   color: var(--text-muted);
 }
 
-.fobs__card-top {
+.fobs__card--review {
+  border-color: #f59e0b;
+  background: #fffbeb;
+  box-shadow: inset 0 0 0 1px rgba(245, 158, 11, 0.15);
+}
+
+[data-theme="dark"] .fobs__card--review {
+  border-color: rgba(245, 158, 11, 0.55);
+  background: rgba(245, 158, 11, 0.08);
+}
+
+.fobs__card-word-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 0.5rem;
 }
 
-.fobs__card--review {
-  border-color: color-mix(in srgb, var(--wrong) 35%, var(--border));
-  background: color-mix(in srgb, var(--wrong) 4%, var(--surface));
+.fobs__card-word-row .fobs__card-word {
+  flex: 1;
+  min-width: 0;
+}
+
+.fobs__list-filters {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.875rem;
+  flex-wrap: wrap;
+}
+
+.fobs__list-filter {
+  font-family: inherit;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  padding: 0.4rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--input-bg);
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.fobs__list-filter--active {
+  border-color: #f59e0b;
+  background: #fffbeb;
+  color: #b45309;
+}
+
+[data-theme="dark"] .fobs__list-filter--active {
+  border-color: rgba(245, 158, 11, 0.55);
+  background: rgba(245, 158, 11, 0.12);
+  color: #fcd34d;
 }
 
 .fobs__tag {
   display: inline-flex;
   align-items: center;
-  padding: 0.12rem 0.45rem;
+  flex-shrink: 0;
+  padding: 0.18rem 0.55rem;
   border-radius: 999px;
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.02em;
   white-space: nowrap;
 }
 
 .fobs__tag--compact {
-  font-size: 0.625rem;
-  padding: 0.08rem 0.35rem;
+  font-size: 0.6875rem;
+  padding: 0.12rem 0.45rem;
 }
 
 .fobs__tag--review {
-  color: #b45309;
-  background: #fef3c7;
-  border: 1px solid #fcd34d;
+  color: #92400e;
+  background: #fde68a;
+  border: 1px solid #f59e0b;
 }
 
 [data-theme="dark"] .fobs__tag--review {
   color: #fcd34d;
-  background: rgba(251, 191, 36, 0.12);
-  border-color: rgba(251, 191, 36, 0.35);
+  background: rgba(245, 158, 11, 0.2);
+  border-color: rgba(245, 158, 11, 0.55);
 }
 
 .fobs--setup {

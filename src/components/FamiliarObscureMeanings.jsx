@@ -14,9 +14,12 @@ import {
   applyFamiliarObscureQuizResult,
   buildQuizScopeKey,
   buildShuffledOrder,
+  FOBS_PROGRESS_EVENT,
+  isFamiliarObscureReviewEntry,
   loadFamiliarObscureProgress,
   patchFamiliarObscureProgress,
 } from "../services/familiarObscureProgress";
+import { useIsActiveTab } from "../context/ActiveTabContext";
 
 function ReviewTag({ compact = false }) {
   return (
@@ -360,10 +363,12 @@ function FamiliarObscureQuiz({ entries, scope, onExit, onProgressChange, wordBan
 
 function FamiliarObscureMeanings({ wordBankMap, micGranted }) {
   const { speakWord } = useSettings();
+  const isTabActive = useIsActiveTab("familiar-obscure");
   const entries = useMemo(() => getFamiliarObscureEntries(), []);
   const idBounds = useMemo(() => getFamiliarObscureIdBounds(entries), [entries]);
   const [panelMode, setPanelMode] = useState("browse");
   const [query, setQuery] = useState("");
+  const [listFilter, setListFilter] = useState("all");
   const [selectedId, setSelectedId] = useState(null);
   const [quizScope, setQuizScope] = useState(() => createDefaultQuizScope(entries));
   const [quizEntries, setQuizEntries] = useState([]);
@@ -375,22 +380,42 @@ function FamiliarObscureMeanings({ wordBankMap, micGranted }) {
     setProgress(loadFamiliarObscureProgress());
   }, []);
 
-  const unknownSet = useMemo(() => new Set(progress.unknownIds), [progress.unknownIds]);
+  const reviewCount = progress.unknownIds.length;
   const filtered = useMemo(() => filterFamiliarObscureEntries(entries, query), [entries, query]);
+  const displayed = useMemo(() => {
+    if (listFilter !== "review") return filtered;
+    return filtered.filter((entry) => isFamiliarObscureReviewEntry(entry.id, progress));
+  }, [filtered, listFilter, progress]);
   const selected = useMemo(
     () => entries.find((entry) => entry.id === selectedId) ?? null,
     [entries, selectedId]
   );
 
+  useEffect(() => {
+    function onProgressChange() {
+      refreshProgress();
+    }
+    window.addEventListener(FOBS_PROGRESS_EVENT, onProgressChange);
+    return () => window.removeEventListener(FOBS_PROGRESS_EVENT, onProgressChange);
+  }, [refreshProgress]);
+
+  useEffect(() => {
+    if (isTabActive && panelMode === "browse") {
+      refreshProgress();
+    }
+  }, [isTabActive, panelMode, refreshProgress]);
+
   const openEntry = useCallback((id) => {
+    refreshProgress();
     listScrollY.current = window.scrollY;
     setSelectedId(id);
-  }, []);
+  }, [refreshProgress]);
 
   const closeEntry = useCallback(() => {
+    refreshProgress();
     restoreListScroll.current = true;
     setSelectedId(null);
-  }, []);
+  }, [refreshProgress]);
 
   const startQuiz = useCallback((scope, scopedEntries) => {
     setQuizScope(scope);
@@ -443,7 +468,7 @@ function FamiliarObscureMeanings({ wordBankMap, micGranted }) {
     return (
       <EntryDetail
         entry={selected}
-        needsReview={unknownSet.has(selected.id)}
+        needsReview={isFamiliarObscureReviewEntry(selected.id, progress)}
         onBack={closeEntry}
         onSpeak={speakWord}
       />
@@ -456,8 +481,7 @@ function FamiliarObscureMeanings({ wordBankMap, micGranted }) {
         <div>
           <h2 className="fobs__title">{getFamiliarObscureTitle()}</h2>
           <p className="fobs__subtitle">
-            共 {entries.length} 词 · 已掌握 {progress.masteredIds.length} 词 · 待复习{" "}
-            {progress.unknownIds.length} 词 · 点击卡片查看详情
+            共 {entries.length} 词 · 已掌握 {progress.masteredIds.length} 词 · 待复习 {reviewCount} 词
           </p>
         </div>
         <div className="fobs__header-actions">
@@ -489,27 +513,49 @@ function FamiliarObscureMeanings({ wordBankMap, micGranted }) {
         </div>
       </header>
 
-      {filtered.length === 0 ? (
-        <p className="fobs__empty">没有匹配的词条</p>
+      <div className="fobs__list-filters" role="tablist" aria-label="词表筛选">
+        <button
+          type="button"
+          className={`fobs__list-filter${listFilter === "all" ? " fobs__list-filter--active" : ""}`}
+          onClick={() => setListFilter("all")}
+        >
+          全部
+        </button>
+        <button
+          type="button"
+          className={`fobs__list-filter${listFilter === "review" ? " fobs__list-filter--active" : ""}`}
+          onClick={() => setListFilter("review")}
+        >
+          待复习{reviewCount > 0 ? ` (${reviewCount})` : ""}
+        </button>
+      </div>
+
+      {displayed.length === 0 ? (
+        <p className="fobs__empty">
+          {listFilter === "review" ? "暂无待复习词条，测试中答错会自动标记" : "没有匹配的词条"}
+        </p>
       ) : (
         <div className="fobs__grid">
-          {filtered.map((entry) => (
-            <button
-              key={entry.id}
-              type="button"
-              className={`fobs__card${unknownSet.has(entry.id) ? " fobs__card--review" : ""}`}
-              onClick={() => openEntry(entry.id)}
-            >
-              <div className="fobs__card-top">
+          {displayed.map((entry) => {
+            const needsReview = isFamiliarObscureReviewEntry(entry.id, progress);
+            return (
+              <button
+                key={entry.id}
+                type="button"
+                className={`fobs__card${needsReview ? " fobs__card--review" : ""}`}
+                onClick={() => openEntry(entry.id)}
+              >
                 <span className="fobs__card-id">#{entry.id}</span>
-                {unknownSet.has(entry.id) ? <ReviewTag compact /> : null}
-              </div>
-              <strong className="fobs__card-word">{entry.word}</strong>
-              <p className="fobs__card-common">{entry.commonMeaning || "—"}</p>
-              <p className="fobs__card-hint">点击查看 SAT 僻义与记忆方法</p>
-              <MemoryTipBlock text={entry.memoryTip} compact />
-            </button>
-          ))}
+                <div className="fobs__card-word-row">
+                  <strong className="fobs__card-word">{entry.word}</strong>
+                  {needsReview ? <ReviewTag /> : null}
+                </div>
+                <p className="fobs__card-common">{entry.commonMeaning || "—"}</p>
+                <p className="fobs__card-hint">点击查看 SAT 僻义与记忆方法</p>
+                <MemoryTipBlock text={entry.memoryTip} compact />
+              </button>
+            );
+          })}
         </div>
       )}
 
