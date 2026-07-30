@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { memo, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useSettings } from "../context/SettingsContext";
 import { evaluateAnswer } from "../services/ai";
 import {
@@ -279,12 +279,35 @@ function FamiliarObscureMeanings() {
   const [masteredCount, setMasteredCount] = useState(
     () => loadFamiliarObscureProgress().masteredIds.length
   );
+  const listScrollY = useRef(0);
+  const restoreListScroll = useRef(false);
 
   const filtered = useMemo(() => filterFamiliarObscureEntries(entries, query), [entries, query]);
   const selected = useMemo(
     () => entries.find((entry) => entry.id === selectedId) ?? null,
     [entries, selectedId]
   );
+
+  const openEntry = useCallback((id) => {
+    listScrollY.current = window.scrollY;
+    setSelectedId(id);
+  }, []);
+
+  const closeEntry = useCallback(() => {
+    restoreListScroll.current = true;
+    setSelectedId(null);
+  }, []);
+
+  useLayoutEffect(() => {
+    if (selectedId) {
+      window.scrollTo(0, 0);
+      return;
+    }
+    if (panelMode === "browse" && restoreListScroll.current) {
+      restoreListScroll.current = false;
+      window.scrollTo(0, listScrollY.current);
+    }
+  }, [selectedId, panelMode]);
 
   if (panelMode === "quiz") {
     return (
@@ -293,6 +316,7 @@ function FamiliarObscureMeanings() {
         speakWord={speakWord}
         onExit={() => {
           setMasteredCount(loadFamiliarObscureProgress().masteredIds.length);
+          restoreListScroll.current = true;
           setPanelMode("browse");
         }}
       />
@@ -303,7 +327,7 @@ function FamiliarObscureMeanings() {
     return (
       <EntryDetail
         entry={selected}
-        onBack={() => setSelectedId(null)}
+        onBack={closeEntry}
         onSpeak={speakWord}
       />
     );
@@ -328,7 +352,10 @@ function FamiliarObscureMeanings() {
               className="fobs__mode-tab"
               role="tab"
               aria-selected={false}
-              onClick={() => setPanelMode("quiz")}
+              onClick={() => {
+                listScrollY.current = window.scrollY;
+                setPanelMode("quiz");
+              }}
             >
               僻义测试
             </button>
@@ -353,7 +380,7 @@ function FamiliarObscureMeanings() {
               key={entry.id}
               type="button"
               className="fobs__card"
-              onClick={() => setSelectedId(entry.id)}
+              onClick={() => openEntry(entry.id)}
             >
               <span className="fobs__card-id">#{entry.id}</span>
               <strong className="fobs__card-word">{entry.word}</strong>
