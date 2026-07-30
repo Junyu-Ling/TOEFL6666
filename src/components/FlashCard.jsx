@@ -980,13 +980,21 @@ export default function FlashCard({
   const onEnglishPhase = hideWordFirst && recallStep === "english";
   const showWord = !onEnglishPhase;
 
-  const frontPrompt = onEnglishPhase
-    ? "先听发音，默写或语音输入英文单词"
-    : hideWordFirst && recallStep === "meaning"
-      ? "写出该词的中文释义，Enter 提交或空内容翻面"
-      : isTypeMode
-        ? "用中文或别的英文词解释（勿照抄原词），Enter 提交批改"
-        : "先在脑海里回忆词义，按空格或 Enter 翻面核对";
+  const frontPrompt = wordData.familiarObscure
+    ? onEnglishPhase
+      ? "先听发音，默写或语音输入英文单词"
+      : hideWordFirst && recallStep === "meaning"
+        ? "写出该词的 SAT 僻义，Enter 提交或空内容翻面"
+        : isTypeMode
+          ? "写出该词在 SAT 阅读中的僻义，Enter 提交批改"
+          : "先回忆 SAT 僻义，按空格或 Enter 翻面核对"
+    : onEnglishPhase
+      ? "先听发音，默写或语音输入英文单词"
+      : hideWordFirst && recallStep === "meaning"
+        ? "写出该词的中文释义，Enter 提交或空内容翻面"
+        : isTypeMode
+          ? "用中文或别的英文词解释（勿照抄原词），Enter 提交批改"
+          : "先在脑海里回忆词义，按空格或 Enter 翻面核对";
 
   const desktopHint = onEnglishPhase
     ? dictating
@@ -1238,6 +1246,13 @@ export default function FlashCard({
             )}
           </div>
 
+          {wordData.familiarObscure?.commonMeaning ? (
+            <div className="flashcard__front-hint">
+              <span className="flashcard__front-hint-label">常见释义</span>
+              <p className="flashcard__front-hint-text">{wordData.familiarObscure.commonMeaning}</p>
+            </div>
+          ) : null}
+
           <p className="flashcard__prompt">{frontPrompt}</p>
 
           {onEnglishPhase ? (
@@ -1425,6 +1440,8 @@ export default function FlashCard({
                 <MemoryTrickBlock trick={result.memory_trick} />
               )}
 
+              <FamiliarObscureMemoryTip text={wordData.familiarObscure?.memoryTip} />
+
               <button type="button" className="btn btn--primary flashcard__next" onClick={onNext}>
                 下一个
               </button>
@@ -1443,6 +1460,8 @@ export default function FlashCard({
                   <li key={i}>{def}</li>
                 ))}
               </ul>
+
+              <FamiliarObscureMemoryTip text={wordData.familiarObscure?.memoryTip} />
 
               {memoryLoading && !wordStats?.memory_trick && (
                 <p className="flashcard__memory-status">
@@ -1539,6 +1558,16 @@ export default function FlashCard({
           下一词
         </button>
       </div>
+    </div>
+  );
+}
+
+function FamiliarObscureMemoryTip({ text }) {
+  if (!text) return null;
+  return (
+    <div className="flashcard__fobs-memory">
+      <span className="flashcard__fobs-memory-label">记忆方法</span>
+      <p className="flashcard__fobs-memory-text">{text}</p>
     </div>
   );
 }

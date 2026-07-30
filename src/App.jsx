@@ -1083,7 +1083,10 @@ export default function App() {
 
   const readingFillPanel = useMemo(() => <ReadingFillBlank />, []);
 
-  const familiarObscurePanel = useMemo(() => <FamiliarObscureMeanings />, []);
+  const familiarObscurePanel = useMemo(
+    () => <FamiliarObscureMeanings wordBankMap={wordBankMap} micGranted={mic.isGranted} />,
+    [wordBankMap, mic.isGranted]
+  );
 
   const unrecognizedPanel = useMemo(
     () =>

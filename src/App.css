@@ -1227,6 +1227,58 @@ body {
   margin-bottom: 1rem;
 }
 
+.flashcard__front-hint {
+  margin: 0 0 0.85rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  text-align: left;
+}
+
+.flashcard__front-hint-label {
+  display: block;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.25rem;
+}
+
+.flashcard__front-hint-text {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.45;
+  color: var(--text);
+}
+
+.flashcard__fobs-memory {
+  margin-top: 0.75rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: var(--radius-sm);
+  background: var(--accent-soft);
+  border: 1px solid var(--border);
+  text-align: left;
+}
+
+.flashcard__fobs-memory-label {
+  display: block;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.25rem;
+}
+
+.flashcard__fobs-memory-text {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.45;
+  color: var(--text);
+}
+
 .flashcard__input-wrap {
   position: relative;
 }
@@ -6413,6 +6465,13 @@ body {
   display: flex;
   justify-content: center;
   gap: 0.625rem;
+  flex-wrap: wrap;
+}
+
+.fobs__quiz-toolbar {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
   flex-wrap: wrap;
 }
 

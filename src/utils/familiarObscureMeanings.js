@@ -25,6 +25,12 @@ export function buildFamiliarObscureWordData(entry) {
   return {
     word: entry.word,
     definitions: getObscureDefinitions(entry),
+    familiarObscure: {
+      entryId: entry.id,
+      commonMeaning: entry.commonMeaning || "",
+      memoryTip: entry.memoryTip || "",
+      obscureMeaning: entry.obscureMeaning || "",
+    },
   };
 }
 
