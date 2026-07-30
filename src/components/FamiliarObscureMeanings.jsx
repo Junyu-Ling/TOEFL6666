@@ -3,15 +3,26 @@ import { useSettings } from "../context/SettingsContext";
 import PracticeSession from "./PracticeSession";
 import {
   buildFamiliarObscureWordData,
+  createDefaultQuizScope,
+  filterEntriesByQuizScope,
   filterFamiliarObscureEntries,
   getFamiliarObscureEntries,
+  getFamiliarObscureIdBounds,
   getFamiliarObscureTitle,
 } from "../utils/familiarObscureMeanings";
 import {
+  applyFamiliarObscureQuizResult,
+  buildQuizScopeKey,
   buildShuffledOrder,
   loadFamiliarObscureProgress,
   patchFamiliarObscureProgress,
 } from "../services/familiarObscureProgress";
+
+function ReviewTag({ compact = false }) {
+  return (
+    <span className={`fobs__tag fobs__tag--review${compact ? " fobs__tag--compact" : ""}`}>待复习</span>
+  );
+}
 
 function MemoryTipBlock({ text, compact = false }) {
   if (!text) {
@@ -25,7 +36,7 @@ function MemoryTipBlock({ text, compact = false }) {
   );
 }
 
-function EntryDetail({ entry, onBack, onSpeak }) {
+function EntryDetail({ entry, onBack, onSpeak, needsReview }) {
   return (
     <article className="fobs__detail">
       <header className="fobs__detail-header">
@@ -37,6 +48,7 @@ function EntryDetail({ entry, onBack, onSpeak }) {
           <button type="button" className="fobs__detail-word" onClick={() => onSpeak?.(entry.word)}>
             {entry.word}
           </button>
+          {needsReview ? <ReviewTag /> : null}
         </div>
       </header>
 
@@ -63,15 +75,187 @@ function EntryDetail({ entry, onBack, onSpeak }) {
   );
 }
 
-function FamiliarObscureQuiz({ entries, onExit, wordBankMap, micGranted }) {
+function clampScopeId(value, min, max) {
+  const n = Number.parseInt(String(value).trim(), 10);
+  if (!Number.isFinite(n)) return min;
+  return Math.min(max, Math.max(min, n));
+}
+
+function FamiliarObscureQuizSetup({ entries, onBack, onStart }) {
+  const idBounds = useMemo(() => getFamiliarObscureIdBounds(entries), [entries]);
+  const saved = useMemo(() => loadFamiliarObscureProgress(), []);
+  const [fromId, setFromId] = useState(String(saved.lastScope.fromId || idBounds.min));
+  const [toId, setToId] = useState(String(saved.lastScope.toId || idBounds.max));
+  const [onlyReview, setOnlyReview] = useState(Boolean(saved.lastScope.onlyReview));
+  const [onlyUnmastered, setOnlyUnmastered] = useState(Boolean(saved.lastScope.onlyUnmastered));
+  const [error, setError] = useState("");
+
+  const scope = useMemo(
+    () => ({
+      fromId: clampScopeId(fromId, idBounds.min, idBounds.max),
+      toId: clampScopeId(toId, idBounds.min, idBounds.max),
+      onlyReview,
+      onlyUnmastered,
+    }),
+    [fromId, toId, onlyReview, onlyUnmastered, idBounds.min, idBounds.max]
+  );
+
+  const previewEntries = useMemo(
+    () => filterEntriesByQuizScope(entries, scope, saved),
+    [entries, scope, saved]
+  );
+
+  const reviewCount = saved.unknownIds.length;
+  const unmasteredCount = entries.length - saved.masteredIds.length;
+
+  function handleStart() {
+    if (previewEntries.length === 0) {
+      setError("当前范围内没有可测词条，请调整编号或筛选条件");
+      return;
+    }
+    patchFamiliarObscureProgress({ lastScope: scope });
+    onStart(scope, previewEntries);
+  }
+
+  return (
+    <div className="fobs fobs--setup">
+      <header className="fobs__header">
+        <div>
+          <h2 className="fobs__title">僻义测试 · 选择范围</h2>
+          <p className="fobs__subtitle">
+            编号 #{idBounds.min}–#{idBounds.max} · 本次将测 {previewEntries.length} 词
+          </p>
+        </div>
+        <button type="button" className="btn btn--ghost btn--sm" onClick={onBack}>
+          返回词表
+        </button>
+      </header>
+
+      <section className="fobs__setup-card">
+        <h3 className="fobs__setup-label">编号范围</h3>
+        <div className="fobs__setup-range">
+          <label className="fobs__setup-field">
+            <span>从</span>
+            <input
+              type="number"
+              min={idBounds.min}
+              max={idBounds.max}
+              value={fromId}
+              onChange={(event) => {
+                setError("");
+                setFromId(event.target.value);
+              }}
+            />
+          </label>
+          <span className="fobs__setup-range-sep">至</span>
+          <label className="fobs__setup-field">
+            <span>到</span>
+            <input
+              type="number"
+              min={idBounds.min}
+              max={idBounds.max}
+              value={toId}
+              onChange={(event) => {
+                setError("");
+                setToId(event.target.value);
+              }}
+            />
+          </label>
+        </div>
+        <div className="fobs__setup-presets">
+          <button
+            type="button"
+            className="fobs__setup-preset"
+            onClick={() => {
+              setFromId(String(idBounds.min));
+              setToId(String(idBounds.max));
+              setOnlyReview(false);
+              setOnlyUnmastered(false);
+              setError("");
+            }}
+          >
+            全部
+          </button>
+          <button
+            type="button"
+            className="fobs__setup-preset"
+            onClick={() => {
+              setFromId(String(idBounds.min));
+              setToId(String(idBounds.max));
+              setOnlyReview(false);
+              setOnlyUnmastered(true);
+              setError("");
+            }}
+          >
+            仅未掌握
+          </button>
+          <button
+            type="button"
+            className="fobs__setup-preset"
+            onClick={() => {
+              setFromId(String(idBounds.min));
+              setToId(String(idBounds.max));
+              setOnlyReview(true);
+              setOnlyUnmastered(false);
+              setError("");
+            }}
+          >
+            仅待复习
+          </button>
+        </div>
+      </section>
+
+      <section className="fobs__setup-card">
+        <h3 className="fobs__setup-label">筛选条件</h3>
+        <label className="fobs__setup-check">
+          <input
+            type="checkbox"
+            checked={onlyUnmastered}
+            onChange={(event) => {
+              setError("");
+              setOnlyUnmastered(event.target.checked);
+            }}
+          />
+          <span>排除已掌握词（{unmasteredCount} 词可选）</span>
+        </label>
+        <label className="fobs__setup-check">
+          <input
+            type="checkbox"
+            checked={onlyReview}
+            onChange={(event) => {
+              setError("");
+              setOnlyReview(event.target.checked);
+            }}
+          />
+          <span>仅测待复习词（{reviewCount} 词已标记）</span>
+        </label>
+        <p className="fobs__setup-hint">
+          测试中答错或标记「不认识」的词，会自动在词表打上「待复习」标签；答对后会移除。
+        </p>
+      </section>
+
+      {error ? <p className="fobs__setup-error">{error}</p> : null}
+
+      <button type="button" className="btn btn--primary fobs__setup-start" onClick={handleStart}>
+        开始测试（{previewEntries.length} 词）
+      </button>
+    </div>
+  );
+}
+
+function FamiliarObscureQuiz({ entries, scope, onExit, onProgressChange, wordBankMap, micGranted }) {
+  const scopeKey = useMemo(() => buildQuizScopeKey(scope, entries.length), [scope, entries.length]);
   const saved = useMemo(() => loadFamiliarObscureProgress(), []);
   const [order, setOrder] = useState(() => {
-    if (saved.quizOrder.length === entries.length) return saved.quizOrder;
+    if (saved.quizScopeKey === scopeKey && saved.quizOrder.length === entries.length) {
+      return saved.quizOrder;
+    }
     return buildShuffledOrder(entries.length);
   });
-  const [index, setIndex] = useState(() =>
-    Math.max(0, Math.min(saved.quizIndex ?? 0, Math.max(entries.length - 1, 0)))
-  );
+  const [index, setIndex] = useState(() => {
+    if (saved.quizScopeKey !== scopeKey) return 0;
+    return Math.max(0, Math.min(saved.quizIndex ?? 0, Math.max(entries.length - 1, 0)));
+  });
   const [complete, setComplete] = useState(false);
 
   const entry = entries[order[index]] ?? null;
@@ -79,28 +263,32 @@ function FamiliarObscureQuiz({ entries, onExit, wordBankMap, micGranted }) {
   const total = entries.length;
 
   useEffect(() => {
-    if (!complete) {
-      patchFamiliarObscureProgress({ quizIndex: index, quizOrder: order });
-    }
-  }, [complete, index, order]);
+    patchFamiliarObscureProgress({ quizScopeKey: scopeKey, lastScope: scope });
+  }, [scope, scopeKey]);
 
-  const handleResult = useCallback((_wordData, aiResult) => {
-    if (!aiResult?.is_correct) return;
-    const entryId = _wordData?.familiarObscure?.entryId;
-    if (!entryId) return;
-    const savedProgress = loadFamiliarObscureProgress();
-    const masteredIds = new Set(savedProgress.masteredIds);
-    masteredIds.add(entryId);
-    patchFamiliarObscureProgress({ masteredIds: [...masteredIds] });
-  }, []);
+  useEffect(() => {
+    if (!complete) {
+      patchFamiliarObscureProgress({ quizIndex: index, quizOrder: order, quizScopeKey: scopeKey });
+    }
+  }, [complete, index, order, scopeKey]);
+
+  const handleResult = useCallback(
+    (_wordData, aiResult) => {
+      const entryId = _wordData?.familiarObscure?.entryId;
+      if (!entryId) return;
+      applyFamiliarObscureQuizResult(entryId, aiResult);
+      onProgressChange?.();
+    },
+    [onProgressChange]
+  );
 
   const restartQuiz = useCallback(() => {
     const nextOrder = buildShuffledOrder(entries.length);
     setOrder(nextOrder);
     setIndex(0);
     setComplete(false);
-    patchFamiliarObscureProgress({ quizIndex: 0, quizOrder: nextOrder });
-  }, [entries.length]);
+    patchFamiliarObscureProgress({ quizIndex: 0, quizOrder: nextOrder, quizScopeKey: scopeKey });
+  }, [entries.length, scopeKey]);
 
   const handleNext = useCallback(() => {
     if (index >= total - 1) {
@@ -114,17 +302,19 @@ function FamiliarObscureQuiz({ entries, onExit, wordBankMap, micGranted }) {
     if (index > 0) setIndex((prev) => prev - 1);
   }, [index]);
 
+  const scopeLabel = `#${Math.min(scope.fromId, scope.toId)}–#${Math.max(scope.fromId, scope.toId)}`;
+
   if (complete) {
     return (
       <section className="practice-view">
         <div className="practice-toolbar">
           <div className="practice-toolbar__left">
-            <span className="practice-toolbar__title">僻义测试</span>
+            <span className="practice-toolbar__title">僻义测试 · {scopeLabel}</span>
           </div>
         </div>
         <div className="word-list-view__empty">
           <span className="empty-icon">🎉</span>
-          <p>本轮测试完成，共 {total} 词。</p>
+          <p>本轮测试完成，共 {total} 词。不认识的词已在词表标记「待复习」。</p>
           <div className="fobs__quiz-actions">
             <button type="button" className="btn btn--primary" onClick={restartQuiz}>
               重新测试
@@ -141,7 +331,7 @@ function FamiliarObscureQuiz({ entries, onExit, wordBankMap, micGranted }) {
   return (
     <PracticeSession
       tabId="familiar-obscure"
-      title="僻义测试"
+      title={`僻义测试 · ${scopeLabel}`}
       toolbarExtra={
         <>
           <button type="button" className="btn btn--ghost btn--sm" onClick={restartQuiz}>
@@ -171,15 +361,21 @@ function FamiliarObscureQuiz({ entries, onExit, wordBankMap, micGranted }) {
 function FamiliarObscureMeanings({ wordBankMap, micGranted }) {
   const { speakWord } = useSettings();
   const entries = useMemo(() => getFamiliarObscureEntries(), []);
+  const idBounds = useMemo(() => getFamiliarObscureIdBounds(entries), [entries]);
   const [panelMode, setPanelMode] = useState("browse");
   const [query, setQuery] = useState("");
   const [selectedId, setSelectedId] = useState(null);
-  const [masteredCount, setMasteredCount] = useState(
-    () => loadFamiliarObscureProgress().masteredIds.length
-  );
+  const [quizScope, setQuizScope] = useState(() => createDefaultQuizScope(entries));
+  const [quizEntries, setQuizEntries] = useState([]);
+  const [progress, setProgress] = useState(() => loadFamiliarObscureProgress());
   const listScrollY = useRef(0);
   const restoreListScroll = useRef(false);
 
+  const refreshProgress = useCallback(() => {
+    setProgress(loadFamiliarObscureProgress());
+  }, []);
+
+  const unknownSet = useMemo(() => new Set(progress.unknownIds), [progress.unknownIds]);
   const filtered = useMemo(() => filterFamiliarObscureEntries(entries, query), [entries, query]);
   const selected = useMemo(
     () => entries.find((entry) => entry.id === selectedId) ?? null,
@@ -196,6 +392,12 @@ function FamiliarObscureMeanings({ wordBankMap, micGranted }) {
     setSelectedId(null);
   }, []);
 
+  const startQuiz = useCallback((scope, scopedEntries) => {
+    setQuizScope(scope);
+    setQuizEntries(scopedEntries);
+    setPanelMode("quiz");
+  }, []);
+
   useLayoutEffect(() => {
     if (selectedId) {
       window.scrollTo(0, 0);
@@ -207,14 +409,29 @@ function FamiliarObscureMeanings({ wordBankMap, micGranted }) {
     }
   }, [selectedId, panelMode]);
 
+  if (panelMode === "quiz-setup") {
+    return (
+      <FamiliarObscureQuizSetup
+        entries={entries}
+        onBack={() => {
+          restoreListScroll.current = true;
+          setPanelMode("browse");
+        }}
+        onStart={startQuiz}
+      />
+    );
+  }
+
   if (panelMode === "quiz") {
     return (
       <FamiliarObscureQuiz
-        entries={entries}
+        entries={quizEntries}
+        scope={quizScope}
         wordBankMap={wordBankMap}
         micGranted={micGranted}
+        onProgressChange={refreshProgress}
         onExit={() => {
-          setMasteredCount(loadFamiliarObscureProgress().masteredIds.length);
+          refreshProgress();
           restoreListScroll.current = true;
           setPanelMode("browse");
         }}
@@ -226,6 +443,7 @@ function FamiliarObscureMeanings({ wordBankMap, micGranted }) {
     return (
       <EntryDetail
         entry={selected}
+        needsReview={unknownSet.has(selected.id)}
         onBack={closeEntry}
         onSpeak={speakWord}
       />
@@ -238,7 +456,8 @@ function FamiliarObscureMeanings({ wordBankMap, micGranted }) {
         <div>
           <h2 className="fobs__title">{getFamiliarObscureTitle()}</h2>
           <p className="fobs__subtitle">
-            共 {entries.length} 词 · 已掌握 {masteredCount} 词 · 点击卡片查看详情
+            共 {entries.length} 词 · 已掌握 {progress.masteredIds.length} 词 · 待复习{" "}
+            {progress.unknownIds.length} 词 · 点击卡片查看详情
           </p>
         </div>
         <div className="fobs__header-actions">
@@ -253,7 +472,7 @@ function FamiliarObscureMeanings({ wordBankMap, micGranted }) {
               aria-selected={false}
               onClick={() => {
                 listScrollY.current = window.scrollY;
-                setPanelMode("quiz");
+                setPanelMode("quiz-setup");
               }}
             >
               僻义测试
@@ -278,10 +497,13 @@ function FamiliarObscureMeanings({ wordBankMap, micGranted }) {
             <button
               key={entry.id}
               type="button"
-              className="fobs__card"
+              className={`fobs__card${unknownSet.has(entry.id) ? " fobs__card--review" : ""}`}
               onClick={() => openEntry(entry.id)}
             >
-              <span className="fobs__card-id">#{entry.id}</span>
+              <div className="fobs__card-top">
+                <span className="fobs__card-id">#{entry.id}</span>
+                {unknownSet.has(entry.id) ? <ReviewTag compact /> : null}
+              </div>
               <strong className="fobs__card-word">{entry.word}</strong>
               <p className="fobs__card-common">{entry.commonMeaning || "—"}</p>
               <p className="fobs__card-hint">点击查看 SAT 僻义与记忆方法</p>
@@ -290,6 +512,10 @@ function FamiliarObscureMeanings({ wordBankMap, micGranted }) {
           ))}
         </div>
       )}
+
+      <p className="fobs__footnote">
+        编号范围 #{idBounds.min}–#{idBounds.max} · 测试中不认识的词会自动标记「待复习」
+      </p>
     </div>
   );
 }

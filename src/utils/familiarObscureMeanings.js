@@ -51,3 +51,33 @@ export function filterFamiliarObscureEntries(entries, query) {
     return haystack.includes(q);
   });
 }
+
+export function getFamiliarObscureIdBounds(entries) {
+  if (!entries.length) return { min: 1, max: 1 };
+  let min = entries[0].id;
+  let max = entries[0].id;
+  for (const entry of entries) {
+    min = Math.min(min, entry.id);
+    max = Math.max(max, entry.id);
+  }
+  return { min, max };
+}
+
+export function filterEntriesByQuizScope(entries, scope, progress = {}) {
+  const fromId = Math.min(scope.fromId, scope.toId);
+  const toId = Math.max(scope.fromId, scope.toId);
+  const mastered = new Set(progress.masteredIds || []);
+  const unknown = new Set(progress.unknownIds || []);
+
+  return entries.filter((entry) => {
+    if (entry.id < fromId || entry.id > toId) return false;
+    if (scope.onlyReview && !unknown.has(entry.id)) return false;
+    if (scope.onlyUnmastered && mastered.has(entry.id)) return false;
+    return true;
+  });
+}
+
+export function createDefaultQuizScope(entries) {
+  const { min, max } = getFamiliarObscureIdBounds(entries);
+  return { fromId: min, toId: max, onlyReview: false, onlyUnmastered: false };
+}
