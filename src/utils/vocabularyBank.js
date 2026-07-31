@@ -87,23 +87,20 @@ export function findSimilarBankWords(words, query, { limit = 5, maxDistance = 2 
   const q = query.trim().toLowerCase();
   if (!q || !isEnglishWordQuery(query) || isWordInBank(words, q)) return [];
 
+  const prefixLen = Math.min(2, q.length);
+  const prefix = q.slice(0, prefixLen);
   const threshold = q.length <= 4 ? 1 : maxDistance;
   const scored = [];
 
   for (const item of words) {
     const word = item.word.toLowerCase();
     if (word === q) continue;
+    if (prefixLen >= 2 && !word.startsWith(prefix)) continue;
 
     const distance = levenshtein(q, word);
     if (distance > threshold) continue;
 
-    let score = distance;
-    const prefixLen = Math.min(3, q.length, word.length);
-    if (prefixLen >= 2 && word.startsWith(q.slice(0, prefixLen))) {
-      score -= 0.5;
-    }
-
-    scored.push({ item, score });
+    scored.push({ item, score: distance });
   }
 
   return scored

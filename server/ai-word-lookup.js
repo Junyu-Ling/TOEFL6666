@@ -14,10 +14,10 @@ const SYSTEM_PROMPT = `你是英语词典助手。用户查询的单词不在本
 
 规则：
 1. definitions 数组列出该词常见词性与中文释义，每条格式为「词性. 释义」；控制在 8 条以内，只写核心义项。
-2. 若用户提供了「词库相近词」列表，优先判断用户是否把词库里的某个词打错了；若是，word 填词库中的正确拼写，typo_corrected=true，typo_note 用一句中文说明（如「你是不是想查 appeal？」）。
-3. 若输入是常见拼写错误（如 recieve→receive），修正后给出释义，typo_corrected=true，typo_note 说明疑似错字。
+2. 词库相近词仅供参考。若输入更像是常见英文单词的拼写错误（如 aple→apple、recieve→receive），必须优先纠正为该常见词并给出释义；不要强行匹配词库里字母略像但词义无关的词（如 aple 不应纠正为 ample、maple、able）。
+3. 若输入与词库某词仅差 1～2 个字母且前缀一致（如 appeel→appeal），可纠正为词库词，typo_corrected=true，typo_note 说明「你是不是想查 appeal？」。
 4. 若输入是有效英文单词且不在词库，typo_corrected=false，直接给释义。
-5. 若输入不是有效英文单词，definitions 为空数组，typo_note 说明无法识别并请检查拼写。
+5. 若输入不是有效英文单词且无法合理纠正，definitions 为空数组，typo_note 说明无法识别并请检查拼写。
 6. 必须一次输出完整、合法的 JSON。`;
 
 function createConfigError(message, status = 500) {

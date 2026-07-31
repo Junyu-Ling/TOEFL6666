@@ -231,6 +231,17 @@ function VocabularyBank({
     }
   }, [aiLookupLoading, canAiLookup, searchTerm, words]);
 
+  const handleAiLookupRef = useRef(handleAiLookup);
+  handleAiLookupRef.current = handleAiLookup;
+
+  useEffect(() => {
+    if (!canAiLookup || searchTerm.length < 3) return undefined;
+    const timer = setTimeout(() => {
+      handleAiLookupRef.current?.();
+    }, 600);
+    return () => clearTimeout(timer);
+  }, [canAiLookup, searchTerm]);
+
   const handleSearchKeyDown = useCallback(
     (event) => {
       if (event.key !== "Enter" || event.nativeEvent?.isComposing) return;
@@ -354,7 +365,9 @@ function VocabularyBank({
               {!aiLookup && !aiLookupLoading && (
                 <div className="vocabulary-bank__ai-lookup">
                   <p className="vocabulary-bank__ai-lookup-hint">
-                    按 Enter 或点击下方按钮，让 AI 查词并检查是否拼写有误
+                    {similarBankWords.length > 0
+                      ? "以上可能为打错的词库词；也可按 Enter 让 AI 查常见英文词"
+                      : "未在词库中找到相近词，正在猜测你想查的英文单词…"}
                   </p>
                   <button
                     type="button"
