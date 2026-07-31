@@ -380,9 +380,19 @@ export default function FlashCard({
     requestAnimationFrame(focusInput);
   }, [focusInput]);
 
+  const readMeaningAnswer = useCallback(
+    () => (inputRef.current?.value ?? answerRef.current).trim(),
+    []
+  );
+
+  const readEnglishAnswer = useCallback(
+    () => (englishInputRef.current?.value ?? englishAnswerRef.current).trim(),
+    []
+  );
+
   const submitAnswer = useCallback(
     async (answerText) => {
-      const text = (answerText ?? answerRef.current).trim();
+      const text = (answerText ?? readMeaningAnswer()).trim();
       if (loadingRef.current || flippedRef.current || !text) return;
       if (hideWordFirstRef.current && recallStepRef.current !== "meaning") return;
 
@@ -423,7 +433,7 @@ export default function FlashCard({
         }
       }
     },
-    [wordData, wordBankMap, onResult, stopDictation, focusCard, showWrongAnswer]
+    [wordData, wordBankMap, onResult, stopDictation, focusCard, showWrongAnswer, readMeaningAnswer]
   );
 
   const handleTypoClarification = useCallback(
@@ -760,7 +770,9 @@ export default function FlashCard({
     setFlipped(false);
     setBackMode(null);
     setUserAnswer("");
+    answerRef.current = "";
     setEnglishAttempt("");
+    englishAnswerRef.current = "";
     setRecallStep("english");
     setEnglishRecallHint("");
     setResult(null);
@@ -780,6 +792,10 @@ export default function FlashCard({
     swipeLockRef.current = false;
     swipeDraggingRef.current = false;
     stopDictation();
+  }, [wordData?.word, stopDictation]);
+
+  useEffect(() => {
+    if (!wordData?.word) return undefined;
 
     let speechTimer;
     let dictationTimer;
@@ -801,21 +817,8 @@ export default function FlashCard({
       clearTimeout(speechTimer);
       clearTimeout(dictationTimer);
       clearTimeout(focusTimer);
-      stopDictation();
     };
-  }, [
-    wordData?.word,
-    speakWord,
-    stopDictation,
-    settings.autoReadOnNewWord,
-    settings.autoDictateOnNewWord,
-    settings.hideWordFirst,
-    settings.practiceStyle,
-    micGranted,
-    isTypeMode,
-    focusInput,
-    focusCard,
-  ]);
+  }, [wordData?.word]);
 
   useEffect(() => {
     if (!settingsOpen) return;
@@ -930,6 +933,8 @@ export default function FlashCard({
       }
 
       if (e.key === "Enter" && !e.shiftKey) {
+        if (e.isComposing || e.nativeEvent?.isComposing) return;
+
         if (flippedRef.current) {
           e.preventDefault();
           if (backModeRef.current === "ai") {
@@ -943,7 +948,7 @@ export default function FlashCard({
         }
 
         if (hideWordFirstRef.current && recallStepRef.current === "english") {
-          const hasEnglish = englishAnswerRef.current.trim();
+          const hasEnglish = readEnglishAnswer();
           if (!hasEnglish) return;
           e.preventDefault();
           advanceToMeaningStepRef.current?.();
@@ -951,12 +956,13 @@ export default function FlashCard({
         }
 
         const inInput = isTypingInAnswerField();
-        const hasAnswer = answerRef.current.trim();
+        const meaningAnswer = readMeaningAnswer();
+        const hasAnswer = Boolean(meaningAnswer);
 
         e.preventDefault();
 
         if (hasAnswer && (isTypeMode || inInput)) {
-          submitAnswer(answerRef.current);
+          submitAnswer(meaningAnswer);
           return;
         }
 
@@ -971,7 +977,17 @@ export default function FlashCard({
 
     window.addEventListener("keydown", handleGlobalKeyDown, true);
     return () => window.removeEventListener("keydown", handleGlobalKeyDown, true);
-  }, [onPrev, onNext, submitAnswer, flipToManual, flipBack, handleManualMark, isTypeMode]);
+  }, [
+    onPrev,
+    onNext,
+    submitAnswer,
+    flipToManual,
+    flipBack,
+    handleManualMark,
+    isTypeMode,
+    readMeaningAnswer,
+    readEnglishAnswer,
+  ]);
 
   const onEnglishPhase = hideWordFirst && recallStep === "english";
   const showWord = !onEnglishPhase;
@@ -1248,7 +1264,10 @@ export default function FlashCard({
                 spellCheck={false}
                 placeholder={micGranted ? "听音默写英文单词，也可语音输入…" : "听音默写英文单词…"}
                 value={englishAttempt}
-                onChange={(e) => setEnglishAttempt(e.target.value)}
+                onChange={(e) => {
+                  englishAnswerRef.current = e.target.value;
+                  setEnglishAttempt(e.target.value);
+                }}
                 onFocus={() => {
                   if (settingsOpenRef.current) {
                     englishInputRef.current?.blur();
@@ -1297,7 +1316,10 @@ export default function FlashCard({
                       : "可选：点这里输入释义，Enter 提交批改…"
               }
               value={userAnswer}
-              onChange={(e) => setUserAnswer(e.target.value)}
+              onChange={(e) => {
+                answerRef.current = e.target.value;
+                setUserAnswer(e.target.value);
+              }}
               onFocus={() => {
                 if (settingsOpenRef.current) {
                   inputRef.current?.blur();
