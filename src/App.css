@@ -1047,6 +1047,22 @@ body {
   color: #dc2626;
 }
 
+.vocabulary-bank__similar-words {
+  width: 100%;
+  max-width: 520px;
+  margin-top: 0.25rem;
+}
+
+.vocabulary-bank__similar-list {
+  margin-top: 0.5rem;
+}
+
+.vocabulary-bank__typo-note {
+  margin: 0.25rem 0 0.375rem;
+  font-size: 0.875rem;
+  color: var(--accent, #2563eb);
+}
+
 .word-item--ai-lookup {
   width: 100%;
   max-width: 520px;

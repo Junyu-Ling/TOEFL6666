@@ -47,14 +47,69 @@ export function groupBankFamilyWords(words) {
   return groupBankWordsByFamily(words, familyRootByWord);
 }
 
+function levenshtein(a, b) {
+  if (a === b) return 0;
+  if (!a.length) return b.length;
+  if (!b.length) return a.length;
+
+  const row = Array.from({ length: b.length + 1 }, (_, index) => index);
+  for (let i = 1; i <= a.length; i++) {
+    let prev = row[0];
+    row[0] = i;
+    for (let j = 1; j <= b.length; j++) {
+      const temp = row[j];
+      const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+      row[j] = Math.min(row[j] + 1, row[j - 1] + 1, prev + cost);
+      prev = temp;
+    }
+  }
+  return row[b.length];
+}
+
 export function filterBankWords(words, query) {
   const q = query.trim().toLowerCase();
   if (!q) return words;
-  return words.filter(
-    (item) =>
-      item.word.toLowerCase().includes(q) ||
+
+  const englishQuery = isEnglishWordQuery(query);
+  return words.filter((item) => {
+    const word = item.word.toLowerCase();
+    if (englishQuery) {
+      return word.startsWith(q);
+    }
+    return (
+      word.includes(q) ||
       item.definitions?.some((def) => def.toLowerCase().includes(q))
-  );
+    );
+  });
+}
+
+export function findSimilarBankWords(words, query, { limit = 5, maxDistance = 2 } = {}) {
+  const q = query.trim().toLowerCase();
+  if (!q || !isEnglishWordQuery(query) || isWordInBank(words, q)) return [];
+
+  const threshold = q.length <= 4 ? 1 : maxDistance;
+  const scored = [];
+
+  for (const item of words) {
+    const word = item.word.toLowerCase();
+    if (word === q) continue;
+
+    const distance = levenshtein(q, word);
+    if (distance > threshold) continue;
+
+    let score = distance;
+    const prefixLen = Math.min(3, q.length, word.length);
+    if (prefixLen >= 2 && word.startsWith(q.slice(0, prefixLen))) {
+      score -= 0.5;
+    }
+
+    scored.push({ item, score });
+  }
+
+  return scored
+    .sort((a, b) => a.score - b.score || a.item.word.localeCompare(b.item.word, "en"))
+    .slice(0, limit)
+    .map((entry) => entry.item);
 }
 
 export function sortBankWords(words, sortMode, availableLists) {

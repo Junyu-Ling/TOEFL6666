@@ -1,4 +1,4 @@
-import { memo, useMemo, useState, useDeferredValue, useEffect, useRef, useCallback } from "react";
+import { memo, useMemo, useState, useEffect, useRef, useCallback } from "react";
 import {
   BANK_SORT_OPTIONS,
   filterBankWords,
@@ -12,6 +12,7 @@ import {
   isEnglishWordQuery,
   shouldResetBankViewForMode,
   isWordInBank,
+  findSimilarBankWords,
 } from "../utils/vocabularyBank";
 import PronunciationAlert from "./PronunciationAlert";
 import { getPronunciationAlert, getIrregularPronunciationStats } from "../utils/pronunciationAlert";
@@ -129,14 +130,13 @@ function VocabularyBank({
   appMode = "toefl",
 }) {
   const [query, setQuery] = useState("");
-  const deferredQuery = useDeferredValue(query);
   const [sortMode, setSortMode] = useState("level-list");
   const [viewMode, setViewMode] = useState("all");
   const [aiLookup, setAiLookup] = useState(null);
   const [aiLookupLoading, setAiLookupLoading] = useState(false);
   const [aiLookupError, setAiLookupError] = useState(null);
   const lookupAbortRef = useRef(null);
-  const isSearchPending = query !== deferredQuery;
+  const searchTerm = query.trim();
 
   const isSatMode = appMode === "sat";
   const bankViewOptions = useMemo(() => getBankViewOptions(appMode), [appMode]);
@@ -164,9 +164,9 @@ function VocabularyBank({
     } else if (viewMode === "word-family") {
       filtered = filterBankFamilyWords(words);
     }
-    filtered = filterBankWords(filtered, deferredQuery);
+    filtered = filterBankWords(filtered, searchTerm);
     return sortBankWords(filtered, sortMode, availableLists);
-  }, [words, deferredQuery, sortMode, viewMode, availableLists]);
+  }, [words, searchTerm, sortMode, viewMode, availableLists]);
 
   const groupedWords = useMemo(
     () => groupBankWords(displayedWords, sortMode, availableLists, wordListIndex),
@@ -178,13 +178,16 @@ function VocabularyBank({
     return groupBankFamilyWords(displayedWords);
   }, [displayedWords, viewMode]);
 
-  const isFiltering = query.trim().length > 0;
-  const searchTerm = deferredQuery.trim();
+  const isFiltering = searchTerm.length > 0;
   const canAiLookup =
     isFiltering &&
     displayedWords.length === 0 &&
     isEnglishWordQuery(searchTerm) &&
     !isWordInBank(words, searchTerm);
+  const similarBankWords = useMemo(() => {
+    if (!canAiLookup) return [];
+    return findSimilarBankWords(words, searchTerm);
+  }, [canAiLookup, words, searchTerm]);
   const isSpecialView = viewMode === "irregular-pronunciation";
   const isFamilyView = viewMode === "word-family";
 
@@ -208,7 +211,11 @@ function VocabularyBank({
     setAiLookup(null);
 
     try {
-      const result = await lookupWordDefinitions(searchTerm, { signal: controller.signal });
+      const bankHints = findSimilarBankWords(words, searchTerm, { limit: 12 }).map((item) => item.word);
+      const result = await lookupWordDefinitions(searchTerm, {
+        signal: controller.signal,
+        bankHints,
+      });
       if (controller.signal.aborted) return;
       setAiLookup(result);
     } catch (err) {
@@ -222,7 +229,17 @@ function VocabularyBank({
         setAiLookupLoading(false);
       }
     }
-  }, [aiLookupLoading, canAiLookup, searchTerm]);
+  }, [aiLookupLoading, canAiLookup, searchTerm, words]);
+
+  const handleSearchKeyDown = useCallback(
+    (event) => {
+      if (event.key !== "Enter" || event.nativeEvent?.isComposing) return;
+      if (!canAiLookup || aiLookupLoading) return;
+      event.preventDefault();
+      handleAiLookup();
+    },
+    [aiLookupLoading, canAiLookup, handleAiLookup]
+  );
   const practiceLabel =
     bankSession && bankPracticePaused
       ? `继续练习（${bankSession.index + 1}/${bankSession.queue.length}）`
@@ -267,17 +284,18 @@ function VocabularyBank({
 
       <div className="word-list-view__toolbar vocabulary-bank__toolbar">
         <input
-          className={`word-list-view__search${isSearchPending ? " word-list-view__search--pending" : ""}`}
+          className="word-list-view__search"
           type="search"
           placeholder={
             isFamilyView
               ? "在词族中搜索单词或释义…"
               : isSpecialView
                 ? "在特殊发音列表中搜索…"
-                : "搜索单词或释义…"
+                : "搜索单词（英文前缀匹配）或释义… Enter 查词库外单词"
           }
           value={query}
           onChange={(e) => setQuery(e.target.value)}
+          onKeyDown={handleSearchKeyDown}
           aria-label="搜索单词"
         />
         {bankViewOptions.length > 1 && (
@@ -317,9 +335,27 @@ function VocabularyBank({
               <p>
                 词库中未找到 <strong>{searchTerm}</strong>
               </p>
+              {similarBankWords.length > 0 && (
+                <div className="vocabulary-bank__similar-words">
+                  <p className="vocabulary-bank__ai-lookup-hint">词库中相近的单词：</p>
+                  <div className="word-list vocabulary-bank__similar-list">
+                    {similarBankWords.map((item) => (
+                      <BankWordItem
+                        key={item.word}
+                        item={item}
+                        availableLists={availableLists}
+                        bookStatus={bookStatusByWord.get(item.word)}
+                        compact
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
               {!aiLookup && !aiLookupLoading && (
                 <div className="vocabulary-bank__ai-lookup">
-                  <p className="vocabulary-bank__ai-lookup-hint">是否使用 AI 查询该词的中文释义？</p>
+                  <p className="vocabulary-bank__ai-lookup-hint">
+                    按 Enter 或点击下方按钮，让 AI 查词并检查是否拼写有误
+                  </p>
                   <button
                     type="button"
                     className="btn btn--accent btn--sm"
@@ -354,6 +390,9 @@ function VocabularyBank({
                     <h3 className="word-item__word">{aiLookup.word}</h3>
                     <span className="word-item__list-badge word-item__list-badge--ai">AI 释义</span>
                   </div>
+                  {aiLookup.typoNote ? (
+                    <p className="vocabulary-bank__typo-note">{aiLookup.typoNote}</p>
+                  ) : null}
                   <p className="word-item__defs">{aiLookup.definitions.join(" · ")}</p>
                   <PronunciationAlert
                     alert={getPronunciationAlert(aiLookup.word)}
