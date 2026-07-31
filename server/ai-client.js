@@ -29,6 +29,17 @@ function resolveChatCompletionsUrl(baseUrl, providerId = "") {
   return `${clean}/chat/completions`;
 }
 
+function isDeepSeekEndpoint(providerId, baseUrl) {
+  return providerId === "deepseek" || /deepseek\.com/i.test(baseUrl || "");
+}
+
+function extractAssistantText(message) {
+  if (!message) return "";
+  const content = String(message.content ?? "").trim();
+  if (content) return content;
+  return String(message.reasoning_content ?? "").trim();
+}
+
 async function openaiCompatibleChat({
   apiKey,
   baseUrl,
@@ -50,6 +61,11 @@ async function openaiCompatibleChat({
     body.response_format = { type: "json_object" };
   }
 
+  // V4 默认开启 thinking，JSON 批改等场景会在 content 留空；关闭后走普通输出。
+  if (isDeepSeekEndpoint(providerId, baseUrl)) {
+    body.thinking = { type: "disabled" };
+  }
+
   const response = await fetch(resolveChatCompletionsUrl(baseUrl, providerId), {
     method: "POST",
     headers: {
@@ -64,8 +80,17 @@ async function openaiCompatibleChat({
     throw createConfigError(data.error?.message || data.error?.msg || data.message || "AI API 请求失败", response.status);
   }
 
-  const text = data.choices?.[0]?.message?.content;
-  if (!text) throw createConfigError("AI 未返回有效内容", 502);
+  const message = data.choices?.[0]?.message;
+  const text = extractAssistantText(message);
+  if (!text) {
+    const finishReason = data.choices?.[0]?.finish_reason;
+    throw createConfigError(
+      finishReason === "length"
+        ? "AI 输出被截断，请稍后重试"
+        : "AI 未返回有效内容，请确认 DEEPSEEK_API_KEY 与 DEEPSEEK_MODEL 配置正确",
+      502
+    );
+  }
   return text;
 }
 
@@ -90,6 +115,7 @@ async function* openaiCompatibleChatStream({
       temperature,
       messages,
       stream: true,
+      ...(isDeepSeekEndpoint(providerId, baseUrl) ? { thinking: { type: "disabled" } } : {}),
     }),
   });
 
@@ -158,8 +184,8 @@ async function anthropicChat({ apiKey, baseUrl, model, messages, maxTokens, temp
     throw createConfigError(data.error?.message || data.error?.type || "Anthropic API 请求失败", response.status);
   }
 
-  const text = data.content?.map((block) => block.text).join("").trim();
-  if (!text) throw createConfigError("AI 未返回有效内容", 502);
+  const text = extractAssistantText({ content: data.content?.map((block) => block.text).join("") });
+  if (!text) throw createConfigError("AI 未返回有效内容，请确认 API 配置正确", 502);
   return text;
 }
 

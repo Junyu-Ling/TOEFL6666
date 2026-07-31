@@ -99,7 +99,7 @@ export async function evaluateWithDeepSeek(payload, config = {}) {
 
   const text = await chatCompletion({
     config,
-    maxTokens: 448,
+    maxTokens: 512,
     temperature: 0.3,
     responseFormat: "json",
     messages: [
