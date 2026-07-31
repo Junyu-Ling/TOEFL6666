@@ -23,6 +23,9 @@ public/wordlists-sat/
 # Scripts cache and uploads
 scripts/__pycache__/
 scripts/_uploads/
+scripts/_*.png
+scripts/_*.txt
+scripts/articles-*.json
 
 # Editor directories and files
 .vscode/*

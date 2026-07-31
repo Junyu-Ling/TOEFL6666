@@ -17,7 +17,7 @@ import FamiliarObscureMeanings from "./components/FamiliarObscureMeanings";
 import TabPanel from "./components/TabPanel";
 import MottoFooter from "./components/MottoFooter";
 import { recordVisit, refreshStreak } from "./services/streak";
-import { syncService, SYNC_APPLIED_EVENT, SYNC_STATUS_EVENT } from "./services/syncService";
+import { syncService, SYNC_APPLIED_EVENT } from "./services/syncService";
 import { useMicrophone } from "./hooks/useMicrophone";
 import { useSettings } from "./context/SettingsContext";
 import { ActiveTabProvider } from "./context/ActiveTabContext";

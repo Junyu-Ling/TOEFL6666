@@ -851,10 +851,6 @@ export default function FlashCard({
       return active === inputRef.current || active === englishInputRef.current;
     }
 
-    function isTypingEnglishField() {
-      return document.activeElement === englishInputRef.current;
-    }
-
     function isExternalInteractiveContext(event) {
       if (isTypingInAnswerField()) return false;
       return shouldIgnoreAppGameKeys(event);

@@ -289,17 +289,3 @@ export function shuffleArray(items) {
 export function sortByWrongCount(items) {
   return [...items].sort((a, b) => (b.wrongCount ?? 0) - (a.wrongCount ?? 0));
 }
-
-export function seededShuffle(items, seed) {
-  const copy = [...items];
-  let state = seed >>> 0;
-  const next = () => {
-    state = (state * 1664525 + 1013904223) >>> 0;
-    return state / 0x100000000;
-  };
-  for (let i = copy.length - 1; i > 0; i--) {
-    const j = Math.floor(next() * (i + 1));
-    [copy[i], copy[j]] = [copy[j], copy[i]];
-  }
-  return copy;
-}
