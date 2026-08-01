@@ -30,6 +30,8 @@ export function buildFamiliarObscureWordData(entry) {
       commonMeaning: entry.commonMeaning || "",
       memoryTip: entry.memoryTip || "",
       obscureMeaning: entry.obscureMeaning || "",
+      exampleEn: entry.exampleEn || "",
+      exampleZh: entry.exampleZh || "",
     },
   };
 }

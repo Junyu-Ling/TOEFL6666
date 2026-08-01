@@ -1156,6 +1156,58 @@ body {
   color: var(--text);
 }
 
+.flashcard__fobs-extra {
+  margin-top: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  text-align: left;
+  width: 100%;
+}
+
+.flashcard__fobs-block {
+  padding: 0.65rem 0.75rem;
+  border-radius: var(--radius-sm);
+  background: var(--surface-2, rgba(0, 0, 0, 0.03));
+  border: 1px solid var(--border);
+}
+
+.flashcard__fobs-block--memory {
+  background: var(--accent-soft);
+}
+
+.flashcard__fobs-block-label {
+  display: block;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.25rem;
+}
+
+.flashcard__fobs-block-text {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.45;
+  color: var(--text);
+}
+
+.flashcard__fobs-example-en {
+  margin: 0 0 0.375rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  font-style: italic;
+  color: var(--text);
+}
+
+.flashcard__fobs-example-zh {
+  margin: 0;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
 .flashcard__input-wrap {
   position: relative;
 }

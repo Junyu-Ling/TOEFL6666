@@ -1443,7 +1443,7 @@ export default function FlashCard({
                 <MemoryTrickBlock trick={result.memory_trick} />
               )}
 
-              <FamiliarObscureMemoryTip text={wordData.familiarObscure?.memoryTip} />
+              <FamiliarObscureBackExtras familiarObscure={wordData.familiarObscure} />
 
               <button type="button" className="btn btn--primary flashcard__next" onClick={onNext}>
                 下一个
@@ -1464,7 +1464,7 @@ export default function FlashCard({
                 ))}
               </ul>
 
-              <FamiliarObscureMemoryTip text={wordData.familiarObscure?.memoryTip} />
+              <FamiliarObscureBackExtras familiarObscure={wordData.familiarObscure} />
 
               {memoryLoading && !wordStats?.memory_trick && (
                 <p className="flashcard__memory-status">
@@ -1565,12 +1565,33 @@ export default function FlashCard({
   );
 }
 
-function FamiliarObscureMemoryTip({ text }) {
-  if (!text) return null;
+function FamiliarObscureBackExtras({ familiarObscure }) {
+  if (!familiarObscure) return null;
+
+  const { commonMeaning, exampleEn, exampleZh, memoryTip } = familiarObscure;
+  if (!commonMeaning && !exampleEn && !exampleZh && !memoryTip) return null;
+
   return (
-    <div className="flashcard__fobs-memory">
-      <span className="flashcard__fobs-memory-label">记忆方法</span>
-      <p className="flashcard__fobs-memory-text">{text}</p>
+    <div className="flashcard__fobs-extra">
+      {commonMeaning ? (
+        <div className="flashcard__fobs-block">
+          <span className="flashcard__fobs-block-label">常见释义</span>
+          <p className="flashcard__fobs-block-text">{commonMeaning}</p>
+        </div>
+      ) : null}
+      {exampleEn || exampleZh ? (
+        <div className="flashcard__fobs-block">
+          <span className="flashcard__fobs-block-label">例句</span>
+          {exampleEn ? <p className="flashcard__fobs-example-en">{exampleEn}</p> : null}
+          {exampleZh ? <p className="flashcard__fobs-example-zh">{exampleZh}</p> : null}
+        </div>
+      ) : null}
+      {memoryTip ? (
+        <div className="flashcard__fobs-block flashcard__fobs-block--memory">
+          <span className="flashcard__fobs-block-label">记忆方法</span>
+          <p className="flashcard__fobs-block-text">{memoryTip}</p>
+        </div>
+      ) : null}
     </div>
   );
 }
