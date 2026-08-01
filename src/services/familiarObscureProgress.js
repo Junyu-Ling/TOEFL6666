@@ -57,6 +57,26 @@ export function getBrowseSession(scopeKey) {
   };
 }
 
+export function resolveBrowseSessionState(scopeKey, entriesLength, shuffle) {
+  const session = getBrowseSession(scopeKey);
+  if (
+    session &&
+    session.order.length === entriesLength &&
+    session.shuffle === shuffle
+  ) {
+    return {
+      index: Math.max(0, Math.min(session.index ?? 0, Math.max(entriesLength - 1, 0))),
+      order: session.order,
+    };
+  }
+  return {
+    index: 0,
+    order: shuffle
+      ? buildShuffledOrder(entriesLength)
+      : Array.from({ length: entriesLength }, (_, index) => index),
+  };
+}
+
 export function patchBrowseSession(scopeKey, { index, order, shuffle }) {
   const progress = loadFamiliarObscureProgress();
   const browseSessions = { ...normalizeBrowseSessions(loadRaw()) };

@@ -1,4 +1,4 @@
-import { memo, useCallback, useMemo, useState, useEffect, useRef } from "react";
+import { memo, useCallback, useMemo, useState, useEffect, useLayoutEffect, useRef } from "react";
 import {
   buildFamiliarObscureWordData,
   filterEntriesByQuizScope,
@@ -13,7 +13,7 @@ import {
   buildBrowseScopeKey,
   buildShuffledOrder,
   FOBS_PROGRESS_EVENT,
-  getBrowseSession,
+  resolveBrowseSessionState,
   isFamiliarObscureReviewEntry,
   loadFamiliarObscureProgress,
   patchBrowseSession,
@@ -234,15 +234,7 @@ function FamiliarObscurePractice({
   const savedQuiz = useMemo(() => loadFamiliarObscureProgress(), []);
 
   function resolveInitialBrowseSession() {
-    const session = getBrowseSession(scopeKey);
-    if (session && session.order.length === entries.length) {
-      return session;
-    }
-    return {
-      index: 0,
-      order: shuffle ? buildShuffledOrder(entries.length) : entries.map((_, index) => index),
-      shuffle,
-    };
+    return resolveBrowseSessionState(scopeKey, entries.length, shuffle);
   }
 
   function resolveInitialQuizSession() {
@@ -266,41 +258,16 @@ function FamiliarObscurePractice({
   const [order, setOrder] = useState(() => initialSession.order);
   const [index, setIndex] = useState(() => initialSession.index);
   const [complete, setComplete] = useState(false);
-  const prevQueueKeyRef = useRef(null);
+  const prevShuffleRef = useRef(shuffle);
 
-  const queueKey = `${scopeKey}:${entries.length}:${shuffle ? 1 : 0}`;
-
-  function restoreSessionForQueueKey() {
-    if (isBrowse) {
-      const session = getBrowseSession(scopeKey);
-      if (session && session.order.length === entries.length && session.shuffle === shuffle) {
-        setOrder(session.order);
-        setIndex(Math.max(0, Math.min(session.index ?? 0, Math.max(entries.length - 1, 0))));
-        setComplete(false);
-        return;
-      }
-    } else {
-      const quiz = loadFamiliarObscureProgress();
-      if (quiz.quizScopeKey === scopeKey && quiz.quizOrder.length === entries.length) {
-        setOrder(quiz.quizOrder);
-        setIndex(Math.max(0, Math.min(quiz.quizIndex ?? 0, Math.max(entries.length - 1, 0))));
-        setComplete(false);
-        return;
-      }
-    }
-
-    setOrder(shuffle ? buildShuffledOrder(entries.length) : entries.map((_, i) => i));
-    setIndex(0);
+  useLayoutEffect(() => {
+    if (!isBrowse || prevShuffleRef.current === shuffle) return;
+    prevShuffleRef.current = shuffle;
+    const session = resolveBrowseSessionState(scopeKey, entries.length, shuffle);
+    setOrder(session.order);
+    setIndex(session.index);
     setComplete(false);
-  }
-
-  useEffect(() => {
-    if (prevQueueKeyRef.current === queueKey) return;
-    if (prevQueueKeyRef.current !== null) {
-      restoreSessionForQueueKey();
-    }
-    prevQueueKeyRef.current = queueKey;
-  }, [queueKey, entries.length, shuffle, scopeKey, isBrowse]);
+  }, [isBrowse, shuffle, scopeKey, entries.length]);
 
   useEffect(() => {
     if (!isBrowse && scope) {
@@ -600,6 +567,7 @@ function FamiliarObscureMeanings({ wordBankMap, micGranted }) {
       </div>
 
       <FamiliarObscurePractice
+        key={practiceScopeKey}
         entries={practiceEntries}
         scopeKey={practiceScopeKey}
         sessionType="browse"
