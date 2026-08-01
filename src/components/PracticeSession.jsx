@@ -23,13 +23,15 @@ function PracticeSession({
 
   return (
     <section className="practice-view">
-      <div className="practice-toolbar">
-        <div className="practice-toolbar__left">
-          <span className="practice-toolbar__title">{title}</span>
-          {toolbarExtra}
+      {(title || stats || toolbarExtra) && (
+        <div className="practice-toolbar">
+          <div className="practice-toolbar__left">
+            {title ? <span className="practice-toolbar__title">{title}</span> : null}
+            {toolbarExtra}
+          </div>
+          {stats ? <div className="practice-toolbar__stats">{stats}</div> : null}
         </div>
-        {stats ? <div className="practice-toolbar__stats">{stats}</div> : null}
-      </div>
+      )}
 
       <div className="progress-track" aria-label="学习进度">
         <div className="progress-track__fill" style={{ width: `${progress}%` }} />

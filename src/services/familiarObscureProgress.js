@@ -36,6 +36,13 @@ export function loadFamiliarObscureProgress() {
     quizIndex: Number.isFinite(saved?.quizIndex) ? saved.quizIndex : 0,
     quizOrder: Array.isArray(saved?.quizOrder) ? saved.quizOrder : [],
     quizScopeKey: typeof saved?.quizScopeKey === "string" ? saved.quizScopeKey : "",
+    browseIndex: Number.isFinite(saved?.browseIndex) ? saved.browseIndex : 0,
+    browseOrder: Array.isArray(saved?.browseOrder) ? saved.browseOrder : [],
+    browseScopeKey: typeof saved?.browseScopeKey === "string" ? saved.browseScopeKey : "",
+    browseShuffle: Boolean(saved?.browseShuffle),
+    browseQuery: typeof saved?.browseQuery === "string" ? saved.browseQuery : "",
+    browseListFilter: saved?.browseListFilter === "review" ? "review" : "all",
+    panelMode: saved?.panelMode === "quiz" ? "quiz" : "practice",
     masteredIds: normalizeIdList(saved?.masteredIds),
     unknownIds: normalizeIdList(saved?.unknownIds),
     lastScope: normalizeScope(saved?.lastScope),
@@ -86,6 +93,10 @@ export function buildQuizScopeKey(scope, entryCount) {
   const fromId = Math.min(scope.fromId, scope.toId);
   const toId = Math.max(scope.fromId, scope.toId);
   return `${fromId}-${toId}-${scope.onlyReview ? 1 : 0}-${scope.onlyUnmastered ? 1 : 0}-${entryCount}`;
+}
+
+export function buildBrowseScopeKey(listFilter, query, entryCount) {
+  return `browse-${listFilter}-${String(query || "").trim().toLowerCase()}-${entryCount}`;
 }
 
 export function applyFamiliarObscureQuizResult(entryIdRaw, aiResult) {
