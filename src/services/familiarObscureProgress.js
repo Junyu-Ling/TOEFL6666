@@ -156,7 +156,11 @@ export function buildQuizScopeKey(scope, entryCount) {
 }
 
 export function buildBrowseScopeKey(listFilter, query, entryCount) {
-  return `browse-${listFilter}-${String(query || "").trim().toLowerCase()}-${entryCount}`;
+  const q = String(query || "").trim().toLowerCase();
+  if (listFilter === "review") {
+    return `browse-review-${q}`;
+  }
+  return `browse-${listFilter}-${q}-${entryCount}`;
 }
 
 export function applyFamiliarObscureQuizResult(entryIdRaw, aiResult) {

@@ -214,6 +214,14 @@ function FamiliarObscureQuizSetup({ entries, onBack, onStart }) {
   );
 }
 
+function removeEntryAtOrderIndex(entries, order, atIndex) {
+  const removeIdx = order[atIndex];
+  return {
+    entries: entries.filter((_, i) => i !== removeIdx),
+    order: order.filter((i) => i !== removeIdx).map((i) => (i > removeIdx ? i - 1 : i)),
+  };
+}
+
 function FamiliarObscurePractice({
   entries,
   title,
@@ -221,6 +229,7 @@ function FamiliarObscurePractice({
   scopeKey,
   scope,
   sessionType = "quiz",
+  deferReviewRemoval = false,
   onProgressChange,
   onExit,
   wordBankMap,
@@ -232,24 +241,27 @@ function FamiliarObscurePractice({
 }) {
   const isBrowse = sessionType === "browse";
   const savedQuiz = useMemo(() => loadFamiliarObscureProgress(), []);
+  const [localEntries, setLocalEntries] = useState(() => entries);
+  const pendingResultRef = useRef(null);
+  const activeEntries = deferReviewRemoval ? localEntries : entries;
 
   function resolveInitialBrowseSession() {
-    return resolveBrowseSessionState(scopeKey, entries.length, shuffle);
+    return resolveBrowseSessionState(scopeKey, activeEntries.length, shuffle);
   }
 
   function resolveInitialQuizSession() {
     if (
       savedQuiz.quizScopeKey === scopeKey &&
-      savedQuiz.quizOrder.length === entries.length
+      savedQuiz.quizOrder.length === activeEntries.length
     ) {
       return {
-        index: Math.max(0, Math.min(savedQuiz.quizIndex ?? 0, Math.max(entries.length - 1, 0))),
+        index: Math.max(0, Math.min(savedQuiz.quizIndex ?? 0, Math.max(activeEntries.length - 1, 0))),
         order: savedQuiz.quizOrder,
       };
     }
     return {
       index: 0,
-      order: shuffle ? buildShuffledOrder(entries.length) : entries.map((_, index) => index),
+      order: shuffle ? buildShuffledOrder(activeEntries.length) : activeEntries.map((_, index) => index),
     };
   }
 
@@ -263,11 +275,19 @@ function FamiliarObscurePractice({
   useLayoutEffect(() => {
     if (!isBrowse || prevShuffleRef.current === shuffle) return;
     prevShuffleRef.current = shuffle;
-    const session = resolveBrowseSessionState(scopeKey, entries.length, shuffle);
+    const session = resolveBrowseSessionState(scopeKey, activeEntries.length, shuffle);
     setOrder(session.order);
     setIndex(session.index);
     setComplete(false);
-  }, [isBrowse, shuffle, scopeKey, entries.length]);
+  }, [isBrowse, shuffle, scopeKey, activeEntries.length]);
+
+  useEffect(() => {
+    return () => {
+      const pending = pendingResultRef.current;
+      if (!pending) return;
+      applyFamiliarObscureQuizResult(pending.entryId, pending.aiResult);
+    };
+  }, []);
 
   useEffect(() => {
     if (!isBrowse && scope) {
@@ -284,22 +304,31 @@ function FamiliarObscurePractice({
     patchFamiliarObscureProgress({ quizIndex: index, quizOrder: order, quizScopeKey: scopeKey });
   }, [complete, index, order, isBrowse, scopeKey, shuffle]);
 
-  const entry = entries[order[index]] ?? null;
+  const entry = activeEntries[order[index]] ?? null;
   const currentWord = entry ? buildFamiliarObscureWordData(entry) : null;
-  const total = entries.length;
+  const total = activeEntries.length;
 
   const handleResult = useCallback(
     (_wordData, aiResult) => {
       const entryId = _wordData?.familiarObscure?.entryId;
       if (!entryId) return;
+      if (deferReviewRemoval && aiResult.is_correct) {
+        pendingResultRef.current = { entryId, aiResult };
+        return;
+      }
       applyFamiliarObscureQuizResult(entryId, aiResult);
       onProgressChange?.();
     },
-    [onProgressChange]
+    [deferReviewRemoval, onProgressChange]
   );
 
   const restart = useCallback(() => {
-    const nextOrder = shuffle ? buildShuffledOrder(entries.length) : entries.map((_, i) => i);
+    pendingResultRef.current = null;
+    const baseEntries = deferReviewRemoval ? entries : activeEntries;
+    if (deferReviewRemoval) {
+      setLocalEntries(entries);
+    }
+    const nextOrder = shuffle ? buildShuffledOrder(baseEntries.length) : baseEntries.map((_, i) => i);
     setOrder(nextOrder);
     setIndex(0);
     setComplete(false);
@@ -308,21 +337,62 @@ function FamiliarObscurePractice({
     } else {
       patchFamiliarObscureProgress({ quizIndex: 0, quizOrder: nextOrder, quizScopeKey: scopeKey });
     }
-  }, [entries.length, isBrowse, scopeKey, shuffle]);
+  }, [activeEntries, deferReviewRemoval, entries, isBrowse, scopeKey, shuffle]);
 
   const handleNext = useCallback(() => {
+    const pending = pendingResultRef.current;
+    const currentEntryId = entry?.id;
+
+    if (pending && pending.entryId === currentEntryId) {
+      applyFamiliarObscureQuizResult(pending.entryId, pending.aiResult);
+      pendingResultRef.current = null;
+      onProgressChange?.();
+
+      if (deferReviewRemoval && pending.aiResult.is_correct) {
+        const { entries: nextEntries, order: nextOrder } = removeEntryAtOrderIndex(
+          activeEntries,
+          order,
+          index
+        );
+        setLocalEntries(nextEntries);
+        setOrder(nextOrder);
+        if (nextEntries.length === 0 || index >= nextEntries.length) {
+          setComplete(true);
+        }
+        if (isBrowse) {
+          patchBrowseSession(scopeKey, {
+            index: Math.min(index, Math.max(nextEntries.length - 1, 0)),
+            order: nextOrder,
+            shuffle,
+          });
+        }
+        return;
+      }
+    }
+
     if (index >= total - 1) {
       setComplete(true);
       return;
     }
     setIndex((prev) => prev + 1);
-  }, [index, total]);
+  }, [
+    activeEntries,
+    deferReviewRemoval,
+    entry?.id,
+    index,
+    isBrowse,
+    onProgressChange,
+    order,
+    scopeKey,
+    shuffle,
+    total,
+  ]);
 
   const handlePrev = useCallback(() => {
     if (index > 0) setIndex((prev) => prev - 1);
   }, [index]);
 
-  if (entries.length === 0) {
+  if (activeEntries.length === 0) {
     return (
       <div className="word-list-view__empty fobs__practice-empty">
         <span className="empty-icon">📭</span>
@@ -571,6 +641,7 @@ function FamiliarObscureMeanings({ wordBankMap, micGranted }) {
         entries={practiceEntries}
         scopeKey={practiceScopeKey}
         sessionType="browse"
+        deferReviewRemoval={listFilter === "review"}
         shuffle={shuffle}
         onToggleShuffle={() => setShuffle((value) => !value)}
         wordBankMap={wordBankMap}
