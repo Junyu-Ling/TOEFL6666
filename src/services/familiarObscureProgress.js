@@ -30,15 +30,55 @@ function emitProgressChange() {
   }
 }
 
+function normalizeBrowseSessions(saved) {
+  if (saved?.browseSessions && typeof saved.browseSessions === "object") {
+    return saved.browseSessions;
+  }
+  if (typeof saved?.browseScopeKey === "string" && saved.browseScopeKey) {
+    return {
+      [saved.browseScopeKey]: {
+        index: Number.isFinite(saved.browseIndex) ? saved.browseIndex : 0,
+        order: Array.isArray(saved.browseOrder) ? saved.browseOrder : [],
+        shuffle: Boolean(saved.browseShuffle),
+      },
+    };
+  }
+  return {};
+}
+
+export function getBrowseSession(scopeKey) {
+  const sessions = normalizeBrowseSessions(loadRaw());
+  const session = sessions[scopeKey];
+  if (!session || typeof session !== "object") return null;
+  return {
+    index: Number.isFinite(session.index) ? session.index : 0,
+    order: Array.isArray(session.order) ? session.order : [],
+    shuffle: Boolean(session.shuffle),
+  };
+}
+
+export function patchBrowseSession(scopeKey, { index, order, shuffle }) {
+  const progress = loadFamiliarObscureProgress();
+  const browseSessions = { ...normalizeBrowseSessions(loadRaw()) };
+  browseSessions[scopeKey] = {
+    index,
+    order,
+    shuffle: Boolean(shuffle),
+  };
+  return patchFamiliarObscureProgress({
+    browseSessions,
+    browseShuffle: Boolean(shuffle),
+    panelMode: "practice",
+  });
+}
+
 export function loadFamiliarObscureProgress() {
   const saved = loadRaw();
   return {
     quizIndex: Number.isFinite(saved?.quizIndex) ? saved.quizIndex : 0,
     quizOrder: Array.isArray(saved?.quizOrder) ? saved.quizOrder : [],
     quizScopeKey: typeof saved?.quizScopeKey === "string" ? saved.quizScopeKey : "",
-    browseIndex: Number.isFinite(saved?.browseIndex) ? saved.browseIndex : 0,
-    browseOrder: Array.isArray(saved?.browseOrder) ? saved.browseOrder : [],
-    browseScopeKey: typeof saved?.browseScopeKey === "string" ? saved.browseScopeKey : "",
+    browseSessions: normalizeBrowseSessions(saved),
     browseShuffle: Boolean(saved?.browseShuffle),
     browseQuery: typeof saved?.browseQuery === "string" ? saved.browseQuery : "",
     browseListFilter: saved?.browseListFilter === "review" ? "review" : "all",

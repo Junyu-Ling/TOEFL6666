@@ -13,8 +13,10 @@ import {
   buildBrowseScopeKey,
   buildShuffledOrder,
   FOBS_PROGRESS_EVENT,
+  getBrowseSession,
   isFamiliarObscureReviewEntry,
   loadFamiliarObscureProgress,
+  patchBrowseSession,
   patchFamiliarObscureProgress,
 } from "../services/familiarObscureProgress";
 import { useIsActiveTab } from "../context/ActiveTabContext";
@@ -228,36 +230,77 @@ function FamiliarObscurePractice({
   onToggleShuffle,
   emptyMessage = "没有可练习的词条",
 }) {
-  const saved = useMemo(() => loadFamiliarObscureProgress(), []);
   const isBrowse = sessionType === "browse";
-  const savedScopeKey = isBrowse ? saved.browseScopeKey : saved.quizScopeKey;
-  const savedIndex = isBrowse ? saved.browseIndex : saved.quizIndex;
-  const savedOrder = isBrowse ? saved.browseOrder : saved.quizOrder;
+  const savedQuiz = useMemo(() => loadFamiliarObscureProgress(), []);
 
-  const [order, setOrder] = useState(() => {
-    if (savedScopeKey === scopeKey && savedOrder.length === entries.length) {
-      return savedOrder;
+  function resolveInitialBrowseSession() {
+    const session = getBrowseSession(scopeKey);
+    if (session && session.order.length === entries.length) {
+      return session;
     }
-    return shuffle ? buildShuffledOrder(entries.length) : entries.map((_, index) => index);
-  });
-  const [index, setIndex] = useState(() => {
-    if (savedScopeKey !== scopeKey) return 0;
-    return Math.max(0, Math.min(savedIndex ?? 0, Math.max(entries.length - 1, 0)));
-  });
+    return {
+      index: 0,
+      order: shuffle ? buildShuffledOrder(entries.length) : entries.map((_, index) => index),
+      shuffle,
+    };
+  }
+
+  function resolveInitialQuizSession() {
+    if (
+      savedQuiz.quizScopeKey === scopeKey &&
+      savedQuiz.quizOrder.length === entries.length
+    ) {
+      return {
+        index: Math.max(0, Math.min(savedQuiz.quizIndex ?? 0, Math.max(entries.length - 1, 0))),
+        order: savedQuiz.quizOrder,
+      };
+    }
+    return {
+      index: 0,
+      order: shuffle ? buildShuffledOrder(entries.length) : entries.map((_, index) => index),
+    };
+  }
+
+  const initialSession = isBrowse ? resolveInitialBrowseSession() : resolveInitialQuizSession();
+
+  const [order, setOrder] = useState(() => initialSession.order);
+  const [index, setIndex] = useState(() => initialSession.index);
   const [complete, setComplete] = useState(false);
   const prevQueueKeyRef = useRef(null);
 
   const queueKey = `${scopeKey}:${entries.length}:${shuffle ? 1 : 0}`;
 
+  function restoreSessionForQueueKey() {
+    if (isBrowse) {
+      const session = getBrowseSession(scopeKey);
+      if (session && session.order.length === entries.length && session.shuffle === shuffle) {
+        setOrder(session.order);
+        setIndex(Math.max(0, Math.min(session.index ?? 0, Math.max(entries.length - 1, 0))));
+        setComplete(false);
+        return;
+      }
+    } else {
+      const quiz = loadFamiliarObscureProgress();
+      if (quiz.quizScopeKey === scopeKey && quiz.quizOrder.length === entries.length) {
+        setOrder(quiz.quizOrder);
+        setIndex(Math.max(0, Math.min(quiz.quizIndex ?? 0, Math.max(entries.length - 1, 0))));
+        setComplete(false);
+        return;
+      }
+    }
+
+    setOrder(shuffle ? buildShuffledOrder(entries.length) : entries.map((_, i) => i));
+    setIndex(0);
+    setComplete(false);
+  }
+
   useEffect(() => {
     if (prevQueueKeyRef.current === queueKey) return;
     if (prevQueueKeyRef.current !== null) {
-      setOrder(shuffle ? buildShuffledOrder(entries.length) : entries.map((_, i) => i));
-      setIndex(0);
-      setComplete(false);
+      restoreSessionForQueueKey();
     }
     prevQueueKeyRef.current = queueKey;
-  }, [queueKey, entries.length, shuffle]);
+  }, [queueKey, entries.length, shuffle, scopeKey, isBrowse]);
 
   useEffect(() => {
     if (!isBrowse && scope) {
@@ -268,13 +311,7 @@ function FamiliarObscurePractice({
   useEffect(() => {
     if (complete) return;
     if (isBrowse) {
-      patchFamiliarObscureProgress({
-        browseScopeKey: scopeKey,
-        browseIndex: index,
-        browseOrder: order,
-        browseShuffle: shuffle,
-        panelMode: "practice",
-      });
+      patchBrowseSession(scopeKey, { index, order, shuffle });
       return;
     }
     patchFamiliarObscureProgress({ quizIndex: index, quizOrder: order, quizScopeKey: scopeKey });
@@ -300,12 +337,7 @@ function FamiliarObscurePractice({
     setIndex(0);
     setComplete(false);
     if (isBrowse) {
-      patchFamiliarObscureProgress({
-        browseIndex: 0,
-        browseOrder: nextOrder,
-        browseScopeKey: scopeKey,
-        browseShuffle: shuffle,
-      });
+      patchBrowseSession(scopeKey, { index: 0, order: nextOrder, shuffle });
     } else {
       patchFamiliarObscureProgress({ quizIndex: 0, quizOrder: nextOrder, quizScopeKey: scopeKey });
     }
