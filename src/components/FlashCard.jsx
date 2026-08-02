@@ -16,6 +16,7 @@ import { fetchMemoryTrick } from "../services/memoryTrick";
 import { shouldFetchMemoryTrick } from "../shared/memoryTrick";
 import MemoryTrickBlock from "./MemoryTrickBlock";
 import PronunciationAlert from "./PronunciationAlert";
+import { isMobileLayout, useMobileLayout } from "../hooks/useMobileLayout";
 
 const SILENCE_STOP_MS = 2000;
 const SWIPE_THRESHOLD_PX = 48;
@@ -26,10 +27,6 @@ const SWIPE_SNAP_MS = 320;
 
 /** 跨单词卡片 remount 保持「练习读音」开关，直到用户再次关闭 */
 let pronouncePracticePreferred = false;
-
-function isMobileLayout() {
-  return window.matchMedia("(max-width: 640px)").matches;
-}
 
 function isTouchInteractiveTarget(target) {
   return Boolean(
@@ -73,6 +70,7 @@ export default function FlashCard({
   tabId,
 }) {
   const { speakWord, settings, settingsOpen } = useSettings();
+  const mobileLayout = useMobileLayout();
   const isActive = useIsActiveTab(tabId);
   const isActiveRef = useRef(isActive);
   isActiveRef.current = isActive;
@@ -1024,6 +1022,8 @@ export default function FlashCard({
         ? "说完后停顿 2 秒自动提交"
         : "点卡片空白翻面 · 左滑上一词 · 右滑下一词";
 
+  const interactionHint = mobileLayout ? mobileHint : desktopHint;
+
   async function handlePronouncePractice() {
     if (!micGranted) {
       setError("请先允许麦克风权限");
@@ -1368,10 +1368,7 @@ export default function FlashCard({
             ) : error ? (
               <span className="flashcard__status flashcard__status--error">{error}</span>
             ) : (
-              <>
-                <span className="flashcard__status flashcard__status--desktop">{desktopHint}</span>
-                <span className="flashcard__status flashcard__status--mobile">{mobileHint}</span>
-              </>
+              <span className="flashcard__status">{interactionHint}</span>
             )}
           </div>
         </div>
@@ -1402,11 +1399,8 @@ export default function FlashCard({
                       真的不认识 <kbd className="flashcard__kbd">0</kbd>
                     </button>
                   </div>
-                  <p className="flashcard__footer flashcard__footer--back flashcard__footer--typo flashcard__footer--desktop">
-                    1 打错字了 · 0 真的不认识
-                  </p>
-                  <p className="flashcard__footer flashcard__footer--back flashcard__footer--typo flashcard__footer--mobile">
-                    同音不同字时，选一项即可继续
+                  <p className="flashcard__footer flashcard__footer--back flashcard__footer--typo">
+                    {mobileLayout ? "同音不同字时，选一项即可继续" : "1 打错字了 · 0 真的不认识"}
                   </p>
                 </div>
               ) : (
@@ -1448,7 +1442,9 @@ export default function FlashCard({
               <button type="button" className="btn btn--primary flashcard__next" onClick={onNext}>
                 下一个
               </button>
-              <p className="flashcard__footer flashcard__footer--back">Enter / ↓ 下一个 · 空格翻回正面</p>
+              <p className="flashcard__footer flashcard__footer--back">
+                {mobileLayout ? "点「下一个」继续" : "Enter / ↓ 下一个 · 空格翻回正面"}
+              </p>
                 </>
               )}
             </>
@@ -1482,11 +1478,10 @@ export default function FlashCard({
                   不认识 <kbd className="flashcard__kbd">0</kbd>
                 </button>
               </div>
-              <p className="flashcard__footer flashcard__footer--back flashcard__footer--desktop">
-                1 认识 · 0 不认识 · Enter / 空格翻回正面
-              </p>
-              <p className="flashcard__footer flashcard__footer--back flashcard__footer--mobile">
-                左滑认识 · 右滑不认识 · 点空白翻回
+              <p className="flashcard__footer flashcard__footer--back">
+                {mobileLayout
+                  ? "左滑认识 · 右滑不认识 · 点空白翻回"
+                  : "1 认识 · 0 不认识 · Enter / 空格翻回正面"}
               </p>
             </>
           )}
