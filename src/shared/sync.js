@@ -271,7 +271,7 @@ function mergeChatHistory(local, remote) {
 function mergeSettingsValue(localStr, remoteStr) {
   const local = parseJson(localStr, {});
   const remote = parseJson(remoteStr, {});
-  const merged = { ...local, ...remote };
+  const merged = { ...remote, ...local };
   delete merged.aiApiKey;
   return JSON.stringify(merged);
 }

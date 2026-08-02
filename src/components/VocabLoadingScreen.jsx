@@ -28,9 +28,9 @@ function pickRandomWord(excludeWord) {
   return next;
 }
 
-export default function VocabLoadingScreen({ dataReady = false, onWordJudged }) {
+export default function VocabLoadingScreen({ dataReady = false, onWordJudged, appMode: appModeProp }) {
   const { settings } = useSettings();
-  const appMode = settings.appMode ?? "toefl";
+  const appMode = appModeProp ?? settings.appMode ?? "toefl";
   const [current] = useState(() => pickRandomWord(null));
   const [flipped, setFlipped] = useState(false);
   const [completed, setCompleted] = useState(false);

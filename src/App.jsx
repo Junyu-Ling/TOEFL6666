@@ -67,6 +67,8 @@ export default function App() {
   const { settingsOpen, settings, setAppMode } = useSettings();
   const appMode = normalizeAppMode(settings.appMode);
   const savedRef = useRef(loadProgress(appMode));
+  const modeSwitchLockRef = useRef(false);
+  const loadingSessionRef = useRef(0);
   const mic = useMicrophone();
   const [micPromptVisible, setMicPromptVisible] = useState(true);
 
@@ -242,6 +244,14 @@ export default function App() {
     }
   }, [wordsDataReady, loadingWordJudged, wordsError]);
 
+  useEffect(() => {
+    if (wordsLoading) return undefined;
+    const timer = window.setTimeout(() => {
+      modeSwitchLockRef.current = false;
+    }, 450);
+    return () => window.clearTimeout(timer);
+  }, [wordsLoading]);
+
   const handleLoadingWordJudged = useCallback(() => {
     setLoadingWordJudged(true);
   }, []);
@@ -295,7 +305,10 @@ export default function App() {
   const handleExamModeSwitch = useCallback(
     (targetMode) => {
       const nextMode = normalizeAppMode(targetMode);
-      if (nextMode === appMode) return;
+      if (nextMode === appMode || wordsLoading || modeSwitchLockRef.current) return;
+
+      modeSwitchLockRef.current = true;
+      loadingSessionRef.current += 1;
 
       saveProgress(
         {
@@ -331,7 +344,7 @@ export default function App() {
       setUnrecognizedReviewListIds([]);
       setRecognizedReviewListIds([]);
     },
-    [activeListId, activeTab, appMode, bookPracticePaused, bookPractices, listProgress, reviewShuffle, setAppMode]
+    [activeListId, activeTab, appMode, bookPracticePaused, bookPractices, listProgress, reviewShuffle, setAppMode, wordsLoading]
   );
 
   const handleTabChange = useCallback(
@@ -1293,7 +1306,12 @@ export default function App() {
     <div className="app">
       {wordsLoading ? (
         <div className="app-loading-overlay">
-          <VocabLoadingScreen dataReady={wordsDataReady} onWordJudged={handleLoadingWordJudged} />
+          <VocabLoadingScreen
+            key={`${appMode}-${loadingSessionRef.current}`}
+            appMode={appMode}
+            dataReady={wordsDataReady}
+            onWordJudged={handleLoadingWordJudged}
+          />
         </div>
       ) : null}
       <div className="app-shell" inert={settingsOpen || wordsLoading}>
