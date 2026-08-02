@@ -7,7 +7,6 @@ import SettingsPanel from "./components/SettingsPanel";
 import VocabAssistant from "./components/VocabAssistant";
 import StreakPanel from "./components/StreakPanel";
 import VocabLoadingScreen from "./components/VocabLoadingScreen";
-import ExamModeTransition from "./components/ExamModeTransition";
 import BookReviewScopeBar from "./components/BookReviewScopeBar";
 import VocabularyBank from "./components/VocabularyBank";
 import LexGridGame from "./components/LexGridGame";
@@ -109,8 +108,6 @@ export default function App() {
   const [streakOpen, setStreakOpen] = useState(false);
   const [unrecognizedReviewListIds, setUnrecognizedReviewListIds] = useState([]);
   const [recognizedReviewListIds, setRecognizedReviewListIds] = useState([]);
-  const [modeTransition, setModeTransition] = useState(null);
-
   useEffect(() => {
     function syncStreak() {
       setStreakData(recordVisit());
@@ -298,61 +295,44 @@ export default function App() {
   const handleExamModeSwitch = useCallback(
     (targetMode) => {
       const nextMode = normalizeAppMode(targetMode);
-      if (nextMode === appMode || modeTransition) return;
-      setModeTransition({ from: appMode, to: nextMode });
+      if (nextMode === appMode) return;
+
+      saveProgress(
+        {
+          activeListId,
+          activeTab,
+          reviewShuffle,
+          listProgress,
+          bookPractices,
+          bookPracticePaused,
+        },
+        appMode
+      );
+
+      setWordsLoading(true);
+      setWordsDataReady(false);
+      setLoadingWordJudged(false);
+      setWordsError(null);
+      setAppMode(nextMode);
+      setStorageAppMode(nextMode);
+
+      const progress = loadProgress(nextMode);
+      savedRef.current = progress;
+      const practices = loadBookPractices(progress);
+
+      setRecognized(loadRecognized(nextMode));
+      setUnrecognized(loadUnrecognized(nextMode));
+      setListProgress(progress.listProgress || {});
+      setBookPractices(practices);
+      setBookPracticePaused(loadBookPracticePaused(progress, practices));
+      setActiveTab(normalizeActiveTabForMode(progress.activeTab || "practice", nextMode));
+      setActiveListId(progress.activeListId ?? null);
+      setReviewShuffle(progress.reviewShuffle ?? false);
+      setUnrecognizedReviewListIds([]);
+      setRecognizedReviewListIds([]);
     },
-    [appMode, modeTransition]
+    [activeListId, activeTab, appMode, bookPracticePaused, bookPractices, listProgress, reviewShuffle, setAppMode]
   );
-
-  const completeModeTransition = useCallback(() => {
-    if (!modeTransition) return;
-
-    saveProgress(
-      {
-        activeListId,
-        activeTab,
-        reviewShuffle,
-        listProgress,
-        bookPractices,
-        bookPracticePaused,
-      },
-      appMode
-    );
-
-    const { to } = modeTransition;
-    setWordsLoading(true);
-    setWordsDataReady(false);
-    setLoadingWordJudged(false);
-    setWordsError(null);
-    setAppMode(to);
-    setStorageAppMode(to);
-
-    const progress = loadProgress(to);
-    savedRef.current = progress;
-    const practices = loadBookPractices(progress);
-
-    setRecognized(loadRecognized(to));
-    setUnrecognized(loadUnrecognized(to));
-    setListProgress(progress.listProgress || {});
-    setBookPractices(practices);
-    setBookPracticePaused(loadBookPracticePaused(progress, practices));
-    setActiveTab(normalizeActiveTabForMode(progress.activeTab || "practice", to));
-    setActiveListId(progress.activeListId ?? null);
-    setReviewShuffle(progress.reviewShuffle ?? false);
-    setUnrecognizedReviewListIds([]);
-    setRecognizedReviewListIds([]);
-    setModeTransition(null);
-  }, [
-    activeListId,
-    activeTab,
-    appMode,
-    bookPracticePaused,
-    bookPractices,
-    listProgress,
-    modeTransition,
-    reviewShuffle,
-    setAppMode,
-  ]);
 
   const handleTabChange = useCallback(
     (tab) => {
@@ -1311,21 +1291,12 @@ export default function App() {
 
   return (
     <div className="app">
-      {modeTransition ? (
-        <div className="app-loading-overlay app-loading-overlay--transition">
-          <ExamModeTransition
-            fromMode={modeTransition.from}
-            toMode={modeTransition.to}
-            onComplete={completeModeTransition}
-          />
-        </div>
-      ) : null}
       {wordsLoading ? (
         <div className="app-loading-overlay">
           <VocabLoadingScreen dataReady={wordsDataReady} onWordJudged={handleLoadingWordJudged} />
         </div>
       ) : null}
-      <div className="app-shell" inert={settingsOpen || wordsLoading || Boolean(modeTransition)}>
+      <div className="app-shell" inert={settingsOpen || wordsLoading}>
         <Navbar
           activeTab={activeTab}
           onTabChange={handleTabChange}

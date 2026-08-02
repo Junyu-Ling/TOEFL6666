@@ -125,9 +125,6 @@ export default function VocabLoadingScreen({ dataReady = false, onWordJudged }) 
 
       <div className="vocab-loader__content">
         <p className="vocab-loader__brand">
-          <span className="vocab-loader__brand-icon" aria-hidden>
-            {appMode === "sat" ? "🌙" : "☀️"}
-          </span>
           <span className="vocab-loader__brand-text">{APP_MODE_LABELS[appMode]}</span>
         </p>
 
