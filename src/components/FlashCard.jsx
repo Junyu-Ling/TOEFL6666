@@ -158,6 +158,8 @@ export default function FlashCard({
 
   const fetchMemoryTrickBackground = useCallback(
     async (baseResult) => {
+      if (wordData?.transitionWord) return;
+
       const priorWrongCount = wordStats?.wrongCount ?? 0;
       const existingTrick =
         wordStats?.memory_trick ??
@@ -171,6 +173,7 @@ export default function FlashCard({
           isCorrect: false,
           priorWrongCount,
           existingTrick,
+          wordData,
         })
       ) {
         return;
@@ -188,6 +191,7 @@ export default function FlashCard({
         try {
           const memory_trick = await fetchMemoryTrick(wordData);
           if (fetchToken !== memoryFetchTokenRef.current) break;
+          if (!memory_trick) break;
           pendingMemoryTrickRef.current = memory_trick;
           setResult((prev) =>
             prev && prev.is_correct === false ? { ...prev, memory_trick } : prev
@@ -1434,20 +1438,20 @@ export default function FlashCard({
                 )}
               </div>
 
-              {!result.is_correct && memoryLoading && !result.memory_trick && (
+              {!isTransitionWord && !result.is_correct && memoryLoading && !result.memory_trick && (
                 <p className="flashcard__memory-status">
                   <span className="spinner spinner--inline" />
                   记忆法生成中…
                 </p>
               )}
 
-              {!result.is_correct && memoryTrickError && !result.memory_trick && !memoryLoading && (
+              {!isTransitionWord && !result.is_correct && memoryTrickError && !result.memory_trick && !memoryLoading && (
                 <p className="flashcard__memory-status flashcard__memory-status--error" role="alert">
                   {memoryTrickError}
                 </p>
               )}
 
-              {!result.is_correct && result.memory_trick && (
+              {!isTransitionWord && !result.is_correct && result.memory_trick && (
                 <MemoryTrickBlock trick={result.memory_trick} />
               )}
 
@@ -1476,7 +1480,7 @@ export default function FlashCard({
 
               <FamiliarObscureBackExtras familiarObscure={wordData.familiarObscure} />
 
-              {memoryLoading && !wordStats?.memory_trick && (
+              {!isTransitionWord && memoryLoading && !wordStats?.memory_trick && (
                 <p className="flashcard__memory-status">
                   <span className="spinner spinner--inline" />
                   记忆法准备中…

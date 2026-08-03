@@ -1392,10 +1392,12 @@ export default function App() {
         </ActiveTabProvider>
       </main>
 
-      <VocabAssistant
-        currentWord={assistantWord}
-        micGranted={mic.isGranted}
-      />
+      {activeTab !== "transition-words" ? (
+        <VocabAssistant
+          currentWord={assistantWord}
+          micGranted={mic.isGranted}
+        />
+      ) : null}
 
       {activeTab !== "reading-fill" ? <MottoFooter /> : null}
       </div>

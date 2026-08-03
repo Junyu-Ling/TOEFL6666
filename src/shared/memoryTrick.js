@@ -10,7 +10,8 @@ export function memoryTrickTagClass(type) {
 }
 
 /** 非一遍过：任意一次答错，或历史上曾答错过（wrongCount >= 1） */
-export function shouldFetchMemoryTrick({ isCorrect, priorWrongCount, existingTrick }) {
+export function shouldFetchMemoryTrick({ isCorrect, priorWrongCount, existingTrick, wordData }) {
+  if (wordData?.transitionWord) return false;
   if (existingTrick) return false;
   if (isCorrect === true) return false;
   if (isCorrect === false) return true;

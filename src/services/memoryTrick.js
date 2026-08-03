@@ -1,6 +1,8 @@
 import { enqueueMemoryTrickRequest, memoryTrickKey } from "./memoryTrickQueue";
 
 export async function fetchMemoryTrick(wordData) {
+  if (wordData?.transitionWord) return null;
+
   const key = memoryTrickKey(wordData);
 
   return enqueueMemoryTrickRequest(key, async () => {
