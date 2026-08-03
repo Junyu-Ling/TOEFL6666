@@ -1,5 +1,6 @@
 import { memo, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import {
+  buildTransitionWordChoices,
   buildTransitionWordData,
   buildShuffledTransitionOrder,
   getTransitionWordEntries,
@@ -13,7 +14,7 @@ import {
   resolveTransitionSession,
   TW_PROGRESS_EVENT,
 } from "../services/transitionWordsProgress";
-import PracticeSession from "./PracticeSession";
+import TransitionWordCard from "./TransitionWordCard";
 
 function TransitionWordsPractice({
   entries,
@@ -21,8 +22,6 @@ function TransitionWordsPractice({
   onToggleShuffle,
   listFilter,
   progress,
-  wordBankMap,
-  micGranted,
   onProgressChange,
 }) {
   const [localEntries] = useState(() => entries);
@@ -65,7 +64,12 @@ function TransitionWordsPractice({
 
   const entry = localEntries[order[index]] ?? null;
   const currentWord = entry ? buildTransitionWordData(entry) : null;
+  const choices = useMemo(
+    () => (entry ? buildTransitionWordChoices(entry) : []),
+    [entry]
+  );
   const total = localEntries.length;
+  const progressPct = total ? Math.round(((index + 1) / total) * 100) : 0;
 
   const handleResult = useCallback(
     (_wordData, aiResult) => {
@@ -142,37 +146,50 @@ function TransitionWordsPractice({
   }
 
   return (
-    <PracticeSession
-      tabId="transition-words"
-      title={getTransitionWordsTitle()}
-      stats={stats}
-      toolbarExtra={
-        <button
-          type="button"
-          className={`btn btn--ghost btn--sm${shuffle ? " btn--toggle-on" : ""}`}
-          onClick={onToggleShuffle}
-          aria-pressed={shuffle}
-        >
-          {shuffle ? "乱序" : "顺序"}
-        </button>
-      }
-      queueLength={total}
-      currentIndex={index}
-      currentWord={currentWord}
-      wordStats={null}
-      wordBankMap={wordBankMap}
-      micGranted={micGranted}
-      onResult={handleResult}
-      onMemoryTrickGenerated={() => {}}
-      onNext={handleNext}
-      onPrev={handlePrev}
-      sessionKey={`tw-${entry?.id ?? "empty"}-${index}`}
-      emptyMessage="本轮练习完成"
-    />
+    <section className="practice-view">
+      <div className="practice-toolbar">
+        <div className="practice-toolbar__left">
+          <span className="practice-toolbar__title">{getTransitionWordsTitle()}</span>
+          <button
+            type="button"
+            className={`btn btn--ghost btn--sm${shuffle ? " btn--toggle-on" : ""}`}
+            onClick={onToggleShuffle}
+            aria-pressed={shuffle}
+          >
+            {shuffle ? "乱序" : "顺序"}
+          </button>
+        </div>
+        {stats}
+      </div>
+
+      <div className="progress-track" aria-label="学习进度">
+        <div className="progress-track__fill" style={{ width: `${progressPct}%` }} />
+      </div>
+      <p className="progress-label">
+        {total ? `${index + 1} / ${total}` : "0 / 0"}
+      </p>
+
+      {currentWord && choices.length ? (
+        <TransitionWordCard
+          key={`tw-${entry.id}-${index}`}
+          tabId="transition-words"
+          wordData={currentWord}
+          choices={choices}
+          onResult={handleResult}
+          onNext={handleNext}
+          onPrev={handlePrev}
+        />
+      ) : (
+        <div className="word-list-view__empty">
+          <span className="empty-icon">🎉</span>
+          <p>本轮练习完成</p>
+        </div>
+      )}
+    </section>
   );
 }
 
-function TransitionWords({ wordBankMap, micGranted }) {
+function TransitionWords() {
   const entries = useMemo(() => getTransitionWordEntries(), []);
   const saved = useMemo(() => loadTransitionWordsProgress(), []);
   const [shuffle, setShuffle] = useState(saved.shuffle !== false);
@@ -209,7 +226,7 @@ function TransitionWords({ wordBankMap, micGranted }) {
           <div className="tw__control-heading">
             <h2 className="tw__title">{getTransitionWordsTitle()}</h2>
             <p className="tw__subtitle">
-              共 {entries.length} 个 · 说出过渡词的逻辑关系（如对比/转折、因果关系）
+              共 {entries.length} 个 · 四选一判断过渡词的逻辑关系
             </p>
           </div>
           <div className="tw__control-actions">
@@ -244,8 +261,6 @@ function TransitionWords({ wordBankMap, micGranted }) {
         onToggleShuffle={() => setShuffle((prev) => !prev)}
         listFilter={listFilter}
         progress={progress}
-        wordBankMap={wordBankMap}
-        micGranted={micGranted}
         onProgressChange={refreshProgress}
       />
     </div>
