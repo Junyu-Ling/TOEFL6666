@@ -1,6 +1,5 @@
 import { memo, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import {
-  buildTransitionWordChoices,
   buildTransitionWordData,
   buildShuffledTransitionOrder,
   getTransitionWordEntries,
@@ -64,10 +63,6 @@ function TransitionWordsPractice({
 
   const entry = localEntries[order[index]] ?? null;
   const currentWord = entry ? buildTransitionWordData(entry) : null;
-  const choices = useMemo(
-    () => (entry ? buildTransitionWordChoices(entry) : []),
-    [entry]
-  );
   const total = localEntries.length;
   const progressPct = total ? Math.round(((index + 1) / total) * 100) : 0;
 
@@ -169,12 +164,11 @@ function TransitionWordsPractice({
         {total ? `${index + 1} / ${total}` : "0 / 0"}
       </p>
 
-      {currentWord && choices.length ? (
+      {currentWord ? (
         <TransitionWordCard
           key={`tw-${entry.id}-${index}`}
           tabId="transition-words"
           wordData={currentWord}
-          choices={choices}
           onResult={handleResult}
           onNext={handleNext}
           onPrev={handlePrev}
@@ -226,7 +220,7 @@ function TransitionWords() {
           <div className="tw__control-heading">
             <h2 className="tw__title">{getTransitionWordsTitle()}</h2>
             <p className="tw__subtitle">
-              共 {entries.length} 个 · 四选一判断过渡词的逻辑关系
+              共 {entries.length} 个 · 从下方全部逻辑关系中选择正确答案
             </p>
           </div>
           <div className="tw__control-actions">
