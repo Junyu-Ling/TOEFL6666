@@ -17,7 +17,7 @@ export function getAlternateAppMode(mode) {
 }
 
 const TOEFL_ONLY_TABS = new Set(["reading-vocab", "reading-fill"]);
-const SAT_ONLY_TABS = new Set(["familiar-obscure"]);
+const SAT_ONLY_TABS = new Set(["transition-words", "familiar-obscure"]);
 
 export function isTabAvailableInMode(tabId, appMode = "toefl") {
   const mode = normalizeAppMode(appMode);

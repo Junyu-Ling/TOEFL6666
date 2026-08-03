@@ -1,0 +1,161 @@
+{
+  "title": "SAT 过渡词",
+  "categories": [
+    {
+      "id": "addition",
+      "label": "添加信息",
+      "subtitle": "补充或递进关系",
+      "aliases": ["补充", "递进", "添加", "补充或递进", "添加信息", "递进关系"]
+    },
+    {
+      "id": "contrast",
+      "label": "对比/转折",
+      "subtitle": "对立或相反的观点",
+      "aliases": ["对比", "转折", "对立", "相反", "对比转折", "转折对比"]
+    },
+    {
+      "id": "cause-effect",
+      "label": "因果关系",
+      "subtitle": "表示原因和结果",
+      "aliases": ["因果", "原因", "结果", "原因和结果", "因果关系"]
+    },
+    {
+      "id": "example",
+      "label": "举例说明",
+      "subtitle": "提供例子或具体说明",
+      "aliases": ["举例", "例子", "具体说明", "举例说明", "例证"]
+    },
+    {
+      "id": "conclusion",
+      "label": "总结/结论",
+      "subtitle": "总结或得出结论",
+      "aliases": ["总结", "结论", "归纳", "总结结论", "总结/结论"]
+    },
+    {
+      "id": "sequence",
+      "label": "顺序/时间",
+      "subtitle": "表示时间或逻辑顺序",
+      "aliases": ["顺序", "时间", "先后", "逻辑顺序", "时间顺序", "顺序时间"]
+    },
+    {
+      "id": "emphasis",
+      "label": "强调",
+      "subtitle": "加强语气或突出观点",
+      "aliases": ["强调", "突出", "加强语气", "突出观点"]
+    },
+    {
+      "id": "comparison",
+      "label": "比较",
+      "subtitle": "表示相似性或比较",
+      "aliases": ["比较", "相似", "相似性", "类比"]
+    },
+    {
+      "id": "clarification",
+      "label": "解释/澄清",
+      "subtitle": "进一步解释或说明",
+      "aliases": ["解释", "澄清", "说明", "解释澄清", "进一步解释"]
+    },
+    {
+      "id": "alternative",
+      "label": "替代/选择",
+      "subtitle": "表示替代方案或选择",
+      "aliases": ["替代", "选择", "替代方案", "替代选择", "或者"]
+    },
+    {
+      "id": "concession",
+      "label": "让步",
+      "subtitle": "承认对立观点或保留意见",
+      "aliases": ["让步", "诚然", "尽管", "保留意见"]
+    }
+  ],
+  "entries": [
+    { "id": 1, "word": "Additionally", "categoryId": "addition" },
+    { "id": 2, "word": "Furthermore", "categoryId": "addition" },
+    { "id": 3, "word": "Moreover", "categoryId": "addition" },
+    { "id": 4, "word": "Also", "categoryId": "addition" },
+    { "id": 5, "word": "In addition", "categoryId": "addition" },
+    { "id": 6, "word": "Besides", "categoryId": "addition" },
+
+    { "id": 7, "word": "However", "categoryId": "contrast" },
+    { "id": 8, "word": "Nevertheless", "categoryId": "contrast" },
+    { "id": 9, "word": "Nonetheless", "categoryId": "contrast" },
+    { "id": 10, "word": "On the other hand", "categoryId": "contrast" },
+    { "id": 11, "word": "In contrast", "categoryId": "contrast" },
+    { "id": 12, "word": "Conversely", "categoryId": "contrast" },
+    { "id": 13, "word": "That being said", "categoryId": "contrast" },
+    { "id": 14, "word": "Still", "categoryId": "contrast" },
+    { "id": 15, "word": "Yet", "categoryId": "contrast" },
+    { "id": 16, "word": "Even so", "categoryId": "contrast" },
+
+    { "id": 17, "word": "Therefore", "categoryId": "cause-effect" },
+    { "id": 18, "word": "Thus", "categoryId": "cause-effect" },
+    { "id": 19, "word": "Consequently", "categoryId": "cause-effect" },
+    { "id": 20, "word": "As a result", "categoryId": "cause-effect" },
+    { "id": 21, "word": "Hence", "categoryId": "cause-effect" },
+    { "id": 22, "word": "Accordingly", "categoryId": "cause-effect" },
+    { "id": 23, "word": "In that case", "categoryId": "cause-effect" },
+    { "id": 24, "word": "Thereby", "categoryId": "cause-effect" },
+    { "id": 25, "word": "Thereupon", "categoryId": "cause-effect" },
+    { "id": 26, "word": "Fittingly", "categoryId": "cause-effect" },
+    { "id": 27, "word": "For this reason", "categoryId": "cause-effect" },
+    { "id": 28, "word": "Then", "categoryId": "cause-effect" },
+    { "id": 29, "word": "In turn", "categoryId": "cause-effect" },
+    { "id": 30, "word": "To that end", "categoryId": "cause-effect" },
+    { "id": 31, "word": "Invariably", "categoryId": "cause-effect" },
+    { "id": 32, "word": "Predictably", "categoryId": "cause-effect" },
+    { "id": 33, "word": "As such", "categoryId": "cause-effect" },
+
+    { "id": 34, "word": "For example", "categoryId": "example" },
+    { "id": 35, "word": "For instance", "categoryId": "example" },
+    { "id": 36, "word": "Such as", "categoryId": "example" },
+    { "id": 37, "word": "Specifically", "categoryId": "example" },
+    { "id": 38, "word": "To illustrate", "categoryId": "example" },
+    { "id": 39, "word": "In particular", "categoryId": "example" },
+
+    { "id": 40, "word": "In conclusion", "categoryId": "conclusion" },
+    { "id": 41, "word": "To summarize", "categoryId": "conclusion" },
+    { "id": 42, "word": "Ultimately", "categoryId": "conclusion" },
+    { "id": 43, "word": "Finally", "categoryId": "conclusion" },
+    { "id": 44, "word": "In summary", "categoryId": "conclusion" },
+    { "id": 45, "word": "Overall", "categoryId": "conclusion" },
+    { "id": 46, "word": "All in all", "categoryId": "conclusion" },
+
+    { "id": 47, "word": "First", "categoryId": "sequence" },
+    { "id": 48, "word": "Second", "categoryId": "sequence" },
+    { "id": 49, "word": "Third", "categoryId": "sequence" },
+    { "id": 50, "word": "Next", "categoryId": "sequence" },
+    { "id": 51, "word": "Afterward", "categoryId": "sequence" },
+    { "id": 52, "word": "Meanwhile", "categoryId": "sequence" },
+    { "id": 53, "word": "Subsequently", "categoryId": "sequence" },
+    { "id": 54, "word": "Previously", "categoryId": "sequence" },
+
+    { "id": 55, "word": "Indeed", "categoryId": "emphasis" },
+    { "id": 56, "word": "In fact", "categoryId": "emphasis" },
+    { "id": 57, "word": "Certainly", "categoryId": "emphasis" },
+    { "id": 58, "word": "Undoubtedly", "categoryId": "emphasis" },
+    { "id": 59, "word": "Above all", "categoryId": "emphasis" },
+    { "id": 60, "word": "Especially", "categoryId": "emphasis" },
+
+    { "id": 61, "word": "Similarly", "categoryId": "comparison" },
+    { "id": 62, "word": "Likewise", "categoryId": "comparison" },
+    { "id": 63, "word": "In the same way", "categoryId": "comparison" },
+    { "id": 64, "word": "By the same token", "categoryId": "comparison" },
+    { "id": 65, "word": "In the same manner", "categoryId": "comparison" },
+
+    { "id": 66, "word": "That is", "categoryId": "clarification" },
+    { "id": 67, "word": "In other words", "categoryId": "clarification" },
+    { "id": 68, "word": "To put it differently", "categoryId": "clarification" },
+    { "id": 69, "word": "Namely", "categoryId": "clarification" },
+
+    { "id": 70, "word": "Otherwise", "categoryId": "alternative" },
+    { "id": 71, "word": "Alternatively", "categoryId": "alternative" },
+    { "id": 72, "word": "Or", "categoryId": "alternative" },
+    { "id": 73, "word": "Rather", "categoryId": "alternative" },
+    { "id": 74, "word": "Instead", "categoryId": "alternative" },
+
+    { "id": 75, "word": "Of course", "categoryId": "concession" },
+    { "id": 76, "word": "Actually", "categoryId": "concession" },
+    { "id": 77, "word": "In any case", "categoryId": "concession" },
+    { "id": 78, "word": "Regardless", "categoryId": "concession" }
+  ]
+}

@@ -5615,6 +5615,81 @@ body {
   }
 }
 
+/* ── Transition Words · SAT 过渡词 ── */
+.tw {
+  max-width: none;
+  padding: 0.5rem 0.75rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+}
+
+.tw__control-bar {
+  width: 100%;
+  max-width: var(--fc-width);
+  margin: 0 auto;
+  padding: 0.875rem 1rem;
+  border-radius: 1rem;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.tw__control-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.tw__control-heading {
+  min-width: 0;
+}
+
+.tw__title {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.tw__subtitle {
+  margin: 0.25rem 0 0;
+  font-size: 0.875rem;
+  color: var(--text-light);
+  line-height: 1.45;
+}
+
+.tw__filter-tabs {
+  display: inline-flex;
+  gap: 0.375rem;
+  padding: 0.25rem;
+  border-radius: 999px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+}
+
+.tw__filter-tab {
+  border: none;
+  background: transparent;
+  color: var(--text-light);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.tw__filter-tab--active {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.tw__empty {
+  margin-top: 1rem;
+}
+
 /* ── Familiar Obscure Meanings · 熟词僻义 ── */
 .fobs--practice {
   max-width: none;

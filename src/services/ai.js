@@ -7,6 +7,7 @@ import {
   analyzeDefinitionCoverage,
   TARGET_WORD_ITSELF_MESSAGE,
 } from "./localMatch";
+import { evaluateTransitionWordAnswer } from "../utils/transitionWords";
 import { loadRecognized } from "./storage";
 import { buildRecognizedConfusionContext } from "../shared/confusionContext";
 import {
@@ -24,6 +25,9 @@ export async function evaluateAnswer(wordData, userAnswer, options = {}) {
   if (signal?.aborted) {
     throw new DOMException("Aborted", "AbortError");
   }
+
+  const transitionResult = evaluateTransitionWordAnswer(wordData, trimmed);
+  if (transitionResult) return transitionResult;
 
   if (isUsingTargetWordItself(trimmed, wordData.word)) {
     return buildLocalWrongResult(TARGET_WORD_ITSELF_MESSAGE);

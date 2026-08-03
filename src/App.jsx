@@ -13,6 +13,7 @@ import LexGridGame from "./components/LexGridGame";
 import ReadingVocabMatch from "./components/ReadingVocabMatch";
 import ReadingFillBlank from "./components/ReadingFillBlank";
 import FamiliarObscureMeanings from "./components/FamiliarObscureMeanings";
+import TransitionWords from "./components/TransitionWords";
 import TabPanel from "./components/TabPanel";
 import MottoFooter from "./components/MottoFooter";
 import { recordVisit, refreshStreak } from "./services/streak";
@@ -1081,6 +1082,11 @@ export default function App() {
     [wordBankMap, mic.isGranted]
   );
 
+  const transitionWordsPanel = useMemo(
+    () => <TransitionWords wordBankMap={wordBankMap} micGranted={mic.isGranted} />,
+    [wordBankMap, mic.isGranted]
+  );
+
   const unrecognizedPanel = useMemo(
     () =>
       unrecognizedPracticeActive ? (
@@ -1365,6 +1371,12 @@ export default function App() {
           <TabPanel tabId="recognized" activeTab={activeTab}>
             {recognizedPanel}
           </TabPanel>
+
+          {appMode === "sat" ? (
+            <TabPanel tabId="transition-words" activeTab={activeTab}>
+              {transitionWordsPanel}
+            </TabPanel>
+          ) : null}
 
           {appMode === "sat" ? (
             <TabPanel tabId="familiar-obscure" activeTab={activeTab}>
