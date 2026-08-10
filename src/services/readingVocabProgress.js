@@ -44,9 +44,35 @@ export function patchSavedSetProgress(setId, patch) {
   return saved;
 }
 
-export function patchReadingVocabSetIndex(setIndex) {
-  const saved = loadRaw() ?? { setIndex: 0, sets: {} };
-  saved.setIndex = setIndex;
+export function getSavedCollectionSetIndex(collectionIndex) {
+  const saved = loadRaw();
+  const key = String(collectionIndex);
+  const fromMap = saved?.collectionSetIndexes?.[key];
+  if (typeof fromMap === "number" && Number.isFinite(fromMap)) {
+    return fromMap;
+  }
+  if (collectionIndex === 0 && typeof saved?.setIndex === "number") {
+    return saved.setIndex;
+  }
+  return 0;
+}
+
+export function patchReadingVocabSetIndex(setIndex, collectionIndex = 0) {
+  const saved = loadRaw() ?? { setIndex: 0, collectionIndex: 0, collectionSetIndexes: {}, sets: {} };
+  const key = String(collectionIndex);
+  saved.collectionSetIndexes = saved.collectionSetIndexes ?? {};
+  saved.collectionSetIndexes[key] = setIndex;
+  saved.collectionIndex = collectionIndex;
+  if (collectionIndex === 0) {
+    saved.setIndex = setIndex;
+  }
+  saveReadingVocabProgress(saved);
+  return saved;
+}
+
+export function patchReadingVocabCollectionIndex(collectionIndex) {
+  const saved = loadRaw() ?? { setIndex: 0, collectionIndex: 0, collectionSetIndexes: {}, sets: {} };
+  saved.collectionIndex = collectionIndex;
   saveReadingVocabProgress(saved);
   return saved;
 }

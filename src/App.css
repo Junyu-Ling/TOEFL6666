@@ -5367,6 +5367,40 @@ body {
   gap: 1.25rem;
 }
 
+.rvocab__collections {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.rvocab__collection-tab {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-muted);
+  border-radius: 999px;
+  padding: 0.4rem 0.85rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+
+.rvocab__collection-tab:hover:not(:disabled) {
+  color: var(--text);
+  border-color: var(--accent);
+}
+
+.rvocab__collection-tab--active {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 10%, var(--surface));
+}
+
+.rvocab__collection-tab:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
 .rvocab__header {
   display: flex;
   align-items: flex-start;

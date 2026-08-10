@@ -2,8 +2,10 @@ import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { useSettings } from "../context/SettingsContext";
 import { resolveReadingVocabDefinitions } from "../services/readingVocabDefinitions";
 import {
+  getSavedCollectionSetIndex,
   getSavedSetProgress,
   loadReadingVocabProgress,
+  patchReadingVocabCollectionIndex,
   patchReadingVocabSetIndex,
   patchSavedSetProgress,
 } from "../services/readingVocabProgress";
@@ -13,8 +15,10 @@ import {
   buildSetRound,
   buildTestRound,
   findPairById,
+  getReadingVocabCollections,
   getReadingVocabSets,
   getReadingVocabTitle,
+  getSetDisplayLabel,
   restoreSetRound,
 } from "../utils/readingVocabMatch";
 
@@ -49,14 +53,23 @@ function RevealPanel({ pair, definitions, loading, onContinue }) {
   );
 }
 
-function createInitialState(sets) {
+function createInitialState(collections) {
   const saved = loadReadingVocabProgress();
-  const setIndex = Math.max(0, Math.min(saved?.setIndex ?? 0, sets.length - 1));
+  const collectionIndex = Math.max(
+    0,
+    Math.min(saved?.collectionIndex ?? 0, collections.length - 1)
+  );
+  const sets = collections[collectionIndex]?.sets ?? [];
+  const setIndex = Math.max(
+    0,
+    Math.min(getSavedCollectionSetIndex(collectionIndex), sets.length - 1)
+  );
   const set = sets[setIndex];
-  const savedSet = getSavedSetProgress(set.id);
-  const round = restoreSetRound(set, savedSet);
+  const savedSet = set ? getSavedSetProgress(set.id) : null;
+  const round = set ? restoreSetRound(set, savedSet) : { pairs: [], leftItems: [], rightItems: [] };
 
   return {
+    collectionIndex,
     setIndex,
     round,
     completedIds: new Set(savedSet?.completedIds ?? []),
@@ -75,10 +88,11 @@ function persistSetState(setId, round, completedIds, setComplete) {
 
 function ReadingVocabMatch({ words }) {
   const { settings, speakWord } = useSettings();
-  const sets = useMemo(() => getReadingVocabSets(), []);
+  const collections = useMemo(() => getReadingVocabCollections(), []);
   const wordBankMap = useMemo(() => buildWordBankMap(words), [words]);
-  const [initialState] = useState(() => createInitialState(sets));
+  const [initialState] = useState(() => createInitialState(collections));
 
+  const [collectionIndex, setCollectionIndex] = useState(initialState.collectionIndex);
   const [viewMode, setViewMode] = useState("sets");
   const [setIndex, setSetIndex] = useState(initialState.setIndex);
   const [round, setRound] = useState(initialState.round);
@@ -91,17 +105,19 @@ function ReadingVocabMatch({ words }) {
   const [shake, setShake] = useState(false);
   const [setComplete, setSetComplete] = useState(initialState.setComplete);
 
+  const sets = useMemo(() => getReadingVocabSets(collectionIndex), [collectionIndex]);
   const currentSet = sets[setIndex];
   const isTestMode = viewMode === "test";
   const revealPair = revealPairId ? findPairById(round, revealPairId) : null;
   const totalPairs = round.pairs.length;
   const doneCount = completedIds.size;
+  const currentSetLabel = currentSet ? getSetDisplayLabel(currentSet, setIndex) : "";
 
   useEffect(() => {
     if (isTestMode || !currentSet) return;
     persistSetState(currentSet.id, round, completedIds, setComplete);
-    patchReadingVocabSetIndex(setIndex);
-  }, [isTestMode, completedIds, currentSet, round, setComplete, setIndex]);
+    patchReadingVocabSetIndex(setIndex, collectionIndex);
+  }, [collectionIndex, isTestMode, completedIds, currentSet, round, setComplete, setIndex]);
 
   const notifyAnswerResult = useCallback(
     (isCorrect) => {
@@ -126,8 +142,9 @@ function ReadingVocabMatch({ words }) {
     setSetComplete(false);
   }, []);
 
-  const applySetState = useCallback((index, set, savedSet) => {
+  const applySetState = useCallback((nextCollectionIndex, index, set, savedSet) => {
     setViewMode("sets");
+    setCollectionIndex(nextCollectionIndex);
     setSetIndex(index);
     setRound(restoreSetRound(set, savedSet));
     setSelectedLeft(null);
@@ -138,17 +155,29 @@ function ReadingVocabMatch({ words }) {
     setRevealLoading(false);
     setShake(false);
     setSetComplete(savedSet?.setComplete === true);
-    patchReadingVocabSetIndex(index);
+    patchReadingVocabSetIndex(index, nextCollectionIndex);
   }, []);
 
   const loadSet = useCallback(
-    (index) => {
-      const safeIndex = Math.max(0, Math.min(index, sets.length - 1));
-      const set = sets[safeIndex];
+    (index, nextCollectionIndex = collectionIndex) => {
+      const nextSets = getReadingVocabSets(nextCollectionIndex);
+      const safeIndex = Math.max(0, Math.min(index, nextSets.length - 1));
+      const set = nextSets[safeIndex];
+      if (!set) return;
       const savedSet = getSavedSetProgress(set.id);
-      applySetState(safeIndex, set, savedSet);
+      applySetState(nextCollectionIndex, safeIndex, set, savedSet);
     },
-    [applySetState, sets]
+    [applySetState, collectionIndex]
+  );
+
+  const switchCollection = useCallback(
+    (nextCollectionIndex) => {
+      if (nextCollectionIndex === collectionIndex || Boolean(revealPairId)) return;
+      patchReadingVocabCollectionIndex(nextCollectionIndex);
+      const savedSetIndex = getSavedCollectionSetIndex(nextCollectionIndex);
+      loadSet(savedSetIndex, nextCollectionIndex);
+    },
+    [collectionIndex, loadSet, revealPairId]
   );
 
   const restartSet = useCallback(() => {
@@ -158,16 +187,16 @@ function ReadingVocabMatch({ words }) {
 
   const startTest = useCallback(() => {
     setViewMode("test");
-    resetBoardState(buildTestRound());
-  }, [resetBoardState]);
+    resetBoardState(buildTestRound(undefined, collectionIndex));
+  }, [collectionIndex, resetBoardState]);
 
   const restartTest = useCallback(() => {
-    resetBoardState(buildTestRound());
-  }, [resetBoardState]);
+    resetBoardState(buildTestRound(undefined, collectionIndex));
+  }, [collectionIndex, resetBoardState]);
 
   const exitTest = useCallback(() => {
-    loadSet(setIndex);
-  }, [loadSet, setIndex]);
+    loadSet(setIndex, collectionIndex);
+  }, [collectionIndex, loadSet, setIndex]);
 
   const getDefinitionsForWord = useCallback(
     async (word) => resolveReadingVocabDefinitions(word, wordBankMap),
@@ -255,19 +284,37 @@ function ReadingVocabMatch({ words }) {
     }
   }, [doneCount, revealPairId, totalPairs]);
 
-  if (!sets.length) {
+  if (!collections.length || !sets.length) {
     return <div className="rvocab__empty">暂无阅读词汇题数据</div>;
   }
 
   return (
     <div className="rvocab">
+      {collections.length > 1 ? (
+        <div className="rvocab__collections" role="tablist" aria-label="阅读词汇合集">
+          {collections.map((collection, index) => (
+            <button
+              key={collection.id}
+              type="button"
+              role="tab"
+              aria-selected={index === collectionIndex}
+              className={`rvocab__collection-tab${index === collectionIndex ? " rvocab__collection-tab--active" : ""}`}
+              disabled={Boolean(revealPairId)}
+              onClick={() => switchCollection(index)}
+            >
+              {collection.title}
+            </button>
+          ))}
+        </div>
+      ) : null}
+
       <header className="rvocab__header">
         <div>
-          <h2 className="rvocab__title">{getReadingVocabTitle()}</h2>
+          <h2 className="rvocab__title">{getReadingVocabTitle(collectionIndex)}</h2>
           <p className="rvocab__subtitle">
             {isTestMode
               ? `综合测试 · 随机抽取 ${totalPairs} 题 · 进度 ${doneCount}/${totalPairs}`
-              : `第 ${currentSet.id} 组 · 共 ${sets.length} 组 · 进度 ${doneCount}/${totalPairs}`}
+              : `${currentSetLabel} · 共 ${sets.length} 组 · 进度 ${doneCount}/${totalPairs}`}
           </p>
         </div>
         <div className="rvocab__set-nav">
@@ -313,7 +360,7 @@ function ReadingVocabMatch({ words }) {
 
       <p className="rvocab__instructions">
         {isTestMode
-          ? "综合测试从全部分组中随机抽题，可反复重新抽取练习。"
+          ? "综合测试从当前合集全部分组中随机抽题，可反复重新抽取练习。"
           : "点击左侧单词与右侧近义词配对；每成功匹配一对，会显示该单词的中文意思。"}
       </p>
 
@@ -386,7 +433,7 @@ function ReadingVocabMatch({ words }) {
 
       {setComplete && (
         <div className="rvocab__complete">
-          <p>{isTestMode ? "综合测试完成！" : `第 ${currentSet.id} 组全部完成！`}</p>
+          <p>{isTestMode ? "综合测试完成！" : `${currentSetLabel}全部完成！`}</p>
           <div className="rvocab__complete-actions">
             <button
               type="button"
@@ -410,7 +457,7 @@ function ReadingVocabMatch({ words }) {
             )}
           </div>
           {!isTestMode && setIndex >= sets.length - 1 && (
-            <p className="rvocab__complete-all">全部 {sets.length} 组已完成 🎉</p>
+            <p className="rvocab__complete-all">当前合集 {sets.length} 组已全部完成 🎉</p>
           )}
         </div>
       )}

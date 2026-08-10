@@ -1,11 +1,37 @@
 import readingVocabData from "../data/readingVocabMatch.json";
 
-export function getReadingVocabSets() {
-  return readingVocabData.sets;
+function normalizeCollections(data) {
+  if (Array.isArray(data.collections) && data.collections.length > 0) {
+    return data.collections;
+  }
+  if (Array.isArray(data.sets)) {
+    return [{ id: "default", title: data.title || "新托福阅读词汇题", sets: data.sets }];
+  }
+  return [];
 }
 
-export function getReadingVocabTitle() {
-  return readingVocabData.title;
+const collections = normalizeCollections(readingVocabData);
+
+export function getReadingVocabCollections() {
+  return collections;
+}
+
+export function getReadingVocabCollection(collectionIndex = 0) {
+  const safeIndex = Math.max(0, Math.min(collectionIndex, collections.length - 1));
+  return collections[safeIndex] ?? null;
+}
+
+export function getReadingVocabSets(collectionIndex = 0) {
+  return getReadingVocabCollection(collectionIndex)?.sets ?? [];
+}
+
+export function getReadingVocabTitle(collectionIndex = 0) {
+  return getReadingVocabCollection(collectionIndex)?.title ?? "阅读词汇题";
+}
+
+export function getSetDisplayLabel(set, setIndexInCollection) {
+  if (set?.label) return set.label;
+  return `第 ${setIndexInCollection + 1} 组`;
 }
 
 export function normalizeMatchText(text) {
@@ -28,8 +54,8 @@ export function shuffleArray(items) {
   return copy;
 }
 
-export function getAllReadingVocabPairs() {
-  return readingVocabData.sets.flatMap((set) =>
+export function getAllReadingVocabPairs(collectionIndex = 0) {
+  return getReadingVocabSets(collectionIndex).flatMap((set) =>
     set.pairs.map((pair, index) => ({
       ...pair,
       id: pairKey(set.id, index),
@@ -91,8 +117,8 @@ export function restoreSetRound(set, savedSetProgress) {
   return buildSetRound(set);
 }
 
-export function buildFullRound() {
-  const pairs = getAllReadingVocabPairs();
+export function buildFullRound(collectionIndex = 0) {
+  const pairs = getAllReadingVocabPairs(collectionIndex);
   return {
     pairs,
     leftItems: shuffleArray(pairs.map((p) => ({ id: p.id, text: p.word, side: "left" }))),
@@ -102,9 +128,9 @@ export function buildFullRound() {
 
 export const READING_VOCAB_TEST_SIZE = 16;
 
-/** 综合测试：从全部题目中随机抽取一批，每次开始/重来都会重新抽取与打乱。 */
-export function buildTestRound(sampleSize = READING_VOCAB_TEST_SIZE) {
-  const allPairs = shuffleArray(getAllReadingVocabPairs());
+/** 综合测试：从当前合集全部题目中随机抽取一批，每次开始/重来都会重新抽取与打乱。 */
+export function buildTestRound(sampleSize = READING_VOCAB_TEST_SIZE, collectionIndex = 0) {
+  const allPairs = shuffleArray(getAllReadingVocabPairs(collectionIndex));
   const pairs = allPairs.slice(0, Math.min(sampleSize, allPairs.length));
   return {
     pairs,
