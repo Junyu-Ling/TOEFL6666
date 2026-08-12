@@ -5124,7 +5124,7 @@ body {
   text-align: center;
   text-transform: lowercase;
   vertical-align: baseline;
-  caret-color: var(--accent, #1f6666);
+  caret-color: var(--text);
   outline: none;
   appearance: none;
   -webkit-appearance: none;
