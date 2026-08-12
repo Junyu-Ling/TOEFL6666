@@ -34,6 +34,7 @@ const BlankInput = forwardRef(function BlankInput(
 ) {
   const inputRef = useRef(null);
   const value = letters.join("");
+  const placeholder = "_".repeat(blank.fillLen);
 
   useImperativeHandle(ref, () => ({
     focusFirst: () => inputRef.current?.focus(),
@@ -69,13 +70,6 @@ const BlankInput = forwardRef(function BlankInput(
         style={{ "--fill-ch": blank.fillLen }}
         aria-label={`填空：${blank.answer}`}
       >
-        <span className="rfill-blank__guide" aria-hidden="true">
-          {Array.from({ length: blank.fillLen }, (_, index) => (
-            <span key={`${blank.id}-dash-${index}`} className="rfill-blank__dash">
-              {letters[index] ? "\u00A0" : "–"}
-            </span>
-          ))}
-        </span>
         <input
           ref={inputRef}
           type="text"
@@ -87,6 +81,7 @@ const BlankInput = forwardRef(function BlankInput(
           maxLength={blank.fillLen}
           className="rfill-blank__line"
           value={value}
+          placeholder={placeholder}
           aria-label={`填写 ${blank.fillLen} 个字母`}
           onChange={handleChange}
           onKeyDown={handleKeyDown}

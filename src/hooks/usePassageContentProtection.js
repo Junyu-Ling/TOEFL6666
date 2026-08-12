@@ -13,7 +13,7 @@ function selectionTouchesPassage(passage) {
 }
 
 function isBlankInput(node) {
-  return node instanceof HTMLInputElement && node.classList.contains("rfill-blank__box");
+  return node instanceof HTMLInputElement && node.classList.contains("rfill-blank__line");
 }
 
 export function usePassageContentProtection(passageRef) {
