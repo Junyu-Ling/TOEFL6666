@@ -1310,6 +1310,549 @@
   },
   {
     "id": 78,
+    "title": "Supply and Demand",
+    "raw": "Supply and demand are fundamental concepts in economics because they determine the price and availability of goods or services. When th____ [3] is mo____ [2] demand f__ [2] a pro____ [4], suppliers m____ [2] make i____ [1] more expe____ [5] to incr____ [4] profits. Conve_____ [5], an exc____ [3] supply can lead to price reductions. Market equilibrium occurs when supply matches demand, resulting in stable prices. The real world, however, is rarely as simple as this. Various factors influence these dynamics, including consumer preferences, production costs, and external events.",
+    "answers": [
+      "there",
+      "more",
+      "for",
+      "product",
+      "may",
+      "it",
+      "expensive",
+      "increase",
+      "Conversely",
+      "excess"
+    ]
+  },
+  {
+    "id": 79,
+    "title": "Color Perception",
+    "raw": "Color perception has fascinated scientists and artists alike for centuries. The study of pigments, subst____ [5] that gi____ [2] color t____ [1] materials, rev____ [4] complex intera____ [6] with li____ [3]. Pigments abs____ [3] certain wavel____ [6] and ref____ [4] others, wh____ [3] is why objects appear to have color. Synthetic pigments have expanded the color palette available to artists and industries. The development of pigments requires knowledge of chemistry and physics, as their properties influence durability and appearance. Understanding how pigments behave is crucial in various fields, from art restoration to manufacturing.",
+    "answers": [
+      "substances",
+      "give",
+      "to",
+      "reveals",
+      "interactions",
+      "light",
+      "absorb",
+      "wavelengths",
+      "reflect",
+      "which"
+    ]
+  },
+  {
+    "id": 80,
+    "title": "Academia",
+    "raw": "In the world of academia, art history is more than just studying paintings — it is about decoding the emotional language of visual storytelling. For example, chiaroscuro is a tech____ [5] that origi____ [5] during t____ [2] Renaissance. Exemp______ [6] by str____ [3] contrast bet____ [4] light a____ [2] shadow, the st____ [3] evokes dr____ [3] through sele____ [5] illumination. Artists like Caravaggio mastered this interplay, using it to pull viewers into the heart of his scenes, guiding their eyes and stirring their emotions with every flicker of light.",
+    "answers": [
+      "technique",
+      "originated",
+      "the",
+      "Exemplified",
+      "strong",
+      "between",
+      "and",
+      "style",
+      "drama",
+      "selective"
+    ]
+  },
+  {
+    "id": 81,
+    "title": "Sodium-ion Batteries",
+    "raw": "Sodium-ion batteries are gaining attention as a potential alternative to lithium-ion batteries. Sodium is more accessible than lithium because it can be extracted from seawater, while lithium typically requires mining methods that can har____ [1] the envir______ [6]. Sodium-ion techn____ [5] is consi_____ [5] more susta______ [6] in t____ [2] long run. However, sev____ [4] challenges lim____ [2] its wides____ [5] use. Sodium-ion batteries often store less energy than lithium-ion batteries, reducing their efficiency for certain applications. Researchers continue to study sodium-ion batteries in order to improve their performance and determine their role in future energy systems.",
+    "answers": [
+      "harm",
+      "environment",
+      "technology",
+      "considered",
+      "sustainable",
+      "the",
+      "several",
+      "limit",
+      "widespread"
+    ]
+  },
+  {
+    "id": 82,
+    "title": "The Rise of Industrialization",
+    "raw": "The rise of industrialization in the eighteenth and nineteenth centuries brought about a dramatic shift in how goods were made, leading to the widespread development of factories. These centralized workp____ [5] replaced tradi____ [6] handcrafting a____ [2] cottage indus____ [5] with mechanized produ____ [5] systems pow____ [4] by st____ [3], water, o____ [1] electricity, allo____ [4] for gre____ [4] efficiency in the manufacturing of goods. Factories not only transformed economies and labor systems but also reshaped urban landscapes, contributing to population growth, environmental changes, and new social dynamics.",
+    "answers": [
+      "workplaces",
+      "traditional",
+      "and",
+      "industries",
+      "production",
+      "powered",
+      "steam",
+      "or",
+      "allowing",
+      "greater"
+    ]
+  },
+  {
+    "id": 83,
+    "title": "Water and Alien Life",
+    "raw": "In recent years, the search for extraterrestrial organisms has increasingly focused on water as an important clue. On Earth, water supports biological processes, and its detection on ice-covered moons such as Europa and Enceladus has attracted scien____ [5] attention. Evid____ [4] suggests th____ [2] these i____ [2] moons con____ [4] oceans ke____ [2] liquid b____ [1] tidal hea____ [4], a pro____ [4] in wh____ [3] gravitational forces generated by nearby planets produce internal warmth.",
+    "answers": [
+      "scientific",
+      "Evidence",
+      "that",
+      "icy",
+      "contain",
+      "kept",
+      "by",
+      "heating",
+      "process",
+      "which"
+    ]
+  },
+  {
+    "id": 84,
+    "title": "Atmospheric Pressure's Role",
+    "raw": "Atmospheric pressure plays a critical role in weather systems. High-pressure zones bring clear, calm conditions due to descending air that inhibits cloud formation. In low-pressure systems, warm air rises, cools, and condenses into clouds, wh____ [3] can le____ [2] to precip____ [7]. Barometric pressure varia____ [5] help meteoro____ [7] improve fore____ [5], as ra____ [3] fluctuations of____ [3] signal appro____ [6]. Adva____ [4] models use atmospheric force gradients, temperature, and humidity to predict storm movement and intensity, providing vital information for both short-term weather outlooks and long-term climate assessments.",
+    "answers": [
+      "which",
+      "lead",
+      "precipitation",
+      "variations",
+      "meteorologists",
+      "forecasts",
+      "rapid",
+      "often",
+      "approaching",
+      "Advanced"
+    ]
+  },
+  {
+    "id": 85,
+    "title": "Urbanization, Industrialization, History",
+    "raw": "The trajectory of modern history has been profoundly shaped by urbanization and industrialization, which redefined both physical landscapes and social structures. As industrial centers grew, rural populations increasingly abandoned agrarian lifestyles rooted in seasonal labor and subsistence farming for wage-based employment in cities. Urban enviro____ [6] became hu____ [2] of econ____ [4] opportunity a____ [2] social exch____ [4], where indiv______ [6] from var____ [3] backgrounds inter____ [5], shared id____ [3], and contr____ [6] to emerging cultural movements. This shift marked a fundamental transformation in how people lived, worked, and connected within society.",
+    "answers": [
+      "environments",
+      "hubs",
+      "economic",
+      "and",
+      "exchange",
+      "individuals",
+      "varied",
+      "interacted",
+      "ideas",
+      "contributed"
+    ]
+  },
+  {
+    "id": 86,
+    "title": "GIS in Geography",
+    "raw": "Modern geographers employ advanced technologies, including geographic information systems (GIS), to analyze spatial data, enabling them to visualize patterns of urban development, resource allocation, and environmental change. This analy____ [5] approach all____ [3] geographers t____ [1] provide insi____ [4] into pres____ [4] global iss____ [3] such a____ [1] climate cha____ [3], migration, a____ [2] sustainable devel____ [6], offering frameworks for informed decision-making and policy implementation. Understanding the geographic dimensions of these challenges is crucial for fostering resilience and adaptability in a rapidly changing world.",
+    "answers": [
+      "analytical",
+      "allows",
+      "to",
+      "insights",
+      "pressing",
+      "issues",
+      "as",
+      "change",
+      "and",
+      "development"
+    ]
+  },
+  {
+    "id": 87,
+    "title": "Louisiana Purchase",
+    "raw": "The Louisiana Purchase of 1803 was a landmark diplomatic agreement in which the United States acquired approximately 828,000 square miles of territory from France for $15 million. Negotiated under President Thomas Jefferson, the acqui____ [6] nearly dou____ [4] the la____ [2] area o____ [1] the nat____ [3] and sec____ [4] access t____ [1] key inl____ [3] waterways a____ [2] trade hu____ [2] essential for economic expansion. The purchase also affirmed the principle of implied powers within the United States Constitution, setting a precedent for future territorial growth.",
+    "answers": [
+      "acquisition",
+      "doubled",
+      "land",
+      "of",
+      "nation",
+      "secured",
+      "to",
+      "inland",
+      "and",
+      "hubs"
+    ]
+  },
+  {
+    "id": 88,
+    "title": "Lion Social Behavior",
+    "raw": "Lions, known as the kings of the jungle, are actually savanna (grassland) dwellers found mainly in Africa. They are the only truly soc____ [3] big ca____ [2], living i____ [1] prides, wh____ [3] are gro____ [3] that typi____ [5] include rel____ [4] females, th____ [3] offspring, a____ [2] some ma____ [3]. The pride structure aids in hunting, cub protection, and territorial defense. Lions communicate through vocalizations, such as roars, which can be heard up to 5 miles away. These vocal signals help maintain territorial boundaries and coordinate group activities.",
+    "answers": [
+      "social",
+      "cats",
+      "in",
+      "which",
+      "groups",
+      "typically",
+      "related",
+      "their",
+      "and",
+      "males"
+    ]
+  },
+  {
+    "id": 89,
+    "title": "Public Art Galleries",
+    "raw": "The emergence of public galleries in Europe in the eighteenth century marked a turning point in making art accessible to a wider audience. Britain and France led this movement, with the British Museum (1759) and the Louvre (opened to the public in 1793) setting early examples. These instit____ [6] were supp____ [5] by pat____ [4] and gover____ [6] who recog____ [5] art's educa____ [6] and cult____ [4] value. Su____ [2] investments cre____ [4] spaces n____ [2] only for displaying collections but also for encouraging scholarly engagement and public appreciation, laying the groundwork for modern museum culture.",
+    "answers": [
+      "institutions",
+      "supported",
+      "patrons",
+      "governments",
+      "recognized",
+      "educational",
+      "cultural",
+      "Such",
+      "created",
+      "not"
+    ]
+  },
+  {
+    "id": 90,
+    "title": "Insect Social Behavior",
+    "raw": "The study of insect behavior reveals complex survival strategies and social interactions across species. Honeybees, for inst____ [4], perform a distin____ [5] dance t____ [1] convey spa____ [4] information ab____ [3] foraging si____ [3]. Ants exem____ [5] extraordinary colle____ [5] behavior, def____ [4] by cooper____ [5] efficiency. By analyzing these patterns, researchers can trace evolutionary pathways and adaptive strategies that support insect resilience across diverse ecosystems. These insights underscore the ecological sophistication embedded within even the smallest of organisms.",
+    "answers": [
+      "instance",
+      "distinctive",
+      "to",
+      "spatial",
+      "about",
+      "sites",
+      "exemplify",
+      "collective",
+      "defined",
+      "cooperative"
+    ]
+  },
+  {
+    "id": 91,
+    "title": "Comparative Advantage",
+    "raw": "In analyzing global trade dynamics, the principle of comparative advantage plays a foundational role. It suggests that nations should specialize in producing goods they can create most efficiently, thereby enhancing ove____ [4] economic produc____ [6] and fost____ [5] international interde____ [8]. However, exce____ [5] reliance o____ [1] this mo____ [3] can exp____ [3] economies t____ [1] significant ri____ [3]. Countries that concentrate on a limited range of exports may become vulnerable to market volatility, such as shifts in global demand or price fluctuations. While comparative advantage can stimulate growth, it must be strategically managed to ensure long-term economic sustainability.",
+    "answers": [
+      "overall",
+      "productivity",
+      "fostering",
+      "interdependence",
+      "excessive",
+      "on",
+      "model",
+      "expose",
+      "to",
+      "risks"
+    ]
+  },
+  {
+    "id": 92,
+    "title": "Color and Pigment (Summary)",
+    "raw": "In visual arts, the interplay between color and pigment is fundamental in shaping artistic expression. Pigments, the materials that give color to paint, are der____ [4] from var____ [4] sources, incl____ [5] minerals, pla____ [3], and synt____ [5] compounds. Art____ [4] selected mate____ [5] based o____ [1] their abi____ [4] to con____ [4] underlying layers (opacity) and resist fading over time. The transformation of pigments into vibrant colors involves the complex interaction of light with the pigment's molecular structure. This interaction determines the color's intensity and luminosity.",
+    "answers": [
+      "derived",
+      "various",
+      "including",
+      "plants",
+      "synthetic",
+      "Artists",
+      "materials",
+      "on",
+      "ability",
+      "conceal"
+    ]
+  },
+  {
+    "id": 93,
+    "title": "AI Revolutionizes Industries",
+    "raw": "In recent years, the development of artificial intelligence has revolutionized numerous industries, transforming the way businesses operate and interact with their customers. AI technologies, such as machine learning and natural language processing, enable comp____ [5] to per____ [4] tasks th____ [2] previously requ____ [4] human judg____ [4]. For exa____ [4], customer ser____ [4] chatbots a____ [2] now cap____ [4] of unders____ [7] and responding to queries, providing instant support. Additionally, AI-driven analytics tools offer insights by processing vast amounts of data in real time, helping organizations make informed decisions.",
+    "answers": [
+      "computers",
+      "perform",
+      "that",
+      "required",
+      "judgment",
+      "example",
+      "service",
+      "are",
+      "capable",
+      "understanding"
+    ]
+  },
+  {
+    "id": 94,
+    "title": "India: Cultural Crossroads",
+    "raw": "Throughout history, the Indian subcontinent has been a cultural crossroads that has facilitated the exchange of ideas, goods, and philosophies between East and West. The Mauryan Empire, established in 322 BCE, represented one of the earliest fo____ [3] of consol____ [6] rule i____ [1] the reg____ [3] and la____ [2] the ground____ [4] for fut____ [3] administrative mod____ [3]. A not____ [4] achievement w____ [2] the spread of Buddhism under the emperor Ashoka, who propagated its teachings beyond India into Central Asia. The Gupta period, often termed the golden age, witnessed advancements in sciences, mathematics, and art.",
+    "answers": [
+      "forms",
+      "consolidated",
+      "in",
+      "region",
+      "laid",
+      "groundwork",
+      "future",
+      "models",
+      "notable",
+      "was"
+    ]
+  },
+  {
+    "id": 95,
+    "title": "Public Health Basics",
+    "raw": "Public health is a field that looks at the overall well-being of communities, focusing on how society and individual health are connected. Over ti____ [2], public health prog____ [4] have gr____ [3] from ba____ [3] efforts li____ [2] improving sanit____ [5] to inc____ [4] many strat_____ [5] that de____ [2] with soc____ [3] factors affecting health. This history shows the ongoing challenge of deciding how to use limited resources while facing more and more health problems, such as new diseases and long-term conditions linked to lifestyle. As leaders work to solve these issues, they are realizing the importance of teamwork across different fields.",
+    "answers": [
+      "time",
+      "programs",
+      "grown",
+      "basic",
+      "like",
+      "sanitation",
+      "include",
+      "strategies",
+      "deal",
+      "social"
+    ]
+  },
+  {
+    "id": 96,
+    "title": "Price Elasticity Analysis",
+    "raw": "Price elasticity describes how strongly purchasing behavior responds to changes in cost, income, availability, or competing options within a market. Demand f____ [2] a pro____ [4] with hi____ [2] elasticity wi____ [2] change substa____ [7] when t____ [2] price shi____ [3], refle____ [5] how cons____ [5] value i____ [1]. Essential goods often show weaker reactions because buyers keep purchasing them despite moderate cost increases or limited household budgets. Optional items usually react more sharply, since buyers can delay purchases, compare alternatives, or select cheaper substitutes without major inconvenience. Businesses study this pattern to predict sales, set prices carefully, and estimate revenue under changing economic conditions.",
+    "answers": [
+      "for",
+      "product",
+      "high",
+      "will",
+      "substantially",
+      "the",
+      "shifts",
+      "reflecting",
+      "consumers",
+      "it"
+    ]
+  },
+  {
+    "id": 97,
+    "title": "Baroque to Classical",
+    "raw": "The transition from Baroque to Classical music reflected broader cultural shifts in eighteenth-century Europe. Baroque music, with its elaborate textures and emotional intensity, mirrored the grandeur of monarchies and the Church. As Enlightenment ide____ [3] gained infl____ [5], Classical music eme____ [4] with sim____ [4], less orn____ [3] structures, bala____ [4] phrasing, and a fo____ [3] on rea____ [3] and or____ [3]. Composers li____ [2] Haydn and Mozart embraced simplicity and symmetry, aligning with the era's intellectual and social movements that favored rational thought over divine authority. This stylistic shift marked a move toward accessibility and elegance in musical expression.",
+    "answers": [
+      "ideals",
+      "influence",
+      "emerged",
+      "simpler",
+      "ornate",
+      "balanced",
+      "focus",
+      "reason",
+      "order",
+      "like"
+    ]
+  },
+  {
+    "id": 98,
+    "title": "Forming Hypotheses",
+    "raw": "Formulating a hypothesis is a vital step in academic research, linking observation to theory. It starts with reviewing existing literature to identify gaps or inconsistencies. Resea____ [6] then sug____ [4] a hypot____ [5] — a tent____ [5] explanation o____ [1] prediction ba____ [3] on obser____ [6]. This gui____ [3] study des____ [3], determining vari____ [5] to manipulate and measure. Through rigorous testing and analysis, the hypothesis is confirmed or refuted. This iterative process highlights the evolving nature of knowledge, as empirical data continuously informs and reshapes theoretical frameworks within a discipline.",
+    "answers": [
+      "Researchers",
+      "suggest",
+      "hypothesis",
+      "tentative",
+      "or",
+      "based",
+      "observation",
+      "guides",
+      "design",
+      "variables"
+    ]
+  },
+  {
+    "id": 99,
+    "title": "Extraterrestrial Life Search",
+    "raw": "The search for extraterrestrial life often focuses on finding water and volcanic activity on other planets. Water i____ [1] essential f____ [2] life a____ [1] we kn____ [2] it, a____ [2] its pres____ [4] could indi____ [4] habitable condi____ [5]. Volcanic acti____ [4] reveals insi____ [4] into a planet's geology and thermal dynamics, which can affect its potential to support life. Missions to Mars and distant moons aim to detect signs of these elements, using advanced instruments to analyze surface and atmospheric samples. Discoveries in this field could redefine our understanding of life's possibilities beyond Earth.",
+    "answers": [
+      "is",
+      "for",
+      "as",
+      "know",
+      "and",
+      "presence",
+      "indicate",
+      "conditions",
+      "activity",
+      "insights"
+    ]
+  },
+  {
+    "id": 100,
+    "title": "Circadian Rhythms",
+    "raw": "Circadian rhythms are natural cycles that help regulate key functions in the body over a roughly 24-hour period. These rhythms respond to external cues like light and temperature, aligning sleep, alertness, and hormone levels with the environment. Disruption of circadian rhythms, often due to irre____ [5] sleep patt____ [4], can le____ [2] to nega____ [4] effects o____ [1] health, incl____ [5] impaired cogn____ [5] function, mo____ [2] disorders, a____ [2] metabolic distur____ [6]. Understanding the molecular mechanisms underlying these rhythms is crucial for developing therapeutic strategies for disorders related to circadian disruption.",
+    "answers": [
+      "irregular",
+      "patterns",
+      "lead",
+      "negative",
+      "on",
+      "including",
+      "cognitive",
+      "mood",
+      "and",
+      "disturbances"
+    ]
+  },
+  {
+    "id": 101,
+    "title": "Public Health Initiatives",
+    "raw": "Public health initiatives play a pivotal role in mitigating the spread of infectious diseases and enhancing overall community well-being. These initiatives often encompass a range of strategies, incl____ [5] vaccination prog____ [4], health educ____ [5] campaigns, a____ [2] the prom____ [5] of sani______ [6] practices. T____ [2] collaboration bet____ [4] governmental agen____ [4], healthcare prov____ [5], and non-profit organizations to identify and address health risks.",
+    "answers": [
+      "including",
+      "programs",
+      "education",
+      "and",
+      "promotion",
+      "sanitation",
+      "The",
+      "between",
+      "agencies",
+      "providers"
+    ]
+  },
+  {
+    "id": 102,
+    "title": "Extinction Events",
+    "raw": "Throughout Earth's history, extinction events have dramatically reshaped the planet's biodiversity. While some view these events as part of nature's cycle, cur____ [4] extinctions te____ [2] an alte____ [5] — o____ [2] driven b____ [1] human acti____ [4]. Industrialization, poll____ [5], deforestation, a____ [2] climate cha____ [3] are accele____ [6] species loss at a pace never before seen, threatening ecosystems and eroding the genetic diversity that helps life adapt and survive. Unlike past natural extinctions, this crisis is one we have created and one we have the power to stop.",
+    "answers": [
+      "current",
+      "tell",
+      "alternate",
+      "one",
+      "by",
+      "activity",
+      "pollution",
+      "and",
+      "change",
+      "accelerating"
+    ]
+  },
+  {
+    "id": 103,
+    "title": "Nomads to Agriculture",
+    "raw": "The transition from nomadic lifestyles to settled agriculture marked a pivotal shift in early civilizations. Fertile river valleys enabled sustained crop production, leading to food surpluses that supported population growth and permanent settlements. Surplus reso____ [5] allowed so____ [2] individuals t____ [1] specialize i____ [1] non-agricultural ro____ [3], giving ri____ [2] to soc____ [3] stratification a____ [2] centralized auth____ [5]. Leaders eme____ [4] to manage distribution, enforce rules, and coordinate communal projects such as irrigation. These developments laid the foundation for political organization and institutionalized power structures.",
+    "answers": [
+      "resources",
+      "some",
+      "to",
+      "in",
+      "roles",
+      "rise",
+      "social",
+      "and",
+      "authority",
+      "emerged"
+    ]
+  },
+  {
+    "id": 104,
+    "title": "Aquatic Ecosystem Complexity",
+    "raw": "The complexity and diversity of aquatic ecosystems have captivated scientists for decades, prompting extensive studies into the myriad interactions between species and their environments. In these vast under____ [5] worlds, t____ [2] adaptive strat_____ [5] of fi____ [2] and ot____ [3] aquatic orga____ [5] are n____ [2] only fasci____ [6] but cru____ [4] for surv____ [4]. For instance, the symbiotic relationships that often develop — such as those between cleaner species that feed on parasites and their larger hosts — highlight the intricate dependencies at play. However, these interactions are increasingly threatened by human activities that disrupt habitats and contribute to biodiversity loss.",
+    "answers": [
+      "underwater",
+      "the",
+      "strategies",
+      "fish",
+      "other",
+      "organisms",
+      "not",
+      "fascinating",
+      "crucial",
+      "survival"
+    ]
+  },
+  {
+    "id": 105,
+    "title": "Industrial Revolution Impact",
+    "raw": "The rise of industrialization in the eighteenth and nineteenth centuries brought about a dramatic shift in how goods were made, leading to the widespread development of factories. These centralized workp____ [5] replaced tradi____ [6] handcrafting a____ [2] cottage indus____ [5] with mechanized produ____ [5] systems pow____ [4] by st____ [3], water, o____ [1] electricity, allo____ [4] for gre____ [4] efficiency in the manufacturing of goods. Factories not only transformed economies and labor systems but also reshaped urban landscapes, contributing to population growth, environmental changes, and new social dynamics.",
+    "answers": [
+      "workplaces",
+      "traditional",
+      "and",
+      "industries",
+      "production",
+      "powered",
+      "steam",
+      "or",
+      "allowing",
+      "greater"
+    ]
+  },
+  {
+    "id": 106,
+    "title": "Ecological Footprint Analysis",
+    "raw": "The concept of ecological footprints is used to analyze an individual's or a nation's environmental impacts. This measure accounts for the resources consumed as well as waste created and compares them to Earth's ability to regenerate those resources. Because consu____ [6] patterns va____ [2] globally, signi____ [6] disparities eme____ [3] between reg____ [4]. In deve____ [5] countries, lar____ [3] footprints res____ [3] from gre____ [4] per cap____ [3] resource use and greater reliance on technology. Understanding these patterns is crucial for developing sustainable policies that aim to reduce human demands on the planet's ecosystems, ensuring long-term environmental and economic viability.",
+    "answers": [
+      "consumption",
+      "vary",
+      "significant",
+      "emerge",
+      "regions",
+      "developed",
+      "larger",
+      "result",
+      "greater",
+      "capita"
+    ]
+  },
+  {
+    "id": 107,
+    "title": "Photoperiodism in Trees",
+    "raw": "Photoperiodism is crucial for the survival of organisms. In trees, photoperiodism refers to the physiological response to the length of day and night. This response influences seas____ [4] behaviors li____ [2] leaf shed____ [4] and flow_____ [5]. As t____ [2] days gr____ [2] shorter a____ [2] the nig___ [3] longer, so____ [2] trees be___ [3] to prepare for the changing seasons by dropping their leaves. This conserves water and energy during the winter months and protects the sensitive tissues of the tree from cold damage.",
+    "answers": [
+      "seasonal",
+      "like",
+      "shedding",
+      "flowering",
+      "the",
+      "grow",
+      "and",
+      "nights",
+      "some",
+      "begin"
+    ]
+  },
+  {
+    "id": 108,
+    "title": "AI in Weather Forecasting",
+    "raw": "Computational models and artificial intelligence (AI) have become essential tools in modern weather forecasting. Traditional models simulate atmospheric processes using physics-based equations, but they require significant computing power and time. AI-based sys____ [4], by cont____ [4], analyze va____ [2] datasets t____ [1] identify patt____ [4] and gene____ [4] forecasts mo____ [2] quickly a____ [2] efficiently. Rese____ [4] institutions ha____ [2] created forecasting tools driven by artificial intelligence that can improve short- and medium-range predictions, especially in regions with limited infrastructure.",
+    "answers": [
+      "systems",
+      "contrast",
+      "vast",
+      "to",
+      "patterns",
+      "generate",
+      "more",
+      "and",
+      "Research",
+      "have"
+    ]
+  },
+  {
+    "id": 109,
+    "title": "Prehistoric Cave Art",
+    "raw": "Cave paintings represent some of the earliest forms of human expression and communication, often characterized by their intricate depictions and symbolic meanings. These artw____ [4] primarily fo___ [3] on t____ [2] walls a____ [2] ceilings o____ [1] caves, of___ [3] insights in____ [2] the li___ [3] and bel____ [4] of prehi______ [6] peoples. Such paintings frequently feature animals, hunting scenes, and abstract shapes, suggesting a complex relationship between humans and their environment and possibly spiritual beliefs. The pigments were garnered from natural sources like minerals and charcoal.",
+    "answers": [
+      "artworks",
+      "found",
+      "the",
+      "and",
+      "of",
+      "offer",
+      "into",
+      "lives",
+      "beliefs",
+      "prehistoric"
+    ]
+  },
+  {
+    "id": 110,
     "title": "Coral Reef Ecosystem",
     "raw": "Coral reefs are among the most diverse and productive ecosystems on Earth. Bu___ [3] by colo____ [4] of ti__ [2] coral polyps, the__ [2] underwater struc_____ [5] support a_ [1] incredible ra___ [3] of mar___ [3] life, incl_____ [5] fish, inver________ [8], and algae. Coral reefs act as nurseries and shelter for various species. However, coral reefs face threats from climate change, pollution, and overfishing. Efforts to conserve and restore these ecosystems are crucial for maintaining biodiversity and the health of the oceans.",
     "answers": [
@@ -1326,7 +1869,7 @@
     ]
   },
   {
-    "id": 79,
+    "id": 111,
     "title": "Kinship in Prehistory",
     "raw": "The role of kinship was central to the social structure of prehistoric communities. Kinship not only structured family relationships but also shaped how resources were shared, labor was organized, and social hierarchies were maintained within the group. Archaeol______ [6] evidence sug_____ [5] that indiv______ [6] held spe_____ [5] roles ba___ [3] on a__ [2] and gen___ [3], contributing t_ [1] a soph_________ [9] division o_ [1] labor. The intricacy of these social structures is further evidenced by the existence of ceremonial sites, which indicate collective activities and social gatherings.",
     "answers": [
@@ -1343,7 +1886,7 @@
     ]
   },
   {
-    "id": 80,
+    "id": 112,
     "title": "Neolithic Pottery",
     "raw": "During the Neolithic period, craftspeople began producing pottery that served both practical and aesthetic purposes. Initially created f__ [2] storing fo__ [2] and wa___ [3], these cl__ [2] vessels even______ [6] featured decor_____ [5] elements su__ [2] as care_____ [5] incised patt____ [4] and pai____ [4] designs. This dual function—utility and beauty—marks one of the earliest examples of craftsmanship evolving into artistic expression. The refinement of pottery techniques, including firing and glazing, reflected growing technical skill and cultural values.",
     "answers": [
@@ -1360,7 +1903,7 @@
     ]
   },
   {
-    "id": 81,
+    "id": 113,
     "title": "Industrial Revolution's Impact",
     "raw": "The Industrial Revolution profoundly transformed North America, spurring urban growth through technology and immigration. Many advancements boosted connectivity, accelerating commerce and communication. Yet, urbanization brought chall_____ [5] like overcro_____ [5], poor infrastru_____ [5], and soc___ [3] inequality. Histor____ [4] debate whe____ [4] these cha____ [4] fostered mod___ [3] prosperity o_ [1] deepened divi_____ [5] in society. The era's complex legacy continues to prompt scholarly inquiry, revealing how industrialization shaped North America's development and raised enduring questions about progress, equity, and the long-term impact of technological and economic transformation.",
     "answers": [
@@ -1377,7 +1920,7 @@
     ]
   },
   {
-    "id": 82,
+    "id": 114,
     "title": "Moons and Life",
     "raw": "The discovery of water and volcanic activity on moons like Europa and Enceladus has sparked interest in the potential for extraterrestrial life. These moons, orbi____ [4] the plan___ [3] Jupiter a__ [2] Saturn, ha__ [2] ice-covered surf____ [4] with oce___ [3] lying under_____ [5]. Volcanic acti____ [4], in t__ [2] form o_ [1] hydrothermal vents, provides heat and nutrients, creating environments where microbial life could potentially thrive. Missions by spacecraft such as the Galileo and Cassini have gathered valuable data on these moons.",
     "answers": [
@@ -1394,7 +1937,7 @@
     ]
   },
   {
-    "id": 83,
+    "id": 115,
     "title": "Aquariums: Aquatic Habitats",
     "raw": "Aquariums provide an opportunity to observe a variety of fish and other aquatic organisms in a controlled environment. These facil_____ [5] carefully repli____ [4] natural habi____ [4], allowing visi____ [4] to le___ [3] about mar___ [3] life with___ [3] venturing in__ [2] the oc___ [3]. Exhibits of___ [3] include coral reefs, kelp forests, and freshwater streams, showcasing the diversity of aquatic ecosystems. Educational programs and guided tours enhance the experience, offering insights into the behavior, diet, and conservation of these organisms. Maintaining an aquarium requires expertise in water chemistry, filtration systems, and species compatibility.",
     "answers": [
@@ -1411,7 +1954,7 @@
     ]
   },
   {
-    "id": 84,
+    "id": 116,
     "title": "What is Economics",
     "raw": "Economics is the social science that studies the production, distribution, and consumption of goods and services. It exam____ [4] how indiv______ [6], households, busin_____ [5], and gover______ [6] make cho____ [4] about reso____ [4] allocation a__ [2] how su__ [2] decisions aff___ [3] overall stab_____ [5] and growth in the economy. Through the application of theoretical models and the collection of empirical data, economists can help policymakers formulate strategies to address issues such as inflation, unemployment, and trade imbalances, thereby improving societal well-being.",
     "answers": [
@@ -1428,7 +1971,7 @@
     ]
   },
   {
-    "id": 85,
+    "id": 117,
     "title": "3D Printing",
     "raw": "The advancement of 3D printing technology has revolutionized manufacturing by enabling precise, layer-by-layer fabrication of complex objects. 3D printing can use div____ [4] materials su__ [2] as pla____ [4], metals, a__ [2] ceramics. Engi_____ [5] are ab__ [2] to fab______ [6] lightweight, str___ [3] components wi__ [2] internal struc_____ [5] that are impossible to produce using traditional methods. In the medical field, 3D printing facilitates the production of patient-specific implants and prosthetics tailored to anatomical data from imaging scans. 3D printing enhances design flexibility and production efficiency by streamlining prototyping and reducing material waste.",
     "answers": [
@@ -1445,7 +1988,7 @@
     ]
   },
   {
-    "id": 86,
+    "id": 118,
     "title": "Circadian Rhythm",
     "raw": "The circadian rhythm regulates sleep-wake cycles and other physiological processes, operating on a roughly 24-hour cycle influenced by external cues such as light and temperature. Disruptions to this rhythm, like irre_____ [5] sleep patt____ [4], can le__ [2] to hea___ [3] issues incl_____ [5] insomnia, exhau_____ [5], and dec______ [6] cognitive func_____ [5]. Some rese_______ [7] are expl_____ [5] the mechanisms of circadian rhythms, aiming to develop treatments for sleep disorders and improve overall health. Understanding these rhythms is crucial for addressing various health concerns.",
     "answers": [
@@ -1462,7 +2005,7 @@
     ]
   },
   {
-    "id": 87,
+    "id": 119,
     "title": "The Role of Museum",
     "raw": "Museums play a crucial role in preserving and showcasing art, history, and culture. They pro____ [4] a sp___ [3] where peo___ [3] can eng___ [3] with mul_____ [5] forms o_ [1] artistic expre_____ [5] and histo_____ [5] artifacts. Ma__ [2] museums al__ [2] offer educational programs and workshops, fostering a deeper understanding of the subjects they display. In addition, digital innovations have enabled museums to reach global audiences through virtual tours and online collections. The patronage of visual arts by individuals and organizations helps support artists and ensures the continued growth and diversity of the cultural landscape.",
     "answers": [
@@ -1479,7 +2022,7 @@
     ]
   },
   {
-    "id": 88,
+    "id": 120,
     "title": "Philosophy of Mind",
     "raw": "The field of philosophy of mind delves into the nature of consciousness, thought processes, and the intricate relationship between the mind and body. I_ [1] addresses funda______ [6] questions ab___ [3] perception, iden____ [4], self-awareness, a__ [2] subjective exper_____ [5]. The disci_____ [5] explores h__ [2] and w__ [2] we per_____ [5] the world as we do, examining the mechanisms behind thought, emotion, and awareness. This field is a deeply interdisciplinary one that intersects with psychology, neuroscience, and cognitive science, providing a comprehensive approach to understanding human cognition and consciousness.",
     "answers": [
@@ -1496,7 +2039,7 @@
     ]
   },
   {
-    "id": 89,
+    "id": 121,
     "title": "Studying Galaxies",
     "raw": "The observational study of galaxies has significantly advanced our understanding of the universe. By analyzing t__ [2] light emi____ [4] from cele_____ [5] bodies, li__ [2] stars, astro______ [6] can in___ [3] various prope_____ [5] such a_ [1] distance fr__ [2] Earth, compo______ [6], and velocity. As light from galaxies travels through space, it stretches, shifting to the red end of the spectrum. This shift is directly proportional to a galaxy's speed and distance, allowing scientists to map the universe's expansion.",
     "answers": [
@@ -1513,7 +2056,7 @@
     ]
   },
   {
-    "id": 90,
+    "id": 122,
     "title": "Geographic Education",
     "raw": "Geographic education equips students with the tools to understand global issues through a spatial lens. For example, studying how rising sea levels affect coastal communities helps learners connect physical geography with human impact. This know_____ [5] is essen____ [4] for plan____ [4] disaster resp_____ [5], managing reso_____ [5], and addre_____ [5] climate cha___ [3]. Geographic lite____ [4] also fos____ [4] critical thin____ [4] about migration, urban development, and environmental sustainability. By teaching students to analyze maps, data, and patterns, geography empowers them to make informed decisions in an increasingly interconnected and environmentally challenged world.",
     "answers": [
@@ -1530,7 +2073,7 @@
     ]
   },
   {
-    "id": 91,
+    "id": 123,
     "title": "Urbanization",
     "raw": "The trajectory of modern history has been profoundly shaped by urbanization and industrialization, which redefined both physical landscapes and social structures. As industrial centers grew, rural populations increasingly abandoned agrarian lifestyles rooted in seasonal labor and subsistence farming for wage-based employment in cities. Urban enviro______ [6] became hu__ [2] of econ____ [4] opportunity a__ [2] social exch____ [4], where indiv______ [6] from var___ [3] backgrounds inter_____ [5], shared id___ [3], and contr______ [6] to emerging cultural movements. This shift marked a fundamental transformation in how people lived, worked, and connected within society.",
     "answers": [
@@ -1547,7 +2090,7 @@
     ]
   },
   {
-    "id": 92,
+    "id": 124,
     "title": "Critical Thinking",
     "raw": "Critical thinking is a vital skill that involves analyzing information objectively and making reasoned judgments. This process requ____ [4] a clear, rati____ [4] approach t_ [1] problem-solving, wh___ [3] one ass_____ [5] evidence, iden______ [6] biases, a__ [2] evaluates argu_____ [5]. Critical thin____ [4] are ab__ [2] to distinguish between fact and opinion, and they ask probing questions to gain deeper insights. In academic contexts, this skill helps students develop well-founded conclusions and become more effective learners. Encouraging critical thinking is essential for fostering intellectual growth and informed decision-making.",
     "answers": [
@@ -1564,7 +2107,7 @@
     ]
   },
   {
-    "id": 93,
+    "id": 125,
     "title": "India",
     "raw": "Throughout history, the Indian subcontinent has been a cultural crossroads that has facilitated the exchange of ideas, goods, and philosophies between East and West. The Mauryan Empire, established in 322 BCE, represented one of the earliest fo___ [3] of consol______ [6] rule i_ [1] the reg___ [3] and la__ [2] the ground____ [4] for fut___ [3] administrative mod___ [3]. A not____ [4] achievement w__ [2] the spread of Buddhism under the emperor Ashoka, who propagated its teachings beyond India into Central Asia. The Gupta period, often termed the golden age, witnessed advancements in sciences, mathematics, and art.",
     "answers": [
@@ -1581,7 +2124,7 @@
     ]
   },
   {
-    "id": 94,
+    "id": 126,
     "title": "Cognition and Consciousness",
     "raw": "Understanding the relationship between cognition and consciousness is pivotal for unraveling the complexities of human thinking and behavior, as both are fundamental activities of the brain. Cognition is the men___ [3] process b_ [1] which indiv______ [6] acquire know_____ [5] and under________ [8] through tho____ [4], experience, a__ [2] the sen___ [3]. Consciousness ref___ [3] to t__ [2] state of being aware of and responsive to one's surroundings. The advancements of neuroimaging technologies have provided insights into how consciousness arises from neural networks and how cognitive processes can occur both with and without conscious awareness.",
     "answers": [
@@ -1598,7 +2141,7 @@
     ]
   },
   {
-    "id": 95,
+    "id": 127,
     "title": "European Middle Ages",
     "raw": "The Middle Ages was a period in Europe that spanned roughly between the fifth and fifteenth centuries. This e__ [2] saw signif_____ [5] changes, mo__ [2] notably t__ [2] spread o_ [1] Christianity a__ [2] the estab________ [8] of pow_____ [5] kingdoms. Des____ [4] being of___ [3] referred to as the \"Dark Ages,\" a name that suggests stagnation and decline, this period also witnessed remarkable achievements in art, architecture, and learning, laying the groundwork for Europe's transition into the Renaissance and the age of discovery.",
     "answers": [
@@ -1615,7 +2158,7 @@
     ]
   },
   {
-    "id": 96,
+    "id": 128,
     "title": "Shadow Puppetry",
     "raw": "Shadow puppetry is an ancient form of storytelling that uses flat, articulated (movable) figures cast onto a screen by a light source. Shadow puppetry comb____ [4] visual art_____ [5] with dram____ [4] narration, crea____ [4] engaging perfor______ [6] that con___ [3] traditional ta___ [3] and mo___ [3] lessons. Th__ [2] art fo__ [2] originated in Asia and spread to various cultures around the world. The puppets are typically made of leather or paper and manipulated by sticks or strings. Performers narrate stories, often accompanied by music or sound effects.",
     "answers": [
@@ -1632,7 +2175,7 @@
     ]
   },
   {
-    "id": 97,
+    "id": 129,
     "title": "Earth Rock Formations",
     "raw": "The study of geological formations provides insights into Earth's dynamic processes. Metamorphic rocks are rocks that have been transformed by heat and pressure. Sedimentary rocks fo__ [2] as lay___ [3] of mat_____ [5] build u_ [1] over ti__ [2] and a__ [2] eventually pre____ [4] and fu___ [3] together t_ [1] create so___ [3] rock. The strata inside these formations serve as historical records of environmental conditions, revealing changes in climate, sea levels, and biological evolution. Analyzing rocks allows geologists to reconstruct past geological events.",
     "answers": [
@@ -1649,7 +2192,7 @@
     ]
   },
   {
-    "id": 98,
+    "id": 130,
     "title": "Ocean Overview",
     "raw": "Oceanography is the study of the physical, chemical, and biological aspects of the ocean. This fi___ [3] encompasses t__ [2] exploration o_ [1] ocean curr____ [4], marine ecos______ [6], and geolo_____ [5] seabed struc_____ [5]. Oceanographers u__ [2] satellites a__ [2] other adva____ [4] technology to monitor and analyze ocean conditions. By tracking sea surface temperatures, currents, salinity, and other features, researchers contribute to our understanding of climate change. Their work is vital for sustaining ocean health and preserving marine biodiversity.",
     "answers": [
@@ -1666,7 +2209,7 @@
     ]
   },
   {
-    "id": 99,
+    "id": 131,
     "title": "Grasshopper",
     "raw": "Grasshoppers are insects commonly found in dry places with grass and plants. Grasshoppers ha__ [2] several wa__ [2] they pro____ [4] themselves aga____ [4] danger. Th__ [2] have powe____ [4] back le__ [2], which al___ [3] them t_ [1] jump aw__ [2] from enemies, such as rodents and snakes. Some grasshoppers can jump twenty times the length of their bodies. By the time they are adults, grasshoppers can also fly. Adult grasshoppers fly very quickly and this helps them avoid danger.",
     "answers": [
@@ -1683,7 +2226,7 @@
     ]
   },
   {
-    "id": 100,
+    "id": 132,
     "title": "Climate Change",
     "raw": "Global temperatures and weather patterns are experiencing notable shifts, which scientific research strongly associates with human-related factors. Activities su__ [2] as t__ [2] us_ [1] of fossil fu___ [3], ch_____ [5] i_ [1] land use, and industrial produ_____ [5] contribute t_ [1] the accumu_______ [7] of green_____ [5] gases in the atmosphere. These gases retain heat, gradually increasing the Earth's average temperature. If emissions continue at current levels, potential outcomes may include more frequent extreme weather events, rising sea levels, and disruptions to ecosystems. Experts emphasize that timely and coordinated efforts are essential to reduce risks and promote long-term environmental stability.",
     "answers": [
@@ -1700,7 +2243,7 @@
     ]
   },
   {
-    "id": 101,
+    "id": 133,
     "title": "Atmospheric Pressure",
     "raw": "Atmospheric pressure plays a critical role in weather systems. High-pressure zones bring clear, calm conditions due to descending air that inhibits cloud formation. In low-pressure systems, warm air rises, cools, and condenses into clouds, wh___ [3] can le__ [2] to precip_______ [7]. Barometric pressure varia_____ [5] help meteoro_______ [7] improve fore_____ [5], as ra___ [3] fluctuations of___ [3] signal appro______ [6] storms. Adva____ [4] models use atmospheric force gradients, temperature, and humidity to predict storm movement and intensity, providing vital information for both short-term weather outlooks and long-term climate assessments.",
     "answers": [
@@ -1717,7 +2260,7 @@
     ]
   },
   {
-    "id": 102,
+    "id": 134,
     "title": "Film Technology",
     "raw": "The evolution of the film industry has been shaped by major technological shifts, especially the move from silent films to movies with sound. In the silent era, filmmakers relied entirely on visual storytelling, using expressive acting and title cards to convey dialogue and emotion. The introd______ [6] of synchronized so___ [3]—where au___ [3] was mat____ [4] precisely wi__ [2] t__ [2] mov___ [3] image—all____ [4] audiences t_ [1] hear act___ [3] speak f__ [2] the first time, transforming the cinematic experience. This breakthrough laid the foundation for later innovations like CGI and immersive sound design, expanding how stories could be told on screen.",
     "answers": [
@@ -1735,7 +2278,7 @@
     ]
   },
   {
-    "id": 103,
+    "id": 135,
     "title": "Louisiana Purchase",
     "raw": "The Louisiana Purchase of 1803 was a landmark diplomatic agreement in which the United States acquired approximately 828,000 square miles of territory from France for $15 million. Negotiated under President Thomas Jefferson, the acqui______ [6] nearly dou____ [4] the la__ [2] area o_ [1] the nat___ [3] and sec____ [4] access t_ [1] key inl___ [3] waterways a__ [2] trade hu__ [2] essential for economic expansion. The purchase also affirmed the principle of implied powers within the United States Constitution, setting a precedent for future territorial growth.",
     "answers": [
@@ -1752,7 +2295,7 @@
     ]
   },
   {
-    "id": 104,
+    "id": 136,
     "title": "Aquatic Ecosystem",
     "raw": "The complexity and diversity of aquatic ecosystems have captivated scientists for decades, prompting extensive studies into the myriad interactions between species and their environments. In these vast under_____ [5] worlds, t__ [2] adaptive strat_____ [5] of fi__ [2] and ot___ [3] aquatic orga_____ [5] are n__ [2] only fasci______ [6] but cru____ [4] for surv____ [4]. For instance, the symbiotic relationships that often develop—such as those between cleaner species that feed on parasites and their larger hosts—highlight the intricate dependencies at play. However, these interactions are increasingly threatened by human activities that disrupt habitats and contribute to biodiversity loss.",
     "answers": [
@@ -1769,7 +2312,7 @@
     ]
   },
   {
-    "id": 105,
+    "id": 137,
     "title": "Mammal Social Communication",
     "raw": "In the complex social structures of many terrestrial mammals, communication plays an essential role in maintaining group cohesion and ensuring survival. For example, elephants use diff_____ [5] sounds, incl_____ [5] infrasonic ca___ [3] that tra___ [3] long dist_____ [5], to he__ [2] them mo__ [2] together a__ [2] warn ea__ [2] other ab___ [3] danger. Similarly, prairie dogs employ a sophisticated system of vocalizations to share information about predator types, size, and speed. These communicative behaviors are critical, as they allow individual animals to respond promptly to threats and sustain group unity.",
     "answers": [
@@ -1786,7 +2329,7 @@
     ]
   },
   {
-    "id": 106,
+    "id": 138,
     "title": "Medieval European",
     "raw": "Medieval European history encompasses the time period from the fall of the Roman Empire to the onset of the Renaissance. This era lasted around 900 years and is also called the Middle Ages. During these cent_____ [5], feudalism w__ [2] the domi____ [4] social str______ [6], shaping the political, econ____ [4], and cult____ [4] landscape. Da___ [3] life a__ [2] governance were strongly influenced by the Catholic Church. Studying medieval history reveals the foundations of modern European society and the profound changes that occurred over time. It also helps students understand how people lived, worked, and believed during this important time in history.",
     "answers": [
@@ -1801,7 +2344,7 @@
     ]
   },
   {
-    "id": 107,
+    "id": 139,
     "title": "Ocean and Alien Life",
     "raw": "In recent years, the search for extraterrestrial organisms has increasingly focused on water as an important clue. On Earth, water supports biological processes, and its detection on ice-covered moons such as Europa and Enceladus has attracted scien_____ [5] attention. Evid____ [4] suggests th__ [2] these i__ [2] moons con____ [4] oceans ke__ [2] liquid b_ [1] tidal hea____ [4], a pro____ [4] in wh___ [3] gravitational forces generated by nearby planets produce internal warmth. This energy source may create environments comparable to Earth's deep-sea hydrothermal regions, where biological activity occurs without sunlight.",
     "answers": [
@@ -1818,7 +2361,7 @@
     ]
   },
   {
-    "id": 108,
+    "id": 140,
     "title": "Desert Life",
     "raw": "Deserts and extreme environments pose unique challenges for the organisms that inhabit them. These ar___ [3] are charac_______ [7] by ha___ [3] conditions su__ [2] as int____ [4] temperatures, sca___ [3] water, a__ [2] limited veget_____ [5]. Specialized adapt______ [6] have evo____ [4] in both plants and animals to increase survival. Studying these traits provides insights into the resilience of life and helps in understanding how ecosystems function under stress. Desert cacti store water in specialized tissues, while fennec foxes have enlarged ears for heat dissipation.",
     "answers": [
@@ -1835,7 +2378,7 @@
     ]
   },
   {
-    "id": 109,
+    "id": 141,
     "title": "Lion Social Behavior",
     "raw": "Lions, known as the kings of the jungle, are actually savanna (grassland) dwellers found mainly in Africa. They are the only truly soc___ [3] big ca__ [2], living i_ [1] prides, wh___ [3] are gro___ [3] that typi_____ [5] include rel____ [4] females, th___ [3] offspring, a__ [2] some ma___ [3]. The pride structure aids in hunting, cub protection, and territorial defense. Lions communicate through vocalizations, such as roars, which can be heard up to 5 miles away. These vocal signals help maintain territorial boundaries and coordinate group activities.",
     "answers": [
@@ -1852,7 +2395,7 @@
     ]
   },
   {
-    "id": 110,
+    "id": 142,
     "title": "GIS in Geography",
     "raw": "Modern geographers employ advanced technologies, including geographic information systems (GIS), to analyze spatial data, enabling them to visualize patterns of urban development, resource allocation, and environmental change. This analy_____ [5] approach all___ [3] geographers t_ [1] provide insi____ [4] into pres____ [4] global iss___ [3] such a_ [1] climate cha___ [3], migration, a__ [2] sustainable devel______ [6], offering frameworks for informed decision-making and policy implementation. Understanding the geographic dimensions of these challenges is crucial for fostering resilience and adaptability in a rapidly changing world.",
     "answers": [
@@ -1869,7 +2412,7 @@
     ]
   },
   {
-    "id": 111,
+    "id": 143,
     "title": "Animal Social Hierarchies",
     "raw": "In studying animal behavior, it becomes apparent that social hierarchies play a significant role in the lives of many terrestrial mammals. These hierarchies, often established through displays of dominance and submission, dictate ac____ [4] to res______ [6] such a_ [1] food, ma___ [3], and she____ [4], thereby infl_______ [7] survival a__ [2] reproductive suc____ [4]. Behavioral ec________ [8] have obs_____ [5] that such complex social structures can lead to increased group stability, as roles are clearly defined, reducing the frequency of potentially harmful disputes and promoting cooperation among group members.",
     "answers": [
@@ -1886,7 +2429,7 @@
     ]
   },
   {
-    "id": 112,
+    "id": 144,
     "title": "Color in Art",
     "raw": "Throughout history, color and pigment have played a central role in art, shaping how we perceive and interpret visual experiences. Artists ha__ [2] long under_____ [5] the emot_____ [5] and psycho_______ [7] power o_ [1] color, util_____ [5] it t_ [1] convey mo___ [3], create emph____ [4], and ev___ [3] responses. For example, red often symbolizes passion, while blue can elicit calmness. These symbolic associations can vary across cultures and time periods, allowing artists to communicate deeper layers of meaning through their color choices.",
     "answers": [
@@ -1903,7 +2446,7 @@
     ]
   },
   {
-    "id": 113,
+    "id": 145,
     "title": "AI",
     "raw": "In recent years, the development of artificial intelligence has revolutionized numerous industries, transforming the way businesses operate and interact with their customers. AI technologies, such as machine learning and natural language processing, enable comp_____ [5] to per____ [4] tasks th__ [2] previously requ____ [4] human jud_____ [5]. For ex_____ [5], customer ser____ [4] chatbots a__ [2] now cap____ [4] of under________ [8] and responding to queries, providing instant support. Additionally, AI-driven analytics tools offer insights by processing vast amounts of data in real time, helping organizations make informed decisions.",
     "answers": [
@@ -1920,7 +2463,7 @@
     ]
   },
   {
-    "id": 114,
+    "id": 146,
     "title": "Color and Pigment",
     "raw": "In visual arts, the interplay between color and pigment is fundamental in shaping artistic expression. Pigments, the materials that give color to paint, are der____ [4] from var____ [4] sources, incl_____ [5] minerals, pla___ [3], and synt_____ [5] compounds. Art____ [4] selected mate_____ [5] based o_ [1] their ab_____ [5] to con____ [4] underlying layers (opacity) and resist fading over time. The transformation of pigments into vibrant colors involves the complex interaction of light with the pigment's molecular structure. This interaction determines the color's intensity and luminosity.",
     "answers": [
@@ -1934,549 +2477,6 @@
       "on",
       "ability",
       "conceal"
-    ]
-  },
-  {
-    "id": 115,
-    "title": "Supply and Demand",
-    "raw": "Supply and demand are fundamental concepts in economics because they determine the price and availability of goods or services. When th____ [3] is mo____ [2] demand f__ [2] a pro____ [4], suppliers m____ [2] make i____ [1] more expe____ [5] to incr____ [4] profits. Conve_____ [5], an exc____ [3] supply can lead to price reductions. Market equilibrium occurs when supply matches demand, resulting in stable prices. The real world, however, is rarely as simple as this. Various factors influence these dynamics, including consumer preferences, production costs, and external events.",
-    "answers": [
-      "there",
-      "more",
-      "for",
-      "product",
-      "may",
-      "it",
-      "expensive",
-      "increase",
-      "Conversely",
-      "excess"
-    ]
-  },
-  {
-    "id": 116,
-    "title": "Color Perception",
-    "raw": "Color perception has fascinated scientists and artists alike for centuries. The study of pigments, subst____ [5] that gi____ [2] color t____ [1] materials, rev____ [4] complex intera____ [6] with li____ [3]. Pigments abs____ [3] certain wavel____ [6] and ref____ [4] others, wh____ [3] is why objects appear to have color. Synthetic pigments have expanded the color palette available to artists and industries. The development of pigments requires knowledge of chemistry and physics, as their properties influence durability and appearance. Understanding how pigments behave is crucial in various fields, from art restoration to manufacturing.",
-    "answers": [
-      "substances",
-      "give",
-      "to",
-      "reveals",
-      "interactions",
-      "light",
-      "absorb",
-      "wavelengths",
-      "reflect",
-      "which"
-    ]
-  },
-  {
-    "id": 117,
-    "title": "Academia",
-    "raw": "In the world of academia, art history is more than just studying paintings — it is about decoding the emotional language of visual storytelling. For example, chiaroscuro is a tech____ [5] that origi____ [5] during t____ [2] Renaissance. Exemp______ [6] by str____ [3] contrast bet____ [4] light a____ [2] shadow, the st____ [3] evokes dr____ [3] through sele____ [5] illumination. Artists like Caravaggio mastered this interplay, using it to pull viewers into the heart of his scenes, guiding their eyes and stirring their emotions with every flicker of light.",
-    "answers": [
-      "technique",
-      "originated",
-      "the",
-      "Exemplified",
-      "strong",
-      "between",
-      "and",
-      "style",
-      "drama",
-      "selective"
-    ]
-  },
-  {
-    "id": 118,
-    "title": "Sodium-ion Batteries",
-    "raw": "Sodium-ion batteries are gaining attention as a potential alternative to lithium-ion batteries. Sodium is more accessible than lithium because it can be extracted from seawater, while lithium typically requires mining methods that can har____ [1] the envir______ [6]. Sodium-ion techn____ [5] is consi_____ [5] more susta______ [6] in t____ [2] long run. However, sev____ [4] challenges lim____ [2] its wides____ [5] use. Sodium-ion batteries often store less energy than lithium-ion batteries, reducing their efficiency for certain applications. Researchers continue to study sodium-ion batteries in order to improve their performance and determine their role in future energy systems.",
-    "answers": [
-      "harm",
-      "environment",
-      "technology",
-      "considered",
-      "sustainable",
-      "the",
-      "several",
-      "limit",
-      "widespread"
-    ]
-  },
-  {
-    "id": 119,
-    "title": "The Rise of Industrialization",
-    "raw": "The rise of industrialization in the eighteenth and nineteenth centuries brought about a dramatic shift in how goods were made, leading to the widespread development of factories. These centralized workp____ [5] replaced tradi____ [6] handcrafting a____ [2] cottage indus____ [5] with mechanized produ____ [5] systems pow____ [4] by st____ [3], water, o____ [1] electricity, allo____ [4] for gre____ [4] efficiency in the manufacturing of goods. Factories not only transformed economies and labor systems but also reshaped urban landscapes, contributing to population growth, environmental changes, and new social dynamics.",
-    "answers": [
-      "workplaces",
-      "traditional",
-      "and",
-      "industries",
-      "production",
-      "powered",
-      "steam",
-      "or",
-      "allowing",
-      "greater"
-    ]
-  },
-  {
-    "id": 120,
-    "title": "Water and Alien Life",
-    "raw": "In recent years, the search for extraterrestrial organisms has increasingly focused on water as an important clue. On Earth, water supports biological processes, and its detection on ice-covered moons such as Europa and Enceladus has attracted scien____ [5] attention. Evid____ [4] suggests th____ [2] these i____ [2] moons con____ [4] oceans ke____ [2] liquid b____ [1] tidal hea____ [4], a pro____ [4] in wh____ [3] gravitational forces generated by nearby planets produce internal warmth.",
-    "answers": [
-      "scientific",
-      "Evidence",
-      "that",
-      "icy",
-      "contain",
-      "kept",
-      "by",
-      "heating",
-      "process",
-      "which"
-    ]
-  },
-  {
-    "id": 121,
-    "title": "Atmospheric Pressure's Role",
-    "raw": "Atmospheric pressure plays a critical role in weather systems. High-pressure zones bring clear, calm conditions due to descending air that inhibits cloud formation. In low-pressure systems, warm air rises, cools, and condenses into clouds, wh____ [3] can le____ [2] to precip____ [7]. Barometric pressure varia____ [5] help meteoro____ [7] improve fore____ [5], as ra____ [3] fluctuations of____ [3] signal appro____ [6]. Adva____ [4] models use atmospheric force gradients, temperature, and humidity to predict storm movement and intensity, providing vital information for both short-term weather outlooks and long-term climate assessments.",
-    "answers": [
-      "which",
-      "lead",
-      "precipitation",
-      "variations",
-      "meteorologists",
-      "forecasts",
-      "rapid",
-      "often",
-      "approaching",
-      "Advanced"
-    ]
-  },
-  {
-    "id": 122,
-    "title": "Urbanization, Industrialization, History",
-    "raw": "The trajectory of modern history has been profoundly shaped by urbanization and industrialization, which redefined both physical landscapes and social structures. As industrial centers grew, rural populations increasingly abandoned agrarian lifestyles rooted in seasonal labor and subsistence farming for wage-based employment in cities. Urban enviro____ [6] became hu____ [2] of econ____ [4] opportunity a____ [2] social exch____ [4], where indiv______ [6] from var____ [3] backgrounds inter____ [5], shared id____ [3], and contr____ [6] to emerging cultural movements. This shift marked a fundamental transformation in how people lived, worked, and connected within society.",
-    "answers": [
-      "environments",
-      "hubs",
-      "economic",
-      "and",
-      "exchange",
-      "individuals",
-      "varied",
-      "interacted",
-      "ideas",
-      "contributed"
-    ]
-  },
-  {
-    "id": 123,
-    "title": "GIS in Geography",
-    "raw": "Modern geographers employ advanced technologies, including geographic information systems (GIS), to analyze spatial data, enabling them to visualize patterns of urban development, resource allocation, and environmental change. This analy____ [5] approach all____ [3] geographers t____ [1] provide insi____ [4] into pres____ [4] global iss____ [3] such a____ [1] climate cha____ [3], migration, a____ [2] sustainable devel____ [6], offering frameworks for informed decision-making and policy implementation. Understanding the geographic dimensions of these challenges is crucial for fostering resilience and adaptability in a rapidly changing world.",
-    "answers": [
-      "analytical",
-      "allows",
-      "to",
-      "insights",
-      "pressing",
-      "issues",
-      "as",
-      "change",
-      "and",
-      "development"
-    ]
-  },
-  {
-    "id": 124,
-    "title": "Louisiana Purchase",
-    "raw": "The Louisiana Purchase of 1803 was a landmark diplomatic agreement in which the United States acquired approximately 828,000 square miles of territory from France for $15 million. Negotiated under President Thomas Jefferson, the acqui____ [6] nearly dou____ [4] the la____ [2] area o____ [1] the nat____ [3] and sec____ [4] access t____ [1] key inl____ [3] waterways a____ [2] trade hu____ [2] essential for economic expansion. The purchase also affirmed the principle of implied powers within the United States Constitution, setting a precedent for future territorial growth.",
-    "answers": [
-      "acquisition",
-      "doubled",
-      "land",
-      "of",
-      "nation",
-      "secured",
-      "to",
-      "inland",
-      "and",
-      "hubs"
-    ]
-  },
-  {
-    "id": 125,
-    "title": "Lion Social Behavior",
-    "raw": "Lions, known as the kings of the jungle, are actually savanna (grassland) dwellers found mainly in Africa. They are the only truly soc____ [3] big ca____ [2], living i____ [1] prides, wh____ [3] are gro____ [3] that typi____ [5] include rel____ [4] females, th____ [3] offspring, a____ [2] some ma____ [3]. The pride structure aids in hunting, cub protection, and territorial defense. Lions communicate through vocalizations, such as roars, which can be heard up to 5 miles away. These vocal signals help maintain territorial boundaries and coordinate group activities.",
-    "answers": [
-      "social",
-      "cats",
-      "in",
-      "which",
-      "groups",
-      "typically",
-      "related",
-      "their",
-      "and",
-      "males"
-    ]
-  },
-  {
-    "id": 126,
-    "title": "Public Art Galleries",
-    "raw": "The emergence of public galleries in Europe in the eighteenth century marked a turning point in making art accessible to a wider audience. Britain and France led this movement, with the British Museum (1759) and the Louvre (opened to the public in 1793) setting early examples. These instit____ [6] were supp____ [5] by pat____ [4] and gover____ [6] who recog____ [5] art's educa____ [6] and cult____ [4] value. Su____ [2] investments cre____ [4] spaces n____ [2] only for displaying collections but also for encouraging scholarly engagement and public appreciation, laying the groundwork for modern museum culture.",
-    "answers": [
-      "institutions",
-      "supported",
-      "patrons",
-      "governments",
-      "recognized",
-      "educational",
-      "cultural",
-      "Such",
-      "created",
-      "not"
-    ]
-  },
-  {
-    "id": 127,
-    "title": "Insect Social Behavior",
-    "raw": "The study of insect behavior reveals complex survival strategies and social interactions across species. Honeybees, for inst____ [4], perform a distin____ [5] dance t____ [1] convey spa____ [4] information ab____ [3] foraging si____ [3]. Ants exem____ [5] extraordinary colle____ [5] behavior, def____ [4] by cooper____ [5] efficiency. By analyzing these patterns, researchers can trace evolutionary pathways and adaptive strategies that support insect resilience across diverse ecosystems. These insights underscore the ecological sophistication embedded within even the smallest of organisms.",
-    "answers": [
-      "instance",
-      "distinctive",
-      "to",
-      "spatial",
-      "about",
-      "sites",
-      "exemplify",
-      "collective",
-      "defined",
-      "cooperative"
-    ]
-  },
-  {
-    "id": 128,
-    "title": "Comparative Advantage",
-    "raw": "In analyzing global trade dynamics, the principle of comparative advantage plays a foundational role. It suggests that nations should specialize in producing goods they can create most efficiently, thereby enhancing ove____ [4] economic produc____ [6] and fost____ [5] international interde____ [8]. However, exce____ [5] reliance o____ [1] this mo____ [3] can exp____ [3] economies t____ [1] significant ri____ [3]. Countries that concentrate on a limited range of exports may become vulnerable to market volatility, such as shifts in global demand or price fluctuations. While comparative advantage can stimulate growth, it must be strategically managed to ensure long-term economic sustainability.",
-    "answers": [
-      "overall",
-      "productivity",
-      "fostering",
-      "interdependence",
-      "excessive",
-      "on",
-      "model",
-      "expose",
-      "to",
-      "risks"
-    ]
-  },
-  {
-    "id": 129,
-    "title": "Color and Pigment (Summary)",
-    "raw": "In visual arts, the interplay between color and pigment is fundamental in shaping artistic expression. Pigments, the materials that give color to paint, are der____ [4] from var____ [4] sources, incl____ [5] minerals, pla____ [3], and synt____ [5] compounds. Art____ [4] selected mate____ [5] based o____ [1] their abi____ [4] to con____ [4] underlying layers (opacity) and resist fading over time. The transformation of pigments into vibrant colors involves the complex interaction of light with the pigment's molecular structure. This interaction determines the color's intensity and luminosity.",
-    "answers": [
-      "derived",
-      "various",
-      "including",
-      "plants",
-      "synthetic",
-      "Artists",
-      "materials",
-      "on",
-      "ability",
-      "conceal"
-    ]
-  },
-  {
-    "id": 130,
-    "title": "AI Revolutionizes Industries",
-    "raw": "In recent years, the development of artificial intelligence has revolutionized numerous industries, transforming the way businesses operate and interact with their customers. AI technologies, such as machine learning and natural language processing, enable comp____ [5] to per____ [4] tasks th____ [2] previously requ____ [4] human judg____ [4]. For exa____ [4], customer ser____ [4] chatbots a____ [2] now cap____ [4] of unders____ [7] and responding to queries, providing instant support. Additionally, AI-driven analytics tools offer insights by processing vast amounts of data in real time, helping organizations make informed decisions.",
-    "answers": [
-      "computers",
-      "perform",
-      "that",
-      "required",
-      "judgment",
-      "example",
-      "service",
-      "are",
-      "capable",
-      "understanding"
-    ]
-  },
-  {
-    "id": 131,
-    "title": "India: Cultural Crossroads",
-    "raw": "Throughout history, the Indian subcontinent has been a cultural crossroads that has facilitated the exchange of ideas, goods, and philosophies between East and West. The Mauryan Empire, established in 322 BCE, represented one of the earliest fo____ [3] of consol____ [6] rule i____ [1] the reg____ [3] and la____ [2] the ground____ [4] for fut____ [3] administrative mod____ [3]. A not____ [4] achievement w____ [2] the spread of Buddhism under the emperor Ashoka, who propagated its teachings beyond India into Central Asia. The Gupta period, often termed the golden age, witnessed advancements in sciences, mathematics, and art.",
-    "answers": [
-      "forms",
-      "consolidated",
-      "in",
-      "region",
-      "laid",
-      "groundwork",
-      "future",
-      "models",
-      "notable",
-      "was"
-    ]
-  },
-  {
-    "id": 132,
-    "title": "Public Health Basics",
-    "raw": "Public health is a field that looks at the overall well-being of communities, focusing on how society and individual health are connected. Over ti____ [2], public health prog____ [4] have gr____ [3] from ba____ [3] efforts li____ [2] improving sanit____ [5] to inc____ [4] many strat_____ [5] that de____ [2] with soc____ [3] factors affecting health. This history shows the ongoing challenge of deciding how to use limited resources while facing more and more health problems, such as new diseases and long-term conditions linked to lifestyle. As leaders work to solve these issues, they are realizing the importance of teamwork across different fields.",
-    "answers": [
-      "time",
-      "programs",
-      "grown",
-      "basic",
-      "like",
-      "sanitation",
-      "include",
-      "strategies",
-      "deal",
-      "social"
-    ]
-  },
-  {
-    "id": 133,
-    "title": "Price Elasticity Analysis",
-    "raw": "Price elasticity describes how strongly purchasing behavior responds to changes in cost, income, availability, or competing options within a market. Demand f____ [2] a pro____ [4] with hi____ [2] elasticity wi____ [2] change substa____ [7] when t____ [2] price shi____ [3], refle____ [5] how cons____ [5] value i____ [1]. Essential goods often show weaker reactions because buyers keep purchasing them despite moderate cost increases or limited household budgets. Optional items usually react more sharply, since buyers can delay purchases, compare alternatives, or select cheaper substitutes without major inconvenience. Businesses study this pattern to predict sales, set prices carefully, and estimate revenue under changing economic conditions.",
-    "answers": [
-      "for",
-      "product",
-      "high",
-      "will",
-      "substantially",
-      "the",
-      "shifts",
-      "reflecting",
-      "consumers",
-      "it"
-    ]
-  },
-  {
-    "id": 134,
-    "title": "Baroque to Classical",
-    "raw": "The transition from Baroque to Classical music reflected broader cultural shifts in eighteenth-century Europe. Baroque music, with its elaborate textures and emotional intensity, mirrored the grandeur of monarchies and the Church. As Enlightenment ide____ [3] gained infl____ [5], Classical music eme____ [4] with sim____ [4], less orn____ [3] structures, bala____ [4] phrasing, and a fo____ [3] on rea____ [3] and or____ [3]. Composers li____ [2] Haydn and Mozart embraced simplicity and symmetry, aligning with the era's intellectual and social movements that favored rational thought over divine authority. This stylistic shift marked a move toward accessibility and elegance in musical expression.",
-    "answers": [
-      "ideals",
-      "influence",
-      "emerged",
-      "simpler",
-      "ornate",
-      "balanced",
-      "focus",
-      "reason",
-      "order",
-      "like"
-    ]
-  },
-  {
-    "id": 135,
-    "title": "Forming Hypotheses",
-    "raw": "Formulating a hypothesis is a vital step in academic research, linking observation to theory. It starts with reviewing existing literature to identify gaps or inconsistencies. Resea____ [6] then sug____ [4] a hypot____ [5] — a tent____ [5] explanation o____ [1] prediction ba____ [3] on obser____ [6]. This gui____ [3] study des____ [3], determining vari____ [5] to manipulate and measure. Through rigorous testing and analysis, the hypothesis is confirmed or refuted. This iterative process highlights the evolving nature of knowledge, as empirical data continuously informs and reshapes theoretical frameworks within a discipline.",
-    "answers": [
-      "Researchers",
-      "suggest",
-      "hypothesis",
-      "tentative",
-      "or",
-      "based",
-      "observation",
-      "guides",
-      "design",
-      "variables"
-    ]
-  },
-  {
-    "id": 136,
-    "title": "Extraterrestrial Life Search",
-    "raw": "The search for extraterrestrial life often focuses on finding water and volcanic activity on other planets. Water i____ [1] essential f____ [2] life a____ [1] we kn____ [2] it, a____ [2] its pres____ [4] could indi____ [4] habitable condi____ [5]. Volcanic acti____ [4] reveals insi____ [4] into a planet's geology and thermal dynamics, which can affect its potential to support life. Missions to Mars and distant moons aim to detect signs of these elements, using advanced instruments to analyze surface and atmospheric samples. Discoveries in this field could redefine our understanding of life's possibilities beyond Earth.",
-    "answers": [
-      "is",
-      "for",
-      "as",
-      "know",
-      "and",
-      "presence",
-      "indicate",
-      "conditions",
-      "activity",
-      "insights"
-    ]
-  },
-  {
-    "id": 137,
-    "title": "Circadian Rhythms",
-    "raw": "Circadian rhythms are natural cycles that help regulate key functions in the body over a roughly 24-hour period. These rhythms respond to external cues like light and temperature, aligning sleep, alertness, and hormone levels with the environment. Disruption of circadian rhythms, often due to irre____ [5] sleep patt____ [4], can le____ [2] to nega____ [4] effects o____ [1] health, incl____ [5] impaired cogn____ [5] function, mo____ [2] disorders, a____ [2] metabolic distur____ [6]. Understanding the molecular mechanisms underlying these rhythms is crucial for developing therapeutic strategies for disorders related to circadian disruption.",
-    "answers": [
-      "irregular",
-      "patterns",
-      "lead",
-      "negative",
-      "on",
-      "including",
-      "cognitive",
-      "mood",
-      "and",
-      "disturbances"
-    ]
-  },
-  {
-    "id": 138,
-    "title": "Public Health Initiatives",
-    "raw": "Public health initiatives play a pivotal role in mitigating the spread of infectious diseases and enhancing overall community well-being. These initiatives often encompass a range of strategies, incl____ [5] vaccination prog____ [4], health educ____ [5] campaigns, a____ [2] the prom____ [5] of sani______ [6] practices. T____ [2] collaboration bet____ [4] governmental agen____ [4], healthcare prov____ [5], and non-profit organizations to identify and address health risks.",
-    "answers": [
-      "including",
-      "programs",
-      "education",
-      "and",
-      "promotion",
-      "sanitation",
-      "The",
-      "between",
-      "agencies",
-      "providers"
-    ]
-  },
-  {
-    "id": 139,
-    "title": "Extinction Events",
-    "raw": "Throughout Earth's history, extinction events have dramatically reshaped the planet's biodiversity. While some view these events as part of nature's cycle, cur____ [4] extinctions te____ [2] an alte____ [5] — o____ [2] driven b____ [1] human acti____ [4]. Industrialization, poll____ [5], deforestation, a____ [2] climate cha____ [3] are accele____ [6] species loss at a pace never before seen, threatening ecosystems and eroding the genetic diversity that helps life adapt and survive. Unlike past natural extinctions, this crisis is one we have created and one we have the power to stop.",
-    "answers": [
-      "current",
-      "tell",
-      "alternate",
-      "one",
-      "by",
-      "activity",
-      "pollution",
-      "and",
-      "change",
-      "accelerating"
-    ]
-  },
-  {
-    "id": 140,
-    "title": "Nomads to Agriculture",
-    "raw": "The transition from nomadic lifestyles to settled agriculture marked a pivotal shift in early civilizations. Fertile river valleys enabled sustained crop production, leading to food surpluses that supported population growth and permanent settlements. Surplus reso____ [5] allowed so____ [2] individuals t____ [1] specialize i____ [1] non-agricultural ro____ [3], giving ri____ [2] to soc____ [3] stratification a____ [2] centralized auth____ [5]. Leaders eme____ [4] to manage distribution, enforce rules, and coordinate communal projects such as irrigation. These developments laid the foundation for political organization and institutionalized power structures.",
-    "answers": [
-      "resources",
-      "some",
-      "to",
-      "in",
-      "roles",
-      "rise",
-      "social",
-      "and",
-      "authority",
-      "emerged"
-    ]
-  },
-  {
-    "id": 141,
-    "title": "Aquatic Ecosystem Complexity",
-    "raw": "The complexity and diversity of aquatic ecosystems have captivated scientists for decades, prompting extensive studies into the myriad interactions between species and their environments. In these vast under____ [5] worlds, t____ [2] adaptive strat_____ [5] of fi____ [2] and ot____ [3] aquatic orga____ [5] are n____ [2] only fasci____ [6] but cru____ [4] for surv____ [4]. For instance, the symbiotic relationships that often develop — such as those between cleaner species that feed on parasites and their larger hosts — highlight the intricate dependencies at play. However, these interactions are increasingly threatened by human activities that disrupt habitats and contribute to biodiversity loss.",
-    "answers": [
-      "underwater",
-      "the",
-      "strategies",
-      "fish",
-      "other",
-      "organisms",
-      "not",
-      "fascinating",
-      "crucial",
-      "survival"
-    ]
-  },
-  {
-    "id": 142,
-    "title": "Industrial Revolution Impact",
-    "raw": "The rise of industrialization in the eighteenth and nineteenth centuries brought about a dramatic shift in how goods were made, leading to the widespread development of factories. These centralized workp____ [5] replaced tradi____ [6] handcrafting a____ [2] cottage indus____ [5] with mechanized produ____ [5] systems pow____ [4] by st____ [3], water, o____ [1] electricity, allo____ [4] for gre____ [4] efficiency in the manufacturing of goods. Factories not only transformed economies and labor systems but also reshaped urban landscapes, contributing to population growth, environmental changes, and new social dynamics.",
-    "answers": [
-      "workplaces",
-      "traditional",
-      "and",
-      "industries",
-      "production",
-      "powered",
-      "steam",
-      "or",
-      "allowing",
-      "greater"
-    ]
-  },
-  {
-    "id": 143,
-    "title": "Ecological Footprint Analysis",
-    "raw": "The concept of ecological footprints is used to analyze an individual's or a nation's environmental impacts. This measure accounts for the resources consumed as well as waste created and compares them to Earth's ability to regenerate those resources. Because consu____ [6] patterns va____ [2] globally, signi____ [6] disparities eme____ [3] between reg____ [4]. In deve____ [5] countries, lar____ [3] footprints res____ [3] from gre____ [4] per cap____ [3] resource use and greater reliance on technology. Understanding these patterns is crucial for developing sustainable policies that aim to reduce human demands on the planet's ecosystems, ensuring long-term environmental and economic viability.",
-    "answers": [
-      "consumption",
-      "vary",
-      "significant",
-      "emerge",
-      "regions",
-      "developed",
-      "larger",
-      "result",
-      "greater",
-      "capita"
-    ]
-  },
-  {
-    "id": 144,
-    "title": "Photoperiodism in Trees",
-    "raw": "Photoperiodism is crucial for the survival of organisms. In trees, photoperiodism refers to the physiological response to the length of day and night. This response influences seas____ [4] behaviors li____ [2] leaf shed____ [4] and flow_____ [5]. As t____ [2] days gr____ [2] shorter a____ [2] the nig___ [3] longer, so____ [2] trees be___ [3] to prepare for the changing seasons by dropping their leaves. This conserves water and energy during the winter months and protects the sensitive tissues of the tree from cold damage.",
-    "answers": [
-      "seasonal",
-      "like",
-      "shedding",
-      "flowering",
-      "the",
-      "grow",
-      "and",
-      "nights",
-      "some",
-      "begin"
-    ]
-  },
-  {
-    "id": 145,
-    "title": "AI in Weather Forecasting",
-    "raw": "Computational models and artificial intelligence (AI) have become essential tools in modern weather forecasting. Traditional models simulate atmospheric processes using physics-based equations, but they require significant computing power and time. AI-based sys____ [4], by cont____ [4], analyze va____ [2] datasets t____ [1] identify patt____ [4] and gene____ [4] forecasts mo____ [2] quickly a____ [2] efficiently. Rese____ [4] institutions ha____ [2] created forecasting tools driven by artificial intelligence that can improve short- and medium-range predictions, especially in regions with limited infrastructure.",
-    "answers": [
-      "systems",
-      "contrast",
-      "vast",
-      "to",
-      "patterns",
-      "generate",
-      "more",
-      "and",
-      "Research",
-      "have"
-    ]
-  },
-  {
-    "id": 146,
-    "title": "Prehistoric Cave Art",
-    "raw": "Cave paintings represent some of the earliest forms of human expression and communication, often characterized by their intricate depictions and symbolic meanings. These artw____ [4] primarily fo___ [3] on t____ [2] walls a____ [2] ceilings o____ [1] caves, of___ [3] insights in____ [2] the li___ [3] and bel____ [4] of prehi______ [6] peoples. Such paintings frequently feature animals, hunting scenes, and abstract shapes, suggesting a complex relationship between humans and their environment and possibly spiritual beliefs. The pigments were garnered from natural sources like minerals and charcoal.",
-    "answers": [
-      "artworks",
-      "found",
-      "the",
-      "and",
-      "of",
-      "offer",
-      "into",
-      "lives",
-      "beliefs",
-      "prehistoric"
     ]
   }
 ]
