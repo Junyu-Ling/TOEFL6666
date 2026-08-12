@@ -2229,17 +2229,17 @@
   {
     "id": 132,
     "title": "Climate Change",
-    "raw": "Global temperatures and weather patterns are experiencing notable shifts, which scientific research strongly associates with human-related factors. Activities su__ [2] as t__ [2] us_ [1] of fossil fu___ [3], ch_____ [5] i_ [1] land use, and industrial produ_____ [5] contribute t_ [1] the accumu_______ [7] of green_____ [5] gases in the atmosphere. These gases retain heat, gradually increasing the Earth's average temperature. If emissions continue at current levels, potential outcomes may include more frequent extreme weather events, rising sea levels, and disruptions to ecosystems. Experts emphasize that timely and coordinated efforts are essential to reduce risks and promote long-term environmental stability.",
+    "raw": "Global temperatures and weather patterns are experiencing notable shifts, which scientific research strongly associates with human-related factors. Activities su__ [2] as t__ [2] us_ [1] of fossil fu___ [3], changes i_ [1] land use, and industrial produ_____ [5] contribute t_ [1] the accumu_______ [7] o_ [1] green_____ [5] gases in the atmosphere. These gases retain heat, gradually increasing the Earth's average temperature. If emissions continue at current levels, potential outcomes may include more frequent extreme weather events, rising sea levels, and disruptions to ecosystems. Experts emphasize that timely and coordinated efforts are essential to reduce risks and promote long-term environmental stability.",
     "answers": [
       "such",
       "the",
       "use",
       "fuels",
-      "changes",
       "in",
       "production",
       "to",
       "accumulations",
+      "of",
       "greenhouse"
     ]
   },
@@ -2263,14 +2263,13 @@
   {
     "id": 134,
     "title": "Film Technology",
-    "raw": "The evolution of the film industry has been shaped by major technological shifts, especially the move from silent films to movies with sound. In the silent era, filmmakers relied entirely on visual storytelling, using expressive acting and title cards to convey dialogue and emotion. The introd______ [6] of synchronized so___ [3]—where au___ [3] was mat____ [4] precisely wi__ [2] t__ [2] mov___ [3] image—all____ [4] audiences t_ [1] hear act___ [3] speak f__ [2] the first time, transforming the cinematic experience. This breakthrough laid the foundation for later innovations like CGI and immersive sound design, expanding how stories could be told on screen.",
+    "raw": "The evolution of the film industry has been shaped by major technological shifts, especially the move from silent films to movies with sound. In the silent era, filmmakers relied entirely on visual storytelling, using expressive acting and title cards to convey dialogue and emotion. The introd______ [6] of synchronized so___ [3]—where au___ [3] was mat____ [4] precisely wi__ [2] the mov___ [3] image—all____ [4] audiences t_ [1] hear act___ [3] speak f__ [2] the first time, transforming the cinematic experience. This breakthrough laid the foundation for later innovations like CGI and immersive sound design, expanding how stories could be told on screen.",
     "answers": [
       "introduction",
       "sound",
       "audio",
       "matched",
       "with",
-      "the",
       "moving",
       "allowed",
       "to",
