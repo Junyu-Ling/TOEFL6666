@@ -32,47 +32,26 @@ const BlankInput = forwardRef(function BlankInput(
   { blank, letters, checked, result, onChange, onFilled, onEnter },
   ref
 ) {
-  const refs = useRef([]);
+  const inputRef = useRef(null);
+  const value = letters.join("");
 
   useImperativeHandle(ref, () => ({
-    focusFirst: () => refs.current[0]?.focus(),
+    focusFirst: () => inputRef.current?.focus(),
   }));
 
-  const handleChange = (index, value) => {
-    const char = value.slice(-1).replace(/[^a-zA-Z]/g, "");
-    const next = [...letters];
-    next[index] = char;
+  const handleChange = (event) => {
+    const raw = event.target.value.replace(/[^a-zA-Z]/g, "").slice(0, blank.fillLen);
+    const next = Array.from({ length: blank.fillLen }, (_, index) => raw[index] ?? "");
     onChange(next);
-    if (char && index < letters.length - 1) {
-      refs.current[index + 1]?.focus();
-      return;
-    }
-    if (char && index === letters.length - 1) {
+    if (raw.length >= blank.fillLen) {
       onFilled?.();
     }
   };
 
-  const handleKeyDown = (index, event) => {
+  const handleKeyDown = (event) => {
     if (event.key === "Enter") {
       event.preventDefault();
       onEnter?.();
-      return;
-    }
-    if (event.key === "Backspace" && !letters[index] && index > 0) {
-      event.preventDefault();
-      refs.current[index - 1]?.focus();
-      const next = [...letters];
-      next[index - 1] = "";
-      onChange(next);
-      return;
-    }
-    if (event.key === "ArrowLeft" && index > 0) {
-      event.preventDefault();
-      refs.current[index - 1]?.focus();
-    }
-    if (event.key === "ArrowRight" && index < letters.length - 1) {
-      event.preventDefault();
-      refs.current[index + 1]?.focus();
     }
   };
 
@@ -85,27 +64,33 @@ const BlankInput = forwardRef(function BlankInput(
   return (
     <span className={`rfill-blank ${stateClass}`}>
       {blank.prefix ? <span className="rfill-blank__prefix">{blank.prefix}</span> : null}
-      <span className="rfill-blank__boxes" aria-label={`填空：${blank.answer}`}>
-        {letters.map((letter, index) => (
-          <input
-            key={`${blank.id}-${index}`}
-            ref={(node) => {
-              refs.current[index] = node;
-            }}
-            type="text"
-            inputMode="text"
-            autoComplete="off"
-            autoCapitalize="off"
-            autoCorrect="off"
-            spellCheck={false}
-            maxLength={1}
-            className="rfill-blank__box"
-            value={letter}
-            aria-label={`第 ${index + 1} 个字母`}
-            onChange={(event) => handleChange(index, event.target.value)}
-            onKeyDown={(event) => handleKeyDown(index, event)}
-          />
-        ))}
+      <span
+        className="rfill-blank__line-wrap"
+        style={{ "--fill-ch": blank.fillLen }}
+        aria-label={`填空：${blank.answer}`}
+      >
+        <span className="rfill-blank__guide" aria-hidden="true">
+          {Array.from({ length: blank.fillLen }, (_, index) => (
+            <span key={`${blank.id}-dash-${index}`} className="rfill-blank__dash">
+              {letters[index] ? "\u00A0" : "–"}
+            </span>
+          ))}
+        </span>
+        <input
+          ref={inputRef}
+          type="text"
+          inputMode="text"
+          autoComplete="off"
+          autoCapitalize="off"
+          autoCorrect="off"
+          spellCheck={false}
+          maxLength={blank.fillLen}
+          className="rfill-blank__line"
+          value={value}
+          aria-label={`填写 ${blank.fillLen} 个字母`}
+          onChange={handleChange}
+          onKeyDown={handleKeyDown}
+        />
       </span>
     </span>
   );
