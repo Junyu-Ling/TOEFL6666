@@ -34,7 +34,7 @@ const BlankInput = forwardRef(function BlankInput(
 ) {
   const inputRef = useRef(null);
   const value = letters.join("");
-  const placeholder = "_".repeat(blank.fillLen);
+  const placeholder = "_ ".repeat(blank.fillLen).trim();
 
   useImperativeHandle(ref, () => ({
     focusFirst: () => inputRef.current?.focus(),

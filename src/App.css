@@ -5139,7 +5139,9 @@ body {
 }
 
 .rfill-blank__line::placeholder {
-  color: transparent;
+  color: #94a3b8;
+  letter-spacing: 0.12em;
+  font-weight: 400;
 }
 
 .rfill-blank__line:focus {
