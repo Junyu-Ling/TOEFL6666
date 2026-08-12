@@ -5109,75 +5109,80 @@ body {
 
 .rfill-blank__line-wrap {
   display: inline-block;
-  vertical-align: baseline;
-  margin: 0 0.1em;
+  vertical-align: -0.1em;
+  margin: 0 0.15em;
 }
 
 .rfill-blank__line {
   display: inline-block;
-  width: calc(var(--fill-ch) * 0.72em + 0.35em);
-  min-width: 2.5em;
-  border: 0;
-  border-bottom: 2px solid #475569;
-  border-radius: 0;
-  background: transparent;
+  width: calc(var(--fill-ch) * 0.72em + 0.6em);
+  min-width: 2em;
+  height: 1.45em;
+  border: 1.5px solid #94a3b8;
+  border-radius: 3px;
+  background: #f1f5f9;
   color: var(--text);
   font: inherit;
-  font-size: inherit;
+  font-size: 0.9em;
   font-weight: 600;
-  letter-spacing: 0.14em;
-  text-align: left;
+  letter-spacing: 0.06em;
+  text-align: center;
   text-transform: lowercase;
-  padding: 0 0.05em 2px;
+  padding: 0 0.2em;
   margin: 0;
   caret-color: var(--accent, #1f6666);
   outline: none;
-  box-shadow: none;
   appearance: none;
   -webkit-appearance: none;
+  vertical-align: -0.25em;
+  transition: border-color 0.15s, background 0.15s, box-shadow 0.15s;
 }
 
 .rfill-blank__line::placeholder {
-  color: #64748b;
-  letter-spacing: 0.14em;
-  opacity: 1;
-  font-weight: 500;
+  color: transparent;
 }
 
 .rfill-blank__line:focus {
   outline: none;
-  border-bottom-color: var(--accent, #1f6666);
-  box-shadow: none;
+  border-color: var(--accent, #1f6666);
+  background: #fff;
+  box-shadow: 0 0 0 2px rgba(31, 102, 102, 0.15);
 }
 
 .rfill-blank--correct .rfill-blank__line {
-  border-bottom-color: #16a34a;
+  border-color: #16a34a;
+  background: #f0fdf4;
   color: #166534;
 }
 
-.rfill-blank--correct .rfill-blank__line::placeholder {
-  color: #86efac;
-}
-
 .rfill-blank--wrong .rfill-blank__line {
-  border-bottom-color: #dc2626;
+  border-color: #dc2626;
+  background: #fef2f2;
   color: #991b1b;
 }
 
-.rfill-blank--wrong .rfill-blank__line::placeholder {
-  color: #fca5a5;
-}
-
 [data-theme="dark"] .rfill-blank__line {
-  border-bottom-color: #94a3b8;
-}
-
-[data-theme="dark"] .rfill-blank__line::placeholder {
-  color: #64748b;
+  background: #1e293b;
+  border-color: #475569;
+  color: var(--text);
 }
 
 [data-theme="dark"] .rfill-blank__line:focus {
-  border-bottom-color: var(--accent);
+  background: #0f172a;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(31, 102, 102, 0.25);
+}
+
+[data-theme="dark"] .rfill-blank--correct .rfill-blank__line {
+  background: #052e16;
+  border-color: #16a34a;
+  color: #86efac;
+}
+
+[data-theme="dark"] .rfill-blank--wrong .rfill-blank__line {
+  background: #450a0a;
+  border-color: #dc2626;
+  color: #fca5a5;
 }
 
 .rfill__footer {
@@ -5382,8 +5387,8 @@ body {
   }
 
   .rfill-blank__line {
-    width: calc(var(--fill-ch) * 0.68em + 0.25em);
-    letter-spacing: 0.1em;
+    width: calc(var(--fill-ch) * 0.68em + 0.5em);
+    font-size: 0.85em;
   }
 }
 
