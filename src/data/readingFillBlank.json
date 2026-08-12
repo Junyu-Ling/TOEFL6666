@@ -2448,7 +2448,7 @@
   {
     "id": 145,
     "title": "AI",
-    "raw": "In recent years, the development of artificial intelligence has revolutionized numerous industries, transforming the way businesses operate and interact with their customers. AI technologies, such as machine learning and natural language processing, enable comp_____ [5] to per____ [4] tasks th__ [2] previously requ____ [4] human jud_____ [5]. For ex_____ [5], customer ser____ [4] chatbots a__ [2] now cap____ [4] of under________ [8] and responding to queries, providing instant support. Additionally, AI-driven analytics tools offer insights by processing vast amounts of data in real time, helping organizations make informed decisions.",
+    "raw": "In recent years, the development of artificial intelligence has revolutionized numerous industries, transforming the way businesses operate and interact with their customers. AI technologies, such as machine learning and natural language processing, enable comp_____ [5] to per____ [4] tasks th__ [2] previously requ____ [4] human jud_____ [5]. For exa____ [4], customer ser____ [4] chatbots a__ [2] now cap____ [4] of unders_______ [7] and responding to queries, providing instant support. Additionally, AI-driven analytics tools offer insights by processing vast amounts of data in real time, helping organizations make informed decisions.",
     "answers": [
       "computers",
       "perform",
