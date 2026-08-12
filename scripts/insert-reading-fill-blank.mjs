@@ -49,8 +49,8 @@ const insertArticles = [
   {
     id: 118,
     title: "Sodium-ion Batteries",
-    raw: "Sodium-ion batteries are gaining attention as a potential alternative to lithium-ion batteries. Sodium is more accessible than lithium because it can be extracted from seawater, while lithium typically requires mining methods that can har____ [1] the envir______ [6]. Sodium-ion techn____ [5] is consi_____ [5] more susta______ [6] in t____ [2] long run. However, sev____ [4] challenges lim____ [2] its wides____ [5] use. Sodium-ion batteries often store less energy than lithium-ion batteries, reducing their efficiency for certain applications. Researchers continue to study sodium-ion batteries in order to improve their performance and determine their role in future energy systems.",
-    answers: ["harm", "environment", "technology", "considered", "sustainable", "the", "several", "limit", "widespread"],
+    raw: "Sodium-ion batteries are gaining attention as a potential alternative to lithium-ion batteries. Sodium is more accessible than lithium because it can be extracted from seawater, while lithium typically requires mining methods that can ha__ [2] the envir______ [6]. Sodium-ion techn____ [5] is consi_____ [5] more susta______ [6] in t____ [2] long te__ [2]. However, sev____ [4] challenges lim____ [2] its wides____ [5] use. Sodium-ion batteries often store less energy than lithium-ion batteries, reducing their efficiency for certain applications. Researchers continue to study sodium-ion batteries in order to improve their performance and determine their role in future energy systems.",
+    answers: ["harm", "environment", "technology", "considered", "sustainable", "the", "term", "several", "limit", "widespread"],
   },
   {
     id: 119,
