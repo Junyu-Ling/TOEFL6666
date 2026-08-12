@@ -5075,7 +5075,7 @@ body {
   color: inherit;
 }
 
-.rfill__passage .rfill-blank__line {
+.rfill__passage .rfill-blank__box {
   user-select: text;
   -webkit-user-select: text;
 }
@@ -5107,83 +5107,73 @@ body {
   user-drag: none;
 }
 
-.rfill-blank__line-wrap {
+.rfill-blank__box {
   display: inline-block;
-  vertical-align: -0.1em;
-  margin: 0 0.15em;
-}
-
-.rfill-blank__line {
-  display: inline-block;
-  width: calc(var(--fill-ch) * 0.72em + 0.6em);
-  min-width: 2em;
-  height: 1.45em;
-  border: 1.5px solid #94a3b8;
-  border-radius: 3px;
-  background: #f1f5f9;
+  width: 0.9em;
+  height: 1.1em;
+  padding: 0;
+  margin: 0 0.04em;
+  border: none;
+  border-bottom: 1.5px solid #64748b;
+  border-radius: 0;
+  background: transparent;
   color: var(--text);
   font: inherit;
-  font-size: 0.9em;
+  font-size: inherit;
   font-weight: 600;
-  letter-spacing: 0.06em;
   text-align: center;
   text-transform: lowercase;
-  padding: 0 0.2em;
-  margin: 0;
+  vertical-align: baseline;
   caret-color: var(--accent, #1f6666);
   outline: none;
   appearance: none;
   -webkit-appearance: none;
-  vertical-align: -0.25em;
-  transition: border-color 0.15s, background 0.15s, box-shadow 0.15s;
+  line-height: 1;
 }
 
-.rfill-blank__line::placeholder {
+.rfill-blank__box::placeholder {
   color: #94a3b8;
-  letter-spacing: 0.12em;
   font-weight: 400;
 }
 
-.rfill-blank__line:focus {
+.rfill-blank__box:focus {
   outline: none;
-  border-color: var(--accent, #1f6666);
-  background: #fff;
-  box-shadow: 0 0 0 2px rgba(31, 102, 102, 0.15);
+  border-bottom-color: var(--accent, #1f6666);
 }
 
-.rfill-blank--correct .rfill-blank__line {
-  border-color: #16a34a;
-  background: #f0fdf4;
+.rfill-blank--correct .rfill-blank__box {
+  border-bottom-color: #16a34a;
   color: #166534;
 }
 
-.rfill-blank--wrong .rfill-blank__line {
-  border-color: #dc2626;
-  background: #fef2f2;
-  color: #991b1b;
-}
-
-[data-theme="dark"] .rfill-blank__line {
-  background: #1e293b;
-  border-color: #475569;
-  color: var(--text);
-}
-
-[data-theme="dark"] .rfill-blank__line:focus {
-  background: #0f172a;
-  border-color: var(--accent);
-  box-shadow: 0 0 0 2px rgba(31, 102, 102, 0.25);
-}
-
-[data-theme="dark"] .rfill-blank--correct .rfill-blank__line {
-  background: #052e16;
-  border-color: #16a34a;
+.rfill-blank--correct .rfill-blank__box::placeholder {
   color: #86efac;
 }
 
-[data-theme="dark"] .rfill-blank--wrong .rfill-blank__line {
-  background: #450a0a;
-  border-color: #dc2626;
+.rfill-blank--wrong .rfill-blank__box {
+  border-bottom-color: #dc2626;
+  color: #991b1b;
+}
+
+.rfill-blank--wrong .rfill-blank__box::placeholder {
+  color: #fca5a5;
+}
+
+[data-theme="dark"] .rfill-blank__box {
+  border-bottom-color: #94a3b8;
+}
+
+[data-theme="dark"] .rfill-blank__box:focus {
+  border-bottom-color: var(--accent);
+}
+
+[data-theme="dark"] .rfill-blank--correct .rfill-blank__box {
+  border-bottom-color: #16a34a;
+  color: #86efac;
+}
+
+[data-theme="dark"] .rfill-blank--wrong .rfill-blank__box {
+  border-bottom-color: #dc2626;
   color: #fca5a5;
 }
 
@@ -5388,9 +5378,8 @@ body {
     line-height: 1.95;
   }
 
-  .rfill-blank__line {
-    width: calc(var(--fill-ch) * 0.68em + 0.5em);
-    font-size: 0.85em;
+  .rfill-blank__box {
+    width: 0.82em;
   }
 }
 

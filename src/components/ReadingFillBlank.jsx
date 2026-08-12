@@ -32,27 +32,45 @@ const BlankInput = forwardRef(function BlankInput(
   { blank, letters, checked, result, onChange, onFilled, onEnter },
   ref
 ) {
-  const inputRef = useRef(null);
-  const value = letters.join("");
-  const placeholder = "_ ".repeat(blank.fillLen).trim();
+  const refs = useRef([]);
 
   useImperativeHandle(ref, () => ({
-    focusFirst: () => inputRef.current?.focus(),
+    focusFirst: () => refs.current[0]?.focus(),
   }));
 
-  const handleChange = (event) => {
-    const raw = event.target.value.replace(/[^a-zA-Z]/g, "").slice(0, blank.fillLen);
-    const next = Array.from({ length: blank.fillLen }, (_, index) => raw[index] ?? "");
+  const handleChange = (index, value) => {
+    const char = value.slice(-1).replace(/[^a-zA-Z]/g, "");
+    const next = [...letters];
+    next[index] = char;
     onChange(next);
-    if (raw.length >= blank.fillLen) {
+    if (char && index < letters.length - 1) {
+      refs.current[index + 1]?.focus();
+    } else if (char && index === letters.length - 1) {
       onFilled?.();
     }
   };
 
-  const handleKeyDown = (event) => {
+  const handleKeyDown = (index, event) => {
     if (event.key === "Enter") {
       event.preventDefault();
       onEnter?.();
+      return;
+    }
+    if (event.key === "Backspace" && !letters[index] && index > 0) {
+      event.preventDefault();
+      refs.current[index - 1]?.focus();
+      const next = [...letters];
+      next[index - 1] = "";
+      onChange(next);
+      return;
+    }
+    if (event.key === "ArrowLeft" && index > 0) {
+      event.preventDefault();
+      refs.current[index - 1]?.focus();
+    }
+    if (event.key === "ArrowRight" && index < letters.length - 1) {
+      event.preventDefault();
+      refs.current[index + 1]?.focus();
     }
   };
 
@@ -63,30 +81,27 @@ const BlankInput = forwardRef(function BlankInput(
     : "";
 
   return (
-    <span className={`rfill-blank ${stateClass}`}>
+    <span className={`rfill-blank ${stateClass}`} aria-label={`填空：${blank.answer}`}>
       {blank.prefix ? <span className="rfill-blank__prefix">{blank.prefix}</span> : null}
-      <span
-        className="rfill-blank__line-wrap"
-        style={{ "--fill-ch": blank.fillLen }}
-        aria-label={`填空：${blank.answer}`}
-      >
+      {letters.map((letter, index) => (
         <input
-          ref={inputRef}
+          key={`${blank.id}-${index}`}
+          ref={(node) => { refs.current[index] = node; }}
           type="text"
           inputMode="text"
           autoComplete="off"
           autoCapitalize="off"
           autoCorrect="off"
           spellCheck={false}
-          maxLength={blank.fillLen}
-          className="rfill-blank__line"
-          value={value}
-          placeholder={placeholder}
-          aria-label={`填写 ${blank.fillLen} 个字母`}
-          onChange={handleChange}
-          onKeyDown={handleKeyDown}
+          maxLength={1}
+          className="rfill-blank__box"
+          value={letter}
+          placeholder="_"
+          aria-label={`第 ${index + 1} 个字母`}
+          onChange={(e) => handleChange(index, e.target.value)}
+          onKeyDown={(e) => handleKeyDown(index, e)}
         />
-      </span>
+      ))}
     </span>
   );
 });
