@@ -446,7 +446,6 @@ function FamiliarObscurePractice({
   return (
     <PracticeSession
       tabId="familiar-obscure"
-      disableAutoRead
       title={isBrowse ? "" : title}
       stats={stats}
       toolbarExtra={

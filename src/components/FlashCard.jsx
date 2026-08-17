@@ -806,7 +806,9 @@ export default function FlashCard({
     let dictationTimer;
     let focusTimer;
     if (settings.autoReadOnNewWord && isActive && !disableAutoRead) {
-      speechTimer = setTimeout(() => speakWord(wordData.word), 200);
+      speechTimer = setTimeout(() => {
+        if (isActiveRef.current) speakWord(wordData.word);
+      }, 200);
     }
     if (settings.autoDictateOnNewWord && micGranted) {
       dictationTimer = setTimeout(() => startDictationRef.current?.(), 500);
