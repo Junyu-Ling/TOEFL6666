@@ -5789,9 +5789,9 @@ body {
 }
 
 .tw-card__choices {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.45rem;
   width: 100%;
 }
 
@@ -5799,8 +5799,8 @@ body {
   display: flex;
   align-items: center;
   width: 100%;
-  min-height: 3.25rem;
-  padding: 0.7rem 0.95rem;
+  min-height: 2.8rem;
+  padding: 0.55rem 0.75rem;
   border: 1px solid var(--border);
   border-radius: 0.875rem;
   background: var(--surface);

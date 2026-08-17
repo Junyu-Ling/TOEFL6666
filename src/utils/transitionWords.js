@@ -23,6 +23,10 @@ export function buildTransitionWordData(entry) {
   const category = getTransitionWordCategory(entry.categoryId);
   if (!category) return null;
 
+  const altCategories = (entry.alternativeCategoryIds ?? [])
+    .map((id) => getTransitionWordCategory(id))
+    .filter(Boolean);
+
   return {
     word: entry.word,
     definitions: [`${category.label}：${category.subtitle}`],
@@ -32,6 +36,9 @@ export function buildTransitionWordData(entry) {
       categoryLabel: category.label,
       categorySubtitle: category.subtitle,
       categoryAliases: category.aliases ?? [],
+      alternativeCategoryIds: entry.alternativeCategoryIds ?? [],
+      allCorrectCategoryIds: [category.id, ...(entry.alternativeCategoryIds ?? [])],
+      altCategoryLabels: altCategories.map((c) => c.label),
     },
   };
 }
@@ -49,15 +56,20 @@ export function evaluateTransitionWordChoice(selectedCategoryId, transitionWord)
     return buildLocalWrongResult("题目数据异常，请刷新后重试。");
   }
 
-  if (selectedCategoryId === transitionWord.categoryId) {
+  const allCorrect = transitionWord.allCorrectCategoryIds ?? [transitionWord.categoryId];
+  if (allCorrect.includes(selectedCategoryId)) {
     return buildLocalCorrectResult({
       matchedIndices: [0],
       missedIndices: [],
     });
   }
 
+  const altLabels = transitionWord.altCategoryLabels ?? [];
+  const extraHint = altLabels.length
+    ? `（也可选：${altLabels.join("、")}）`
+    : "";
   return buildLocalWrongResult(
-    `正确关系：${transitionWord.categoryLabel}（${transitionWord.categorySubtitle}）`
+    `正确关系：${transitionWord.categoryLabel}（${transitionWord.categorySubtitle}）${extraHint}`
   );
 }
 

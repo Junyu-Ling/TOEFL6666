@@ -98,7 +98,8 @@ export default function TransitionWordCard({
       <div className="tw-card__choices" role="listbox" aria-label="全部逻辑关系">
         {categories.map((choice) => {
           const isSelected = selectedId === choice.id;
-          const isCorrect = choice.id === transitionWord?.categoryId;
+          const allCorrect = transitionWord?.allCorrectCategoryIds ?? (transitionWord?.categoryId ? [transitionWord.categoryId] : []);
+          const isCorrect = allCorrect.includes(choice.id);
           let stateClass = "";
           if (answered) {
             if (isCorrect) stateClass = " tw-card__choice--correct";

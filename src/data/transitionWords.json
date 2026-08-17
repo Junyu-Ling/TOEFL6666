@@ -98,7 +98,7 @@
     { "id": 25, "word": "Thereupon", "categoryId": "cause-effect" },
     { "id": 26, "word": "Fittingly", "categoryId": "cause-effect" },
     { "id": 27, "word": "For this reason", "categoryId": "cause-effect" },
-    { "id": 28, "word": "Then", "categoryId": "cause-effect" },
+    { "id": 28, "word": "Then", "categoryId": "cause-effect", "alternativeCategoryIds": ["sequence"] },
     { "id": 29, "word": "In turn", "categoryId": "cause-effect" },
     { "id": 30, "word": "To that end", "categoryId": "cause-effect" },
     { "id": 31, "word": "Invariably", "categoryId": "cause-effect" },
@@ -128,6 +128,7 @@
     { "id": 52, "word": "Meanwhile", "categoryId": "sequence" },
     { "id": 53, "word": "Subsequently", "categoryId": "sequence" },
     { "id": 54, "word": "Previously", "categoryId": "sequence" },
+    { "id": 79, "word": "Concurrently", "categoryId": "sequence" },
 
     { "id": 55, "word": "Indeed", "categoryId": "emphasis" },
     { "id": 56, "word": "In fact", "categoryId": "emphasis" },
@@ -139,7 +140,7 @@
     { "id": 61, "word": "Similarly", "categoryId": "comparison" },
     { "id": 62, "word": "Likewise", "categoryId": "comparison" },
     { "id": 63, "word": "In the same way", "categoryId": "comparison" },
-    { "id": 64, "word": "By the same token", "categoryId": "comparison" },
+    { "id": 64, "word": "By the same token/note", "categoryId": "comparison" },
     { "id": 65, "word": "In the same manner", "categoryId": "comparison" },
 
     { "id": 66, "word": "That is", "categoryId": "clarification" },
