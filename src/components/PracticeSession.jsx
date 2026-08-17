@@ -18,6 +18,7 @@ function PracticeSession({
   sessionKey,
   emptyMessage = "本轮练习已完成！",
   tabId,
+  disableAutoRead = false,
 }) {
   const progress = queueLength ? Math.round(((currentIndex + 1) / queueLength) * 100) : 0;
 
@@ -52,6 +53,7 @@ function PracticeSession({
           onMemoryTrickGenerated={onMemoryTrickGenerated}
           onNext={onNext}
           onPrev={onPrev}
+          disableAutoRead={disableAutoRead}
         />
       ) : (
         <div className="word-list-view__empty">
