@@ -140,7 +140,8 @@
     { "id": 61, "word": "Similarly", "categoryId": "comparison" },
     { "id": 62, "word": "Likewise", "categoryId": "comparison" },
     { "id": 63, "word": "In the same way", "categoryId": "comparison" },
-    { "id": 64, "word": "By the same token/note", "categoryId": "comparison" },
+    { "id": 64, "word": "By the same token", "categoryId": "comparison" },
+    { "id": 80, "word": "By the same note", "categoryId": "comparison" },
     { "id": 65, "word": "In the same manner", "categoryId": "comparison" },
 
     { "id": 66, "word": "That is", "categoryId": "clarification" },
