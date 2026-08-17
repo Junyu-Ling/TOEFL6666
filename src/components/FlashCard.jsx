@@ -805,7 +805,7 @@ export default function FlashCard({
     let speechTimer;
     let dictationTimer;
     let focusTimer;
-    if (settings.autoReadOnNewWord && isActive && !disableAutoRead) {
+    if (settings.autoReadOnNewWord && !disableAutoRead) {
       speechTimer = setTimeout(() => {
         if (isActiveRef.current) speakWord(wordData.word);
       }, 200);
@@ -825,7 +825,7 @@ export default function FlashCard({
       clearTimeout(dictationTimer);
       clearTimeout(focusTimer);
     };
-  }, [wordData?.word, effectiveTypeMode, settings.autoReadOnNewWord, settings.autoDictateOnNewWord, micGranted, speakWord, focusInput, focusCard, isActive, disableAutoRead]);
+  }, [wordData?.word, effectiveTypeMode, settings.autoReadOnNewWord, settings.autoDictateOnNewWord, micGranted, speakWord, focusInput, focusCard, disableAutoRead]);
 
   useEffect(() => {
     if (!settingsOpen) return;
