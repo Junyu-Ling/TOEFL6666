@@ -1,4 +1,4 @@
-import { supabase } from "./supabase";
+import { supabase, isSupabaseConfigured } from "./supabase";
 
 function normalizePhone(raw) {
   const digits = String(raw).replace(/\D/g, "");
@@ -9,6 +9,7 @@ function normalizePhone(raw) {
 }
 
 export async function sendOtp(phone) {
+  if (!isSupabaseConfigured()) throw new Error("账号功能尚未配置，请联系管理员");
   const { error } = await supabase.auth.signInWithOtp({
     phone: normalizePhone(phone),
   });
@@ -16,6 +17,7 @@ export async function sendOtp(phone) {
 }
 
 export async function verifyOtp(phone, token) {
+  if (!isSupabaseConfigured()) throw new Error("账号功能尚未配置，请联系管理员");
   const { data, error } = await supabase.auth.verifyOtp({
     phone: normalizePhone(phone),
     token,
@@ -26,11 +28,13 @@ export async function verifyOtp(phone, token) {
 }
 
 export async function signOut() {
+  if (!isSupabaseConfigured()) return;
   const { error } = await supabase.auth.signOut();
   if (error) throw error;
 }
 
 export async function getSession() {
+  if (!isSupabaseConfigured()) return null;
   const { data } = await supabase.auth.getSession();
   return data.session ?? null;
 }

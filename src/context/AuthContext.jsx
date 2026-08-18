@@ -1,5 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
-import { supabase } from "../services/supabase";
+import { supabase, isSupabaseConfigured } from "../services/supabase";
 import { getSession, signOut as authSignOut } from "../services/auth";
 import { pullAllProgress, pushAllProgress } from "../services/cloudSync";
 
@@ -24,6 +24,11 @@ export function AuthProvider({ children }) {
   }, []);
 
   useEffect(() => {
+    if (!isSupabaseConfigured()) {
+      setLoading(false);
+      return undefined;
+    }
+
     getSession().then((session) => {
       handleSession(session);
       setLoading(false);

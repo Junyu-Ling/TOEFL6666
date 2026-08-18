@@ -1,4 +1,4 @@
-import { supabase } from "./supabase";
+import { supabase, isSupabaseConfigured } from "./supabase";
 
 const SYNC_KEYS = [
   "toefl666_progress",
@@ -12,6 +12,7 @@ const SYNC_KEYS = [
 ];
 
 export async function pushProgress(userId, key) {
+  if (!isSupabaseConfigured()) return;
   const raw = localStorage.getItem(key);
   if (raw === null) return;
   const { error } = await supabase.from("user_progress").upsert(
@@ -22,6 +23,7 @@ export async function pushProgress(userId, key) {
 }
 
 export async function pullProgress(userId, key) {
+  if (!isSupabaseConfigured()) return;
   const { data, error } = await supabase
     .from("user_progress")
     .select("value, updated_at")
