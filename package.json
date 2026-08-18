@@ -19,6 +19,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.112.3",
     "@upstash/redis": "^1.38.0",
     "katex": "^0.17.0",
     "pinyin-pro": "^3.28.1",

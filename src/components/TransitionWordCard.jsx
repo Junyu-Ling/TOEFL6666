@@ -33,6 +33,12 @@ export default function TransitionWordCard({
   }, [wordData?.word, transitionWord?.entryId]);
 
   useEffect(() => {
+    if (!answered) return undefined;
+    const timer = window.setTimeout(() => onNext?.(), 1500);
+    return () => window.clearTimeout(timer);
+  }, [answered, onNext]);
+
+  useEffect(() => {
     if (!settings.autoReadOnNewWord || !wordData?.word) return undefined;
     const timer = window.setTimeout(() => speakWord(wordData.word), 200);
     return () => window.clearTimeout(timer);

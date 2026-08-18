@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSettings } from "../context/SettingsContext";
+import { useAuth } from "../context/AuthContext";
 import { APP_MODE_LABELS, getAlternateAppMode, isTabAvailableInMode } from "../utils/appMode";
 import { syncService, SYNC_STATUS_EVENT } from "../services/syncService";
 
@@ -15,8 +16,9 @@ const TABS = [
   { id: "reading-fill", label: "阅读填词" },
 ];
 
-export default function Navbar({ activeTab, onTabChange, counts, streak, onStreakClick, onExamModeSwitch }) {
+export default function Navbar({ activeTab, onTabChange, counts, streak, onStreakClick, onExamModeSwitch, onLoginClick }) {
   const { settings, setSettingsOpen } = useSettings();
+  const { user, syncing, signOut } = useAuth();
   const appMode = settings.appMode ?? "toefl";
   const alternateMode = getAlternateAppMode(appMode);
   const loggedInToday = streak?.loggedInToday;
@@ -70,6 +72,31 @@ export default function Navbar({ activeTab, onTabChange, counts, streak, onStrea
       </div>
 
       <div className="navbar__actions">
+        {user ? (
+          <button
+            type="button"
+            className="navbar__user"
+            onClick={signOut}
+            title={`已登录：${user.phone ?? user.email ?? ""}\n点击退出登录`}
+            aria-label="用户账号，点击退出"
+          >
+            <span className="navbar__user-avatar" aria-hidden>👤</span>
+            <span className="navbar__user-phone">
+              {syncing ? "同步中…" : (user.phone ? user.phone.slice(-4) : "已登录")}
+            </span>
+          </button>
+        ) : (
+          <button
+            type="button"
+            className="navbar__login"
+            onClick={onLoginClick}
+            aria-label="登录账号"
+            title="登录/注册"
+          >
+            登录
+          </button>
+        )}
+
         <button
           type="button"
           className={`navbar__streak ${loggedInToday ? "navbar__streak--active" : ""}`}

@@ -1,5 +1,6 @@
 import { useState, useCallback, useMemo, useEffect, useRef } from "react";
 import Navbar from "./components/Navbar";
+import LoginModal from "./components/LoginModal";
 import PracticeSession from "./components/PracticeSession";
 import WordList from "./components/WordList";
 import MicPermissionPrompt from "./components/MicPermissionPrompt";
@@ -109,6 +110,7 @@ export default function App() {
   const [reviewShuffle, setReviewShuffle] = useState(savedRef.current.reviewShuffle ?? false);
   const [streakData, setStreakData] = useState(() => recordVisit());
   const [streakOpen, setStreakOpen] = useState(false);
+  const [loginOpen, setLoginOpen] = useState(false);
   const [unrecognizedReviewListIds, setUnrecognizedReviewListIds] = useState([]);
   const [recognizedReviewListIds, setRecognizedReviewListIds] = useState([]);
   useEffect(() => {
@@ -1331,6 +1333,7 @@ export default function App() {
             setStreakOpen(true);
           }}
           onExamModeSwitch={handleExamModeSwitch}
+          onLoginClick={() => setLoginOpen(true)}
         />
 
         {micPromptVisible && (
@@ -1403,6 +1406,7 @@ export default function App() {
       </div>
 
       <SettingsPanel />
+      {loginOpen ? <LoginModal onClose={() => setLoginOpen(false)} /> : null}
     </div>
   );
 }
