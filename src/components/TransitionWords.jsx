@@ -3,6 +3,7 @@ import {
   buildTransitionWordData,
   buildShuffledTransitionOrder,
   getTransitionWordEntries,
+  getTransitionWordCategory,
   getTransitionWordsTitle,
 } from "../utils/transitionWords";
 import {
@@ -183,11 +184,27 @@ function TransitionWordsPractice({
   );
 }
 
+function filterByQuery(entries, query) {
+  const q = query.trim().toLowerCase();
+  if (!q) return entries;
+  return entries.filter((entry) => {
+    if (entry.word.toLowerCase().includes(q)) return true;
+    const cat = getTransitionWordCategory(entry.categoryId);
+    if (!cat) return false;
+    return (
+      cat.label.toLowerCase().includes(q) ||
+      cat.subtitle.toLowerCase().includes(q) ||
+      (cat.aliases ?? []).some((a) => a.toLowerCase().includes(q))
+    );
+  });
+}
+
 function TransitionWords() {
   const entries = useMemo(() => getTransitionWordEntries(), []);
   const saved = useMemo(() => loadTransitionWordsProgress(), []);
   const [shuffle, setShuffle] = useState(saved.shuffle !== false);
   const [listFilter, setListFilter] = useState("all");
+  const [query, setQuery] = useState("");
   const [progress, setProgress] = useState(() => loadTransitionWordsProgress());
 
   const refreshProgress = useCallback(() => {
@@ -207,11 +224,11 @@ function TransitionWords() {
   }, [refreshProgress]);
 
   const practiceEntries = useMemo(() => {
-    if (listFilter === "review") {
-      return filterTransitionReviewEntries(entries, progress);
-    }
-    return entries;
-  }, [entries, listFilter, progress]);
+    let base = listFilter === "review"
+      ? filterTransitionReviewEntries(entries, progress)
+      : entries;
+    return filterByQuery(base, query);
+  }, [entries, listFilter, progress, query]);
 
   return (
     <div className="tw">
@@ -224,6 +241,14 @@ function TransitionWords() {
             </p>
           </div>
           <div className="tw__control-actions">
+            <input
+              type="search"
+              className="tw__search"
+              placeholder="搜索词或逻辑关系…"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              aria-label="搜索过渡词"
+            />
             <div className="tw__filter-tabs" role="tablist" aria-label="过渡词范围">
               <button
                 type="button"

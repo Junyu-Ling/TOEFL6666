@@ -171,7 +171,7 @@ body {
   font-style: italic;
 }
 
-/* ── Navbar ── */
+/* ââ Navbar ââ */
 .navbar {
   display: flex;
   align-items: center;
@@ -400,7 +400,7 @@ body {
   border-color: var(--border);
 }
 
-/* ── Main ── */
+/* ââ Main ââ */
 .main {
   flex: 1;
   width: 100%;
@@ -431,7 +431,7 @@ body {
   min-height: 0;
 }
 
-/* ── Practice ── */
+/* ââ Practice ââ */
 .practice-view {
   display: flex;
   flex-direction: column;
@@ -540,7 +540,7 @@ body {
   max-width: var(--fc-width);
 }
 
-/* ── Flashcard ── */
+/* ââ Flashcard ââ */
 .flashcard-scene {
   perspective: 1200px;
   display: flex;
@@ -1430,7 +1430,7 @@ body {
   background: var(--bg);
 }
 
-/* ── Vocab Loading Screen ── */
+/* ââ Vocab Loading Screen ââ */
 .vocab-loader {
   position: relative;
   width: 100%;
@@ -1628,8 +1628,8 @@ body {
   50% { opacity: 0.95; transform: scale(1.08); }
 }
 
-/* 卡片字号、内边距沿用 .flashcard-scene / .flashcard__face 的默认值，
-   加载动画卡片略窄于正式练习，但留足单词展示宽度。 */
+/* å¡çå­å·ãåè¾¹è·æ²¿ç¨ .flashcard-scene / .flashcard__face çé»è®¤å¼ï¼
+   å è½½å¨ç»å¡çç¥çªäºæ­£å¼ç»ä¹ ï¼ä½çè¶³åè¯å±ç¤ºå®½åº¦ã */
 .vocab-loader__scene {
   position: relative;
   z-index: 1;
@@ -1730,7 +1730,7 @@ body {
   100% { transform: translateX(320%); }
 }
 
-/* ── Back ── */
+/* ââ Back ââ */
 .flashcard__badge {
   align-self: center;
   font-size: 0.875rem;
@@ -1902,7 +1902,7 @@ body {
   padding: 0.55rem 1rem;
 }
 
-/* ── Buttons ── */
+/* ââ Buttons ââ */
 .btn {
   font-family: inherit;
   font-size: 0.9375rem;
@@ -1993,7 +1993,7 @@ body {
   filter: brightness(1.05);
 }
 
-/* ── Word List ── */
+/* ââ Word List ââ */
 .word-list-view__header {
   display: flex;
   justify-content: space-between;
@@ -2771,7 +2771,7 @@ body {
   user-select: none;
 }
 
-/* ── Settings ── */
+/* ââ Settings ââ */
 .settings-overlay {
   position: fixed;
   inset: 0;
@@ -2821,7 +2821,7 @@ body {
   border-color: var(--border-strong);
 }
 
-/* ── Streak / Calendar ── */
+/* ââ Streak / Calendar ââ */
 .streak-panel {
   width: min(420px, 100vw);
   height: 100%;
@@ -3329,7 +3329,7 @@ body {
 }
 
 .settings-group__summary::before {
-  content: "▸";
+  content: "â¸";
   flex-shrink: 0;
   color: var(--text-muted);
   transition: transform 0.15s;
@@ -3893,7 +3893,7 @@ body {
   padding: 0.55rem 0.75rem;
 }
 
-/* ── Vocab AI Assistant ── */
+/* ââ Vocab AI Assistant ââ */
 .vocab-assistant {
   position: fixed;
   right: 1rem;
@@ -4468,7 +4468,7 @@ body {
   }
 }
 
-/* ── LexGrid · 词格猜词 ── */
+/* ââ LexGrid Â· è¯æ ¼çè¯ ââ */
 .lexgrid {
   --lexgrid-correct: #6aaa64;
   --lexgrid-correct-text: #fff;
@@ -4852,7 +4852,7 @@ body {
   line-height: 1.5;
 }
 
-/* ── Reading Fill Blank · 阅读填词 ── */
+/* ââ Reading Fill Blank Â· éè¯»å¡«è¯ ââ */
 .rfill {
   flex: 1;
   display: flex;
@@ -5382,7 +5382,7 @@ body {
   }
 }
 
-/* ── Reading Vocab Match · 阅读词汇题 ── */
+/* ââ Reading Vocab Match Â· éè¯»è¯æ±é¢ ââ */
 .rvocab {
   max-width: 52rem;
   margin: 0 auto;
@@ -5674,7 +5674,7 @@ body {
   }
 }
 
-/* ── Transition Words · SAT 过渡词 ── */
+/* ââ Transition Words Â· SAT è¿æ¸¡è¯ ââ */
 .tw {
   max-width: none;
   padding: 0.5rem 0.75rem 1.5rem;
@@ -5718,6 +5718,31 @@ body {
   font-size: 0.875rem;
   color: var(--text-light);
   line-height: 1.45;
+}
+
+.tw__control-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+
+.tw__search {
+  width: 14rem;
+  padding: 0.4rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 0.625rem;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 0.875rem;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.tw__search:focus {
+  border-color: var(--accent);
+}
+.tw__search::placeholder {
+  color: var(--text-light);
 }
 
 .tw__filter-tabs {
@@ -5887,7 +5912,7 @@ body {
   margin: 0;
 }
 
-/* ── Familiar Obscure Meanings · 熟词僻义 ── */
+/* ââ Familiar Obscure Meanings Â· çè¯å»ä¹ ââ */
 .fobs--practice {
   max-width: none;
   padding: 0.5rem 0.75rem 1.5rem;
@@ -6529,7 +6554,7 @@ body {
   }
 }
 
-/* ���� Navbar Login / User ���������������������������������������������������������������� */
+/* ©¤©¤ Navbar Login / User ©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤ */
 .navbar__login {
   display: flex;
   align-items: center;
@@ -6569,7 +6594,7 @@ body {
 .navbar__user-avatar { font-size: 0.9rem; }
 .navbar__user-phone { font-weight: 600; letter-spacing: 0.03em; }
 
-/* ���� Login Modal ���������������������������������������������������������������������������������� */
+/* ©¤©¤ Login Modal ©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤ */
 .login-modal__overlay {
   position: fixed;
   inset: 0;
