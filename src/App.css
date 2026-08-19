@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lexend:wght@500;600;700&display=swap");
+﻿@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lexend:wght@500;600;700&display=swap");
 
 :root,
 [data-theme="light"] {
@@ -171,7 +171,7 @@ body {
   font-style: italic;
 }
 
-/* ââ Navbar ââ */
+/* 芒聰聙芒聰聙 Navbar 芒聰聙芒聰聙 */
 .navbar {
   display: flex;
   align-items: center;
@@ -400,7 +400,7 @@ body {
   border-color: var(--border);
 }
 
-/* ââ Main ââ */
+/* 芒聰聙芒聰聙 Main 芒聰聙芒聰聙 */
 .main {
   flex: 1;
   width: 100%;
@@ -431,7 +431,7 @@ body {
   min-height: 0;
 }
 
-/* ââ Practice ââ */
+/* 芒聰聙芒聰聙 Practice 芒聰聙芒聰聙 */
 .practice-view {
   display: flex;
   flex-direction: column;
@@ -540,7 +540,7 @@ body {
   max-width: var(--fc-width);
 }
 
-/* ââ Flashcard ââ */
+/* 芒聰聙芒聰聙 Flashcard 芒聰聙芒聰聙 */
 .flashcard-scene {
   perspective: 1200px;
   display: flex;
@@ -1430,7 +1430,7 @@ body {
   background: var(--bg);
 }
 
-/* ââ Vocab Loading Screen ââ */
+/* 芒聰聙芒聰聙 Vocab Loading Screen 芒聰聙芒聰聙 */
 .vocab-loader {
   position: relative;
   width: 100%;
@@ -1628,8 +1628,8 @@ body {
   50% { opacity: 0.95; transform: scale(1.08); }
 }
 
-/* å¡çå­å·ãåè¾¹è·æ²¿ç¨ .flashcard-scene / .flashcard__face çé»è®¤å¼ï¼
-   å è½½å¨ç»å¡çç¥çªäºæ­£å¼ç»ä¹ ï¼ä½çè¶³åè¯å±ç¤ºå®½åº¦ã */
+/* 氓聧隆莽聣聡氓颅聴氓聫路茫聙聛氓聠聟猫戮鹿猫路聺忙虏驴莽聰篓 .flashcard-scene / .flashcard__face 莽職聞茅禄聵猫庐陇氓聙录茂录聦
+   氓聤聽猫陆陆氓聤篓莽聰禄氓聧隆莽聣聡莽聲楼莽陋聞盲潞聨忙颅拢氓录聫莽禄聝盲鹿聽茂录聦盲陆聠莽聲聶猫露鲁氓聧聲猫炉聧氓卤聲莽陇潞氓庐陆氓潞娄茫聙聜 */
 .vocab-loader__scene {
   position: relative;
   z-index: 1;
@@ -1730,7 +1730,7 @@ body {
   100% { transform: translateX(320%); }
 }
 
-/* ââ Back ââ */
+/* 芒聰聙芒聰聙 Back 芒聰聙芒聰聙 */
 .flashcard__badge {
   align-self: center;
   font-size: 0.875rem;
@@ -1902,7 +1902,7 @@ body {
   padding: 0.55rem 1rem;
 }
 
-/* ââ Buttons ââ */
+/* 芒聰聙芒聰聙 Buttons 芒聰聙芒聰聙 */
 .btn {
   font-family: inherit;
   font-size: 0.9375rem;
@@ -1993,7 +1993,7 @@ body {
   filter: brightness(1.05);
 }
 
-/* ââ Word List ââ */
+/* 芒聰聙芒聰聙 Word List 芒聰聙芒聰聙 */
 .word-list-view__header {
   display: flex;
   justify-content: space-between;
@@ -2771,7 +2771,7 @@ body {
   user-select: none;
 }
 
-/* ââ Settings ââ */
+/* 芒聰聙芒聰聙 Settings 芒聰聙芒聰聙 */
 .settings-overlay {
   position: fixed;
   inset: 0;
@@ -2821,7 +2821,7 @@ body {
   border-color: var(--border-strong);
 }
 
-/* ââ Streak / Calendar ââ */
+/* 芒聰聙芒聰聙 Streak / Calendar 芒聰聙芒聰聙 */
 .streak-panel {
   width: min(420px, 100vw);
   height: 100%;
@@ -3329,7 +3329,7 @@ body {
 }
 
 .settings-group__summary::before {
-  content: "â¸";
+  content: "芒聳赂";
   flex-shrink: 0;
   color: var(--text-muted);
   transition: transform 0.15s;
@@ -3893,7 +3893,7 @@ body {
   padding: 0.55rem 0.75rem;
 }
 
-/* ââ Vocab AI Assistant ââ */
+/* 芒聰聙芒聰聙 Vocab AI Assistant 芒聰聙芒聰聙 */
 .vocab-assistant {
   position: fixed;
   right: 1rem;
@@ -4468,7 +4468,7 @@ body {
   }
 }
 
-/* ââ LexGrid Â· è¯æ ¼çè¯ ââ */
+/* 芒聰聙芒聰聙 LexGrid 脗路 猫炉聧忙聽录莽聦聹猫炉聧 芒聰聙芒聰聙 */
 .lexgrid {
   --lexgrid-correct: #6aaa64;
   --lexgrid-correct-text: #fff;
@@ -4852,7 +4852,7 @@ body {
   line-height: 1.5;
 }
 
-/* ââ Reading Fill Blank Â· éè¯»å¡«è¯ ââ */
+/* 芒聰聙芒聰聙 Reading Fill Blank 脗路 茅聵聟猫炉禄氓隆芦猫炉聧 芒聰聙芒聰聙 */
 .rfill {
   flex: 1;
   display: flex;
@@ -5382,7 +5382,7 @@ body {
   }
 }
 
-/* ââ Reading Vocab Match Â· éè¯»è¯æ±é¢ ââ */
+/* 芒聰聙芒聰聙 Reading Vocab Match 脗路 茅聵聟猫炉禄猫炉聧忙卤聡茅垄聵 芒聰聙芒聰聙 */
 .rvocab {
   max-width: 52rem;
   margin: 0 auto;
@@ -5674,7 +5674,7 @@ body {
   }
 }
 
-/* ââ Transition Words Â· SAT è¿æ¸¡è¯ ââ */
+/* 芒聰聙芒聰聙 Transition Words 脗路 SAT 猫驴聡忙赂隆猫炉聧 芒聰聙芒聰聙 */
 .tw {
   max-width: none;
   padding: 0.5rem 0.75rem 1.5rem;
@@ -5912,7 +5912,7 @@ body {
   margin: 0;
 }
 
-/* ââ Familiar Obscure Meanings Â· çè¯å»ä¹ ââ */
+/* 芒聰聙芒聰聙 Familiar Obscure Meanings 脗路 莽聠聼猫炉聧氓聝禄盲鹿聣 芒聰聙芒聰聙 */
 .fobs--practice {
   max-width: none;
   padding: 0.5rem 0.75rem 1.5rem;
@@ -6554,7 +6554,7 @@ body {
   }
 }
 
-/* ©¤©¤ Navbar Login / User ©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤ */
+/* 漏陇漏陇 Navbar Login / User 漏陇漏陇漏陇漏陇漏陇漏陇漏陇漏陇漏陇漏陇漏陇漏陇漏陇漏陇漏陇漏陇漏陇漏陇漏陇漏陇漏陇漏陇漏陇漏陇漏陇漏陇漏陇漏陇漏陇漏陇漏陇漏陇 */
 .navbar__login {
   display: flex;
   align-items: center;
@@ -6594,7 +6594,7 @@ body {
 .navbar__user-avatar { font-size: 0.9rem; }
 .navbar__user-phone { font-weight: 600; letter-spacing: 0.03em; }
 
-/* ©¤©¤ Login Modal ©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤©¤ */
+/* 漏陇漏陇 Login Modal 漏陇漏陇漏陇漏陇漏陇漏陇漏陇漏陇漏陇漏陇漏陇漏陇漏陇漏陇漏陇漏陇漏陇漏陇漏陇漏陇漏陇漏陇漏陇漏陇漏陇漏陇漏陇漏陇漏陇漏陇漏陇漏陇漏陇漏陇漏陇漏陇漏陇漏陇漏陇漏陇漏陇 */
 .login-modal__overlay {
   position: fixed;
   inset: 0;
@@ -6734,7 +6734,7 @@ body {
   margin: 0;
 }
 
-/* ���� SAT Vocab ���������������������������������������������������������������������������������������� */
+/* ── SAT Vocab ──────────────────────────────────────────── */
 .sv {
   display: flex;
   flex-direction: column;
@@ -6806,7 +6806,6 @@ body {
   font-weight: 600;
 }
 
-/* Card */
 .sv-card-scene {
   width: 100%;
   max-width: 36rem;
