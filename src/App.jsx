@@ -15,6 +15,7 @@ import ReadingVocabMatch from "./components/ReadingVocabMatch";
 import ReadingFillBlank from "./components/ReadingFillBlank";
 import FamiliarObscureMeanings from "./components/FamiliarObscureMeanings";
 import TransitionWords from "./components/TransitionWords";
+import SatVocab from "./components/SatVocab";
 import TabPanel from "./components/TabPanel";
 import MottoFooter from "./components/MottoFooter";
 import { recordVisit, refreshStreak } from "./services/streak";
@@ -1089,6 +1090,8 @@ export default function App() {
     [wordBankMap, mic.isGranted]
   );
 
+  const satVocabPanel = useMemo(() => <SatVocab />, []);
+
   const unrecognizedPanel = useMemo(
     () =>
       unrecognizedPracticeActive ? (
@@ -1374,6 +1377,12 @@ export default function App() {
           <TabPanel tabId="recognized" activeTab={activeTab}>
             {recognizedPanel}
           </TabPanel>
+
+          {appMode === "sat" ? (
+            <TabPanel tabId="sat-vocab" activeTab={activeTab}>
+              {satVocabPanel}
+            </TabPanel>
+          ) : null}
 
           {appMode === "sat" ? (
             <TabPanel tabId="transition-words" activeTab={activeTab}>

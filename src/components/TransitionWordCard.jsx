@@ -54,7 +54,10 @@ export default function TransitionWordCard({
       setResult(aiResult);
       setAnswered(true);
       if (settings.answerSounds) {
-        playAnswerSound(aiResult.is_correct ? settings.answerSoundCorrect : settings.answerSoundWrong);
+        playAnswerSound(aiResult.is_correct, {
+          correctId: settings.answerSoundCorrect,
+          wrongId: settings.answerSoundWrong,
+        });
       }
       onResult?.(wordData, aiResult);
     },
