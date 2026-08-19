@@ -3336,7 +3336,7 @@ body {
 }
 
 .settings-group__summary::before {
-  content: "芒聳赂";
+  content: "\25B8";
   flex-shrink: 0;
   color: var(--text-muted);
   transition: transform 0.15s;
