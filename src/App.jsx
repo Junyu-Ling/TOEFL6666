@@ -1090,7 +1090,10 @@ export default function App() {
     [wordBankMap, mic.isGranted]
   );
 
-  const satVocabPanel = useMemo(() => <SatVocab />, []);
+  const satVocabPanel = useMemo(
+    () => <SatVocab wordBankMap={wordBankMap} micGranted={mic.isGranted} />,
+    [wordBankMap, mic.isGranted]
+  );
 
   const unrecognizedPanel = useMemo(
     () =>

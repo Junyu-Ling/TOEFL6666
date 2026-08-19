@@ -1,7 +1,6 @@
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useSettings } from "../context/SettingsContext";
 import { useIsActiveTab } from "../context/ActiveTabContext";
-import { playAnswerSound } from "../utils/answerSounds";
+import PracticeSession from "./PracticeSession";
 import {
   loadSatVocabProgress,
   markSatVocabMastered,
@@ -11,147 +10,28 @@ import {
 } from "../services/satVocabProgress";
 import rawWords from "../data/satVocab.json";
 
-function shuffle(arr) {
-  const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
+function buildWordData(entry) {
+  return {
+    word: entry.word,
+    definitions: [entry.definition],
+    satVocab: { id: entry.id, color: entry.color },
+  };
+}
+
+function shuffleOrder(len) {
+  const arr = Array.from({ length: len }, (_, i) => i);
+  for (let i = arr.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
+    [arr[i], arr[j]] = [arr[j], arr[i]];
   }
-  return a;
+  return arr;
 }
 
 function buildOrder(words, isShuffled) {
-  return isShuffled ? shuffle(words.map((_, i) => i)) : words.map((_, i) => i);
+  return isShuffled ? shuffleOrder(words.length) : words.map((_, i) => i);
 }
 
-function SatVocabCard({ entry, onMastered, onReview, onNext, onPrev, tabId }) {
-  const { speakWord, settings } = useSettings();
-  const isActive = useIsActiveTab(tabId);
-  const isActiveRef = useRef(isActive);
-  isActiveRef.current = isActive;
-  const [flipped, setFlipped] = useState(false);
-  const [answered, setAnswered] = useState(false);
-  const answeredRef = useRef(false);
-
-  useEffect(() => {
-    setFlipped(false);
-    setAnswered(false);
-    answeredRef.current = false;
-  }, [entry?.id]);
-
-  useEffect(() => {
-    if (!settings.autoReadOnNewWord || !entry?.word) return undefined;
-    const timer = window.setTimeout(() => {
-      if (isActiveRef.current) speakWord(entry.word);
-    }, 200);
-    return () => window.clearTimeout(timer);
-  }, [entry?.word, settings.autoReadOnNewWord, speakWord]);
-
-  useEffect(() => {
-    if (!isActive) return undefined;
-    function onKey(e) {
-      if (e.key === "ArrowUp") { e.preventDefault(); onPrev?.(); return; }
-      if (e.key === "ArrowDown" || e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
-        if (!flipped) { setFlipped(true); return; }
-        if (!answered) return;
-        onNext?.();
-      }
-    }
-    window.addEventListener("keydown", onKey, true);
-    return () => window.removeEventListener("keydown", onKey, true);
-  }, [isActive, flipped, answered, onNext, onPrev]);
-
-  const handleMastered = useCallback(() => {
-    if (answeredRef.current) return;
-    answeredRef.current = true;
-    setAnswered(true);
-    if (settings.answerSounds) {
-      playAnswerSound(true, {
-        correctId: settings.answerSoundCorrect,
-        wrongId: settings.answerSoundWrong,
-      });
-    }
-    onMastered?.(entry.id);
-  }, [entry?.id, onMastered, settings]);
-
-  const handleReview = useCallback(() => {
-    if (answeredRef.current) return;
-    answeredRef.current = true;
-    setAnswered(true);
-    if (settings.answerSounds) {
-      playAnswerSound(false, {
-        correctId: settings.answerSoundCorrect,
-        wrongId: settings.answerSoundWrong,
-      });
-    }
-    onReview?.(entry.id);
-  }, [entry?.id, onReview, settings]);
-
-  if (!entry) return null;
-
-  const colorClass = entry.color === "blue" ? "sv-card__word--blue" : "sv-card__word--black";
-
-  return (
-    <div className="sv-card-scene">
-      <div className={`sv-card ${flipped ? "sv-card--flipped" : ""}`}>
-        <div className="sv-card__front" onClick={() => setFlipped(true)}>
-          <div className="sv-card__word-wrap">
-            <h2 className={`sv-card__word ${colorClass}`}>{entry.word}</h2>
-            <button
-              type="button"
-              className="flashcard__sound"
-              onClick={(e) => { e.stopPropagation(); speakWord(entry.word); }}
-              aria-label="播放发音"
-            >
-              <svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" />
-              </svg>
-            </button>
-          </div>
-          <p className="sv-card__tap-hint">点击翻转查看释义 · Enter</p>
-        </div>
-
-        <div className="sv-card__back">
-          <div className="sv-card__word-wrap">
-            <h2 className={`sv-card__word ${colorClass}`}>{entry.word}</h2>
-            <button
-              type="button"
-              className="flashcard__sound"
-              onClick={() => speakWord(entry.word)}
-              aria-label="播放发音"
-            >
-              <svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" />
-              </svg>
-            </button>
-          </div>
-          <p className="sv-card__definition">{entry.definition}</p>
-
-          {!answered ? (
-            <div className="sv-card__actions">
-              <button type="button" className="sv-card__btn sv-card__btn--review" onClick={handleReview}>
-                不认识 → 生词本
-              </button>
-              <button type="button" className="sv-card__btn sv-card__btn--mastered" onClick={handleMastered}>
-                认识 → 熟词本
-              </button>
-            </div>
-          ) : (
-            <div className="sv-card__answered">
-              <button type="button" className="btn btn--primary flashcard__next" onClick={onNext}>
-                下一个
-              </button>
-              <p className="flashcard__footer flashcard__footer--back">Enter 下一个 · ↑↓ 切词</p>
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function SatVocab() {
+function SatVocab({ wordBankMap, micGranted }) {
   const isActive = useIsActiveTab("sat-vocab");
   const [progress, setProgress] = useState(() => loadSatVocabProgress());
   const [isShuffle, setIsShuffle] = useState(() => loadSatVocabProgress().shuffle);
@@ -190,22 +70,29 @@ function SatVocab() {
   const [order, setOrder] = useState(() => buildOrder(filteredWords, isShuffle));
   const [index, setIndex] = useState(0);
   const [complete, setComplete] = useState(false);
+  const prevFilterKey = useRef(`${listFilter}-${filteredWords.length}`);
 
   useEffect(() => {
+    const key = `${listFilter}-${filteredWords.length}`;
+    if (prevFilterKey.current === key) return;
+    prevFilterKey.current = key;
     setOrder(buildOrder(filteredWords, isShuffle));
     setIndex(0);
     setComplete(false);
-  }, [filteredWords, isShuffle]);
+  }, [filteredWords, isShuffle, listFilter]);
 
   const entry = filteredWords[order[index]] ?? null;
+  const currentWord = entry ? buildWordData(entry) : null;
   const total = filteredWords.length;
 
-  const handleMastered = useCallback((id) => {
-    markSatVocabMastered(id);
-  }, []);
-
-  const handleReview = useCallback((id) => {
-    markSatVocabReview(id);
+  const handleResult = useCallback((_wordData, aiResult) => {
+    const id = _wordData?.satVocab?.id;
+    if (!id) return;
+    if (aiResult.is_correct) {
+      markSatVocabMastered(id);
+    } else {
+      markSatVocabReview(id);
+    }
   }, []);
 
   const handleNext = useCallback(() => {
@@ -231,9 +118,15 @@ function SatVocab() {
     });
   }, []);
 
-  const progress_pct = total ? Math.round(((index + 1) / total) * 100) : 0;
   const masteredCount = progress.masteredIds.length;
   const reviewCount = progress.reviewIds.length;
+
+  const stats = (
+    <>
+      <span className="practice-toolbar__stat">待复习 {reviewCount}</span>
+      <span className="practice-toolbar__stat practice-toolbar__stat--ok">已掌握 {masteredCount}</span>
+    </>
+  );
 
   return (
     <div className="sv">
@@ -255,8 +148,8 @@ function SatVocab() {
             <div className="sv__filter-tabs" role="tablist">
               {[
                 { id: "all", label: "全部" },
-                { id: "review", label: `生词本 ${reviewCount || ""}` },
-                { id: "mastered", label: `熟词本 ${masteredCount || ""}` },
+                { id: "review", label: `生词本 ${reviewCount || ""}`.trim() },
+                { id: "mastered", label: `熟词本 ${masteredCount || ""}`.trim() },
               ].map((tab) => (
                 <button
                   key={tab.id}
@@ -275,50 +168,43 @@ function SatVocab() {
       </div>
 
       {complete || total === 0 ? (
-        <section className="practice-view">
-          <div className="word-list-view__empty">
-            <span className="empty-icon">{total === 0 ? "📋" : "🎉"}</span>
-            <p>{total === 0 ? "当前筛选无词条" : `本轮练习完成，共 ${total} 词`}</p>
-            {total > 0 && (
-              <button type="button" className="btn btn--primary" onClick={restart} style={{ marginTop: "0.75rem" }}>
-                再来一轮
-              </button>
-            )}
-          </div>
-        </section>
+        <div className="word-list-view__empty sv__empty">
+          <span className="empty-icon">{total === 0 ? "📋" : "🎉"}</span>
+          <p>{total === 0 ? "当前筛选无词条" : `本轮练习完成，共 ${total} 词`}</p>
+          {total > 0 && (
+            <button type="button" className="btn btn--primary" onClick={restart} style={{ marginTop: "0.75rem" }}>
+              再来一轮
+            </button>
+          )}
+        </div>
       ) : (
-        <section className="practice-view">
-          <div className="practice-toolbar">
-            <div className="practice-toolbar__left">
-              <span className="practice-toolbar__title">SAT 词汇题</span>
-              <button
-                type="button"
-                className={`btn btn--ghost btn--sm${isShuffle ? " btn--toggle-on" : ""}`}
-                onClick={toggleShuffle}
-                aria-pressed={isShuffle}
-              >
-                {isShuffle ? "乱序" : "顺序"}
-              </button>
-            </div>
-            <span className="practice-toolbar__stat">已掌握 {masteredCount}</span>
-            <span className="practice-toolbar__stat practice-toolbar__stat--fail">待复习 {reviewCount}</span>
-          </div>
-
-          <div className="progress-track" aria-label="学习进度">
-            <div className="progress-track__fill" style={{ width: `${progress_pct}%` }} />
-          </div>
-          <p className="progress-label">{`${index + 1} / ${total}`}</p>
-
-          <SatVocabCard
-            key={`sv-${entry?.id}-${index}`}
-            entry={entry}
-            tabId="sat-vocab"
-            onMastered={handleMastered}
-            onReview={handleReview}
-            onNext={handleNext}
-            onPrev={handlePrev}
-          />
-        </section>
+        <PracticeSession
+          tabId="sat-vocab"
+          title="SAT 词汇题"
+          stats={stats}
+          toolbarExtra={
+            <button
+              type="button"
+              className={`btn btn--ghost btn--sm${isShuffle ? " btn--toggle-on" : ""}`}
+              onClick={toggleShuffle}
+              aria-pressed={isShuffle}
+            >
+              {isShuffle ? "乱序" : "顺序"}
+            </button>
+          }
+          queueLength={total}
+          currentIndex={index}
+          currentWord={currentWord}
+          wordStats={null}
+          wordBankMap={wordBankMap}
+          micGranted={micGranted}
+          onResult={handleResult}
+          onMemoryTrickGenerated={() => {}}
+          onNext={handleNext}
+          onPrev={handlePrev}
+          sessionKey={`sv-${entry?.id}-${index}`}
+          emptyMessage="本轮练习完成"
+        />
       )}
     </div>
   );
