@@ -1177,7 +1177,7 @@ export default function FlashCard({
           <div className="flashcard__term">
             <div className="flashcard__term-row">
               <h2
-                className={`flashcard__word${showWord ? "" : " flashcard__word--hidden"}`}
+                className={`flashcard__word${showWord ? "" : " flashcard__word--hidden"}${wordData?.satVocab?.color === "blue" ? " flashcard__word--blue" : ""}`}
                 aria-hidden={!showWord}
               >
                 {showWord ? wordData.word : "？？？"}

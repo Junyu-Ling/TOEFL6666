@@ -947,6 +947,13 @@ body {
   color: var(--text);
 }
 
+.flashcard__word--blue {
+  color: #2563eb;
+}
+[data-theme="dark"] .flashcard__word--blue {
+  color: #60a5fa;
+}
+
 .flashcard__word--hidden {
   letter-spacing: 0.35em;
   color: var(--text-muted);
