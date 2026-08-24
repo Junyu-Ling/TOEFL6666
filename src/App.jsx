@@ -969,31 +969,45 @@ export default function App() {
         title={listMeta?.title ?? "单词练习"}
         toolbarExtra={
           availableLists.length > 0 ? (
-            <div className="practice-toolbar__pickers">
+            <div className="practice-book-switch">
               {hasJingjingBook ? (
-                <select
-                  className="practice-toolbar__select"
-                  value={activeBook}
-                  onChange={(e) => handleBookChange(e.target.value)}
-                  aria-label="选择词书"
-                >
-                  <option value="level">Level · List</option>
-                  <option value="jingjing">SAT鸡精词汇</option>
-                </select>
+                <div className="practice-book-tabs" role="tablist" aria-label="选择词书">
+                  <button
+                    type="button"
+                    role="tab"
+                    aria-selected={activeBook === "level"}
+                    className={`practice-book-tab${activeBook === "level" ? " practice-book-tab--active" : ""}`}
+                    onClick={() => handleBookChange("level")}
+                  >
+                    Level · List
+                  </button>
+                  <button
+                    type="button"
+                    role="tab"
+                    aria-selected={activeBook === "jingjing"}
+                    className={`practice-book-tab${activeBook === "jingjing" ? " practice-book-tab--active" : ""}`}
+                    onClick={() => handleBookChange("jingjing")}
+                  >
+                    SAT鸡精词汇
+                  </button>
+                </div>
               ) : null}
+              <div className="practice-toolbar__pickers">
               {activeBook === "jingjing" ? (
-                <select
-                  className="practice-toolbar__select"
-                  value={activeLevel ?? ""}
-                  onChange={(e) => handleLevelChange(e.target.value)}
-                  aria-label="选择年份"
-                >
+                <div className="practice-book-tabs practice-book-tabs--years" role="tablist" aria-label="选择年份">
                   {levelNumbers.map((year) => (
-                    <option key={year} value={year}>
-                      {year}年
-                    </option>
+                    <button
+                      key={year}
+                      type="button"
+                      role="tab"
+                      aria-selected={activeLevel === year}
+                      className={`practice-book-tab${activeLevel === year ? " practice-book-tab--active" : ""}`}
+                      onClick={() => handleLevelChange(String(year))}
+                    >
+                      {year}
+                    </button>
                   ))}
-                </select>
+                </div>
               ) : (
                 <>
                   {levelNumbers.length > 1 && (
@@ -1026,6 +1040,7 @@ export default function App() {
                   )}
                 </>
               )}
+              </div>
             </div>
           ) : null
         }
