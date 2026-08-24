@@ -1,0 +1,738 @@
+{
+  "meta": {
+    "level": 2023,
+    "list": 1,
+    "title": "SAT鸡精 · 2023",
+    "book": "jingjing",
+    "year": 2023,
+    "updatedAt": "2026-08-24"
+  },
+  "words": [
+    {
+      "word": "elicit",
+      "definitions": [
+        "v. 引出"
+      ]
+    },
+    {
+      "word": "provoke",
+      "definitions": [
+        "v. 挑衅"
+      ]
+    },
+    {
+      "word": "evince",
+      "definitions": [
+        "v. 表明"
+      ]
+    },
+    {
+      "word": "erratic",
+      "definitions": [
+        "adj. 奇怪的"
+      ]
+    },
+    {
+      "word": "repudiate",
+      "definitions": [
+        "v. 否认"
+      ]
+    },
+    {
+      "word": "induce",
+      "definitions": [
+        "v. 诱导"
+      ]
+    },
+    {
+      "word": "entail",
+      "definitions": [
+        "v. 涉及(不好的事)"
+      ]
+    },
+    {
+      "word": "understate",
+      "definitions": [
+        "v. 轻描淡写"
+      ]
+    },
+    {
+      "word": "convergence",
+      "definitions": [
+        "n. 融合"
+      ]
+    },
+    {
+      "word": "promulgate",
+      "definitions": [
+        "v. 颁布"
+      ]
+    },
+    {
+      "word": "scrupulous",
+      "definitions": [
+        "adj. 一丝不苟的"
+      ]
+    },
+    {
+      "word": "rectify",
+      "definitions": [
+        "v. 纠正"
+      ]
+    },
+    {
+      "word": "spurious",
+      "definitions": [
+        "adj. 虚假的"
+      ]
+    },
+    {
+      "word": "daunt",
+      "definitions": [
+        "v. 令人生畏"
+      ]
+    },
+    {
+      "word": "condescending",
+      "definitions": [
+        "adj. 居高临下的"
+      ]
+    },
+    {
+      "word": "misconstrue",
+      "definitions": [
+        "v. 曲解"
+      ]
+    },
+    {
+      "word": "confound",
+      "definitions": [
+        "v. 混淆"
+      ]
+    },
+    {
+      "word": "meticulous",
+      "definitions": [
+        "adj. 一丝不苟的"
+      ]
+    },
+    {
+      "word": "pristine",
+      "definitions": [
+        "adj. 原始的"
+      ]
+    },
+    {
+      "word": "exploit",
+      "definitions": [
+        "v. 利用"
+      ]
+    },
+    {
+      "word": "appease",
+      "definitions": [
+        "v. 安抚"
+      ]
+    },
+    {
+      "word": "denounce",
+      "definitions": [
+        "v. 谴责"
+      ]
+    },
+    {
+      "word": "grant",
+      "definitions": [
+        "v. 授予"
+      ]
+    },
+    {
+      "word": "affecting",
+      "definitions": [
+        "adj. 令人感动的"
+      ]
+    },
+    {
+      "word": "synopsis",
+      "definitions": [
+        "n. 概要"
+      ]
+    },
+    {
+      "word": "deception",
+      "definitions": [
+        "n. 欺骗"
+      ]
+    },
+    {
+      "word": "irreproachable",
+      "definitions": [
+        "adj. 无可指责的"
+      ]
+    },
+    {
+      "word": "obscure",
+      "definitions": [
+        "adj. 晦涩难懂的"
+      ]
+    },
+    {
+      "word": "conspicuous",
+      "definitions": [
+        "adj. 显眼的"
+      ]
+    },
+    {
+      "word": "insuperable",
+      "definitions": [
+        "adj. 不可逾越的"
+      ]
+    },
+    {
+      "word": "reign",
+      "definitions": [
+        "v. 统治"
+      ]
+    },
+    {
+      "word": "endure",
+      "definitions": [
+        "v. 忍受；持续"
+      ]
+    },
+    {
+      "word": "imitation",
+      "definitions": [
+        "n. 模仿"
+      ]
+    },
+    {
+      "word": "nebulous",
+      "definitions": [
+        "adj. 模糊不清的"
+      ]
+    },
+    {
+      "word": "ineluctable",
+      "definitions": [
+        "adj. 不可避免的"
+      ]
+    },
+    {
+      "word": "emulate",
+      "definitions": [
+        "v. 效仿"
+      ]
+    },
+    {
+      "word": "pervasive",
+      "definitions": [
+        "adj. 普遍的"
+      ]
+    },
+    {
+      "word": "observe",
+      "definitions": [
+        "v. 遵守"
+      ]
+    },
+    {
+      "word": "sporadic",
+      "definitions": [
+        "adj. 零星的"
+      ]
+    },
+    {
+      "word": "sanction",
+      "definitions": [
+        "v. 制裁；许可"
+      ]
+    },
+    {
+      "word": "shrivel",
+      "definitions": [
+        "v. 萎缩"
+      ]
+    },
+    {
+      "word": "commensurate",
+      "definitions": [
+        "adj. 相称的"
+      ]
+    },
+    {
+      "word": "preside",
+      "definitions": [
+        "v. 主持"
+      ]
+    },
+    {
+      "word": "austerity",
+      "definitions": [
+        "n. 节俭"
+      ]
+    },
+    {
+      "word": "stoical",
+      "definitions": [
+        "adj. 坚忍的"
+      ]
+    },
+    {
+      "word": "complexion",
+      "definitions": [
+        "n. 肤色"
+      ]
+    },
+    {
+      "word": "ceramic",
+      "definitions": [
+        "adj. 陶瓷的"
+      ]
+    },
+    {
+      "word": "debunk",
+      "definitions": [
+        "v. 揭穿"
+      ]
+    },
+    {
+      "word": "commotion",
+      "definitions": [
+        "n. 骚动"
+      ]
+    },
+    {
+      "word": "exponent",
+      "definitions": [
+        "n. 指数"
+      ]
+    },
+    {
+      "word": "object",
+      "definitions": [
+        "v. 反对"
+      ]
+    },
+    {
+      "word": "pronounce",
+      "definitions": [
+        "v. 发言"
+      ]
+    },
+    {
+      "word": "ratify",
+      "definitions": [
+        "v. 批准"
+      ]
+    },
+    {
+      "word": "contrive",
+      "definitions": [
+        "v. 谋划(不好的)"
+      ]
+    },
+    {
+      "word": "demur",
+      "definitions": [
+        "v. 反对"
+      ]
+    },
+    {
+      "word": "amplify",
+      "definitions": [
+        "v. 放大"
+      ]
+    },
+    {
+      "word": "haven",
+      "definitions": [
+        "n. 避风港"
+      ]
+    },
+    {
+      "word": "superimpose",
+      "definitions": [
+        "v. 叠加"
+      ]
+    },
+    {
+      "word": "placid",
+      "definitions": [
+        "adj. 平静的"
+      ]
+    },
+    {
+      "word": "banter",
+      "definitions": [
+        "v. 戏谑"
+      ]
+    },
+    {
+      "word": "convoke",
+      "definitions": [
+        "v. 召集"
+      ]
+    },
+    {
+      "word": "spawn",
+      "definitions": [
+        "v. 产卵，生产"
+      ]
+    },
+    {
+      "word": "façade",
+      "definitions": [
+        "n. 外观"
+      ]
+    },
+    {
+      "word": "flank",
+      "definitions": [
+        "n. 侧面"
+      ]
+    },
+    {
+      "word": "contemplate",
+      "definitions": [
+        "v. 沉思"
+      ]
+    },
+    {
+      "word": "multitude",
+      "definitions": [
+        "n. 众多"
+      ]
+    },
+    {
+      "word": "aggregate",
+      "definitions": [
+        "v. 聚集"
+      ]
+    },
+    {
+      "word": "canon",
+      "definitions": [
+        "n. 经典"
+      ]
+    },
+    {
+      "word": "moderation",
+      "definitions": [
+        "n. 节制"
+      ]
+    },
+    {
+      "word": "prim",
+      "definitions": [
+        "adj. 一本正经的"
+      ]
+    },
+    {
+      "word": "strain",
+      "definitions": [
+        "n. 品种；拉紧"
+      ]
+    },
+    {
+      "word": "tempting",
+      "definitions": [
+        "adj. 诱人的"
+      ]
+    },
+    {
+      "word": "dub",
+      "definitions": [
+        "v. 命名"
+      ]
+    },
+    {
+      "word": "solicitude",
+      "definitions": [
+        "n. 关怀"
+      ]
+    },
+    {
+      "word": "falsify",
+      "definitions": [
+        "v. 伪造"
+      ]
+    },
+    {
+      "word": "perturbation",
+      "definitions": [
+        "n. 扰动"
+      ]
+    },
+    {
+      "word": "alleged",
+      "definitions": [
+        "adj. 所谓的"
+      ]
+    },
+    {
+      "word": "diversion",
+      "definitions": [
+        "n. 转移"
+      ]
+    },
+    {
+      "word": "toil",
+      "definitions": [
+        "n. 苦差事"
+      ]
+    },
+    {
+      "word": "lurk",
+      "definitions": [
+        "v. 潜伏"
+      ]
+    },
+    {
+      "word": "unambiguous",
+      "definitions": [
+        "adj. 明确的"
+      ]
+    },
+    {
+      "word": "churn",
+      "definitions": [
+        "v. 搅动"
+      ]
+    },
+    {
+      "word": "maneuver",
+      "definitions": [
+        "n. 策略"
+      ]
+    },
+    {
+      "word": "felicity",
+      "definitions": [
+        "n. 幸福"
+      ]
+    },
+    {
+      "word": "prod",
+      "definitions": [
+        "v. 刺激"
+      ]
+    },
+    {
+      "word": "adhere to",
+      "definitions": [
+        "v. 坚持(传统)"
+      ]
+    },
+    {
+      "word": "baffle",
+      "definitions": [
+        "v. 困惑"
+      ]
+    },
+    {
+      "word": "scowl",
+      "definitions": [
+        "v. 皱眉"
+      ]
+    },
+    {
+      "word": "lean",
+      "definitions": [
+        "v. 倾斜"
+      ]
+    },
+    {
+      "word": "tactic",
+      "definitions": [
+        "n. 策略"
+      ]
+    },
+    {
+      "word": "deduce",
+      "definitions": [
+        "v. 推断"
+      ]
+    },
+    {
+      "word": "integrity",
+      "definitions": [
+        "n. 诚信"
+      ]
+    },
+    {
+      "word": "wander",
+      "definitions": [
+        "v. 漫步"
+      ]
+    },
+    {
+      "word": "conviction",
+      "definitions": [
+        "n. 坚信"
+      ]
+    },
+    {
+      "word": "imperceptible",
+      "definitions": [
+        "adj. 难以察觉的"
+      ]
+    },
+    {
+      "word": "rehabilitate",
+      "definitions": [
+        "v. 修复"
+      ]
+    },
+    {
+      "word": "premise",
+      "definitions": [
+        "n. 前提"
+      ]
+    },
+    {
+      "word": "paucity",
+      "definitions": [
+        "n. 缺乏"
+      ]
+    },
+    {
+      "word": "stewardship",
+      "definitions": [
+        "n. 管理"
+      ]
+    },
+    {
+      "word": "pry",
+      "definitions": [
+        "v. 窥探"
+      ]
+    },
+    {
+      "word": "confer",
+      "definitions": [
+        "v. 授予"
+      ]
+    },
+    {
+      "word": "ominous",
+      "definitions": [
+        "adj. 不祥的"
+      ]
+    },
+    {
+      "word": "throb",
+      "definitions": [
+        "v. 悸动"
+      ]
+    },
+    {
+      "word": "traverse",
+      "definitions": [
+        "v. 横穿"
+      ]
+    },
+    {
+      "word": "telltale",
+      "definitions": [
+        "n. 告密者"
+      ]
+    },
+    {
+      "word": "predisposition",
+      "definitions": [
+        "n. 倾向(患病)"
+      ]
+    },
+    {
+      "word": "treacherous",
+      "definitions": [
+        "adj. 奸诈的"
+      ]
+    },
+    {
+      "word": "apprehension",
+      "definitions": [
+        "n. 忧虑"
+      ]
+    },
+    {
+      "word": "dereliction",
+      "definitions": [
+        "n. 失职"
+      ]
+    },
+    {
+      "word": "potency",
+      "definitions": [
+        "n. 潜能"
+      ]
+    },
+    {
+      "word": "premeditated",
+      "definitions": [
+        "adj. 预谋的"
+      ]
+    },
+    {
+      "word": "imposition",
+      "definitions": [
+        "n. 强加"
+      ]
+    },
+    {
+      "word": "squalid",
+      "definitions": [
+        "adj. 肮脏的"
+      ]
+    },
+    {
+      "word": "scruple",
+      "definitions": [
+        "n. 顾虑"
+      ]
+    },
+    {
+      "word": "malice",
+      "definitions": [
+        "n. 恶意"
+      ]
+    },
+    {
+      "word": "stamina",
+      "definitions": [
+        "n. 耐力"
+      ]
+    },
+    {
+      "word": "desert",
+      "definitions": [
+        "v. 废弃"
+      ]
+    },
+    {
+      "word": "lavish",
+      "definitions": [
+        "adj. 奢华的"
+      ]
+    },
+    {
+      "word": "founder",
+      "definitions": [
+        "n. 创始人；v. 崩溃"
+      ]
+    },
+    {
+      "word": "school",
+      "definitions": [
+        "n. 鱼群"
+      ]
+    },
+    {
+      "word": "concern",
+      "definitions": [
+        "n. 焦虑(关心)"
+      ]
+    }
+  ]
+}

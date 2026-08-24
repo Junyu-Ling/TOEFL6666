@@ -70,7 +70,11 @@ export default function BookReviewScopeBar({
                   }}
                   onChange={() => toggleLevel(level)}
                 />
-                <span>Level {level}</span>
+                <span>
+                  {lists[0]?.book === "jingjing"
+                    ? `${level}年鸡精`
+                    : `Level ${level}`}
+                </span>
               </label>
               <div className="word-list-review-scope__lists">
                 {lists.map((item) => (
@@ -83,7 +87,9 @@ export default function BookReviewScopeBar({
                       }
                     />
                     <span>
-                      List {item.list}（{countByListId.get(item.id) || 0}）
+                      {item.book === "jingjing"
+                        ? `${item.title}（${countByListId.get(item.id) || 0}）`
+                        : `List ${item.list}（${countByListId.get(item.id) || 0}）`}
                     </span>
                   </label>
                 ))}

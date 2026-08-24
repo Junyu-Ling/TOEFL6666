@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-07-29.5",
+  "updatedAt": "2026-08-24",
   "defaultListId": "level1-list1",
   "lists": [
     {
@@ -149,6 +149,42 @@
       "level": 2,
       "list": 10,
       "wordCount": 148
+    },
+    {
+      "id": "jingjing-2023",
+      "title": "SAT鸡精 · 2023",
+      "level": 2023,
+      "list": 1,
+      "book": "jingjing",
+      "year": 2023,
+      "wordCount": 121
+    },
+    {
+      "id": "jingjing-2024",
+      "title": "SAT鸡精 · 2024",
+      "level": 2024,
+      "list": 1,
+      "book": "jingjing",
+      "year": 2024,
+      "wordCount": 168
+    },
+    {
+      "id": "jingjing-2025",
+      "title": "SAT鸡精 · 2025",
+      "level": 2025,
+      "list": 1,
+      "book": "jingjing",
+      "year": 2025,
+      "wordCount": 187
+    },
+    {
+      "id": "jingjing-2026",
+      "title": "SAT鸡精 · 2026",
+      "level": 2026,
+      "list": 1,
+      "book": "jingjing",
+      "year": 2026,
+      "wordCount": 60
     }
   ]
 }
