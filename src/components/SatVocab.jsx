@@ -8,13 +8,14 @@ import {
   patchSatVocabProgress,
   SAT_VOCAB_PROGRESS_EVENT,
 } from "../services/satVocabProgress";
-import rawWords from "../data/satVocab.json";
+import levelListWords from "../data/satVocab.json";
+import jingJingWords from "../data/satVocabJingJing.json";
 
 function buildWordData(entry) {
   return {
     word: entry.word,
     definitions: [entry.definition],
-    satVocab: { id: entry.id, color: entry.color },
+    satVocab: { id: entry.id, color: entry.color || "black" },
   };
 }
 
@@ -37,6 +38,8 @@ function SatVocab({ wordBankMap, micGranted }) {
   const [isShuffle, setIsShuffle] = useState(() => loadSatVocabProgress().shuffle);
   const [listFilter, setListFilter] = useState("all");
   const [query, setQuery] = useState("");
+  const [dataSource, setDataSource] = useState("level-list");
+  const [selectedYear, setSelectedYear] = useState("2023");
 
   const refreshProgress = useCallback(() => {
     setProgress(loadSatVocabProgress());
@@ -50,6 +53,14 @@ function SatVocab({ wordBankMap, micGranted }) {
   useEffect(() => {
     if (isActive) refreshProgress();
   }, [isActive, refreshProgress]);
+
+  const rawWords = useMemo(() => {
+    if (dataSource === "level-list") {
+      return levelListWords;
+    } else {
+      return jingJingWords[selectedYear] || [];
+    }
+  }, [dataSource, selectedYear]);
 
   const filteredWords = useMemo(() => {
     let base = rawWords;
@@ -65,7 +76,7 @@ function SatVocab({ wordBankMap, micGranted }) {
       );
     }
     return base;
-  }, [listFilter, progress, query]);
+  }, [rawWords, listFilter, progress, query]);
 
   const [order, setOrder] = useState(() => buildOrder(filteredWords, isShuffle));
   const [index, setIndex] = useState(0);
@@ -137,6 +148,30 @@ function SatVocab({ wordBankMap, micGranted }) {
             <p className="sv__subtitle">共 {rawWords.length} 词 · 已掌握 {masteredCount} · 待复习 {reviewCount}</p>
           </div>
           <div className="sv__control-actions">
+            <div className="sv__data-source-selector">
+              <select
+                className="sv__select"
+                value={dataSource}
+                onChange={(e) => setDataSource(e.target.value)}
+                aria-label="选择数据源"
+              >
+                <option value="level-list">Level·List 单词书</option>
+                <option value="jing-jing">SAT 鸡精词汇</option>
+              </select>
+              {dataSource === "jing-jing" && (
+                <select
+                  className="sv__select"
+                  value={selectedYear}
+                  onChange={(e) => setSelectedYear(e.target.value)}
+                  aria-label="选择年份"
+                >
+                  <option value="2023">2023年</option>
+                  <option value="2024">2024年</option>
+                  <option value="2025">2025年</option>
+                  <option value="2026">2026年</option>
+                </select>
+              )}
+            </div>
             <input
               type="search"
               className="sv__search"

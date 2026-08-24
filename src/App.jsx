@@ -814,50 +814,14 @@ export default function App() {
       map.get(level).push(item);
     }
     for (const lists of map.values()) {
-      lists.sort((a, b) => (a.list ?? 0) - (b.list ?? 0));
+      lists.sort((a, b) => a.list - b.list);
     }
     return map;
   }, [availableLists]);
 
-  const activeBook = useMemo(() => {
-    const current = availableLists.find((item) => item.id === activeListId);
-    return current?.book === "jingjing" ? "jingjing" : "level";
-  }, [availableLists, activeListId]);
-
-  const hasJingjingBook = useMemo(
-    () => appMode === "sat" && availableLists.some((item) => item.book === "jingjing"),
-    [appMode, availableLists]
-  );
-
-  const practiceLists = useMemo(
-    () =>
-      availableLists.filter((item) =>
-        activeBook === "jingjing" ? item.book === "jingjing" : item.book !== "jingjing"
-      ),
-    [availableLists, activeBook]
-  );
-
-  const practiceListsByLevel = useMemo(() => {
-    const map = new Map();
-    for (const item of practiceLists) {
-      const level = item.level ?? 0;
-      if (!map.has(level)) map.set(level, []);
-      map.get(level).push(item);
-    }
-    for (const lists of map.values()) {
-      lists.sort((a, b) => (a.list ?? 0) - (b.list ?? 0));
-    }
-    return map;
-  }, [practiceLists]);
-
-  const allLevelNumbers = useMemo(
+  const levelNumbers = useMemo(
     () => [...listsByLevel.keys()].sort((a, b) => a - b),
     [listsByLevel]
-  );
-
-  const levelNumbers = useMemo(
-    () => [...practiceListsByLevel.keys()].sort((a, b) => a - b),
-    [practiceListsByLevel]
   );
 
   const activeLevel = useMemo(() => {
@@ -866,32 +830,21 @@ export default function App() {
   }, [availableLists, activeListId, levelNumbers]);
 
   const listsInActiveLevel = useMemo(
-    () => (activeLevel != null ? practiceListsByLevel.get(activeLevel) ?? [] : []),
-    [practiceListsByLevel, activeLevel]
+    () => (activeLevel != null ? listsByLevel.get(activeLevel) ?? [] : []),
+    [listsByLevel, activeLevel]
   );
 
   const handleLevelChange = useCallback(
     (levelValue) => {
       const level = Number(levelValue);
-      const lists = practiceListsByLevel.get(level);
+      const lists = listsByLevel.get(level);
       if (!lists?.length) return;
 
       const current = availableLists.find((item) => item.id === activeListId);
       const preferred = lists.find((item) => item.list === current?.list);
       handleListChange(preferred?.id ?? lists[0].id);
     },
-    [activeListId, availableLists, handleListChange, practiceListsByLevel]
-  );
-
-  const handleBookChange = useCallback(
-    (book) => {
-      const nextLists = availableLists.filter((item) =>
-        book === "jingjing" ? item.book === "jingjing" : item.book !== "jingjing"
-      );
-      if (!nextLists.length) return;
-      handleListChange(nextLists[0].id);
-    },
-    [availableLists, handleListChange]
+    [activeListId, availableLists, handleListChange, listsByLevel]
   );
 
   const unrecognizedCountByListId = useMemo(
@@ -916,23 +869,22 @@ export default function App() {
 
   const levelNumbersWithUnrecognized = useMemo(
     () =>
-      allLevelNumbers.filter((level) =>
+      levelNumbers.filter((level) =>
         (listsByLevel.get(level) ?? []).some(
           (item) => (unrecognizedCountByListId.get(item.id) || 0) > 0
         )
       ),
-    [allLevelNumbers, listsByLevel, unrecognizedCountByListId]
+    [levelNumbers, listsByLevel, unrecognizedCountByListId]
   );
 
   const levelNumbersWithPastWrong = useMemo(
     () =>
-      allLevelNumbers.filter((level) =>
+      levelNumbers.filter((level) =>
         (listsByLevel.get(level) ?? []).some(
           (item) => (pastWrongCountByListId.get(item.id) || 0) > 0
         )
       ),
-    [allLevelNumbers, listsByLevel, pastWrongCountByListId]
-  );
+    [levelNumbers, listsByLevel, pastWrongCountByListId]
   );
 
   const uncategorizedUnrecognizedCount =
@@ -969,78 +921,35 @@ export default function App() {
         title={listMeta?.title ?? "单词练习"}
         toolbarExtra={
           availableLists.length > 0 ? (
-            <div className="practice-book-switch">
-              {hasJingjingBook ? (
-                <div className="practice-book-tabs" role="tablist" aria-label="选择词书">
-                  <button
-                    type="button"
-                    role="tab"
-                    aria-selected={activeBook === "level"}
-                    className={`practice-book-tab${activeBook === "level" ? " practice-book-tab--active" : ""}`}
-                    onClick={() => handleBookChange("level")}
-                  >
-                    Level · List
-                  </button>
-                  <button
-                    type="button"
-                    role="tab"
-                    aria-selected={activeBook === "jingjing"}
-                    className={`practice-book-tab${activeBook === "jingjing" ? " practice-book-tab--active" : ""}`}
-                    onClick={() => handleBookChange("jingjing")}
-                  >
-                    SAT鸡精词汇
-                  </button>
-                </div>
-              ) : null}
-              <div className="practice-toolbar__pickers">
-              {activeBook === "jingjing" ? (
-                <div className="practice-book-tabs practice-book-tabs--years" role="tablist" aria-label="选择年份">
-                  {levelNumbers.map((year) => (
-                    <button
-                      key={year}
-                      type="button"
-                      role="tab"
-                      aria-selected={activeLevel === year}
-                      className={`practice-book-tab${activeLevel === year ? " practice-book-tab--active" : ""}`}
-                      onClick={() => handleLevelChange(String(year))}
-                    >
-                      {year}
-                    </button>
+            <div className="practice-toolbar__pickers">
+              {levelNumbers.length > 1 && (
+                <select
+                  className="practice-toolbar__select"
+                  value={activeLevel ?? ""}
+                  onChange={(e) => handleLevelChange(e.target.value)}
+                  aria-label="选择 Level"
+                >
+                  {levelNumbers.map((level) => (
+                    <option key={level} value={level}>
+                      Level {level}
+                    </option>
                   ))}
-                </div>
-              ) : (
-                <>
-                  {levelNumbers.length > 1 && (
-                    <select
-                      className="practice-toolbar__select"
-                      value={activeLevel ?? ""}
-                      onChange={(e) => handleLevelChange(e.target.value)}
-                      aria-label="选择 Level"
-                    >
-                      {levelNumbers.map((level) => (
-                        <option key={level} value={level}>
-                          Level {level}
-                        </option>
-                      ))}
-                    </select>
-                  )}
-                  {listsInActiveLevel.length > 1 && (
-                    <select
-                      className="practice-toolbar__select"
-                      value={activeListId ?? ""}
-                      onChange={(e) => handleListChange(e.target.value)}
-                      aria-label="选择 List"
-                    >
-                      {listsInActiveLevel.map((item) => (
-                        <option key={item.id} value={item.id}>
-                          List {item.list}
-                        </option>
-                      ))}
-                    </select>
-                  )}
-                </>
+                </select>
               )}
-              </div>
+              {listsInActiveLevel.length > 1 && (
+                <select
+                  className="practice-toolbar__select"
+                  value={activeListId ?? ""}
+                  onChange={(e) => handleListChange(e.target.value)}
+                  aria-label="选择 List"
+                >
+                  {listsInActiveLevel.map((item) => (
+                    <option key={item.id} value={item.id}>
+                      List {item.list}
+                    </option>
+                  ))}
+                </select>
+              )}
             </div>
           ) : null
         }
@@ -1066,9 +975,6 @@ export default function App() {
     [
       listMeta,
       availableLists,
-      hasJingjingBook,
-      activeBook,
-      handleBookChange,
       levelNumbers,
       activeLevel,
       handleLevelChange,
