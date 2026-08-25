@@ -448,18 +448,38 @@ export function importLocalData(bundle) {
   }
 }
 
-export function getSyncSummary() {
+export function getSyncSummary(options = {}) {
   try {
     const recognized = JSON.parse(localStorage.getItem("toefl666_recognized") || "[]");
     const unrecognized = JSON.parse(localStorage.getItem("toefl666_unrecognized") || "[]");
     const progress = JSON.parse(localStorage.getItem("toefl666_progress") || "{}");
     const listCount = Object.keys(progress.listProgress || {}).length;
-    return {
-      recognized: Array.isArray(recognized) ? recognized.length : 0,
-      unrecognized: Array.isArray(unrecognized) ? unrecognized.length : 0,
+    
+    const recognizedCount = Array.isArray(recognized) ? recognized.length : 0;
+    const unrecognizedCount = Array.isArray(unrecognized) ? unrecognized.length : 0;
+    const studiedCount = recognizedCount + unrecognizedCount;
+    
+    const result = {
+      recognized: recognizedCount,
+      unrecognized: unrecognizedCount,
+      studied: studiedCount,
       listCount,
     };
+    
+    if (options.totalWords != null) {
+      result.totalWords = options.totalWords;
+      result.unstudied = Math.max(0, options.totalWords - studiedCount);
+    }
+    
+    return result;
   } catch {
-    return { recognized: 0, unrecognized: 0, listCount: 0 };
+    return { 
+      recognized: 0, 
+      unrecognized: 0, 
+      studied: 0,
+      listCount: 0,
+      totalWords: options.totalWords,
+      unstudied: options.totalWords || 0,
+    };
   }
 }

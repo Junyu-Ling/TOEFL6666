@@ -22,11 +22,12 @@ const SYSTEM_PROMPT_TOEFL = `你是专业的托福备考规划师，服务于 TO
 要求：
 1. 用清晰中文，Markdown 排版（表格、列表、粗体），便于前端渲染。
 2. 先简要诊断：总分差距、最薄弱科目、各科目与目标的差值。
-3. 按优先级给出 2–4 周可执行的提分计划（每日/每周任务要具体）。
-4. 结合本应用功能给建议：单词练习、生词本/熟词本、词格 LexGrid、阅读词汇配对等。
-5. 默认按 **2026 新托福（1–6 分制，四科平均为总分）** 解读；用户明确旧版 0–120 时再换算说明。
-6. 不要编造院校政策；数字与策略要合理、可执行。
-7. 不要输出 HTML；不要把整段包在 \`\`\`markdown 代码块里。`;
+3. **重点分析词汇掌握情况**：结合熟词本、生词本、还未背过的单词数量，评估词汇基础是否扎实，是否需要优先扩充词汇量。
+4. 按优先级给出 2–4 周可执行的提分计划（每日/每周任务要具体）。
+5. 结合本应用功能给建议：单词练习、生词本/熟词本、词格 LexGrid、阅读词汇配对等。如果用户还有大量未背过的单词，建议优先完成词汇积累。
+6. 默认按 **2026 新托福（1–6 分制，四科平均为总分）** 解读；用户明确旧版 0–120 时再换算说明。
+7. 不要编造院校政策；数字与策略要合理、可执行。
+8. 不要输出 HTML；不要把整段包在 \`\`\`markdown 代码块里。`;
 
 const SYSTEM_PROMPT_SAT = `你是专业的 SAT 备考规划师，服务于 SAT 800·800 背单词应用用户。
 
@@ -35,11 +36,12 @@ const SYSTEM_PROMPT_SAT = `你是专业的 SAT 备考规划师，服务于 SAT 8
 要求：
 1. 用清晰中文，Markdown 排版（表格、列表、粗体），便于前端渲染。
 2. 先简要诊断：总分差距、阅读文法与数学哪科更弱、各科与目标的差值。
-3. 按优先级给出 2–4 周可执行的提分计划（每日/每周任务要具体）。
-4. 结合本应用功能给建议：单词练习、生词本/熟词本、词格 LexGrid、熟词僻义等。
-5. 按 **Digital SAT（阅读文法 + 数学，总分 400–1600）** 解读分数与策略。
-6. 不要编造院校政策；数字与策略要合理、可执行。
-7. 不要输出 HTML；不要把整段包在 \`\`\`markdown 代码块里。`;
+3. **重点分析词汇掌握情况**：结合熟词本、生词本、还未背过的单词数量，评估词汇基础是否扎实，是否需要优先扩充词汇量。
+4. 按优先级给出 2–4 周可执行的提分计划（每日/每周任务要具体）。
+5. 结合本应用功能给建议：单词练习、生词本/熟词本、词格 LexGrid、熟词僻义、SAT鸡精词汇等。如果用户还有大量未背过的单词，建议优先完成词汇积累。
+6. 按 **Digital SAT（阅读文法 + 数学，总分 400–1600）** 解读分数与策略。
+7. 不要编造院校政策；数字与策略要合理、可执行。
+8. 不要输出 HTML；不要把整段包在 \`\`\`markdown 代码块里。`;
 
 function createConfigError(message, status = 500) {
   const err = new Error(message);
@@ -86,6 +88,13 @@ function buildUserPrompt(payload) {
     `- 熟词本：${vocabProgress?.recognized ?? 0} 词`,
     `- 生词本：${vocabProgress?.unrecognized ?? 0} 词`,
   ];
+
+  if (vocabProgress?.totalWords != null && vocabProgress?.unstudied != null) {
+    const totalWords = vocabProgress.totalWords;
+    const unstudied = vocabProgress.unstudied;
+    const studiedPercent = totalWords > 0 ? Math.round((totalWords - unstudied) / totalWords * 100) : 0;
+    lines.push(`- 还未背过的单词：${unstudied} 词（总词库 ${totalWords} 词，已背 ${studiedPercent}%）`);
+  }
 
   if (examDates?.length) {
     lines.push(`- 已标记考试日期：${examDates.join("、")}`);

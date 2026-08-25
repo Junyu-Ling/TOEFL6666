@@ -11,6 +11,7 @@ import { getStudyPlanForExam } from "../services/settings";
 import { getSyncSummary } from "../shared/sync";
 import { loadStreak, daysUntil } from "../services/streak";
 import { streamStudyPlan } from "../services/studyPlan";
+import { fetchWordBank } from "../services/wordlist";
 import RichAiContent from "./RichAiContent";
 
 function scoreInputValue(value) {
@@ -102,20 +103,25 @@ export default function ExamScoreSection() {
     setPlanError("");
     setPlanDraft("");
 
-    const syncSummary = getSyncSummary();
-    const payload = {
-      examType,
-      currentScores: isToefl ? settings.toeflScores : settings.satScores,
-      targetTotal: isToefl ? settings.toeflTargetTotal : settings.satTargetTotal,
-      vocabProgress: {
-        recognized: syncSummary.recognized,
-        unrecognized: syncSummary.unrecognized,
-      },
-      examDates: examContext.examDates,
-      daysUntilExam: examContext.daysUntilExam,
-    };
-
     try {
+      const wordBank = await fetchWordBank(examType);
+      const totalWords = Array.isArray(wordBank) ? wordBank.length : 0;
+      
+      const syncSummary = getSyncSummary({ totalWords });
+      const payload = {
+        examType,
+        currentScores: isToefl ? settings.toeflScores : settings.satScores,
+        targetTotal: isToefl ? settings.toeflTargetTotal : settings.satTargetTotal,
+        vocabProgress: {
+          recognized: syncSummary.recognized,
+          unrecognized: syncSummary.unrecognized,
+          totalWords: syncSummary.totalWords,
+          unstudied: syncSummary.unstudied,
+        },
+        examDates: examContext.examDates,
+        daysUntilExam: examContext.daysUntilExam,
+      };
+
       const plan = await streamStudyPlan({
         payload,
         signal: controller.signal,
