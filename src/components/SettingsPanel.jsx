@@ -8,6 +8,7 @@ import {
   WRONG_SOUND_OPTIONS,
   previewAnswerSound,
 } from "../utils/answerSounds";
+import { normalizeAppMode } from "../utils/appMode";
 import ExamScoreSection from "./ExamScoreSection";
 
 const SYNC_SESSION_KEY = "toefl666_last_sync";
@@ -102,7 +103,8 @@ export default function SettingsPanel() {
   const panelRef = useRef(null);
   const pullInputRef = useRef(null);
 
-  const syncSummary = useMemo(() => getSyncSummary(), [settingsOpen, syncStatus.state]);
+  const appMode = normalizeAppMode(settings.appMode);
+  const syncSummary = useMemo(() => getSyncSummary({ appMode }), [settingsOpen, syncStatus.state, appMode]);
   const expiryLabel = formatExpiry(expiresAt);
   const syncState = syncStatus.state;
 

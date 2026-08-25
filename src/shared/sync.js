@@ -450,8 +450,14 @@ export function importLocalData(bundle) {
 
 export function getSyncSummary(options = {}) {
   try {
-    const recognized = JSON.parse(localStorage.getItem("toefl666_recognized") || "[]");
-    const unrecognized = JSON.parse(localStorage.getItem("toefl666_unrecognized") || "[]");
+    const appMode = options.appMode || "toefl";
+    const isSat = appMode === "sat";
+    
+    const recognizedKey = isSat ? "toefl666_sat_recognized" : "toefl666_recognized";
+    const unrecognizedKey = isSat ? "toefl666_sat_unrecognized" : "toefl666_unrecognized";
+    
+    const recognized = JSON.parse(localStorage.getItem(recognizedKey) || "[]");
+    const unrecognized = JSON.parse(localStorage.getItem(unrecognizedKey) || "[]");
     const progress = JSON.parse(localStorage.getItem("toefl666_progress") || "{}");
     const listCount = Object.keys(progress.listProgress || {}).length;
     

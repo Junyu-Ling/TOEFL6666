@@ -107,7 +107,7 @@ export default function ExamScoreSection() {
       const wordBank = await fetchWordBank(examType);
       const totalWords = Array.isArray(wordBank) ? wordBank.length : 0;
       
-      const syncSummary = getSyncSummary({ totalWords });
+      const syncSummary = getSyncSummary({ appMode: examType, totalWords });
       const payload = {
         examType,
         currentScores: isToefl ? settings.toeflScores : settings.satScores,
