@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TOEFL6666 设计升级预览</title>
+  <link rel="stylesheet" href="src/premium-theme.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 var(--space-6);
+    }
+
+    .section {
+      padding: var(--space-12) 0;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: var(--space-8);
+      text-align: center;
+      color: var(--text-primary);
+    }
+
+    .demo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: var(--space-6);
+      margin-bottom: var(--space-8);
+    }
+
+    .theme-toggle {
+      position: fixed;
+      top: var(--space-4);
+      right: var(--space-4);
+      z-index: 1000;
+    }
+
+    .comparison {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-6);
+      margin-bottom: var(--space-8);
+    }
+
+    .comparison-label {
+      text-align: center;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: var(--space-4);
+    }
+
+    @media (max-width: 768px) {
+      .comparison {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 主题切换按钮 -->
+  <div class="theme-toggle">
+    <button class="btn-premium btn-premium--secondary" onclick="toggleTheme()">
+      🌓 切换主题
+    </button>
+  </div>
+
+  <!-- 导航栏示例 -->
+  <nav class="navbar-premium">
+    <div class="navbar-premium__logo">TOEFL6666</div>
+    <ul class="navbar-premium__tabs">
+      <li><button class="navbar-premium__tab navbar-premium__tab--active">单词练习</button></li>
+      <li><button class="navbar-premium__tab">词库</button></li>
+      <li><button class="navbar-premium__tab">生词本</button></li>
+      <li><button class="navbar-premium__tab">熟词本</button></li>
+    </ul>
+    <button class="btn-premium btn-premium--text">设置</button>
+  </nav>
+
+  <div class="container">
+    <!-- 标题 -->
+    <div class="section">
+      <h1 style="font-size: 3rem; font-weight: 700; text-align: center; margin-bottom: var(--space-4);">
+        设计升级预览
+      </h1>
+      <p style="text-align: center; color: var(--text-secondary); font-size: 1.125rem;">
+        Instagram风格的高级感设计
+      </p>
+    </div>
+
+    <!-- 单词卡片示例 -->
+    <div class="section">
+      <h2 class="section-title">单词卡片 - Premium版</h2>
+      <div class="flashcard-premium">
+        <div class="flashcard-premium__word">abandon</div>
+        <div class="flashcard-premium__phonetic">/əˈbændən/</div>
+        <div class="flashcard-premium__definition">
+          to leave someone or something behind, especially something that you are responsible for
+        </div>
+        <div class="flashcard-premium__example">
+          "She abandoned her car in the parking lot and took a taxi home."
+        </div>
+      </div>
+    </div>
+
+    <!-- 按钮系统 -->
+    <div class="section">
+      <h2 class="section-title">按钮系统</h2>
+      <div class="demo-grid">
+        <div class="card-premium">
+          <div class="card-premium__header">
+            <h3 class="card-premium__title">主按钮</h3>
+            <p class="card-premium__subtitle">用于主要操作</p>
+          </div>
+          <div class="flex gap-4">
+            <button class="btn-premium btn-premium--primary">开始练习</button>
+            <button class="btn-premium btn-premium--primary" disabled style="opacity: 0.5; cursor: not-allowed;">禁用状态</button>
+          </div>
+        </div>
+
+        <div class="card-premium">
+          <div class="card-premium__header">
+            <h3 class="card-premium__title">次按钮</h3>
+            <p class="card-premium__subtitle">用于次要操作</p>
+          </div>
+          <div class="flex gap-4">
+            <button class="btn-premium btn-premium--secondary">返回列表</button>
+            <button class="btn-premium btn-premium--text">跳过</button>
+          </div>
+        </div>
+
+        <div class="card-premium">
+          <div class="card-premium__header">
+            <h3 class="card-premium__title">危险按钮</h3>
+            <p class="card-premium__subtitle">用于危险操作</p>
+          </div>
+          <div class="flex gap-4">
+            <button class="btn-premium btn-premium--danger">清空生词本</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 徽章示例 -->
+    <div class="section">
+      <h2 class="section-title">徽章和标签</h2>
+      <div class="card-premium">
+        <div class="flex gap-4" style="flex-wrap: wrap;">
+          <span class="badge-premium badge-premium--primary">Level 3</span>
+          <span class="badge-premium badge-premium--success">✓ 已掌握</span>
+          <span class="badge-premium badge-premium--error">✗ 未掌握</span>
+          <span class="badge-premium badge-premium--primary">第 1/5 轮</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 输入框示例 -->
+    <div class="section">
+      <h2 class="section-title">输入框</h2>
+      <div class="card-premium">
+        <input type="text" class="input-premium" placeholder="输入单词定义..." />
+        <div style="height: var(--space-4);"></div>
+        <input type="text" class="input-premium" placeholder="搜索单词..." />
+      </div>
+    </div>
+
+    <!-- 卡片网格 -->
+    <div class="section">
+      <h2 class="section-title">统计卡片</h2>
+      <div class="demo-grid" style="grid-template-columns: repeat(4, 1fr);">
+        <div class="card-premium" style="text-align: center;">
+          <div style="font-size: 2rem; font-weight: 700; color: var(--primary);">120</div>
+          <div style="font-size: 0.875rem; color: var(--text-secondary); margin-top: var(--space-2);">本轮单词</div>
+        </div>
+        <div class="card-premium" style="text-align: center;">
+          <div style="font-size: 2rem; font-weight: 700; color: var(--success);">96</div>
+          <div style="font-size: 0.875rem; color: var(--text-secondary); margin-top: var(--space-2);">答对</div>
+        </div>
+        <div class="card-premium" style="text-align: center;">
+          <div style="font-size: 2rem; font-weight: 700; color: var(--error);">24</div>
+          <div style="font-size: 0.875rem; color: var(--text-secondary); margin-top: var(--space-2);">答错</div>
+        </div>
+        <div class="card-premium" style="text-align: center;">
+          <div style="font-size: 2rem; font-weight: 700; color: var(--primary);">80%</div>
+          <div style="font-size: 0.875rem; color: var(--text-secondary); margin-top: var(--space-2);">正确率</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 加载动画 -->
+    <div class="section">
+      <h2 class="section-title">加载动画</h2>
+      <div class="card-premium flex items-center justify-center" style="min-height: 100px;">
+        <div class="loader-premium"></div>
+      </div>
+    </div>
+
+    <!-- 对比说明 -->
+    <div class="section">
+      <h2 class="section-title">设计对比</h2>
+      <div class="card-premium">
+        <table style="width: 100%; border-collapse: collapse;">
+          <thead>
+            <tr style="border-bottom: 1px solid var(--border);">
+              <th style="padding: var(--space-4); text-align: left; font-size: 0.875rem; color: var(--text-secondary);">设计元素</th>
+              <th style="padding: var(--space-4); text-align: left; font-size: 0.875rem; color: var(--text-secondary);">当前设计</th>
+              <th style="padding: var(--space-4); text-align: left; font-size: 0.875rem; color: var(--text-secondary);">Premium设计</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid var(--border-light);">
+              <td style="padding: var(--space-4); font-size: 0.875rem;">配色</td>
+              <td style="padding: var(--space-4); font-size: 0.875rem; color: var(--text-secondary);">多种蓝色</td>
+              <td style="padding: var(--space-4); font-size: 0.875rem; color: var(--success);">Instagram蓝 + 灰度系统</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border-light);">
+              <td style="padding: var(--space-4); font-size: 0.875rem;">圆角</td>
+              <td style="padding: var(--space-4); font-size: 0.875rem; color: var(--text-secondary);">不统一</td>
+              <td style="padding: var(--space-4); font-size: 0.875rem; color: var(--success);">统一的圆角系统</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border-light);">
+              <td style="padding: var(--space-4); font-size: 0.875rem;">间距</td>
+              <td style="padding: var(--space-4); font-size: 0.875rem; color: var(--text-secondary);">随机</td>
+              <td style="padding: var(--space-4); font-size: 0.875rem; color: var(--success);">8px基准系统</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border-light);">
+              <td style="padding: var(--space-4); font-size: 0.875rem;">阴影</td>
+              <td style="padding: var(--space-4); font-size: 0.875rem; color: var(--text-secondary);">较重</td>
+              <td style="padding: var(--space-4); font-size: 0.875rem; color: var(--success);">细腻精致</td>
+            </tr>
+            <tr>
+              <td style="padding: var(--space-4); font-size: 0.875rem;">动画</td>
+              <td style="padding: var(--space-4); font-size: 0.875rem; color: var(--text-secondary);">基础</td>
+              <td style="padding: var(--space-4); font-size: 0.875rem; color: var(--success);">丰富的微交互</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 底部说明 -->
+    <div class="section" style="text-align: center; padding-bottom: var(--space-16);">
+      <p style="color: var(--text-secondary); margin-bottom: var(--space-4);">
+        这些是Premium设计系统的一部分示例
+      </p>
+      <p style="color: var(--text-tertiary); font-size: 0.875rem;">
+        查看 docs/DESIGN_UPGRADE_PLAN.md 了解完整的设计指南
+      </p>
+    </div>
+  </div>
+
+  <script>
+    function toggleTheme() {
+      const html = document.documentElement;
+      const currentTheme = html.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+    }
+
+    // 加载保存的主题
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+  </script>
+</body>
+</html>
