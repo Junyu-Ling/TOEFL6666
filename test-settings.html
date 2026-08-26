@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>测试分轮背诵功能</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      line-height: 1.6;
+    }
+    .test-section {
+      background: #f5f5f5;
+      padding: 1.5rem;
+      border-radius: 0.5rem;
+      margin: 1rem 0;
+    }
+    .success { color: #10b981; }
+    .error { color: #ef4444; }
+    button {
+      background: #3b82f6;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      margin: 0.5rem 0.5rem 0.5rem 0;
+    }
+    button:hover {
+      background: #2563eb;
+    }
+    pre {
+      background: white;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      overflow-x: auto;
+    }
+  </style>
+</head>
+<body>
+  <h1>🔍 分轮背诵功能测试</h1>
+  
+  <div class="test-section">
+    <h2>步骤 1: 检查 localStorage</h2>
+    <button onclick="checkSettings()">检查设置</button>
+    <button onclick="clearAndReload()">清除缓存并刷新</button>
+    <pre id="settings-output">点击"检查设置"按钮查看结果</pre>
+  </div>
+
+  <div class="test-section">
+    <h2>步骤 2: 设置分轮背诵</h2>
+    <button onclick="enableRoundReview()">启用分轮背诵</button>
+    <button onclick="setWordsPerRound(15)">设置每轮15个单词</button>
+    <button onclick="setWordsPerRound(20)">设置每轮20个单词</button>
+    <pre id="action-output">点击按钮进行设置</pre>
+  </div>
+
+  <div class="test-section">
+    <h2>步骤 3: 访问应用</h2>
+    <p>设置完成后，访问：<a href="http://localhost:5174" target="_blank">http://localhost:5174</a></p>
+    <p>然后：</p>
+    <ol>
+      <li>点击右上角设置图标 ⚙️</li>
+      <li>向下滚动到"学习行为"部分</li>
+      <li>找到"分轮背诵模式"开关</li>
+    </ol>
+  </div>
+
+  <script>
+    function checkSettings() {
+      try {
+        const settings = JSON.parse(localStorage.getItem('toefl666_settings'));
+        if (!settings) {
+          document.getElementById('settings-output').innerHTML = 
+            '<span class="error">❌ 未找到设置，localStorage 为空</span>';
+          return;
+        }
+        
+        const hasRoundReview = 'enableRoundReview' in settings;
+        const hasWordsPerRound = 'wordsPerRound' in settings;
+        
+        let output = '';
+        if (hasRoundReview && hasWordsPerRound) {
+          output += '<span class="success">✅ 设置已存在！</span>\n\n';
+        } else {
+          output += '<span class="error">❌ 设置不完整</span>\n\n';
+        }
+        
+        output += `enableRoundReview: ${settings.enableRoundReview ?? '未设置'}\n`;
+        output += `wordsPerRound: ${settings.wordsPerRound ?? '未设置'}\n\n`;
+        output += '完整设置:\n' + JSON.stringify(settings, null, 2);
+        
+        document.getElementById('settings-output').textContent = output;
+      } catch (e) {
+        document.getElementById('settings-output').innerHTML = 
+          '<span class="error">❌ 错误: ' + e.message + '</span>';
+      }
+    }
+
+    function clearAndReload() {
+      localStorage.clear();
+      alert('已清除所有 localStorage 数据，页面即将刷新');
+      location.reload();
+    }
+
+    function enableRoundReview() {
+      try {
+        let settings = JSON.parse(localStorage.getItem('toefl666_settings') || '{}');
+        settings.enableRoundReview = true;
+        settings.wordsPerRound = settings.wordsPerRound || 20;
+        localStorage.setItem('toefl666_settings', JSON.stringify(settings));
+        document.getElementById('action-output').innerHTML = 
+          '<span class="success">✅ 已启用分轮背诵模式</span>';
+        setTimeout(checkSettings, 500);
+      } catch (e) {
+        document.getElementById('action-output').innerHTML = 
+          '<span class="error">❌ 错误: ' + e.message + '</span>';
+      }
+    }
+
+    function setWordsPerRound(count) {
+      try {
+        let settings = JSON.parse(localStorage.getItem('toefl666_settings') || '{}');
+        settings.wordsPerRound = count;
+        if (!('enableRoundReview' in settings)) {
+          settings.enableRoundReview = true;
+        }
+        localStorage.setItem('toefl666_settings', JSON.stringify(settings));
+        document.getElementById('action-output').innerHTML = 
+          `<span class="success">✅ 已设置每轮 ${count} 个单词</span>`;
+        setTimeout(checkSettings, 500);
+      } catch (e) {
+        document.getElementById('action-output').innerHTML = 
+          '<span class="error">❌ 错误: ' + e.message + '</span>';
+      }
+    }
+
+    // 页面加载时自动检查
+    window.onload = checkSettings;
+  </script>
+</body>
+</html>

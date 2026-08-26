@@ -2,6 +2,7 @@ import { useState, useCallback, useMemo, useEffect, useRef } from "react";
 import Navbar from "./components/Navbar";
 import LoginModal from "./components/LoginModal";
 import PracticeSession from "./components/PracticeSession";
+import RoundPracticeSession from "./components/RoundPracticeSession";
 import WordList from "./components/WordList";
 import MicPermissionPrompt from "./components/MicPermissionPrompt";
 import SettingsPanel from "./components/SettingsPanel";
@@ -999,7 +1000,7 @@ export default function App() {
   const bankPanel = useMemo(
     () =>
       bankPracticeActive ? (
-        <PracticeSession
+        <RoundPracticeSession
           tabId="bank"
           title={bankPracticeTitle}
           toolbarExtra={
@@ -1007,8 +1008,8 @@ export default function App() {
               返回列表
             </button>
           }
-          queueLength={bankSession.queue.length}
-          currentIndex={bankSession.index}
+          queue={bankSession.queue}
+          currentGlobalIndex={bankSession.index}
           currentWord={bankWord}
           wordStats={getWordStats(bankWord)}
           wordBankMap={wordBankMap}
@@ -1098,7 +1099,7 @@ export default function App() {
   const unrecognizedPanel = useMemo(
     () =>
       unrecognizedPracticeActive ? (
-        <PracticeSession
+        <RoundPracticeSession
           tabId="unrecognized"
           title={unrecognizedPracticeTitle}
           toolbarExtra={
@@ -1106,8 +1107,8 @@ export default function App() {
               返回列表
             </button>
           }
-          queueLength={unrecognizedSession.queue.length}
-          currentIndex={unrecognizedSession.index}
+          queue={unrecognizedSession.queue}
+          currentGlobalIndex={unrecognizedSession.index}
           currentWord={unrecognizedWord}
           wordStats={getWordStats(unrecognizedWord)}
           wordBankMap={wordBankMap}
@@ -1196,7 +1197,7 @@ export default function App() {
   const recognizedPanel = useMemo(
     () =>
       recognizedPracticeActive ? (
-        <PracticeSession
+        <RoundPracticeSession
           tabId="recognized"
           title={recognizedPracticeTitle}
           toolbarExtra={
@@ -1204,8 +1205,8 @@ export default function App() {
               返回列表
             </button>
           }
-          queueLength={recognizedSession.queue.length}
-          currentIndex={recognizedSession.index}
+          queue={recognizedSession.queue}
+          currentGlobalIndex={recognizedSession.index}
           currentWord={recognizedWord}
           wordStats={getWordStats(recognizedWord)}
           wordBankMap={wordBankMap}
