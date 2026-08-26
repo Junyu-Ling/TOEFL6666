@@ -87,9 +87,12 @@ export default function SettingsPanel() {
     setAnswerSounds,
     setAnswerSoundCorrect,
     setAnswerSoundWrong,
+    setWordsPerRound,
+    setEnableRoundReview,
   } = useSettings();
 
   const [delayDraft, setDelayDraft] = useState(String(settings.autoAdvanceDelaySec));
+  const [wordsPerRoundDraft, setWordsPerRoundDraft] = useState(String(settings.wordsPerRound));
   const [pullCode, setPullCode] = useState("");
   const [uploadedCode, setUploadedCode] = useState("");
   const [uploadedHost, setUploadedHost] = useState("");
@@ -128,6 +131,7 @@ export default function SettingsPanel() {
   useEffect(() => {
     if (settingsOpen) {
       setDelayDraft(String(settings.autoAdvanceDelaySec));
+      setWordsPerRoundDraft(String(settings.wordsPerRound));
       setSyncError("");
       setSyncMessage("");
       setPullCode("");
@@ -140,7 +144,7 @@ export default function SettingsPanel() {
         setUploadedHost(last.host || "");
       }
     }
-  }, [settings.autoAdvanceDelaySec, settingsOpen]);
+  }, [settings.autoAdvanceDelaySec, settings.wordsPerRound, settingsOpen]);
 
   function commitDelayDraft() {
     const trimmed = delayDraft.trim();
@@ -156,6 +160,24 @@ export default function SettingsPanel() {
     setDelayDraft(String(clamped));
     if (clamped !== settings.autoAdvanceDelaySec) {
       setAutoAdvanceDelaySec(clamped);
+    }
+  }
+
+  function commitWordsPerRoundDraft() {
+    const trimmed = wordsPerRoundDraft.trim();
+    if (trimmed === "") {
+      setWordsPerRoundDraft(String(settings.wordsPerRound));
+      return;
+    }
+    const n = Number(trimmed);
+    if (!Number.isFinite(n) || n <= 0) {
+      setWordsPerRoundDraft(String(settings.wordsPerRound));
+      return;
+    }
+    const clamped = Math.min(100, Math.max(5, Math.round(n)));
+    setWordsPerRoundDraft(String(clamped));
+    if (clamped !== settings.wordsPerRound) {
+      setWordsPerRound(clamped);
     }
   }
 
@@ -471,6 +493,40 @@ export default function SettingsPanel() {
                       e.currentTarget.blur();
                     }
                   }}
+                />
+              </label>
+            )}
+            <label className="settings-toggle-row">
+              <span className="settings-toggle-row__text">
+                <strong>分轮背诵模式</strong>
+                <span className="settings-toggle-row__hint">每轮背完后回到开头复习一遍</span>
+              </span>
+              <span className="toggle-switch">
+                <input
+                  type="checkbox"
+                  checked={settings.enableRoundReview}
+                  onChange={(e) => setEnableRoundReview(e.target.checked)}
+                />
+                <span className="toggle-switch__track" aria-hidden="true" />
+              </span>
+            </label>
+            {settings.enableRoundReview && (
+              <label className="settings-field">
+                <span>每轮单词数</span>
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  value={wordsPerRoundDraft}
+                  onChange={(e) => setWordsPerRoundDraft(e.target.value)}
+                  onBlur={commitWordsPerRoundDraft}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      commitWordsPerRoundDraft();
+                      e.currentTarget.blur();
+                    }
+                  }}
+                  placeholder="5-100"
                 />
               </label>
             )}

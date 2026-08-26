@@ -45,6 +45,8 @@ const DEFAULT_SETTINGS = {
   satTargetTotal: null,
   studyPlan: null,
   studyPlans: { toefl: null, sat: null },
+  wordsPerRound: 20,
+  enableRoundReview: true,
 };
 
 function normalizeStudyPlanEntry(value) {
@@ -91,6 +93,12 @@ export function clampDelaySec(value) {
   return Math.min(60, Math.max(0, Math.round(n)));
 }
 
+export function clampWordsPerRound(value) {
+  const n = Number(value);
+  if (!Number.isFinite(n) || n <= 0) return DEFAULT_SETTINGS.wordsPerRound;
+  return Math.min(100, Math.max(5, Math.round(n)));
+}
+
 export function loadSettings() {
   try {
     const raw = localStorage.getItem(SETTINGS_KEY);
@@ -116,6 +124,8 @@ export function loadSettings() {
       satTargetTotal: normalizeSatTargetTotal(parsed.satTargetTotal),
       studyPlan: null,
       studyPlans: normalizeStudyPlans(parsed),
+      wordsPerRound: clampWordsPerRound(parsed.wordsPerRound),
+      enableRoundReview: parsed.enableRoundReview !== false,
     };
     if ("aiApiKey" in parsed) {
       saveSettings(next);
@@ -134,6 +144,9 @@ export function patchSettings(patch) {
   const next = { ...loadSettings(), ...patch };
   if ("autoAdvanceDelaySec" in patch) {
     next.autoAdvanceDelaySec = clampDelaySec(next.autoAdvanceDelaySec);
+  }
+  if ("wordsPerRound" in patch) {
+    next.wordsPerRound = clampWordsPerRound(next.wordsPerRound);
   }
   if ("appMode" in patch) {
     next.appMode = normalizeAppMode(next.appMode);

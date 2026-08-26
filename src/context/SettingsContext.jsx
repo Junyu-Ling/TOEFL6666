@@ -113,6 +113,16 @@ export function SettingsProvider({ children }) {
     [updateSettings]
   );
 
+  const setWordsPerRound = useCallback(
+    (wordsPerRound) => updateSettings({ wordsPerRound: Number(wordsPerRound) }),
+    [updateSettings]
+  );
+
+  const setEnableRoundReview = useCallback(
+    (enableRoundReview) => updateSettings({ enableRoundReview }),
+    [updateSettings]
+  );
+
   const setTargetExam = useCallback(
     (targetExam) => {
       const mode = normalizeTargetExam(targetExam);
@@ -204,6 +214,8 @@ export function SettingsProvider({ children }) {
       setAnswerSounds,
       setAnswerSoundCorrect,
       setAnswerSoundWrong,
+      setWordsPerRound,
+      setEnableRoundReview,
       setTargetExam,
       setAppMode,
       setToeflSectionScore,
@@ -228,6 +240,8 @@ export function SettingsProvider({ children }) {
       setAnswerSounds,
       setAnswerSoundCorrect,
       setAnswerSoundWrong,
+      setWordsPerRound,
+      setEnableRoundReview,
       setTargetExam,
       setAppMode,
       setToeflSectionScore,
