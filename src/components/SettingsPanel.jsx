@@ -1,73 +1,17 @@
-import { useState, useEffect, useMemo, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useSettings } from "../context/SettingsContext";
 import { stopGameKeyBubble } from "../utils/appKeyboard";
-import { formatPairingCode, getSyncSummary, isValidPairingCode, normalizePairingCode } from "../shared/sync";
-import { pushSyncData, syncService, SYNC_STATUS_EVENT } from "../services/syncService";
 import {
   CORRECT_SOUND_OPTIONS,
   WRONG_SOUND_OPTIONS,
   previewAnswerSound,
 } from "../utils/answerSounds";
-import { normalizeAppMode } from "../utils/appMode";
 import ExamScoreSection from "./ExamScoreSection";
-
-const SYNC_SESSION_KEY = "toefl666_last_sync";
-
-function readLastSync() {
-  try {
-    return JSON.parse(sessionStorage.getItem(SYNC_SESSION_KEY) || "null");
-  } catch {
-    return null;
-  }
-}
-
-function writeLastSync({ code, host, backend }) {
-  sessionStorage.setItem(
-    SYNC_SESSION_KEY,
-    JSON.stringify({ code, host, backend, at: Date.now() })
-  );
-}
-
-async function copyText(text) {
-  try {
-    await navigator.clipboard.writeText(text);
-    return true;
-  } catch {
-    return false;
-  }
-}
-
-function formatExpiry(expiresAt) {
-  if (!expiresAt) return "";
-  return new Date(expiresAt).toLocaleString("zh-CN", {
-    month: "numeric",
-    day: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-}
 
 function clampDelayInput(value) {
   const n = Number(String(value).trim());
   if (!Number.isFinite(n)) return null;
   return Math.min(60, Math.max(0, Math.round(n)));
-}
-
-function PairingCodeDisplay({ code, onCopy, busy }) {
-  if (!code) return null;
-  return (
-    <div className="pairing-code-display">
-      <span className="pairing-code-display__code">{code}</span>
-      <button
-        type="button"
-        className="settings-action-btn pairing-code-display__copy"
-        onClick={onCopy}
-        disabled={busy}
-      >
-        复制
-      </button>
-    </div>
-  );
 }
 
 export default function SettingsPanel() {
@@ -93,35 +37,7 @@ export default function SettingsPanel() {
 
   const [delayDraft, setDelayDraft] = useState(String(settings.autoAdvanceDelaySec));
   const [wordsPerRoundDraft, setWordsPerRoundDraft] = useState(String(settings.wordsPerRound));
-  const [pullCode, setPullCode] = useState("");
-  const [uploadedCode, setUploadedCode] = useState("");
-  const [uploadedHost, setUploadedHost] = useState("");
-  const [syncBusy, setSyncBusy] = useState(false);
-  const [syncMessage, setSyncMessage] = useState("");
-  const [syncError, setSyncError] = useState("");
-  const [pairingCode, setPairingCode] = useState(() => syncService.getPairingCode());
-  const [syncStatus, setSyncStatus] = useState(() => syncService.getStatus());
-  const [expiresAt, setExpiresAt] = useState(() => syncService.getExpiresAt());
-  const isPaired = Boolean(pairingCode);
   const panelRef = useRef(null);
-  const pullInputRef = useRef(null);
-
-  const appMode = normalizeAppMode(settings.appMode);
-  const syncSummary = useMemo(() => getSyncSummary({ appMode }), [settingsOpen, syncStatus.state, appMode]);
-  const expiryLabel = formatExpiry(expiresAt);
-  const syncState = syncStatus.state;
-
-  useEffect(() => {
-    function onStatus(event) {
-      const detail = event.detail || syncService.getStatus();
-      setSyncStatus(detail);
-      const code = detail.code || syncService.getPairingCode();
-      if (code) setPairingCode(code);
-      setExpiresAt(syncService.getExpiresAt());
-    }
-    window.addEventListener(SYNC_STATUS_EVENT, onStatus);
-    return () => window.removeEventListener(SYNC_STATUS_EVENT, onStatus);
-  }, []);
 
   useEffect(() => {
     if (!settingsOpen || !panelRef.current) return;
@@ -132,17 +48,6 @@ export default function SettingsPanel() {
     if (settingsOpen) {
       setDelayDraft(String(settings.autoAdvanceDelaySec));
       setWordsPerRoundDraft(String(settings.wordsPerRound));
-      setSyncError("");
-      setSyncMessage("");
-      setPullCode("");
-      setPairingCode(syncService.getPairingCode());
-      setSyncStatus(syncService.getStatus());
-      setExpiresAt(syncService.getExpiresAt());
-      const last = readLastSync();
-      if (last?.code) {
-        setUploadedCode(last.code);
-        setUploadedHost(last.host || "");
-      }
     }
   }, [settings.autoAdvanceDelaySec, settings.wordsPerRound, settingsOpen]);
 
@@ -179,118 +84,6 @@ export default function SettingsPanel() {
     if (clamped !== settings.wordsPerRound) {
       setWordsPerRound(clamped);
     }
-  }
-
-  async function handleCopyCode() {
-    const code = pairingCode || uploadedCode;
-    if (!code) return;
-    const ok = await copyText(code.replace(/-/g, ""));
-    setSyncMessage(ok ? `已复制配对码 ${code}` : "复制失败，请手动复制");
-    setSyncError("");
-  }
-
-  async function handlePasteCode() {
-    setSyncError("");
-    try {
-      const text = await navigator.clipboard.readText();
-      const normalized = normalizePairingCode(text);
-      if (!isValidPairingCode(normalized)) {
-        setSyncError("剪贴板内容不是有效的 8 位配对码");
-        return;
-      }
-      setPullCode(formatPairingCode(normalized));
-      setSyncMessage("已从剪贴板粘贴配对码");
-    } catch {
-      setSyncError("无法读取剪贴板，请手动输入");
-    }
-  }
-
-  async function handleUploadSync() {
-    setSyncBusy(true);
-    setSyncError("");
-    setSyncMessage("");
-    try {
-      const result = await pushSyncData();
-      const host = window.location.host;
-      const formatted = formatPairingCode(result.code);
-      setUploadedCode(formatted);
-      setUploadedHost(host);
-      writeLastSync({ code: formatted, host, backend: result.backend });
-      await syncService.establishHost(result.code, {
-        push: false,
-        remoteUpdatedAt: result.updatedAt || Date.now(),
-        expiresAt: result.expiresAt || 0,
-      });
-      setPairingCode(formatted);
-      setExpiresAt(result.expiresAt || 0);
-      const expires = formatExpiry(result.expiresAt);
-      const copied = await copyText(formatted.replace(/-/g, ""));
-      if (result.backend === "memory") {
-        setSyncMessage(
-          `配对码已生成（仅 ${host} 开发环境有效）· 有效期至 ${expires}${
-            copied ? " · 已复制" : ""
-          } · 本机已开启实时同步`
-        );
-      } else {
-        setSyncMessage(
-          `配对码已生成 · 有效期至 ${expires}${copied ? " · 已复制" : ""} · 请在另一台设备输入此码`
-        );
-      }
-    } catch (err) {
-      setSyncError(err.message || "生成失败，请稍后重试");
-    } finally {
-      setSyncBusy(false);
-    }
-  }
-
-  async function handleLinkSync() {
-    const code = normalizePairingCode(pullCode);
-    if (!isValidPairingCode(code)) {
-      setSyncError("请输入完整的 8 位配对码");
-      pullInputRef.current?.focus();
-      return;
-    }
-
-    setSyncBusy(true);
-    setSyncError("");
-    setSyncMessage("");
-    try {
-      await syncService.linkDevice(code);
-      setPairingCode(formatPairingCode(code));
-      setPullCode("");
-      setExpiresAt(syncService.getExpiresAt());
-      setSyncMessage("已与另一台设备合并进度，之后将自动双向同步");
-    } catch (err) {
-      const host = window.location.host;
-      const last = readLastSync();
-      const hints = [
-        "请确认源设备已点击「生成配对码」",
-        `两台设备须打开同一网址（当前 ${host}）`,
-        "请核对配对码是否抄写正确",
-      ];
-      if (last?.host && last.host !== host) {
-        hints.unshift(`本机曾从 ${last.host} 上传，与当前 ${host} 不一致`);
-      }
-      setSyncError(`${err.message || "连接失败"}。${hints.join("；")}。`);
-    } finally {
-      setSyncBusy(false);
-    }
-  }
-
-  function handleUnlink() {
-    if (
-      !window.confirm(
-        "解除配对后，本机将不再与另一台设备自动同步进度。另一台设备不受影响，如需停止同步也请在那一台解除配对。"
-      )
-    ) {
-      return;
-    }
-    syncService.unlink();
-    setPairingCode("");
-    setPullCode("");
-    setExpiresAt(0);
-    setSyncMessage("已解除配对，本机不再自动同步");
-    setSyncError("");
   }
 
   if (!settingsOpen) return null;
@@ -534,135 +327,6 @@ export default function SettingsPanel() {
         </details>
 
         <ExamScoreSection />
-
-        <details className="settings-group" open>
-          <summary className="settings-group__summary">
-            <span className="settings-group__title">进度同步</span>
-            <span className="settings-group__meta">
-              {isPaired
-                ? `已配对 · ${pairingCode}`
-                : `熟词 ${syncSummary.recognized} · 生词 ${syncSummary.unrecognized}`}
-            </span>
-          </summary>
-          <div className="settings-group__body">
-            <p className="settings-hint settings-hint--compact">
-              电脑与手机须打开<strong>同一网址</strong>。一台生成配对码，另一台输入即可合并进度并持续双向同步。
-            </p>
-
-            {isPaired ? (
-              <div className="settings-sync-card settings-sync-card--active">
-                <div className="settings-sync-card__head">
-                  <strong className="settings-sync-card__status">
-                    <span
-                      className={`sync-live-dot ${
-                        syncState === "error" || syncState === "expired"
-                          ? "sync-live-dot--error"
-                          : syncState === "pushing" || syncState === "pulling"
-                            ? "sync-live-dot--busy"
-                            : ""
-                      }`}
-                      aria-hidden
-                    />
-                    {syncState === "expired" ? "配对码已过期" : "实时同步中"}
-                  </strong>
-                  {expiryLabel ? <span>有效期至 {expiryLabel}</span> : null}
-                </div>
-                <PairingCodeDisplay code={pairingCode} onCopy={handleCopyCode} busy={syncBusy} />
-                <p className="settings-hint settings-hint--compact">
-                  任意一端学习进度会自动合并上传。每次同步会续期 30 天。
-                </p>
-                {syncState === "expired" ? (
-                  <button
-                    type="button"
-                    className="settings-action-btn settings-action-btn--primary settings-action-btn--block"
-                    onClick={handleUploadSync}
-                    disabled={syncBusy}
-                  >
-                    重新生成配对码
-                  </button>
-                ) : null}
-                <button
-                  type="button"
-                  className="settings-action-btn settings-action-btn--block"
-                  onClick={handleUnlink}
-                  disabled={syncBusy}
-                >
-                  解除配对
-                </button>
-              </div>
-            ) : (
-              <>
-                <div className="settings-sync-card">
-                  <div className="settings-sync-card__head">
-                    <strong>
-                      <span className="pairing-step">1</span>
-                      在本机生成配对码
-                    </strong>
-                    <span>上传进度并开启实时同步</span>
-                  </div>
-                  <button
-                    type="button"
-                    className="settings-action-btn settings-action-btn--primary settings-action-btn--block"
-                    onClick={handleUploadSync}
-                    disabled={syncBusy}
-                  >
-                    {syncBusy ? "处理中…" : "生成配对码"}
-                  </button>
-                  {uploadedCode ? (
-                    <PairingCodeDisplay code={uploadedCode} onCopy={handleCopyCode} busy={syncBusy} />
-                  ) : null}
-                  {uploadedHost ? (
-                    <p className="settings-hint settings-hint--compact">上次生成站点：{uploadedHost}</p>
-                  ) : null}
-                </div>
-
-                <div className="settings-sync-card">
-                  <div className="settings-sync-card__head">
-                    <strong>
-                      <span className="pairing-step">2</span>
-                      在另一台设备输入配对码
-                    </strong>
-                    <span>先合并两边进度，再持续同步</span>
-                  </div>
-                  <div className="settings-sync-input-row">
-                    <input
-                      ref={pullInputRef}
-                      className="settings-sync-input"
-                      type="text"
-                      value={pullCode}
-                      onChange={(e) => setPullCode(formatPairingCode(e.target.value))}
-                      placeholder="XXXX-XXXX"
-                      autoComplete="off"
-                      spellCheck={false}
-                      maxLength={9}
-                      inputMode="text"
-                      autoCapitalize="characters"
-                    />
-                    <button
-                      type="button"
-                      className="settings-action-btn settings-sync-input-row__paste"
-                      onClick={handlePasteCode}
-                      disabled={syncBusy}
-                    >
-                      粘贴
-                    </button>
-                  </div>
-                  <button
-                    type="button"
-                    className="settings-action-btn settings-action-btn--block"
-                    onClick={handleLinkSync}
-                    disabled={syncBusy || !isValidPairingCode(normalizePairingCode(pullCode))}
-                  >
-                    {syncBusy ? "连接中…" : "连接并实时同步"}
-                  </button>
-                </div>
-              </>
-            )}
-
-            {syncMessage && <p className="settings-status settings-status--ok">{syncMessage}</p>}
-            {syncError && <p className="settings-status settings-status--error">{syncError}</p>}
-          </div>
-        </details>
 
         <details className="settings-group">
           <summary className="settings-group__summary">
