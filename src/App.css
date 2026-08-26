@@ -1,4 +1,4 @@
-﻿@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lexend:wght@500;600;700&display=swap");
+﻿@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lexend:wght@500;600;700&family=Noto+Serif:ital,wght@0,400;0,500;0,600;1,400&display=swap");
 
 :root,
 [data-theme="light"] {
@@ -1001,6 +1001,43 @@ body {
 .pronunciation-alert__label {
   font-weight: 700;
   white-space: nowrap;
+}
+
+/* 音标专用样式 - 优雅高级感 */
+.pronunciation-alert--ipa {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  margin: 0.75rem 0 0;
+  background: linear-gradient(135deg, var(--accent-soft) 0%, color-mix(in srgb, var(--accent) 8%, var(--surface)) 100%);
+  border: 1px solid color-mix(in srgb, var(--accent) 20%, var(--border));
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+  transition: all var(--transition-normal);
+}
+
+.pronunciation-alert--ipa:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.06);
+  border-color: color-mix(in srgb, var(--accent) 35%, var(--border));
+}
+
+.pronunciation-alert__ipa {
+  font-family: "Noto Serif", Georgia, "Times New Roman", serif;
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: var(--accent);
+  letter-spacing: 0.02em;
+  line-height: 1.4;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+[data-theme="dark"] .pronunciation-alert--ipa {
+  background: linear-gradient(135deg, var(--accent-soft) 0%, color-mix(in srgb, var(--accent) 6%, var(--surface)) 100%);
+  border-color: color-mix(in srgb, var(--accent) 25%, var(--border));
 }
 
 .flashcard__pronunciation-alert {
