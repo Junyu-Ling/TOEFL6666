@@ -1017,7 +1017,7 @@ body {
 
 .pronunciation-alert__ipa {
   font-family: "Noto Serif", Georgia, "Times New Roman", serif;
-  font-size: 1rem;
+  font-size: 1.125rem;
   font-weight: 400;
   color: var(--text-muted);
   letter-spacing: 0.02em;
@@ -1037,7 +1037,7 @@ body {
 
 .flashcard__phonetic {
   font-family: "Noto Serif", Georgia, "Times New Roman", serif;
-  font-size: 1.125rem;
+  font-size: 1.375rem;
   font-weight: 400;
   color: var(--text-muted);
   letter-spacing: 0.02em;
@@ -2490,7 +2490,7 @@ body {
 
 .word-item__phonetic {
   font-family: "Noto Serif", Georgia, "Times New Roman", serif;
-  font-size: 0.875rem;
+  font-size: 1rem;
   font-weight: 400;
   color: var(--text-muted);
   letter-spacing: 0.02em;
