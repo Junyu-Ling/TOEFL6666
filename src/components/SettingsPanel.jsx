@@ -669,6 +669,9 @@ export default function SettingsPanel() {
             <span className="settings-group__title">朗读</span>
             <span className="settings-group__meta">
               {settings.systemVoiceURI ? "已选音色" : "自动选择"}
+              {systemVoices.length > 0 && (
+                <span className="settings-group__count">（{systemVoices.length} 个可用）</span>
+              )}
             </span>
           </summary>
           <div className="settings-group__body">
@@ -677,15 +680,89 @@ export default function SettingsPanel() {
               <select
                 value={settings.systemVoiceURI}
                 onChange={(e) => setSystemVoiceURI(e.target.value)}
+                className="settings-field__voice-select"
               >
-                <option value="">自动选择（推荐）</option>
-                {systemVoices.map((voice) => (
-                  <option key={voice.voiceURI} value={voice.voiceURI}>
-                    {voice.name} ({voice.lang})
-                  </option>
-                ))}
+                <option value="">🎯 智能选择（推荐）</option>
+                
+                {(() => {
+                  const premiumVoices = systemVoices.filter((v) => 
+                    /google|microsoft|natural|premium|enhanced|neural/i.test(v.name)
+                  );
+                  const standardVoices = systemVoices.filter((v) => 
+                    !/google|microsoft|natural|premium|enhanced|neural|compact|eloquence|super-compact|legacy|bad\s+news|bubbles|cellos|deranged|good\s+news|jester|organ|superstar|trinoids|whisper|zarvox/i.test(v.name)
+                  );
+                  const lowQualityVoices = systemVoices.filter((v) => 
+                    /compact|eloquence|super-compact|legacy|bad\s+news|bubbles|cellos|deranged|good\s+news|jester|organ|superstar|trinoids|whisper|zarvox/i.test(v.name)
+                  );
+                  
+                  return (
+                    <>
+                      {premiumVoices.length > 0 && (
+                        <optgroup label="⭐ 高级音色">
+                          {premiumVoices.map((voice) => (
+                            <option key={voice.voiceURI} value={voice.voiceURI}>
+                              {voice.name} · {voice.lang}
+                            </option>
+                          ))}
+                        </optgroup>
+                      )}
+                      
+                      {standardVoices.length > 0 && (
+                        <optgroup label="🎙️ 标准音色">
+                          {standardVoices.map((voice) => (
+                            <option key={voice.voiceURI} value={voice.voiceURI}>
+                              {voice.name} · {voice.lang}
+                            </option>
+                          ))}
+                        </optgroup>
+                      )}
+                      
+                      {lowQualityVoices.length > 0 && (
+                        <optgroup label="💬 基础音色">
+                          {lowQualityVoices.map((voice) => (
+                            <option key={voice.voiceURI} value={voice.voiceURI}>
+                              {voice.name} · {voice.lang}
+                            </option>
+                          ))}
+                        </optgroup>
+                      )}
+                    </>
+                  );
+                })()}
               </select>
             </label>
+            
+            {systemVoices.length === 0 && (
+              <p className="settings-field__hint settings-field__hint--warning">
+                ⚠️ 未检测到可用的朗读声音
+              </p>
+            )}
+            
+            {systemVoices.length < 5 && systemVoices.length > 0 && (
+              <details className="settings-field__help">
+                <summary className="settings-field__help-title">
+                  💡 如何添加更多声音？
+                </summary>
+                <div className="settings-field__help-content">
+                  <p><strong>Windows 10/11：</strong></p>
+                  <ol>
+                    <li>打开「设置」→「时间和语言」→「语音」</li>
+                    <li>点击「添加语音」</li>
+                    <li>搜索并安装英语声音包（推荐：Microsoft David、Zira、Mark）</li>
+                  </ol>
+                  
+                  <p><strong>macOS：</strong></p>
+                  <ol>
+                    <li>打开「系统偏好设置」→「辅助功能」→「朗读内容」</li>
+                    <li>点击「系统声音」→「自定义」</li>
+                    <li>下载英语声音（推荐：Samantha、Alex、Allison）</li>
+                  </ol>
+                  
+                  <p><strong>Chrome/Edge：</strong></p>
+                  <p>可使用 Google 云端高级声音，无需额外安装</p>
+                </div>
+              </details>
+            )}
           </div>
         </details>
       </aside>

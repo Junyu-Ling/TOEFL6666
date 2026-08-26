@@ -2,7 +2,7 @@ import { createContext, useContext, useState, useEffect, useCallback, useMemo } 
 import { loadSettings, patchSettings, clampDelaySec, updateToeflSectionScore, updateSatSectionScore, normalizeStudyPlans } from "../services/settings";
 import { normalizeAppMode, APP_MODE_TITLES } from "../utils/appMode";
 import { normalizeTargetExam, normalizeToeflTargetTotal, normalizeSatTargetTotal } from "../utils/examScores";
-import { getSystemVoices, speakWord as speak } from "../utils/speech";
+import { getSystemVoices, getGroupedVoices, getRecommendedVoices, speakWord as speak } from "../utils/speech";
 import { normalizeCorrectSoundId, normalizeWrongSoundId } from "../utils/answerSounds";
 import { SYNC_APPLIED_EVENT } from "../services/syncService";
 

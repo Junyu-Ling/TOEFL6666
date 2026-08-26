@@ -3,11 +3,51 @@ let voicesCache = [];
 const LOW_QUALITY_VOICE_PATTERN = /compact|eloquence|super-compact|legacy|bad\s+news|bubbles|cellos|deranged|good\s+news|jester|organ|superstar|trinoids|whisper|zarvox/i;
 const PREMIUM_VOICE_PATTERN = /google|microsoft|natural|premium|enhanced|neural/i;
 const MAC_PREFERRED_VOICE_PATTERN = /samantha|alex|allison|ava|fred|victoria|daniel|karen|moira|tessa|tom|nicky|aaron|nathan|susan|zoe/i;
+const WINDOWS_PREFERRED_VOICE_PATTERN = /david|zira|mark|jenny|guy|aria|davis|jane|jason|nancy|tony/i;
 
 export function getSystemVoices() {
   if (!("speechSynthesis" in window)) return [];
   voicesCache = window.speechSynthesis.getVoices();
   return voicesCache.filter((v) => v.lang.startsWith("en"));
+}
+
+/**
+ * 获取按质量分组的声音列表
+ */
+export function getGroupedVoices() {
+  const voices = getSystemVoices();
+  const grouped = {
+    premium: [],
+    standard: [],
+    basic: []
+  };
+
+  voices.forEach((voice) => {
+    if (isLowQualityVoice(voice)) {
+      grouped.basic.push(voice);
+    } else if (PREMIUM_VOICE_PATTERN.test(voice.name)) {
+      grouped.premium.push(voice);
+    } else {
+      grouped.standard.push(voice);
+    }
+  });
+
+  // 按评分排序每个组
+  Object.keys(grouped).forEach((key) => {
+    grouped[key].sort((a, b) => scoreVoice(b) - scoreVoice(a));
+  });
+
+  return grouped;
+}
+
+/**
+ * 获取推荐的声音列表（排除低质量）
+ */
+export function getRecommendedVoices() {
+  const voices = getSystemVoices();
+  return voices
+    .filter((v) => !isLowQualityVoice(v))
+    .sort((a, b) => scoreVoice(b) - scoreVoice(a));
 }
 
 function isLowQualityVoice(voice) {
@@ -20,6 +60,7 @@ function scoreVoice(voice) {
   else if (voice.lang.startsWith("en")) score += 6;
   if (PREMIUM_VOICE_PATTERN.test(voice.name)) score += 24;
   if (MAC_PREFERRED_VOICE_PATTERN.test(voice.name)) score += 18;
+  if (WINDOWS_PREFERRED_VOICE_PATTERN.test(voice.name)) score += 16;
   if (isLowQualityVoice(voice)) score -= 60;
   if (voice.default) score += 4;
   if (voice.localService) score += 2;
