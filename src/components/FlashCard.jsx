@@ -17,6 +17,7 @@ import { shouldFetchMemoryTrick } from "../shared/memoryTrick";
 import MemoryTrickBlock from "./MemoryTrickBlock";
 import PronunciationAlert from "./PronunciationAlert";
 import { isMobileLayout, useMobileLayout } from "../hooks/useMobileLayout";
+import { getPhonetic } from "../services/phonetics";
 
 const SILENCE_STOP_MS = 2000;
 const SWIPE_THRESHOLD_PX = 48;
@@ -228,6 +229,11 @@ export default function FlashCard({
       wordStats?.memory_trick?.pronunciation_alert,
       result?.memory_trick?.pronunciation_alert,
     ]
+  );
+
+  const phonetic = useMemo(
+    () => getPhonetic(wordData?.word),
+    [wordData?.word]
   );
 
   useEffect(() => {
@@ -1176,12 +1182,17 @@ export default function FlashCard({
         <div className="flashcard__face flashcard__front">
           <div className="flashcard__term">
             <div className="flashcard__term-row">
-              <h2
-                className={`flashcard__word${showWord ? "" : " flashcard__word--hidden"}${wordData?.satVocab?.color === "blue" ? " flashcard__word--blue" : ""}`}
-                aria-hidden={!showWord}
-              >
-                {showWord ? wordData.word : "？？？"}
-              </h2>
+              <div className="flashcard__word-group">
+                <h2
+                  className={`flashcard__word${showWord ? "" : " flashcard__word--hidden"}${wordData?.satVocab?.color === "blue" ? " flashcard__word--blue" : ""}`}
+                  aria-hidden={!showWord}
+                >
+                  {showWord ? wordData.word : "？？？"}
+                </h2>
+                {showWord && phonetic && (
+                  <div className="flashcard__phonetic">{phonetic}</div>
+                )}
+              </div>
               <div className="flashcard__term-actions">
                 <button
                   type="button"
