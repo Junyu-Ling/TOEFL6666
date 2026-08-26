@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo, useEffect } from "react";
+import { useState, useCallback, useMemo, useEffect, useRef } from "react";
 import { useSettings } from "../context/SettingsContext";
 import PracticeSession from "./PracticeSession";
 import RoundCompleteModal from "./RoundCompleteModal";
@@ -36,14 +36,18 @@ export default function RoundPracticeSession({
   // 轮次管理状态
   const [roundState, setRoundState] = useState(() => {
     const currentRound = Math.floor(currentGlobalIndex / wordsPerRound);
-    const positionInRound = currentGlobalIndex % wordsPerRound;
     return {
       currentRound,           // 当前轮次（从0开始）
-      isReviewing: false,     // 是否处于复习阶段
       showModal: false,       // 是否显示轮次完成模态框
-      completedRounds: new Set(), // 已完成的轮次
+      roundStats: {           // 本轮统计
+        correctCount: 0,
+        wrongCount: 0,
+      },
     };
   });
+
+  // 追踪本轮的答题情况
+  const roundResultsRef = useRef(new Map()); // key: wordIndex, value: isCorrect
 
   // 如果禁用了分轮功能，直接使用原组件
   if (!enableRoundReview || wordsPerRound >= queue.length) {
@@ -93,9 +97,23 @@ export default function RoundPracticeSession({
     };
   }, [currentGlobalIndex, queue.length, wordsPerRound]);
 
+  // 处理答题结果，追踪统计
+  const handleResult = useCallback((result) => {
+    const { isRoundEnd, roundStartIndex } = roundInfo;
+    const wordIndexInRound = currentGlobalIndex - roundStartIndex;
+    
+    // 记录本单词的答题结果
+    if (result?.is_correct !== undefined) {
+      roundResultsRef.current.set(wordIndexInRound, result.is_correct);
+    }
+    
+    // 传递给父组件
+    onResult?.(result);
+  }, [currentGlobalIndex, roundInfo, onResult]);
+
   // 处理下一个单词
   const handleNext = useCallback(() => {
-    const { isRoundEnd, currentRound, roundStartIndex } = roundInfo;
+    const { isRoundEnd, currentRound, roundStartIndex, wordsInRound } = roundInfo;
     
     if (!isRoundEnd) {
       // 轮次还没结束，正常前进
@@ -103,65 +121,77 @@ export default function RoundPracticeSession({
       return;
     }
 
-    // 到达轮末
-    if (!roundState.isReviewing) {
-      // 第一次背完，显示模态框后开始复习
-      setRoundState(prev => ({
-        ...prev,
-        showModal: true,
-      }));
-    } else {
-      // 复习也完成了，显示模态框后进入下一轮
-      setRoundState(prev => ({
-        ...prev,
-        showModal: true,
-        completedRounds: new Set([...prev.completedRounds, currentRound]),
-      }));
-    }
-  }, [roundInfo, roundState.isReviewing, onNext]);
-
-  // 处理模态框的继续按钮
-  const handleContinueFromModal = useCallback(() => {
-    const { currentRound, roundStartIndex } = roundInfo;
+    // 到达轮末，计算本轮统计
+    let correctCount = 0;
+    let wrongCount = 0;
     
-    if (!roundState.isReviewing) {
-      // 开始复习本轮
-      setRoundState(prev => ({
-        ...prev,
-        isReviewing: true,
-        showModal: false,
-      }));
-      // 跳转到本轮开头
-      // 注意：这里需要调用正确的次数来回到轮首
-      const stepsToGoBack = currentGlobalIndex - roundStartIndex;
-      for (let i = 0; i < stepsToGoBack; i++) {
-        onPrev();
-      }
-    } else {
-      // 进入下一轮
-      setRoundState(prev => ({
-        ...prev,
-        currentRound: currentRound + 1,
-        isReviewing: false,
-        showModal: false,
-      }));
-      // 前进到下一轮第一个单词
-      onNext();
+    for (let i = 0; i < wordsInRound; i++) {
+      const result = roundResultsRef.current.get(i);
+      if (result === true) correctCount++;
+      else if (result === false) wrongCount++;
     }
-  }, [roundInfo, roundState.isReviewing, currentGlobalIndex, onNext, onPrev]);
+
+    // 显示结算模态框
+    setRoundState(prev => ({
+      ...prev,
+      showModal: true,
+      roundStats: { correctCount, wrongCount },
+    }));
+  }, [roundInfo, onNext]);
+
+  // 处理"复习本轮"
+  const handleReviewAgain = useCallback(() => {
+    const { roundStartIndex } = roundInfo;
+    
+    // 清空本轮的答题记录，准备重新开始
+    roundResultsRef.current.clear();
+    
+    setRoundState(prev => ({
+      ...prev,
+      showModal: false,
+      roundStats: { correctCount: 0, wrongCount: 0 },
+    }));
+    
+    // 跳转到本轮开头
+    const stepsToGoBack = currentGlobalIndex - roundStartIndex;
+    for (let i = 0; i < stepsToGoBack; i++) {
+      onPrev();
+    }
+  }, [roundInfo, currentGlobalIndex, onPrev]);
+
+  // 处理"继续下一轮"
+  const handleNextRound = useCallback(() => {
+    const { currentRound } = roundInfo;
+    
+    // 清空本轮的答题记录
+    roundResultsRef.current.clear();
+    
+    setRoundState(prev => ({
+      ...prev,
+      currentRound: currentRound + 1,
+      showModal: false,
+      roundStats: { correctCount: 0, wrongCount: 0 },
+    }));
+    
+    // 前进到下一轮第一个单词
+    onNext();
+  }, [roundInfo, onNext]);
 
   // 监听全局索引变化，更新轮次状态
   useEffect(() => {
     const newRound = Math.floor(currentGlobalIndex / wordsPerRound);
     if (newRound !== roundState.currentRound && !roundState.showModal) {
       // 轮次变化了（可能是用户手动跳转）
+      // 清空之前轮次的记录
+      roundResultsRef.current.clear();
+      
       setRoundState(prev => ({
         ...prev,
         currentRound: newRound,
-        isReviewing: prev.completedRounds.has(newRound) ? false : prev.isReviewing,
+        roundStats: { correctCount: 0, wrongCount: 0 },
       }));
     }
-  }, [currentGlobalIndex, wordsPerRound, roundState.currentRound, roundState.showModal, roundState.completedRounds]);
+  }, [currentGlobalIndex, wordsPerRound, roundState.currentRound, roundState.showModal]);
 
   // 计算显示给用户的进度
   const displayProgress = useMemo(() => {
@@ -175,11 +205,10 @@ export default function RoundPracticeSession({
 
   // 构造标题提示
   const enhancedTitle = useMemo(() => {
-    const { currentRound, totalRounds, wordsInRound } = roundInfo;
+    const { currentRound, totalRounds } = roundInfo;
     const roundLabel = `第 ${currentRound + 1}/${totalRounds} 轮`;
-    const stageLabel = roundState.isReviewing ? "（复习）" : "";
-    return `${title} - ${roundLabel}${stageLabel}`;
-  }, [title, roundInfo, roundState.isReviewing]);
+    return `${title} - ${roundLabel}`;
+  }, [title, roundInfo]);
 
   return (
     <>
@@ -193,7 +222,7 @@ export default function RoundPracticeSession({
         wordStats={wordStats}
         wordBankMap={wordBankMap}
         micGranted={micGranted}
-        onResult={onResult}
+        onResult={handleResult}
         onMemoryTrickGenerated={onMemoryTrickGenerated}
         onNext={handleNext}
         onPrev={onPrev}
@@ -205,10 +234,12 @@ export default function RoundPracticeSession({
       
       {roundState.showModal && (
         <RoundCompleteModal
-          isFirstPass={!roundState.isReviewing}
           roundNumber={roundInfo.currentRound + 1}
           wordsInRound={roundInfo.wordsInRound}
-          onContinue={handleContinueFromModal}
+          correctCount={roundState.roundStats.correctCount}
+          wrongCount={roundState.roundStats.wrongCount}
+          onReviewAgain={handleReviewAgain}
+          onNextRound={handleNextRound}
         />
       )}
     </>
