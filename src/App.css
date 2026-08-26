@@ -47,6 +47,17 @@
   --fc-voice-btn: 52px;
   --fc-footer-size: 0.9375rem;
   --fc-btn-size: 1.0625rem;
+  
+  /* 增强的字体系统 */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  
+  /* 增强的过渡效果 */
+  --transition-fast: 150ms ease;
+  --transition-normal: 200ms ease;
+  --transition-slow: 300ms ease;
   --loader-shimmer: #f97316;
   --loader-shimmer-alt: #ffd166;
 }
@@ -7036,3 +7047,185 @@ body {
     transform: scale(1);
   }
 }
+
+/* ============================================
+   增强字体和按钮系统（Premium Design）
+   ============================================ */
+
+/* 全局字体增强 */
+body {
+  font-family: var(--word-font);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: -0.01em;
+}
+
+/* 标题字体增强 */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--word-font);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: -0.02em;
+}
+
+/* 按钮通用基础样式增强 */
+button {
+  font-family: var(--word-font);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: -0.01em;
+  transition: all var(--transition-fast);
+}
+
+button:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+/* Premium 按钮系统 */
+.btn-premium {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.625rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: var(--font-weight-semibold);
+  border-radius: 0.5rem;
+  transition: all var(--transition-fast);
+  cursor: pointer;
+  border: none;
+  gap: 0.5rem;
+  font-family: var(--word-font);
+  letter-spacing: -0.01em;
+}
+
+.btn-premium:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.btn-premium:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* 主按钮 - 使用现有accent颜色 */
+.btn-premium--primary {
+  background: var(--accent);
+  color: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+}
+
+.btn-premium--primary:hover:not(:disabled) {
+  background: var(--accent-hover);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.04), 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+/* 次按钮 */
+.btn-premium--secondary {
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.btn-premium--secondary:hover:not(:disabled) {
+  background: var(--surface-hover);
+  border-color: var(--border-strong);
+}
+
+/* 文字按钮 */
+.btn-premium--text {
+  background: none;
+  color: var(--accent);
+  padding: 0.5rem;
+}
+
+.btn-premium--text:hover:not(:disabled) {
+  background: var(--accent-soft);
+}
+
+/* 成功按钮 */
+.btn-premium--success {
+  background: var(--correct);
+  color: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+}
+
+.btn-premium--success:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--correct) 85%, black);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.04), 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+/* 危险按钮 */
+.btn-premium--danger {
+  background: var(--wrong);
+  color: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+}
+
+.btn-premium--danger:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--wrong) 85%, black);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.04), 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+/* 按钮尺寸变体 */
+.btn-premium--small {
+  padding: 0.5rem 1rem;
+  font-size: 0.8125rem;
+}
+
+.btn-premium--large {
+  padding: 0.875rem 1.75rem;
+  font-size: 1rem;
+}
+
+/* 全宽按钮 */
+.btn-premium--full {
+  width: 100%;
+}
+
+/* 按钮组 */
+.btn-group-premium {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.btn-group-premium--center {
+  justify-content: center;
+}
+
+.btn-group-premium--end {
+  justify-content: flex-end;
+}
+
+/* 增强现有按钮样式 */
+.btn-confirm,
+.btn-known,
+.btn-unknown,
+.btn-next,
+.btn-skip,
+.btn-voice,
+.btn-sound {
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: -0.01em;
+  transition: all var(--transition-fast);
+}
+
+.btn-confirm:active:not(:disabled),
+.btn-known:active:not(:disabled),
+.btn-unknown:active:not(:disabled),
+.btn-next:active:not(:disabled),
+.btn-skip:active:not(:disabled),
+.btn-voice:active:not(:disabled),
+.btn-sound:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+/* 增强输入框字体 */
+input, textarea, select {
+  font-family: var(--word-font);
+  letter-spacing: -0.01em;
+}
+
+/* 工具类 - 字体权重 */
+.font-normal { font-weight: var(--font-weight-normal); }
+.font-medium { font-weight: var(--font-weight-medium); }
+.font-semibold { font-weight: var(--font-weight-semibold); }
+.font-bold { font-weight: var(--font-weight-bold); }
