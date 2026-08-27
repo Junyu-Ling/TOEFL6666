@@ -4,7 +4,6 @@ import PronunciationAlert from "./PronunciationAlert";
 import { fetchMemoryTrick } from "../services/memoryTrick";
 import { getPronunciationAlert } from "../utils/pronunciationAlert";
 import { groupWordsByList } from "../utils/wordListGrouping";
-import { getPhonetic } from "../services/phonetics";
 
 const SORT_OPTIONS = [
   { value: "default", label: "默认顺序" },
@@ -64,7 +63,6 @@ function WordItem({
     item.word,
     trick?.pronunciation_alert
   );
-  const phonetic = getPhonetic(item.word);
 
   useEffect(() => {
     const node = itemRef.current;
@@ -119,12 +117,7 @@ function WordItem({
       <div className="word-item__main">
         <div className="word-item__left">
           <div className="word-item__title-row">
-            <div className="word-item__word-group">
-              <h3 className="word-item__word">{item.word}</h3>
-              {phonetic && (
-                <div className="word-item__phonetic">{phonetic}</div>
-              )}
-            </div>
+            <h3 className="word-item__word">{item.word}</h3>
             {showBadge && (
               <span
                 className={`word-item__wrong-count ${wrongCountPast ? "word-item__wrong-count--past" : ""}`}

@@ -7,7 +7,6 @@ import {
   evaluateTransitionWordChoice,
   getTransitionWordCategoryOptions,
 } from "../utils/transitionWords";
-import { getPhonetic } from "../services/phonetics";
 
 export default function TransitionWordCard({
   wordData,
@@ -25,7 +24,6 @@ export default function TransitionWordCard({
   const answeredRef = useRef(false);
 
   const transitionWord = wordData?.transitionWord;
-  const phonetic = useMemo(() => getPhonetic(wordData?.word), [wordData?.word]);
 
   useEffect(() => {
     setAnswered(false);
@@ -91,12 +89,7 @@ export default function TransitionWordCard({
     <div className="tw-card-scene" aria-label="过渡词练习">
       <div className="tw-card__head">
         <div className="tw-card__term-row">
-          <div className="flashcard__word-group">
-            <h2 className="tw-card__word">{wordData.word}</h2>
-            {phonetic && (
-              <div className="flashcard__phonetic">{phonetic}</div>
-            )}
-          </div>
+          <h2 className="tw-card__word">{wordData.word}</h2>
           <button
             type="button"
             className="flashcard__sound"

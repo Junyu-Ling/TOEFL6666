@@ -17,24 +17,17 @@ import {
 import PronunciationAlert from "./PronunciationAlert";
 import { getPronunciationAlert, getIrregularPronunciationStats } from "../utils/pronunciationAlert";
 import { lookupWordDefinitions } from "../services/wordLookup";
-import { getPhonetic } from "../services/phonetics";
 
 function BankWordItem({ item, availableLists, bookStatus, compact = false }) {
   const listLabel = compact ? "" : getBankWordLabel(item, availableLists);
   const pronunciationAlert = getPronunciationAlert(item.word);
-  const phonetic = getPhonetic(item.word);
 
   return (
     <article className={`word-item word-item--bank${compact ? " word-item--bank-compact" : ""}`}>
       <div className="word-item__main">
         <div className="word-item__left">
           <div className="word-item__title-row">
-            <div className="word-item__word-group">
-              <h3 className="word-item__word">{item.word}</h3>
-              {phonetic && (
-                <div className="word-item__phonetic">{phonetic}</div>
-              )}
-            </div>
+            <h3 className="word-item__word">{item.word}</h3>
             {listLabel && <span className="word-item__list-badge">{listLabel}</span>}
             {bookStatus === "unrecognized" && (
               <span className="word-item__wrong-count">生词</span>
@@ -407,12 +400,7 @@ function VocabularyBank({
               <div className="word-item__main">
                 <div className="word-item__left">
                   <div className="word-item__title-row">
-                    <div className="word-item__word-group">
-                      <h3 className="word-item__word">{aiLookup.word}</h3>
-                      {getPhonetic(aiLookup.word) && (
-                        <div className="word-item__phonetic">{getPhonetic(aiLookup.word)}</div>
-                      )}
-                    </div>
+                    <h3 className="word-item__word">{aiLookup.word}</h3>
                     <span className="word-item__list-badge word-item__list-badge--ai">AI 释义</span>
                   </div>
                   {aiLookup.typoNote ? (
