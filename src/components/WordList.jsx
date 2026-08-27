@@ -136,12 +136,22 @@ function WordItem({
           )}
           {needsMemoryTrick && trick && (
             <div className="word-item__memory">
-              <MemoryTrickBlock trick={trick} compact className="word-item__memory-block" />
+              <MemoryTrickBlock 
+                trick={trick} 
+                tricks={trick.memory_tricks || item.memory_tricks} 
+                compact 
+                className="word-item__memory-block" 
+              />
             </div>
           )}
           {!wrongCountPast && item.memory_trick && (
             <div className="word-item__memory">
-              <MemoryTrickBlock trick={item.memory_trick} compact className="word-item__memory-block" />
+              <MemoryTrickBlock 
+                trick={item.memory_trick} 
+                tricks={item.memory_tricks} 
+                compact 
+                className="word-item__memory-block" 
+              />
             </div>
           )}
         </div>

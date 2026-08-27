@@ -1453,7 +1453,10 @@ export default function FlashCard({
               )}
 
               {!isTransitionWord && !result.is_correct && result.memory_trick && (
-                <MemoryTrickBlock trick={result.memory_trick} />
+                <MemoryTrickBlock 
+                  trick={result.memory_trick} 
+                  tricks={result.memory_tricks} 
+                />
               )}
 
               <FamiliarObscureBackExtras familiarObscure={wordData.familiarObscure} />
