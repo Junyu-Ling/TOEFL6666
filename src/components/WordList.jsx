@@ -127,7 +127,6 @@ function WordItem({
             )}
           </div>
           <p className="word-item__defs">{item.definitions?.join(" · ")}</p>
-          <PronunciationAlert alert={pronunciationAlert} className="word-item__pronunciation-alert" />
           {item.ai_feedback && <p className="word-item__feedback">{item.ai_feedback}</p>}
           {needsMemoryTrick && memoryLoading && !trick && (
             <p className="word-item__memory-status">

@@ -37,9 +37,6 @@ function BankWordItem({ item, availableLists, bookStatus, compact = false }) {
             )}
           </div>
           <p className="word-item__defs">{item.definitions?.join(" · ")}</p>
-          {!compact && (
-            <PronunciationAlert alert={pronunciationAlert} className="word-item__pronunciation-alert" />
-          )}
         </div>
       </div>
     </article>
@@ -407,10 +404,6 @@ function VocabularyBank({
                     <p className="vocabulary-bank__typo-note">{aiLookup.typoNote}</p>
                   ) : null}
                   <p className="word-item__defs">{aiLookup.definitions.join(" · ")}</p>
-                  <PronunciationAlert
-                    alert={getPronunciationAlert(aiLookup.word)}
-                    className="word-item__pronunciation-alert"
-                  />
                 </div>
               </div>
             </article>

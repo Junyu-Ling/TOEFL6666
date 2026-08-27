@@ -1208,8 +1208,6 @@ export default function FlashCard({
               </div>
             </div>
 
-            <PronunciationAlert alert={pronunciationAlert} className="flashcard__pronunciation-alert" />
-
             {micGranted && !isTransitionWord && (
               <div className="flashcard__pronounce-block">
                 <div className="flashcard__pronounce-opts">
