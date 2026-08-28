@@ -12,6 +12,8 @@ import VocabLoadingScreen from "./components/VocabLoadingScreen";
 import BookReviewScopeBar from "./components/BookReviewScopeBar";
 import VocabularyBank from "./components/VocabularyBank";
 import LexGridGame from "./components/LexGridGame";
+import FloatingLexGridButton from "./components/FloatingLexGridButton";
+import FullscreenLexGrid from "./components/FullscreenLexGrid";
 import ReadingVocabMatch from "./components/ReadingVocabMatch";
 import ReadingFillBlank from "./components/ReadingFillBlank";
 import FamiliarObscureMeanings from "./components/FamiliarObscureMeanings";
@@ -113,6 +115,7 @@ export default function App() {
   const [streakData, setStreakData] = useState(() => recordVisit());
   const [streakOpen, setStreakOpen] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
+  const [lexGridFullscreen, setLexGridFullscreen] = useState(false);
   const [unrecognizedReviewListIds, setUnrecognizedReviewListIds] = useState([]);
   const [recognizedReviewListIds, setRecognizedReviewListIds] = useState([]);
   useEffect(() => {
@@ -1370,10 +1373,6 @@ export default function App() {
             </TabPanel>
           ) : null}
 
-          <TabPanel tabId="lexgrid" activeTab={activeTab}>
-            {lexGridPanel}
-          </TabPanel>
-
           <TabPanel tabId="unrecognized" activeTab={activeTab}>
             {unrecognizedPanel}
           </TabPanel>
@@ -1416,7 +1415,20 @@ export default function App() {
       ) : null}
 
       {activeTab !== "reading-fill" ? <MottoFooter /> : null}
+
+      <FloatingLexGridButton
+        onClick={() => setLexGridFullscreen(true)}
+        visible={!lexGridFullscreen}
+      />
       </div>
+
+      <FullscreenLexGrid
+        words={allBankWords}
+        availableLists={availableLists}
+        appMode={appMode}
+        isOpen={lexGridFullscreen}
+        onClose={() => setLexGridFullscreen(false)}
+      />
 
       <SettingsPanel />
       {loginOpen ? <LoginModal onClose={() => setLoginOpen(false)} /> : null}

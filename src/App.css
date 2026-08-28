@@ -7426,3 +7426,229 @@ input, textarea, select {
 .font-medium { font-weight: var(--font-weight-medium); }
 .font-semibold { font-weight: var(--font-weight-semibold); }
 .font-bold { font-weight: var(--font-weight-bold); }
+
+/* ========================================
+   浮动词格按钮
+   ======================================== */
+.floating-lexgrid {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  z-index: 9998;
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+.floating-lexgrid__btn {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), color-mix(in srgb, var(--accent) 85%, var(--primary)));
+  border: none;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.08);
+  transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+}
+
+.floating-lexgrid__btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.floating-lexgrid__btn:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2), 0 3px 6px rgba(0, 0, 0, 0.12);
+}
+
+.floating-lexgrid__btn:hover::before {
+  opacity: 1;
+}
+
+.floating-lexgrid__btn:active {
+  transform: scale(1.02);
+}
+
+.floating-lexgrid__icon {
+  position: relative;
+  z-index: 1;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+}
+
+/* 提示气泡 */
+.floating-lexgrid__tooltip {
+  position: absolute;
+  left: 72px;
+  bottom: 12px;
+  background: white;
+  color: var(--text);
+  padding: 12px 16px;
+  padding-right: 36px;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.08);
+  font-size: 0.9375rem;
+  font-weight: var(--font-weight-medium);
+  white-space: nowrap;
+  animation: floatingTooltipIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events: all;
+}
+
+.floating-lexgrid__tooltip::before {
+  content: "";
+  position: absolute;
+  left: -6px;
+  bottom: 16px;
+  width: 12px;
+  height: 12px;
+  background: white;
+  transform: rotate(45deg);
+  box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.floating-lexgrid__tooltip-close {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  border: none;
+  background: none;
+  color: var(--text-muted);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: all var(--transition-fast);
+}
+
+.floating-lexgrid__tooltip-close:hover {
+  background: var(--bg-secondary);
+  color: var(--text);
+}
+
+@keyframes floatingTooltipIn {
+  from {
+    opacity: 0;
+    transform: translateX(-8px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+  .floating-lexgrid {
+    bottom: 80px;
+    left: 16px;
+  }
+
+  .floating-lexgrid__btn {
+    width: 52px;
+    height: 52px;
+  }
+
+  .floating-lexgrid__tooltip {
+    left: 64px;
+    font-size: 0.875rem;
+    padding: 10px 14px;
+    padding-right: 32px;
+  }
+}
+
+/* ========================================
+   全屏词格
+   ======================================== */
+.fullscreen-lexgrid {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  animation: fullscreenFadeIn 0.2s ease-out;
+}
+
+.fullscreen-lexgrid__content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  padding: 24px;
+  padding-bottom: 80px;
+}
+
+.fullscreen-lexgrid__close {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--bg-secondary);
+  border: 2px solid var(--border);
+  color: var(--text);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.08);
+  transition: all var(--transition-normal);
+  z-index: 10;
+}
+
+.fullscreen-lexgrid__close:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+  transform: scale(1.08);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.12);
+}
+
+.fullscreen-lexgrid__close:active {
+  transform: scale(1.02);
+}
+
+.fullscreen-lexgrid__close svg {
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.08));
+}
+
+@keyframes fullscreenFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+  .fullscreen-lexgrid__content {
+    padding: 16px;
+    padding-bottom: 100px;
+  }
+
+  .fullscreen-lexgrid__close {
+    bottom: 16px;
+    left: 16px;
+    width: 52px;
+    height: 52px;
+  }
+}
