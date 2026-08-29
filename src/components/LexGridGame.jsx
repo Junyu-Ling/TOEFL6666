@@ -71,8 +71,8 @@ function Tile({ letter, state, filled, flip, settled, selected, selectable, posi
   );
 }
 
-function LexGridGame({ words, availableLists, tabId, appMode = "toefl", overlay = false }) {
-  const isTabActive = useIsActiveTab(tabId) || overlay;
+function LexGridGame({ words, availableLists, tabId, appMode = "toefl", overlay = false, enabled = true }) {
+  const isTabActive = enabled && (useIsActiveTab(tabId) || overlay);
   const levels = useMemo(() => getLexGridLevels(appMode), [appMode]);
   const levelLabel = useMemo(() => getLexGridLevelLabel(appMode), [appMode]);
   const pool = useMemo(

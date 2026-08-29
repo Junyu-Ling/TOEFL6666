@@ -1,11 +1,31 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import LexGridGame from "./LexGridGame";
+import HangmanGame from "./HangmanGame";
 import { ActiveTabProvider } from "../context/ActiveTabContext";
 
 const LEXGRID_TAB_ID = "lexgrid-fullscreen";
+const MODE_KEY = "toefl666_minigame_mode";
+
+function loadMode() {
+  try {
+    return localStorage.getItem(MODE_KEY) === "hangman" ? "hangman" : "lexgrid";
+  } catch {
+    return "lexgrid";
+  }
+}
 
 export default function FullscreenLexGrid({ words, availableLists, appMode, onClose, isOpen }) {
   const rootRef = useRef(null);
+  const [mode, setMode] = useState(loadMode);
+
+  function selectMode(next) {
+    setMode(next);
+    try {
+      localStorage.setItem(MODE_KEY, next);
+    } catch {
+      /* ignore */
+    }
+  }
 
   useEffect(() => {
     if (!isOpen) return;
@@ -39,7 +59,7 @@ export default function FullscreenLexGrid({ words, availableLists, appMode, onCl
           type="button"
           className="fullscreen-lexgrid__close"
           onClick={onClose}
-          aria-label="关闭词格游戏"
+          aria-label="关闭小游戏"
           title="关闭 (ESC)"
         >
           <svg
@@ -57,14 +77,48 @@ export default function FullscreenLexGrid({ words, availableLists, appMode, onCl
           </svg>
         </button>
 
+        <div className="minigame-modes" role="tablist" aria-label="小游戏模式">
+          <button
+            type="button"
+            role="tab"
+            aria-selected={mode === "lexgrid"}
+            className={`minigame-modes__btn${mode === "lexgrid" ? " minigame-modes__btn--active" : ""}`}
+            onClick={() => selectMode("lexgrid")}
+          >
+            词格
+          </button>
+          <button
+            type="button"
+            role="tab"
+            aria-selected={mode === "hangman"}
+            className={`minigame-modes__btn${mode === "hangman" ? " minigame-modes__btn--active" : ""}`}
+            onClick={() => selectMode("hangman")}
+          >
+            Hangman
+          </button>
+        </div>
+
         <ActiveTabProvider value={LEXGRID_TAB_ID}>
-          <LexGridGame
-            words={words}
-            availableLists={availableLists}
-            tabId={LEXGRID_TAB_ID}
-            appMode={appMode}
-            overlay
-          />
+          <div hidden={mode !== "lexgrid"}>
+            <LexGridGame
+              words={words}
+              availableLists={availableLists}
+              tabId={LEXGRID_TAB_ID}
+              appMode={appMode}
+              overlay
+              enabled={mode === "lexgrid"}
+            />
+          </div>
+          <div hidden={mode !== "hangman"}>
+            <HangmanGame
+              words={words}
+              availableLists={availableLists}
+              tabId={LEXGRID_TAB_ID}
+              appMode={appMode}
+              overlay
+              enabled={mode === "hangman"}
+            />
+          </div>
         </ActiveTabProvider>
       </div>
     </div>

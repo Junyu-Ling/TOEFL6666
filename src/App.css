@@ -7607,6 +7607,84 @@ input, textarea, select {
   padding-bottom: 80px;
 }
 
+.minigame-modes {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 0 auto 1.25rem;
+  padding: 0.25rem;
+  width: fit-content;
+  max-width: 100%;
+  background: var(--surface-muted);
+  border-radius: 999px;
+}
+
+.minigame-modes__btn {
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-family: var(--word-font);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  padding: 0.5rem 1.15rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.minigame-modes__btn--active {
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: 0 1px 3px rgba(16, 24, 40, 0.08);
+}
+
+.hangman__stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  width: 100%;
+}
+
+.hangman__figure {
+  width: min(220px, 52vw);
+  height: auto;
+  color: var(--text);
+}
+
+.hangman__word {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.45rem;
+  max-width: 36rem;
+}
+
+.hangman__slot {
+  min-width: 1.75rem;
+  height: 2.5rem;
+  border-bottom: 3px solid var(--border-strong);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  font-family: var(--word-font);
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text);
+  line-height: 1;
+  padding-bottom: 0.2rem;
+}
+
+.hangman__slot--missed {
+  color: var(--wrong);
+  border-bottom-color: var(--wrong);
+}
+
+.hangman .lexgrid__keyboard-row {
+  flex-wrap: wrap;
+}
+
 .fullscreen-lexgrid__close {
   position: fixed;
   bottom: 24px;
