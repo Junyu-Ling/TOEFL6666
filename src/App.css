@@ -7446,15 +7446,18 @@ input, textarea, select {
   width: 4rem;
   height: 4rem;
   border-radius: 50%;
-  background: var(--accent);
-  border: none;
+  background: color-mix(in srgb, var(--accent) 28%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
   color: #fff;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 8px 24px color-mix(in srgb, var(--accent) 42%, transparent);
-  transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+  box-shadow: none;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  opacity: 0.42;
+  transition: transform 0.15s, box-shadow 0.15s, background 0.15s, opacity 0.15s, border-color 0.15s;
   position: relative;
   overflow: hidden;
 }
@@ -7469,13 +7472,17 @@ input, textarea, select {
   transition: opacity var(--transition-fast);
 }
 
-.floating-lexgrid__btn:hover {
-  background: var(--accent-hover);
+.floating-lexgrid__btn:hover,
+.floating-lexgrid__btn:focus-visible {
+  background: var(--accent);
+  border-color: transparent;
+  opacity: 1;
   transform: translateY(-2px);
-  box-shadow: 0 12px 30px color-mix(in srgb, var(--accent) 52%, transparent);
+  box-shadow: 0 8px 20px color-mix(in srgb, var(--accent) 36%, transparent);
 }
 
-.floating-lexgrid__btn:hover::before {
+.floating-lexgrid__btn:hover::before,
+.floating-lexgrid__btn:focus-visible::before {
   opacity: 1;
 }
 
@@ -7489,6 +7496,7 @@ input, textarea, select {
   color: #fff;
   fill: #fff;
   stroke: #fff;
+  opacity: 0.9;
 }
 
 /* 提示气泡 */
