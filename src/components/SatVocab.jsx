@@ -112,9 +112,9 @@ function SatVocab({ wordBankMap, micGranted }) {
   }, [index, total]);
 
   const handlePrev = useCallback(() => {
-    setIndex((i) => Math.max(0, i - 1));
+    setIndex((i) => (total > 0 && i <= 0 ? total - 1 : Math.max(0, i - 1)));
     setComplete(false);
-  }, []);
+  }, [total]);
 
   const restart = useCallback(() => {
     setOrder(buildOrder(filteredWords, isShuffle));

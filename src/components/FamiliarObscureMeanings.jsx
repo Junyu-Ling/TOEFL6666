@@ -389,8 +389,9 @@ function FamiliarObscurePractice({
   ]);
 
   const handlePrev = useCallback(() => {
-    if (index > 0) setIndex((prev) => prev - 1);
-  }, [index]);
+    if (total <= 0) return;
+    setIndex((prev) => (prev > 0 ? prev - 1 : total - 1));
+  }, [total]);
 
   if (activeEntries.length === 0) {
     return (

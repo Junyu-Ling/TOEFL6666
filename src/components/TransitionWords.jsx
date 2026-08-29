@@ -98,8 +98,8 @@ function TransitionWordsPractice({
   }, [index, total]);
 
   const handlePrev = useCallback(() => {
-    setIndex((prev) => Math.max(0, prev - 1));
-  }, []);
+    setIndex((prev) => (total > 0 && prev <= 0 ? total - 1 : Math.max(0, prev - 1)));
+  }, [total]);
 
   const stats = (
     <>

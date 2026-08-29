@@ -557,16 +557,16 @@ export default function App() {
   }, [listIndex, wordList.length]);
 
   const handleListPrev = useCallback(() => {
-    if (listIndex > 0) {
-      setListIndex((i) => i - 1);
-    }
-  }, [listIndex]);
+    if (wordList.length === 0) return;
+    setListIndex((i) => (i > 0 ? i - 1 : wordList.length - 1));
+  }, [wordList.length]);
 
   const handleBookPrev = useCallback((bookType) => {
     setBookPractices((prev) => {
       const session = prev[bookType];
-      if (!session || session.index <= 0) return prev;
-      return { ...prev, [bookType]: { ...session, index: session.index - 1 } };
+      if (!session?.queue?.length) return prev;
+      const nextIndex = session.index > 0 ? session.index - 1 : session.queue.length - 1;
+      return { ...prev, [bookType]: { ...session, index: nextIndex } };
     });
   }, []);
 
