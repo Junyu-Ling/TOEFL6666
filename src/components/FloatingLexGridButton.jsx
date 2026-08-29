@@ -52,19 +52,17 @@ export default function FloatingLexGridButton({ onClick, visible = true }) {
       >
         <svg
           className="floating-lexgrid__icon"
-          width="24"
-          height="24"
+          width="26"
+          height="26"
           viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
+          fill="currentColor"
+          stroke="none"
+          aria-hidden
         >
-          <rect x="3" y="3" width="7" height="7" rx="1" />
-          <rect x="14" y="3" width="7" height="7" rx="1" />
-          <rect x="3" y="14" width="7" height="7" rx="1" />
-          <rect x="14" y="14" width="7" height="7" rx="1" />
+          <rect x="2.5" y="2.5" width="8" height="8" rx="1.5" />
+          <rect x="13.5" y="2.5" width="8" height="8" rx="1.5" />
+          <rect x="2.5" y="13.5" width="8" height="8" rx="1.5" />
+          <rect x="13.5" y="13.5" width="8" height="8" rx="1.5" />
         </svg>
       </button>
 
