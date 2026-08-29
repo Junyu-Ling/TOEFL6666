@@ -1,4 +1,4 @@
-import { resolveApiConfig, stripApiConfigFromBody } from "../../server/ai-config.js";
+import { getEnvConfig, resolveApiConfig, stripApiConfigFromBody } from "../../server/ai-config.js";
 import { lookupWordWithDeepSeek } from "../../server/ai-word-lookup.js";
 
 function sendJson(res, status, payload) {
@@ -12,15 +12,6 @@ function parseBody(req) {
   if (typeof req.body === "object") return req.body;
   if (typeof req.body === "string" && req.body.trim()) return JSON.parse(req.body);
   return {};
-}
-
-function getEnvConfig() {
-  return {
-    apiKey: process.env.DEEPSEEK_API_KEY,
-    model: process.env.DEEPSEEK_MODEL,
-    baseUrl: process.env.DEEPSEEK_API_BASE,
-    providerId: "deepseek",
-  };
 }
 
 export default async function handler(req, res) {

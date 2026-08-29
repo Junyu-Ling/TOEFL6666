@@ -15,6 +15,10 @@ dist-ssr
 .env.*
 !.env.example
 
+# Cloudflare Workers
+.dev.vars
+.wrangler/
+
 # Generated wordlist bundles (created by npm run build:wordlists)
 src/generated/
 public/wordlists/

@@ -9,11 +9,23 @@ const memory =
   new Map();
 globalThis.__toefl666SyncStore = memory;
 
-function getRedis() {
-  const url = process.env.UPSTASH_REDIS_REST_URL || process.env.KV_REST_API_URL;
-  const token = process.env.UPSTASH_REDIS_REST_TOKEN || process.env.KV_REST_API_TOKEN;
+function getEnv(env) {
+  if (env && typeof env === "object") return env;
+  if (typeof process !== "undefined" && process.env) return process.env;
+  return {};
+}
+
+function getRedis(env) {
+  const e = getEnv(env);
+  const url = e.UPSTASH_REDIS_REST_URL || e.KV_REST_API_URL;
+  const token = e.UPSTASH_REDIS_REST_TOKEN || e.KV_REST_API_TOKEN;
   if (!url || !token) return null;
   return new Redis({ url, token });
+}
+
+function isDeployedRuntime(env) {
+  const e = getEnv(env);
+  return Boolean(e.VERCEL || e.CF_WORKER || e.CF_PAGES);
 }
 
 function storageKey(code) {
@@ -39,9 +51,9 @@ export async function saveSyncEntry(code, entry) {
   }
 
   const redis = getRedis();
-  if (!redis && process.env.VERCEL) {
+  if (!redis && isDeployedRuntime()) {
     throw createError(
-      "服务端未配置 Redis，无法跨设备同步。请在 Vercel 添加 UPSTASH_REDIS_REST_URL 与 UPSTASH_REDIS_REST_TOKEN 后重新部署。",
+      "服务端未配置 Redis，无法跨设备同步。请在 Cloudflare Worker Secrets 或 Vercel 环境变量中添加 UPSTASH_REDIS_REST_URL 与 UPSTASH_REDIS_REST_TOKEN 后重新部署。",
       503
     );
   }

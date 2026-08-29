@@ -1,5 +1,5 @@
 import { loadEnv } from "vite";
-import { resolveApiConfig, DEFAULT_DEEPSEEK_MODEL, normalizeDeepSeekModel, stripApiConfigFromBody } from "./server/ai-config.js";
+import { resolveApiConfig, getEnvConfig, DEFAULT_DEEPSEEK_MODEL, stripApiConfigFromBody } from "./server/ai-config.js";
 import { evaluateWithDeepSeek } from "./server/ai-evaluate.js";
 import { chatWithDeepSeek, streamChatWithDeepSeek } from "./server/ai-chat.js";
 import { generateMemoryTrick } from "./server/ai-memory-trick.js";
@@ -152,12 +152,7 @@ export function aiProxyPlugin() {
     name: "ai-proxy",
     configResolved(config) {
       const env = loadEnv(config.mode, config.root, "");
-      envConfig = {
-        apiKey: env.DEEPSEEK_API_KEY || "",
-        model: normalizeDeepSeekModel(env.DEEPSEEK_MODEL),
-        baseUrl: (env.DEEPSEEK_API_BASE || "https://api.deepseek.com/v1").replace(/\/$/, ""),
-        providerId: "deepseek",
-      };
+      envConfig = resolveApiConfig(getEnvConfig(env));
     },
     configureServer(server) {
       server.middlewares.use(createAiHandler(() => envConfig));
