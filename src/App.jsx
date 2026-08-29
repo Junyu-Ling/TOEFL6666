@@ -1332,7 +1332,7 @@ export default function App() {
           />
         </div>
       ) : null}
-      <div className="app-shell" inert={settingsOpen || wordsLoading}>
+      <div className="app-shell" inert={settingsOpen || wordsLoading || lexGridFullscreen}>
         <Navbar
           activeTab={activeTab}
           onTabChange={handleTabChange}

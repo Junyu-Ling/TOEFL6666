@@ -4929,6 +4929,8 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
+  position: relative;
+  z-index: 11;
 }
 
 .lexgrid__keyboard-row {

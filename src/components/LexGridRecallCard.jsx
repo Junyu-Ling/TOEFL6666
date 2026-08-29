@@ -13,7 +13,7 @@ export default function LexGridRecallCard({ wordData, recallHint, onKnow, onUnkn
   useEffect(() => {
     function onKeyDown(e) {
       if (!isActive) return;
-      if (shouldIgnoreAppGameKeys(e)) return;
+      if (shouldIgnoreAppGameKeys(e, { allowFullscreen: true })) return;
       if (e.ctrlKey || e.metaKey || e.altKey) return;
 
       if (e.key === "1") {

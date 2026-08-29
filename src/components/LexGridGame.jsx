@@ -71,8 +71,8 @@ function Tile({ letter, state, filled, flip, settled, selected, selectable, posi
   );
 }
 
-function LexGridGame({ words, availableLists, tabId, appMode = "toefl" }) {
-  const isTabActive = useIsActiveTab(tabId);
+function LexGridGame({ words, availableLists, tabId, appMode = "toefl", overlay = false }) {
+  const isTabActive = useIsActiveTab(tabId) || overlay;
   const levels = useMemo(() => getLexGridLevels(appMode), [appMode]);
   const levelLabel = useMemo(() => getLexGridLevelLabel(appMode), [appMode]);
   const pool = useMemo(
@@ -338,7 +338,7 @@ function LexGridGame({ words, availableLists, tabId, appMode = "toefl" }) {
     function onKeyDown(e) {
       if (!isTabActive) return;
       if (round?.status !== "playing") return;
-      if (shouldIgnoreAppGameKeys(e)) return;
+      if (shouldIgnoreAppGameKeys(e, { allowFullscreen: overlay })) return;
       if (e.ctrlKey || e.metaKey || e.altKey) return;
       if (e.key === "Enter") {
         e.preventDefault();
@@ -368,7 +368,7 @@ function LexGridGame({ words, availableLists, tabId, appMode = "toefl" }) {
 
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [handleBackspace, handleLetter, isTabActive, moveCursor, round?.status, submitGuess]);
+  }, [handleBackspace, handleLetter, isTabActive, moveCursor, overlay, round?.status, submitGuess]);
 
   if (!pool.length) {
     return (

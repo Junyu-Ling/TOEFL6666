@@ -1,13 +1,18 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import LexGridGame from "./LexGridGame";
+import { ActiveTabProvider } from "../context/ActiveTabContext";
+
+const LEXGRID_TAB_ID = "lexgrid-fullscreen";
 
 export default function FullscreenLexGrid({ words, availableLists, appMode, onClose, isOpen }) {
-  // ESC键关闭
+  const rootRef = useRef(null);
+
   useEffect(() => {
     if (!isOpen) return;
 
     const handleEscape = (e) => {
       if (e.key === "Escape") {
+        e.preventDefault();
         onClose?.();
       }
     };
@@ -16,20 +21,19 @@ export default function FullscreenLexGrid({ words, availableLists, appMode, onCl
     return () => window.removeEventListener("keydown", handleEscape);
   }, [isOpen, onClose]);
 
-  // 防止背景滚动
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-      return () => {
-        document.body.style.overflow = "";
-      };
-    }
+    if (!isOpen) return;
+    document.body.style.overflow = "hidden";
+    rootRef.current?.focus();
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [isOpen]);
 
   if (!isOpen) return null;
 
   return (
-    <div className="fullscreen-lexgrid">
+    <div className="fullscreen-lexgrid" ref={rootRef} tabIndex={-1}>
       <div className="fullscreen-lexgrid__content">
         <button
           type="button"
@@ -53,12 +57,15 @@ export default function FullscreenLexGrid({ words, availableLists, appMode, onCl
           </svg>
         </button>
 
-        <LexGridGame
-          words={words}
-          availableLists={availableLists}
-          tabId="lexgrid-fullscreen"
-          appMode={appMode}
-        />
+        <ActiveTabProvider value={LEXGRID_TAB_ID}>
+          <LexGridGame
+            words={words}
+            availableLists={availableLists}
+            tabId={LEXGRID_TAB_ID}
+            appMode={appMode}
+            overlay
+          />
+        </ActiveTabProvider>
       </div>
     </div>
   );

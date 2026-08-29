@@ -18,14 +18,17 @@ function isWithinOverlay(element) {
 }
 
 /** 用户正在输入或使用浮层面板时，跳过全局游戏快捷键。 */
-export function shouldIgnoreAppGameKeys(event) {
+export function shouldIgnoreAppGameKeys(event, { allowFullscreen = false } = {}) {
+  const fullscreenOpen = Boolean(document.querySelector(".fullscreen-lexgrid"));
   const candidates = [event?.target, document.activeElement];
 
   for (const element of candidates) {
     if (!(element instanceof Element)) continue;
     if (isTextEntryElement(element)) return true;
-    if (isWithinOverlay(element)) return true;
+    if (!allowFullscreen && isWithinOverlay(element)) return true;
   }
+
+  if (fullscreenOpen && !allowFullscreen) return true;
 
   return false;
 }
