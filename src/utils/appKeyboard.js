@@ -1,9 +1,10 @@
 const OVERLAY_SELECTORS = [
-  ".vocab-assistant",
+  ".vocab-assistant__panel",
   ".settings-panel",
   ".settings-overlay",
   ".streak-panel",
   ".mic-prompt",
+  ".round-complete-overlay",
 ].join(", ");
 
 const TEXT_INPUT_SELECTORS =
@@ -36,4 +37,17 @@ export function shouldIgnoreAppGameKeys(event, { allowFullscreen = false } = {})
 /** 阻止按键冒泡到 window 上的游戏监听器（挂在浮层面板根节点）。 */
 export function stopGameKeyBubble(event) {
   event.stopPropagation();
+}
+
+/** 认识 / 不认识快捷键：优先用 code，避免输入法改写 key 后失灵。 */
+export function isMarkKnownKey(event) {
+  const code = event?.code;
+  const key = event?.key;
+  return code === "Digit1" || code === "Numpad1" || key === "1" || key === "１";
+}
+
+export function isMarkUnknownKey(event) {
+  const code = event?.code;
+  const key = event?.key;
+  return code === "Digit0" || code === "Numpad0" || key === "0" || key === "０";
 }

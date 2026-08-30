@@ -354,12 +354,13 @@ export default function VocabAssistant({ currentWord, micGranted }) {
   }
 
   return (
-    <div className="vocab-assistant" aria-live="polite" onKeyDown={stopGameKeyBubble}>
+    <div className="vocab-assistant" aria-live="polite">
       {open && (
         <section
           className="vocab-assistant__panel"
           style={{ width: panelSize.width, height: panelSize.height }}
           aria-label="词汇 AI 助手"
+          onKeyDown={stopGameKeyBubble}
         >
           <div
             className="vocab-assistant__resize-handle"

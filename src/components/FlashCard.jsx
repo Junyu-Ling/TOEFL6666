@@ -11,7 +11,7 @@ import {
 import { evaluatePronunciation } from "../services/pronunciationEvaluate";
 import { getPronunciationAlert } from "../utils/pronunciationAlert";
 import { playAnswerSound } from "../utils/answerSounds";
-import { shouldIgnoreAppGameKeys } from "../utils/appKeyboard";
+import { shouldIgnoreAppGameKeys, isMarkKnownKey, isMarkUnknownKey } from "../utils/appKeyboard";
 import { fetchMemoryTrick } from "../services/memoryTrick";
 import { shouldFetchMemoryTrick } from "../shared/memoryTrick";
 import MemoryTrickBlock from "./MemoryTrickBlock";
@@ -34,14 +34,6 @@ function isTouchInteractiveTarget(target) {
       "button, a, input, textarea, select, label, .toggle-switch, .voice-btn, .flashcard__mobile-bar, .flashcard__input-wrap"
     )
   );
-}
-
-function isMarkKnownKey(e) {
-  return e.code === "Digit1" || e.code === "Numpad1" || e.key === "1";
-}
-
-function isMarkUnknownKey(e) {
-  return e.code === "Digit0" || e.code === "Numpad0" || e.key === "0";
 }
 
 function computeSwipeTransform(dx) {
@@ -305,6 +297,7 @@ export default function FlashCard({
   const focusCard = useCallback(() => {
     if (settingsOpenRef.current) return;
     inputRef.current?.blur();
+    englishInputRef.current?.blur();
     setInputReady(false);
     cardRef.current?.focus({ preventScroll: true });
   }, []);
@@ -868,6 +861,7 @@ export default function FlashCard({
 
     function handleGlobalKeyDown(e) {
       if (!isActiveRef.current) return;
+      if (settingsOpenRef.current) return;
       if (loadingRef.current) {
         if (e.key === "Escape") {
           e.preventDefault();
@@ -875,43 +869,38 @@ export default function FlashCard({
         }
         return;
       }
-      if (isExternalInteractiveContext(e)) return;
       if (e.metaKey || e.ctrlKey || e.altKey) return;
 
-      if (flippedRef.current && backModeRef.current === "ai") {
-        const pending = resultRef.current;
-        if (pending?.needs_typo_clarification && !pending?.clarified_typo) {
-          if (isTypingInAnswerField()) return;
-          if (isMarkKnownKey(e)) {
-            e.preventDefault();
-            e.stopPropagation();
-            handleTypoClarificationRef.current?.(true);
-            return;
-          }
-          if (isMarkUnknownKey(e)) {
-            e.preventDefault();
-            e.stopPropagation();
-            handleTypoClarificationRef.current?.(false);
-            return;
-          }
+      const fullscreenOpen = Boolean(document.querySelector(".fullscreen-lexgrid"));
+      const blockingOverlay = Boolean(
+        document.querySelector(".round-complete-overlay, .settings-overlay, .streak-panel")
+      );
+      const awaitingTypo =
+        Boolean(resultRef.current?.needs_typo_clarification) && !resultRef.current?.clarified_typo;
+      const canMarkManual = flippedRef.current && backModeRef.current === "manual";
+      const canMarkTypo = flippedRef.current && backModeRef.current === "ai" && awaitingTypo;
+
+      if (
+        !fullscreenOpen &&
+        !blockingOverlay &&
+        (canMarkManual || canMarkTypo) &&
+        (isMarkKnownKey(e) || isMarkUnknownKey(e))
+      ) {
+        if (e.repeat) return;
+        e.preventDefault();
+        e.stopPropagation();
+        inputRef.current?.blur();
+        englishInputRef.current?.blur();
+        const known = isMarkKnownKey(e);
+        if (canMarkTypo) {
+          handleTypoClarificationRef.current?.(known);
+        } else {
+          handleManualMark(known);
         }
+        return;
       }
 
-      if (flippedRef.current && backModeRef.current === "manual") {
-        if (isTypingInAnswerField()) return;
-        if (isMarkKnownKey(e)) {
-          e.preventDefault();
-          e.stopPropagation();
-          handleManualMark(true);
-          return;
-        }
-        if (isMarkUnknownKey(e)) {
-          e.preventDefault();
-          e.stopPropagation();
-          handleManualMark(false);
-          return;
-        }
-      }
+      if (isExternalInteractiveContext(e)) return;
 
       if (e.key === "ArrowUp") {
         e.preventDefault();

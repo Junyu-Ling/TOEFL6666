@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { isMarkKnownKey } from "../utils/appKeyboard";
 
 export default function RoundCompleteModal({ 
   roundNumber, 
@@ -18,10 +19,10 @@ export default function RoundCompleteModal({
 
   useEffect(() => {
     function handleKeyDown(e) {
-      if (e.key === "1") {
+      if (isMarkKnownKey(e)) {
         e.preventDefault();
         onReviewAgain();
-      } else if (e.key === "2" || e.key === "Enter") {
+      } else if (e.key === "2" || e.code === "Digit2" || e.code === "Numpad2" || e.key === "Enter") {
         e.preventDefault();
         onNextRound();
       }
