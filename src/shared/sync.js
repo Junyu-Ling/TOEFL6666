@@ -93,6 +93,11 @@ function mergeWordEntry(a, b) {
     ...primary,
     wrongCount: Math.max(a.wrongCount || 0, b.wrongCount || 0),
     memory_trick: primary.memory_trick || secondary.memory_trick,
+    memory_tricks:
+      (primary.memory_tricks?.length >= 2 ? primary.memory_tricks : null) ||
+      (secondary.memory_tricks?.length >= 2 ? secondary.memory_tricks : null) ||
+      primary.memory_tricks ||
+      secondary.memory_tricks,
     definitions: primary.definitions?.length ? primary.definitions : secondary.definitions,
     ai_feedback: primary.ai_feedback || secondary.ai_feedback,
   };

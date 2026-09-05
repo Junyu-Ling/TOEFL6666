@@ -219,6 +219,9 @@ export function buildWordRecord(wordData, aiResult) {
   if (aiResult.memory_trick) {
     record.memory_trick = aiResult.memory_trick;
   }
+  if (Array.isArray(aiResult.memory_tricks) && aiResult.memory_tricks.length > 0) {
+    record.memory_tricks = aiResult.memory_tricks;
+  }
   return record;
 }
 

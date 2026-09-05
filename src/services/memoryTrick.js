@@ -1,4 +1,5 @@
 import { enqueueMemoryTrickRequest, memoryTrickKey } from "./memoryTrickQueue";
+import { normalizeMemoryTrickPayload } from "../shared/memoryTrick";
 
 export async function fetchMemoryTrick(wordData) {
   if (wordData?.transitionWord) return null;
@@ -21,10 +22,11 @@ export async function fetchMemoryTrick(wordData) {
       throw new Error(data.error || `记忆法生成失败 (${res.status})`);
     }
 
-    if (!data.memory_trick) {
+    const payload = normalizeMemoryTrickPayload(data);
+    if (!payload) {
       throw new Error("记忆法返回格式无效");
     }
 
-    return data.memory_trick;
+    return payload;
   });
 }

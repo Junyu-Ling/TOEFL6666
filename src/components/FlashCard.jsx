@@ -13,7 +13,7 @@ import { getPronunciationAlert } from "../utils/pronunciationAlert";
 import { playAnswerSound } from "../utils/answerSounds";
 import { shouldIgnoreAppGameKeys, isMarkKnownKey, isMarkUnknownKey } from "../utils/appKeyboard";
 import { fetchMemoryTrick } from "../services/memoryTrick";
-import { shouldFetchMemoryTrick } from "../shared/memoryTrick";
+import { shouldFetchMemoryTrick, hasCompleteMemoryTricks } from "../shared/memoryTrick";
 import MemoryTrickBlock from "./MemoryTrickBlock";
 import PronunciationAlert from "./PronunciationAlert";
 import { isMobileLayout, useMobileLayout } from "../hooks/useMobileLayout";
@@ -157,18 +157,32 @@ export default function FlashCard({
       const existingTrick =
         wordStats?.memory_trick ??
         baseResult?.memory_trick ??
+        pendingMemoryTrickRef.current?.memory_trick ??
         pendingMemoryTrickRef.current ??
+        null;
+      const existingTricks =
+        wordStats?.memory_tricks ??
+        baseResult?.memory_tricks ??
+        pendingMemoryTrickRef.current?.memory_tricks ??
         null;
 
       if (
-        existingTrick ||
+        hasCompleteMemoryTricks({ memory_tricks: existingTricks }) ||
         !shouldFetchMemoryTrick({
           isCorrect: false,
           priorWrongCount,
           existingTrick,
+          existingTricks,
           wordData,
         })
       ) {
+        if (existingTricks?.length && baseResult && !baseResult.memory_tricks) {
+          setResult((prev) =>
+            prev && prev.is_correct === false
+              ? { ...prev, memory_trick: existingTrick, memory_tricks: existingTricks }
+              : prev
+          );
+        }
         return;
       }
       if (memoryFetchRef.current) return;
@@ -182,14 +196,20 @@ export default function FlashCard({
       for (let attempt = 0; attempt < 2; attempt += 1) {
         if (fetchToken !== memoryFetchTokenRef.current) break;
         try {
-          const memory_trick = await fetchMemoryTrick(wordData);
+          const payload = await fetchMemoryTrick(wordData);
           if (fetchToken !== memoryFetchTokenRef.current) break;
-          if (!memory_trick) break;
-          pendingMemoryTrickRef.current = memory_trick;
+          if (!payload) break;
+          pendingMemoryTrickRef.current = payload;
           setResult((prev) =>
-            prev && prev.is_correct === false ? { ...prev, memory_trick } : prev
+            prev && prev.is_correct === false
+              ? {
+                  ...prev,
+                  memory_trick: payload.memory_trick,
+                  memory_tricks: payload.memory_tricks,
+                }
+              : prev
           );
-          onMemoryTrickGenerated?.(wordData, memory_trick);
+          onMemoryTrickGenerated?.(wordData, payload);
           lastError = null;
           break;
         } catch (err) {
@@ -206,7 +226,7 @@ export default function FlashCard({
         setMemoryLoading(false);
       }
     },
-    [wordData, wordStats?.wrongCount, wordStats?.memory_trick, onMemoryTrickGenerated]
+    [wordData, wordStats?.wrongCount, wordStats?.memory_trick, wordStats?.memory_tricks, onMemoryTrickGenerated]
   );
 
   const pronunciationAlert = useMemo(
@@ -307,11 +327,14 @@ export default function FlashCard({
       const pendingTrick = pendingMemoryTrickRef.current;
       pendingMemoryTrickRef.current = null;
       const existingTrick =
-        wordStats?.memory_trick ?? aiResult.memory_trick ?? pendingTrick ?? null;
+        wordStats?.memory_trick ?? aiResult.memory_trick ?? pendingTrick?.memory_trick ?? pendingTrick ?? null;
+      const existingTricks =
+        wordStats?.memory_tricks ?? aiResult.memory_tricks ?? pendingTrick?.memory_tricks ?? null;
       const nextResult = {
         ...aiResult,
         is_correct: false,
         ...(existingTrick ? { memory_trick: existingTrick } : {}),
+        ...(existingTricks?.length ? { memory_tricks: existingTricks } : {}),
       };
 
       setResult(nextResult);
@@ -322,11 +345,11 @@ export default function FlashCard({
       if (persist) onResult?.(wordData, nextResult);
       requestAnimationFrame(focusCard);
 
-      if (!nextResult.memory_trick) {
+      if (!hasCompleteMemoryTricks(nextResult)) {
         void fetchMemoryTrickBackground(nextResult);
       }
     },
-    [wordData, wordStats?.memory_trick, onResult, focusCard, fetchMemoryTrickBackground]
+    [wordData, wordStats?.memory_trick, wordStats?.memory_tricks, onResult, focusCard, fetchMemoryTrickBackground]
   );
 
   const flipBack = useCallback(() => {

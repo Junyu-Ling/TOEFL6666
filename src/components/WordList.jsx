@@ -2,6 +2,7 @@ import { memo, useMemo, useState, useEffect, useRef } from "react";
 import MemoryTrickBlock from "./MemoryTrickBlock";
 import PronunciationAlert from "./PronunciationAlert";
 import { fetchMemoryTrick } from "../services/memoryTrick";
+import { hasCompleteMemoryTricks } from "../shared/memoryTrick";
 import { getPronunciationAlert } from "../utils/pronunciationAlert";
 import { groupWordsByList } from "../utils/wordListGrouping";
 
@@ -53,20 +54,22 @@ function WordItem({
   const wrongCount = item.wrongCount ?? 0;
   const showBadge = showWrongCount && wrongCount > 0;
   const needsMemoryTrick = wrongCountPast && wrongCount >= 1;
-  const [localTrick, setLocalTrick] = useState(null);
+  const [localPayload, setLocalPayload] = useState(null);
   const [memoryLoading, setMemoryLoading] = useState(false);
   const [visible, setVisible] = useState(false);
   const itemRef = useRef(null);
 
-  const trick = item.memory_trick || localTrick;
+  const trick = item.memory_trick || localPayload?.memory_trick;
+  const tricks = item.memory_tricks || localPayload?.memory_tricks;
+  const hasDual = hasCompleteMemoryTricks(item) || hasCompleteMemoryTricks(localPayload);
   const pronunciationAlert = getPronunciationAlert(
     item.word,
-    trick?.pronunciation_alert
+    trick?.pronunciation_alert || localPayload?.pronunciation_alert
   );
 
   useEffect(() => {
     const node = itemRef.current;
-    if (!node || !needsMemoryTrick || item.memory_trick || localTrick) return undefined;
+    if (!node || !needsMemoryTrick || hasDual) return undefined;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -80,19 +83,19 @@ function WordItem({
 
     observer.observe(node);
     return () => observer.disconnect();
-  }, [needsMemoryTrick, item.memory_trick, localTrick]);
+  }, [needsMemoryTrick, hasDual]);
 
   useEffect(() => {
-    if (!visible || !needsMemoryTrick || item.memory_trick || localTrick) return undefined;
+    if (!visible || !needsMemoryTrick || hasDual) return undefined;
 
     let cancelled = false;
     setMemoryLoading(true);
 
     fetchMemoryTrick({ word: item.word, definitions: item.definitions })
-      .then((memory_trick) => {
-        if (cancelled) return;
-        setLocalTrick(memory_trick);
-        onMemoryTrickSaved?.(item.word, memory_trick);
+      .then((payload) => {
+        if (cancelled || !payload) return;
+        setLocalPayload(payload);
+        onMemoryTrickSaved?.(item.word, payload);
       })
       .catch(() => {})
       .finally(() => {
@@ -102,15 +105,7 @@ function WordItem({
     return () => {
       cancelled = true;
     };
-  }, [
-    visible,
-    needsMemoryTrick,
-    item.word,
-    item.definitions,
-    item.memory_trick,
-    localTrick,
-    onMemoryTrickSaved,
-  ]);
+  }, [visible, needsMemoryTrick, hasDual, item.word, item.definitions, onMemoryTrickSaved]);
 
   return (
     <article ref={itemRef} className={`word-item word-item--${variant}`}>
@@ -138,7 +133,7 @@ function WordItem({
             <div className="word-item__memory">
               <MemoryTrickBlock 
                 trick={trick} 
-                tricks={trick.memory_tricks || item.memory_tricks} 
+                tricks={tricks} 
                 compact 
                 className="word-item__memory-block" 
               />

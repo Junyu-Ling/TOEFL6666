@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   MEMORY_TRICK_TYPE_LABELS,
   memoryTrickTagClass,
@@ -8,6 +8,10 @@ export default function MemoryTrickBlock({ trick, tricks, compact = false, class
   // tricks 是数组（多个记忆法），trick 是单个（兼容旧格式）
   const allTricks = tricks && Array.isArray(tricks) && tricks.length > 0 ? tricks : (trick ? [trick] : []);
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    setCurrentIndex(0);
+  }, [tricks, trick]);
   
   if (allTricks.length === 0) return null;
 

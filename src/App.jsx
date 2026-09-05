@@ -62,6 +62,7 @@ import {
   sameListIdSet,
 } from "./utils/wordListGrouping";
 import { buildWordBankMap } from "./utils/homophoneBank";
+import { attachMemoryTricks, hasCompleteMemoryTricks } from "./shared/memoryTrick";
 import "./App.css";
 
 function clampIndex(index, length) {
@@ -388,40 +389,41 @@ export default function App() {
 
   const getWordStats = useCallback(
     (wordData) => {
-      if (!wordData) return { wrongCount: 0, memory_trick: null };
+      if (!wordData) return { wrongCount: 0, memory_trick: null, memory_tricks: null };
       const unrec = unrecognized.find((item) => item.word === wordData.word);
       const rec = recognized.find((item) => item.word === wordData.word);
       const entry = unrec || rec;
       return {
         wrongCount: entry?.wrongCount ?? 0,
         memory_trick: entry?.memory_trick ?? null,
+        memory_tricks: entry?.memory_tricks ?? null,
       };
     },
     [unrecognized, recognized]
   );
 
-  const handleMemoryTrickGenerated = useCallback((wordData, memory_trick) => {
+  const handleMemoryTrickGenerated = useCallback((wordData, payload) => {
     setUnrecognized((prev) => {
       const existing = prev.find((item) => item.word === wordData.word);
-      if (!existing || existing.memory_trick) return prev;
-      const next = upsertWord(prev, { ...existing, memory_trick });
+      if (!existing || hasCompleteMemoryTricks(existing)) return prev;
+      const next = upsertWord(prev, attachMemoryTricks(existing, payload));
       saveUnrecognized(next);
       return next;
     });
     setRecognized((prev) => {
       const existing = prev.find((item) => item.word === wordData.word);
-      if (!existing || existing.memory_trick) return prev;
-      const next = upsertWord(prev, { ...existing, memory_trick });
+      if (!existing || hasCompleteMemoryTricks(existing)) return prev;
+      const next = upsertWord(prev, attachMemoryTricks(existing, payload));
       saveRecognized(next);
       return next;
     });
   }, []);
 
-  const handleRecognizedMemoryTrick = useCallback((word, memory_trick) => {
+  const handleRecognizedMemoryTrick = useCallback((word, payload) => {
     setRecognized((prev) => {
       const existing = prev.find((item) => item.word === word);
-      if (!existing || existing.memory_trick) return prev;
-      const next = upsertWord(prev, { ...existing, memory_trick });
+      if (!existing || hasCompleteMemoryTricks(existing)) return prev;
+      const next = upsertWord(prev, attachMemoryTricks(existing, payload));
       saveRecognized(next);
       return next;
     });
@@ -452,9 +454,18 @@ export default function App() {
               aiResult,
               carryWrong
             );
-            if (wrongEntry?.memory_trick || aiResult.memory_trick || existingRec?.memory_trick) {
-              record.memory_trick =
-                wrongEntry?.memory_trick || aiResult.memory_trick || existingRec?.memory_trick;
+            const trickSource =
+              (hasCompleteMemoryTricks(wrongEntry) && wrongEntry) ||
+              (hasCompleteMemoryTricks(aiResult) && aiResult) ||
+              (hasCompleteMemoryTricks(existingRec) && existingRec) ||
+              wrongEntry ||
+              aiResult ||
+              existingRec;
+            if (trickSource?.memory_trick) {
+              record.memory_trick = trickSource.memory_trick;
+            }
+            if (trickSource?.memory_tricks?.length) {
+              record.memory_tricks = trickSource.memory_tricks;
             }
             const next = upsertWord(prevRec, record);
             saveRecognized(next);
@@ -495,6 +506,7 @@ export default function App() {
             sourceListId: record.sourceListId ?? existing?.sourceListId ?? wordData.sourceListId ?? bookListId,
             wrongCount: (existing?.wrongCount ?? 0) + 1,
             memory_trick: record.memory_trick ?? existing?.memory_trick,
+            memory_tricks: record.memory_tricks ?? existing?.memory_tricks,
           };
           const next = upsertWord(prev, wrongRecord);
           saveUnrecognized(next);

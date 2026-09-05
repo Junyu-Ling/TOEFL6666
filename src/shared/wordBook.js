@@ -8,6 +8,9 @@ export function compactWordBookEntry(item) {
   if (item.sourceListId) compact.sourceListId = item.sourceListId;
   if (item.wrongCount > 0) compact.wrongCount = item.wrongCount;
   if (item.memory_trick) compact.memory_trick = item.memory_trick;
+  if (Array.isArray(item.memory_tricks) && item.memory_tricks.length > 0) {
+    compact.memory_tricks = item.memory_tricks;
+  }
   return compact;
 }
 
