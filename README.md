@@ -11,7 +11,7 @@ npm install
 npm run dev
 ```
 
-浏览器打开 http://localhost:5173/ 。本地 `/api` 由 Vite 插件转发到 [`server/`](server/) 逻辑。
+浏览器打开 http://localhost:5175/ 。本地 `/api` 由 Vite 插件转发到 [`server/`](server/) 逻辑。
 
 ## Cloudflare Workers 部署
 

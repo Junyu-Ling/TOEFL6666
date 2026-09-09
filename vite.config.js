@@ -7,6 +7,7 @@ export default defineConfig({
   plugins: [react(), aiProxyPlugin(), syncProxyPlugin()],
   server: {
     host: true,
-    port: 5173,
+    port: 5175,
+    strictPort: true,
   },
 });

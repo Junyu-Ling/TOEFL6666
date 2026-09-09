@@ -17,10 +17,11 @@ export function getAlternateAppMode(mode) {
 }
 
 const TOEFL_ONLY_TABS = new Set(["reading-vocab", "reading-fill"]);
-const SAT_ONLY_TABS = new Set(["transition-words", "familiar-obscure", "sat-vocab"]);
+const SAT_ONLY_TABS = new Set(["transition-words", "familiar-obscure"]);
 
 export function isTabAvailableInMode(tabId, appMode = "toefl") {
   const mode = normalizeAppMode(appMode);
+  if (tabId === "sat-vocab") return false;
   if (mode === "sat" && TOEFL_ONLY_TABS.has(tabId)) return false;
   if (mode === "toefl" && SAT_ONLY_TABS.has(tabId)) return false;
   return true;

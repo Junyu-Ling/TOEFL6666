@@ -9,7 +9,6 @@ const TABS = [
   { id: "bank", label: "词库" },
   { id: "unrecognized", label: "生词本" },
   { id: "recognized", label: "熟词本" },
-  { id: "sat-vocab", label: "SAT词汇" },
   { id: "transition-words", label: "过渡词" },
   { id: "familiar-obscure", label: "熟词僻义" },
   { id: "reading-vocab", label: "阅读词汇" },
