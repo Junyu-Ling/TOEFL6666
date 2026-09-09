@@ -39,6 +39,21 @@ export function generatePairingCode() {
   return formatPairingCode(raw);
 }
 
+function stripSecretApiSettings(settings) {
+  if (!settings || typeof settings !== "object") return settings;
+  delete settings.aiApiKey;
+  delete settings.customApiKey;
+  return settings;
+}
+
+function sanitizeSettingsJson(raw) {
+  try {
+    return JSON.stringify(stripSecretApiSettings(JSON.parse(raw)));
+  } catch {
+    return raw;
+  }
+}
+
 export function exportLocalData({ excludeKeys = [] } = {}) {
   const skip = new Set(excludeKeys);
   const data = {};
@@ -60,6 +75,10 @@ export function exportLocalData({ excludeKeys = [] } = {}) {
         } catch {
           // fall through to raw export
         }
+      }
+      if (key === "toefl666_settings") {
+        data[key] = sanitizeSettingsJson(raw);
+        continue;
       }
       data[key] = raw;
     }
@@ -276,8 +295,9 @@ function mergeChatHistory(local, remote) {
 function mergeSettingsValue(localStr, remoteStr) {
   const local = parseJson(localStr, {});
   const remote = parseJson(remoteStr, {});
-  const merged = { ...remote, ...local };
-  delete merged.aiApiKey;
+  const localKey = typeof local.customApiKey === "string" ? local.customApiKey : "";
+  const merged = stripSecretApiSettings({ ...remote, ...local });
+  if (localKey) merged.customApiKey = localKey;
   return JSON.stringify(merged);
 }
 
@@ -402,10 +422,12 @@ export function importLocalData(bundle) {
     throw new Error("同步数据格式无效");
   }
 
+  let preservedCustomApiKey = "";
   try {
     const raw = localStorage.getItem("toefl666_settings");
     if (raw) {
       const settings = JSON.parse(raw);
+      preservedCustomApiKey = typeof settings.customApiKey === "string" ? settings.customApiKey : "";
       if (settings.aiApiKey) {
         delete settings.aiApiKey;
         localStorage.setItem("toefl666_settings", JSON.stringify(settings));
@@ -437,8 +459,8 @@ export function importLocalData(bundle) {
     if (SYNC_EXCLUDED_KEYS.has(key)) continue;
     if (key === "toefl666_settings") {
       try {
-        const settings = JSON.parse(value);
-        delete settings.aiApiKey;
+        const settings = stripSecretApiSettings(JSON.parse(value));
+        if (preservedCustomApiKey) settings.customApiKey = preservedCustomApiKey;
         localStorage.setItem(key, JSON.stringify(settings));
         continue;
       } catch {

@@ -123,6 +123,21 @@ export function SettingsProvider({ children }) {
     [updateSettings]
   );
 
+  const setCustomApiBase = useCallback(
+    (customApiBase) => updateSettings({ customApiBase: String(customApiBase || "") }),
+    [updateSettings]
+  );
+
+  const setCustomApiKey = useCallback(
+    (customApiKey) => updateSettings({ customApiKey: String(customApiKey || "") }),
+    [updateSettings]
+  );
+
+  const setCustomApiModel = useCallback(
+    (customApiModel) => updateSettings({ customApiModel: String(customApiModel || "") }),
+    [updateSettings]
+  );
+
   const setTargetExam = useCallback(
     (targetExam) => {
       const mode = normalizeTargetExam(targetExam);
@@ -216,6 +231,9 @@ export function SettingsProvider({ children }) {
       setAnswerSoundWrong,
       setWordsPerRound,
       setEnableRoundReview,
+      setCustomApiBase,
+      setCustomApiKey,
+      setCustomApiModel,
       setTargetExam,
       setAppMode,
       setToeflSectionScore,
@@ -242,6 +260,9 @@ export function SettingsProvider({ children }) {
       setAnswerSoundWrong,
       setWordsPerRound,
       setEnableRoundReview,
+      setCustomApiBase,
+      setCustomApiKey,
+      setCustomApiModel,
       setTargetExam,
       setAppMode,
       setToeflSectionScore,

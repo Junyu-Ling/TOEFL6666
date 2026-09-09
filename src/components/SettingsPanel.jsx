@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useSettings } from "../context/SettingsContext";
+import { detectProvider } from "../shared/ai-providers";
 import { stopGameKeyBubble } from "../utils/appKeyboard";
 import {
   CORRECT_SOUND_OPTIONS,
@@ -33,10 +34,16 @@ export default function SettingsPanel() {
     setAnswerSoundWrong,
     setWordsPerRound,
     setEnableRoundReview,
+    setCustomApiBase,
+    setCustomApiKey,
+    setCustomApiModel,
   } = useSettings();
 
   const [delayDraft, setDelayDraft] = useState(String(settings.autoAdvanceDelaySec));
   const [wordsPerRoundDraft, setWordsPerRoundDraft] = useState(String(settings.wordsPerRound));
+  const [apiBaseDraft, setApiBaseDraft] = useState(settings.customApiBase || "");
+  const [apiKeyDraft, setApiKeyDraft] = useState(settings.customApiKey || "");
+  const [apiModelDraft, setApiModelDraft] = useState(settings.customApiModel || "");
   const panelRef = useRef(null);
 
   useEffect(() => {
@@ -48,8 +55,18 @@ export default function SettingsPanel() {
     if (settingsOpen) {
       setDelayDraft(String(settings.autoAdvanceDelaySec));
       setWordsPerRoundDraft(String(settings.wordsPerRound));
+      setApiBaseDraft(settings.customApiBase || "");
+      setApiKeyDraft(settings.customApiKey || "");
+      setApiModelDraft(settings.customApiModel || "");
     }
-  }, [settings.autoAdvanceDelaySec, settings.wordsPerRound, settingsOpen]);
+  }, [
+    settings.autoAdvanceDelaySec,
+    settings.wordsPerRound,
+    settings.customApiBase,
+    settings.customApiKey,
+    settings.customApiModel,
+    settingsOpen,
+  ]);
 
   function commitDelayDraft() {
     const trimmed = delayDraft.trim();
@@ -85,6 +102,48 @@ export default function SettingsPanel() {
       setWordsPerRound(clamped);
     }
   }
+
+  function commitApiBaseDraft() {
+    const next = apiBaseDraft.trim();
+    if (next !== (settings.customApiBase || "")) {
+      setCustomApiBase(next);
+    }
+    setApiBaseDraft(next);
+  }
+
+  function commitApiKeyDraft() {
+    const next = apiKeyDraft.trim();
+    if (next !== (settings.customApiKey || "")) {
+      setCustomApiKey(next);
+    }
+    setApiKeyDraft(next);
+  }
+
+  function commitApiModelDraft() {
+    const next = apiModelDraft.trim();
+    if (next !== (settings.customApiModel || "")) {
+      setCustomApiModel(next);
+    }
+    setApiModelDraft(next);
+  }
+
+  function clearCustomApi() {
+    setApiBaseDraft("");
+    setApiKeyDraft("");
+    setApiModelDraft("");
+    setCustomApiBase("");
+    setCustomApiKey("");
+    setCustomApiModel("");
+  }
+
+  const customApiReady = Boolean(
+    (settings.customApiKey || "").trim() &&
+      (settings.customApiBase || "").trim() &&
+      (settings.customApiModel || "").trim()
+  );
+  const detectedProvider = detectProvider(apiKeyDraft, apiBaseDraft);
+  const detectedProviderName =
+    detectedProvider && detectedProvider.id !== "custom" ? detectedProvider.name : "";
 
   if (!settingsOpen) return null;
 
@@ -122,6 +181,63 @@ export default function SettingsPanel() {
             </button>
           </div>
         </section>
+
+        <details className="settings-group">
+          <summary className="settings-group__summary">
+            <span className="settings-group__title">自定义 API</span>
+            <span className="settings-group__meta">{customApiReady ? "已启用" : "未配置"}</span>
+          </summary>
+          <div className="settings-group__body">
+            <p className="settings-hint settings-hint--compact">
+              填写 OpenAI 兼容接口即可，不必选择厂家。DeepSeek、OpenAI、Gemini、Groq、OpenRouter、智谱、通义等都可以。地址填到 /v1 这一层，三项都填才生效，留空则用服务器默认。密钥只保存在本机，不会同步到云端。
+            </p>
+            <label className="settings-field">
+              API 地址
+              <input
+                type="text"
+                inputMode="url"
+                autoComplete="off"
+                spellCheck={false}
+                placeholder="https://api.deepseek.com/v1"
+                value={apiBaseDraft}
+                onChange={(e) => setApiBaseDraft(e.target.value)}
+                onBlur={commitApiBaseDraft}
+              />
+            </label>
+            <label className="settings-field">
+              API Key
+              <input
+                type="password"
+                autoComplete="off"
+                spellCheck={false}
+                placeholder="sk-…"
+                value={apiKeyDraft}
+                onChange={(e) => setApiKeyDraft(e.target.value)}
+                onBlur={commitApiKeyDraft}
+              />
+            </label>
+            <label className="settings-field">
+              模型名
+              <input
+                type="text"
+                autoComplete="off"
+                spellCheck={false}
+                placeholder="deepseek-v4-flash"
+                value={apiModelDraft}
+                onChange={(e) => setApiModelDraft(e.target.value)}
+                onBlur={commitApiModelDraft}
+              />
+            </label>
+            {detectedProviderName && (
+              <p className="settings-hint settings-hint--compact">已识别：{detectedProviderName}</p>
+            )}
+            {(apiBaseDraft || apiKeyDraft || apiModelDraft) && (
+              <button type="button" className="settings-action-btn" onClick={clearCustomApi}>
+                清除自定义 API
+              </button>
+            )}
+          </div>
+        </details>
 
         <details className="settings-group" open>
           <summary className="settings-group__summary">

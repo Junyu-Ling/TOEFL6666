@@ -1,13 +1,15 @@
+import { withUserApiConfig } from "./userApiConfig";
+
 export async function evaluatePronunciation(wordData, { transcript, alternatives, pronunciationHint, signal } = {}) {
   const res = await fetch("/api/ai/pronounce-evaluate", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
+    body: JSON.stringify(withUserApiConfig({
       word: wordData.word,
       transcript,
       alternatives,
       pronunciationHint,
-    }),
+    })),
     signal,
   });
 

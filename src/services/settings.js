@@ -47,6 +47,9 @@ const DEFAULT_SETTINGS = {
   studyPlans: { toefl: null, sat: null },
   wordsPerRound: 20,
   enableRoundReview: true,
+  customApiBase: "",
+  customApiKey: "",
+  customApiModel: "",
 };
 
 function normalizeStudyPlanEntry(value) {
@@ -99,6 +102,10 @@ export function clampWordsPerRound(value) {
   return Math.min(100, Math.max(5, Math.round(n)));
 }
 
+function normalizeCustomApiField(value) {
+  return typeof value === "string" ? value : "";
+}
+
 export function loadSettings() {
   try {
     const raw = localStorage.getItem(SETTINGS_KEY);
@@ -126,8 +133,11 @@ export function loadSettings() {
       studyPlans: normalizeStudyPlans(parsed),
       wordsPerRound: clampWordsPerRound(parsed.wordsPerRound),
       enableRoundReview: parsed.enableRoundReview !== false,
+      customApiBase: normalizeCustomApiField(parsed.customApiBase || parsed.aiApiBase),
+      customApiKey: normalizeCustomApiField(parsed.customApiKey || parsed.aiApiKey),
+      customApiModel: normalizeCustomApiField(parsed.customApiModel || parsed.aiModel),
     };
-    if ("aiApiKey" in parsed) {
+    if ("aiApiKey" in parsed || "aiApiBase" in parsed || "aiModel" in parsed) {
       saveSettings(next);
     }
     return next;

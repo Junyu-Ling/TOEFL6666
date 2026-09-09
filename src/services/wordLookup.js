@@ -1,3 +1,5 @@
+import { withUserApiConfig } from "./userApiConfig";
+
 export async function lookupWordDefinitions(word, { signal, bankHints } = {}) {
   const query = String(word || "").trim();
   if (!query) {
@@ -11,7 +13,7 @@ export async function lookupWordDefinitions(word, { signal, bankHints } = {}) {
   const res = await fetch("/api/ai/word-lookup", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ word: query, bankHints: hints }),
+    body: JSON.stringify(withUserApiConfig({ word: query, bankHints: hints })),
     signal,
   });
 

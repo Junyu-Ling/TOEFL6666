@@ -16,6 +16,7 @@ import {
   buildConfusionClarificationResult,
   applyConfusionToWrongResult,
 } from "../utils/homophoneBank";
+import { withUserApiConfig } from "./userApiConfig";
 
 export async function evaluateAnswer(wordData, userAnswer, options = {}) {
   const { signal, wordBank } = options;
@@ -64,12 +65,12 @@ export async function evaluateAnswer(wordData, userAnswer, options = {}) {
   const res = await fetch("/api/ai/evaluate", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
+    body: JSON.stringify(withUserApiConfig({
       word: wordData.word,
       definitions: wordData.definitions,
       userAnswer: trimmed,
       recognizedVocabulary,
-    }),
+    })),
     signal,
   });
 

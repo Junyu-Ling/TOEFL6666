@@ -1,4 +1,4 @@
-import { getEnvConfig, resolveApiConfig, stripApiConfigFromBody } from "../server/ai-config.js";
+import { getEnvConfig, resolveRequestConfig, stripApiConfigFromBody } from "../server/ai-config.js";
 import { evaluateWithDeepSeek } from "../server/ai-evaluate.js";
 import { chatWithDeepSeek, streamChatWithDeepSeek } from "../server/ai-chat.js";
 import { generateMemoryTrick } from "../server/ai-memory-trick.js";
@@ -11,10 +11,6 @@ import { jsonResponse, methodNotAllowed, readJsonBody, redirectWordlists, sseRes
 
 function matchPath(pathname, path) {
   return pathname === path;
-}
-
-function apiConfigFromEnv() {
-  return resolveApiConfig(getEnvConfig());
 }
 
 export async function handleApiRequest(request) {
@@ -34,8 +30,10 @@ export async function handleApiRequest(request) {
 
   try {
     const body = await readJsonBody(request);
-    const config = apiConfigFromEnv();
     const payload = stripApiConfigFromBody(body);
+    const config = pathname.startsWith("/api/ai/")
+      ? resolveRequestConfig(body, getEnvConfig())
+      : null;
 
     if (matchPath(pathname, "/api/ai/evaluate")) {
       const result = await evaluateWithDeepSeek(payload, config);

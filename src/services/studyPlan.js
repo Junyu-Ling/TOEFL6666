@@ -1,3 +1,5 @@
+import { withUserApiConfig } from "./userApiConfig";
+
 function parseSseEvents(buffer) {
   const events = [];
   const parts = buffer.split("\n\n");
@@ -26,7 +28,7 @@ export async function streamStudyPlan({ payload, onDelta, signal }) {
   const res = await fetch("/api/ai/study-plan", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ ...payload, stream: true }),
+    body: JSON.stringify(withUserApiConfig({ ...payload, stream: true })),
     signal,
   });
 

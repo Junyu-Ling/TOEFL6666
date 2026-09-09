@@ -1,3 +1,5 @@
+import { withUserApiConfig } from "./userApiConfig";
+
 function parseSseEvents(buffer) {
   const events = [];
   const parts = buffer.split("\n\n");
@@ -31,11 +33,11 @@ export async function streamVocabChat({ messages, context, onDelta, signal }) {
   const res = await fetch("/api/ai/chat", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
+    body: JSON.stringify(withUserApiConfig({
       messages: textOnlyMessages,
       context,
       stream: true,
-    }),
+    })),
     signal,
   });
 

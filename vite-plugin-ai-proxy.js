@@ -1,5 +1,5 @@
 import { loadEnv } from "vite";
-import { resolveApiConfig, getEnvConfig, DEFAULT_DEEPSEEK_MODEL, stripApiConfigFromBody } from "./server/ai-config.js";
+import { resolveRequestConfig, getEnvConfig, DEFAULT_DEEPSEEK_MODEL, stripApiConfigFromBody } from "./server/ai-config.js";
 import { evaluateWithDeepSeek } from "./server/ai-evaluate.js";
 import { chatWithDeepSeek, streamChatWithDeepSeek } from "./server/ai-chat.js";
 import { generateMemoryTrick } from "./server/ai-memory-trick.js";
@@ -70,7 +70,7 @@ export function createAiHandler(getEnvConfig) {
 
     try {
       const body = JSON.parse(await readBody(req));
-      const config = resolveApiConfig(getEnvConfig());
+      const config = resolveRequestConfig(body, getEnvConfig());
       const payload = stripApiConfigFromBody(body);
 
       if (isEvaluate) {
@@ -152,7 +152,7 @@ export function aiProxyPlugin() {
     name: "ai-proxy",
     configResolved(config) {
       const env = loadEnv(config.mode, config.root, "");
-      envConfig = resolveApiConfig(getEnvConfig(env));
+      envConfig = resolveRequestConfig({}, getEnvConfig(env));
     },
     configureServer(server) {
       server.middlewares.use(createAiHandler(() => envConfig));

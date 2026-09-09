@@ -1,4 +1,4 @@
-import { getEnvConfig, resolveApiConfig, stripApiConfigFromBody } from "../../server/ai-config.js";
+import { getEnvConfig, resolveRequestConfig, stripApiConfigFromBody } from "../../server/ai-config.js";
 import { generateMemoryTrick } from "../../server/ai-memory-trick.js";
 
 function sendJson(res, status, payload) {
@@ -22,7 +22,7 @@ export default async function handler(req, res) {
 
   try {
     const body = parseBody(req);
-    const config = resolveApiConfig(getEnvConfig());
+    const config = resolveRequestConfig(body, getEnvConfig());
     const result = await generateMemoryTrick(stripApiConfigFromBody(body), config);
     sendJson(res, 200, result);
   } catch (err) {

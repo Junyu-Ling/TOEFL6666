@@ -1,4 +1,4 @@
-import { getEnvConfig, resolveApiConfig, stripApiConfigFromBody } from "../../server/ai-config.js";
+import { getEnvConfig, resolveRequestConfig, stripApiConfigFromBody } from "../../server/ai-config.js";
 import { chatWithDeepSeek, streamChatWithDeepSeek } from "../../server/ai-chat.js";
 
 function sendJson(res, status, payload) {
@@ -40,7 +40,7 @@ export default async function handler(req, res) {
 
   try {
     const body = parseBody(req);
-    const config = resolveApiConfig(getEnvConfig());
+    const config = resolveRequestConfig(body, getEnvConfig());
     const payload = stripApiConfigFromBody(body);
 
     if (body.stream) {

@@ -1,3 +1,5 @@
+import { withUserApiConfig } from "./userApiConfig";
+
 export async function validateEnglishWord(word, { signal } = {}) {
   const query = String(word || "").trim();
   if (!query) {
@@ -7,7 +9,7 @@ export async function validateEnglishWord(word, { signal } = {}) {
   const res = await fetch("/api/ai/word-validate", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ word: query }),
+    body: JSON.stringify(withUserApiConfig({ word: query })),
     signal,
   });
 
