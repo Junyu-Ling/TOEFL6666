@@ -1,10 +1,13 @@
 import { loadSettings } from "./settings";
+import { providerFromApiKey } from "../shared/ai-providers";
 
 export function readUserApiConfig(settings = loadSettings()) {
   const apiKey = String(settings?.customApiKey || "").trim();
-  const baseUrl = String(settings?.customApiBase || "").trim();
-  const model = String(settings?.customApiModel || "").trim();
-  if (!apiKey || !baseUrl || !model) return null;
+  if (!apiKey) return null;
+  const provider = providerFromApiKey(apiKey);
+  const baseUrl = String(settings?.customApiBase || provider?.baseUrl || "").trim();
+  const model = String(settings?.customApiModel || provider?.defaultModel || "").trim();
+  if (!baseUrl || !model) return null;
   return { apiKey, baseUrl, model };
 }
 

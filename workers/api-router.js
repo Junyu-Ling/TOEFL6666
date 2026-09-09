@@ -6,6 +6,7 @@ import { evaluatePronunciationWithDeepSeek } from "../server/ai-pronounce-evalua
 import { lookupWordWithDeepSeek } from "../server/ai-word-lookup.js";
 import { validateWordWithDeepSeek } from "../server/ai-word-validate.js";
 import { generateStudyPlan, streamStudyPlan } from "../server/ai-study-plan.js";
+import { identifyProviderFromKey } from "../server/ai-detect-provider.js";
 import { handleSyncPull, handleSyncPush } from "../server/sync-api.js";
 import { jsonResponse, methodNotAllowed, readJsonBody, redirectWordlists, sseResponse } from "./http.js";
 
@@ -30,6 +31,13 @@ export async function handleApiRequest(request) {
 
   try {
     const body = await readJsonBody(request);
+
+    if (matchPath(pathname, "/api/ai/detect-provider")) {
+      const result = await identifyProviderFromKey(body.apiKey);
+      if (!result) return jsonResponse(400, { error: "无法识别该 API Key" });
+      return jsonResponse(200, result);
+    }
+
     const payload = stripApiConfigFromBody(body);
     const config = pathname.startsWith("/api/ai/")
       ? resolveRequestConfig(body, getEnvConfig())

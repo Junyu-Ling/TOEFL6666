@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useSettings } from "../context/SettingsContext";
-import { detectProvider } from "../shared/ai-providers";
+import { detectProvider, providerFromApiKey } from "../shared/ai-providers";
 import { stopGameKeyBubble } from "../utils/appKeyboard";
 import {
   CORRECT_SOUND_OPTIONS,
@@ -34,17 +34,16 @@ export default function SettingsPanel() {
     setAnswerSoundWrong,
     setWordsPerRound,
     setEnableRoundReview,
-    setCustomApiBase,
-    setCustomApiKey,
-    setCustomApiModel,
+    setCustomApi,
   } = useSettings();
 
   const [delayDraft, setDelayDraft] = useState(String(settings.autoAdvanceDelaySec));
   const [wordsPerRoundDraft, setWordsPerRoundDraft] = useState(String(settings.wordsPerRound));
-  const [apiBaseDraft, setApiBaseDraft] = useState(settings.customApiBase || "");
   const [apiKeyDraft, setApiKeyDraft] = useState(settings.customApiKey || "");
-  const [apiModelDraft, setApiModelDraft] = useState(settings.customApiModel || "");
+  const [apiDetecting, setApiDetecting] = useState(false);
+  const [apiDetectError, setApiDetectError] = useState("");
   const panelRef = useRef(null);
+  const apiDetectSeq = useRef(0);
 
   useEffect(() => {
     if (!settingsOpen || !panelRef.current) return;
@@ -55,16 +54,13 @@ export default function SettingsPanel() {
     if (settingsOpen) {
       setDelayDraft(String(settings.autoAdvanceDelaySec));
       setWordsPerRoundDraft(String(settings.wordsPerRound));
-      setApiBaseDraft(settings.customApiBase || "");
       setApiKeyDraft(settings.customApiKey || "");
-      setApiModelDraft(settings.customApiModel || "");
+      setApiDetectError("");
     }
   }, [
     settings.autoAdvanceDelaySec,
     settings.wordsPerRound,
-    settings.customApiBase,
     settings.customApiKey,
-    settings.customApiModel,
     settingsOpen,
   ]);
 
@@ -103,37 +99,69 @@ export default function SettingsPanel() {
     }
   }
 
-  function commitApiBaseDraft() {
-    const next = apiBaseDraft.trim();
-    if (next !== (settings.customApiBase || "")) {
-      setCustomApiBase(next);
-    }
-    setApiBaseDraft(next);
-  }
-
-  function commitApiKeyDraft() {
-    const next = apiKeyDraft.trim();
-    if (next !== (settings.customApiKey || "")) {
-      setCustomApiKey(next);
-    }
+  async function commitApiKeyDraft(raw = apiKeyDraft) {
+    const next = String(raw).trim();
     setApiKeyDraft(next);
-  }
-
-  function commitApiModelDraft() {
-    const next = apiModelDraft.trim();
-    if (next !== (settings.customApiModel || "")) {
-      setCustomApiModel(next);
+    setApiDetectError("");
+    if (!next) {
+      apiDetectSeq.current += 1;
+      setCustomApi({ customApiKey: "", customApiBase: "", customApiModel: "" });
+      return;
     }
-    setApiModelDraft(next);
+
+    if (
+      next === (settings.customApiKey || "").trim() &&
+      (settings.customApiBase || "").trim() &&
+      (settings.customApiModel || "").trim()
+    ) {
+      return;
+    }
+
+    const seq = ++apiDetectSeq.current;
+    const local = providerFromApiKey(next);
+    if (local) {
+      setCustomApi({
+        customApiKey: next,
+        customApiBase: local.baseUrl,
+        customApiModel: local.defaultModel,
+      });
+      return;
+    }
+
+    setApiDetecting(true);
+    try {
+      const res = await fetch("/api/ai/detect-provider", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ apiKey: next }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (seq !== apiDetectSeq.current) return;
+      if (!res.ok || !data.baseUrl || !data.model) {
+        setApiDetectError(data.error || "无法识别该 API Key");
+        setCustomApi({ customApiKey: next, customApiBase: "", customApiModel: "" });
+        return;
+      }
+      setCustomApi({
+        customApiKey: next,
+        customApiBase: data.baseUrl,
+        customApiModel: data.model,
+      });
+    } catch {
+      if (seq !== apiDetectSeq.current) return;
+      setApiDetectError("识别失败，请稍后重试");
+      setCustomApi({ customApiKey: next, customApiBase: "", customApiModel: "" });
+    } finally {
+      if (seq === apiDetectSeq.current) setApiDetecting(false);
+    }
   }
 
   function clearCustomApi() {
-    setApiBaseDraft("");
+    apiDetectSeq.current += 1;
     setApiKeyDraft("");
-    setApiModelDraft("");
-    setCustomApiBase("");
-    setCustomApiKey("");
-    setCustomApiModel("");
+    setApiDetectError("");
+    setApiDetecting(false);
+    setCustomApi({ customApiKey: "", customApiBase: "", customApiModel: "" });
   }
 
   const customApiReady = Boolean(
@@ -141,7 +169,7 @@ export default function SettingsPanel() {
       (settings.customApiBase || "").trim() &&
       (settings.customApiModel || "").trim()
   );
-  const detectedProvider = detectProvider(apiKeyDraft, apiBaseDraft);
+  const detectedProvider = detectProvider(apiKeyDraft || settings.customApiKey, settings.customApiBase);
   const detectedProviderName =
     detectedProvider && detectedProvider.id !== "custom" ? detectedProvider.name : "";
 
@@ -185,25 +213,14 @@ export default function SettingsPanel() {
         <details className="settings-group">
           <summary className="settings-group__summary">
             <span className="settings-group__title">自定义 API</span>
-            <span className="settings-group__meta">{customApiReady ? "已启用" : "未配置"}</span>
+            <span className="settings-group__meta">
+              {apiDetecting ? "正在识别" : customApiReady ? "已启用" : "未配置"}
+            </span>
           </summary>
           <div className="settings-group__body">
             <p className="settings-hint settings-hint--compact">
-              填写 OpenAI 兼容接口即可，不必选择厂家。DeepSeek、OpenAI、Gemini、Groq、OpenRouter、智谱、通义等都可以。地址填到 /v1 这一层，三项都填才生效，留空则用服务器默认。密钥只保存在本机，不会同步到云端。
+              只需粘贴 API Key，系统会自动识别厂家并选用对应模型。DeepSeek、OpenAI、Gemini、Groq、OpenRouter、智谱、Kimi 等都可以。留空则用服务器默认。密钥只保存在本机，不会同步到云端。
             </p>
-            <label className="settings-field">
-              API 地址
-              <input
-                type="text"
-                inputMode="url"
-                autoComplete="off"
-                spellCheck={false}
-                placeholder="https://api.deepseek.com/v1"
-                value={apiBaseDraft}
-                onChange={(e) => setApiBaseDraft(e.target.value)}
-                onBlur={commitApiBaseDraft}
-              />
-            </label>
             <label className="settings-field">
               API Key
               <input
@@ -212,26 +229,36 @@ export default function SettingsPanel() {
                 spellCheck={false}
                 placeholder="sk-…"
                 value={apiKeyDraft}
-                onChange={(e) => setApiKeyDraft(e.target.value)}
-                onBlur={commitApiKeyDraft}
+                onChange={(e) => {
+                  setApiKeyDraft(e.target.value);
+                  setApiDetectError("");
+                }}
+                onPaste={(e) => {
+                  const pasted = (e.clipboardData.getData("text") || "").trim();
+                  if (!pasted) return;
+                  e.preventDefault();
+                  setApiKeyDraft(pasted);
+                  commitApiKeyDraft(pasted);
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    e.currentTarget.blur();
+                  }
+                }}
+                onBlur={() => commitApiKeyDraft()}
               />
             </label>
-            <label className="settings-field">
-              模型名
-              <input
-                type="text"
-                autoComplete="off"
-                spellCheck={false}
-                placeholder="deepseek-v4-flash"
-                value={apiModelDraft}
-                onChange={(e) => setApiModelDraft(e.target.value)}
-                onBlur={commitApiModelDraft}
-              />
-            </label>
-            {detectedProviderName && (
+            {apiDetecting && (
+              <p className="settings-hint settings-hint--compact">正在识别厂家…</p>
+            )}
+            {!apiDetecting && detectedProviderName && customApiReady && (
               <p className="settings-hint settings-hint--compact">已识别：{detectedProviderName}</p>
             )}
-            {(apiBaseDraft || apiKeyDraft || apiModelDraft) && (
+            {!apiDetecting && apiDetectError && (
+              <p className="settings-field__hint settings-field__hint--warning">{apiDetectError}</p>
+            )}
+            {apiKeyDraft && (
               <button type="button" className="settings-action-btn" onClick={clearCustomApi}>
                 清除自定义 API
               </button>

@@ -44,7 +44,7 @@ export const AI_PROVIDERS = [
     name: "DeepSeek",
     baseUrl: "https://api.deepseek.com/v1",
     defaultModel: "deepseek-v4-flash",
-    detect: (key, url) => /deepseek\.com/i.test(url || ""),
+    detect: (key, url) => /^sk-[a-f0-9]{32}$/i.test(key) || /deepseek\.com/i.test(url || ""),
   },
   {
     id: "moonshot",
@@ -115,7 +115,7 @@ export const AI_PROVIDERS = [
     name: "xAI",
     baseUrl: "https://api.x.ai/v1",
     defaultModel: "grok-2-latest",
-    detect: (key, url) => /api\.x\.ai/i.test(url || ""),
+    detect: (key, url) => /^xai-/.test(key) || /api\.x\.ai/i.test(url || ""),
   },
   {
     id: "azure-openai",
@@ -130,7 +130,7 @@ export const AI_PROVIDERS = [
     baseUrl: "https://api.openai.com/v1",
     defaultModel: "gpt-4o-mini",
     detect: (key, url) =>
-      /^sk-proj-/.test(key) || (/^sk-[a-zA-Z0-9]{10,}/.test(key) && !/^sk-ant-/.test(key) && !/^sk-or-/.test(key)) || /api\.openai\.com/i.test(url || ""),
+      /^sk-proj-/.test(key) || /^sk-svcacct-/.test(key) || /api\.openai\.com/i.test(url || ""),
   },
   {
     id: "custom",
@@ -177,6 +177,31 @@ export function detectProvider(apiKey, baseUrl = "") {
   if (key) return getProviderById("custom");
   return null;
 }
+
+export function providerFromApiKey(apiKey) {
+  const provider = detectProvider(apiKey);
+  if (!provider || provider.id === "custom") return null;
+  if (!provider.baseUrl || !provider.defaultModel) return null;
+  return provider;
+}
+
+export const KEY_PROBE_PROVIDER_IDS = [
+  "deepseek",
+  "openai",
+  "moonshot",
+  "siliconflow",
+  "qwen",
+  "mistral",
+  "xai",
+  "groq",
+  "openrouter",
+  "google",
+  "zhipu",
+  "minimax",
+  "baichuan",
+  "tencent",
+  "baidu",
+];
 
 export function buildProviderDefaults(apiKey, baseUrl = "", providerId = "") {
   const provider = (providerId && getProviderById(providerId)) || detectProvider(apiKey, baseUrl) || getProviderById("custom");

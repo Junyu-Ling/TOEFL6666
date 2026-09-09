@@ -7,6 +7,7 @@ import { evaluatePronunciationWithDeepSeek } from "./server/ai-pronounce-evaluat
 import { lookupWordWithDeepSeek } from "./server/ai-word-lookup.js";
 import { validateWordWithDeepSeek } from "./server/ai-word-validate.js";
 import { generateStudyPlan, streamStudyPlan } from "./server/ai-study-plan.js";
+import { identifyProviderFromKey } from "./server/ai-detect-provider.js";
 
 function readBody(req) {
   return new Promise((resolve, reject) => {
@@ -64,12 +65,23 @@ export function createAiHandler(getEnvConfig) {
     const isWordLookup = matchApiPath(req.url, "/api/ai/word-lookup");
     const isWordValidate = matchApiPath(req.url, "/api/ai/word-validate");
     const isStudyPlan = matchApiPath(req.url, "/api/ai/study-plan");
-    if (!isEvaluate && !isChat && !isMemoryTrick && !isPronounceEvaluate && !isWordLookup && !isWordValidate && !isStudyPlan) {
+    const isDetectProvider = matchApiPath(req.url, "/api/ai/detect-provider");
+    if (!isEvaluate && !isChat && !isMemoryTrick && !isPronounceEvaluate && !isWordLookup && !isWordValidate && !isStudyPlan && !isDetectProvider) {
       return next();
     }
 
     try {
       const body = JSON.parse(await readBody(req));
+      if (isDetectProvider) {
+        const result = await identifyProviderFromKey(body.apiKey);
+        if (!result) {
+          sendJson(res, 400, { error: "无法识别该 API Key" });
+          return;
+        }
+        sendJson(res, 200, result);
+        return;
+      }
+
       const config = resolveRequestConfig(body, getEnvConfig());
       const payload = stripApiConfigFromBody(body);
 

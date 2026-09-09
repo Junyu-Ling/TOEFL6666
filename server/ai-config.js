@@ -1,4 +1,4 @@
-import { detectProvider } from "../src/shared/ai-providers.js";
+import { detectProvider, providerFromApiKey } from "../src/shared/ai-providers.js";
 
 export const DEFAULT_DEEPSEEK_MODEL = "deepseek-v4-flash";
 
@@ -72,10 +72,15 @@ export function getEnvConfig(env) {
 export function resolveUserApiConfig(raw) {
   if (!raw || typeof raw !== "object") return null;
   const apiKey = String(raw.apiKey || "").trim();
-  const baseUrl = String(raw.baseUrl || "").trim().replace(/\/$/, "");
-  const model = String(raw.model || "").trim();
-  if (!apiKey || !baseUrl || !model) return null;
-  if (apiKey.length > 2048 || baseUrl.length > 300 || model.length > 120) return null;
+  if (!apiKey || apiKey.length > 2048) return null;
+
+  const detected = providerFromApiKey(apiKey) || detectProvider(apiKey, String(raw.baseUrl || "").trim());
+  const baseUrl = String(raw.baseUrl || detected?.baseUrl || "")
+    .trim()
+    .replace(/\/$/, "");
+  const model = String(raw.model || detected?.defaultModel || "").trim();
+  if (!baseUrl || !model) return null;
+  if (baseUrl.length > 300 || model.length > 120) return null;
 
   try {
     const url = new URL(baseUrl);
@@ -84,12 +89,11 @@ export function resolveUserApiConfig(raw) {
     return null;
   }
 
-  const detected = detectProvider(apiKey, baseUrl);
   return {
     apiKey,
     baseUrl,
     model,
-    providerId: detected?.id || "custom",
+    providerId: detected?.id && detected.id !== "custom" ? detected.id : "custom",
     apiStyle: detected?.apiStyle || "openai",
     source: "user",
   };
@@ -123,7 +127,7 @@ export function resolveRequestConfig(body, envConfig) {
     if (attempted) {
       const user = resolveUserApiConfig(raw);
       if (!user) {
-        const err = new Error("自定义 API 配置无效，请检查地址、密钥和模型名");
+        const err = new Error("无法识别该 API Key");
         err.status = 400;
         throw err;
       }

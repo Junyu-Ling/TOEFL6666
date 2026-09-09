@@ -123,20 +123,13 @@ export function SettingsProvider({ children }) {
     [updateSettings]
   );
 
-  const setCustomApiBase = useCallback(
-    (customApiBase) => updateSettings({ customApiBase: String(customApiBase || "") }),
-    [updateSettings]
-  );
-
-  const setCustomApiKey = useCallback(
-    (customApiKey) => updateSettings({ customApiKey: String(customApiKey || "") }),
-    [updateSettings]
-  );
-
-  const setCustomApiModel = useCallback(
-    (customApiModel) => updateSettings({ customApiModel: String(customApiModel || "") }),
-    [updateSettings]
-  );
+  const setCustomApi = useCallback((next) => {
+    updateSettings({
+      customApiKey: String(next?.customApiKey || ""),
+      customApiBase: String(next?.customApiBase || ""),
+      customApiModel: String(next?.customApiModel || ""),
+    });
+  }, [updateSettings]);
 
   const setTargetExam = useCallback(
     (targetExam) => {
@@ -231,9 +224,7 @@ export function SettingsProvider({ children }) {
       setAnswerSoundWrong,
       setWordsPerRound,
       setEnableRoundReview,
-      setCustomApiBase,
-      setCustomApiKey,
-      setCustomApiModel,
+      setCustomApi,
       setTargetExam,
       setAppMode,
       setToeflSectionScore,
@@ -260,9 +251,7 @@ export function SettingsProvider({ children }) {
       setAnswerSoundWrong,
       setWordsPerRound,
       setEnableRoundReview,
-      setCustomApiBase,
-      setCustomApiKey,
-      setCustomApiModel,
+      setCustomApi,
       setTargetExam,
       setAppMode,
       setToeflSectionScore,
