@@ -1,4 +1,11 @@
 import {
+  getUserProfile,
+  publicUserFromProfile,
+  resolveLoginUser,
+  sessionPayloadFromProfile,
+} from "./access-store.js";
+import { readSupabaseUser } from "./access-api.js";
+import {
   clearOauthStateCookie,
   clearSessionCookie,
   createSessionToken,
@@ -109,26 +116,86 @@ export async function handleGithubCallback(req, res) {
     email = primary?.email || "";
   }
 
-  const sessionUser = {
+  const stored = await resolveLoginUser({
     id: `gh_${profile.id}`,
+    githubId: `gh_${profile.id}`,
     email,
-    phone: "",
     name: profile.name || profile.login || "",
     login: profile.login || "",
     avatar: profile.avatar_url || "",
     provider: "github",
-  };
-  setSessionCookie(req, res, createSessionToken(sessionUser));
+  });
+  setSessionCookie(req, res, createSessionToken(sessionPayloadFromProfile(stored)));
   redirect(res, `${requestOrigin(req)}/`);
 }
 
-export function handleAuthMe(req, res) {
-  const user = readSessionUser(req);
-  if (!user) {
+export async function handleAuthMe(req, res) {
+  const session = readSessionUser(req);
+  if (!session) {
     sendJson(res, 200, { user: null });
     return;
   }
-  sendJson(res, 200, { user });
+  const stored = await getUserProfile(session.id);
+  sendJson(res, 200, { user: publicUserFromProfile(stored || session) });
+}
+
+export async function handleAuthIdentity(req, res) {
+  const sessionUser = readSessionUser(req);
+  const supabaseUser = await readSupabaseUser(req);
+  if (!sessionUser && !supabaseUser) throw createError("请先登录", 401);
+
+  const incoming = supabaseUser
+    ? {
+        id: supabaseUser.id,
+        email: supabaseUser.email || "",
+        phone: supabaseUser.phone || "",
+        name: supabaseUser.user_metadata?.full_name || supabaseUser.user_metadata?.name || "",
+        provider: supabaseUser.phone ? "phone" : "email",
+      }
+    : sessionUser;
+
+  const stored = await resolveLoginUser(
+    {
+      ...sessionUser,
+      ...incoming,
+      id: sessionUser?.id || incoming.id,
+      githubId: sessionUser?.githubId || (String(sessionUser?.id || "").startsWith("gh_") ? sessionUser.id : ""),
+      email: incoming.email || sessionUser?.email || "",
+      phone: incoming.phone || sessionUser?.phone || "",
+      name: incoming.name || sessionUser?.name || "",
+      login: sessionUser?.login || "",
+      avatar: sessionUser?.avatar || "",
+      providers: [
+        ...(sessionUser?.providers || []),
+        incoming.provider,
+        sessionUser?.provider,
+      ].filter(Boolean),
+    },
+    { preferId: sessionUser?.id }
+  );
+  setSessionCookie(req, res, createSessionToken(sessionPayloadFromProfile(stored)));
+  sendJson(res, 200, { user: publicUserFromProfile(stored) });
+}
+
+export async function handleAuthLink(req, res, body = {}) {
+  const sessionUser = readSessionUser(req);
+  if (!sessionUser) throw createError("请先登录", 401);
+  const email = String(body.email || "").trim();
+  const phone = String(body.phone || "").replace(/\D/g, "");
+  if (!email && phone.length < 11) throw createError("请填写要绑定的邮箱或手机号", 400);
+  const stored = await resolveLoginUser(
+    {
+      ...sessionUser,
+      id: sessionUser.id,
+      email: email || sessionUser.email || "",
+      phone: phone || sessionUser.phone || "",
+      provider: phone ? "phone" : "email",
+      providers: [...(sessionUser.providers || []), phone ? "phone" : "email", sessionUser.provider].filter(Boolean),
+    },
+    { preferId: sessionUser.id }
+  );
+  setSessionCookie(req, res, createSessionToken(sessionPayloadFromProfile(stored)));
+  sendJson(res, 200, { user: publicUserFromProfile(stored) });
 }
 
 export function handleAuthLogout(req, res) {

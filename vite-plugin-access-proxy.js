@@ -1,7 +1,8 @@
 import { loadEnv } from "vite";
 import { handleAccessGrant, handleAccessMe, handleAccessUsers } from "./server/access-api.js";
-import { handleAuthLogout, handleAuthMe, handleGithubCallback, handleGithubStart } from "./server/auth-github.js";
+import { handleAuthIdentity, handleAuthLink, handleAuthLogout, handleAuthMe, handleGithubCallback, handleGithubStart } from "./server/auth-github.js";
 import { handleReadingFillArticles } from "./server/reading-fill-articles.js";
+import { handleAccountProgressPull, handleAccountProgressPush } from "./server/account-progress.js";
 
 function readBody(req) {
   return new Promise((resolve, reject) => {
@@ -61,8 +62,11 @@ export function accessProxyPlugin() {
         const isGhStart = matchApiPath(req.url, "/api/auth/github/start");
         const isGhCallback = matchApiPath(req.url, "/api/auth/github/callback");
         const isAuthMe = matchApiPath(req.url, "/api/auth/me");
+        const isAuthIdentity = matchApiPath(req.url, "/api/auth/identity");
+        const isAuthLink = matchApiPath(req.url, "/api/auth/link");
+        const isAccountSync = matchApiPath(req.url, "/api/sync/account");
         const isLogout = matchApiPath(req.url, "/api/auth/logout");
-        if (!isAccessMe && !isUsers && !isGrant && !isReadingFillArticles && !isGhStart && !isGhCallback && !isAuthMe && !isLogout) {
+        if (!isAccessMe && !isUsers && !isGrant && !isReadingFillArticles && !isGhStart && !isGhCallback && !isAuthMe && !isAuthIdentity && !isAuthLink && !isAccountSync && !isLogout) {
           return next();
         }
 
@@ -76,7 +80,25 @@ export function accessProxyPlugin() {
             return;
           }
           if (isAuthMe && req.method === "GET") {
-            handleAuthMe(req, res);
+            await handleAuthMe(req, res);
+            return;
+          }
+          if (isAuthIdentity && req.method === "POST") {
+            await handleAuthIdentity(req, res);
+            return;
+          }
+          if (isAuthLink && req.method === "POST") {
+            const body = parseBody(await readBody(req));
+            await handleAuthLink(req, res, body);
+            return;
+          }
+          if (isAccountSync && req.method === "GET") {
+            sendJson(res, 200, await handleAccountProgressPull(req));
+            return;
+          }
+          if (isAccountSync && req.method === "POST") {
+            const body = parseBody(await readBody(req));
+            sendJson(res, 200, await handleAccountProgressPush(req, body));
             return;
           }
           if (isLogout && req.method === "POST") {

@@ -76,6 +76,35 @@ export async function getAppUser() {
   return data.user || null;
 }
 
+export async function syncIdentitySession(accessToken = "") {
+  const headers = { "Content-Type": "application/json" };
+  if (accessToken) headers.Authorization = `Bearer ${accessToken}`;
+  const res = await fetch("/api/auth/identity", {
+    method: "POST",
+    credentials: "include",
+    headers,
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    throw new Error(data.error || "账号关联失败");
+  }
+  return data.user || null;
+}
+
+export async function linkAccountIdentity({ email = "", phone = "" } = {}) {
+  const res = await fetch("/api/auth/link", {
+    method: "POST",
+    credentials: "include",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, phone }),
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    throw new Error(data.error || "绑定失败");
+  }
+  return data.user || null;
+}
+
 export async function getSession() {
   if (!isSupabaseConfigured()) return null;
   const { data } = await supabase.auth.getSession();

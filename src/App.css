@@ -7117,6 +7117,19 @@ body {
   text-overflow: ellipsis;
 }
 
+.account-link__bound {
+  margin: 0;
+  padding-left: 1.1rem;
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+
+.account-link__row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.5rem;
+}
+
 /* ── SAT Vocab ──────────────────────────────────────────── */
 .sv {
   display: flex;

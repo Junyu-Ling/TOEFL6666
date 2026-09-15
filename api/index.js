@@ -10,8 +10,9 @@ import { identifyProviderFromKey } from "../server/ai-detect-provider.js";
 import { handleSyncPush, handleSyncPull } from "../server/sync-api.js";
 import { cloneOwnVoice, isClonedVoiceConfigured, synthesizeVocabWord } from "../server/tts-minimax.js";
 import { handleAccessGrant, handleAccessMe, handleAccessUsers } from "../server/access-api.js";
-import { handleAuthLogout, handleAuthMe, handleGithubCallback, handleGithubStart } from "../server/auth-github.js";
+import { handleAuthIdentity, handleAuthLink, handleAuthLogout, handleAuthMe, handleGithubCallback, handleGithubStart } from "../server/auth-github.js";
 import { handleReadingFillArticles } from "../server/reading-fill-articles.js";
+import { handleAccountProgressPull, handleAccountProgressPush } from "../server/account-progress.js";
 
 export const config = {
   api: {
@@ -127,7 +128,38 @@ export default async function handler(req, res) {
         sendJson(res, 405, { error: "Method Not Allowed" });
         return;
       }
-      handleAuthMe(req, res);
+      await handleAuthMe(req, res);
+      return;
+    }
+
+    if (pathname === "/api/auth/identity") {
+      if (method !== "POST") {
+        sendJson(res, 405, { error: "Method Not Allowed" });
+        return;
+      }
+      await handleAuthIdentity(req, res);
+      return;
+    }
+
+    if (pathname === "/api/auth/link") {
+      if (method !== "POST") {
+        sendJson(res, 405, { error: "Method Not Allowed" });
+        return;
+      }
+      await handleAuthLink(req, res, parseBody(req));
+      return;
+    }
+
+    if (pathname === "/api/sync/account") {
+      if (method === "GET") {
+        sendJson(res, 200, await handleAccountProgressPull(req));
+        return;
+      }
+      if (method === "POST") {
+        sendJson(res, 200, await handleAccountProgressPush(req, parseBody(req)));
+        return;
+      }
+      sendJson(res, 405, { error: "Method Not Allowed" });
       return;
     }
 

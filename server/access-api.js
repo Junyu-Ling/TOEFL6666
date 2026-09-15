@@ -28,17 +28,22 @@ function getSupabaseAuthClient() {
   return createClient(url, key);
 }
 
+export async function readSupabaseUser(req) {
+  const token = getBearerToken(req);
+  if (!token) return null;
+  const supabase = getSupabaseAuthClient();
+  if (!supabase) return null;
+  const { data, error } = await supabase.auth.getUser(token);
+  if (error || !data?.user) return null;
+  return data.user;
+}
+
 export async function requireAccessUser(req) {
   const sessionUser = readSessionUser(req);
   if (sessionUser) return sessionUser;
-
-  const token = getBearerToken(req);
-  if (!token) throw createError("请先登录", 401);
-  const supabase = getSupabaseAuthClient();
-  if (!supabase) throw createError("请先登录", 401);
-  const { data, error } = await supabase.auth.getUser(token);
-  if (error || !data?.user) throw createError("登录已过期，请重新登录", 401);
-  return data.user;
+  const supabaseUser = await readSupabaseUser(req);
+  if (supabaseUser) return supabaseUser;
+  throw createError("请先登录", 401);
 }
 
 export async function handleAccessMe(req) {

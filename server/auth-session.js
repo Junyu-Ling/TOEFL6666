@@ -125,12 +125,22 @@ export function readSessionUser(req) {
   try {
     const data = JSON.parse(Buffer.from(body, "base64url").toString("utf8"));
     if (!data?.id || (data.exp && Date.now() > data.exp)) return null;
+    const providers = Array.isArray(data.providers) && data.providers.length
+      ? data.providers
+      : [data.provider || "github"];
     return {
       id: data.id,
       email: data.email || "",
       phone: data.phone || "",
+      emails: data.emails || [],
+      phones: data.phones || [],
+      githubId: data.githubId || "",
       name: data.name || "",
-      app_metadata: { provider: data.provider || "github", providers: [data.provider || "github"] },
+      login: data.login || "",
+      avatar: data.avatar || "",
+      provider: providers[0] || "github",
+      providers,
+      app_metadata: { provider: providers[0] || "github", providers },
       user_metadata: { name: data.name || "", user_name: data.login || "", avatar_url: data.avatar || "" },
     };
   } catch {

@@ -65,12 +65,12 @@ export default function AccessAdminSettings() {
   return (
     <details className="settings-group" open>
       <summary className="settings-group__summary">
-        <span className="settings-group__title">阅读填词权限</span>
+        <span className="settings-group__title">注册用户</span>
         <span className="settings-group__meta">{users.length} 人已注册</span>
       </summary>
       <div className="settings-group__body">
         <p className="settings-hint settings-hint--compact">
-          只有你开通后，对方才能使用托福阅读填词。用户登录一次后会出现在列表里。
+          你是管理员，这里能看到所有登录过的人，并开通阅读填词。
         </p>
         <label className="settings-field">
           搜索用户

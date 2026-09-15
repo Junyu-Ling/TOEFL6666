@@ -10,6 +10,7 @@ import {
 import ExamScoreSection from "./ExamScoreSection";
 import ClonedVoiceSettings from "./ClonedVoiceSettings";
 import AccessAdminSettings from "./AccessAdminSettings";
+import AccountLinkSettings from "./AccountLinkSettings";
 
 function clampDelayInput(value) {
   const n = Number(String(value).trim());
@@ -194,6 +195,7 @@ export default function SettingsPanel() {
           </button>
         </header>
 
+        <AccountLinkSettings />
         <AccessAdminSettings />
 
         <section className="settings-section settings-section--compact">

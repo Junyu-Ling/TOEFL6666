@@ -69,7 +69,9 @@ npm run dev
 
 仓库保持公开以便 Vercel 部署。题目明文不进 Git，只提交 `server/data/readingFillBlank.json.enc`。线上用已有的 `GITHUB_CLIENT_SECRET`（或 `READING_FILL_SECRET` / `AUTH_SECRET`）解密。本地改题后运行 `npm run encrypt:reading-fill`。
 
-GitHub 登录**不需要 Supabase**。在 GitHub OAuth App 里把 Callback URL 设为：
+GitHub 登录**不需要 Supabase**。点右上角小人登录后，练习进度按账号存在 Redis。设置里可绑定手机号/邮箱，之后任意已绑定方式都进同一账号。GitHub 邮箱为该管理员地址的账号可在设置中看到全部注册用户。
+
+在 GitHub OAuth App 里把 Callback URL 设为：
 
 - 本地：`http://localhost:5175/api/auth/github/callback`
 - 线上：`https://<你的域名>/api/auth/github/callback`

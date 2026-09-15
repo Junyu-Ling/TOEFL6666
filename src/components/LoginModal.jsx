@@ -5,6 +5,7 @@ import {
   sendEmailOtp,
   verifyEmailOtp,
   signInWithProvider,
+  syncIdentitySession,
 } from "../services/auth";
 import { LoginBrandIcon } from "./LoginBrandIcons";
 
@@ -65,7 +66,10 @@ export default function LoginModal({ onClose }) {
 
   async function handleVerifyEmail() {
     await run(async () => {
-      await verifyEmailOtp(email, otp);
+      const data = await verifyEmailOtp(email, otp);
+      if (data?.session?.access_token) {
+        await syncIdentitySession(data.session.access_token);
+      }
       onClose?.();
     });
   }
@@ -82,7 +86,10 @@ export default function LoginModal({ onClose }) {
   async function handleVerifyPhone() {
     await run(async () => {
       if (!otp.trim()) throw new Error("请输入验证码");
-      await verifyOtp(phone, otp);
+      const data = await verifyOtp(phone, otp);
+      if (data?.session?.access_token) {
+        await syncIdentitySession(data.session.access_token);
+      }
       onClose?.();
     });
   }
