@@ -24,7 +24,7 @@ function sleep(ms) {
 
 function collectWords() {
   const words = new Map();
-  for (const dir of ["public/api/wordlists", "public/api/wordlists-sat"]) {
+  for (const dir of ["data/wordlists", "data/wordlists-sat"]) {
     const abs = path.join(root, dir);
     if (!fs.existsSync(abs)) continue;
     for (const file of fs.readdirSync(abs)) {

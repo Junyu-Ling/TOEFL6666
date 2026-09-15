@@ -3,7 +3,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const dir = path.join(__dirname, "../public/api/wordlists-sat");
+const dir = path.join(__dirname, "../data/wordlists-sat");
 const defaultSourcePath = path.join(__dirname, "raw/sat-level1-list1.txt");
 
 function formatListTitle(level, list) {

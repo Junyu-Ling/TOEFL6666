@@ -4,7 +4,7 @@ import { fileURLToPath } from "url";
 import XLSX from "xlsx";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const outDir = path.join(__dirname, "../public/api/wordlists-sat");
+const outDir = path.join(__dirname, "../data/wordlists-sat");
 const rawDir = path.join(__dirname, "raw");
 
 const POS_SEGMENT =

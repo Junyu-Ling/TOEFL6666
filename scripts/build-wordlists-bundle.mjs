@@ -5,10 +5,11 @@ import { fileURLToPath } from "url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(__dirname, "..");
 const publicRoot = path.join(root, "public");
+const dataRoot = path.join(root, "data");
 
 const MODES = [
-  { name: "toefl", src: "api/wordlists", dest: "wordlists", generated: "toefl" },
-  { name: "sat", src: "api/wordlists-sat", dest: "wordlists-sat", generated: "sat" },
+  { name: "toefl", src: "wordlists", dest: "wordlists", generated: "toefl" },
+  { name: "sat", src: "wordlists-sat", dest: "wordlists-sat", generated: "sat" },
 ];
 
 const META_FILES = ["manifest.json", "word-index.json", "word-bank.json"];
@@ -36,7 +37,7 @@ function copyListFilesToPublic(srcDir, destDirName) {
 }
 
 for (const mode of MODES) {
-  const srcDir = path.join(publicRoot, mode.src);
+  const srcDir = path.join(dataRoot, mode.src);
   if (!fs.existsSync(srcDir)) continue;
   copyMetaToGenerated(srcDir, mode.generated);
   copyListFilesToPublic(srcDir, mode.dest);

@@ -5,7 +5,7 @@ import { detectIrregularPronunciation } from "../src/utils/pronunciationRules.js
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(__dirname, "..");
-const listDir = path.join(root, "public/api/wordlists");
+const listDir = path.join(root, "data/wordlists");
 const outFile = path.join(root, "src/data/irregularPronunciation.json");
 
 const words = new Map();

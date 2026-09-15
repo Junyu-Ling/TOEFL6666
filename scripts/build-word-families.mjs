@@ -5,7 +5,7 @@ import { buildWordFamilyMap } from "../src/utils/wordFamilies.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(__dirname, "..");
-const listDir = path.join(root, "public/api/wordlists");
+const listDir = path.join(root, "data/wordlists");
 const outFile = path.join(root, "src/data/wordFamilies.json");
 
 const words = new Map();

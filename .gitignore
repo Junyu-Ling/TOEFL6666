@@ -20,6 +20,9 @@ src/generated/
 public/wordlists/
 public/wordlists-sat/
 
+# 词库源文件在 data/，禁止再出现 public/api（会被 Vercel 当成 Serverless Function）
+public/api/
+
 # Vercel Hobby 最多 12 个 Serverless Function：只保留 api/index.js
 /api/**
 !/api/index.js

@@ -36,6 +36,6 @@ function buildWordBank(dir) {
   console.log(`Word bank built: ${words.length} words (${path.basename(dir)})`);
 }
 
-const apiRoot = path.join(__dirname, "../public/api");
-buildWordBank(path.join(apiRoot, "wordlists"));
-buildWordBank(path.join(apiRoot, "wordlists-sat"));
+const dataRoot = path.join(__dirname, "../data");
+buildWordBank(path.join(dataRoot, "wordlists"));
+buildWordBank(path.join(dataRoot, "wordlists-sat"));

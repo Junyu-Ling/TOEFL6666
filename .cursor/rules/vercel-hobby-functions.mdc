@@ -15,3 +15,4 @@ Hobby 计划 **最多 12 个 Serverless Function**。这条限制每次改代码
 - 禁止新增 `api/ai/*.js`、`api/tts/*.js`、`api/auth/*.js`、`api/[...path].js` 等任何额外函数文件
 - 新 API 只在 `api/index.js` 里加分支，逻辑放 `server/`
 - 词库等静态资源不要写成 `/api/...` 函数；不要为了修问题去拆函数或改 rewrite 结构
+- 禁止再把词库放到 `public/api/`（会打进 `dist/api/`，被当成大量函数，部署报 No more than 12 Serverless Functions）

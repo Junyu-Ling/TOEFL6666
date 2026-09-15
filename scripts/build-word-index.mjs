@@ -36,6 +36,6 @@ function buildWordIndex(dir) {
   console.log(`Word index built: ${total} unique words (${path.basename(dir)})`);
 }
 
-const apiRoot = path.join(__dirname, "../public/api");
-buildWordIndex(path.join(apiRoot, "wordlists"));
-buildWordIndex(path.join(apiRoot, "wordlists-sat"));
+const dataRoot = path.join(__dirname, "../data");
+buildWordIndex(path.join(dataRoot, "wordlists"));
+buildWordIndex(path.join(dataRoot, "wordlists-sat"));
