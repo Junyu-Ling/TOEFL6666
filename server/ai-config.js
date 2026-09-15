@@ -20,7 +20,7 @@ function readEnv(env) {
 }
 
 /**
- * 从运行时环境读取后端模型配置。密钥只来自 process.env / Worker env，不进前端。
+ * 从运行时环境读取后端模型配置。密钥只来自 process.env / Vercel 环境变量，不进前端。
  * 优先 DeepSeek（与现网一致）；未配置时回落 Gemini / OpenAI。
  */
 export function getEnvConfig(env) {

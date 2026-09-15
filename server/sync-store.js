@@ -25,7 +25,7 @@ function getRedis(env) {
 
 function isDeployedRuntime(env) {
   const e = getEnv(env);
-  return Boolean(e.VERCEL || e.CF_WORKER || e.CF_PAGES);
+  return Boolean(e.VERCEL);
 }
 
 function storageKey(code) {
@@ -53,7 +53,7 @@ export async function saveSyncEntry(code, entry) {
   const redis = getRedis();
   if (!redis && isDeployedRuntime()) {
     throw createError(
-      "服务端未配置 Redis，无法跨设备同步。请在 Cloudflare Worker Secrets 或 Vercel 环境变量中添加 UPSTASH_REDIS_REST_URL 与 UPSTASH_REDIS_REST_TOKEN 后重新部署。",
+      "服务端未配置 Redis，无法跨设备同步。请在 Vercel 环境变量中添加 UPSTASH_REDIS_REST_URL 与 UPSTASH_REDIS_REST_TOKEN 后重新部署。",
       503
     );
   }

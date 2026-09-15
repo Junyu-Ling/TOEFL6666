@@ -13,30 +13,29 @@ npm run dev
 
 浏览器打开 http://localhost:5175/ 。本地 `/api` 由 Vite 插件转发到 [`server/`](server/) 逻辑。
 
-## Cloudflare Workers 部署
+## Vercel 部署
 
-前端静态资源与 `/api/*` 部署在**同一个 Worker** 上：
-
-- `https://toefl6666.<账号>.workers.dev/` → 前端
-- `https://toefl6666.<账号>.workers.dev/api/...` → 后端
-
-### Dashboard（连接 Git 的 Workers 应用）
+连接 GitHub 仓库后用 Vercel 部署。根目录就是仓库根：
 
 | 项 | 值 |
 | --- | --- |
-| Root directory | 仓库根（留空或 `/`） |
+| Framework | Vite（可自动识别） |
 | Build command | `npm run build` |
-| Deploy command | `npx wrangler deploy` |
-| Wrangler config | `wrangler.jsonc` |
-| Worker name | `toefl6666` |
+| Output directory | `dist` |
+| API | [`api/`](api/) + [`vercel.json`](vercel.json) |
 
-### Secrets（Variables and Secrets → Encrypt）
+生产环境访问：
+
+- `https://<项目>.vercel.app/` → 前端
+- `https://<项目>.vercel.app/api/...` → 后端
+
+### Environment Variables
 
 必填：
 
 - `DEEPSEEK_API_KEY`
 
-建议明文变量：
+建议：
 
 - `DEEPSEEK_MODEL` = `deepseek-v4-flash`
 - `DEEPSEEK_API_BASE` = `https://api.deepseek.com/v1`
@@ -51,16 +50,4 @@ npm run dev
 - `GEMINI_API_KEY`
 - `OPENAI_API_KEY`
 
-CLI：
-
-```bash
-npx wrangler secret put DEEPSEEK_API_KEY
-npx wrangler secret put UPSTASH_REDIS_REST_URL
-npx wrangler secret put UPSTASH_REDIS_REST_TOKEN
-```
-
-本地也可 `npm run deploy`（先 build 再 wrangler deploy）。用 Worker 仿真本地 API：复制 `.dev.vars.example` 为 `.dev.vars` 后执行 `npm run cf:dev`。
-
 **不要**把上述 Key 配成 `VITE_*`。Supabase 登录使用的 `VITE_SUPABASE_URL` / `VITE_SUPABASE_ANON_KEY` 是公开 anon 配置；不要把 service_role 放进仓库。
-
-现有 [`api/`](api/) 与 [`vercel.json`](vercel.json) 仍保留，Vercel 部署可继续工作，直到你完全切到 Cloudflare。

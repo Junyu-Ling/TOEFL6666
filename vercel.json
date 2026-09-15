@@ -14,6 +14,18 @@
     "api/ai/pronounce-evaluate.js": {
       "maxDuration": 30
     },
+    "api/ai/study-plan.js": {
+      "maxDuration": 30
+    },
+    "api/ai/word-lookup.js": {
+      "maxDuration": 30
+    },
+    "api/ai/word-validate.js": {
+      "maxDuration": 15
+    },
+    "api/ai/detect-provider.js": {
+      "maxDuration": 30
+    },
     "api/sync/push.js": {
       "maxDuration": 15
     },
