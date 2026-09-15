@@ -5,6 +5,7 @@ import { fetchMemoryTrick } from "../services/memoryTrick";
 import { hasCompleteMemoryTricks } from "../shared/memoryTrick";
 import { getPronunciationAlert } from "../utils/pronunciationAlert";
 import { groupWordsByList } from "../utils/wordListGrouping";
+import PhoneticLine from "./PhoneticLine";
 
 const SORT_OPTIONS = [
   { value: "default", label: "默认顺序" },
@@ -121,6 +122,7 @@ function WordItem({
               </span>
             )}
           </div>
+          <PhoneticLine word={item.word} className="word-item__phonetic" />
           <p className="word-item__defs">{item.definitions?.join(" · ")}</p>
           {item.ai_feedback && <p className="word-item__feedback">{item.ai_feedback}</p>}
           {needsMemoryTrick && memoryLoading && !trick && (

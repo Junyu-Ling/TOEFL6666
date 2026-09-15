@@ -32,7 +32,14 @@ function levenshtein(a, b) {
 
 const ipaIndex = new Map();
 
-for (const [word, ipa] of Object.entries(phoneticData.phonetics || {})) {
+function entryIpa(value) {
+  if (!value) return "";
+  if (typeof value === "string") return value;
+  return value.us || value.uk || "";
+}
+
+for (const [word, value] of Object.entries(phoneticData.phonetics || {})) {
+  const ipa = entryIpa(value);
   if (!ipa) continue;
   const key = normalizeIpaKey(ipa);
   if (!key) continue;
@@ -51,7 +58,7 @@ export function buildWordBankMap(words = []) {
 
 export function getSimilarSoundWords(word, { maxDistance = 1 } = {}) {
   const normalized = String(word || "").trim().toLowerCase();
-  const ipa = phoneticData.phonetics?.[normalized];
+  const ipa = entryIpa(phoneticData.phonetics?.[normalized]);
   if (!ipa) return [];
 
   const key = normalizeIpaKey(ipa);

@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useSettings } from "../context/SettingsContext";
 import { shouldIgnoreAppGameKeys, isMarkKnownKey, isMarkUnknownKey } from "../utils/appKeyboard";
+import PhoneticLine from "./PhoneticLine";
 
 export default function LexGridRecallCard({ wordData, recallHint, onKnow, onUnknown, isActive = true }) {
   const { speakWord } = useSettings();
@@ -60,7 +61,10 @@ export default function LexGridRecallCard({ wordData, recallHint, onKnow, onUnkn
           <div className="flashcard__face flashcard__front">
             <div className="flashcard__term">
               <div className="flashcard__term-row">
-                <h2 className="flashcard__word">{wordData.word}</h2>
+                <div className="flashcard__word-group">
+                  <h2 className="flashcard__word">{wordData.word}</h2>
+                  <PhoneticLine word={wordData.word} className="flashcard__phonetic" />
+                </div>
                 <div className="flashcard__term-actions">
                   <button
                     type="button"

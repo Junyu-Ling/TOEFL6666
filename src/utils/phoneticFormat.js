@@ -5,22 +5,45 @@ export function normalizeIpa(text) {
   return `/${value}/`;
 }
 
+function dialectFromAudio(audio) {
+  const value = String(audio || "");
+  if (/-us\b|\/us\//i.test(value)) return "us";
+  if (/-gb\b|\/uk\//i.test(value)) return "uk";
+  return "";
+}
+
+export function pickUsUkPhonetics(data) {
+  const entries = Array.isArray(data) ? data : data ? [data] : [];
+  let us = "";
+  let uk = "";
+  const unlabeled = [];
+
+  for (const entry of entries) {
+    const phonetics = Array.isArray(entry?.phonetics) ? entry.phonetics : [];
+    for (const item of phonetics) {
+      if (!item?.text) continue;
+      const ipa = normalizeIpa(item.text);
+      const dialect = dialectFromAudio(item.audio);
+      if (dialect === "us" && !us) us = ipa;
+      else if (dialect === "uk" && !uk) uk = ipa;
+      else unlabeled.push(ipa);
+    }
+    if (entry?.phonetic) unlabeled.push(normalizeIpa(entry.phonetic));
+  }
+
+  const fallback = unlabeled.find(Boolean) || "";
+  return {
+    us: us || fallback,
+    uk: uk || fallback,
+  };
+}
+
 export function pickPhonetic(entry) {
-  if (!entry) return "";
-
-  const phonetics = Array.isArray(entry.phonetics) ? entry.phonetics : [];
-  const us = phonetics.find((item) => item.text && /-us\b|\/us\//i.test(item.audio || ""));
-  if (us?.text) return normalizeIpa(us.text);
-
-  const uk = phonetics.find((item) => item.text && /-gb\b|\/uk\//i.test(item.audio || ""));
-  if (uk?.text) return normalizeIpa(uk.text);
-
-  const first = phonetics.find((item) => item.text)?.text;
-  if (first) return normalizeIpa(first);
-
-  return normalizeIpa(entry.phonetic);
+  const pair = pickUsUkPhonetics(entry ? [entry] : []);
+  return pair.us || pair.uk || "";
 }
 
 export function pickPhoneticFromApiPayload(data) {
-  return pickPhonetic(Array.isArray(data) ? data[0] : null);
+  const pair = pickUsUkPhonetics(data);
+  return pair.us || pair.uk || "";
 }

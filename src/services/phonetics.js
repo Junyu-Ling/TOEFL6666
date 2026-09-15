@@ -2,15 +2,28 @@ import phoneticsData from "../data/phonetics.json";
 
 const phoneticMap = phoneticsData.phonetics || {};
 
+function asPair(value) {
+  if (!value) return { us: "", uk: "" };
+  if (typeof value === "string") return { us: value, uk: value };
+  return {
+    us: String(value.us || ""),
+    uk: String(value.uk || ""),
+  };
+}
+
+export function getPhoneticPair(word) {
+  if (!word) return { us: "", uk: "" };
+  return asPair(phoneticMap[String(word).toLowerCase().trim()]);
+}
+
 /**
- * 获取单词的音标
+ * 获取单词的音标（优先美式）
  * @param {string} word - 单词
  * @returns {string} 音标（IPA格式），如果没有则返回空字符串
  */
 export function getPhonetic(word) {
-  if (!word) return "";
-  const normalized = word.toLowerCase().trim();
-  return phoneticMap[normalized] || "";
+  const { us, uk } = getPhoneticPair(word);
+  return us || uk || "";
 }
 
 /**
@@ -35,11 +48,13 @@ export function getPhonetics(words) {
  * @returns {boolean}
  */
 export function hasPhonetic(word) {
-  return Boolean(getPhonetic(word));
+  const { us, uk } = getPhoneticPair(word);
+  return Boolean(us || uk);
 }
 
 export default {
   getPhonetic,
+  getPhoneticPair,
   getPhonetics,
   hasPhonetic,
 };

@@ -17,6 +17,7 @@ import {
 import PronunciationAlert from "./PronunciationAlert";
 import { getPronunciationAlert, getIrregularPronunciationStats } from "../utils/pronunciationAlert";
 import { lookupWordDefinitions } from "../services/wordLookup";
+import PhoneticLine from "./PhoneticLine";
 
 function BankWordItem({ item, availableLists, bookStatus, compact = false }) {
   const listLabel = compact ? "" : getBankWordLabel(item, availableLists);
@@ -36,6 +37,7 @@ function BankWordItem({ item, availableLists, bookStatus, compact = false }) {
               <span className="word-item__wrong-count word-item__wrong-count--past">熟词</span>
             )}
           </div>
+          <PhoneticLine word={item.word} className="word-item__phonetic" />
           <p className="word-item__defs">{item.definitions?.join(" · ")}</p>
         </div>
       </div>
@@ -400,6 +402,7 @@ function VocabularyBank({
                     <h3 className="word-item__word">{aiLookup.word}</h3>
                     <span className="word-item__list-badge word-item__list-badge--ai">AI 释义</span>
                   </div>
+                  <PhoneticLine word={aiLookup.word} className="word-item__phonetic" />
                   {aiLookup.typoNote ? (
                     <p className="vocabulary-bank__typo-note">{aiLookup.typoNote}</p>
                   ) : null}
