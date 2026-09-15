@@ -1,0 +1,14 @@
+---
+description: Vercel Hobby 最多 12 个 Serverless Function，后端只能有一个 api/index.js
+alwaysApply: true
+---
+
+# Vercel Hobby 函数上限
+
+Hobby 计划 **最多 12 个 Serverless Function**。本项目必须永远只保留 **一个** 后端函数：
+
+- 只允许 `api/index.js`
+- 所有接口走 `vercel.json` 里 **一条** rewrite：`/api/:path*` → `/api?__route=:path*`
+- 禁止新增 `api/ai/*.js`、`api/tts/*.js`、`api/auth/*.js`、`api/[...path].js` 等任何额外函数文件
+- 禁止为每个路由写一条 rewrite（会被当成多个函数，超限）
+- 新 API 只在 `api/index.js` 里加分支，逻辑放 `server/`

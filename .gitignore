@@ -20,7 +20,9 @@ src/generated/
 public/wordlists/
 public/wordlists-sat/
 
-# Scripts cache and uploads
+# Vercel Hobby 最多 12 个 Serverless Function：只保留 api/index.js
+/api/**
+!/api/index.js
 scripts/__pycache__/
 scripts/_uploads/
 scripts/_*.png

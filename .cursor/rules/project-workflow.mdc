@@ -7,3 +7,4 @@ alwaysApply: true
 
 - 每次完成代码更改后，commit 并 push 到 GitHub（`origin main`），除非用户明确说不要 push。
 - 向用户汇报时保持简洁：不要逐条列出每个单词的释义，不要用具体乱码示例（如「密码xxx」）说明判错逻辑。
+- Vercel Hobby 最多 12 个 Serverless Function。后端只能有 `api/index.js` 这一个函数；所有 `/api/*` 用 rewrite 打进去。禁止再新增 `api/**/*.js`。
