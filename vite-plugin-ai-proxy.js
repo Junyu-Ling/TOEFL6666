@@ -1,5 +1,5 @@
 import { loadEnv } from "vite";
-import { resolveRequestConfig, getEnvConfig, DEFAULT_DEEPSEEK_MODEL, stripApiConfigFromBody } from "./server/ai-config.js";
+import { resolveRequestConfig, getEnvConfig, DEFAULT_GROQ_MODEL, DEFAULT_GROQ_BASE, stripApiConfigFromBody } from "./server/ai-config.js";
 import { evaluateWithDeepSeek } from "./server/ai-evaluate.js";
 import { chatWithDeepSeek, streamChatWithDeepSeek } from "./server/ai-chat.js";
 import { generateMemoryTrick } from "./server/ai-memory-trick.js";
@@ -155,9 +155,9 @@ export function createAiHandler(getEnvConfig) {
 export function aiProxyPlugin() {
   let envConfig = {
     apiKey: "",
-    model: DEFAULT_DEEPSEEK_MODEL,
-    baseUrl: "https://api.deepseek.com/v1",
-    providerId: "deepseek",
+    model: DEFAULT_GROQ_MODEL,
+    baseUrl: DEFAULT_GROQ_BASE,
+    providerId: "groq",
   };
 
   return {

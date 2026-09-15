@@ -21,7 +21,7 @@ export const AI_PROVIDERS = [
     id: "groq",
     name: "Groq",
     baseUrl: "https://api.groq.com/openai/v1",
-    defaultModel: "llama-3.3-70b-versatile",
+    defaultModel: "openai/gpt-oss-120b",
     detect: (key, url) => /^gsk_/.test(key) || /groq\.com/i.test(url || ""),
   },
   {

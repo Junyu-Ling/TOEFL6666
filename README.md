@@ -6,7 +6,7 @@
 
 ```bash
 cp .env.example .env
-# 在 .env 中填写 DEEPSEEK_API_KEY（不要使用 VITE_ 前缀）
+# 在 .env 中填写 GROQ_API_KEY（不要使用 VITE_ 前缀）
 npm install
 npm run dev
 ```
@@ -33,10 +33,16 @@ npm run dev
 
 必填：
 
-- `DEEPSEEK_API_KEY`
+- `GROQ_API_KEY`
 
 建议：
 
+- `GROQ_MODEL` = `openai/gpt-oss-120b`
+- `GROQ_API_BASE` = `https://api.groq.com/openai/v1`
+
+未配置 Groq 时的可选回落：
+
+- `DEEPSEEK_API_KEY`
 - `DEEPSEEK_MODEL` = `deepseek-v4-flash`
 - `DEEPSEEK_API_BASE` = `https://api.deepseek.com/v1`
 
@@ -45,7 +51,7 @@ npm run dev
 - `UPSTASH_REDIS_REST_URL`
 - `UPSTASH_REDIS_REST_TOKEN`
 
-可选（仅当未配置 DeepSeek 时由后端回落，仍不要写进前端）：
+可选回落（仍不要写进前端）：
 
 - `GEMINI_API_KEY`
 - `OPENAI_API_KEY`

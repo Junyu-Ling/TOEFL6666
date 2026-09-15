@@ -225,7 +225,7 @@ export default function SettingsPanel() {
           </summary>
           <div className="settings-group__body">
             <p className="settings-hint settings-hint--compact">
-              只需粘贴 API Key，系统会自动识别厂家并选用对应模型。DeepSeek、OpenAI、Gemini、Groq、OpenRouter、智谱、Kimi 等都可以。留空则用服务器默认。密钥只保存在本机，不会同步到云端。
+              只需粘贴 API Key，系统会自动识别厂家并选用对应模型。留空则用服务器默认（Groq gpt-oss-120b）。密钥只保存在本机，不会同步到云端。
             </p>
             <label className="settings-field">
               API Key

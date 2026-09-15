@@ -1,5 +1,7 @@
 import { detectProvider, providerFromApiKey } from "../src/shared/ai-providers.js";
 
+export const DEFAULT_GROQ_MODEL = "openai/gpt-oss-120b";
+export const DEFAULT_GROQ_BASE = "https://api.groq.com/openai/v1";
 export const DEFAULT_DEEPSEEK_MODEL = "deepseek-v4-flash";
 
 /** 本站统一用 Flash；Pro / Reasoner / 已退役 chat 均回落到 Flash。 */
@@ -21,10 +23,21 @@ function readEnv(env) {
 
 /**
  * 从运行时环境读取后端模型配置。密钥只来自 process.env / Vercel 环境变量，不进前端。
- * 优先 DeepSeek（与现网一致）；未配置时回落 Gemini / OpenAI。
+ * 默认 Groq gpt-oss-120b；未配置 GROQ_API_KEY 时回落 DeepSeek / Gemini / OpenAI。
  */
 export function getEnvConfig(env) {
   const e = readEnv(env);
+
+  if (e.GROQ_API_KEY) {
+    return {
+      apiKey: e.GROQ_API_KEY,
+      model: e.GROQ_MODEL || DEFAULT_GROQ_MODEL,
+      baseUrl: e.GROQ_API_BASE || DEFAULT_GROQ_BASE,
+      providerId: "groq",
+      apiStyle: "openai",
+      source: "env",
+    };
+  }
 
   if (e.DEEPSEEK_API_KEY) {
     return {
@@ -61,9 +74,9 @@ export function getEnvConfig(env) {
 
   return {
     apiKey: "",
-    model: DEFAULT_DEEPSEEK_MODEL,
-    baseUrl: "https://api.deepseek.com/v1",
-    providerId: "deepseek",
+    model: DEFAULT_GROQ_MODEL,
+    baseUrl: DEFAULT_GROQ_BASE,
+    providerId: "groq",
     apiStyle: "openai",
     source: "env",
   };
