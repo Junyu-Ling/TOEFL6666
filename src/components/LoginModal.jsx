@@ -6,6 +6,7 @@ import {
   verifyEmailOtp,
   signInWithProvider,
 } from "../services/auth";
+import { LoginBrandIcon } from "./LoginBrandIcons";
 
 const RESEND_SECONDS = 60;
 
@@ -121,6 +122,7 @@ export default function LoginModal({ onClose }) {
                   onClick={() => handleSocial(item.id)}
                   disabled={loading}
                 >
+                  <LoginBrandIcon id={item.id} />
                   {item.label}
                 </button>
               ))}
@@ -128,9 +130,11 @@ export default function LoginModal({ onClose }) {
             <p className="login-modal__divider">或使用账号</p>
             <div className="login-modal__account-row">
               <button type="button" className="btn btn--primary login-modal__btn" onClick={() => { setMethod("email"); setError(""); }}>
+                <LoginBrandIcon id="email" />
                 邮箱登录
               </button>
               <button type="button" className="btn login-modal__btn login-modal__btn--ghost" onClick={() => { setMethod("phone"); setError(""); }}>
+                <LoginBrandIcon id="phone" />
                 手机号登录
               </button>
             </div>
