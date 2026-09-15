@@ -27,7 +27,7 @@ npm run dev
 生产环境访问：
 
 - `https://<项目>.vercel.app/` → 前端
-- `https://<项目>.vercel.app/api/...` → 后端
+- `https://<项目>.vercel.app/api/...` → 后端（全部 `/api` 打进同一个 Serverless Function，以适配 Hobby 的 12 个函数上限）
 
 ### Environment Variables
 

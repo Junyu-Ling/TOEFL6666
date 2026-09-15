@@ -2,41 +2,8 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "functions": {
-    "api/ai/evaluate.js": {
+    "api/[...path].js": {
       "maxDuration": 30
-    },
-    "api/ai/chat.js": {
-      "maxDuration": 30
-    },
-    "api/ai/memory-trick.js": {
-      "maxDuration": 30
-    },
-    "api/ai/pronounce-evaluate.js": {
-      "maxDuration": 30
-    },
-    "api/ai/study-plan.js": {
-      "maxDuration": 30
-    },
-    "api/ai/word-lookup.js": {
-      "maxDuration": 30
-    },
-    "api/ai/word-validate.js": {
-      "maxDuration": 15
-    },
-    "api/ai/detect-provider.js": {
-      "maxDuration": 30
-    },
-    "api/tts/clone.js": {
-      "maxDuration": 30
-    },
-    "api/tts/speak.js": {
-      "maxDuration": 15
-    },
-    "api/sync/push.js": {
-      "maxDuration": 15
-    },
-    "api/sync/pull.js": {
-      "maxDuration": 15
     }
   },
   "headers": [
