@@ -9,6 +9,7 @@ import { generateStudyPlan, streamStudyPlan } from "../server/ai-study-plan.js";
 import { identifyProviderFromKey } from "../server/ai-detect-provider.js";
 import { handleSyncPush, handleSyncPull } from "../server/sync-api.js";
 import { cloneOwnVoice, isClonedVoiceConfigured, synthesizeVocabWord } from "../server/tts-minimax.js";
+import { handleAccessGrant, handleAccessMe, handleAccessUsers } from "../server/access-api.js";
 
 export const config = {
   api: {
@@ -77,6 +78,33 @@ export default async function handler(req, res) {
         return;
       }
       sendJson(res, 200, { available: isClonedVoiceConfigured() });
+      return;
+    }
+
+    if (pathname === "/api/access/me") {
+      if (method !== "GET" && method !== "POST") {
+        sendJson(res, 405, { error: "Method Not Allowed" });
+        return;
+      }
+      sendJson(res, 200, await handleAccessMe(req));
+      return;
+    }
+
+    if (pathname === "/api/access/users") {
+      if (method !== "GET") {
+        sendJson(res, 405, { error: "Method Not Allowed" });
+        return;
+      }
+      sendJson(res, 200, await handleAccessUsers(req));
+      return;
+    }
+
+    if (pathname === "/api/access/grant") {
+      if (method !== "POST") {
+        sendJson(res, 405, { error: "Method Not Allowed" });
+        return;
+      }
+      sendJson(res, 200, await handleAccessGrant(req, parseBody(req)));
       return;
     }
 

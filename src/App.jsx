@@ -16,6 +16,7 @@ import FloatingLexGridButton from "./components/FloatingLexGridButton";
 import FullscreenLexGrid from "./components/FullscreenLexGrid";
 import ReadingVocabMatch from "./components/ReadingVocabMatch";
 import ReadingFillBlank from "./components/ReadingFillBlank";
+import ReadingFillGate from "./components/ReadingFillGate";
 import FamiliarObscureMeanings from "./components/FamiliarObscureMeanings";
 import TransitionWords from "./components/TransitionWords";
 import TabPanel from "./components/TabPanel";
@@ -1401,7 +1402,9 @@ export default function App() {
 
           {appMode === "toefl" ? (
             <TabPanel tabId="reading-fill" activeTab={activeTab}>
-              {readingFillPanel}
+              <ReadingFillGate onLogin={() => setLoginOpen(true)}>
+                {readingFillPanel}
+              </ReadingFillGate>
             </TabPanel>
           ) : null}
         </ActiveTabProvider>

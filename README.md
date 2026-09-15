@@ -56,3 +56,17 @@ npm run dev
 - `MINIMAX_GROUP_ID`（若控制台要求）
 
 **不要**把上述 Key 配成 `VITE_*`。Supabase 登录使用的 `VITE_SUPABASE_URL` / `VITE_SUPABASE_ANON_KEY` 是公开 anon 配置；不要把 service_role 放进仓库。
+
+### 阅读填词权限
+
+阅读填词默认不对所有人开放。用户登录后会出现在管理员列表里，管理员可在设置中开通。
+
+在 Vercel / `.env` 中把管理员写进下面任一变量（逗号分隔）：
+
+- `ACCESS_ADMIN_EMAILS`
+- `ACCESS_ADMIN_USER_IDS`
+- `ACCESS_ADMIN_PHONES`
+
+开通记录保存在 Redis（与跨设备同步同一套 Upstash）。
+
+登录方式：邮箱验证码、手机短信、Google、GitHub。微信 / QQ / ChatGPT 入口已放在登录页；微信和 QQ 需在对应开放平台创建应用并接到 Supabase 后才能真正跳转，ChatGPT 账号目前没有网站第三方登录。

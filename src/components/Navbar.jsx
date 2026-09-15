@@ -81,7 +81,13 @@ export default function Navbar({ activeTab, onTabChange, counts, streak, onStrea
           >
             <span className="navbar__user-avatar" aria-hidden>👤</span>
             <span className="navbar__user-phone">
-              {syncing ? "同步中…" : (user.phone ? user.phone.slice(-4) : "已登录")}
+              {syncing
+                ? "同步中…"
+                : user.phone
+                  ? user.phone.slice(-4)
+                  : user.email
+                    ? user.email.split("@")[0]
+                    : "已登录"}
             </span>
           </button>
         ) : (

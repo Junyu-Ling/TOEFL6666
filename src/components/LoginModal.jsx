@@ -1,22 +1,39 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { sendOtp, verifyOtp } from "../services/auth";
+import {
+  sendOtp,
+  verifyOtp,
+  sendEmailOtp,
+  verifyEmailOtp,
+  signInWithProvider,
+} from "../services/auth";
 
 const RESEND_SECONDS = 60;
 
+const SOCIAL = [
+  { id: "google", label: "Google" },
+  { id: "github", label: "GitHub" },
+  { id: "wechat", label: "微信" },
+  { id: "qq", label: "QQ" },
+  { id: "openai", label: "ChatGPT" },
+];
+
 export default function LoginModal({ onClose }) {
-  const [step, setStep] = useState("phone"); // "phone" | "otp"
+  const [method, setMethod] = useState("home");
+  const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [countdown, setCountdown] = useState(0);
+  const emailRef = useRef(null);
   const phoneRef = useRef(null);
   const otpRef = useRef(null);
 
   useEffect(() => {
-    if (step === "phone") phoneRef.current?.focus();
-    else otpRef.current?.focus();
-  }, [step]);
+    if (method === "email") emailRef.current?.focus();
+    else if (method === "phone") phoneRef.current?.focus();
+    else if (method.endsWith("-otp")) otpRef.current?.focus();
+  }, [method]);
 
   useEffect(() => {
     if (countdown <= 0) return undefined;
@@ -24,56 +41,64 @@ export default function LoginModal({ onClose }) {
     return () => window.clearTimeout(id);
   }, [countdown]);
 
-  const handleSendOtp = useCallback(async () => {
-    const trimmed = phone.trim();
-    if (!trimmed) { setError("请输入手机号"); return; }
+  const run = useCallback(async (fn) => {
     setError("");
     setLoading(true);
     try {
-      await sendOtp(trimmed);
-      setStep("otp");
-      setCountdown(RESEND_SECONDS);
+      await fn();
     } catch (e) {
-      setError(e.message || "发送失败，请稍后重试");
+      setError(e.message || "操作失败，请稍后重试");
     } finally {
       setLoading(false);
     }
-  }, [phone]);
+  }, []);
 
-  const handleVerify = useCallback(async () => {
-    const trimmed = otp.trim();
-    if (!trimmed) { setError("请输入验证码"); return; }
-    setError("");
-    setLoading(true);
-    try {
-      await verifyOtp(phone.trim(), trimmed);
-      onClose?.();
-    } catch (e) {
-      setError(e.message || "验证码错误，请重试");
-    } finally {
-      setLoading(false);
-    }
-  }, [otp, phone, onClose]);
-
-  const handleResend = useCallback(async () => {
-    if (countdown > 0) return;
-    setError("");
-    setLoading(true);
-    try {
-      await sendOtp(phone.trim());
-      setCountdown(RESEND_SECONDS);
-    } catch (e) {
-      setError(e.message || "发送失败，请稍后重试");
-    } finally {
-      setLoading(false);
-    }
-  }, [countdown, phone]);
-
-  function handlePhoneKey(e) {
-    if (e.key === "Enter") handleSendOtp();
+  async function handleSocial(id) {
+    await run(() => signInWithProvider(id));
   }
-  function handleOtpKey(e) {
-    if (e.key === "Enter") handleVerify();
+
+  async function handleSendEmail() {
+    await run(async () => {
+      await sendEmailOtp(email);
+      setMethod("email-otp");
+      setCountdown(RESEND_SECONDS);
+    });
+  }
+
+  async function handleVerifyEmail() {
+    await run(async () => {
+      await verifyEmailOtp(email, otp);
+      onClose?.();
+    });
+  }
+
+  async function handleSendPhone() {
+    await run(async () => {
+      if (!phone.trim()) throw new Error("请输入手机号");
+      await sendOtp(phone);
+      setMethod("phone-otp");
+      setCountdown(RESEND_SECONDS);
+    });
+  }
+
+  async function handleVerifyPhone() {
+    await run(async () => {
+      if (!otp.trim()) throw new Error("请输入验证码");
+      await verifyOtp(phone, otp);
+      onClose?.();
+    });
+  }
+
+  async function handleResend() {
+    if (countdown > 0) return;
+    if (method === "email-otp") await handleSendEmail();
+    else await handleSendPhone();
+  }
+
+  function goHome() {
+    setMethod("home");
+    setOtp("");
+    setError("");
   }
 
   return (
@@ -84,7 +109,92 @@ export default function LoginModal({ onClose }) {
           <button type="button" className="login-modal__close" onClick={onClose} aria-label="关闭">✕</button>
         </div>
 
-        {step === "phone" ? (
+        {method === "home" ? (
+          <div className="login-modal__body">
+            <p className="login-modal__hint">选择一种方式登录。阅读填词需管理员开通后才能使用。</p>
+            <div className="login-modal__social">
+              {SOCIAL.map((item) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  className={`login-modal__social-btn login-modal__social-btn--${item.id}`}
+                  onClick={() => handleSocial(item.id)}
+                  disabled={loading}
+                >
+                  {item.label}
+                </button>
+              ))}
+            </div>
+            <p className="login-modal__divider">或使用账号</p>
+            <div className="login-modal__account-row">
+              <button type="button" className="btn btn--primary login-modal__btn" onClick={() => { setMethod("email"); setError(""); }}>
+                邮箱登录
+              </button>
+              <button type="button" className="btn login-modal__btn login-modal__btn--ghost" onClick={() => { setMethod("phone"); setError(""); }}>
+                手机号登录
+              </button>
+            </div>
+            {error ? <p className="login-modal__error">{error}</p> : null}
+          </div>
+        ) : null}
+
+        {method === "email" ? (
+          <div className="login-modal__body">
+            <p className="login-modal__hint">输入邮箱，我们将发送一次性验证码</p>
+            <label className="login-modal__label">
+              <span>邮箱</span>
+              <input
+                ref={emailRef}
+                type="email"
+                className="login-modal__input"
+                placeholder="you@example.com"
+                value={email}
+                autoComplete="email"
+                onChange={(e) => { setEmail(e.target.value); setError(""); }}
+                onKeyDown={(e) => { if (e.key === "Enter") handleSendEmail(); }}
+                disabled={loading}
+              />
+            </label>
+            {error ? <p className="login-modal__error">{error}</p> : null}
+            <button type="button" className="btn btn--primary login-modal__btn" onClick={handleSendEmail} disabled={loading}>
+              {loading ? "发送中…" : "获取验证码"}
+            </button>
+            <button type="button" className="login-modal__back" onClick={goHome}>返回其他登录方式</button>
+          </div>
+        ) : null}
+
+        {method === "email-otp" ? (
+          <div className="login-modal__body">
+            <p className="login-modal__hint">验证码已发送至 {email}，有效期 10 分钟</p>
+            <label className="login-modal__label">
+              <span>验证码</span>
+              <input
+                ref={otpRef}
+                type="text"
+                inputMode="numeric"
+                className="login-modal__input login-modal__input--otp"
+                placeholder="6 位验证码"
+                value={otp}
+                maxLength={8}
+                onChange={(e) => { setOtp(e.target.value); setError(""); }}
+                onKeyDown={(e) => { if (e.key === "Enter") handleVerifyEmail(); }}
+                disabled={loading}
+              />
+            </label>
+            {error ? <p className="login-modal__error">{error}</p> : null}
+            <button type="button" className="btn btn--primary login-modal__btn" onClick={handleVerifyEmail} disabled={loading}>
+              {loading ? "验证中…" : "登录"}
+            </button>
+            <div className="login-modal__resend-row">
+              <button type="button" className="login-modal__resend" onClick={handleResend} disabled={countdown > 0 || loading}>
+                {countdown > 0 ? `${countdown}s 后可重发` : "重新发送"}
+              </button>
+              <button type="button" className="login-modal__back" onClick={goHome}>返回</button>
+            </div>
+          </div>
+        ) : null}
+
+        {method === "phone" ? (
           <div className="login-modal__body">
             <p className="login-modal__hint">输入手机号，我们将发送短信验证码</p>
             <label className="login-modal__label">
@@ -99,22 +209,20 @@ export default function LoginModal({ onClose }) {
                   value={phone}
                   maxLength={11}
                   onChange={(e) => { setPhone(e.target.value); setError(""); }}
-                  onKeyDown={handlePhoneKey}
+                  onKeyDown={(e) => { if (e.key === "Enter") handleSendPhone(); }}
                   disabled={loading}
                 />
               </div>
             </label>
             {error ? <p className="login-modal__error">{error}</p> : null}
-            <button
-              type="button"
-              className="btn btn--primary login-modal__btn"
-              onClick={handleSendOtp}
-              disabled={loading}
-            >
+            <button type="button" className="btn btn--primary login-modal__btn" onClick={handleSendPhone} disabled={loading}>
               {loading ? "发送中…" : "获取验证码"}
             </button>
+            <button type="button" className="login-modal__back" onClick={goHome}>返回其他登录方式</button>
           </div>
-        ) : (
+        ) : null}
+
+        {method === "phone-otp" ? (
           <div className="login-modal__body">
             <p className="login-modal__hint">验证码已发送至 +86 {phone}，有效期 10 分钟</p>
             <label className="login-modal__label">
@@ -126,40 +234,24 @@ export default function LoginModal({ onClose }) {
                 className="login-modal__input login-modal__input--otp"
                 placeholder="6 位验证码"
                 value={otp}
-                maxLength={6}
-                onChange={(e) => { setOtp(e.target.value.replace(/\D/g, "")); setError(""); }}
-                onKeyDown={handleOtpKey}
+                maxLength={8}
+                onChange={(e) => { setOtp(e.target.value); setError(""); }}
+                onKeyDown={(e) => { if (e.key === "Enter") handleVerifyPhone(); }}
                 disabled={loading}
               />
             </label>
             {error ? <p className="login-modal__error">{error}</p> : null}
-            <button
-              type="button"
-              className="btn btn--primary login-modal__btn"
-              onClick={handleVerify}
-              disabled={loading}
-            >
+            <button type="button" className="btn btn--primary login-modal__btn" onClick={handleVerifyPhone} disabled={loading}>
               {loading ? "验证中…" : "登录"}
             </button>
             <div className="login-modal__resend-row">
-              <button
-                type="button"
-                className="login-modal__resend"
-                onClick={handleResend}
-                disabled={countdown > 0 || loading}
-              >
-                {countdown > 0 ? `重新发送 (${countdown}s)` : "重新发送验证码"}
+              <button type="button" className="login-modal__resend" onClick={handleResend} disabled={countdown > 0 || loading}>
+                {countdown > 0 ? `${countdown}s 后可重发` : "重新发送"}
               </button>
-              <button
-                type="button"
-                className="login-modal__back"
-                onClick={() => { setStep("phone"); setOtp(""); setError(""); }}
-              >
-                修改手机号
-              </button>
+              <button type="button" className="login-modal__back" onClick={goHome}>返回</button>
             </div>
           </div>
-        )}
+        ) : null}
 
         <p className="login-modal__footer">登录即视为同意使用条款 · 数据仅用于多设备同步</p>
       </div>

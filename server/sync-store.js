@@ -9,13 +9,13 @@ const memory =
   new Map();
 globalThis.__toefl666SyncStore = memory;
 
-function getEnv(env) {
+export function getEnv(env) {
   if (env && typeof env === "object") return env;
   if (typeof process !== "undefined" && process.env) return process.env;
   return {};
 }
 
-function getRedis(env) {
+export function getRedis(env) {
   const e = getEnv(env);
   const url = e.UPSTASH_REDIS_REST_URL || e.KV_REST_API_URL;
   const token = e.UPSTASH_REDIS_REST_TOKEN || e.KV_REST_API_TOKEN;
@@ -23,7 +23,7 @@ function getRedis(env) {
   return new Redis({ url, token });
 }
 
-function isDeployedRuntime(env) {
+export function isDeployedRuntime(env) {
   const e = getEnv(env);
   return Boolean(e.VERCEL);
 }

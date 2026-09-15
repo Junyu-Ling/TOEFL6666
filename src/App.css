@@ -6871,7 +6871,7 @@ body {
 
 .login-modal {
   width: 100%;
-  max-width: 26rem;
+  max-width: 28rem;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 1.25rem;
@@ -6952,6 +6952,8 @@ body {
   border: 1px solid var(--border);
   border-radius: 0.625rem;
   background: var(--bg);
+  width: 100%;
+  box-sizing: border-box;
 }
 .login-modal__input--otp {
   letter-spacing: 0.25em;
@@ -6995,6 +6997,110 @@ body {
   color: var(--text-light);
   text-align: center;
   margin: 0;
+}
+
+.login-modal__social {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.login-modal__social-btn {
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  border-radius: 0.625rem;
+  padding: 0.65rem 0.5rem;
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.login-modal__social-btn:hover:not(:disabled) {
+  border-color: var(--accent);
+}
+
+.login-modal__social-btn--openai {
+  grid-column: 1 / -1;
+}
+
+.login-modal__divider {
+  margin: 0.15rem 0 0;
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--text-light);
+}
+
+.login-modal__account-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.login-modal__btn--ghost {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+.feature-gate {
+  max-width: 28rem;
+  margin: 3rem auto;
+  padding: 1.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.feature-gate__title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.feature-gate__text {
+  margin: 0;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.access-admin__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.access-admin__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.55rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.access-admin__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.access-admin__meta strong {
+  font-size: 0.9rem;
+}
+
+.access-admin__meta span {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* ── SAT Vocab ──────────────────────────────────────────── */
