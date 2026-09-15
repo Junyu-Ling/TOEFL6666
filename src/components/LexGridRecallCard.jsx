@@ -61,10 +61,7 @@ export default function LexGridRecallCard({ wordData, recallHint, onKnow, onUnkn
           <div className="flashcard__face flashcard__front">
             <div className="flashcard__term">
               <div className="flashcard__term-row">
-                <div className="flashcard__word-group">
-                  <h2 className="flashcard__word">{wordData.word}</h2>
-                  <PhoneticLine word={wordData.word} className="flashcard__phonetic" />
-                </div>
+                <h2 className="flashcard__word">{wordData.word}</h2>
                 <div className="flashcard__term-actions">
                   <button
                     type="button"
@@ -81,6 +78,7 @@ export default function LexGridRecallCard({ wordData, recallHint, onKnow, onUnkn
                   </button>
                 </div>
               </div>
+              <PhoneticLine word={wordData.word} className="flashcard__phonetic" />
             </div>
             <p className="flashcard__footer">点卡片或空格看释义</p>
           </div>

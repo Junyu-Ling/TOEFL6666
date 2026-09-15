@@ -1179,15 +1179,12 @@ export default function FlashCard({
         <div className="flashcard__face flashcard__front">
           <div className="flashcard__term">
             <div className="flashcard__term-row">
-              <div className="flashcard__word-group">
-                <h2
-                  className={`flashcard__word${showWord ? "" : " flashcard__word--hidden"}${wordData?.satVocab?.color === "blue" ? " flashcard__word--blue" : ""}`}
-                  aria-hidden={!showWord}
-                >
-                  {showWord ? wordData.word : "？？？"}
-                </h2>
-                <PhoneticLine word={wordData.word} className="flashcard__phonetic" hidden={!showWord} />
-              </div>
+              <h2
+                className={`flashcard__word${showWord ? "" : " flashcard__word--hidden"}${wordData?.satVocab?.color === "blue" ? " flashcard__word--blue" : ""}`}
+                aria-hidden={!showWord}
+              >
+                {showWord ? wordData.word : "？？？"}
+              </h2>
               <div className="flashcard__term-actions">
                 <button
                   type="button"
@@ -1213,6 +1210,7 @@ export default function FlashCard({
                 )}
               </div>
             </div>
+            <PhoneticLine word={wordData.word} className="flashcard__phonetic" hidden={!showWord} />
 
             {micGranted && !isTransitionWord && (
               <div className="flashcard__pronounce-block">
