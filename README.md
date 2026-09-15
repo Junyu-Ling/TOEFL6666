@@ -61,12 +61,22 @@ npm run dev
 
 阅读填词默认不对所有人开放。用户登录后会出现在管理员列表里，管理员可在设置中开通。
 
-在 Vercel / `.env` 中把管理员写进下面任一变量（逗号分隔）：
+GitHub 登录**不需要 Supabase**。在 GitHub OAuth App 里把 Callback URL 设为：
+
+- 本地：`http://localhost:5175/api/auth/github/callback`
+- 线上：`https://<你的域名>/api/auth/github/callback`
+
+环境变量：
+
+- `GITHUB_CLIENT_ID`
+- `GITHUB_CLIENT_SECRET`（只放 Vercel / `.env`，不要提交仓库）
+
+管理员写进下面任一变量（逗号分隔）：
 
 - `ACCESS_ADMIN_EMAILS`
-- `ACCESS_ADMIN_USER_IDS`
+- `ACCESS_ADMIN_USER_IDS`（GitHub 用户为 `gh_` + 数字 ID）
 - `ACCESS_ADMIN_PHONES`
 
-开通记录保存在 Redis（与跨设备同步同一套 Upstash）。
+开通记录保存在 Redis。
 
-登录方式：邮箱验证码、手机短信、Google、GitHub。微信 / QQ / ChatGPT 入口已放在登录页；微信和 QQ 需在对应开放平台创建应用并接到 Supabase 后才能真正跳转，ChatGPT 账号目前没有网站第三方登录。
+登录：GitHub 已直接接入。邮箱 / 手机 / Google 仍可保留入口；微信 / QQ 需开放平台，ChatGPT 没有网站第三方登录。

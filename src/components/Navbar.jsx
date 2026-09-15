@@ -76,7 +76,7 @@ export default function Navbar({ activeTab, onTabChange, counts, streak, onStrea
             type="button"
             className="navbar__user"
             onClick={signOut}
-            title={`已登录：${user.phone ?? user.email ?? ""}\n点击退出登录`}
+            title={`已登录：${user.phone ?? user.email ?? user.name ?? ""}\n点击退出登录`}
             aria-label="用户账号，点击退出"
           >
             <span className="navbar__user-avatar" aria-hidden>👤</span>
@@ -85,9 +85,7 @@ export default function Navbar({ activeTab, onTabChange, counts, streak, onStrea
                 ? "同步中…"
                 : user.phone
                   ? user.phone.slice(-4)
-                  : user.email
-                    ? user.email.split("@")[0]
-                    : "已登录"}
+                  : user.user_metadata?.user_name || user.name || (user.email ? user.email.split("@")[0] : "已登录")}
             </span>
           </button>
         ) : (

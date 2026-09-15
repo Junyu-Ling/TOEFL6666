@@ -1,5 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 import { getEnv } from "./sync-store.js";
+import { readSessionUser } from "./auth-session.js";
 import {
   getAccessSnapshot,
   listAccessUsers,
@@ -28,10 +29,13 @@ function getSupabaseAuthClient() {
 }
 
 export async function requireAccessUser(req) {
+  const sessionUser = readSessionUser(req);
+  if (sessionUser) return sessionUser;
+
   const token = getBearerToken(req);
   if (!token) throw createError("请先登录", 401);
   const supabase = getSupabaseAuthClient();
-  if (!supabase) throw createError("账号系统尚未配置", 503);
+  if (!supabase) throw createError("请先登录", 401);
   const { data, error } = await supabase.auth.getUser(token);
   if (error || !data?.user) throw createError("登录已过期，请重新登录", 401);
   return data.user;
@@ -56,6 +60,5 @@ export async function handleAccessGrant(req, body) {
   const userId = String(body?.userId || "").trim();
   const feature = String(body?.feature || FEATURE_READING_FILL).trim();
   const enabled = Boolean(body?.enabled);
-  const result = await setFeatureGrant(userId, feature, enabled);
-  return result;
+  return setFeatureGrant(userId, feature, enabled);
 }

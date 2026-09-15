@@ -10,6 +10,7 @@ import { identifyProviderFromKey } from "../server/ai-detect-provider.js";
 import { handleSyncPush, handleSyncPull } from "../server/sync-api.js";
 import { cloneOwnVoice, isClonedVoiceConfigured, synthesizeVocabWord } from "../server/tts-minimax.js";
 import { handleAccessGrant, handleAccessMe, handleAccessUsers } from "../server/access-api.js";
+import { handleAuthLogout, handleAuthMe, handleGithubCallback, handleGithubStart } from "../server/auth-github.js";
 
 export const config = {
   api: {
@@ -78,6 +79,42 @@ export default async function handler(req, res) {
         return;
       }
       sendJson(res, 200, { available: isClonedVoiceConfigured() });
+      return;
+    }
+
+    if (pathname === "/api/auth/github/start") {
+      if (method !== "GET") {
+        sendJson(res, 405, { error: "Method Not Allowed" });
+        return;
+      }
+      handleGithubStart(req, res);
+      return;
+    }
+
+    if (pathname === "/api/auth/github/callback") {
+      if (method !== "GET") {
+        sendJson(res, 405, { error: "Method Not Allowed" });
+        return;
+      }
+      await handleGithubCallback(req, res);
+      return;
+    }
+
+    if (pathname === "/api/auth/me") {
+      if (method !== "GET") {
+        sendJson(res, 405, { error: "Method Not Allowed" });
+        return;
+      }
+      handleAuthMe(req, res);
+      return;
+    }
+
+    if (pathname === "/api/auth/logout") {
+      if (method !== "POST") {
+        sendJson(res, 405, { error: "Method Not Allowed" });
+        return;
+      }
+      handleAuthLogout(req, res);
       return;
     }
 

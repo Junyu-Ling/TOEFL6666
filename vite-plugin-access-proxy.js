@@ -1,5 +1,6 @@
 import { loadEnv } from "vite";
 import { handleAccessGrant, handleAccessMe, handleAccessUsers } from "./server/access-api.js";
+import { handleAuthLogout, handleAuthMe, handleGithubCallback, handleGithubStart } from "./server/auth-github.js";
 
 function readBody(req) {
   return new Promise((resolve, reject) => {
@@ -36,6 +37,9 @@ function applyEnv(env) {
     "ACCESS_ADMIN_EMAILS",
     "ACCESS_ADMIN_USER_IDS",
     "ACCESS_ADMIN_PHONES",
+    "GITHUB_CLIENT_ID",
+    "GITHUB_CLIENT_SECRET",
+    "AUTH_SECRET",
   ]) {
     if (env[key] && !process.env[key]) process.env[key] = env[key];
   }
@@ -49,13 +53,35 @@ export function accessProxyPlugin() {
     },
     configureServer(server) {
       server.middlewares.use(async (req, res, next) => {
-        const isMe = matchApiPath(req.url, "/api/access/me");
+        const isAccessMe = matchApiPath(req.url, "/api/access/me");
         const isUsers = matchApiPath(req.url, "/api/access/users");
         const isGrant = matchApiPath(req.url, "/api/access/grant");
-        if (!isMe && !isUsers && !isGrant) return next();
+        const isGhStart = matchApiPath(req.url, "/api/auth/github/start");
+        const isGhCallback = matchApiPath(req.url, "/api/auth/github/callback");
+        const isAuthMe = matchApiPath(req.url, "/api/auth/me");
+        const isLogout = matchApiPath(req.url, "/api/auth/logout");
+        if (!isAccessMe && !isUsers && !isGrant && !isGhStart && !isGhCallback && !isAuthMe && !isLogout) {
+          return next();
+        }
 
         try {
-          if (isMe && (req.method === "GET" || req.method === "POST")) {
+          if (isGhStart && req.method === "GET") {
+            handleGithubStart(req, res);
+            return;
+          }
+          if (isGhCallback && req.method === "GET") {
+            await handleGithubCallback(req, res);
+            return;
+          }
+          if (isAuthMe && req.method === "GET") {
+            handleAuthMe(req, res);
+            return;
+          }
+          if (isLogout && req.method === "POST") {
+            handleAuthLogout(req, res);
+            return;
+          }
+          if (isAccessMe && (req.method === "GET" || req.method === "POST")) {
             sendJson(res, 200, await handleAccessMe(req));
             return;
           }

@@ -1,12 +1,9 @@
-import { getSession } from "./auth";
-
 async function accessRequest(path, { method = "GET", body } = {}) {
-  const session = await getSession();
   const headers = { "Content-Type": "application/json" };
-  if (session?.access_token) headers.Authorization = `Bearer ${session.access_token}`;
   const res = await fetch(path, {
     method,
     headers,
+    credentials: "include",
     body: body ? JSON.stringify(body) : undefined,
   });
   const data = await res.json().catch(() => ({}));

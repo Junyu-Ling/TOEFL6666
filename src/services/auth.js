@@ -9,7 +9,7 @@ function normalizePhone(raw) {
 }
 
 export async function sendOtp(phone) {
-  if (!isSupabaseConfigured()) throw new Error("账号功能尚未配置，请联系管理员");
+  if (!isSupabaseConfigured()) throw new Error("手机号登录需要短信服务，当前请用 GitHub 登录");
   const { error } = await supabase.auth.signInWithOtp({
     phone: normalizePhone(phone),
   });
@@ -17,7 +17,7 @@ export async function sendOtp(phone) {
 }
 
 export async function verifyOtp(phone, token) {
-  if (!isSupabaseConfigured()) throw new Error("账号功能尚未配置，请联系管理员");
+  if (!isSupabaseConfigured()) throw new Error("手机号登录需要短信服务，当前请用 GitHub 登录");
   const { data, error } = await supabase.auth.verifyOtp({
     phone: normalizePhone(phone),
     token,
@@ -28,7 +28,7 @@ export async function verifyOtp(phone, token) {
 }
 
 export async function sendEmailOtp(email) {
-  if (!isSupabaseConfigured()) throw new Error("账号功能尚未配置，请联系管理员");
+  if (!isSupabaseConfigured()) throw new Error("邮箱登录尚未单独接好，当前请用 GitHub 登录");
   const trimmed = String(email || "").trim();
   if (!trimmed) throw new Error("请输入邮箱");
   const { error } = await supabase.auth.signInWithOtp({
@@ -39,7 +39,7 @@ export async function sendEmailOtp(email) {
 }
 
 export async function verifyEmailOtp(email, token) {
-  if (!isSupabaseConfigured()) throw new Error("账号功能尚未配置，请联系管理员");
+  if (!isSupabaseConfigured()) throw new Error("邮箱登录尚未单独接好，当前请用 GitHub 登录");
   const { data, error } = await supabase.auth.verifyOtp({
     email: String(email || "").trim(),
     token: String(token || "").trim(),
@@ -49,41 +49,34 @@ export async function verifyEmailOtp(email, token) {
   return data;
 }
 
-const OAUTH_PROVIDERS = {
-  google: "google",
-  github: "github",
-  wechat: "wechat",
-  qq: "qq",
-  openai: "openai",
-};
-
 const OAUTH_HINTS = {
-  wechat: "微信登录需先在微信开放平台创建网站应用，并在 Supabase 配置后才能使用。",
-  qq: "QQ 登录需先在 QQ 互联创建应用，并在 Supabase 配置后才能使用。",
-  openai: "ChatGPT 账号目前不提供网站第三方登录，请改用 Google、GitHub 或邮箱。",
+  wechat: "微信登录需先在微信开放平台创建网站应用后再接入。",
+  qq: "QQ 登录需先在 QQ 互联创建应用后再接入。",
+  openai: "ChatGPT 账号目前不提供网站第三方登录，请改用 GitHub。",
+  google: "Google 登录尚未单独接入，当前请用 GitHub。",
 };
 
 export async function signInWithProvider(providerId) {
-  if (!isSupabaseConfigured()) throw new Error("账号功能尚未配置，请联系管理员");
-  const hint = OAUTH_HINTS[providerId];
-  const provider = OAUTH_PROVIDERS[providerId];
-  if (!provider) throw new Error("不支持的登录方式");
-  if (hint && (providerId === "wechat" || providerId === "qq" || providerId === "openai")) {
-    throw new Error(hint);
+  if (providerId === "github") {
+    window.location.href = "/api/auth/github/start";
+    return;
   }
-  const { error } = await supabase.auth.signInWithOAuth({
-    provider,
-    options: {
-      redirectTo: window.location.origin,
-    },
-  });
-  if (error) throw error;
+  const hint = OAUTH_HINTS[providerId];
+  throw new Error(hint || "不支持的登录方式");
 }
 
 export async function signOut() {
+  await fetch("/api/auth/logout", { method: "POST", credentials: "include" }).catch(() => {});
   if (!isSupabaseConfigured()) return;
   const { error } = await supabase.auth.signOut();
   if (error) throw error;
+}
+
+export async function getAppUser() {
+  const res = await fetch("/api/auth/me", { credentials: "include" });
+  if (!res.ok) return null;
+  const data = await res.json().catch(() => ({}));
+  return data.user || null;
 }
 
 export async function getSession() {
@@ -93,6 +86,5 @@ export async function getSession() {
 }
 
 export async function getUser() {
-  const session = await getSession();
-  return session?.user ?? null;
+  return (await getAppUser()) || (await getSession())?.user || null;
 }

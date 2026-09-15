@@ -1,6 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { supabase, isSupabaseConfigured } from "../services/supabase";
-import { getSession, signOut as authSignOut } from "../services/auth";
+import { getAppUser, getSession, signOut as authSignOut } from "../services/auth";
 import { pullAllProgress, pushAllProgress } from "../services/cloudSync";
 
 const AuthContext = createContext(null);
@@ -10,10 +10,9 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
   const [syncing, setSyncing] = useState(false);
 
-  const handleSession = useCallback(async (session) => {
-    const nextUser = session?.user ?? null;
+  const applyUser = useCallback(async (nextUser) => {
     setUser(nextUser);
-    if (nextUser) {
+    if (nextUser && !String(nextUser.id || "").startsWith("gh_")) {
       setSyncing(true);
       try {
         await pullAllProgress(nextUser.id);
@@ -24,25 +23,44 @@ export function AuthProvider({ children }) {
   }, []);
 
   useEffect(() => {
-    if (!isSupabaseConfigured()) {
-      setLoading(false);
-      return undefined;
+    let cancelled = false;
+
+    async function boot() {
+      const appUser = await getAppUser().catch(() => null);
+      if (cancelled) return;
+      if (appUser) {
+        await applyUser(appUser);
+        setLoading(false);
+        return;
+      }
+      if (isSupabaseConfigured()) {
+        const session = await getSession();
+        if (!cancelled) await applyUser(session?.user ?? null);
+      } else if (!cancelled) {
+        await applyUser(null);
+      }
+      if (!cancelled) setLoading(false);
     }
 
-    getSession().then((session) => {
-      handleSession(session);
-      setLoading(false);
-    });
+    boot();
+
+    if (!isSupabaseConfigured()) {
+      return () => {
+        cancelled = true;
+      };
+    }
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      handleSession(session);
+      applyUser(session?.user ?? null);
     });
-
-    return () => subscription.unsubscribe();
-  }, [handleSession]);
+    return () => {
+      cancelled = true;
+      subscription.unsubscribe();
+    };
+  }, [applyUser]);
 
   const signOut = useCallback(async () => {
-    if (user) {
+    if (user && !String(user.id || "").startsWith("gh_")) {
       await pushAllProgress(user.id).catch(() => {});
     }
     await authSignOut();
