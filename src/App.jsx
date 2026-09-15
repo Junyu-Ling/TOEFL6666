@@ -77,8 +77,10 @@ export default function App() {
   const savedRef = useRef(loadProgress(appMode));
   const modeSwitchLockRef = useRef(false);
   const loadingSessionRef = useRef(0);
+  const reloadFromSyncRef = useRef(() => {});
   const mic = useMicrophone();
   const [micPromptVisible, setMicPromptVisible] = useState(true);
+  const [introPlayed, setIntroPlayed] = useState(false);
 
   useEffect(() => {
     setStorageAppMode(appMode);
@@ -164,16 +166,18 @@ export default function App() {
     }
   }, [appMode]);
 
+  reloadFromSyncRef.current = reloadFromSync;
+
   useEffect(() => {
     const cleanupFocus = syncService.start();
-    const onApplied = () => reloadFromSync();
+    const onApplied = () => reloadFromSyncRef.current();
     window.addEventListener(SYNC_APPLIED_EVENT, onApplied);
     return () => {
       window.removeEventListener(SYNC_APPLIED_EVENT, onApplied);
       cleanupFocus?.();
       syncService.stop();
     };
-  }, [reloadFromSync]);
+  }, []);
 
   useEffect(() => {
     if (wordsLoading) return;
@@ -193,7 +197,6 @@ export default function App() {
     async function loadCloudWords() {
       setWordsLoading(true);
       setWordsDataReady(false);
-      setLoadingWordJudged(false);
       setWordsError(null);
       try {
         const manifest = fetchWordListManifest(appMode);
@@ -247,12 +250,24 @@ export default function App() {
   useEffect(() => {
     if (wordsError) {
       setWordsLoading(false);
+      setIntroPlayed(true);
       return;
     }
-    if (wordsDataReady && loadingWordJudged) {
+    if (!wordsDataReady) return;
+    if (introPlayed || loadingWordJudged) {
       setWordsLoading(false);
+      setIntroPlayed(true);
     }
-  }, [wordsDataReady, loadingWordJudged, wordsError]);
+  }, [wordsDataReady, loadingWordJudged, wordsError, introPlayed]);
+
+  useEffect(() => {
+    if (!wordsLoading) return undefined;
+    const timer = window.setTimeout(() => {
+      setWordsLoading(false);
+      setIntroPlayed(true);
+    }, 8000);
+    return () => window.clearTimeout(timer);
+  }, [wordsLoading]);
 
   useEffect(() => {
     if (wordsLoading) return undefined;
@@ -1343,6 +1358,7 @@ export default function App() {
             key={`${appMode}-${loadingSessionRef.current}`}
             appMode={appMode}
             dataReady={wordsDataReady}
+            skipIntro={introPlayed}
             onWordJudged={handleLoadingWordJudged}
           />
         </div>

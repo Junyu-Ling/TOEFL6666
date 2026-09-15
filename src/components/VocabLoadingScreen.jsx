@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useSettings } from "../context/SettingsContext";
 import { APP_MODE_LABELS } from "../utils/appMode";
 import loadingWordsData from "../data/loadingWords.json";
@@ -28,19 +28,26 @@ function pickRandomWord(excludeWord) {
   return next;
 }
 
-export default function VocabLoadingScreen({ dataReady = false, onWordJudged, appMode: appModeProp }) {
+export default function VocabLoadingScreen({
+  dataReady = false,
+  skipIntro = false,
+  onWordJudged,
+  appMode: appModeProp,
+}) {
   const { settings } = useSettings();
   const appMode = appModeProp ?? settings.appMode ?? "toefl";
   const [current] = useState(() => pickRandomWord(null));
   const [flipped, setFlipped] = useState(false);
   const [completed, setCompleted] = useState(false);
   const [messageIndex, setMessageIndex] = useState(0);
+  const finishedRef = useRef(false);
 
   const finishLoading = useCallback(() => {
-    if (completed) return;
+    if (finishedRef.current) return;
+    finishedRef.current = true;
     setCompleted(true);
     onWordJudged?.();
-  }, [completed, onWordJudged]);
+  }, [onWordJudged]);
 
   const handleFlip = useCallback(() => {
     if (completed) return;
@@ -48,8 +55,16 @@ export default function VocabLoadingScreen({ dataReady = false, onWordJudged, ap
   }, [completed]);
 
   useEffect(() => {
-    if (!current) onWordJudged?.();
-  }, [current, onWordJudged]);
+    if (!current || skipIntro) finishLoading();
+  }, [current, finishLoading, skipIntro]);
+
+  useEffect(() => {
+    if (!dataReady || completed) return;
+    const enterTimer = window.setTimeout(() => {
+      finishLoading();
+    }, skipIntro ? 0 : 800);
+    return () => window.clearTimeout(enterTimer);
+  }, [completed, dataReady, finishLoading, skipIntro]);
 
   useEffect(() => {
     if (!current || completed || flipped) return;

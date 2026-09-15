@@ -54,7 +54,7 @@
       "destination": "/api?__route=:path*"
     },
     {
-      "source": "/((?!api/).*)",
+      "source": "/((?!api/|wordlists/|wordlists-sat/|assets/).*)",
       "destination": "/index.html"
     }
   ]

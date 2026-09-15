@@ -6,7 +6,6 @@ const SYNC_KEYS = [
   "toefl666_reading_fill_blank",
   "toefl666_lexgrid_progress",
   "toefl666_streak",
-  "toefl666_settings",
 ];
 
 function localUpdatedAt(raw) {

@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useEffect, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useRef, useState } from "react";
 import { supabase, isSupabaseConfigured } from "../services/supabase";
 import { getAppUser, getSession, signOut as authSignOut, syncIdentitySession } from "../services/auth";
 import { pullAllProgress, pushAllProgress } from "../services/cloudSync";
@@ -9,22 +9,28 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [syncing, setSyncing] = useState(false);
+  const lastPulledIdRef = useRef(null);
 
-  const applyUser = useCallback(async (nextUser) => {
+  const applyUser = useCallback(async (nextUser, { forcePull = false } = {}) => {
     setUser(nextUser);
-    if (nextUser?.id) {
-      setSyncing(true);
-      try {
-        await pullAllProgress(nextUser.id);
-      } finally {
-        setSyncing(false);
-      }
+    const id = nextUser?.id || null;
+    if (!id) {
+      lastPulledIdRef.current = null;
+      return;
+    }
+    if (!forcePull && lastPulledIdRef.current === id) return;
+    lastPulledIdRef.current = id;
+    setSyncing(true);
+    try {
+      await pullAllProgress(id);
+    } finally {
+      setSyncing(false);
     }
   }, []);
 
   const refreshUser = useCallback(async () => {
     const appUser = await getAppUser().catch(() => null);
-    await applyUser(appUser);
+    await applyUser(appUser, { forcePull: true });
     return appUser;
   }, [applyUser]);
 
@@ -35,7 +41,7 @@ export function AuthProvider({ children }) {
       const appUser = await getAppUser().catch(() => null);
       if (cancelled) return;
       if (appUser) {
-        await applyUser(appUser);
+        await applyUser(appUser, { forcePull: true });
         setLoading(false);
         return;
       }
