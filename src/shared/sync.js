@@ -43,6 +43,7 @@ function stripSecretApiSettings(settings) {
   if (!settings || typeof settings !== "object") return settings;
   delete settings.aiApiKey;
   delete settings.customApiKey;
+  delete settings.clonedVoiceId;
   return settings;
 }
 
@@ -296,8 +297,10 @@ function mergeSettingsValue(localStr, remoteStr) {
   const local = parseJson(localStr, {});
   const remote = parseJson(remoteStr, {});
   const localKey = typeof local.customApiKey === "string" ? local.customApiKey : "";
+  const localVoice = typeof local.clonedVoiceId === "string" ? local.clonedVoiceId : "";
   const merged = stripSecretApiSettings({ ...remote, ...local });
   if (localKey) merged.customApiKey = localKey;
+  if (localVoice) merged.clonedVoiceId = localVoice;
   return JSON.stringify(merged);
 }
 
@@ -423,11 +426,13 @@ export function importLocalData(bundle) {
   }
 
   let preservedCustomApiKey = "";
+  let preservedClonedVoiceId = "";
   try {
     const raw = localStorage.getItem("toefl666_settings");
     if (raw) {
       const settings = JSON.parse(raw);
       preservedCustomApiKey = typeof settings.customApiKey === "string" ? settings.customApiKey : "";
+      preservedClonedVoiceId = typeof settings.clonedVoiceId === "string" ? settings.clonedVoiceId : "";
       if (settings.aiApiKey) {
         delete settings.aiApiKey;
         localStorage.setItem("toefl666_settings", JSON.stringify(settings));
@@ -461,6 +466,7 @@ export function importLocalData(bundle) {
       try {
         const settings = stripSecretApiSettings(JSON.parse(value));
         if (preservedCustomApiKey) settings.customApiKey = preservedCustomApiKey;
+        if (preservedClonedVoiceId) settings.clonedVoiceId = preservedClonedVoiceId;
         localStorage.setItem(key, JSON.stringify(settings));
         continue;
       } catch {

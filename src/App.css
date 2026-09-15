@@ -1260,6 +1260,7 @@ body {
 
 .flashcard__input-wrap {
   position: relative;
+  margin-top: 0.25rem;
 }
 
 .flashcard__input-wrap .flashcard__input {
@@ -3981,6 +3982,14 @@ body {
   gap: 0.5rem;
 }
 
+.cloned-voice-settings {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+
 .settings-action-btn--inline {
   margin-left: 0.5rem;
   padding: 0.15rem 0.5rem;
@@ -5353,6 +5362,7 @@ body {
   appearance: none;
   -webkit-appearance: none;
   line-height: 1;
+  ime-mode: disabled;
 }
 
 .rfill-blank__box::placeholder {

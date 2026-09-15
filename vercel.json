@@ -26,6 +26,12 @@
     "api/ai/detect-provider.js": {
       "maxDuration": 30
     },
+    "api/tts/clone.js": {
+      "maxDuration": 30
+    },
+    "api/tts/speak.js": {
+      "maxDuration": 15
+    },
     "api/sync/push.js": {
       "maxDuration": 15
     },

@@ -8,6 +8,7 @@ import {
   previewAnswerSound,
 } from "../utils/answerSounds";
 import ExamScoreSection from "./ExamScoreSection";
+import ClonedVoiceSettings from "./ClonedVoiceSettings";
 
 function clampDelayInput(value) {
   const n = Number(String(value).trim());
@@ -35,6 +36,8 @@ export default function SettingsPanel() {
     setWordsPerRound,
     setEnableRoundReview,
     setCustomApi,
+    setClonedVoiceId,
+    speakWord,
   } = useSettings();
 
   const [delayDraft, setDelayDraft] = useState(String(settings.autoAdvanceDelaySec));
@@ -176,7 +179,7 @@ export default function SettingsPanel() {
   if (!settingsOpen) return null;
 
   return (
-    <div className="settings-overlay" onClick={() => setSettingsOpen(false)} onKeyDown={stopGameKeyBubble}>
+    <div className="settings-overlay" lang="zh-CN" onClick={() => setSettingsOpen(false)} onKeyDown={stopGameKeyBubble}>
       <aside
         ref={panelRef}
         tabIndex={-1}
@@ -475,13 +478,18 @@ export default function SettingsPanel() {
           <summary className="settings-group__summary">
             <span className="settings-group__title">朗读</span>
             <span className="settings-group__meta">
-              {settings.systemVoiceURI ? "已选音色" : "自动选择"}
+              {settings.clonedVoiceId ? "我的声音" : settings.systemVoiceURI ? "已选音色" : "自动选择"}
               {systemVoices.length > 0 && (
                 <span className="settings-group__count">（{systemVoices.length} 个可用）</span>
               )}
             </span>
           </summary>
           <div className="settings-group__body">
+            <ClonedVoiceSettings
+              clonedVoiceId={settings.clonedVoiceId}
+              setClonedVoiceId={setClonedVoiceId}
+              speakWord={speakWord}
+            />
             <label className="settings-field">
               <span>朗读音色</span>
               <select

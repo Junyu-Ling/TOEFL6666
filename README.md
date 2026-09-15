@@ -50,4 +50,9 @@ npm run dev
 - `GEMINI_API_KEY`
 - `OPENAI_API_KEY`
 
+可选（本人声音克隆，仅用于站内读单词，不提供下载/导出）：
+
+- `MINIMAX_API_KEY`
+- `MINIMAX_GROUP_ID`（若控制台要求）
+
 **不要**把上述 Key 配成 `VITE_*`。Supabase 登录使用的 `VITE_SUPABASE_URL` / `VITE_SUPABASE_ANON_KEY` 是公开 anon 配置；不要把 service_role 放进仓库。

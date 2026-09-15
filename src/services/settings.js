@@ -50,6 +50,7 @@ const DEFAULT_SETTINGS = {
   customApiBase: "",
   customApiKey: "",
   customApiModel: "",
+  clonedVoiceId: "",
 };
 
 function normalizeStudyPlanEntry(value) {
@@ -136,6 +137,7 @@ export function loadSettings() {
       customApiBase: normalizeCustomApiField(parsed.customApiBase || parsed.aiApiBase),
       customApiKey: normalizeCustomApiField(parsed.customApiKey || parsed.aiApiKey),
       customApiModel: normalizeCustomApiField(parsed.customApiModel || parsed.aiModel),
+      clonedVoiceId: normalizeCustomApiField(parsed.clonedVoiceId),
     };
     if ("aiApiKey" in parsed || "aiApiBase" in parsed || "aiModel" in parsed) {
       saveSettings(next);

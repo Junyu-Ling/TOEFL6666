@@ -131,6 +131,11 @@ export function SettingsProvider({ children }) {
     });
   }, [updateSettings]);
 
+  const setClonedVoiceId = useCallback(
+    (clonedVoiceId) => updateSettings({ clonedVoiceId: String(clonedVoiceId || "") }),
+    [updateSettings]
+  );
+
   const setTargetExam = useCallback(
     (targetExam) => {
       const mode = normalizeTargetExam(targetExam);
@@ -225,6 +230,7 @@ export function SettingsProvider({ children }) {
       setWordsPerRound,
       setEnableRoundReview,
       setCustomApi,
+      setClonedVoiceId,
       setTargetExam,
       setAppMode,
       setToeflSectionScore,
@@ -252,6 +258,7 @@ export function SettingsProvider({ children }) {
       setWordsPerRound,
       setEnableRoundReview,
       setCustomApi,
+      setClonedVoiceId,
       setTargetExam,
       setAppMode,
       setToeflSectionScore,

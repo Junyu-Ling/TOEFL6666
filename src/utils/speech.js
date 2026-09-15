@@ -1,3 +1,5 @@
+import { playClonedWord, stopClonedSpeech } from "../services/clonedVoice";
+
 let voicesCache = [];
 
 const LOW_QUALITY_VOICE_PATTERN = /compact|eloquence|super-compact|legacy|bad\s+news|bubbles|cellos|deranged|good\s+news|jester|organ|superstar|trinoids|whisper|zarvox/i;
@@ -113,6 +115,16 @@ function whenVoicesReady(callback) {
 }
 
 export function speakWord(word, settings) {
-  if (!word || !("speechSynthesis" in window)) return;
+  if (!word) return;
+  const clonedVoiceId = String(settings?.clonedVoiceId || "").trim();
+  if (clonedVoiceId) {
+    if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+    playClonedWord(word, clonedVoiceId).catch(() => {
+      if ("speechSynthesis" in window) whenVoicesReady(() => speakNow(word, settings));
+    });
+    return;
+  }
+  stopClonedSpeech();
+  if (!("speechSynthesis" in window)) return;
   whenVoicesReady(() => speakNow(word, settings));
 }
