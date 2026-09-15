@@ -80,7 +80,6 @@ export default function App() {
   const reloadFromSyncRef = useRef(() => {});
   const mic = useMicrophone();
   const [micPromptVisible, setMicPromptVisible] = useState(true);
-  const [introPlayed, setIntroPlayed] = useState(false);
 
   useEffect(() => {
     setStorageAppMode(appMode);
@@ -197,6 +196,7 @@ export default function App() {
     async function loadCloudWords() {
       setWordsLoading(true);
       setWordsDataReady(false);
+      setLoadingWordJudged(false);
       setWordsError(null);
       try {
         const manifest = fetchWordListManifest(appMode);
@@ -250,24 +250,12 @@ export default function App() {
   useEffect(() => {
     if (wordsError) {
       setWordsLoading(false);
-      setIntroPlayed(true);
       return;
     }
-    if (!wordsDataReady) return;
-    if (introPlayed || loadingWordJudged) {
+    if (wordsDataReady && loadingWordJudged) {
       setWordsLoading(false);
-      setIntroPlayed(true);
     }
-  }, [wordsDataReady, loadingWordJudged, wordsError, introPlayed]);
-
-  useEffect(() => {
-    if (!wordsLoading) return undefined;
-    const timer = window.setTimeout(() => {
-      setWordsLoading(false);
-      setIntroPlayed(true);
-    }, 8000);
-    return () => window.clearTimeout(timer);
-  }, [wordsLoading]);
+  }, [wordsDataReady, loadingWordJudged, wordsError]);
 
   useEffect(() => {
     if (wordsLoading) return undefined;
@@ -1358,7 +1346,6 @@ export default function App() {
             key={`${appMode}-${loadingSessionRef.current}`}
             appMode={appMode}
             dataReady={wordsDataReady}
-            skipIntro={introPlayed}
             onWordJudged={handleLoadingWordJudged}
           />
         </div>
