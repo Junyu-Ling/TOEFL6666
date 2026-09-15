@@ -4,7 +4,7 @@
   "functions": {
     "api/index.js": {
       "maxDuration": 30,
-      "includeFiles": "server/data/readingFillBlank.json"
+      "includeFiles": "server/data/readingFillBlank.json.enc"
     }
   },
   "headers": [
@@ -49,13 +49,28 @@
     }
   ],
   "rewrites": [
-    {
-      "source": "/api/:path*",
-      "destination": "/api?__route=:path*"
-    },
-    {
-      "source": "/((?!api/).*)",
-      "destination": "/index.html"
-    }
+    { "source": "/api/auth/github/start", "destination": "/api?__route=auth/github/start" },
+    { "source": "/api/auth/github/callback", "destination": "/api?__route=auth/github/callback" },
+    { "source": "/api/auth/me", "destination": "/api?__route=auth/me" },
+    { "source": "/api/auth/logout", "destination": "/api?__route=auth/logout" },
+    { "source": "/api/access/me", "destination": "/api?__route=access/me" },
+    { "source": "/api/access/users", "destination": "/api?__route=access/users" },
+    { "source": "/api/access/grant", "destination": "/api?__route=access/grant" },
+    { "source": "/api/reading-fill/articles", "destination": "/api?__route=reading-fill/articles" },
+    { "source": "/api/tts/status", "destination": "/api?__route=tts/status" },
+    { "source": "/api/tts/clone", "destination": "/api?__route=tts/clone" },
+    { "source": "/api/tts/speak", "destination": "/api?__route=tts/speak" },
+    { "source": "/api/sync/push", "destination": "/api?__route=sync/push" },
+    { "source": "/api/sync/pull", "destination": "/api?__route=sync/pull" },
+    { "source": "/api/ai/detect-provider", "destination": "/api?__route=ai/detect-provider" },
+    { "source": "/api/ai/evaluate", "destination": "/api?__route=ai/evaluate" },
+    { "source": "/api/ai/memory-trick", "destination": "/api?__route=ai/memory-trick" },
+    { "source": "/api/ai/pronounce-evaluate", "destination": "/api?__route=ai/pronounce-evaluate" },
+    { "source": "/api/ai/word-lookup", "destination": "/api?__route=ai/word-lookup" },
+    { "source": "/api/ai/word-validate", "destination": "/api?__route=ai/word-validate" },
+    { "source": "/api/ai/study-plan", "destination": "/api?__route=ai/study-plan" },
+    { "source": "/api/ai/chat", "destination": "/api?__route=ai/chat" },
+    { "source": "/api/:path*", "destination": "/api?__route=:path*" },
+    { "source": "/((?!api/).*)", "destination": "/index.html" }
   ]
 }

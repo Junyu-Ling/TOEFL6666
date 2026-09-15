@@ -27,6 +27,9 @@ scripts/_*.png
 scripts/_*.txt
 scripts/articles-*.json
 
+# 阅读填词明文只留在本机；仓库里只提交加密文件
+server/data/readingFillBlank.json
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

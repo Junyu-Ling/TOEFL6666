@@ -1,12 +1,14 @@
-import { createRequire } from "node:module";
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { requireAccessUser } from "./access-api.js";
 import { getAccessSnapshot } from "./access-store.js";
+import { getEnv } from "./sync-store.js";
+import { decryptReadingFillJson, readingFillKeyFromEnv } from "./reading-fill-crypto.js";
 
-const require = createRequire(import.meta.url);
-const DATA_PATH = join(dirname(fileURLToPath(import.meta.url)), "data", "readingFillBlank.json");
+const DIR = dirname(fileURLToPath(import.meta.url));
+const PLAIN_PATH = join(DIR, "data", "readingFillBlank.json");
+const ENC_PATH = join(DIR, "data", "readingFillBlank.json.enc");
 
 function createError(message, status) {
   const err = new Error(message);
@@ -14,21 +16,31 @@ function createError(message, status) {
   return err;
 }
 
-export function loadReadingFillRawArticles() {
-  let parsed;
-  try {
-    parsed = require("./data/readingFillBlank.json");
-  } catch {
-    try {
-      parsed = JSON.parse(readFileSync(DATA_PATH, "utf8"));
-    } catch {
-      throw createError("题目未配置", 503);
-    }
-  }
+function parseArticles(text) {
+  const parsed = JSON.parse(text);
   if (!Array.isArray(parsed) || parsed.length === 0) {
     throw createError("题目未配置", 503);
   }
   return parsed;
+}
+
+export function loadReadingFillRawArticles() {
+  try {
+    return parseArticles(readFileSync(PLAIN_PATH, "utf8"));
+  } catch (err) {
+    if (err.status) throw err;
+  }
+
+  const key = readingFillKeyFromEnv(getEnv());
+  if (!key) {
+    throw createError("题目未配置", 503);
+  }
+  try {
+    return parseArticles(decryptReadingFillJson(readFileSync(ENC_PATH, "utf8"), key));
+  } catch (err) {
+    if (err.status) throw err;
+    throw createError("题目未配置", 503);
+  }
 }
 
 export async function handleReadingFillArticles(req) {

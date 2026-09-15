@@ -59,9 +59,9 @@ npm run dev
 
 ### 阅读填词权限
 
-阅读填词默认不对所有人开放。未开通时导航栏不显示该入口；题目只通过登录后的接口下发，不会打进前端静态包。
+阅读填词默认不对所有人开放。未开通时导航栏不显示该入口；题目只通过登录后的接口下发，不会打进前端静态包。用户登录后会出现在管理员列表里，管理员可在设置中开通。
 
-用户登录后会出现在管理员列表里，管理员可在设置中开通。题目文件在 `server/data/`，仓库已设为私有。
+仓库保持公开以便 Vercel 部署。题目明文不进 Git，只提交 `server/data/readingFillBlank.json.enc`。线上用已有的 `GITHUB_CLIENT_SECRET`（或 `READING_FILL_SECRET` / `AUTH_SECRET`）解密。本地改题后运行 `npm run encrypt:reading-fill`。
 
 GitHub 登录**不需要 Supabase**。在 GitHub OAuth App 里把 Callback URL 设为：
 

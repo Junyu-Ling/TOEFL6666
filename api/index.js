@@ -47,7 +47,7 @@ function firstHeader(req, name) {
 function pathnameOf(req) {
   const rawRoute = req.query?.__route;
   const route = Array.isArray(rawRoute) ? rawRoute.join("/") : String(rawRoute || "");
-  if (route) {
+  if (route && route !== "undefined") {
     try {
       return `/api/${decodeURIComponent(route)}`.replace(/\/+$/, "");
     } catch {
@@ -55,9 +55,12 @@ function pathnameOf(req) {
     }
   }
 
-  const forwarded = firstHeader(req, "x-forwarded-uri").split("?")[0];
-  if (forwarded.startsWith("/api/") && forwarded !== "/api") {
-    return forwarded.replace(/\/+$/, "");
+  const headerNames = ["x-forwarded-uri", "x-original-uri", "x-vercel-original-path", "x-invoke-path"];
+  for (const name of headerNames) {
+    const forwarded = firstHeader(req, name).split("?")[0];
+    if (forwarded.startsWith("/api/") && forwarded !== "/api") {
+      return forwarded.replace(/\/+$/, "");
+    }
   }
 
   try {
