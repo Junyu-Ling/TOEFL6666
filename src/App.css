@@ -7039,10 +7039,6 @@ body {
   border-color: var(--accent);
 }
 
-.login-modal__social-btn--openai {
-  grid-column: 1 / -1;
-}
-
 .login-modal__divider {
   margin: 0.15rem 0 0;
   text-align: center;

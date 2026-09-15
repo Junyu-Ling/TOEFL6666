@@ -13,9 +13,6 @@ const RESEND_SECONDS = 60;
 const SOCIAL = [
   { id: "google", label: "Google" },
   { id: "github", label: "GitHub" },
-  { id: "wechat", label: "微信" },
-  { id: "qq", label: "QQ" },
-  { id: "openai", label: "ChatGPT" },
 ];
 
 export default function LoginModal({ onClose }) {
@@ -112,7 +109,7 @@ export default function LoginModal({ onClose }) {
 
         {method === "home" ? (
           <div className="login-modal__body">
-            <p className="login-modal__hint">选择一种方式登录。阅读填词需管理员开通后才能使用。</p>
+            <p className="login-modal__hint">选择一种方式登录。</p>
             <div className="login-modal__social">
               {SOCIAL.map((item) => (
                 <button

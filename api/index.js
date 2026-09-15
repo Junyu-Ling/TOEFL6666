@@ -11,6 +11,7 @@ import { handleSyncPush, handleSyncPull } from "../server/sync-api.js";
 import { cloneOwnVoice, isClonedVoiceConfigured, synthesizeVocabWord } from "../server/tts-minimax.js";
 import { handleAccessGrant, handleAccessMe, handleAccessUsers } from "../server/access-api.js";
 import { handleAuthLogout, handleAuthMe, handleGithubCallback, handleGithubStart } from "../server/auth-github.js";
+import { handleReadingFillArticles } from "../server/reading-fill-articles.js";
 
 export const config = {
   api: {
@@ -37,18 +38,36 @@ function sendSse(res, payload) {
   res.write(`data: ${JSON.stringify(payload)}\n\n`);
 }
 
+function firstHeader(req, name) {
+  const value = req.headers?.[name];
+  if (Array.isArray(value)) return String(value[0] || "");
+  return String(value || "");
+}
+
 function pathnameOf(req) {
-  if (Array.isArray(req.query?.path) && req.query.path.length) {
-    return `/api/${req.query.path.join("/")}`;
+  const rawRoute = req.query?.__route;
+  const route = Array.isArray(rawRoute) ? rawRoute.join("/") : String(rawRoute || "");
+  if (route) {
+    try {
+      return `/api/${decodeURIComponent(route)}`.replace(/\/+$/, "");
+    } catch {
+      return `/api/${route}`.replace(/\/+$/, "");
+    }
   }
-  if (typeof req.query?.path === "string" && req.query.path) {
-    return `/api/${req.query.path}`;
+
+  const forwarded = firstHeader(req, "x-forwarded-uri").split("?")[0];
+  if (forwarded.startsWith("/api/") && forwarded !== "/api") {
+    return forwarded.replace(/\/+$/, "");
   }
+
   try {
-    return new URL(req.url || "/", "http://n").pathname.replace(/\/+$/, "") || "/";
+    const path = new URL(req.url || "/", "http://n").pathname.replace(/\/+$/, "") || "/";
+    if (path.startsWith("/api")) return path;
   } catch {
-    return String(req.url || "/").split("?")[0].replace(/\/+$/, "") || "/";
+    const path = String(req.url || "/").split("?")[0].replace(/\/+$/, "") || "/";
+    if (path.startsWith("/api")) return path;
   }
+  return "/api";
 }
 
 async function handleStream(res, iterator) {
@@ -142,6 +161,16 @@ export default async function handler(req, res) {
         return;
       }
       sendJson(res, 200, await handleAccessGrant(req, parseBody(req)));
+      return;
+    }
+
+    if (pathname === "/api/reading-fill/articles") {
+      if (method !== "GET") {
+        sendJson(res, 405, { error: "Method Not Allowed" });
+        return;
+      }
+      res.setHeader("Cache-Control", "private, no-store");
+      sendJson(res, 200, await handleReadingFillArticles(req));
       return;
     }
 

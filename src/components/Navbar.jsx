@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSettings } from "../context/SettingsContext";
 import { useAuth } from "../context/AuthContext";
+import { useAccess } from "../context/AccessContext";
 import { APP_MODE_LABELS, getAlternateAppMode, isTabAvailableInMode } from "../utils/appMode";
 import { syncService, SYNC_STATUS_EVENT } from "../services/syncService";
 
@@ -18,6 +19,7 @@ const TABS = [
 export default function Navbar({ activeTab, onTabChange, counts, streak, onStreakClick, onExamModeSwitch, onLoginClick }) {
   const { settings, setSettingsOpen } = useSettings();
   const { user, syncing, signOut } = useAuth();
+  const { canUseReadingFill } = useAccess();
   const appMode = settings.appMode ?? "toefl";
   const alternateMode = getAlternateAppMode(appMode);
   const loggedInToday = streak?.loggedInToday;
@@ -52,7 +54,10 @@ export default function Navbar({ activeTab, onTabChange, counts, streak, onStrea
       </button>
 
       <div className="navbar__tabs">
-        {TABS.filter((tab) => isTabAvailableInMode(tab.id, appMode)).map((tab) => (
+        {TABS.filter((tab) => {
+          if (tab.id === "reading-fill" && !canUseReadingFill) return false;
+          return isTabAvailableInMode(tab.id, appMode);
+        }).map((tab) => (
           <button
             key={tab.id}
             type="button"

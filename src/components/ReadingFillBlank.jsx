@@ -1,12 +1,11 @@
 import { forwardRef, memo, useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from "react";
 import {
-  getReadingFillBlankArticles,
   getReadingFillBlankQuestionRange,
   getReadingFillBlankReviewRows,
   gradeArticle,
-  READING_FILL_BLANK_QUESTION_TOTAL,
-  READING_FILL_BLANK_TOTAL,
+  hydrateReadingFillBlankArticles,
 } from "../utils/readingFillBlank";
+import { fetchReadingFillArticles } from "../services/access";
 import {
   clearReadingFillBlankProgress,
   getArticleInputs,
@@ -170,7 +169,9 @@ const BlankInput = forwardRef(function BlankInput(
 function ReadingFillBlank() {
   const isTabActive = useIsActiveTab("reading-fill");
   useEnglishImeLock(isTabActive);
-  const articles = useMemo(() => getReadingFillBlankArticles(), []);
+  const [articles, setArticles] = useState([]);
+  const [articlesLoading, setArticlesLoading] = useState(true);
+  const [articlesError, setArticlesError] = useState("");
   const [progress, setProgress] = useState(() => loadReadingFillBlankProgress());
   const [viewMode, setViewMode] = useState("practice");
   const [selectedReviewIndex, setSelectedReviewIndex] = useState(0);
@@ -196,6 +197,29 @@ function ReadingFillBlank() {
     () => getReadingFillBlankReviewRows(articles, progress),
     [articles, progress]
   );
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      setArticlesLoading(true);
+      setArticlesError("");
+      try {
+        const data = await fetchReadingFillArticles();
+        if (cancelled) return;
+        setArticles(hydrateReadingFillBlankArticles(data.articles || []));
+      } catch (err) {
+        if (!cancelled) {
+          setArticles([]);
+          setArticlesError(err.message || "题目加载失败");
+        }
+      } finally {
+        if (!cancelled) setArticlesLoading(false);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const handleBlankFilled = useCallback(
     (blankId) => {
@@ -323,6 +347,22 @@ function ReadingFillBlank() {
     setViewMode("practice");
   };
 
+  if (articlesLoading) {
+    return (
+      <div className="rfill" lang="zh-CN">
+        <p className="rfill__empty">正在加载题目…</p>
+      </div>
+    );
+  }
+
+  if (articlesError) {
+    return (
+      <div className="rfill" lang="zh-CN">
+        <p className="rfill__empty">{articlesError}</p>
+      </div>
+    );
+  }
+
   if (!article) {
     return (
       <div className="rfill" lang="en">
@@ -402,11 +442,11 @@ function ReadingFillBlank() {
             {viewMode === "review"
               ? `${reviewQuestionRange.start}-${reviewQuestionRange.end}`
               : `${questionRange.start}-${questionRange.end}`}{" "}
-            of {READING_FILL_BLANK_QUESTION_TOTAL}
+            of {questionRange.total}
           </span>
         </div>
         <div className="rfill__subbar-right">
-          共 {READING_FILL_BLANK_TOTAL} 篇 · 当前{" "}
+          共 {articles.length} 篇 · 当前{" "}
           {viewMode === "review" ? selectedReviewIndex + 1 : articleIndex + 1}/{articles.length}
         </div>
       </div>

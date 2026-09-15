@@ -1,6 +1,7 @@
 import { loadEnv } from "vite";
 import { handleAccessGrant, handleAccessMe, handleAccessUsers } from "./server/access-api.js";
 import { handleAuthLogout, handleAuthMe, handleGithubCallback, handleGithubStart } from "./server/auth-github.js";
+import { handleReadingFillArticles } from "./server/reading-fill-articles.js";
 
 function readBody(req) {
   return new Promise((resolve, reject) => {
@@ -56,11 +57,12 @@ export function accessProxyPlugin() {
         const isAccessMe = matchApiPath(req.url, "/api/access/me");
         const isUsers = matchApiPath(req.url, "/api/access/users");
         const isGrant = matchApiPath(req.url, "/api/access/grant");
+        const isReadingFillArticles = matchApiPath(req.url, "/api/reading-fill/articles");
         const isGhStart = matchApiPath(req.url, "/api/auth/github/start");
         const isGhCallback = matchApiPath(req.url, "/api/auth/github/callback");
         const isAuthMe = matchApiPath(req.url, "/api/auth/me");
         const isLogout = matchApiPath(req.url, "/api/auth/logout");
-        if (!isAccessMe && !isUsers && !isGrant && !isGhStart && !isGhCallback && !isAuthMe && !isLogout) {
+        if (!isAccessMe && !isUsers && !isGrant && !isReadingFillArticles && !isGhStart && !isGhCallback && !isAuthMe && !isLogout) {
           return next();
         }
 
@@ -92,6 +94,11 @@ export function accessProxyPlugin() {
           if (isGrant && req.method === "POST") {
             const body = parseBody(await readBody(req));
             sendJson(res, 200, await handleAccessGrant(req, body));
+            return;
+          }
+          if (isReadingFillArticles && req.method === "GET") {
+            res.setHeader("Cache-Control", "private, no-store");
+            sendJson(res, 200, await handleReadingFillArticles(req));
             return;
           }
           sendJson(res, 405, { error: "Method Not Allowed" });

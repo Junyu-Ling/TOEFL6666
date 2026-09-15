@@ -16,7 +16,6 @@ import FloatingLexGridButton from "./components/FloatingLexGridButton";
 import FullscreenLexGrid from "./components/FullscreenLexGrid";
 import ReadingVocabMatch from "./components/ReadingVocabMatch";
 import ReadingFillBlank from "./components/ReadingFillBlank";
-import ReadingFillGate from "./components/ReadingFillGate";
 import FamiliarObscureMeanings from "./components/FamiliarObscureMeanings";
 import TransitionWords from "./components/TransitionWords";
 import TabPanel from "./components/TabPanel";
@@ -48,6 +47,7 @@ import {
   setStorageAppMode,
 } from "./services/storage";
 import { normalizeAppMode, normalizeActiveTabForMode } from "./utils/appMode";
+import { useAccess } from "./context/AccessContext";
 import {
   UNCategorized_LIST_ID,
   inferSourceListId,
@@ -72,6 +72,7 @@ function clampIndex(index, length) {
 
 export default function App() {
   const { settingsOpen, settings, setAppMode } = useSettings();
+  const { canUseReadingFill, loading: accessLoading } = useAccess();
   const appMode = normalizeAppMode(settings.appMode);
   const savedRef = useRef(loadProgress(appMode));
   const modeSwitchLockRef = useRef(false);
@@ -374,6 +375,13 @@ export default function App() {
     },
     [activeListId, appMode, bookPracticePaused, bookPractices, listIndex, reviewShuffle]
   );
+
+  useEffect(() => {
+    if (accessLoading) return;
+    if (activeTab === "reading-fill" && !canUseReadingFill) {
+      handleTabChange("practice");
+    }
+  }, [accessLoading, activeTab, canUseReadingFill, handleTabChange]);
 
   const listWord = useMemo(() => {
     const item = wordList[listIndex];
@@ -1400,11 +1408,9 @@ export default function App() {
             </TabPanel>
           ) : null}
 
-          {appMode === "toefl" ? (
+          {appMode === "toefl" && canUseReadingFill ? (
             <TabPanel tabId="reading-fill" activeTab={activeTab}>
-              <ReadingFillGate onLogin={() => setLoginOpen(true)}>
-                {readingFillPanel}
-              </ReadingFillGate>
+              {readingFillPanel}
             </TabPanel>
           ) : null}
         </ActiveTabProvider>

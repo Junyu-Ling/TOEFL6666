@@ -1,14 +1,7 @@
-import rawArticles from "../data/readingFillBlank.json";
 import { getArticleInputs } from "../services/readingFillBlankProgress";
 
-export const READING_FILL_BLANK_TOTAL = rawArticles.length;
-export const READING_FILL_BLANK_QUESTION_TOTAL = rawArticles.reduce(
-  (sum, article) => sum + (article.answers?.length ?? 0),
-  0
-);
-
 export function getReadingFillBlankQuestionTotal(articles) {
-  return articles.reduce((sum, article) => sum + (article.blankCount ?? 0), 0);
+  return articles.reduce((sum, article) => sum + (article.blankCount ?? article.answers?.length ?? 0), 0);
 }
 
 export function parsePassage(raw, answers) {
@@ -50,7 +43,7 @@ export function parsePassage(raw, answers) {
   return segments;
 }
 
-export function getReadingFillBlankArticles() {
+export function hydrateReadingFillBlankArticles(rawArticles = []) {
   return rawArticles.map((article) => ({
     id: article.id,
     title: article.title,
@@ -60,10 +53,6 @@ export function getReadingFillBlankArticles() {
   }));
 }
 
-export function getReadingFillBlankArticle(articleId) {
-  return getReadingFillBlankArticles().find((article) => article.id === articleId) ?? null;
-}
-
 export function getReadingFillBlankQuestionRange(articles, articleIndex) {
   let start = 1;
   for (let i = 0; i < articleIndex; i += 1) {
@@ -71,7 +60,7 @@ export function getReadingFillBlankQuestionRange(articles, articleIndex) {
   }
   const blankCount = articles[articleIndex]?.blankCount ?? 0;
   const end = blankCount > 0 ? start + blankCount - 1 : Math.max(start - 1, 0);
-  return { start, end, total: READING_FILL_BLANK_QUESTION_TOTAL };
+  return { start, end, total: getReadingFillBlankQuestionTotal(articles) };
 }
 
 export function getBlankSegments(article) {

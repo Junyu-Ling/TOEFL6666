@@ -50,9 +50,6 @@ export async function verifyEmailOtp(email, token) {
 }
 
 const OAUTH_HINTS = {
-  wechat: "微信登录需先在微信开放平台创建网站应用后再接入。",
-  qq: "QQ 登录需先在 QQ 互联创建应用后再接入。",
-  openai: "ChatGPT 账号目前不提供网站第三方登录，请改用 GitHub。",
   google: "Google 登录尚未单独接入，当前请用 GitHub。",
 };
 

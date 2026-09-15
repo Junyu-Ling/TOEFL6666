@@ -3,7 +3,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const dataPath = path.join(__dirname, "../src/data/readingFillBlank.json");
+const dataPath = path.join(__dirname, "../server/data/readingFillBlank.json");
 
 const articles = JSON.parse(fs.readFileSync(dataPath, "utf8"));
 const byId = new Map(articles.map((article) => [article.id, article]));

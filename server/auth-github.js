@@ -56,8 +56,8 @@ export async function handleGithubCallback(req, res) {
   }
 
   const url = new URL(req.url || "/", requestOrigin(req));
-  const code = url.searchParams.get("code") || "";
-  const state = url.searchParams.get("state") || "";
+  const code = url.searchParams.get("code") || String(req.query?.code || "");
+  const state = url.searchParams.get("state") || String(req.query?.state || "");
   const expected = getCookie(req, OAUTH_STATE_COOKIE);
   clearOauthStateCookie(req, res);
 

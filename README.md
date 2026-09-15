@@ -27,7 +27,7 @@ npm run dev
 生产环境访问：
 
 - `https://<项目>.vercel.app/` → 前端
-- `https://<项目>.vercel.app/api/...` → 后端（全部 `/api` 打进同一个 Serverless Function，以适配 Hobby 的 12 个函数上限）
+- `https://<项目>.vercel.app/api/...` → 后端（全部 `/api` 打进 `api/index.js` 这一个 Function）
 
 ### Environment Variables
 
@@ -59,7 +59,9 @@ npm run dev
 
 ### 阅读填词权限
 
-阅读填词默认不对所有人开放。用户登录后会出现在管理员列表里，管理员可在设置中开通。
+阅读填词默认不对所有人开放。未开通时导航栏不显示该入口；题目只通过登录后的接口下发，不会打进前端静态包。
+
+用户登录后会出现在管理员列表里，管理员可在设置中开通。题目文件在 `server/data/`，仓库已设为私有。
 
 GitHub 登录**不需要 Supabase**。在 GitHub OAuth App 里把 Callback URL 设为：
 
@@ -79,4 +81,4 @@ GitHub 登录**不需要 Supabase**。在 GitHub OAuth App 里把 Callback URL �
 
 开通记录保存在 Redis。
 
-登录：GitHub 已直接接入。邮箱 / 手机 / Google 仍可保留入口；微信 / QQ 需开放平台，ChatGPT 没有网站第三方登录。
+登录：GitHub 已直接接入。邮箱 / 手机 / Google 仍可保留入口。

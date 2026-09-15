@@ -4,7 +4,7 @@ import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const articles = JSON.parse(
-  fs.readFileSync(path.join(__dirname, "../src/data/readingFillBlank.json"), "utf8")
+  fs.readFileSync(path.join(__dirname, "../server/data/readingFillBlank.json"), "utf8")
 );
 
 function normTitle(t) {

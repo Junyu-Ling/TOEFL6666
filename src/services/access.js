@@ -29,3 +29,7 @@ export async function grantReadingFill(userId, enabled) {
     body: { userId, feature: "reading-fill", enabled },
   });
 }
+
+export async function fetchReadingFillArticles() {
+  return accessRequest("/api/reading-fill/articles");
+}
