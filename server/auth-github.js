@@ -8,15 +8,16 @@ import { readSupabaseUser } from "./access-api.js";
 import {
   clearOauthStateCookie,
   clearSessionCookie,
+  createOauthState,
   createSessionToken,
   getGithubConfig,
   getCookie,
   OAUTH_STATE_COOKIE,
-  randomState,
   readSessionUser,
   requestOrigin,
   setOauthStateCookie,
   setSessionCookie,
+  verifyOauthState,
 } from "./auth-session.js";
 
 function createError(message, status) {
@@ -41,12 +42,29 @@ function callbackUrl(req) {
   return `${requestOrigin(req)}/api/auth/github/callback`;
 }
 
+function firstQuery(value) {
+  if (Array.isArray(value)) return String(value[0] || "");
+  return value == null ? "" : String(value);
+}
+
+function queryParam(req, url, key) {
+  return url.searchParams.get(key) || firstQuery(req.query?.[key]);
+}
+
+function redirectHome(req, res, params = {}) {
+  const dest = new URL("/", `${requestOrigin(req)}/`);
+  for (const [key, value] of Object.entries(params)) {
+    if (value) dest.searchParams.set(key, value);
+  }
+  redirect(res, dest.toString());
+}
+
 export function handleGithubStart(req, res) {
   const { clientId, clientSecret } = getGithubConfig();
   if (!clientId || !clientSecret) {
     throw createError("GitHub 登录未配置 Client Secret。在 Vercel / .env 中设置 GITHUB_CLIENT_SECRET。", 503);
   }
-  const state = randomState();
+  const state = createOauthState();
   setOauthStateCookie(req, res, state);
   const url = new URL("https://github.com/login/oauth/authorize");
   url.searchParams.set("client_id", clientId);
@@ -59,74 +77,94 @@ export function handleGithubStart(req, res) {
 export async function handleGithubCallback(req, res) {
   const { clientId, clientSecret } = getGithubConfig();
   if (!clientId || !clientSecret) {
-    throw createError("GitHub 登录未配置 Client Secret。", 503);
+    redirectHome(req, res, { login_error: "config" });
+    return;
   }
 
   const url = new URL(req.url || "/", requestOrigin(req));
-  const code = url.searchParams.get("code") || String(req.query?.code || "");
-  const state = url.searchParams.get("state") || String(req.query?.state || "");
+  const denied = queryParam(req, url, "error");
+  const code = queryParam(req, url, "code");
+  const state = queryParam(req, url, "state");
   const expected = getCookie(req, OAUTH_STATE_COOKIE);
   clearOauthStateCookie(req, res);
 
-  if (!code) throw createError("GitHub 未返回授权码", 400);
-  if (!state || !expected || state !== expected) throw createError("登录状态校验失败，请重试", 400);
-
-  const tokenRes = await fetch("https://github.com/login/oauth/access_token", {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      "User-Agent": "TOEFL6666",
-    },
-    body: JSON.stringify({
-      client_id: clientId,
-      client_secret: clientSecret,
-      code,
-      redirect_uri: callbackUrl(req),
-    }),
-  });
-  const tokenData = await tokenRes.json().catch(() => ({}));
-  if (!tokenData.access_token) {
-    throw createError(tokenData.error_description || "GitHub 换票失败", 401);
+  if (denied) {
+    redirectHome(req, res, { login_error: denied === "access_denied" ? "denied" : "server" });
+    return;
+  }
+  if (!code) {
+    redirectHome(req, res, { login_error: "missing_code" });
+    return;
+  }
+  if (!verifyOauthState(state, expected)) {
+    redirectHome(req, res, { login_error: "bad_state" });
+    return;
   }
 
-  const userRes = await fetch("https://api.github.com/user", {
-    headers: {
-      Accept: "application/vnd.github+json",
-      Authorization: `Bearer ${tokenData.access_token}`,
-      "User-Agent": "TOEFL6666",
-    },
-  });
-  const profile = await userRes.json().catch(() => ({}));
-  if (!profile.id) throw createError("无法读取 GitHub 账号", 401);
+  try {
+    const tokenRes = await fetch("https://github.com/login/oauth/access_token", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "User-Agent": "TOEFL6666",
+      },
+      body: JSON.stringify({
+        client_id: clientId,
+        client_secret: clientSecret,
+        code,
+        redirect_uri: callbackUrl(req),
+      }),
+    });
+    const tokenData = await tokenRes.json().catch(() => ({}));
+    if (!tokenData.access_token) {
+      redirectHome(req, res, { login_error: "token" });
+      return;
+    }
 
-  let email = profile.email || "";
-  if (!email) {
-    const emailRes = await fetch("https://api.github.com/user/emails", {
+    const userRes = await fetch("https://api.github.com/user", {
       headers: {
         Accept: "application/vnd.github+json",
         Authorization: `Bearer ${tokenData.access_token}`,
         "User-Agent": "TOEFL6666",
       },
     });
-    const emails = await emailRes.json().catch(() => []);
-    const primary = Array.isArray(emails)
-      ? emails.find((item) => item.primary && item.verified) || emails.find((item) => item.verified) || emails[0]
-      : null;
-    email = primary?.email || "";
-  }
+    const profile = await userRes.json().catch(() => ({}));
+    if (!profile.id) {
+      redirectHome(req, res, { login_error: "profile" });
+      return;
+    }
 
-  const stored = await resolveLoginUser({
-    id: `gh_${profile.id}`,
-    githubId: `gh_${profile.id}`,
-    email,
-    name: profile.name || profile.login || "",
-    login: profile.login || "",
-    avatar: profile.avatar_url || "",
-    provider: "github",
-  });
-  setSessionCookie(req, res, createSessionToken(sessionPayloadFromProfile(stored)));
-  redirect(res, `${requestOrigin(req)}/`);
+    let email = profile.email || "";
+    if (!email) {
+      const emailRes = await fetch("https://api.github.com/user/emails", {
+        headers: {
+          Accept: "application/vnd.github+json",
+          Authorization: `Bearer ${tokenData.access_token}`,
+          "User-Agent": "TOEFL6666",
+        },
+      });
+      const emails = await emailRes.json().catch(() => []);
+      const primary = Array.isArray(emails)
+        ? emails.find((item) => item.primary && item.verified) || emails.find((item) => item.verified) || emails[0]
+        : null;
+      email = primary?.email || "";
+    }
+
+    const stored = await resolveLoginUser({
+      id: `gh_${profile.id}`,
+      githubId: `gh_${profile.id}`,
+      email,
+      name: profile.name || profile.login || "",
+      login: profile.login || "",
+      avatar: profile.avatar_url || "",
+      provider: "github",
+    });
+    setSessionCookie(req, res, createSessionToken(sessionPayloadFromProfile(stored)));
+    redirectHome(req, res);
+  } catch {
+    redirectHome(req, res, { login_error: "server" });
+  }
 }
 
 export async function handleAuthMe(req, res) {

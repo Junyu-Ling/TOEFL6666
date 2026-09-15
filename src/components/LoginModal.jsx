@@ -16,13 +16,23 @@ const SOCIAL = [
   { id: "github", label: "GitHub" },
 ];
 
-export default function LoginModal({ onClose }) {
+const LOGIN_ERRORS = {
+  missing_code: "GitHub 未返回授权码，请再试一次。",
+  bad_state: "登录状态已过期，请再点一次 GitHub 登录。",
+  token: "GitHub 授权失败，请再试一次。",
+  profile: "无法读取 GitHub 账号，请确认已授权邮箱权限。",
+  config: "GitHub 登录尚未配置完成。",
+  denied: "已取消 GitHub 授权。",
+  server: "GitHub 登录失败，请稍后重试。",
+};
+
+export default function LoginModal({ onClose, initialError = "" }) {
   const [method, setMethod] = useState("home");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState(LOGIN_ERRORS[initialError] || "");
   const [countdown, setCountdown] = useState(0);
   const emailRef = useRef(null);
   const phoneRef = useRef(null);

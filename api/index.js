@@ -106,7 +106,7 @@ export default async function handler(req, res) {
     }
 
     if (pathname === "/api/auth/github/start") {
-      if (method !== "GET") {
+      if (method !== "GET" && method !== "HEAD") {
         sendJson(res, 405, { error: "Method Not Allowed" });
         return;
       }
@@ -115,7 +115,7 @@ export default async function handler(req, res) {
     }
 
     if (pathname === "/api/auth/github/callback") {
-      if (method !== "GET") {
+      if (method !== "GET" && method !== "HEAD") {
         sendJson(res, 405, { error: "Method Not Allowed" });
         return;
       }
@@ -124,7 +124,7 @@ export default async function handler(req, res) {
     }
 
     if (pathname === "/api/auth/me") {
-      if (method !== "GET") {
+      if (method !== "GET" && method !== "HEAD") {
         sendJson(res, 405, { error: "Method Not Allowed" });
         return;
       }

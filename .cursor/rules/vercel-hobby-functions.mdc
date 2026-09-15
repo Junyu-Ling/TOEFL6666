@@ -5,10 +5,13 @@ alwaysApply: true
 
 # Vercel Hobby 函数上限
 
-Hobby 计划 **最多 12 个 Serverless Function**。本项目必须永远只保留 **一个** 后端函数：
+Hobby 计划 **最多 12 个 Serverless Function**。这条限制每次改代码、每次 push 都要遵守，不要反复改 `vercel.json` 的 API 路由。
+
+本项目必须永远只保留 **一个** 后端函数：
 
 - 只允许 `api/index.js`
-- 所有接口走 `vercel.json` 里 **一条** rewrite：`/api/:path*` → `/api?__route=:path*`
+- `vercel.json` 里 API rewrite **永远只有这一条**：`/api/:path*` → `/api?__route=:path*`
+- 禁止再加第二条指向 `/api` 的 rewrite 或 redirect（会被当成多个函数，部署报 No more than 12 Serverless Functions）
 - 禁止新增 `api/ai/*.js`、`api/tts/*.js`、`api/auth/*.js`、`api/[...path].js` 等任何额外函数文件
-- 禁止为每个路由写一条 rewrite（会被当成多个函数，超限）
 - 新 API 只在 `api/index.js` 里加分支，逻辑放 `server/`
+- 词库等静态资源不要写成 `/api/...` 函数；不要为了修问题去拆函数或改 rewrite 结构

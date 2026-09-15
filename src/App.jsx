@@ -118,9 +118,20 @@ export default function App() {
   const [streakData, setStreakData] = useState(() => recordVisit());
   const [streakOpen, setStreakOpen] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
+  const [loginError, setLoginError] = useState("");
   const [lexGridFullscreen, setLexGridFullscreen] = useState(false);
   const [unrecognizedReviewListIds, setUnrecognizedReviewListIds] = useState([]);
   const [recognizedReviewListIds, setRecognizedReviewListIds] = useState([]);
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const err = params.get("login_error");
+    if (!err) return;
+    setLoginError(err);
+    setLoginOpen(true);
+    params.delete("login_error");
+    const search = params.toString();
+    window.history.replaceState({}, "", `${window.location.pathname}${search ? `?${search}` : ""}${window.location.hash}`);
+  }, []);
   useEffect(() => {
     function syncStreak() {
       setStreakData(recordVisit());
@@ -1443,7 +1454,15 @@ export default function App() {
       />
 
       <SettingsPanel />
-      {loginOpen ? <LoginModal onClose={() => setLoginOpen(false)} /> : null}
+      {loginOpen ? (
+        <LoginModal
+          initialError={loginError}
+          onClose={() => {
+            setLoginOpen(false);
+            setLoginError("");
+          }}
+        />
+      ) : null}
     </div>
   );
 }

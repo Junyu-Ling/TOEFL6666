@@ -97,6 +97,31 @@ export function randomState() {
   return randomBytes(16).toString("hex");
 }
 
+export function createOauthState() {
+  const nonce = randomState();
+  const exp = String(Date.now() + 10 * 60 * 1000);
+  const body = `${nonce}.${exp}`;
+  return `${body}.${sign(body, getAuthSecret())}`;
+}
+
+export function verifyOauthState(state, cookieValue = "") {
+  const value = String(state || "");
+  if (!value) return false;
+  if (cookieValue && value === cookieValue) return true;
+  const secret = getAuthSecret();
+  const parts = value.split(".");
+  if (parts.length !== 3 || !secret) return false;
+  const [nonce, exp, sig] = parts;
+  if (!nonce || !exp || !sig) return false;
+  const body = `${nonce}.${exp}`;
+  const expected = sign(body, secret);
+  const a = Buffer.from(expected);
+  const b = Buffer.from(sig);
+  if (a.length !== b.length || !timingSafeEqual(a, b)) return false;
+  const expiresAt = Number(exp);
+  return Number.isFinite(expiresAt) && expiresAt >= Date.now();
+}
+
 function sign(body, secret) {
   return createHmac("sha256", secret).update(body).digest("base64url");
 }
