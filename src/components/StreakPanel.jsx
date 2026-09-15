@@ -62,7 +62,7 @@ export default function StreakPanel({ open, onClose, streak, onStreakChange }) {
   if (!open) return null;
 
   return (
-    <div className="settings-overlay" onClick={onClose} onKeyDown={stopGameKeyBubble}>
+    <div className="settings-overlay" lang="zh-CN" onClick={onClose} onKeyDown={stopGameKeyBubble}>
       <aside className="streak-panel" onClick={(e) => e.stopPropagation()}>
         <header className="streak-panel__header">
           <div>

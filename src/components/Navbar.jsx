@@ -39,7 +39,7 @@ export default function Navbar({ activeTab, onTabChange, counts, streak, onStrea
     : "打开设置";
 
   return (
-    <nav className="navbar">
+    <nav className="navbar" lang="zh-CN">
       <button
         type="button"
         className="navbar__brand"

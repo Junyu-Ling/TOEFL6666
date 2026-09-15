@@ -77,7 +77,7 @@ export default function LoginModal({ onClose }) {
   }
 
   return (
-    <div className="login-modal__overlay" onClick={(e) => { if (e.target === e.currentTarget) onClose?.(); }}>
+    <div className="login-modal__overlay" lang="zh-CN" onClick={(e) => { if (e.target === e.currentTarget) onClose?.(); }}>
       <div className="login-modal" role="dialog" aria-modal="true" aria-label="登录">
         <div className="login-modal__header">
           <h2 className="login-modal__title">登录 / 注册</h2>

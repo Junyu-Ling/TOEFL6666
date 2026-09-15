@@ -16,6 +16,13 @@ import {
   patchArticleInputs,
 } from "../services/readingFillBlankProgress";
 import { usePassageContentProtection } from "../hooks/usePassageContentProtection";
+import { useEnglishImeLock } from "../hooks/useEnglishImeLock";
+import { useIsActiveTab } from "../context/ActiveTabContext";
+import {
+  dismissImeComposition,
+  latinLetterFromText,
+  letterFromKeyboardEvent,
+} from "../utils/englishIme";
 
 function ReviewBookmarkIcon() {
   return (
@@ -38,40 +45,90 @@ const BlankInput = forwardRef(function BlankInput(
     focusFirst: () => refs.current[0]?.focus(),
   }));
 
-  const handleChange = (index, value) => {
-    const char = value.slice(-1).replace(/[^a-zA-Z]/g, "");
+  const commitLetter = (index, char) => {
+    if (!char) return;
     const next = [...letters];
     next[index] = char;
     onChange(next);
-    if (char && index < letters.length - 1) {
+    if (index < letters.length - 1) {
       refs.current[index + 1]?.focus();
-    } else if (char && index === letters.length - 1) {
+    } else {
       onFilled?.();
     }
   };
 
+  const handleChange = (index, value) => {
+    const char = latinLetterFromText(value);
+    if (!char) return;
+    commitLetter(index, char);
+  };
+
   const handleKeyDown = (index, event) => {
+    if (event.ctrlKey || event.metaKey || event.altKey) return;
+
     if (event.key === "Enter") {
       event.preventDefault();
       onEnter?.();
       return;
     }
-    if (event.key === "Backspace" && !letters[index] && index > 0) {
+
+    if (event.key === "Backspace") {
       event.preventDefault();
-      refs.current[index - 1]?.focus();
       const next = [...letters];
-      next[index - 1] = "";
-      onChange(next);
+      if (letters[index]) {
+        next[index] = "";
+        onChange(next);
+        return;
+      }
+      if (index > 0) {
+        refs.current[index - 1]?.focus();
+        next[index - 1] = "";
+        onChange(next);
+      }
       return;
     }
+
     if (event.key === "ArrowLeft" && index > 0) {
       event.preventDefault();
       refs.current[index - 1]?.focus();
+      return;
     }
     if (event.key === "ArrowRight" && index < letters.length - 1) {
       event.preventDefault();
       refs.current[index + 1]?.focus();
+      return;
     }
+
+    const letter = letterFromKeyboardEvent(event);
+    if (!letter) return;
+    event.preventDefault();
+    event.stopPropagation();
+    if (event.key === "Process" || event.keyCode === 229) {
+      dismissImeComposition(event.currentTarget);
+    }
+    commitLetter(index, letter);
+  };
+
+  const handleBeforeInput = (index, event) => {
+    const type = event.nativeEvent?.inputType ?? event.inputType;
+    if (type === "insertCompositionText" || type === "insertFromComposition") {
+      event.preventDefault();
+      return;
+    }
+    if (type !== "insertText") return;
+    const letter = latinLetterFromText(event.data);
+    event.preventDefault();
+    if (letter) commitLetter(index, letter);
+  };
+
+  const handleCompositionStart = (event) => {
+    dismissImeComposition(event.currentTarget);
+  };
+
+  const handleCompositionEnd = (index, event) => {
+    if (letters[index]) return;
+    const letter = latinLetterFromText(event.data);
+    if (letter) commitLetter(index, letter);
   };
 
   const stateClass = checked
@@ -88,9 +145,10 @@ const BlankInput = forwardRef(function BlankInput(
           key={`${blank.id}-${index}`}
           ref={(node) => { refs.current[index] = node; }}
           type="text"
+          lang="en"
           inputMode="text"
           autoComplete="off"
-          autoCapitalize="off"
+          autoCapitalize="none"
           autoCorrect="off"
           spellCheck={false}
           maxLength={1}
@@ -100,6 +158,9 @@ const BlankInput = forwardRef(function BlankInput(
           aria-label={`第 ${index + 1} 个字母`}
           onChange={(e) => handleChange(index, e.target.value)}
           onKeyDown={(e) => handleKeyDown(index, e)}
+          onBeforeInput={(e) => handleBeforeInput(index, e)}
+          onCompositionStart={handleCompositionStart}
+          onCompositionEnd={(e) => handleCompositionEnd(index, e)}
         />
       ))}
     </span>
@@ -107,6 +168,8 @@ const BlankInput = forwardRef(function BlankInput(
 });
 
 function ReadingFillBlank() {
+  const isTabActive = useIsActiveTab("reading-fill");
+  useEnglishImeLock(isTabActive);
   const articles = useMemo(() => getReadingFillBlankArticles(), []);
   const [progress, setProgress] = useState(() => loadReadingFillBlankProgress());
   const [viewMode, setViewMode] = useState("practice");
@@ -121,6 +184,9 @@ function ReadingFillBlank() {
   const [grade, setGrade] = useState(null);
   const blankRefs = useRef({});
   const passageRef = useRef(null);
+  const inputsRef = useRef(inputs);
+  const wasTabActiveRef = useRef(false);
+  inputsRef.current = inputs;
   const blankIds = useMemo(
     () => article?.segments.filter((segment) => segment.type === "blank").map((segment) => segment.id) ?? [],
     [article]
@@ -144,6 +210,20 @@ function ReadingFillBlank() {
   );
 
   usePassageContentProtection(passageRef);
+
+  useEffect(() => {
+    const becameActive = isTabActive && !wasTabActiveRef.current;
+    wasTabActiveRef.current = isTabActive;
+    if (!becameActive || viewMode !== "practice") return undefined;
+    const currentInputs = inputsRef.current;
+    const firstEmptyId =
+      blankIds.find((id) => (currentInputs[id] ?? []).some((ch) => !ch)) ?? blankIds[0];
+    if (!firstEmptyId) return undefined;
+    const frame = window.requestAnimationFrame(() => {
+      blankRefs.current[firstEmptyId]?.focusFirst();
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, [isTabActive, viewMode, blankIds]);
 
   const syncArticle = useCallback(
     (nextIndex) => {
@@ -245,7 +325,7 @@ function ReadingFillBlank() {
 
   if (!article) {
     return (
-      <div className="rfill">
+      <div className="rfill" lang="en">
         <p className="rfill__empty">暂无题目</p>
       </div>
     );
@@ -257,7 +337,7 @@ function ReadingFillBlank() {
   const selectedReviewRow = reviewRows[selectedReviewIndex];
 
   return (
-    <div className="rfill">
+    <div className="rfill" lang="en">
       <header className="rfill__header">
         <div className="rfill__header-left">
           <h1 className="rfill__title">

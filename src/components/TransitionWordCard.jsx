@@ -149,7 +149,7 @@ export default function TransitionWordCard({
           <p className="flashcard__footer flashcard__footer--back">Enter 下一个 · ↑↓ 切词</p>
         </div>
       ) : (
-        <p className="flashcard__status tw-card__hint">点击选择逻辑关系 · ↑↓ 切词</p>
+        <p className="flashcard__status tw-card__hint">点选逻辑关系 · ↑↓ 切词</p>
       )}
     </div>
   );

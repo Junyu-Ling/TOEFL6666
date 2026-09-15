@@ -151,7 +151,7 @@ export default function VocabLoadingScreen({ dataReady = false, onWordJudged, ap
                       <h2 className="flashcard__word">{current.word}</h2>
                     </div>
                   </div>
-                  <p className="flashcard__prompt">稍后将自动展示释义，先认一认这个词</p>
+                  <p className="flashcard__footer">先认一认这个词</p>
                 </div>
 
                 <div className="flashcard__face flashcard__back">

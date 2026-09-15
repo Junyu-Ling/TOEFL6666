@@ -678,7 +678,7 @@ export default function FlashCard({
     stopDictation();
     const matched = matchesEnglishRecall(text, wordData.word);
     setEnglishRecallHint(
-      matched ? "拼写正确，请写出中文释义" : `已记录「${text}」，请写出中文释义`
+      matched ? "拼写正确，写中文释义" : `已记下「${text}」，写中文释义`
     );
     setRecallStep("meaning");
     setUserAnswer("");
@@ -1011,16 +1011,6 @@ export default function FlashCard({
   const onEnglishPhase = hideWordFirst && recallStep === "english";
   const showWord = !onEnglishPhase;
 
-  const frontPrompt = isTransitionWord
-    ? "这个过渡词表示什么逻辑关系？用中文回答"
-    : onEnglishPhase
-    ? "先听发音，默写或语音输入英文单词"
-    : hideWordFirst && recallStep === "meaning"
-      ? "写出该词的中文释义，Enter 提交或空内容翻面"
-      : effectiveTypeMode
-        ? "用中文或别的英文词解释（勿照抄原词），Enter 提交批改"
-        : "先在脑海里回忆词义，按空格或 Enter 翻面核对";
-
   const desktopHint = isTransitionWord
     ? effectiveTypeMode
       ? "Enter 提交 · Shift+Enter 换行 · 框外空格翻面 · ↑↓ 切词"
@@ -1276,8 +1266,6 @@ export default function FlashCard({
               </div>
             )}
           </div>
-
-          <p className="flashcard__prompt">{frontPrompt}</p>
 
           {onEnglishPhase ? (
             <div className="flashcard__input-wrap">

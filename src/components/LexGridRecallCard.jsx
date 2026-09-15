@@ -78,7 +78,7 @@ export default function LexGridRecallCard({ wordData, recallHint, onKnow, onUnkn
                 </div>
               </div>
             </div>
-            <p className="flashcard__prompt">点击卡片或按空格查看释义</p>
+            <p className="flashcard__footer">点卡片或空格看释义</p>
           </div>
 
           <div className="flashcard__face flashcard__back">
