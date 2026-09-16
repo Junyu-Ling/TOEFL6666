@@ -86,20 +86,29 @@ function salvageEvaluate(text) {
 }
 
 function salvageMemoryTrick(text) {
-  const type = extractJsonField(text, "type");
-  const formula = extractJsonField(text, "formula");
-  const content = extractJsonField(text, "content");
-  const pronunciation_alert = extractJsonField(text, "pronunciation_alert");
+  const source = String(text || "");
+  const parts = source.split(/"type"\s*:/);
+  const tricks = [];
 
-  if (!formula && !content) return null;
-
-  return {
-    memory_trick: {
+  for (let i = 1; i < parts.length; i += 1) {
+    const chunk = `"type":${parts[i]}`;
+    const type = extractJsonField(chunk, "type");
+    const formula = extractJsonField(chunk, "formula");
+    const content = extractJsonField(chunk, "content");
+    if (!formula && !content) continue;
+    tricks.push({
       type: typeof type === "string" ? type : "association",
       formula: formula || "",
       content: content || "",
-      pronunciation_alert: pronunciation_alert || "",
-    },
+    });
+  }
+
+  if (tricks.length === 0) return null;
+
+  const pronunciation_alert = extractJsonField(source, "pronunciation_alert") || "";
+  return {
+    memory_tricks: tricks,
+    ...(pronunciation_alert ? { pronunciation_alert } : {}),
   };
 }
 

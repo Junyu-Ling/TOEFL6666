@@ -24,7 +24,9 @@ export function normalizeMemoryTrickPayload(data) {
 }
 
 export function hasCompleteMemoryTricks(entry) {
-  return Array.isArray(entry?.memory_tricks) && entry.memory_tricks.length >= 2;
+  if (!Array.isArray(entry?.memory_tricks) || entry.memory_tricks.length < 2) return false;
+  const types = new Set(entry.memory_tricks.map((trick) => trick?.type));
+  return types.has("root") && types.has("homophone");
 }
 
 export function attachMemoryTricks(record, payload) {

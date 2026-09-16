@@ -1,5 +1,5 @@
 import { enqueueMemoryTrickRequest, memoryTrickKey } from "./memoryTrickQueue";
-import { normalizeMemoryTrickPayload } from "../shared/memoryTrick";
+import { hasCompleteMemoryTricks, normalizeMemoryTrickPayload } from "../shared/memoryTrick";
 import { withUserApiConfig } from "./userApiConfig";
 
 export async function fetchMemoryTrick(wordData) {
@@ -24,8 +24,8 @@ export async function fetchMemoryTrick(wordData) {
     }
 
     const payload = normalizeMemoryTrickPayload(data);
-    if (!payload) {
-      throw new Error("记忆法返回格式无效");
+    if (!hasCompleteMemoryTricks(payload)) {
+      throw new Error("记忆法生成不完整，请重试");
     }
 
     return payload;
