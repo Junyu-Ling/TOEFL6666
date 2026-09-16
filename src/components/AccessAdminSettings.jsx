@@ -2,8 +2,24 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { fetchAccessUsers, grantReadingFill } from "../services/access";
 import { useAccess } from "../context/AccessContext";
 
+function userEmails(user) {
+  return [...new Set([user.email, ...(user.emails || [])].map((item) => String(item || "").trim()).filter(Boolean))];
+}
+
 function userLabel(user) {
-  return user.name || user.email || user.phone || user.id.slice(0, 8);
+  return user.name || user.login || userEmails(user)[0] || user.phone || user.id.slice(0, 8);
+}
+
+function userDetail(user) {
+  const bits = [];
+  if (user.isAdmin) bits.push("管理员");
+  else if (user.features?.readingFill) bits.push("已开通阅读填词");
+  else bits.push("未开通");
+  const emails = userEmails(user);
+  if (emails.length) bits.push(emails.join(" / "));
+  if (user.phone) bits.push(user.phone);
+  if (user.login && user.login !== user.name) bits.push(user.login);
+  return bits.join(" · ");
 }
 
 export default function AccessAdminSettings() {
@@ -36,7 +52,9 @@ export default function AccessAdminSettings() {
     const q = query.trim().toLowerCase();
     if (!q) return users;
     return users.filter((user) =>
-      [user.email, user.phone, user.name, user.id].some((value) => String(value || "").toLowerCase().includes(q))
+      [user.email, user.phone, user.name, user.login, user.id, ...(user.emails || [])].some((value) =>
+        String(value || "").toLowerCase().includes(q)
+      )
     );
   }, [users, query]);
 
@@ -70,7 +88,7 @@ export default function AccessAdminSettings() {
       </summary>
       <div className="settings-group__body">
         <p className="settings-hint settings-hint--compact">
-          你是管理员，这里能看到所有登录过的人，并开通阅读填词。
+          你是管理员。这里能看到所有登录过本站的人；点开通后，对方才能使用阅读填词。
         </p>
         <label className="settings-field">
           搜索用户
@@ -90,11 +108,7 @@ export default function AccessAdminSettings() {
               <li key={user.id} className="access-admin__row">
                 <div className="access-admin__meta">
                   <strong>{userLabel(user)}</strong>
-                  <span>
-                    {user.isAdmin ? "管理员" : enabled ? "已开通" : "未开通"}
-                    {user.email ? ` · ${user.email}` : ""}
-                    {user.phone ? ` · ${user.phone}` : ""}
-                  </span>
+                  <span>{userDetail(user)}</span>
                 </div>
                 <button
                   type="button"

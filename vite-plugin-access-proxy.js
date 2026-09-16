@@ -1,6 +1,7 @@
 import { loadEnv } from "vite";
 import { handleAccessGrant, handleAccessMe, handleAccessUsers } from "./server/access-api.js";
 import { handleAuthIdentity, handleAuthLink, handleAuthLogout, handleAuthMe, handleGithubCallback, handleGithubStart } from "./server/auth-github.js";
+import { handleGoogleCallback, handleGoogleStart } from "./server/auth-google.js";
 import { handleReadingFillArticles } from "./server/reading-fill-articles.js";
 import { handleAccountProgressPull, handleAccountProgressPush } from "./server/account-progress.js";
 
@@ -41,6 +42,8 @@ function applyEnv(env) {
     "ACCESS_ADMIN_PHONES",
     "GITHUB_CLIENT_ID",
     "GITHUB_CLIENT_SECRET",
+    "GOOGLE_CLIENT_ID",
+    "GOOGLE_CLIENT_SECRET",
     "AUTH_SECRET",
   ]) {
     if (env[key] && !process.env[key]) process.env[key] = env[key];
@@ -61,12 +64,14 @@ export function accessProxyPlugin() {
         const isReadingFillArticles = matchApiPath(req.url, "/api/reading-fill/articles");
         const isGhStart = matchApiPath(req.url, "/api/auth/github/start");
         const isGhCallback = matchApiPath(req.url, "/api/auth/github/callback");
+        const isGoogleStart = matchApiPath(req.url, "/api/auth/google/start");
+        const isGoogleCallback = matchApiPath(req.url, "/api/auth/google/callback");
         const isAuthMe = matchApiPath(req.url, "/api/auth/me");
         const isAuthIdentity = matchApiPath(req.url, "/api/auth/identity");
         const isAuthLink = matchApiPath(req.url, "/api/auth/link");
         const isAccountSync = matchApiPath(req.url, "/api/sync/account");
         const isLogout = matchApiPath(req.url, "/api/auth/logout");
-        if (!isAccessMe && !isUsers && !isGrant && !isReadingFillArticles && !isGhStart && !isGhCallback && !isAuthMe && !isAuthIdentity && !isAuthLink && !isAccountSync && !isLogout) {
+        if (!isAccessMe && !isUsers && !isGrant && !isReadingFillArticles && !isGhStart && !isGhCallback && !isGoogleStart && !isGoogleCallback && !isAuthMe && !isAuthIdentity && !isAuthLink && !isAccountSync && !isLogout) {
           return next();
         }
 
@@ -77,6 +82,14 @@ export function accessProxyPlugin() {
           }
           if (isGhCallback && req.method === "GET") {
             await handleGithubCallback(req, res);
+            return;
+          }
+          if (isGoogleStart && req.method === "GET") {
+            handleGoogleStart(req, res);
+            return;
+          }
+          if (isGoogleCallback && req.method === "GET") {
+            await handleGoogleCallback(req, res);
             return;
           }
           if (isAuthMe && req.method === "GET") {

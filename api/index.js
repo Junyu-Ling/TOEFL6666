@@ -11,6 +11,7 @@ import { handleSyncPush, handleSyncPull } from "../server/sync-api.js";
 import { cloneOwnVoice, isClonedVoiceConfigured, synthesizeVocabWord } from "../server/tts-minimax.js";
 import { handleAccessGrant, handleAccessMe, handleAccessUsers } from "../server/access-api.js";
 import { handleAuthIdentity, handleAuthLink, handleAuthLogout, handleAuthMe, handleGithubCallback, handleGithubStart } from "../server/auth-github.js";
+import { handleGoogleCallback, handleGoogleStart } from "../server/auth-google.js";
 import { handleReadingFillArticles } from "../server/reading-fill-articles.js";
 import { handleAccountProgressPull, handleAccountProgressPush } from "../server/account-progress.js";
 
@@ -120,6 +121,24 @@ export default async function handler(req, res) {
         return;
       }
       await handleGithubCallback(req, res);
+      return;
+    }
+
+    if (pathname === "/api/auth/google/start") {
+      if (method !== "GET" && method !== "HEAD") {
+        sendJson(res, 405, { error: "Method Not Allowed" });
+        return;
+      }
+      handleGoogleStart(req, res);
+      return;
+    }
+
+    if (pathname === "/api/auth/google/callback") {
+      if (method !== "GET" && method !== "HEAD") {
+        sendJson(res, 405, { error: "Method Not Allowed" });
+        return;
+      }
+      await handleGoogleCallback(req, res);
       return;
     }
 

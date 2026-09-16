@@ -57,7 +57,11 @@ function identityKey(kind, value) {
 }
 
 function collectEmails(user) {
-  return unique([user?.email, ...(user?.emails || [])]).map(normalizeEmail);
+  return unique([
+    user?.email,
+    ...(user?.emails || []),
+    user?.user_metadata?.email,
+  ]).map(normalizeEmail);
 }
 
 function collectPhones(user) {
@@ -310,8 +314,22 @@ export async function getAccessSnapshot(user, env) {
   if (!user?.id) {
     return { isAdmin: false, features: { readingFill: false } };
   }
-  const profile = await upsertAccessUser(user);
-  const admin = isAdminUser(profile || user, env);
+
+  let profile = null;
+  try {
+    profile = await upsertAccessUser(user);
+  } catch (err) {
+    if (isAdminUser(user, env)) {
+      return {
+        isAdmin: true,
+        features: { readingFill: true },
+        user: publicUserFromProfile(profileFromUser(user)),
+      };
+    }
+    throw err;
+  }
+
+  const admin = isAdminUser(profile, env) || isAdminUser(user, env);
   if (admin) {
     return { isAdmin: true, features: { readingFill: true }, user: publicUserFromProfile(profile) };
   }

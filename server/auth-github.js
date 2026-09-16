@@ -135,26 +135,32 @@ export async function handleGithubCallback(req, res) {
       return;
     }
 
-    let email = profile.email || "";
-    if (!email) {
-      const emailRes = await fetch("https://api.github.com/user/emails", {
-        headers: {
-          Accept: "application/vnd.github+json",
-          Authorization: `Bearer ${tokenData.access_token}`,
-          "User-Agent": "TOEFL6666",
-        },
-      });
-      const emails = await emailRes.json().catch(() => []);
-      const primary = Array.isArray(emails)
-        ? emails.find((item) => item.primary && item.verified) || emails.find((item) => item.verified) || emails[0]
-        : null;
-      email = primary?.email || "";
-    }
+    const emailRes = await fetch("https://api.github.com/user/emails", {
+      headers: {
+        Accept: "application/vnd.github+json",
+        Authorization: `Bearer ${tokenData.access_token}`,
+        "User-Agent": "TOEFL6666",
+      },
+    });
+    const emailList = await emailRes.json().catch(() => []);
+    const verifiedEmails = Array.isArray(emailList)
+      ? emailList
+          .filter((item) => item?.email && item.verified !== false)
+          .map((item) => item.email)
+      : [];
+    const primary = Array.isArray(emailList)
+      ? emailList.find((item) => item.primary && item.verified) ||
+        emailList.find((item) => item.verified) ||
+        emailList[0]
+      : null;
+    const email = primary?.email || profile.email || verifiedEmails[0] || "";
+    const emails = [...new Set([email, profile.email, ...verifiedEmails].filter(Boolean))];
 
     const stored = await resolveLoginUser({
       id: `gh_${profile.id}`,
       githubId: `gh_${profile.id}`,
       email,
+      emails,
       name: profile.name || profile.login || "",
       login: profile.login || "",
       avatar: profile.avatar_url || "",

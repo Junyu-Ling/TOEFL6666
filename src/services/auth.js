@@ -49,17 +49,16 @@ export async function verifyEmailOtp(email, token) {
   return data;
 }
 
-const OAUTH_HINTS = {
-  google: "Google 登录尚未单独接入，当前请用 GitHub。",
-};
-
 export async function signInWithProvider(providerId) {
   if (providerId === "github") {
     window.location.href = "/api/auth/github/start";
     return;
   }
-  const hint = OAUTH_HINTS[providerId];
-  throw new Error(hint || "不支持的登录方式");
+  if (providerId === "google") {
+    window.location.href = "/api/auth/google/start";
+    return;
+  }
+  throw new Error("不支持的登录方式");
 }
 
 export async function signOut() {

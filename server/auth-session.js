@@ -24,6 +24,14 @@ export function getGithubConfig() {
   };
 }
 
+export function getGoogleConfig() {
+  const env = getEnv();
+  return {
+    clientId: env.GOOGLE_CLIENT_ID || "",
+    clientSecret: env.GOOGLE_CLIENT_SECRET || "",
+  };
+}
+
 export function requestOrigin(req) {
   const forwardedProto = req.headers?.["x-forwarded-proto"];
   const protoRaw = Array.isArray(forwardedProto) ? forwardedProto[0] : forwardedProto;

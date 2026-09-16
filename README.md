@@ -65,28 +65,34 @@ npm run dev
 
 ### 阅读填词权限
 
-阅读填词默认不对所有人开放。未开通时导航栏不显示该入口；题目只通过登录后的接口下发，不会打进前端静态包。用户登录后会出现在管理员列表里，管理员可在设置中开通。
+阅读填词默认不对所有人开放。未开通时导航栏不显示该入口；题目只通过登录后的接口下发，不会打进前端静态包。
+
+`jy.ling.cc@gmail.com` 已写死为管理员：用这个 Gmail（Google 登录，或 GitHub 账号绑定了该邮箱）登录后，阅读填词全开，设置里能看到所有注册用户并为他们开通。其他人必须由该管理员开通后才能用。
 
 仓库保持公开以便 Vercel 部署。题目明文不进 Git，只提交 `server/data/readingFillBlank.json.enc`。线上用已有的 `GITHUB_CLIENT_SECRET`（或 `READING_FILL_SECRET` / `AUTH_SECRET`）解密。本地改题后运行 `npm run encrypt:reading-fill`。
 
-GitHub 登录**不需要 Supabase**。点右上角小人登录后，练习进度按账号存在 Redis。设置里可绑定手机号/邮箱，之后任意已绑定方式都进同一账号。GitHub 邮箱为该管理员地址的账号可在设置中看到全部注册用户。
+GitHub 登录**不需要 Supabase**。点右上角登录后，练习进度按账号存在 Redis。设置里可绑定手机号/邮箱，之后任意已绑定方式都进同一账号。
 
 在 GitHub OAuth App 里把 Callback URL 设为：
 
 - 本地：`http://localhost:5175/api/auth/github/callback`
 - 线上：`https://<你的域名>/api/auth/github/callback`
 
+要用 Gmail 直接登录时，再配 Google OAuth，Callback URL 为：
+
+- 本地：`http://localhost:5175/api/auth/google/callback`
+- 线上：`https://<你的域名>/api/auth/google/callback`
+
 环境变量：
 
 - `GITHUB_CLIENT_ID`
 - `GITHUB_CLIENT_SECRET`（只放 Vercel / `.env`，不要提交仓库）
+- `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET`（可选，用于 Google 登录）
 
-管理员写进下面任一变量（逗号分隔）：
+管理员写进下面任一变量（逗号分隔；`jy.ling.cc@gmail.com` 即使不配也生效）：
 
 - `ACCESS_ADMIN_EMAILS`
 - `ACCESS_ADMIN_USER_IDS`（GitHub 用户为 `gh_` + 数字 ID）
 - `ACCESS_ADMIN_PHONES`
 
 开通记录保存在 Redis。
-
-登录：GitHub 已直接接入。邮箱 / 手机 / Google 仍可保留入口。
