@@ -122,46 +122,16 @@ export default function StreakPanel({ open, onClose, streak, onStreakChange }) {
 
           <div className="settings-main__body streak-page">
             {section === "calendar" ? (
-              <>
-                <section className="streak-panel__stats">
-                  <div className="streak-stat streak-stat--primary">
-                    <span className="streak-stat__emoji" aria-hidden>
-                      🔥
-                    </span>
-                    <div className="streak-stat__body">
-                      <strong className="streak-stat__value">{streak.currentStreak ?? 0}</strong>
-                      <span className="streak-stat__label">连续天数</span>
-                    </div>
-                  </div>
-                  <div className="streak-stat">
-                    <strong>{streak.longestStreak ?? 0}</strong>
-                    <span>最长连续</span>
-                  </div>
-                  <div className="streak-stat">
-                    <strong>{streak.totalDays ?? 0}</strong>
-                    <span>累计打卡</span>
-                  </div>
-                </section>
-
-                {streak.loggedInToday ? (
-                  <p className="streak-panel__today-badge">今日已打卡 · 火苗已点亮</p>
-                ) : null}
-
-                {nextMilestone ? (
-                  <p className="streak-panel__next">
-                    再坚持 <strong>{daysToNext}</strong> 天，解锁「{nextMilestone.emoji} {nextMilestone.title}」
-                  </p>
-                ) : null}
-
+              <div className="streak-calendar-layout">
                 <section className="streak-calendar settings-card">
                   <div className="streak-calendar__nav">
-                    <button type="button" className="btn btn--ghost btn--sm" onClick={() => shiftMonth(-1)}>
+                    <button type="button" className="streak-calendar__shift" onClick={() => shiftMonth(-1)} aria-label="上个月">
                       ‹
                     </button>
                     <h3>
                       {viewMonth.year} 年 {viewMonth.month + 1} 月
                     </h3>
-                    <button type="button" className="btn btn--ghost btn--sm" onClick={() => shiftMonth(1)}>
+                    <button type="button" className="streak-calendar__shift" onClick={() => shiftMonth(1)} aria-label="下个月">
                       ›
                     </button>
                   </div>
@@ -263,7 +233,39 @@ export default function StreakPanel({ open, onClose, streak, onStreakChange }) {
                     </div>
                   ) : null}
                 </section>
-              </>
+
+                <aside className="streak-calendar-side">
+                  <section className="streak-panel__stats">
+                    <div className="streak-stat streak-stat--primary">
+                      <span className="streak-stat__emoji" aria-hidden>
+                        🔥
+                      </span>
+                      <div className="streak-stat__body">
+                        <strong className="streak-stat__value">{streak.currentStreak ?? 0}</strong>
+                        <span className="streak-stat__label">连续天数</span>
+                      </div>
+                    </div>
+                    <div className="streak-stat">
+                      <strong>{streak.longestStreak ?? 0}</strong>
+                      <span>最长连续</span>
+                    </div>
+                    <div className="streak-stat">
+                      <strong>{streak.totalDays ?? 0}</strong>
+                      <span>累计打卡</span>
+                    </div>
+                  </section>
+
+                  {streak.loggedInToday ? (
+                    <p className="streak-panel__today-badge">今日已打卡 · 火苗已点亮</p>
+                  ) : null}
+
+                  {nextMilestone ? (
+                    <p className="streak-panel__next">
+                      再坚持 <strong>{daysToNext}</strong> 天，解锁「{nextMilestone.emoji} {nextMilestone.title}」
+                    </p>
+                  ) : null}
+                </aside>
+              </div>
             ) : null}
 
             {section === "exams" ? (

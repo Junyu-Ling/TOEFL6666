@@ -2722,7 +2722,7 @@ body {
   }
 
   .streak-day {
-    min-height: 3.25rem;
+    min-height: 2.7rem;
   }
 
   .streak-exam {
@@ -3569,17 +3569,40 @@ body {
 
 /* ── Streak / Calendar ── */
 .streak-panel .settings-main__body.streak-page {
-  width: min(920px, 100%);
+  width: min(840px, 100%);
+}
+
+.streak-calendar-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 26.5rem) minmax(15rem, 1fr);
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.streak-calendar.settings-card {
+  padding: 1rem 1.05rem 1.1rem;
+  margin-bottom: 0;
 }
 
 .streak-panel__stats {
   display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 0.75rem;
 }
 
-.streak-calendar.settings-card {
-  padding: 1rem;
+.streak-calendar-side .streak-panel__today-badge,
+.streak-calendar-side .streak-panel__next {
+  margin: 0;
+}
+
+@media (max-width: 900px) {
+  .streak-calendar-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .streak-panel__stats {
+    grid-template-columns: 1.2fr 1fr 1fr;
+  }
 }
 
 .streak-stat {
@@ -3797,11 +3820,29 @@ body {
   font-weight: 700;
 }
 
+.streak-calendar__shift {
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 1.125rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.streak-calendar__shift:hover {
+  background: var(--surface-hover);
+  border-color: var(--border-strong);
+}
+
 .streak-calendar__weekdays,
 .streak-calendar__grid {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 0.4rem;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 0.28rem;
 }
 
 .streak-calendar__weekdays {
@@ -3817,17 +3858,17 @@ body {
 
 .streak-day {
   position: relative;
-  min-height: 4.25rem;
+  min-height: 2.7rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.2rem;
-  padding: 0.35rem 0.2rem;
-  border-radius: 10px;
+  gap: 0.12rem;
+  padding: 0.2rem 0.1rem;
+  border-radius: 8px;
   border: 1px solid transparent;
   background: var(--surface);
-  font-size: 0.8125rem;
+  font-size: 0.75rem;
   color: var(--text);
   font-family: inherit;
   cursor: pointer;

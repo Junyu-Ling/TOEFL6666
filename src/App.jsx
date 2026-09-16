@@ -1456,7 +1456,7 @@ export default function App() {
 
       <FloatingLexGridButton
         onClick={() => setLexGridFullscreen(true)}
-        visible={!lexGridFullscreen}
+        visible={!lexGridFullscreen && !settingsOpen && !streakOpen}
       />
       </div>
 
