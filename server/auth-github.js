@@ -182,8 +182,20 @@ export async function handleAuthMe(req, res) {
     sendJson(res, 200, { user: null });
     return;
   }
-  const stored = await getUserProfile(session.id);
-  sendJson(res, 200, { user: publicUserFromProfile(stored || session) });
+  let stored = null;
+  try {
+    stored = await getUserProfile(session.id);
+  } catch {
+    stored = null;
+  }
+  const source = stored
+    ? {
+        ...stored,
+        email: stored.email || session.email,
+        emails: [...new Set([...(stored.emails || []), ...(session.emails || []), stored.email, session.email].filter(Boolean))],
+      }
+    : session;
+  sendJson(res, 200, { user: publicUserFromProfile(source) });
 }
 
 export async function handleAuthIdentity(req, res) {

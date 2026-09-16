@@ -1,10 +1,10 @@
+import { HARDCODED_ADMIN_EMAILS } from "../src/shared/admin.js";
 import { getEnv, getRedis, isDeployedRuntime } from "./sync-store.js";
 
 const USERS_KEY = "toefl666:access:users";
 const IDENTITY_KEY = "toefl666:access:identities";
 const READING_FILL_KEY = "toefl666:access:reading-fill";
 const FEATURE_READING_FILL = "reading-fill";
-const HARDCODED_ADMIN_EMAILS = ["jy.ling.cc@gmail.com"];
 
 const memory =
   globalThis.__toefl666AccessStore ??

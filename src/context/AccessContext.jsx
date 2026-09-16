@@ -1,5 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { fetchAccessMe } from "../services/access";
+import { accessFallbackFromUser } from "../shared/admin";
 
 const AccessContext = createContext(null);
 
@@ -9,27 +10,31 @@ const EMPTY = {
 };
 
 export function AccessProvider({ children, user }) {
-  const [access, setAccess] = useState(EMPTY);
-  const [loading, setLoading] = useState(Boolean(user));
+  const fallback = accessFallbackFromUser(user);
+  const [access, setAccess] = useState(fallback || EMPTY);
+  const [loading, setLoading] = useState(Boolean(user) && !fallback);
 
   const refresh = useCallback(async () => {
+    const local = accessFallbackFromUser(user);
     if (!user) {
       setAccess(EMPTY);
       setLoading(false);
       return EMPTY;
     }
-    setLoading(true);
+    if (local) setAccess(local);
+    setLoading(!local);
     try {
       const data = await fetchAccessMe();
       const next = {
-        isAdmin: Boolean(data.isAdmin),
-        canUseReadingFill: Boolean(data.features?.readingFill),
+        isAdmin: Boolean(data.isAdmin) || Boolean(local?.isAdmin),
+        canUseReadingFill: Boolean(data.features?.readingFill) || Boolean(local?.canUseReadingFill),
       };
       setAccess(next);
       return next;
     } catch {
-      setAccess(EMPTY);
-      return EMPTY;
+      const next = local || EMPTY;
+      setAccess(next);
+      return next;
     } finally {
       setLoading(false);
     }

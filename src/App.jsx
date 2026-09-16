@@ -1422,7 +1422,7 @@ export default function App() {
             </TabPanel>
           ) : null}
 
-          {appMode === "toefl" && canUseReadingFill ? (
+          {canUseReadingFill ? (
             <TabPanel tabId="reading-fill" activeTab={activeTab}>
               {readingFillPanel}
             </TabPanel>
