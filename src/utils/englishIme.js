@@ -3,6 +3,7 @@ const RESTORE_IME_SELECTOR = [
   ".navbar",
   ".vocab-assistant",
   ".settings-overlay",
+  ".settings-shell",
   ".settings-panel",
   ".login-modal",
   ".login-modal__overlay",

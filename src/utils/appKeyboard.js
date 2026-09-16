@@ -1,7 +1,8 @@
-const OVERLAY_SELECTORS = [
+  const OVERLAY_SELECTORS = [
   ".vocab-assistant__panel",
   ".settings-panel",
   ".settings-overlay",
+  ".settings-shell",
   ".streak-panel",
   ".mic-prompt",
   ".round-complete-overlay",

@@ -10,16 +10,9 @@ function userLabel(user) {
   return user.name || user.login || userEmails(user)[0] || user.phone || user.id.slice(0, 8);
 }
 
-function userDetail(user) {
-  const bits = [];
-  if (user.isAdmin) bits.push("管理员");
-  else if (user.features?.readingFill) bits.push("已开通阅读填词");
-  else bits.push("未开通");
-  const emails = userEmails(user);
-  if (emails.length) bits.push(emails.join(" / "));
-  if (user.phone) bits.push(user.phone);
-  if (user.login && user.login !== user.name) bits.push(user.login);
-  return bits.join(" · ");
+function userInitial(user) {
+  const label = userLabel(user);
+  return String(label || "?").slice(0, 1).toUpperCase();
 }
 
 export default function AccessAdminSettings() {
@@ -60,6 +53,12 @@ export default function AccessAdminSettings() {
     );
   }, [users, query]);
 
+  const stats = useMemo(() => {
+    const granted = users.filter((user) => user.isAdmin || user.features?.readingFill).length;
+    const admins = users.filter((user) => user.isAdmin).length;
+    return { total: users.length, granted, admins };
+  }, [users]);
+
   async function toggleReadingFill(user, enabled) {
     setBusyId(user.id);
     setError("");
@@ -83,57 +82,87 @@ export default function AccessAdminSettings() {
   if (!isAdmin) return null;
 
   return (
-    <details className="settings-group" open>
-      <summary className="settings-group__summary">
-        <span className="settings-group__title">注册用户</span>
-        <span className="settings-group__meta">{users.length} 人已注册</span>
-      </summary>
-      <div className="settings-group__body">
-        <p className="settings-hint settings-hint--compact">
-          你是管理员。这里能看到所有登录过本站的人；点开通后，对方才能使用阅读填词。
+    <div className="admin-page">
+      <div className="admin-stats">
+        <div className="admin-stat">
+          <strong>{stats.total}</strong>
+          <span>注册用户</span>
+        </div>
+        <div className="admin-stat">
+          <strong>{stats.granted}</strong>
+          <span>已开通阅读填词</span>
+        </div>
+        <div className="admin-stat">
+          <strong>{stats.admins}</strong>
+          <span>管理员</span>
+        </div>
+      </div>
+
+      {!storageReady ? (
+        <p className="settings-field__hint settings-field__hint--warning">
+          服务端未配置 Redis，注册用户和开通记录都存不住。请在 Vercel 添加 UPSTASH_REDIS_REST_URL 与
+          UPSTASH_REDIS_REST_TOKEN 后重新部署。
         </p>
-        {storageReady ? null : (
-          <p className="settings-hint settings-hint--compact">
-            服务端未配置 Redis，注册用户和开通记录都存不住。请在 Vercel 添加
-            UPSTASH_REDIS_REST_URL 与 UPSTASH_REDIS_REST_TOKEN 后重新部署。
-          </p>
-        )}
-        <label className="settings-field">
-          搜索用户
-          <input
-            type="search"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="邮箱 / 手机号 / 名称"
-          />
-        </label>
-        {error ? <p className="settings-hint settings-hint--compact">{error}</p> : null}
-        {loading ? <p className="settings-hint settings-hint--compact">加载中…</p> : null}
-        <ul className="access-admin__list">
+      ) : null}
+
+      <section className="settings-card">
+        <div className="admin-toolbar">
+          <label className="settings-field admin-toolbar__search">
+            搜索用户
+            <input
+              type="search"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="邮箱 / 手机号 / 名称"
+            />
+          </label>
+          <button type="button" className="settings-action-btn" onClick={loadUsers} disabled={loading}>
+            {loading ? "刷新中…" : "刷新"}
+          </button>
+        </div>
+        {error ? <p className="settings-status settings-status--error">{error}</p> : null}
+
+        <ul className="admin-user-list">
           {filtered.map((user) => {
             const enabled = Boolean(user.features?.readingFill);
+            const emails = userEmails(user);
             return (
-              <li key={user.id} className="access-admin__row">
-                <div className="access-admin__meta">
-                  <strong>{userLabel(user)}</strong>
-                  <span>{userDetail(user)}</span>
+              <li key={user.id} className="admin-user">
+                {user.avatar ? (
+                  <img className="admin-user__avatar" src={user.avatar} alt="" />
+                ) : (
+                  <div className="admin-user__avatar admin-user__avatar--empty" aria-hidden>
+                    {userInitial(user)}
+                  </div>
+                )}
+                <div className="admin-user__meta">
+                  <div className="admin-user__name">
+                    <strong>{userLabel(user)}</strong>
+                    {user.isAdmin ? <span className="account-pill account-pill--admin">管理员</span> : null}
+                    {!user.isAdmin && enabled ? <span className="account-pill account-pill--ok">已开通</span> : null}
+                    {!user.isAdmin && !enabled ? <span className="account-pill">未开通</span> : null}
+                  </div>
+                  <span>
+                    {emails[0] || user.phone || user.login || user.id}
+                    {user.provider ? ` · ${user.provider}` : ""}
+                  </span>
                 </div>
                 <button
                   type="button"
-                  className={`theme-toggle__btn ${enabled ? "theme-toggle__btn--active" : ""}`}
+                  className={`settings-action-btn${enabled && !user.isAdmin ? " settings-action-btn--primary" : ""}`}
                   disabled={user.isAdmin || busyId === user.id}
                   onClick={() => toggleReadingFill(user, !enabled)}
                 >
-                  {user.isAdmin ? "管理员" : enabled ? "关闭" : "开通"}
+                  {user.isAdmin ? "全开" : enabled ? "关闭" : "开通"}
                 </button>
               </li>
             );
           })}
         </ul>
         {!loading && filtered.length === 0 ? (
-          <p className="settings-hint settings-hint--compact">还没有其他已登录用户。</p>
+          <p className="settings-hint settings-hint--compact">还没有匹配的已登录用户。</p>
         ) : null}
-      </div>
-    </details>
+      </section>
+    </div>
   );
 }

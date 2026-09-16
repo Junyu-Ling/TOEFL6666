@@ -71,7 +71,7 @@ function clampIndex(index, length) {
 }
 
 export default function App() {
-  const { settingsOpen, settings, setAppMode } = useSettings();
+  const { settingsOpen, settings, setAppMode, setSettingsOpen } = useSettings();
   const { canUseReadingFill, loading: accessLoading } = useAccess();
   const appMode = normalizeAppMode(settings.appMode);
   const savedRef = useRef(loadProgress(appMode));
@@ -1453,7 +1453,12 @@ export default function App() {
         onClose={() => setLexGridFullscreen(false)}
       />
 
-      <SettingsPanel />
+      <SettingsPanel
+        onLoginClick={() => {
+          setSettingsOpen(false);
+          setLoginOpen(true);
+        }}
+      />
       {loginOpen ? (
         <LoginModal
           initialError={loginError}

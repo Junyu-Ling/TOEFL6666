@@ -1,5 +1,6 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import { useSettings } from "../context/SettingsContext";
+import { useAccess } from "../context/AccessContext";
 import { detectProvider, providerFromApiKey } from "../shared/ai-providers";
 import { stopGameKeyBubble } from "../utils/appKeyboard";
 import {
@@ -12,13 +13,71 @@ import ClonedVoiceSettings from "./ClonedVoiceSettings";
 import AccessAdminSettings from "./AccessAdminSettings";
 import AccountLinkSettings from "./AccountLinkSettings";
 
+const SECTION_STORAGE_KEY = "toefl666_settings_section";
+
+const NAV_ITEMS = [
+  { id: "general", label: "通用", keywords: "外观 主题 浅色 深色 界面" },
+  { id: "account", label: "账号", keywords: "登录 注册 邮箱 手机 绑定 退出 google github 同步" },
+  { id: "practice", label: "练习", keywords: "输入 默念 听写 音效 朗读 开麦 翻面 分轮 单词" },
+  { id: "voice", label: "朗读", keywords: "音色 声音 克隆 语音 tts" },
+  { id: "api", label: "API", keywords: "密钥 groq openai deepseek 模型 key" },
+  { id: "exam", label: "考试", keywords: "托福 sat 分数 提分 计划" },
+  { id: "admin", label: "用户", keywords: "管理员 开通 阅读填词 注册 权限", adminOnly: true },
+];
+
 function clampDelayInput(value) {
   const n = Number(String(value).trim());
   if (!Number.isFinite(n)) return null;
   return Math.min(60, Math.max(0, Math.round(n)));
 }
 
-export default function SettingsPanel() {
+function SettingRow({ title, hint, children, stacked = false }) {
+  return (
+    <div className={`settings-row${stacked ? " settings-row--stacked" : ""}`}>
+      <div className="settings-row__text">
+        <div className="settings-row__title">{title}</div>
+        {hint ? <div className="settings-row__hint">{hint}</div> : null}
+      </div>
+      <div className="settings-row__control">{children}</div>
+    </div>
+  );
+}
+
+function Toggle({ checked, onChange, disabled = false }) {
+  return (
+    <span className="toggle-switch">
+      <input type="checkbox" checked={checked} onChange={onChange} disabled={disabled} />
+      <span className="toggle-switch__track" aria-hidden="true" />
+    </span>
+  );
+}
+
+function Segmented({ options, value, onChange }) {
+  return (
+    <div className="settings-seg" role="group">
+      {options.map((option) => (
+        <button
+          key={option.value}
+          type="button"
+          className={`settings-seg__btn${value === option.value ? " settings-seg__btn--active" : ""}`}
+          onClick={() => onChange(option.value)}
+        >
+          {option.label}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+function readStoredSection() {
+  try {
+    return sessionStorage.getItem(SECTION_STORAGE_KEY) || "general";
+  } catch {
+    return "general";
+  }
+}
+
+export default function SettingsPanel({ onLoginClick }) {
   const {
     settings,
     systemVoices,
@@ -41,14 +100,29 @@ export default function SettingsPanel() {
     setClonedVoiceId,
     speakWord,
   } = useSettings();
+  const { isAdmin } = useAccess();
 
+  const [section, setSection] = useState(readStoredSection);
+  const [query, setQuery] = useState("");
   const [delayDraft, setDelayDraft] = useState(String(settings.autoAdvanceDelaySec));
   const [wordsPerRoundDraft, setWordsPerRoundDraft] = useState(String(settings.wordsPerRound));
   const [apiKeyDraft, setApiKeyDraft] = useState(settings.customApiKey || "");
   const [apiDetecting, setApiDetecting] = useState(false);
   const [apiDetectError, setApiDetectError] = useState("");
   const panelRef = useRef(null);
+  const searchRef = useRef(null);
   const apiDetectSeq = useRef(0);
+
+  const navItems = useMemo(
+    () => NAV_ITEMS.filter((item) => !item.adminOnly || isAdmin),
+    [isAdmin]
+  );
+
+  const visibleNav = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    if (!q) return navItems;
+    return navItems.filter((item) => `${item.label} ${item.keywords}`.toLowerCase().includes(q));
+  }, [navItems, query]);
 
   useEffect(() => {
     if (!settingsOpen || !panelRef.current) return;
@@ -56,18 +130,50 @@ export default function SettingsPanel() {
   }, [settingsOpen]);
 
   useEffect(() => {
-    if (settingsOpen) {
-      setDelayDraft(String(settings.autoAdvanceDelaySec));
-      setWordsPerRoundDraft(String(settings.wordsPerRound));
-      setApiKeyDraft(settings.customApiKey || "");
-      setApiDetectError("");
+    if (!settingsOpen) {
+      setQuery("");
+      return;
     }
+    setDelayDraft(String(settings.autoAdvanceDelaySec));
+    setWordsPerRoundDraft(String(settings.wordsPerRound));
+    setApiKeyDraft(settings.customApiKey || "");
+    setApiDetectError("");
   }, [
     settings.autoAdvanceDelaySec,
     settings.wordsPerRound,
     settings.customApiKey,
     settingsOpen,
   ]);
+
+  useEffect(() => {
+    if (!settingsOpen) return undefined;
+    const onKey = (event) => {
+      if (event.key !== "Escape") return;
+      event.preventDefault();
+      if (query) {
+        setQuery("");
+        searchRef.current?.focus();
+        return;
+      }
+      setSettingsOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [settingsOpen, setSettingsOpen, query]);
+
+  useEffect(() => {
+    if (!visibleNav.length) return;
+    if (visibleNav.some((item) => item.id === section)) return;
+    setSection(visibleNav[0].id);
+  }, [visibleNav, section]);
+
+  useEffect(() => {
+    try {
+      sessionStorage.setItem(SECTION_STORAGE_KEY, section);
+    } catch {
+      // ignore
+    }
+  }, [section]);
 
   function commitDelayDraft() {
     const trimmed = delayDraft.trim();
@@ -178,414 +284,366 @@ export default function SettingsPanel() {
   const detectedProviderName =
     detectedProvider && detectedProvider.id !== "custom" ? detectedProvider.name : "";
 
+  const currentNav = navItems.find((item) => item.id === section) || navItems[0];
+
   if (!settingsOpen) return null;
 
   return (
-    <div className="settings-overlay" lang="zh-CN" onClick={() => setSettingsOpen(false)} onKeyDown={stopGameKeyBubble}>
-      <aside
-        ref={panelRef}
-        tabIndex={-1}
-        className="settings-panel"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <header className="settings-panel__header">
-          <h2>设置</h2>
-          <button type="button" className="settings-panel__close" onClick={() => setSettingsOpen(false)}>
-            ×
-          </button>
-        </header>
+    <div className="settings-overlay" lang="zh-CN" onKeyDown={stopGameKeyBubble}>
+      <div ref={panelRef} tabIndex={-1} className="settings-shell" role="dialog" aria-modal="true" aria-label="设置">
+        <aside className="settings-nav">
+          <div className="settings-nav__search">
+            <input
+              ref={searchRef}
+              type="search"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="搜索设置"
+              aria-label="搜索设置"
+            />
+          </div>
+          <nav className="settings-nav__list" aria-label="设置分类">
+            {visibleNav.map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                className={`settings-nav__item${item.id === section ? " settings-nav__item--active" : ""}`}
+                onClick={() => setSection(item.id)}
+              >
+                {item.label}
+              </button>
+            ))}
+            {visibleNav.length === 0 ? <p className="settings-nav__empty">没有匹配的设置</p> : null}
+          </nav>
+        </aside>
 
-        <AccountLinkSettings />
-        <AccessAdminSettings />
+        <section className="settings-main">
+          <header className="settings-main__header">
+            <div>
+              <h2>{currentNav?.label || "设置"}</h2>
+              {section === "account" ? (
+                <p>管理登录方式、绑定邮箱/手机，以及云端同步状态。</p>
+              ) : null}
+              {section === "admin" ? <p>查看所有注册用户，并为他们开通阅读填词。</p> : null}
+            </div>
+            <button type="button" className="settings-panel__close" onClick={() => setSettingsOpen(false)} aria-label="关闭设置">
+              ×
+            </button>
+          </header>
 
-        <section className="settings-section settings-section--compact">
-          <h3>外观</h3>
-          <div className="theme-toggle">
-            <button
-              type="button"
-              className={`theme-toggle__btn ${settings.theme === "light" ? "theme-toggle__btn--active" : ""}`}
-              onClick={() => setTheme("light")}
-            >
-              浅色
-            </button>
-            <button
-              type="button"
-              className={`theme-toggle__btn ${settings.theme === "dark" ? "theme-toggle__btn--active" : ""}`}
-              onClick={() => setTheme("dark")}
-            >
-              深色
-            </button>
+          <div className="settings-main__body">
+            {section === "general" ? (
+              <div className="settings-card">
+                <SettingRow title="外观" hint="浅色适合白天，深色适合夜间刷词。">
+                  <Segmented
+                    value={settings.theme}
+                    onChange={setTheme}
+                    options={[
+                      { value: "light", label: "浅色" },
+                      { value: "dark", label: "深色" },
+                    ]}
+                  />
+                </SettingRow>
+              </div>
+            ) : null}
+
+            {section === "account" ? (
+              <AccountLinkSettings
+                onLoginClick={() => {
+                  setSettingsOpen(false);
+                  onLoginClick?.();
+                }}
+              />
+            ) : null}
+
+            {section === "practice" ? (
+              <div className="settings-card">
+                <SettingRow title="练习方式" hint="输入批改会核对释义；默念核对只翻面确认。">
+                  <Segmented
+                    value={settings.practiceStyle === "recall" ? "recall" : "type"}
+                    onChange={setPracticeStyle}
+                    options={[
+                      { value: "type", label: "输入批改" },
+                      { value: "recall", label: "默念核对" },
+                    ]}
+                  />
+                </SettingRow>
+                {settings.practiceStyle !== "recall" ? (
+                  <SettingRow title="先隐藏单词" hint="听音默写英文后再写中文释义。">
+                    <Toggle checked={settings.hideWordFirst} onChange={(e) => setHideWordFirst(e.target.checked)} />
+                  </SettingRow>
+                ) : null}
+                <SettingRow title="答对 / 答错音效">
+                  <Toggle checked={settings.answerSounds} onChange={(e) => setAnswerSounds(e.target.checked)} />
+                </SettingRow>
+                {settings.answerSounds ? (
+                  <>
+                    <SettingRow title="答对音效">
+                      <div className="settings-sound-row">
+                        <select
+                          value={settings.answerSoundCorrect}
+                          onChange={(e) => setAnswerSoundCorrect(e.target.value)}
+                        >
+                          {CORRECT_SOUND_OPTIONS.map((opt) => (
+                            <option key={opt.id} value={opt.id}>
+                              {opt.label}
+                            </option>
+                          ))}
+                        </select>
+                        <button
+                          type="button"
+                          className="settings-action-btn settings-sound-row__preview"
+                          onClick={() => previewAnswerSound(true, settings.answerSoundCorrect)}
+                        >
+                          试听
+                        </button>
+                      </div>
+                    </SettingRow>
+                    <SettingRow title="答错音效">
+                      <div className="settings-sound-row">
+                        <select
+                          value={settings.answerSoundWrong}
+                          onChange={(e) => setAnswerSoundWrong(e.target.value)}
+                        >
+                          {WRONG_SOUND_OPTIONS.map((opt) => (
+                            <option key={opt.id} value={opt.id}>
+                              {opt.label}
+                            </option>
+                          ))}
+                        </select>
+                        <button
+                          type="button"
+                          className="settings-action-btn settings-sound-row__preview"
+                          onClick={() => previewAnswerSound(false, settings.answerSoundWrong)}
+                        >
+                          试听
+                        </button>
+                      </div>
+                    </SettingRow>
+                  </>
+                ) : null}
+                <SettingRow title="切换单词时自动朗读">
+                  <Toggle
+                    checked={settings.autoReadOnNewWord}
+                    onChange={(e) => setAutoReadOnNewWord(e.target.checked)}
+                  />
+                </SettingRow>
+                <SettingRow title="切换单词时自动开麦">
+                  <Toggle
+                    checked={settings.autoDictateOnNewWord}
+                    onChange={(e) => setAutoDictateOnNewWord(e.target.checked)}
+                  />
+                </SettingRow>
+                <SettingRow title="翻面后自动下一个">
+                  <Toggle
+                    checked={settings.autoAdvanceAfterFlip}
+                    onChange={(e) => setAutoAdvanceAfterFlip(e.target.checked)}
+                  />
+                </SettingRow>
+                {settings.autoAdvanceAfterFlip ? (
+                  <SettingRow title="翻面后停留（秒）">
+                    <input
+                      className="settings-inline-input"
+                      type="text"
+                      inputMode="numeric"
+                      value={delayDraft}
+                      onChange={(e) => setDelayDraft(e.target.value)}
+                      onBlur={commitDelayDraft}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          e.preventDefault();
+                          commitDelayDraft();
+                          e.currentTarget.blur();
+                        }
+                      }}
+                    />
+                  </SettingRow>
+                ) : null}
+                <SettingRow title="分轮背诵模式" hint="每轮背完后回到开头复习一遍。">
+                  <Toggle
+                    checked={settings.enableRoundReview}
+                    onChange={(e) => setEnableRoundReview(e.target.checked)}
+                  />
+                </SettingRow>
+                {settings.enableRoundReview ? (
+                  <SettingRow title="每轮单词数">
+                    <input
+                      className="settings-inline-input"
+                      type="text"
+                      inputMode="numeric"
+                      value={wordsPerRoundDraft}
+                      onChange={(e) => setWordsPerRoundDraft(e.target.value)}
+                      onBlur={commitWordsPerRoundDraft}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          e.preventDefault();
+                          commitWordsPerRoundDraft();
+                          e.currentTarget.blur();
+                        }
+                      }}
+                      placeholder="5-100"
+                    />
+                  </SettingRow>
+                ) : null}
+              </div>
+            ) : null}
+
+            {section === "voice" ? (
+              <div className="settings-card">
+                <ClonedVoiceSettings
+                  clonedVoiceId={settings.clonedVoiceId}
+                  setClonedVoiceId={setClonedVoiceId}
+                  speakWord={speakWord}
+                />
+                <SettingRow title="朗读音色" hint="优先使用高级/自然语言包。" stacked>
+                  <select
+                    value={settings.systemVoiceURI}
+                    onChange={(e) => setSystemVoiceURI(e.target.value)}
+                    className="settings-field__voice-select"
+                  >
+                    <option value="">智能选择（推荐）</option>
+                    {(() => {
+                      const premiumVoices = systemVoices.filter((v) =>
+                        /google|microsoft|natural|premium|enhanced|neural/i.test(v.name)
+                      );
+                      const standardVoices = systemVoices.filter(
+                        (v) =>
+                          !/google|microsoft|natural|premium|enhanced|neural|compact|eloquence|super-compact|legacy|bad\s+news|bubbles|cellos|deranged|good\s+news|jester|organ|superstar|trinoids|whisper|zarvox/i.test(
+                            v.name
+                          )
+                      );
+                      const lowQualityVoices = systemVoices.filter((v) =>
+                        /compact|eloquence|super-compact|legacy|bad\s+news|bubbles|cellos|deranged|good\s+news|jester|organ|superstar|trinoids|whisper|zarvox/i.test(
+                          v.name
+                        )
+                      );
+                      return (
+                        <>
+                          {premiumVoices.length > 0 && (
+                            <optgroup label="高级音色">
+                              {premiumVoices.map((voice) => (
+                                <option key={voice.voiceURI} value={voice.voiceURI}>
+                                  {voice.name} · {voice.lang}
+                                </option>
+                              ))}
+                            </optgroup>
+                          )}
+                          {standardVoices.length > 0 && (
+                            <optgroup label="标准音色">
+                              {standardVoices.map((voice) => (
+                                <option key={voice.voiceURI} value={voice.voiceURI}>
+                                  {voice.name} · {voice.lang}
+                                </option>
+                              ))}
+                            </optgroup>
+                          )}
+                          {lowQualityVoices.length > 0 && (
+                            <optgroup label="基础音色">
+                              {lowQualityVoices.map((voice) => (
+                                <option key={voice.voiceURI} value={voice.voiceURI}>
+                                  {voice.name} · {voice.lang}
+                                </option>
+                              ))}
+                            </optgroup>
+                          )}
+                        </>
+                      );
+                    })()}
+                  </select>
+                </SettingRow>
+                {systemVoices.length === 0 ? (
+                  <p className="settings-field__hint settings-field__hint--warning">未检测到可用的朗读声音</p>
+                ) : null}
+                {systemVoices.length < 5 && systemVoices.length > 0 ? (
+                  <details className="settings-field__help">
+                    <summary className="settings-field__help-title">如何添加更多声音？</summary>
+                    <div className="settings-field__help-content">
+                      <p>
+                        <strong>Windows 10/11：</strong>
+                      </p>
+                      <ol>
+                        <li>打开「设置」→「时间和语言」→「语音」</li>
+                        <li>点击「添加语音」</li>
+                        <li>搜索并安装英语声音包（推荐：Microsoft David、Zira、Mark）</li>
+                      </ol>
+                      <p>
+                        <strong>macOS：</strong>
+                      </p>
+                      <ol>
+                        <li>打开「系统偏好设置」→「辅助功能」→「朗读内容」</li>
+                        <li>点击「系统声音」→「自定义」</li>
+                        <li>下载英语声音（推荐：Samantha、Alex、Allison）</li>
+                      </ol>
+                      <p>
+                        <strong>Chrome/Edge：</strong>
+                      </p>
+                      <p>可使用 Google 云端高级声音，无需额外安装</p>
+                    </div>
+                  </details>
+                ) : null}
+              </div>
+            ) : null}
+
+            {section === "api" ? (
+              <div className="settings-card">
+                <SettingRow
+                  title="自定义 API Key"
+                  hint="粘贴后会自动识别厂家并选用对应模型。留空则用服务器默认。密钥只保存在本机。"
+                  stacked
+                >
+                  <input
+                    type="password"
+                    autoComplete="off"
+                    spellCheck={false}
+                    placeholder="sk-…"
+                    value={apiKeyDraft}
+                    onChange={(e) => {
+                      setApiKeyDraft(e.target.value);
+                      setApiDetectError("");
+                    }}
+                    onPaste={(e) => {
+                      const pasted = (e.clipboardData.getData("text") || "").trim();
+                      if (!pasted) return;
+                      e.preventDefault();
+                      setApiKeyDraft(pasted);
+                      commitApiKeyDraft(pasted);
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        e.preventDefault();
+                        e.currentTarget.blur();
+                      }
+                    }}
+                    onBlur={() => commitApiKeyDraft()}
+                  />
+                </SettingRow>
+                {apiDetecting ? <p className="settings-hint settings-hint--compact">正在识别厂家…</p> : null}
+                {!apiDetecting && detectedProviderName && customApiReady ? (
+                  <p className="settings-hint settings-hint--compact">已识别：{detectedProviderName}</p>
+                ) : null}
+                {!apiDetecting && apiDetectError ? (
+                  <p className="settings-field__hint settings-field__hint--warning">{apiDetectError}</p>
+                ) : null}
+                {apiKeyDraft ? (
+                  <div className="settings-page__actions">
+                    <button type="button" className="settings-action-btn" onClick={clearCustomApi}>
+                      清除自定义 API
+                    </button>
+                  </div>
+                ) : null}
+              </div>
+            ) : null}
+
+            {section === "exam" ? (
+              <div className="settings-card">
+                <ExamScoreSection embedded />
+              </div>
+            ) : null}
+
+            {section === "admin" ? <AccessAdminSettings /> : null}
           </div>
         </section>
-
-        <details className="settings-group">
-          <summary className="settings-group__summary">
-            <span className="settings-group__title">自定义 API</span>
-            <span className="settings-group__meta">
-              {apiDetecting ? "正在识别" : customApiReady ? "已启用" : "未配置"}
-            </span>
-          </summary>
-          <div className="settings-group__body">
-            <p className="settings-hint settings-hint--compact">
-              只需粘贴 API Key，系统会自动识别厂家并选用对应模型。留空则用服务器默认（Groq gpt-oss-120b）。密钥只保存在本机，不会同步到云端。
-            </p>
-            <label className="settings-field">
-              API Key
-              <input
-                type="password"
-                autoComplete="off"
-                spellCheck={false}
-                placeholder="sk-…"
-                value={apiKeyDraft}
-                onChange={(e) => {
-                  setApiKeyDraft(e.target.value);
-                  setApiDetectError("");
-                }}
-                onPaste={(e) => {
-                  const pasted = (e.clipboardData.getData("text") || "").trim();
-                  if (!pasted) return;
-                  e.preventDefault();
-                  setApiKeyDraft(pasted);
-                  commitApiKeyDraft(pasted);
-                }}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    e.preventDefault();
-                    e.currentTarget.blur();
-                  }
-                }}
-                onBlur={() => commitApiKeyDraft()}
-              />
-            </label>
-            {apiDetecting && (
-              <p className="settings-hint settings-hint--compact">正在识别厂家…</p>
-            )}
-            {!apiDetecting && detectedProviderName && customApiReady && (
-              <p className="settings-hint settings-hint--compact">已识别：{detectedProviderName}</p>
-            )}
-            {!apiDetecting && apiDetectError && (
-              <p className="settings-field__hint settings-field__hint--warning">{apiDetectError}</p>
-            )}
-            {apiKeyDraft && (
-              <button type="button" className="settings-action-btn" onClick={clearCustomApi}>
-                清除自定义 API
-              </button>
-            )}
-          </div>
-        </details>
-
-        <details className="settings-group" open>
-          <summary className="settings-group__summary">
-            <span className="settings-group__title">练习</span>
-            <span className="settings-group__meta">
-              {settings.hideWordFirst && settings.practiceStyle !== "recall"
-                ? "听写后写释义"
-                : settings.practiceStyle === "recall"
-                  ? "默念核对"
-                  : "输入批改"}
-            </span>
-          </summary>
-          <div className="settings-group__body">
-            <div className="settings-field">
-              <span>练习方式</span>
-              <div className="theme-toggle">
-                <button
-                  type="button"
-                  className={`theme-toggle__btn ${settings.practiceStyle !== "recall" ? "theme-toggle__btn--active" : ""}`}
-                  onClick={() => setPracticeStyle("type")}
-                >
-                  输入批改
-                </button>
-                <button
-                  type="button"
-                  className={`theme-toggle__btn ${settings.practiceStyle === "recall" ? "theme-toggle__btn--active" : ""}`}
-                  onClick={() => setPracticeStyle("recall")}
-                >
-                  默念核对
-                </button>
-              </div>
-            </div>
-            {settings.practiceStyle !== "recall" ? (
-              <label className="settings-toggle-row">
-                <span className="settings-toggle-row__text">
-                  <strong>先隐藏单词</strong>
-                  <small>听音默写英文后再写中文释义</small>
-                </span>
-                <span className="toggle-switch">
-                  <input
-                    type="checkbox"
-                    checked={settings.hideWordFirst}
-                    onChange={(e) => setHideWordFirst(e.target.checked)}
-                  />
-                  <span className="toggle-switch__track" aria-hidden="true" />
-                </span>
-              </label>
-            ) : null}
-            <label className="settings-toggle-row">
-              <span className="settings-toggle-row__text">
-                <strong>答对 / 答错音效</strong>
-              </span>
-              <span className="toggle-switch">
-                <input
-                  type="checkbox"
-                  checked={settings.answerSounds}
-                  onChange={(e) => setAnswerSounds(e.target.checked)}
-                />
-                <span className="toggle-switch__track" aria-hidden="true" />
-              </span>
-            </label>
-            {settings.answerSounds ? (
-              <>
-                <div className="settings-field settings-field--spaced">
-                  <span>答对音效</span>
-                  <div className="settings-sound-row">
-                    <select
-                      value={settings.answerSoundCorrect}
-                      onChange={(e) => setAnswerSoundCorrect(e.target.value)}
-                    >
-                      {CORRECT_SOUND_OPTIONS.map((opt) => (
-                        <option key={opt.id} value={opt.id}>
-                          {opt.label}
-                        </option>
-                      ))}
-                    </select>
-                    <button
-                      type="button"
-                      className="settings-action-btn settings-sound-row__preview"
-                      onClick={() => previewAnswerSound(true, settings.answerSoundCorrect)}
-                    >
-                      试听
-                    </button>
-                  </div>
-                </div>
-                <div className="settings-field settings-field--spaced">
-                  <span>答错音效</span>
-                  <div className="settings-sound-row">
-                    <select
-                      value={settings.answerSoundWrong}
-                      onChange={(e) => setAnswerSoundWrong(e.target.value)}
-                    >
-                      {WRONG_SOUND_OPTIONS.map((opt) => (
-                        <option key={opt.id} value={opt.id}>
-                          {opt.label}
-                        </option>
-                      ))}
-                    </select>
-                    <button
-                      type="button"
-                      className="settings-action-btn settings-sound-row__preview"
-                      onClick={() => previewAnswerSound(false, settings.answerSoundWrong)}
-                    >
-                      试听
-                    </button>
-                  </div>
-                </div>
-              </>
-            ) : null}
-            <label className="settings-toggle-row">
-              <span className="settings-toggle-row__text">
-                <strong>切换单词时自动朗读</strong>
-              </span>
-              <span className="toggle-switch">
-                <input
-                  type="checkbox"
-                  checked={settings.autoReadOnNewWord}
-                  onChange={(e) => setAutoReadOnNewWord(e.target.checked)}
-                />
-                <span className="toggle-switch__track" aria-hidden="true" />
-              </span>
-            </label>
-            <label className="settings-toggle-row">
-              <span className="settings-toggle-row__text">
-                <strong>切换单词时自动开麦</strong>
-              </span>
-              <span className="toggle-switch">
-                <input
-                  type="checkbox"
-                  checked={settings.autoDictateOnNewWord}
-                  onChange={(e) => setAutoDictateOnNewWord(e.target.checked)}
-                />
-                <span className="toggle-switch__track" aria-hidden="true" />
-              </span>
-            </label>
-            <label className="settings-toggle-row">
-              <span className="settings-toggle-row__text">
-                <strong>翻面后自动下一个</strong>
-              </span>
-              <span className="toggle-switch">
-                <input
-                  type="checkbox"
-                  checked={settings.autoAdvanceAfterFlip}
-                  onChange={(e) => setAutoAdvanceAfterFlip(e.target.checked)}
-                />
-                <span className="toggle-switch__track" aria-hidden="true" />
-              </span>
-            </label>
-            {settings.autoAdvanceAfterFlip && (
-              <label className="settings-field">
-                <span>翻面后停留（秒）</span>
-                <input
-                  type="text"
-                  inputMode="numeric"
-                  value={delayDraft}
-                  onChange={(e) => setDelayDraft(e.target.value)}
-                  onBlur={commitDelayDraft}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                      e.preventDefault();
-                      commitDelayDraft();
-                      e.currentTarget.blur();
-                    }
-                  }}
-                />
-              </label>
-            )}
-            <label className="settings-toggle-row">
-              <span className="settings-toggle-row__text">
-                <strong>分轮背诵模式</strong>
-                <span className="settings-toggle-row__hint">每轮背完后回到开头复习一遍</span>
-              </span>
-              <span className="toggle-switch">
-                <input
-                  type="checkbox"
-                  checked={settings.enableRoundReview}
-                  onChange={(e) => setEnableRoundReview(e.target.checked)}
-                />
-                <span className="toggle-switch__track" aria-hidden="true" />
-              </span>
-            </label>
-            {settings.enableRoundReview && (
-              <label className="settings-field">
-                <span>每轮单词数</span>
-                <input
-                  type="text"
-                  inputMode="numeric"
-                  value={wordsPerRoundDraft}
-                  onChange={(e) => setWordsPerRoundDraft(e.target.value)}
-                  onBlur={commitWordsPerRoundDraft}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                      e.preventDefault();
-                      commitWordsPerRoundDraft();
-                      e.currentTarget.blur();
-                    }
-                  }}
-                  placeholder="5-100"
-                />
-              </label>
-            )}
-          </div>
-        </details>
-
-        <ExamScoreSection />
-
-        <details className="settings-group">
-          <summary className="settings-group__summary">
-            <span className="settings-group__title">朗读</span>
-            <span className="settings-group__meta">
-              {settings.clonedVoiceId ? "我的声音" : settings.systemVoiceURI ? "已选音色" : "自动选择"}
-              {systemVoices.length > 0 && (
-                <span className="settings-group__count">（{systemVoices.length} 个可用）</span>
-              )}
-            </span>
-          </summary>
-          <div className="settings-group__body">
-            <ClonedVoiceSettings
-              clonedVoiceId={settings.clonedVoiceId}
-              setClonedVoiceId={setClonedVoiceId}
-              speakWord={speakWord}
-            />
-            <label className="settings-field">
-              <span>朗读音色</span>
-              <select
-                value={settings.systemVoiceURI}
-                onChange={(e) => setSystemVoiceURI(e.target.value)}
-                className="settings-field__voice-select"
-              >
-                <option value="">🎯 智能选择（推荐）</option>
-                
-                {(() => {
-                  const premiumVoices = systemVoices.filter((v) => 
-                    /google|microsoft|natural|premium|enhanced|neural/i.test(v.name)
-                  );
-                  const standardVoices = systemVoices.filter((v) => 
-                    !/google|microsoft|natural|premium|enhanced|neural|compact|eloquence|super-compact|legacy|bad\s+news|bubbles|cellos|deranged|good\s+news|jester|organ|superstar|trinoids|whisper|zarvox/i.test(v.name)
-                  );
-                  const lowQualityVoices = systemVoices.filter((v) => 
-                    /compact|eloquence|super-compact|legacy|bad\s+news|bubbles|cellos|deranged|good\s+news|jester|organ|superstar|trinoids|whisper|zarvox/i.test(v.name)
-                  );
-                  
-                  return (
-                    <>
-                      {premiumVoices.length > 0 && (
-                        <optgroup label="⭐ 高级音色">
-                          {premiumVoices.map((voice) => (
-                            <option key={voice.voiceURI} value={voice.voiceURI}>
-                              {voice.name} · {voice.lang}
-                            </option>
-                          ))}
-                        </optgroup>
-                      )}
-                      
-                      {standardVoices.length > 0 && (
-                        <optgroup label="🎙️ 标准音色">
-                          {standardVoices.map((voice) => (
-                            <option key={voice.voiceURI} value={voice.voiceURI}>
-                              {voice.name} · {voice.lang}
-                            </option>
-                          ))}
-                        </optgroup>
-                      )}
-                      
-                      {lowQualityVoices.length > 0 && (
-                        <optgroup label="💬 基础音色">
-                          {lowQualityVoices.map((voice) => (
-                            <option key={voice.voiceURI} value={voice.voiceURI}>
-                              {voice.name} · {voice.lang}
-                            </option>
-                          ))}
-                        </optgroup>
-                      )}
-                    </>
-                  );
-                })()}
-              </select>
-            </label>
-            
-            {systemVoices.length === 0 && (
-              <p className="settings-field__hint settings-field__hint--warning">
-                ⚠️ 未检测到可用的朗读声音
-              </p>
-            )}
-            
-            {systemVoices.length < 5 && systemVoices.length > 0 && (
-              <details className="settings-field__help">
-                <summary className="settings-field__help-title">
-                  💡 如何添加更多声音？
-                </summary>
-                <div className="settings-field__help-content">
-                  <p><strong>Windows 10/11：</strong></p>
-                  <ol>
-                    <li>打开「设置」→「时间和语言」→「语音」</li>
-                    <li>点击「添加语音」</li>
-                    <li>搜索并安装英语声音包（推荐：Microsoft David、Zira、Mark）</li>
-                  </ol>
-                  
-                  <p><strong>macOS：</strong></p>
-                  <ol>
-                    <li>打开「系统偏好设置」→「辅助功能」→「朗读内容」</li>
-                    <li>点击「系统声音」→「自定义」</li>
-                    <li>下载英语声音（推荐：Samantha、Alex、Allison）</li>
-                  </ol>
-                  
-                  <p><strong>Chrome/Edge：</strong></p>
-                  <p>可使用 Google 云端高级声音，无需额外安装</p>
-                </div>
-              </details>
-            )}
-          </div>
-        </details>
-      </aside>
+      </div>
     </div>
   );
 }

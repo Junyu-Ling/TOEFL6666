@@ -34,7 +34,7 @@ function examScoreMeta(settings, examType) {
   return "未填写";
 }
 
-export default function ExamScoreSection() {
+export default function ExamScoreSection({ embedded = false }) {
   const {
     settings,
     setToeflSectionScore,
@@ -155,13 +155,8 @@ export default function ExamScoreSection() {
     ? "填写托福实考分数与目标分，AI 将分析薄弱科目并生成个性化提分计划。采用 2026 新格式（四门各 1–6 分，总分为四科平均）。"
     : "填写 SAT 实考分数与目标分，AI 将分析薄弱科目并生成个性化提分计划（阅读文法 + 数学，总分 400–1600）。";
 
-  return (
-    <details className="settings-group">
-      <summary className="settings-group__summary">
-        <span className="settings-group__title">{sectionTitle}</span>
-        <span className="settings-group__meta">{examScoreMeta(settings, examType)}</span>
-      </summary>
-      <div className="settings-group__body">
+  const body = (
+      <div className={embedded ? "settings-page__stack" : "settings-group__body"}>
         <p className="settings-hint settings-hint--compact">{sectionHint}</p>
 
         {isToefl ? (
@@ -279,6 +274,17 @@ export default function ExamScoreSection() {
           </div>
         ) : null}
       </div>
+  );
+
+  if (embedded) return body;
+
+  return (
+    <details className="settings-group">
+      <summary className="settings-group__summary">
+        <span className="settings-group__title">{sectionTitle}</span>
+        <span className="settings-group__meta">{examScoreMeta(settings, examType)}</span>
+      </summary>
+      {body}
     </details>
   );
 }

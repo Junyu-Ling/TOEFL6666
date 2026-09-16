@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useAuth } from "../context/AuthContext";
+import { useAccess } from "../context/AccessContext";
 import { isSupabaseConfigured } from "../services/supabase";
 import { linkAccountIdentity, sendEmailOtp, sendOtp, syncIdentitySession, verifyEmailOtp, verifyOtp } from "../services/auth";
+import { LoginBrandIcon } from "./LoginBrandIcons";
 
 function formatPhone(value) {
   const digits = String(value || "").replace(/\D/g, "");
@@ -10,8 +12,26 @@ function formatPhone(value) {
   return digits ? `+${digits}` : "";
 }
 
-export default function AccountLinkSettings() {
-  const { user, refreshUser } = useAuth();
+function IdentityRow({ id, title, detail, connected }) {
+  return (
+    <div className={`account-identity${connected ? " account-identity--on" : ""}`}>
+      <span className="account-identity__icon" aria-hidden>
+        <LoginBrandIcon id={id} />
+      </span>
+      <div className="account-identity__meta">
+        <strong>{title}</strong>
+        <span>{detail}</span>
+      </div>
+      <span className={`account-pill${connected ? " account-pill--ok" : ""}`}>
+        {connected ? "已连接" : "未连接"}
+      </span>
+    </div>
+  );
+}
+
+export default function AccountLinkSettings({ onLoginClick }) {
+  const { user, syncing, signOut, refreshUser } = useAuth();
+  const { isAdmin, canUseReadingFill } = useAccess();
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
@@ -20,11 +40,20 @@ export default function AccountLinkSettings() {
   const [error, setError] = useState("");
   const [ok, setOk] = useState("");
 
-  if (!user) return null;
-
-  const emails = [...new Set([user.email, ...(user.emails || [])].filter(Boolean))];
-  const phones = [...new Set([user.phone, ...(user.phones || [])].filter(Boolean))];
-  const providers = user.providers?.length ? user.providers : [user.provider].filter(Boolean);
+  const emails = useMemo(
+    () => [...new Set([user?.email, ...(user?.emails || [])].filter(Boolean))],
+    [user]
+  );
+  const phones = useMemo(
+    () => [...new Set([user?.phone, ...(user?.phones || [])].filter(Boolean))],
+    [user]
+  );
+  const providers = user?.providers?.length ? user.providers : [user?.provider].filter(Boolean);
+  const hasGithub = providers.includes("github") || String(user?.id || "").startsWith("gh_");
+  const hasGoogle = providers.includes("google") || String(user?.id || "").startsWith("google_");
+  const avatar = user?.avatar || user?.user_metadata?.avatar_url || "";
+  const displayName =
+    user?.name || user?.user_metadata?.user_name || user?.login || (emails[0] ? emails[0].split("@")[0] : "已登录");
 
   async function run(fn) {
     setError("");
@@ -87,25 +116,87 @@ export default function AccountLinkSettings() {
     });
   }
 
+  if (!user) {
+    return (
+      <div className="account-page">
+        <div className="account-hero">
+          <div className="account-hero__avatar account-hero__avatar--empty" aria-hidden>
+            ?
+          </div>
+          <div className="account-hero__copy">
+            <h3>未登录</h3>
+            <p>登录后进度会跟账号走，换设备也能继续。管理员账号还能开通阅读填词。</p>
+          </div>
+        </div>
+        <div className="settings-page__actions">
+          <button type="button" className="settings-action-btn settings-action-btn--primary" onClick={onLoginClick}>
+            登录 / 注册
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <details className="settings-group" open>
-      <summary className="settings-group__summary">
-        <span className="settings-group__title">关联登录方式</span>
-        <span className="settings-group__meta">{providers.join(" / ") || "已登录"}</span>
-      </summary>
-      <div className="settings-group__body">
-        <p className="settings-hint settings-hint--compact">
-          给当前账号绑定手机号或邮箱后，下次用其中任何一种方式登录都是同一份进度。登录后的数据保存在服务器 Redis，不需要再配 Supabase。
-        </p>
-        <ul className="account-link__bound">
-          {providers.includes("github") || String(user.id || "").startsWith("gh_") ? <li>GitHub 已绑定</li> : null}
-          {emails.map((item) => (
-            <li key={`e-${item}`}>邮箱 {item}</li>
-          ))}
-          {phones.map((item) => (
-            <li key={`p-${item}`}>手机 {item}</li>
-          ))}
-        </ul>
+    <div className="account-page">
+      <section className="account-hero">
+        {avatar ? (
+          <img className="account-hero__avatar" src={avatar} alt="" />
+        ) : (
+          <div className="account-hero__avatar account-hero__avatar--empty" aria-hidden>
+            {displayName.slice(0, 1).toUpperCase()}
+          </div>
+        )}
+        <div className="account-hero__copy">
+          <div className="account-hero__name-row">
+            <h3>{displayName}</h3>
+            {isAdmin ? <span className="account-pill account-pill--admin">管理员</span> : null}
+            {canUseReadingFill && !isAdmin ? <span className="account-pill account-pill--ok">阅读填词已开通</span> : null}
+          </div>
+          <p>{emails[0] || phones[0] || "已登录"}</p>
+          <div className="account-hero__facts">
+            <span>{syncing ? "正在同步进度…" : "进度已跟账号同步"}</span>
+            <span className="account-hero__id">{user.id}</span>
+          </div>
+        </div>
+      </section>
+
+      <section className="settings-card">
+        <div className="settings-card__head">
+          <h4>登录方式</h4>
+          <p>任意一种已绑定方式登录，都会进入同一个账号。</p>
+        </div>
+        <IdentityRow
+          id="github"
+          title="GitHub"
+          detail={hasGithub ? user.login || "已用 GitHub 登录" : "未绑定"}
+          connected={hasGithub}
+        />
+        <IdentityRow
+          id="google"
+          title="Google"
+          detail={hasGoogle ? emails[0] || "已用 Google 登录" : "未绑定"}
+          connected={hasGoogle}
+        />
+        <IdentityRow
+          id="email"
+          title="邮箱"
+          detail={emails.length ? emails.join(" / ") : "可再绑定一个邮箱"}
+          connected={emails.length > 0}
+        />
+        <IdentityRow
+          id="phone"
+          title="手机号"
+          detail={phones.length ? phones.join(" / ") : "可再绑定一个手机号"}
+          connected={phones.length > 0}
+        />
+      </section>
+
+      <section className="settings-card">
+        <div className="settings-card__head">
+          <h4>添加绑定</h4>
+          <p>绑定后，下次用邮箱或手机号也能进这个账号。</p>
+        </div>
         <label className="settings-field">
           绑定手机号
           <div className="account-link__row">
@@ -117,7 +208,7 @@ export default function AccountLinkSettings() {
               onChange={(e) => setPhone(e.target.value)}
               disabled={loading}
             />
-            <button type="button" className="btn btn--primary" onClick={bindPhone} disabled={loading}>
+            <button type="button" className="settings-action-btn settings-action-btn--primary" onClick={bindPhone} disabled={loading}>
               {pending === "phone" ? "确认绑定" : "绑定"}
             </button>
           </div>
@@ -132,7 +223,7 @@ export default function AccountLinkSettings() {
               onChange={(e) => setEmail(e.target.value)}
               disabled={loading}
             />
-            <button type="button" className="btn btn--primary" onClick={bindEmail} disabled={loading}>
+            <button type="button" className="settings-action-btn settings-action-btn--primary" onClick={bindEmail} disabled={loading}>
               {pending === "email" ? "确认绑定" : "绑定"}
             </button>
           </div>
@@ -150,9 +241,21 @@ export default function AccountLinkSettings() {
             />
           </label>
         ) : null}
-        {error ? <p className="settings-hint settings-hint--compact">{error}</p> : null}
-        {ok ? <p className="settings-hint settings-hint--compact">{ok}</p> : null}
-      </div>
-    </details>
+        {error ? <p className="settings-status settings-status--error">{error}</p> : null}
+        {ok ? <p className="settings-status settings-status--ok">{ok}</p> : null}
+      </section>
+
+      <section className="settings-card settings-card--danger">
+        <div className="settings-card__head">
+          <h4>退出登录</h4>
+          <p>本机登录态会清除。进度已保存在账号里，下次登录还会在。</p>
+        </div>
+        <div className="settings-page__actions">
+          <button type="button" className="settings-action-btn" onClick={() => signOut()}>
+            退出当前账号
+          </button>
+        </div>
+      </section>
+    </div>
   );
 }
