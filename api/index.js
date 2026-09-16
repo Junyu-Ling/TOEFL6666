@@ -13,6 +13,7 @@ import { handleAccessGrant, handleAccessMe, handleAccessUsers } from "../server/
 import { handleAuthIdentity, handleAuthLink, handleAuthLogout, handleAuthMe, handleGithubCallback, handleGithubStart } from "../server/auth-github.js";
 import { handleGoogleCallback, handleGoogleStart } from "../server/auth-google.js";
 import { handleReadingFillArticles } from "../server/reading-fill-articles.js";
+import { handleReadingVocabCollections } from "../server/reading-vocab-collections.js";
 import { handleAccountProgressPull, handleAccountProgressPush } from "../server/account-progress.js";
 
 export const config = {
@@ -225,6 +226,16 @@ export default async function handler(req, res) {
       }
       res.setHeader("Cache-Control", "private, no-store");
       sendJson(res, 200, await handleReadingFillArticles(req));
+      return;
+    }
+
+    if (pathname === "/api/reading-vocab/collections") {
+      if (method !== "GET") {
+        sendJson(res, 405, { error: "Method Not Allowed" });
+        return;
+      }
+      res.setHeader("Cache-Control", "private, no-store");
+      sendJson(res, 200, await handleReadingVocabCollections(req));
       return;
     }
 

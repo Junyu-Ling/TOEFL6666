@@ -1,32 +1,26 @@
-import readingVocabData from "../data/readingVocabMatch.json";
-
-function normalizeCollections(data) {
-  if (Array.isArray(data.collections) && data.collections.length > 0) {
+export function normalizeCollections(data) {
+  if (Array.isArray(data?.collections) && data.collections.length > 0) {
     return data.collections;
   }
-  if (Array.isArray(data.sets)) {
+  if (Array.isArray(data?.sets)) {
     return [{ id: "default", title: data.title || "新托福阅读词汇题", sets: data.sets }];
   }
   return [];
 }
 
-const collections = normalizeCollections(readingVocabData);
-
-export function getReadingVocabCollections() {
-  return collections;
+export function getReadingVocabCollection(collections, collectionIndex = 0) {
+  const list = Array.isArray(collections) ? collections : [];
+  if (!list.length) return null;
+  const safeIndex = Math.max(0, Math.min(collectionIndex, list.length - 1));
+  return list[safeIndex] ?? null;
 }
 
-export function getReadingVocabCollection(collectionIndex = 0) {
-  const safeIndex = Math.max(0, Math.min(collectionIndex, collections.length - 1));
-  return collections[safeIndex] ?? null;
+export function getReadingVocabSets(collections, collectionIndex = 0) {
+  return getReadingVocabCollection(collections, collectionIndex)?.sets ?? [];
 }
 
-export function getReadingVocabSets(collectionIndex = 0) {
-  return getReadingVocabCollection(collectionIndex)?.sets ?? [];
-}
-
-export function getReadingVocabTitle(collectionIndex = 0) {
-  return getReadingVocabCollection(collectionIndex)?.title ?? "阅读词汇题";
+export function getReadingVocabTitle(collections, collectionIndex = 0) {
+  return getReadingVocabCollection(collections, collectionIndex)?.title ?? "阅读词汇题";
 }
 
 export function getSetDisplayLabel(set, setIndexInCollection) {
@@ -54,8 +48,8 @@ export function shuffleArray(items) {
   return copy;
 }
 
-export function getAllReadingVocabPairs(collectionIndex = 0) {
-  return getReadingVocabSets(collectionIndex).flatMap((set) =>
+export function getAllReadingVocabPairs(collections, collectionIndex = 0) {
+  return getReadingVocabSets(collections, collectionIndex).flatMap((set) =>
     set.pairs.map((pair, index) => ({
       ...pair,
       id: pairKey(set.id, index),
@@ -117,8 +111,8 @@ export function restoreSetRound(set, savedSetProgress) {
   return buildSetRound(set);
 }
 
-export function buildFullRound(collectionIndex = 0) {
-  const pairs = getAllReadingVocabPairs(collectionIndex);
+export function buildFullRound(collections, collectionIndex = 0) {
+  const pairs = getAllReadingVocabPairs(collections, collectionIndex);
   return {
     pairs,
     leftItems: shuffleArray(pairs.map((p) => ({ id: p.id, text: p.word, side: "left" }))),
@@ -129,8 +123,8 @@ export function buildFullRound(collectionIndex = 0) {
 export const READING_VOCAB_TEST_SIZE = 16;
 
 /** 综合测试：从当前合集全部题目中随机抽取一批，每次开始/重来都会重新抽取与打乱。 */
-export function buildTestRound(sampleSize = READING_VOCAB_TEST_SIZE, collectionIndex = 0) {
-  const allPairs = shuffleArray(getAllReadingVocabPairs(collectionIndex));
+export function buildTestRound(collections, sampleSize = READING_VOCAB_TEST_SIZE, collectionIndex = 0) {
+  const allPairs = shuffleArray(getAllReadingVocabPairs(collections, collectionIndex));
   const pairs = allPairs.slice(0, Math.min(sampleSize, allPairs.length));
   return {
     pairs,

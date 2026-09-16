@@ -32,8 +32,10 @@ scripts/_*.png
 scripts/_*.txt
 scripts/articles-*.json
 
-# 阅读填词明文只留在本机；仓库里只提交加密文件
+# 阅读填词 / 词汇配对明文只留在本机；仓库里只提交加密文件
 server/data/readingFillBlank.json
+server/data/readingVocabMatch.json
+src/data/readingVocabMatch.json
 
 # Editor directories and files
 .vscode/*

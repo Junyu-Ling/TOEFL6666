@@ -3,6 +3,7 @@ import { handleAccessGrant, handleAccessMe, handleAccessUsers } from "./server/a
 import { handleAuthIdentity, handleAuthLink, handleAuthLogout, handleAuthMe, handleGithubCallback, handleGithubStart } from "./server/auth-github.js";
 import { handleGoogleCallback, handleGoogleStart } from "./server/auth-google.js";
 import { handleReadingFillArticles } from "./server/reading-fill-articles.js";
+import { handleReadingVocabCollections } from "./server/reading-vocab-collections.js";
 import { handleAccountProgressPull, handleAccountProgressPush } from "./server/account-progress.js";
 
 function readBody(req) {
@@ -45,6 +46,7 @@ function applyEnv(env) {
     "GOOGLE_CLIENT_ID",
     "GOOGLE_CLIENT_SECRET",
     "AUTH_SECRET",
+    "READING_FILL_SECRET",
   ]) {
     if (env[key] && !process.env[key]) process.env[key] = env[key];
   }
@@ -62,6 +64,7 @@ export function accessProxyPlugin() {
         const isUsers = matchApiPath(req.url, "/api/access/users");
         const isGrant = matchApiPath(req.url, "/api/access/grant");
         const isReadingFillArticles = matchApiPath(req.url, "/api/reading-fill/articles");
+        const isReadingVocabCollections = matchApiPath(req.url, "/api/reading-vocab/collections");
         const isGhStart = matchApiPath(req.url, "/api/auth/github/start");
         const isGhCallback = matchApiPath(req.url, "/api/auth/github/callback");
         const isGoogleStart = matchApiPath(req.url, "/api/auth/google/start");
@@ -71,7 +74,7 @@ export function accessProxyPlugin() {
         const isAuthLink = matchApiPath(req.url, "/api/auth/link");
         const isAccountSync = matchApiPath(req.url, "/api/sync/account");
         const isLogout = matchApiPath(req.url, "/api/auth/logout");
-        if (!isAccessMe && !isUsers && !isGrant && !isReadingFillArticles && !isGhStart && !isGhCallback && !isGoogleStart && !isGoogleCallback && !isAuthMe && !isAuthIdentity && !isAuthLink && !isAccountSync && !isLogout) {
+        if (!isAccessMe && !isUsers && !isGrant && !isReadingFillArticles && !isReadingVocabCollections && !isGhStart && !isGhCallback && !isGoogleStart && !isGoogleCallback && !isAuthMe && !isAuthIdentity && !isAuthLink && !isAccountSync && !isLogout) {
           return next();
         }
 
@@ -134,6 +137,11 @@ export function accessProxyPlugin() {
           if (isReadingFillArticles && req.method === "GET") {
             res.setHeader("Cache-Control", "private, no-store");
             sendJson(res, 200, await handleReadingFillArticles(req));
+            return;
+          }
+          if (isReadingVocabCollections && req.method === "GET") {
+            res.setHeader("Cache-Control", "private, no-store");
+            sendJson(res, 200, await handleReadingVocabCollections(req));
             return;
           }
           sendJson(res, 405, { error: "Method Not Allowed" });

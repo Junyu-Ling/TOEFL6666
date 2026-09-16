@@ -41,3 +41,7 @@ export async function grantReadingVocab(userId, enabled) {
 export async function fetchReadingFillArticles() {
   return accessRequest("/api/reading-fill/articles");
 }
+
+export async function fetchReadingVocabCollections() {
+  return accessRequest("/api/reading-vocab/collections");
+}

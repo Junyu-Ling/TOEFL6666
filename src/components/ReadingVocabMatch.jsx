@@ -1,5 +1,6 @@
 import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { useSettings } from "../context/SettingsContext";
+import { fetchReadingVocabCollections } from "../services/access";
 import { resolveReadingVocabDefinitions } from "../services/readingVocabDefinitions";
 import {
   getSavedCollectionSetIndex,
@@ -15,10 +16,10 @@ import {
   buildSetRound,
   buildTestRound,
   findPairById,
-  getReadingVocabCollections,
   getReadingVocabSets,
   getReadingVocabTitle,
   getSetDisplayLabel,
+  normalizeCollections,
   restoreSetRound,
 } from "../utils/readingVocabMatch";
 
@@ -86,9 +87,8 @@ function persistSetState(setId, round, completedIds, setComplete) {
   });
 }
 
-function ReadingVocabMatch({ words }) {
+function ReadingVocabMatchBoard({ words, collections }) {
   const { settings, speakWord } = useSettings();
-  const collections = useMemo(() => getReadingVocabCollections(), []);
   const wordBankMap = useMemo(() => buildWordBankMap(words), [words]);
   const [initialState] = useState(() => createInitialState(collections));
 
@@ -105,7 +105,7 @@ function ReadingVocabMatch({ words }) {
   const [shake, setShake] = useState(false);
   const [setComplete, setSetComplete] = useState(initialState.setComplete);
 
-  const sets = useMemo(() => getReadingVocabSets(collectionIndex), [collectionIndex]);
+  const sets = useMemo(() => getReadingVocabSets(collections, collectionIndex), [collections, collectionIndex]);
   const currentSet = sets[setIndex];
   const isTestMode = viewMode === "test";
   const revealPair = revealPairId ? findPairById(round, revealPairId) : null;
@@ -160,14 +160,14 @@ function ReadingVocabMatch({ words }) {
 
   const loadSet = useCallback(
     (index, nextCollectionIndex = collectionIndex) => {
-      const nextSets = getReadingVocabSets(nextCollectionIndex);
+      const nextSets = getReadingVocabSets(collections, nextCollectionIndex);
       const safeIndex = Math.max(0, Math.min(index, nextSets.length - 1));
       const set = nextSets[safeIndex];
       if (!set) return;
       const savedSet = getSavedSetProgress(set.id);
       applySetState(nextCollectionIndex, safeIndex, set, savedSet);
     },
-    [applySetState, collectionIndex]
+    [applySetState, collectionIndex, collections]
   );
 
   const switchCollection = useCallback(
@@ -187,12 +187,12 @@ function ReadingVocabMatch({ words }) {
 
   const startTest = useCallback(() => {
     setViewMode("test");
-    resetBoardState(buildTestRound(undefined, collectionIndex));
-  }, [collectionIndex, resetBoardState]);
+    resetBoardState(buildTestRound(collections, undefined, collectionIndex));
+  }, [collectionIndex, collections, resetBoardState]);
 
   const restartTest = useCallback(() => {
-    resetBoardState(buildTestRound(undefined, collectionIndex));
-  }, [collectionIndex, resetBoardState]);
+    resetBoardState(buildTestRound(collections, undefined, collectionIndex));
+  }, [collectionIndex, collections, resetBoardState]);
 
   const exitTest = useCallback(() => {
     loadSet(setIndex, collectionIndex);
@@ -310,7 +310,7 @@ function ReadingVocabMatch({ words }) {
 
       <header className="rvocab__header">
         <div>
-          <h2 className="rvocab__title">{getReadingVocabTitle(collectionIndex)}</h2>
+          <h2 className="rvocab__title">{getReadingVocabTitle(collections, collectionIndex)}</h2>
           <p className="rvocab__subtitle">
             {isTestMode
               ? `综合测试 · 随机抽取 ${totalPairs} 题 · 进度 ${doneCount}/${totalPairs}`
@@ -463,6 +463,41 @@ function ReadingVocabMatch({ words }) {
       )}
     </div>
   );
+}
+
+function ReadingVocabMatch({ words }) {
+  const [collections, setCollections] = useState(null);
+  const [loadError, setLoadError] = useState("");
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      setLoadError("");
+      try {
+        const data = await fetchReadingVocabCollections();
+        if (cancelled) return;
+        setCollections(normalizeCollections(data));
+      } catch (err) {
+        if (cancelled) return;
+        setCollections([]);
+        setLoadError(err.message || "题目加载失败");
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  if (loadError) {
+    return <div className="rvocab__empty">{loadError}</div>;
+  }
+  if (!collections) {
+    return <div className="rvocab__empty">正在加载题目…</div>;
+  }
+  if (!collections.length) {
+    return <div className="rvocab__empty">暂无阅读词汇题数据</div>;
+  }
+  return <ReadingVocabMatchBoard words={words} collections={collections} />;
 }
 
 export default memo(ReadingVocabMatch);
