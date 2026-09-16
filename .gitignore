@@ -45,3 +45,5 @@ server/data/readingFillBlank.json
 *.njsproj
 *.sln
 *.sw?
+
+.vercel

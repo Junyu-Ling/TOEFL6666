@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 import { requireAccessUser } from "./access-api.js";
 import { getAccessSnapshot } from "./access-store.js";
 import { getEnv } from "./sync-store.js";
-import { decryptReadingFillJson, readingFillKeyFromEnv } from "./reading-fill-crypto.js";
+import { decryptReadingFillJsonWithEnv } from "./reading-fill-crypto.js";
 
 const DIR = dirname(fileURLToPath(import.meta.url));
 const PLAIN_PATH = join(DIR, "data", "readingFillBlank.json");
@@ -31,12 +31,8 @@ export function loadReadingFillRawArticles() {
     if (err.status) throw err;
   }
 
-  const key = readingFillKeyFromEnv(getEnv());
-  if (!key) {
-    throw createError("题目未配置", 503);
-  }
   try {
-    return parseArticles(decryptReadingFillJson(readFileSync(ENC_PATH, "utf8"), key));
+    return parseArticles(decryptReadingFillJsonWithEnv(readFileSync(ENC_PATH, "utf8"), getEnv()));
   } catch (err) {
     if (err.status) throw err;
     throw createError("题目未配置", 503);
