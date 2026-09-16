@@ -16,6 +16,7 @@ import FloatingLexGridButton from "./components/FloatingLexGridButton";
 import FullscreenLexGrid from "./components/FullscreenLexGrid";
 import ReadingVocabMatch from "./components/ReadingVocabMatch";
 import ReadingFillBlank from "./components/ReadingFillBlank";
+import FeatureGate from "./components/FeatureGate";
 import FamiliarObscureMeanings from "./components/FamiliarObscureMeanings";
 import TransitionWords from "./components/TransitionWords";
 import TabPanel from "./components/TabPanel";
@@ -72,7 +73,7 @@ function clampIndex(index, length) {
 
 export default function App() {
   const { settingsOpen, settings, setAppMode, setSettingsOpen } = useSettings();
-  const { canUseReadingFill, loading: accessLoading } = useAccess();
+  const { canUseReadingFill, canUseReadingVocab, loading: accessLoading } = useAccess();
   const appMode = normalizeAppMode(settings.appMode);
   const savedRef = useRef(loadProgress(appMode));
   const modeSwitchLockRef = useRef(false);
@@ -395,7 +396,10 @@ export default function App() {
     if (activeTab === "reading-fill" && !canUseReadingFill) {
       handleTabChange("practice");
     }
-  }, [accessLoading, activeTab, canUseReadingFill, handleTabChange]);
+    if (activeTab === "reading-vocab" && !canUseReadingVocab) {
+      handleTabChange("practice");
+    }
+  }, [accessLoading, activeTab, canUseReadingFill, canUseReadingVocab, handleTabChange]);
 
   const listWord = useMemo(() => {
     const item = wordList[listIndex];
@@ -1112,11 +1116,22 @@ export default function App() {
   );
 
   const readingVocabPanel = useMemo(
-    () => <ReadingVocabMatch words={allBankWords} />,
-    [allBankWords]
+    () => (
+      <FeatureGate title="词汇配对" allowed={canUseReadingVocab} onLogin={() => setLoginOpen(true)}>
+        <ReadingVocabMatch words={allBankWords} />
+      </FeatureGate>
+    ),
+    [allBankWords, canUseReadingVocab]
   );
 
-  const readingFillPanel = useMemo(() => <ReadingFillBlank />, []);
+  const readingFillPanel = useMemo(
+    () => (
+      <FeatureGate title="阅读填词" allowed={canUseReadingFill} onLogin={() => setLoginOpen(true)}>
+        <ReadingFillBlank />
+      </FeatureGate>
+    ),
+    [canUseReadingFill]
+  );
 
   const familiarObscurePanel = useMemo(
     () => <FamiliarObscureMeanings wordBankMap={wordBankMap} micGranted={mic.isGranted} />,
@@ -1396,7 +1411,7 @@ export default function App() {
             {bankPanel}
           </TabPanel>
 
-          {appMode === "toefl" ? (
+          {appMode === "toefl" && canUseReadingVocab ? (
             <TabPanel tabId="reading-vocab" activeTab={activeTab}>
               {readingVocabPanel}
             </TabPanel>

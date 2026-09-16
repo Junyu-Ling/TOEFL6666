@@ -14,7 +14,7 @@ export function isHardcodedAdminUser(user) {
 
 export function accessFallbackFromUser(user) {
   if (isHardcodedAdminUser(user)) {
-    return { isAdmin: true, canUseReadingFill: true };
+    return { isAdmin: true, canUseReadingFill: true, canUseReadingVocab: true };
   }
   return null;
 }

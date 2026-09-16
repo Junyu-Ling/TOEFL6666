@@ -4,7 +4,13 @@ import { getEnv, getRedis, isDeployedRuntime } from "./sync-store.js";
 const USERS_KEY = "toefl666:access:users";
 const IDENTITY_KEY = "toefl666:access:identities";
 const READING_FILL_KEY = "toefl666:access:reading-fill";
+const READING_VOCAB_KEY = "toefl666:access:reading-vocab";
 const FEATURE_READING_FILL = "reading-fill";
+const FEATURE_READING_VOCAB = "reading-vocab";
+const FEATURES = {
+  [FEATURE_READING_FILL]: { redisKey: READING_FILL_KEY, memoryKey: "readingFill", flag: "readingFill" },
+  [FEATURE_READING_VOCAB]: { redisKey: READING_VOCAB_KEY, memoryKey: "readingVocab", flag: "readingVocab" },
+};
 
 const memory =
   globalThis.__toefl666AccessStore ??
@@ -12,8 +18,17 @@ const memory =
     users: new Map(),
     identities: new Map(),
     readingFill: new Set(),
+    readingVocab: new Set(),
   });
 globalThis.__toefl666AccessStore = memory;
+
+function emptyFeatures() {
+  return { readingFill: false, readingVocab: false };
+}
+
+function adminFeatures() {
+  return { readingFill: true, readingVocab: true };
+}
 
 function createError(message, status) {
   const err = new Error(message);
@@ -161,13 +176,15 @@ async function readUsers() {
   return Object.fromEntries(memory.users);
 }
 
-async function readReadingFillIds() {
+async function readFeatureIds(feature) {
+  const spec = FEATURES[feature];
+  if (!spec) return new Set();
   const redis = getRedis();
   if (redis) {
-    const members = (await redis.smembers(READING_FILL_KEY)) || [];
+    const members = (await redis.smembers(spec.redisKey)) || [];
     return new Set(members.map(String));
   }
-  return new Set(memory.readingFill);
+  return new Set(memory[spec.memoryKey]);
 }
 
 async function saveUser(profile) {
@@ -217,18 +234,20 @@ async function indexProfile(profile) {
   if (String(profile.id || "").startsWith("gh_")) await writeIdentity("github", profile.id, profile.id);
 }
 
-async function transferReadingFill(fromId, toId) {
+async function transferFeature(feature, fromId, toId) {
   if (!fromId || !toId || fromId === toId) return;
-  const granted = await readReadingFillIds();
+  const spec = FEATURES[feature];
+  if (!spec) return;
+  const granted = await readFeatureIds(feature);
   if (!granted.has(fromId)) return;
   const redis = getRedis();
   if (redis) {
-    await redis.sadd(READING_FILL_KEY, toId);
-    await redis.srem(READING_FILL_KEY, fromId);
+    await redis.sadd(spec.redisKey, toId);
+    await redis.srem(spec.redisKey, fromId);
     return;
   }
-  memory.readingFill.add(toId);
-  memory.readingFill.delete(fromId);
+  memory[spec.memoryKey].add(toId);
+  memory[spec.memoryKey].delete(fromId);
 }
 
 function mergeProfiles(canonical, extra) {
@@ -258,7 +277,8 @@ async function mergeUserInto(fromId, toId) {
   merged.id = toId;
   await saveUser(merged);
   await indexProfile(merged);
-  await transferReadingFill(fromId, toId);
+  await transferFeature(FEATURE_READING_FILL, fromId, toId);
+  await transferFeature(FEATURE_READING_VOCAB, fromId, toId);
   await deleteUser(fromId);
 }
 
@@ -329,7 +349,7 @@ export async function resolveLoginProfile(incoming, options) {
 
 export async function getAccessSnapshot(user, env) {
   if (!user?.id) {
-    return { isAdmin: false, features: { readingFill: false } };
+    return { isAdmin: false, features: emptyFeatures() };
   }
 
   // 用户库不可用时不要连登录态一起弄丢：管理员照旧全开，其他人按未开通处理。
@@ -342,7 +362,7 @@ export async function getAccessSnapshot(user, env) {
     console.warn("[access] 用户库不可用：", err.message);
     return {
       isAdmin: admin,
-      features: { readingFill: admin },
+      features: admin ? adminFeatures() : emptyFeatures(),
       user: publicUserFromProfile(fallback),
       storageReady: false,
     };
@@ -350,19 +370,24 @@ export async function getAccessSnapshot(user, env) {
 
   const admin = isAdminUser(profile, env) || isAdminUser(user, env);
   if (admin) {
-    return { isAdmin: true, features: { readingFill: true }, user: publicUserFromProfile(profile) };
+    return { isAdmin: true, features: adminFeatures(), user: publicUserFromProfile(profile) };
   }
-  const granted = await readReadingFillIds();
+  const readingFill = await readFeatureIds(FEATURE_READING_FILL);
+  const readingVocab = await readFeatureIds(FEATURE_READING_VOCAB);
   return {
     isAdmin: false,
-    features: { readingFill: granted.has(profile.id) },
+    features: {
+      readingFill: readingFill.has(profile.id),
+      readingVocab: readingVocab.has(profile.id),
+    },
     user: publicUserFromProfile(profile),
   };
 }
 
 export async function listAccessUsers(env) {
   const users = await readUsers();
-  const granted = await readReadingFillIds();
+  const readingFill = await readFeatureIds(FEATURE_READING_FILL);
+  const readingVocab = await readFeatureIds(FEATURE_READING_VOCAB);
   return Object.values(users)
     .map((profile) => {
       const admin = isAdminUser(profile, env);
@@ -371,7 +396,8 @@ export async function listAccessUsers(env) {
         lastSeen: profile.lastSeen || 0,
         isAdmin: admin,
         features: {
-          readingFill: admin || granted.has(profile.id),
+          readingFill: admin || readingFill.has(profile.id),
+          readingVocab: admin || readingVocab.has(profile.id),
         },
       };
     })
@@ -381,20 +407,21 @@ export async function listAccessUsers(env) {
 export async function setFeatureGrant(userId, feature, enabled) {
   const id = String(userId || "").trim();
   if (!id) throw createError("缺少用户", 400);
-  if (feature !== FEATURE_READING_FILL) throw createError("不支持的功能", 400);
+  const spec = FEATURES[feature];
+  if (!spec) throw createError("不支持的功能", 400);
 
   const redis = getRedis();
   if (redis) {
-    if (enabled) await redis.sadd(READING_FILL_KEY, id);
-    else await redis.srem(READING_FILL_KEY, id);
+    if (enabled) await redis.sadd(spec.redisKey, id);
+    else await redis.srem(spec.redisKey, id);
     return { userId: id, feature, enabled: Boolean(enabled) };
   }
   if (isDeployedRuntime()) {
     throw createError("服务端未配置 Redis，无法保存开通权限。", 503);
   }
-  if (enabled) memory.readingFill.add(id);
-  else memory.readingFill.delete(id);
+  if (enabled) memory[spec.memoryKey].add(id);
+  else memory[spec.memoryKey].delete(id);
   return { userId: id, feature, enabled: Boolean(enabled) };
 }
 
-export { FEATURE_READING_FILL, HARDCODED_ADMIN_EMAILS };
+export { FEATURE_READING_FILL, FEATURE_READING_VOCAB, HARDCODED_ADMIN_EMAILS };

@@ -23,11 +23,19 @@ export async function fetchAccessUsers() {
   return accessRequest("/api/access/users");
 }
 
-export async function grantReadingFill(userId, enabled) {
+export async function grantFeature(userId, feature, enabled) {
   return accessRequest("/api/access/grant", {
     method: "POST",
-    body: { userId, feature: "reading-fill", enabled },
+    body: { userId, feature, enabled },
   });
+}
+
+export async function grantReadingFill(userId, enabled) {
+  return grantFeature(userId, "reading-fill", enabled);
+}
+
+export async function grantReadingVocab(userId, enabled) {
+  return grantFeature(userId, "reading-vocab", enabled);
 }
 
 export async function fetchReadingFillArticles() {

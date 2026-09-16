@@ -22,7 +22,7 @@ const NAV_ITEMS = [
   { id: "voice", label: "朗读", keywords: "音色 声音 克隆 语音 tts" },
   { id: "api", label: "API", keywords: "密钥 groq openai deepseek 模型 key" },
   { id: "exam", label: "考试", keywords: "托福 sat 分数 提分 计划" },
-  { id: "admin", label: "用户", keywords: "管理员 开通 阅读填词 注册 权限", adminOnly: true },
+  { id: "admin", label: "用户", keywords: "管理员 开通 阅读填词 词汇配对 注册 权限", adminOnly: true },
 ];
 
 function clampDelayInput(value) {
@@ -324,7 +324,7 @@ export default function SettingsPanel({ onLoginClick }) {
               {section === "account" ? (
                 <p>管理登录方式、绑定邮箱/手机，以及云端同步状态。</p>
               ) : null}
-              {section === "admin" ? <p>查看所有注册用户，并为他们开通阅读填词。</p> : null}
+              {section === "admin" ? <p>查看所有注册用户，并分开开通阅读填词和词汇配对。</p> : null}
             </div>
             <button type="button" className="settings-panel__close" onClick={() => setSettingsOpen(false)} aria-label="关闭设置">
               ×

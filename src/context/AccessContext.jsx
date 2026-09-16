@@ -7,6 +7,7 @@ const AccessContext = createContext(null);
 const EMPTY = {
   isAdmin: false,
   canUseReadingFill: false,
+  canUseReadingVocab: false,
 };
 
 export function AccessProvider({ children, user }) {
@@ -28,6 +29,7 @@ export function AccessProvider({ children, user }) {
       const next = {
         isAdmin: Boolean(data.isAdmin) || Boolean(local?.isAdmin),
         canUseReadingFill: Boolean(data.features?.readingFill) || Boolean(local?.canUseReadingFill),
+        canUseReadingVocab: Boolean(data.features?.readingVocab) || Boolean(local?.canUseReadingVocab),
       };
       setAccess(next);
       return next;

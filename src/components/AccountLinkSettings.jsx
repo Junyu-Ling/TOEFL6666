@@ -31,7 +31,7 @@ function IdentityRow({ id, title, detail, connected }) {
 
 export default function AccountLinkSettings({ onLoginClick }) {
   const { user, syncing, signOut, refreshUser } = useAuth();
-  const { isAdmin, canUseReadingFill } = useAccess();
+  const { isAdmin, canUseReadingFill, canUseReadingVocab } = useAccess();
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
@@ -125,7 +125,7 @@ export default function AccountLinkSettings({ onLoginClick }) {
           </div>
           <div className="account-hero__copy">
             <h3>未登录</h3>
-            <p>登录后进度会跟账号走，换设备也能继续。管理员账号还能开通阅读填词。</p>
+            <p>登录后进度会跟账号走，换设备也能继续。管理员账号还能分开开通阅读填词和词汇配对。</p>
           </div>
         </div>
         <div className="settings-page__actions">
@@ -152,6 +152,7 @@ export default function AccountLinkSettings({ onLoginClick }) {
             <h3>{displayName}</h3>
             {isAdmin ? <span className="account-pill account-pill--admin">管理员</span> : null}
             {canUseReadingFill && !isAdmin ? <span className="account-pill account-pill--ok">阅读填词已开通</span> : null}
+            {canUseReadingVocab && !isAdmin ? <span className="account-pill account-pill--ok">词汇配对已开通</span> : null}
           </div>
           <p>{emails[0] || phones[0] || "已登录"}</p>
           <div className="account-hero__facts">

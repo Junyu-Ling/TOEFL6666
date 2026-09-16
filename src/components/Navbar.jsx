@@ -19,7 +19,7 @@ const TABS = [
 export default function Navbar({ activeTab, onTabChange, counts, streak, onStreakClick, onExamModeSwitch, onLoginClick }) {
   const { settings, setSettingsOpen } = useSettings();
   const { user, syncing, signOut } = useAuth();
-  const { canUseReadingFill } = useAccess();
+  const { canUseReadingFill, canUseReadingVocab } = useAccess();
   const appMode = settings.appMode ?? "toefl";
   const alternateMode = getAlternateAppMode(appMode);
   const loggedInToday = streak?.loggedInToday;
@@ -56,6 +56,7 @@ export default function Navbar({ activeTab, onTabChange, counts, streak, onStrea
       <div className="navbar__tabs">
         {TABS.filter((tab) => {
           if (tab.id === "reading-fill" && !canUseReadingFill) return false;
+          if (tab.id === "reading-vocab" && !canUseReadingVocab) return false;
           return isTabAvailableInMode(tab.id, appMode);
         }).map((tab) => (
           <button

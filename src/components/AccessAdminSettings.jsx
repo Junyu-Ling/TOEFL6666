@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { fetchAccessUsers, grantReadingFill } from "../services/access";
+import { fetchAccessUsers, grantFeature } from "../services/access";
 import { useAccess } from "../context/AccessContext";
 
 function userEmails(user) {
@@ -22,7 +22,7 @@ export default function AccessAdminSettings() {
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [busyId, setBusyId] = useState("");
+  const [busyKey, setBusyKey] = useState("");
 
   const loadUsers = useCallback(async () => {
     if (!isAdmin) return;
@@ -54,20 +54,22 @@ export default function AccessAdminSettings() {
   }, [users, query]);
 
   const stats = useMemo(() => {
-    const granted = users.filter((user) => user.isAdmin || user.features?.readingFill).length;
+    const fill = users.filter((user) => user.isAdmin || user.features?.readingFill).length;
+    const vocab = users.filter((user) => user.isAdmin || user.features?.readingVocab).length;
     const admins = users.filter((user) => user.isAdmin).length;
-    return { total: users.length, granted, admins };
+    return { total: users.length, fill, vocab, admins };
   }, [users]);
 
-  async function toggleReadingFill(user, enabled) {
-    setBusyId(user.id);
+  async function toggleFeature(user, feature, enabled) {
+    setBusyKey(`${user.id}:${feature}`);
     setError("");
     try {
-      await grantReadingFill(user.id, enabled);
+      await grantFeature(user.id, feature, enabled);
+      const flag = feature === "reading-vocab" ? "readingVocab" : "readingFill";
       setUsers((current) =>
         current.map((item) =>
           item.id === user.id
-            ? { ...item, features: { ...item.features, readingFill: enabled } }
+            ? { ...item, features: { ...item.features, [flag]: enabled } }
             : item
         )
       );
@@ -75,7 +77,7 @@ export default function AccessAdminSettings() {
     } catch (err) {
       setError(err.message || "开通失败");
     } finally {
-      setBusyId("");
+      setBusyKey("");
     }
   }
 
@@ -89,8 +91,12 @@ export default function AccessAdminSettings() {
           <span>注册用户</span>
         </div>
         <div className="admin-stat">
-          <strong>{stats.granted}</strong>
+          <strong>{stats.fill}</strong>
           <span>已开通阅读填词</span>
+        </div>
+        <div className="admin-stat">
+          <strong>{stats.vocab}</strong>
+          <span>已开通词汇配对</span>
         </div>
         <div className="admin-stat">
           <strong>{stats.admins}</strong>
@@ -120,11 +126,15 @@ export default function AccessAdminSettings() {
             {loading ? "刷新中…" : "刷新"}
           </button>
         </div>
+        <p className="settings-hint settings-hint--compact admin-toolbar__hint">
+          阅读填词和词汇配对分开开通，点哪个开哪个。
+        </p>
         {error ? <p className="settings-status settings-status--error">{error}</p> : null}
 
         <ul className="admin-user-list">
           {filtered.map((user) => {
-            const enabled = Boolean(user.features?.readingFill);
+            const fillOn = Boolean(user.features?.readingFill);
+            const vocabOn = Boolean(user.features?.readingVocab);
             const emails = userEmails(user);
             return (
               <li key={user.id} className="admin-user">
@@ -139,22 +149,33 @@ export default function AccessAdminSettings() {
                   <div className="admin-user__name">
                     <strong>{userLabel(user)}</strong>
                     {user.isAdmin ? <span className="account-pill account-pill--admin">管理员</span> : null}
-                    {!user.isAdmin && enabled ? <span className="account-pill account-pill--ok">已开通</span> : null}
-                    {!user.isAdmin && !enabled ? <span className="account-pill">未开通</span> : null}
+                    {!user.isAdmin && fillOn ? <span className="account-pill account-pill--ok">填词</span> : null}
+                    {!user.isAdmin && vocabOn ? <span className="account-pill account-pill--ok">配对</span> : null}
+                    {!user.isAdmin && !fillOn && !vocabOn ? <span className="account-pill">未开通</span> : null}
                   </div>
                   <span>
                     {emails[0] || user.phone || user.login || user.id}
                     {user.provider ? ` · ${user.provider}` : ""}
                   </span>
                 </div>
-                <button
-                  type="button"
-                  className={`settings-action-btn${enabled && !user.isAdmin ? " settings-action-btn--primary" : ""}`}
-                  disabled={user.isAdmin || busyId === user.id}
-                  onClick={() => toggleReadingFill(user, !enabled)}
-                >
-                  {user.isAdmin ? "全开" : enabled ? "关闭" : "开通"}
-                </button>
+                <div className="admin-user__actions">
+                  <button
+                    type="button"
+                    className={`settings-action-btn${fillOn && !user.isAdmin ? " settings-action-btn--primary" : ""}`}
+                    disabled={user.isAdmin || busyKey === `${user.id}:reading-fill`}
+                    onClick={() => toggleFeature(user, "reading-fill", !fillOn)}
+                  >
+                    {user.isAdmin ? "填词全开" : fillOn ? "关闭填词" : "开通填词"}
+                  </button>
+                  <button
+                    type="button"
+                    className={`settings-action-btn${vocabOn && !user.isAdmin ? " settings-action-btn--primary" : ""}`}
+                    disabled={user.isAdmin || busyKey === `${user.id}:reading-vocab`}
+                    onClick={() => toggleFeature(user, "reading-vocab", !vocabOn)}
+                  >
+                    {user.isAdmin ? "配对全开" : vocabOn ? "关闭配对" : "开通配对"}
+                  </button>
+                </div>
               </li>
             );
           })}
