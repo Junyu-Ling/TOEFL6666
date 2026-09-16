@@ -3,6 +3,7 @@ import { getEnv } from "./sync-store.js";
 import { readSessionUser } from "./auth-session.js";
 import {
   getAccessSnapshot,
+  isUserStoreReady,
   listAccessUsers,
   setFeatureGrant,
   FEATURE_READING_FILL,
@@ -55,7 +56,7 @@ export async function handleAccessUsers(req) {
   const user = await requireAccessUser(req);
   const snapshot = await getAccessSnapshot(user);
   if (!snapshot.isAdmin) throw createError("没有管理员权限", 403);
-  return { users: await listAccessUsers() };
+  return { users: await listAccessUsers(), storageReady: isUserStoreReady() };
 }
 
 export async function handleAccessGrant(req, body) {

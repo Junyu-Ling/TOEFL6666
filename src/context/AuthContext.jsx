@@ -23,6 +23,9 @@ export function AuthProvider({ children }) {
     setSyncing(true);
     try {
       await pullAllProgress(id);
+    } catch (err) {
+      // 云同步失败不能中断启动，否则登录态和权限都加载不出来
+      console.warn("[auth] 拉取云端进度失败：", err);
     } finally {
       setSyncing(false);
     }
@@ -38,24 +41,28 @@ export function AuthProvider({ children }) {
     let cancelled = false;
 
     async function boot() {
-      const appUser = await getAppUser().catch(() => null);
-      if (cancelled) return;
-      if (appUser) {
-        await applyUser(appUser, { forcePull: true });
-        setLoading(false);
-        return;
-      }
-      if (isSupabaseConfigured()) {
-        const session = await getSession();
-        if (session?.access_token) {
-          await syncIdentitySession(session.access_token).catch(() => null);
+      try {
+        const appUser = await getAppUser().catch(() => null);
+        if (cancelled) return;
+        if (appUser) {
+          await applyUser(appUser, { forcePull: true });
+          return;
         }
-        const next = await getAppUser().catch(() => null);
-        if (!cancelled) await applyUser(next || session?.user || null);
-      } else if (!cancelled) {
-        await applyUser(null);
+        if (isSupabaseConfigured()) {
+          const session = await getSession().catch(() => null);
+          if (session?.access_token) {
+            await syncIdentitySession(session.access_token).catch(() => null);
+          }
+          const next = await getAppUser().catch(() => null);
+          if (!cancelled) await applyUser(next || session?.user || null);
+        } else if (!cancelled) {
+          await applyUser(null);
+        }
+      } catch (err) {
+        console.warn("[auth] 初始化登录态失败：", err);
+      } finally {
+        if (!cancelled) setLoading(false);
       }
-      if (!cancelled) setLoading(false);
     }
 
     boot();
@@ -85,7 +92,13 @@ export function AuthProvider({ children }) {
     if (user?.id) {
       await pushAllProgress(user.id).catch(() => {});
     }
-    await authSignOut();
+    try {
+      await authSignOut();
+    } catch (err) {
+      // 退出接口报错也要把本地登录态清掉，否则导航栏一直显示旧账号
+      console.warn("[auth] 退出登录失败：", err);
+    }
+    lastPulledIdRef.current = null;
     setUser(null);
   }, [user]);
 

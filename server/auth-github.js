@@ -1,6 +1,7 @@
 import {
   getUserProfile,
   publicUserFromProfile,
+  resolveLoginProfile,
   resolveLoginUser,
   sessionPayloadFromProfile,
 } from "./access-store.js";
@@ -156,7 +157,7 @@ export async function handleGithubCallback(req, res) {
     const email = primary?.email || profile.email || verifiedEmails[0] || "";
     const emails = [...new Set([email, profile.email, ...verifiedEmails].filter(Boolean))];
 
-    const stored = await resolveLoginUser({
+    const { profile: stored, error: storeError } = await resolveLoginProfile({
       id: `gh_${profile.id}`,
       githubId: `gh_${profile.id}`,
       email,
@@ -166,10 +167,12 @@ export async function handleGithubCallback(req, res) {
       avatar: profile.avatar_url || "",
       provider: "github",
     });
+    if (storeError) console.error("[auth/github] 用户库不可用：", storeError.message);
     setSessionCookie(req, res, createSessionToken(sessionPayloadFromProfile(stored)));
     redirectHome(req, res);
-  } catch {
-    redirectHome(req, res, { login_error: "server" });
+  } catch (err) {
+    console.error("[auth/github] 登录失败：", err);
+    redirectHome(req, res, { login_error: err?.status === 503 ? "secret" : "server" });
   }
 }
 

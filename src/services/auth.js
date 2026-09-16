@@ -64,8 +64,7 @@ export async function signInWithProvider(providerId) {
 export async function signOut() {
   await fetch("/api/auth/logout", { method: "POST", credentials: "include" }).catch(() => {});
   if (!isSupabaseConfigured()) return;
-  const { error } = await supabase.auth.signOut();
-  if (error) throw error;
+  await supabase.auth.signOut().catch(() => {});
 }
 
 export async function getAppUser() {

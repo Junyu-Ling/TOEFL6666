@@ -1,5 +1,5 @@
 import {
-  resolveLoginUser,
+  resolveLoginProfile,
   sessionPayloadFromProfile,
 } from "./access-store.js";
 import {
@@ -119,7 +119,7 @@ export async function handleGoogleCallback(req, res) {
       return;
     }
 
-    const stored = await resolveLoginUser({
+    const { profile: stored, error: storeError } = await resolveLoginProfile({
       id: `google_${profile.sub}`,
       email,
       emails: [email],
@@ -128,9 +128,11 @@ export async function handleGoogleCallback(req, res) {
       avatar: profile.picture || "",
       provider: "google",
     });
+    if (storeError) console.error("[auth/google] 用户库不可用：", storeError.message);
     setSessionCookie(req, res, createSessionToken(sessionPayloadFromProfile(stored)));
     redirectHome(req, res);
-  } catch {
-    redirectHome(req, res, { login_error: "server" });
+  } catch (err) {
+    console.error("[auth/google] 登录失败：", err);
+    redirectHome(req, res, { login_error: err?.status === 503 ? "secret" : "server" });
   }
 }

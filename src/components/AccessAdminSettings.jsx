@@ -25,6 +25,7 @@ function userDetail(user) {
 export default function AccessAdminSettings() {
   const { isAdmin, refresh } = useAccess();
   const [users, setUsers] = useState([]);
+  const [storageReady, setStorageReady] = useState(true);
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -37,6 +38,7 @@ export default function AccessAdminSettings() {
     try {
       const data = await fetchAccessUsers();
       setUsers(data.users || []);
+      setStorageReady(data.storageReady !== false);
     } catch (err) {
       setError(err.message || "无法加载用户列表");
     } finally {
@@ -90,6 +92,12 @@ export default function AccessAdminSettings() {
         <p className="settings-hint settings-hint--compact">
           你是管理员。这里能看到所有登录过本站的人；点开通后，对方才能使用阅读填词。
         </p>
+        {storageReady ? null : (
+          <p className="settings-hint settings-hint--compact">
+            服务端未配置 Redis，注册用户和开通记录都存不住。请在 Vercel 添加
+            UPSTASH_REDIS_REST_URL 与 UPSTASH_REDIS_REST_TOKEN 后重新部署。
+          </p>
+        )}
         <label className="settings-field">
           搜索用户
           <input

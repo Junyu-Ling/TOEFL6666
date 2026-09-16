@@ -310,23 +310,42 @@ export async function upsertAccessUser(user) {
   return resolveLoginUser(user, { preferId: user.id });
 }
 
+/** 线上没配 Redis 时用户库不可用，用户列表与开通记录都存不住。 */
+export function isUserStoreReady() {
+  return Boolean(getRedis()) || !isDeployedRuntime();
+}
+
+/**
+ * 登录只需要签名会话，不该被用户库拖垮。写库失败时退回本次登录带来的资料，
+ * 这样管理员照样能进站，只是不会出现在跨设备的注册用户列表里。
+ */
+export async function resolveLoginProfile(incoming, options) {
+  try {
+    return { profile: await resolveLoginUser(incoming, options), persisted: true };
+  } catch (err) {
+    return { profile: profileFromUser(incoming), persisted: false, error: err };
+  }
+}
+
 export async function getAccessSnapshot(user, env) {
   if (!user?.id) {
     return { isAdmin: false, features: { readingFill: false } };
   }
 
+  // 用户库不可用时不要连登录态一起弄丢：管理员照旧全开，其他人按未开通处理。
   let profile = null;
   try {
     profile = await upsertAccessUser(user);
   } catch (err) {
-    if (isAdminUser(user, env)) {
-      return {
-        isAdmin: true,
-        features: { readingFill: true },
-        user: publicUserFromProfile(profileFromUser(user)),
-      };
-    }
-    throw err;
+    const fallback = profileFromUser(user);
+    const admin = isAdminUser(user, env);
+    console.warn("[access] 用户库不可用：", err.message);
+    return {
+      isAdmin: admin,
+      features: { readingFill: admin },
+      user: publicUserFromProfile(fallback),
+      storageReady: false,
+    };
   }
 
   const admin = isAdminUser(profile, env) || isAdminUser(user, env);

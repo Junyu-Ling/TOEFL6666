@@ -11,9 +11,10 @@ function createError(message, status) {
   return err;
 }
 
+/** 只配了 Google 也要能签会话，否则 Google 登录会在写 Cookie 这步失败。 */
 export function getAuthSecret() {
   const env = getEnv();
-  return env.AUTH_SECRET || env.GITHUB_CLIENT_SECRET || "";
+  return env.AUTH_SECRET || env.GITHUB_CLIENT_SECRET || env.GOOGLE_CLIENT_SECRET || "";
 }
 
 export function getGithubConfig() {
@@ -136,7 +137,7 @@ function sign(body, secret) {
 
 export function createSessionToken(user) {
   const secret = getAuthSecret();
-  if (!secret) throw createError("未配置 GITHUB_CLIENT_SECRET 或 AUTH_SECRET", 503);
+  if (!secret) throw createError("未配置 AUTH_SECRET / GITHUB_CLIENT_SECRET / GOOGLE_CLIENT_SECRET", 503);
   const payload = {
     ...user,
     exp: Date.now() + SESSION_DAYS * 24 * 3600 * 1000,

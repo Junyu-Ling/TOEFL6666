@@ -23,6 +23,7 @@ const LOGIN_ERRORS = {
   profile: "无法读取账号信息，请确认已授权邮箱权限。",
   config: "GitHub 登录尚未配置完成。",
   google_config: "Google 登录尚未配置。请在 Vercel / .env 中设置 GOOGLE_CLIENT_ID 和 GOOGLE_CLIENT_SECRET。",
+  secret: "服务端缺少会话密钥。请在 Vercel 配置 AUTH_SECRET（或 GITHUB_CLIENT_SECRET / GOOGLE_CLIENT_SECRET）后重新部署。",
   unverified: "请使用已验证的邮箱登录。",
   denied: "已取消授权。",
   server: "登录失败，请稍后重试。",
