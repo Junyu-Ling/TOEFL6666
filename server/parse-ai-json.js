@@ -111,9 +111,16 @@ function tryParseJson(text) {
   }
 }
 
+function stripModelWrappers(text) {
+  return String(text || "")
+    .replace(/<\|[^|]*\|>/g, "\n")
+    .replace(/^```(?:json)?\s*/i, "")
+    .replace(/\s*```$/i, "")
+    .trim();
+}
+
 export function parseAiJson(text) {
-  let cleaned = String(text || "").trim();
-  cleaned = cleaned.replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/i, "");
+  let cleaned = stripModelWrappers(text);
 
   const direct = tryParseJson(cleaned);
   if (direct) return direct;

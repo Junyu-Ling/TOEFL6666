@@ -33,11 +33,35 @@ function isDeepSeekEndpoint(providerId, baseUrl) {
   return providerId === "deepseek" || /deepseek\.com/i.test(baseUrl || "");
 }
 
+function isGptOssModel(model) {
+  return /gpt-oss/i.test(String(model || ""));
+}
+
+/** gpt-oss 是推理模型，Groq 强制 json_object 经常报 Failed to validate JSON。 */
+function usesNativeJsonMode(providerId, model) {
+  if (!JSON_MODE_PROVIDER_IDS.has(providerId)) return false;
+  if (isGptOssModel(model)) return false;
+  return true;
+}
+
 function extractAssistantText(message) {
   if (!message) return "";
   const content = String(message.content ?? "").trim();
   if (content) return content;
-  return String(message.reasoning_content ?? "").trim();
+  return String(message.reasoning_content ?? message.reasoning ?? "").trim();
+}
+
+function extractFailedGeneration(data) {
+  const failed =
+    data?.error?.failed_generation ||
+    data?.failed_generation ||
+    data?.error?.metadata?.failed_generation;
+  return typeof failed === "string" ? failed.trim() : "";
+}
+
+function isJsonValidateError(data) {
+  const message = `${data?.error?.message || data?.error?.code || data?.message || ""}`;
+  return /validate JSON|json_validate_failed|failed_generation/i.test(message);
 }
 
 async function openaiCompatibleChat({
@@ -57,13 +81,19 @@ async function openaiCompatibleChat({
     messages,
   };
 
-  if (responseFormat === "json" && JSON_MODE_PROVIDER_IDS.has(providerId)) {
+  if (responseFormat === "json" && usesNativeJsonMode(providerId, model)) {
     body.response_format = { type: "json_object" };
   }
 
   // V4 默认开启 thinking，JSON 批改等场景会在 content 留空；关闭后走普通输出。
   if (isDeepSeekEndpoint(providerId, baseUrl)) {
     body.thinking = { type: "disabled" };
+  }
+
+  // Groq gpt-oss 会把推理过程掺进生成结果，隐藏推理并压低力度，避免 JSON 被校验器拒绝。
+  if (providerId === "groq" && isGptOssModel(model)) {
+    body.reasoning_effort = responseFormat === "json" ? "low" : "medium";
+    body.reasoning_format = "hidden";
   }
 
   const response = await fetch(resolveChatCompletionsUrl(baseUrl, providerId), {
@@ -77,7 +107,16 @@ async function openaiCompatibleChat({
 
   const data = await response.json().catch(() => ({}));
   if (!response.ok) {
-    throw createConfigError(data.error?.message || data.error?.msg || data.message || "AI API 请求失败", response.status);
+    const failedGeneration = extractFailedGeneration(data);
+    if (failedGeneration && isJsonValidateError(data)) {
+      return failedGeneration;
+    }
+    throw createConfigError(
+      isJsonValidateError(data)
+        ? "AI 返回格式无效，请重试"
+        : data.error?.message || data.error?.msg || data.message || "AI API 请求失败",
+      isJsonValidateError(data) ? 502 : response.status
+    );
   }
 
   const message = data.choices?.[0]?.message;
@@ -116,6 +155,9 @@ async function* openaiCompatibleChatStream({
       messages,
       stream: true,
       ...(isDeepSeekEndpoint(providerId, baseUrl) ? { thinking: { type: "disabled" } } : {}),
+      ...(providerId === "groq" && isGptOssModel(model)
+        ? { reasoning_effort: "medium", reasoning_format: "hidden" }
+        : {}),
     }),
   });
 
@@ -209,7 +251,7 @@ export async function chatCompletion({
   }
 
   const enrichedMessages =
-    responseFormat === "json" && !JSON_MODE_PROVIDER_IDS.has(providerId)
+    responseFormat === "json" && !usesNativeJsonMode(providerId, model)
       ? messages.map((message, index) =>
           message.role === "system" && index === messages.findIndex((item) => item.role === "system")
             ? {
