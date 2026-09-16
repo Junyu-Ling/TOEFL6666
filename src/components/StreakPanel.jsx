@@ -12,12 +12,13 @@ import {
   formatCountdown,
   addExamMark,
   removeExamMark,
+  setCheckInDate,
 } from "../services/streak";
 
 const WEEKDAY_LABELS = ["日", "一", "二", "三", "四", "五", "六"];
 
 const NAV_ITEMS = [
-  { id: "calendar", label: "日历", hint: "每天打开应用点亮火苗，点击日期标记考试。" },
+  { id: "calendar", label: "日历", hint: "点日期后可以把打卡同步到日历，登录后会跟着账号走。" },
   { id: "exams", label: "考试", hint: "查看已标记的托福和 SAT 考试日期。" },
   { id: "rewards", label: "奖励", hint: "连续打卡会解锁这些称号。" },
 ];
@@ -47,6 +48,9 @@ export default function StreakPanel({ open, onClose, streak, onStreakChange }) {
   const nextMilestone = getNextMilestone(streak.currentStreak ?? 0);
   const daysToNext = nextMilestone ? nextMilestone.days - (streak.currentStreak ?? 0) : 0;
   const selectedExams = selectedDate ? getExamsOnDate(examMarks, selectedDate) : [];
+  const checkInDate = selectedDate && selectedDate <= today ? selectedDate : today;
+  const checkInLogged = loginSet.has(checkInDate);
+  const checkInIsToday = checkInDate === today;
   const currentNav = NAV_ITEMS.find((item) => item.id === section) || NAV_ITEMS[0];
 
   useEffect(() => {
@@ -71,6 +75,11 @@ export default function StreakPanel({ open, onClose, streak, onStreakChange }) {
       return { year: date.getFullYear(), month: date.getMonth() };
     });
     setSelectedDate(null);
+  }
+
+  function handleToggleCheckIn(dateKey = checkInDate) {
+    if (!dateKey || dateKey > today) return;
+    onStreakChange?.(setCheckInDate(dateKey, !loginSet.has(dateKey)));
   }
 
   function handleMarkExam(type) {
@@ -133,6 +142,20 @@ export default function StreakPanel({ open, onClose, streak, onStreakChange }) {
                     </h3>
                     <button type="button" className="streak-calendar__shift" onClick={() => shiftMonth(1)} aria-label="下个月">
                       ›
+                    </button>
+                  </div>
+
+                  <div className="streak-checkin">
+                    <div className="streak-checkin__copy">
+                      <strong>{checkInIsToday ? "今天" : checkInDate}</strong>
+                      <span>{checkInLogged ? "已经在日历上" : "还没记到日历"}</span>
+                    </div>
+                    <button
+                      type="button"
+                      className={`streak-checkin__btn${checkInLogged ? " streak-checkin__btn--on" : ""}`}
+                      onClick={() => handleToggleCheckIn(checkInDate)}
+                    >
+                      {checkInLogged ? "从日历去掉" : "同步到日历"}
                     </button>
                   </div>
 
@@ -201,6 +224,14 @@ export default function StreakPanel({ open, onClose, streak, onStreakChange }) {
                         标记 <strong>{selectedDate}</strong>
                       </p>
                       <div className="streak-mark-menu__actions">
+                        <button
+                          type="button"
+                          className={`btn btn--sm${checkInLogged && selectedDate === checkInDate ? " btn--ghost" : " btn--primary"} streak-mark-btn`}
+                          disabled={Boolean(selectedDate && selectedDate > today)}
+                          onClick={() => handleToggleCheckIn(selectedDate || today)}
+                        >
+                          🔥 {loginSet.has(selectedDate) ? "去掉这天打卡" : "把这天同步到日历"}
+                        </button>
                         {Object.values(EXAM_TYPES).map((exam) => (
                           <button
                             key={exam.id}

@@ -182,6 +182,29 @@ export function addExamMark(type, dateKey) {
   return buildStreakSnapshot(next);
 }
 
+export function setCheckInDate(dateKey, enabled) {
+  const key = String(dateKey || "").trim();
+  const today = toDateKey();
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(key) || key > today) {
+    return loadStreak();
+  }
+
+  const raw = readStreakRaw();
+  const loginSet = new Set(raw.loginDates);
+  if (enabled) loginSet.add(key);
+  else loginSet.delete(key);
+
+  const loginDates = [...loginSet].sort();
+  const currentStreak = computeStreak(loginDates);
+  const next = {
+    ...raw,
+    loginDates,
+    longestStreak: Math.max(raw.longestStreak ?? 0, currentStreak),
+  };
+  saveStreak(next);
+  return buildStreakSnapshot(next);
+}
+
 export function removeExamMark(id) {
   const raw = readStreakRaw();
   const examMarks = normalizeExamMarks(raw.examMarks).filter((entry) => entry.id !== id);
