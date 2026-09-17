@@ -378,12 +378,13 @@ export default function App() {
 
   const handleTabChange = useCallback(
     (tab) => {
-      setActiveTab(tab);
+      const nextTab = normalizeActiveTabForMode(tab, appMode);
+      setActiveTab(nextTab);
       setListProgress((prev) => {
         const next = activeListId ? patchListProgress(prev, activeListId, listIndex) : prev;
         saveProgress({
           activeListId,
-          activeTab: tab,
+          activeTab: nextTab,
           reviewShuffle,
           listProgress: next,
           bookPractices,
@@ -397,13 +398,13 @@ export default function App() {
 
   useEffect(() => {
     if (accessLoading) return;
-    if (activeTab === "reading-fill" && !canUseReadingFill) {
+    if (activeTab === "reading-fill" && (appMode !== "toefl" || !canUseReadingFill)) {
       handleTabChange("practice");
     }
-    if (activeTab === "reading-vocab" && !canUseReadingVocab) {
+    if (activeTab === "reading-vocab" && (appMode !== "toefl" || !canUseReadingVocab)) {
       handleTabChange("practice");
     }
-  }, [accessLoading, activeTab, canUseReadingFill, canUseReadingVocab, handleTabChange]);
+  }, [accessLoading, activeTab, appMode, canUseReadingFill, canUseReadingVocab, handleTabChange]);
 
   const listWord = useMemo(() => {
     const item = wordList[listIndex];
@@ -1441,7 +1442,7 @@ export default function App() {
             </TabPanel>
           ) : null}
 
-          {canUseReadingFill ? (
+          {appMode === "toefl" && canUseReadingFill ? (
             <TabPanel tabId="reading-fill" activeTab={activeTab}>
               {readingFillPanel}
             </TabPanel>
