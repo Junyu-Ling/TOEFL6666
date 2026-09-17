@@ -43,12 +43,18 @@ function SettingRow({ title, hint, children, stacked = false }) {
   );
 }
 
-function Toggle({ checked, onChange, disabled = false }) {
+function Toggle({ checked, onChange, disabled = false, label }) {
   return (
-    <span className="toggle-switch">
-      <input type="checkbox" checked={checked} onChange={onChange} disabled={disabled} />
+    <label className={`toggle-switch${disabled ? " toggle-switch--disabled" : ""}`}>
+      <input
+        type="checkbox"
+        checked={checked}
+        onChange={onChange}
+        disabled={disabled}
+        aria-label={label}
+      />
       <span className="toggle-switch__track" aria-hidden="true" />
-    </span>
+    </label>
   );
 }
 
@@ -370,11 +376,19 @@ export default function SettingsPanel({ onLoginClick }) {
                 </SettingRow>
                 {settings.practiceStyle !== "recall" ? (
                   <SettingRow title="先隐藏单词" hint="听音默写英文后再写中文释义。">
-                    <Toggle checked={settings.hideWordFirst} onChange={(e) => setHideWordFirst(e.target.checked)} />
+                    <Toggle
+                      label="先隐藏单词"
+                      checked={settings.hideWordFirst}
+                      onChange={(e) => setHideWordFirst(e.target.checked)}
+                    />
                   </SettingRow>
                 ) : null}
                 <SettingRow title="答对 / 答错音效">
-                  <Toggle checked={settings.answerSounds} onChange={(e) => setAnswerSounds(e.target.checked)} />
+                  <Toggle
+                    label="答对 / 答错音效"
+                    checked={settings.answerSounds}
+                    onChange={(e) => setAnswerSounds(e.target.checked)}
+                  />
                 </SettingRow>
                 {settings.answerSounds ? (
                   <>
@@ -424,18 +438,21 @@ export default function SettingsPanel({ onLoginClick }) {
                 ) : null}
                 <SettingRow title="切换单词时自动朗读">
                   <Toggle
+                    label="切换单词时自动朗读"
                     checked={settings.autoReadOnNewWord}
                     onChange={(e) => setAutoReadOnNewWord(e.target.checked)}
                   />
                 </SettingRow>
                 <SettingRow title="切换单词时自动开麦">
                   <Toggle
+                    label="切换单词时自动开麦"
                     checked={settings.autoDictateOnNewWord}
                     onChange={(e) => setAutoDictateOnNewWord(e.target.checked)}
                   />
                 </SettingRow>
                 <SettingRow title="翻面后自动下一个">
                   <Toggle
+                    label="翻面后自动下一个"
                     checked={settings.autoAdvanceAfterFlip}
                     onChange={(e) => setAutoAdvanceAfterFlip(e.target.checked)}
                   />
@@ -461,6 +478,7 @@ export default function SettingsPanel({ onLoginClick }) {
                 ) : null}
                 <SettingRow title="分轮背诵模式" hint="每轮背完后回到开头复习一遍。">
                   <Toggle
+                    label="分轮背诵模式"
                     checked={settings.enableRoundReview}
                     onChange={(e) => setEnableRoundReview(e.target.checked)}
                   />
