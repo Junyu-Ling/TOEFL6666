@@ -2,6 +2,12 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { stopGameKeyBubble } from "../utils/appKeyboard";
 import { addExamsToDeviceCalendar } from "../utils/deviceCalendar";
 import {
+  copyCalendarFeedUrl,
+  getGoogleSubscribeUrl,
+  getOutlookSubscribeUrl,
+  syncStudyCalendarNow,
+} from "../services/calendarSync";
+import {
   STREAK_MILESTONES,
   EXAM_TYPES,
   toDateKey,
@@ -13,13 +19,14 @@ import {
   formatCountdown,
   addExamMark,
   removeExamMark,
+  enableIcsCalendarSync,
 } from "../services/streak";
 
 const WEEKDAY_LABELS = ["日", "一", "二", "三", "四", "五", "六"];
 
 const NAV_ITEMS = [
-  { id: "calendar", label: "日历", hint: "点日期标记考试，可以把考试加到电脑上的日历。" },
-  { id: "exams", label: "考试", hint: "查看已标记的托福和 SAT，也可以加到电脑日历。" },
+  { id: "calendar", label: "日历", hint: "点日期标记托福或 SAT 考试，可以把这场考试加到电脑日历。" },
+  { id: "exams", label: "考试", hint: "已标记的考试可以加到 Windows / Mac 日历；AI 会按最近一场托福倒计时排计划。" },
   { id: "rewards", label: "奖励", hint: "连续打卡会解锁这些称号。" },
 ];
 
@@ -28,6 +35,7 @@ export default function StreakPanel({ open, onClose, streak, onStreakChange }) {
   const todayDate = useMemo(() => parseDateKey(today), [today]);
   const panelRef = useRef(null);
   const [section, setSection] = useState("calendar");
+  const [syncNote, setSyncNote] = useState("");
   const [viewMonth, setViewMonth] = useState(() => ({
     year: todayDate.getFullYear(),
     month: todayDate.getMonth(),
@@ -49,6 +57,45 @@ export default function StreakPanel({ open, onClose, streak, onStreakChange }) {
   const daysToNext = nextMilestone ? nextMilestone.days - (streak.currentStreak ?? 0) : 0;
   const selectedExams = selectedDate ? getExamsOnDate(examMarks, selectedDate) : [];
   const currentNav = NAV_ITEMS.find((item) => item.id === section) || NAV_ITEMS[0];
+  const calendarSync = streak.calendarSync || {};
+  const icsEnabled = Boolean(calendarSync.icsEnabled && calendarSync.token);
+
+  async function publishExamCalendar(nextStreak = streak) {
+    try {
+      await syncStudyCalendarNow(nextStreak);
+    } catch (err) {
+      setSyncNote(err.message || "电脑日历更新失败");
+    }
+  }
+
+  function handleMarkExam(type) {
+    if (!selectedDate) return;
+    let next = addExamMark(type, selectedDate);
+    if (!next.calendarSync?.icsEnabled) {
+      next = enableIcsCalendarSync();
+    }
+    onStreakChange?.(next);
+    addExamsToDeviceCalendar({ type, dateKey: selectedDate });
+    setSyncNote("已把这场考试加到电脑日历，可在下载的日历文件里打开。");
+    publishExamCalendar(next);
+  }
+
+  async function handleSyncExamsToDevice() {
+    if (!upcomingExams.length) return;
+    const next = enableIcsCalendarSync();
+    onStreakChange?.(next);
+    addExamsToDeviceCalendar(upcomingExams);
+    setSyncNote("已下载考试日历。再用下面的订阅，电脑日历会跟着新的标记更新。");
+    await publishExamCalendar(next);
+  }
+
+  async function handleCopyFeed() {
+    const next = enableIcsCalendarSync();
+    onStreakChange?.(next);
+    const ok = await copyCalendarFeedUrl(next.calendarSync?.token).catch(() => false);
+    setSyncNote(ok ? "订阅链接已复制，可粘贴到 Windows 日历的“从网络订阅”。" : "复制失败，请手动订阅 Outlook 或 Google 日历。");
+    await publishExamCalendar(next);
+  }
 
   useEffect(() => {
     if (!open || !panelRef.current) return;
@@ -74,14 +121,13 @@ export default function StreakPanel({ open, onClose, streak, onStreakChange }) {
     setSelectedDate(null);
   }
 
-  function handleMarkExam(type) {
-    if (!selectedDate) return;
-    onStreakChange?.(addExamMark(type, selectedDate));
-    addExamsToDeviceCalendar({ type, dateKey: selectedDate });
-  }
-
   function handleRemoveExam(id) {
-    onStreakChange?.(removeExamMark(id));
+    const next = removeExamMark(id);
+    onStreakChange?.(next);
+    if (next.calendarSync?.icsEnabled) {
+      setSyncNote("已移除这场考试，订阅的电脑日历会随后更新。");
+      publishExamCalendar(next);
+    }
   }
 
   if (!open) return null;
@@ -140,21 +186,47 @@ export default function StreakPanel({ open, onClose, streak, onStreakChange }) {
 
                   <div className="streak-device-cal">
                     <div className="streak-device-cal__copy">
-                      <strong>同步到电脑日历</strong>
+                      <strong>考试标记 → 电脑日历</strong>
                       <span>
                         {upcomingExams.length
                           ? `把已标记的 ${upcomingExams.length} 场考试加到 Windows / Mac 日历`
-                          : "先点日期标记考试，再加到电脑日历"}
+                          : "先点日期标记托福或 SAT，再加到电脑日历"}
                       </span>
+                      {syncNote ? <span>{syncNote}</span> : null}
                     </div>
-                    <button
-                      type="button"
-                      className="streak-device-cal__btn"
-                      disabled={!upcomingExams.length}
-                      onClick={() => addExamsToDeviceCalendar(upcomingExams)}
-                    >
-                      加到电脑日历
-                    </button>
+                    <div className="streak-device-cal__actions">
+                      <button
+                        type="button"
+                        className="streak-device-cal__btn"
+                        disabled={!upcomingExams.length}
+                        onClick={handleSyncExamsToDevice}
+                      >
+                        加到电脑日历
+                      </button>
+                      {icsEnabled ? (
+                        <>
+                          <a
+                            className="streak-device-cal__btn streak-device-cal__btn--ghost"
+                            href={getOutlookSubscribeUrl(calendarSync.token)}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            Outlook
+                          </a>
+                          <a
+                            className="streak-device-cal__btn streak-device-cal__btn--ghost"
+                            href={getGoogleSubscribeUrl(calendarSync.token)}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            Google 日历
+                          </a>
+                          <button type="button" className="streak-device-cal__btn streak-device-cal__btn--ghost" onClick={handleCopyFeed}>
+                            复制订阅
+                          </button>
+                        </>
+                      ) : null}
+                    </div>
                   </div>
 
                   <div className="streak-calendar__weekdays">
@@ -303,14 +375,10 @@ export default function StreakPanel({ open, onClose, streak, onStreakChange }) {
                 <section className="streak-exams">
                   <div className="streak-device-cal">
                     <div className="streak-device-cal__copy">
-                      <strong>同步到电脑日历</strong>
+                      <strong>考试标记 → 电脑日历</strong>
                       <span>把这些考试加到 Windows / Mac 日历</span>
                     </div>
-                    <button
-                      type="button"
-                      className="streak-device-cal__btn"
-                      onClick={() => addExamsToDeviceCalendar(upcomingExams)}
-                    >
+                    <button type="button" className="streak-device-cal__btn" onClick={handleSyncExamsToDevice}>
                       全部加到电脑日历
                     </button>
                   </div>

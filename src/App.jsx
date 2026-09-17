@@ -22,6 +22,7 @@ import TransitionWords from "./components/TransitionWords";
 import TabPanel from "./components/TabPanel";
 import MottoFooter from "./components/MottoFooter";
 import { recordVisit, refreshStreak } from "./services/streak";
+import { listenStudyCalendarChanges } from "./services/calendarSync";
 import { syncService, SYNC_APPLIED_EVENT } from "./services/syncService";
 import { useMicrophone } from "./hooks/useMicrophone";
 import { useSettings } from "./context/SettingsContext";
@@ -158,6 +159,8 @@ export default function App() {
       window.removeEventListener("storage", handleStorage);
     };
   }, []);
+
+  useEffect(() => listenStudyCalendarChanges(), []);
 
   const reloadFromSync = useCallback(() => {
     const progress = loadProgress(appMode);

@@ -54,7 +54,7 @@ async function publishIcsFeed(streak) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       token,
-      loginDates: streak.loginDates || [],
+      loginDates: [],
       examMarks: streak.examMarks || [],
     }),
   });
@@ -64,7 +64,7 @@ async function publishIcsFeed(streak) {
 }
 
 async function pushGoogleCalendar(streak) {
-  if (googleConnected === false && !streak?.calendarSync?.googleEnabled) return null;
+  if (!streak?.calendarSync?.googleEnabled && googleConnected !== true) return null;
   const res = await fetch("/api/calendar/google-sync", {
     method: "POST",
     credentials: "include",

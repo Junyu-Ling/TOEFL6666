@@ -59,7 +59,7 @@ export default function ExamScoreSection({ embedded = false }) {
     }
   }, [savedPlan, planBusy]);
 
-  const nearestExam = getNearestExamOfType(loadStreak().examMarks, examType);
+  const nearestExam = getNearestExamOfType(loadStreak().examMarks, isToefl ? "toefl" : examType);
 
   const canGenerate = isToefl
     ? settings.toeflScores?.total != null && settings.toeflTargetTotal != null
@@ -99,9 +99,10 @@ export default function ExamScoreSection({ embedded = false }) {
       const totalWords = Array.isArray(wordBank) ? wordBank.length : 0;
       
       const streak = loadStreak();
-      const nearest = getNearestExamOfType(streak.examMarks, examType);
+      const nearestToefl = getNearestExamOfType(streak.examMarks, "toefl");
+      const nearest = isToefl ? nearestToefl : getNearestExamOfType(streak.examMarks, examType);
       const examDates = (streak.examMarks || [])
-        .filter((mark) => mark.type === examType)
+        .filter((mark) => mark.type === (isToefl ? "toefl" : examType))
         .map((mark) => mark.dateKey)
         .sort();
       const syncSummary = getSyncSummary({ appMode: examType, totalWords });
@@ -150,7 +151,7 @@ export default function ExamScoreSection({ embedded = false }) {
   const displayedPlan = planDraft || savedPlan?.content || "";
   const sectionTitle = isToefl ? "托福分数与提分计划" : "SAT 分数与提分计划";
   const sectionHint = isToefl
-    ? "填写托福实考分数与目标分，AI 将分析薄弱科目并生成个性化提分计划。采用 2026 新格式（四门各 1–6 分，总分为四科平均）。"
+    ? "填写托福实考分数与目标分。生成计划时，AI 会先看你在学习日历里标记的最近一场托福考试还有多久，再按倒计时安排节奏。采用 2026 新格式（四门各 1–6 分，总分为四科平均）。"
     : "填写 SAT 实考分数与目标分，AI 将分析薄弱科目并生成个性化提分计划（阅读文法 + 数学，总分 400–1600）。";
 
   const body = (

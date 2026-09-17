@@ -3868,6 +3868,14 @@ body {
   background: color-mix(in srgb, var(--accent) 8%, var(--surface));
 }
 
+.streak-device-cal__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.4rem;
+}
+
 .streak-device-cal__copy {
   display: flex;
   flex-direction: column;
@@ -3896,6 +3904,7 @@ body {
   background: var(--accent);
   color: #fff;
   cursor: pointer;
+  text-decoration: none;
 }
 
 .streak-device-cal__btn:hover:not(:disabled) {
@@ -3905,6 +3914,12 @@ body {
 .streak-device-cal__btn:disabled {
   opacity: 0.45;
   cursor: not-allowed;
+}
+
+.streak-device-cal__btn--ghost {
+  background: var(--surface);
+  color: var(--text);
+  border-color: var(--border);
 }
 
 .streak-calendar__weekdays,
