@@ -1,7 +1,7 @@
 import { createContext, useCallback, useContext, useEffect, useRef, useState } from "react";
 import { supabase, isSupabaseConfigured } from "../services/supabase";
 import { getAppUser, getSession, signOut as authSignOut, syncIdentitySession } from "../services/auth";
-import { pullAllProgress, pushAllProgress } from "../services/cloudSync";
+import { pullAllProgress, pushAllProgress, schedulePushAllProgress } from "../services/cloudSync";
 
 const AuthContext = createContext(null);
 
@@ -107,13 +107,17 @@ export function AuthProvider({ children }) {
     const push = () => {
       pushAllProgress(user.id).catch(() => {});
     };
-    const timer = window.setInterval(push, 45000);
-    window.addEventListener("beforeunload", push);
+    const onHidden = () => {
+      if (document.visibilityState === "hidden") push();
+    };
+    const onDirty = () => schedulePushAllProgress(user.id);
     window.addEventListener("pagehide", push);
+    document.addEventListener("visibilitychange", onHidden);
+    window.addEventListener("toefl666-progress-dirty", onDirty);
     return () => {
-      window.clearInterval(timer);
-      window.removeEventListener("beforeunload", push);
       window.removeEventListener("pagehide", push);
+      document.removeEventListener("visibilitychange", onHidden);
+      window.removeEventListener("toefl666-progress-dirty", onDirty);
       push();
     };
   }, [user?.id]);

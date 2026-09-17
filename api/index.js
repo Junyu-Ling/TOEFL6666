@@ -11,10 +11,18 @@ import { handleSyncPush, handleSyncPull } from "../server/sync-api.js";
 import { cloneOwnVoice, isClonedVoiceConfigured, synthesizeVocabWord } from "../server/tts-minimax.js";
 import { handleAccessGrant, handleAccessMe, handleAccessUsers } from "../server/access-api.js";
 import { handleAuthIdentity, handleAuthLink, handleAuthLogout, handleAuthMe, handleGithubCallback, handleGithubStart } from "../server/auth-github.js";
-import { handleGoogleCallback, handleGoogleStart } from "../server/auth-google.js";
+import { handleGoogleCallback, handleGoogleCalendarStart, handleGoogleStart } from "../server/auth-google.js";
 import { handleReadingFillArticles } from "../server/reading-fill-articles.js";
 import { handleReadingVocabCollections } from "../server/reading-vocab-collections.js";
 import { handleAccountProgressPull, handleAccountProgressPush } from "../server/account-progress.js";
+import { handleCalendarFeed, handleCalendarPublish } from "../server/calendar-feed.js";
+import {
+  handleGoogleCalendarDisconnect,
+  handleGoogleCalendarPull,
+  handleGoogleCalendarStatus,
+  handleGoogleCalendarSync,
+} from "../server/google-calendar-sync.js";
+import { requireAccessUser } from "../server/access-api.js";
 
 export const config = {
   api: {
@@ -23,6 +31,26 @@ export const config = {
     },
   },
 };
+
+function queryParam(req, key) {
+  const fromQuery = req.query?.[key];
+  if (Array.isArray(fromQuery)) return String(fromQuery[0] || "");
+  if (fromQuery != null && String(fromQuery) !== "") return String(fromQuery);
+  try {
+    return new URL(req.url || "/", "http://n").searchParams.get(key) || "";
+  } catch {
+    return "";
+  }
+}
+
+function sendAudio(res, audio) {
+  res.statusCode = 200;
+  res.setHeader("Content-Type", "audio/mpeg");
+  res.setHeader("Cache-Control", "public, max-age=86400, s-maxage=604800, immutable");
+  res.setHeader("X-Content-Type-Options", "nosniff");
+  if (audio?.length) res.setHeader("Content-Length", String(audio.length));
+  res.end(audio);
+}
 
 function sendJson(res, status, payload) {
   res.statusCode = status;
@@ -99,11 +127,21 @@ export default async function handler(req, res) {
 
   try {
     if (pathname === "/api/tts/status") {
-      if (method !== "GET") {
+      if (method !== "GET" && method !== "HEAD") {
         sendJson(res, 405, { error: "Method Not Allowed" });
         return;
       }
+      res.setHeader("Cache-Control", "public, max-age=60, s-maxage=300");
       sendJson(res, 200, { available: isClonedVoiceConfigured() });
+      return;
+    }
+
+    if (pathname === "/api/tts/speak" && (method === "GET" || method === "HEAD")) {
+      const audio = await synthesizeVocabWord({
+        word: queryParam(req, "word"),
+        voiceId: queryParam(req, "voiceId"),
+      });
+      sendAudio(res, audio);
       return;
     }
 
@@ -134,12 +172,88 @@ export default async function handler(req, res) {
       return;
     }
 
+    if (pathname === "/api/auth/google/calendar") {
+      if (method !== "GET" && method !== "HEAD") {
+        sendJson(res, 405, { error: "Method Not Allowed" });
+        return;
+      }
+      handleGoogleCalendarStart(req, res);
+      return;
+    }
+
     if (pathname === "/api/auth/google/callback") {
       if (method !== "GET" && method !== "HEAD") {
         sendJson(res, 405, { error: "Method Not Allowed" });
         return;
       }
       await handleGoogleCallback(req, res);
+      return;
+    }
+
+    if (pathname === "/api/calendar/publish") {
+      if (method !== "POST") {
+        sendJson(res, 405, { error: "Method Not Allowed" });
+        return;
+      }
+      sendJson(res, 200, await handleCalendarPublish(req, parseBody(req)));
+      return;
+    }
+
+    if (pathname === "/api/calendar/feed.ics") {
+      if (method !== "GET" && method !== "HEAD") {
+        sendJson(res, 405, { error: "Method Not Allowed" });
+        return;
+      }
+      await handleCalendarFeed(req, res);
+      return;
+    }
+
+    if (pathname === "/api/calendar/google-status") {
+      if (method !== "GET" && method !== "HEAD") {
+        sendJson(res, 405, { error: "Method Not Allowed" });
+        return;
+      }
+      try {
+        const user = await requireAccessUser(req);
+        sendJson(res, 200, await handleGoogleCalendarStatus(user.id));
+      } catch (err) {
+        if (err.status === 401) {
+          sendJson(res, 200, { connected: false });
+          return;
+        }
+        throw err;
+      }
+      return;
+    }
+
+    if (pathname === "/api/calendar/google-sync") {
+      if (method !== "POST") {
+        sendJson(res, 405, { error: "Method Not Allowed" });
+        return;
+      }
+      const user = await requireAccessUser(req);
+      const body = parseBody(req);
+      sendJson(res, 200, await handleGoogleCalendarSync(user.id, body));
+      return;
+    }
+
+    if (pathname === "/api/calendar/google-pull") {
+      if (method !== "GET" && method !== "HEAD") {
+        sendJson(res, 405, { error: "Method Not Allowed" });
+        return;
+      }
+      const user = await requireAccessUser(req);
+      sendJson(res, 200, await handleGoogleCalendarPull(user.id));
+      return;
+    }
+
+    if (pathname === "/api/calendar/google-disconnect") {
+      if (method !== "POST") {
+        sendJson(res, 405, { error: "Method Not Allowed" });
+        return;
+      }
+      const user = await requireAccessUser(req);
+      sendJson(res, 200, await handleGoogleCalendarDisconnect(user.id));
       return;
     }
 
@@ -273,11 +387,7 @@ export default async function handler(req, res) {
 
     if (pathname === "/api/tts/speak") {
       const audio = await synthesizeVocabWord({ word: body.word, voiceId: body.voiceId });
-      res.statusCode = 200;
-      res.setHeader("Content-Type", "audio/mpeg");
-      res.setHeader("Cache-Control", "no-store");
-      res.setHeader("X-Content-Type-Options", "nosniff");
-      res.end(audio);
+      sendAudio(res, audio);
       return;
     }
 

@@ -18,6 +18,7 @@ const DEFAULT_STREAK = {
   loginDates: [],
   longestStreak: 0,
   examMarks: [],
+  calendarSync: { token: "", icsEnabled: false, googleEnabled: false },
 };
 
 export function toDateKey(date = new Date()) {
@@ -105,12 +106,42 @@ export function normalizeExamMarks(examMarks) {
 
 let memoryStreakCache = null;
 
+function createCalendarToken() {
+  const bytes = new Uint8Array(18);
+  if (typeof crypto !== "undefined" && crypto.getRandomValues) {
+    crypto.getRandomValues(bytes);
+  } else {
+    for (let i = 0; i < bytes.length; i++) bytes[i] = Math.floor(Math.random() * 256);
+  }
+  return Array.from(bytes, (value) => value.toString(16).padStart(2, "0")).join("");
+}
+
+export function normalizeCalendarSync(value) {
+  const token = String(value?.token || "").replace(/[^a-zA-Z0-9_-]/g, "").slice(0, 64);
+  return {
+    token: token.length >= 20 ? token : "",
+    icsEnabled: Boolean(value?.icsEnabled && token.length >= 20),
+    googleEnabled: Boolean(value?.googleEnabled),
+    lastSyncedAt: Number(value?.lastSyncedAt) || 0,
+    lastSynced: {
+      loginDates: Array.isArray(value?.lastSynced?.loginDates) ? value.lastSynced.loginDates : [],
+      examMarks: Array.isArray(value?.lastSynced?.examMarks) ? value.lastSynced.examMarks : [],
+    },
+  };
+}
+
 function serializeStreak(data) {
   return {
     loginDates: Array.isArray(data.loginDates) ? [...data.loginDates].sort() : [],
     longestStreak: data.longestStreak ?? 0,
     examMarks: normalizeExamMarks(data.examMarks),
+    calendarSync: normalizeCalendarSync(data.calendarSync),
   };
+}
+
+function notifyCalendarChanged(payload) {
+  if (typeof window === "undefined") return;
+  window.dispatchEvent(new CustomEvent("toefl666-calendar-changed", { detail: payload }));
 }
 
 function writeStreakRaw(data) {
@@ -139,7 +170,7 @@ function readStreakRaw() {
     return serializeStreak(memoryStreakCache);
   }
 
-  const empty = { ...DEFAULT_STREAK, loginDates: [], examMarks: [] };
+  const empty = { ...DEFAULT_STREAK, loginDates: [], examMarks: [], calendarSync: normalizeCalendarSync(null) };
   memoryStreakCache = serializeStreak(empty);
   return memoryStreakCache;
 }
@@ -156,6 +187,7 @@ function buildStreakSnapshot(data) {
     totalDays: loginDates.length,
     loggedInToday: loginDates.includes(today),
     examMarks: normalizeExamMarks(data.examMarks),
+    calendarSync: normalizeCalendarSync(data.calendarSync),
   };
 }
 
@@ -167,8 +199,106 @@ export function refreshStreak() {
   return loadStreak();
 }
 
-export function saveStreak(data) {
-  writeStreakRaw(data);
+export function saveStreak(data, { syncCalendar = true } = {}) {
+  const payload = writeStreakRaw(data);
+  if (syncCalendar) notifyCalendarChanged(payload);
+  return payload;
+}
+
+export function enableIcsCalendarSync() {
+  const raw = readStreakRaw();
+  const prev = normalizeCalendarSync(raw.calendarSync);
+  const next = {
+    ...raw,
+    calendarSync: {
+      ...prev,
+      token: prev.token || createCalendarToken(),
+      icsEnabled: true,
+    },
+  };
+  saveStreak(next);
+  return buildStreakSnapshot(next);
+}
+
+export function disableIcsCalendarSync() {
+  const raw = readStreakRaw();
+  const next = {
+    ...raw,
+    calendarSync: { ...normalizeCalendarSync(raw.calendarSync), icsEnabled: false },
+  };
+  saveStreak(next, { syncCalendar: false });
+  return buildStreakSnapshot(next);
+}
+
+export function setGoogleCalendarSyncEnabled(enabled) {
+  const raw = readStreakRaw();
+  const next = {
+    ...raw,
+    calendarSync: { ...normalizeCalendarSync(raw.calendarSync), googleEnabled: Boolean(enabled) },
+  };
+  saveStreak(next, { syncCalendar: Boolean(enabled) });
+  return buildStreakSnapshot(next);
+}
+
+export function applyGoogleCalendarPull(remote) {
+  if (!remote) return loadStreak();
+  const raw = readStreakRaw();
+  const lastLogin = new Set(raw.calendarSync?.lastSynced?.loginDates || []);
+  const remoteLogin = new Set(remote.loginDates || []);
+  const loginDates = new Set(raw.loginDates || []);
+  for (const dateKey of lastLogin) {
+    if (!remoteLogin.has(dateKey)) loginDates.delete(dateKey);
+  }
+  for (const dateKey of remoteLogin) {
+    if (dateKey <= toDateKey()) loginDates.add(dateKey);
+  }
+
+  const lastExams = new Set((raw.calendarSync?.lastSynced?.examMarks || []).map((mark) => mark.id));
+  const remoteExams = new Map((remote.examMarks || []).map((mark) => [mark.id, mark]));
+  const exams = new Map((raw.examMarks || []).map((mark) => [mark.id, mark]));
+  for (const id of lastExams) {
+    if (!remoteExams.has(id)) exams.delete(id);
+  }
+  for (const [id, mark] of remoteExams) {
+    if (!exams.has(id)) exams.set(id, mark);
+  }
+
+  const nextLoginDates = [...loginDates].sort();
+  const next = {
+    ...raw,
+    loginDates: nextLoginDates,
+    longestStreak: Math.max(raw.longestStreak ?? 0, computeStreak(nextLoginDates)),
+    examMarks: [...exams.values()],
+    calendarSync: {
+      ...normalizeCalendarSync(raw.calendarSync),
+      googleEnabled: true,
+      lastSyncedAt: Date.now(),
+      lastSynced: {
+        loginDates: [...remoteLogin].sort(),
+        examMarks: remote.examMarks || [],
+      },
+    },
+  };
+  saveStreak(next, { syncCalendar: false });
+  return buildStreakSnapshot(next);
+}
+
+export function markGoogleCalendarSynced(streakLike = loadStreak()) {
+  const raw = readStreakRaw();
+  const next = {
+    ...raw,
+    calendarSync: {
+      ...normalizeCalendarSync(raw.calendarSync),
+      googleEnabled: true,
+      lastSyncedAt: Date.now(),
+      lastSynced: {
+        loginDates: streakLike.loginDates || raw.loginDates || [],
+        examMarks: streakLike.examMarks || raw.examMarks || [],
+      },
+    },
+  };
+  saveStreak(next, { syncCalendar: false });
+  return buildStreakSnapshot(next);
 }
 
 export function addExamMark(type, dateKey) {
@@ -178,29 +308,6 @@ export function addExamMark(type, dateKey) {
     { id: createExamId(type, dateKey), type, dateKey },
   ];
   const next = { ...raw, examMarks };
-  saveStreak(next);
-  return buildStreakSnapshot(next);
-}
-
-export function setCheckInDate(dateKey, enabled) {
-  const key = String(dateKey || "").trim();
-  const today = toDateKey();
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(key) || key > today) {
-    return loadStreak();
-  }
-
-  const raw = readStreakRaw();
-  const loginSet = new Set(raw.loginDates);
-  if (enabled) loginSet.add(key);
-  else loginSet.delete(key);
-
-  const loginDates = [...loginSet].sort();
-  const currentStreak = computeStreak(loginDates);
-  const next = {
-    ...raw,
-    loginDates,
-    longestStreak: Math.max(raw.longestStreak ?? 0, currentStreak),
-  };
   saveStreak(next);
   return buildStreakSnapshot(next);
 }
@@ -232,11 +339,8 @@ export function getUpcomingExams(examMarks) {
     .sort((a, b) => a.daysLeft - b.daysLeft || a.dateKey.localeCompare(b.dateKey));
 }
 
-export function getNearestExamReminders(examMarks) {
-  const upcoming = getUpcomingExams(examMarks).filter((exam) => exam.daysLeft >= 0);
-  return Object.keys(EXAM_TYPES)
-    .map((type) => upcoming.find((exam) => exam.type === type))
-    .filter(Boolean);
+export function getNearestExamOfType(examMarks, type) {
+  return getUpcomingExams(examMarks).find((exam) => exam.type === type && exam.daysLeft >= 0) ?? null;
 }
 
 export function recordVisit() {
@@ -254,6 +358,7 @@ export function recordVisit() {
   const longestStreak = Math.max(raw.longestStreak ?? 0, currentStreak);
 
   const next = {
+    ...raw,
     loginDates,
     longestStreak,
     examMarks: raw.examMarks,

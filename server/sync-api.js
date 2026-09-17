@@ -68,10 +68,20 @@ export async function handleSyncPull(body = {}) {
   }
 
   const { entry, backend } = await loadSyncEntry(code);
+  const updatedAt = entry.updatedAt || entry.payload?.exportedAt || 0;
+  const since = Number(body.since) || 0;
+  if (since > 0 && updatedAt <= since) {
+    return {
+      unchanged: true,
+      updatedAt,
+      expiresAt: entry.expiresAt,
+      backend,
+    };
+  }
   return {
     payload: entry.payload,
     exportedAt: entry.payload.exportedAt,
-    updatedAt: entry.updatedAt || entry.payload.exportedAt,
+    updatedAt,
     expiresAt: entry.expiresAt,
     backend,
   };

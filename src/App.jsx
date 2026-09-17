@@ -193,6 +193,7 @@ export default function App() {
   useEffect(() => {
     if (wordsLoading) return;
     syncService.markDirty();
+    window.dispatchEvent(new Event("toefl666-progress-dirty"));
   }, [recognized, unrecognized, listProgress, bookPractices, bookPracticePaused, streakData, wordsLoading]);
 
   const applyList = useCallback((listId, words, meta, index) => {

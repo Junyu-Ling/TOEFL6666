@@ -16,8 +16,8 @@ import { pullSyncPayload, pushSyncPayload } from "./syncApi";
 export const SYNC_APPLIED_EVENT = "toefl666-sync-applied";
 export const SYNC_STATUS_EVENT = "toefl666-sync-status";
 
-const POLL_MS = 3000;
-const PUSH_DEBOUNCE_MS = 1500;
+const POLL_MS = 60000;
+const PUSH_DEBOUNCE_MS = 4000;
 
 let pollTimer = null;
 let pushTimer = null;
@@ -80,6 +80,10 @@ function installStorageHook() {
 async function applyRemotePayload(result) {
   const session = getSession();
   if (!session) return false;
+  if (result?.unchanged) {
+    if (result.expiresAt) updateSession({ expiresAt: result.expiresAt });
+    return false;
+  }
 
   const remoteUpdatedAt = result.updatedAt || result.payload?.exportedAt || 0;
   if (remoteUpdatedAt <= session.lastRemoteUpdatedAt) return false;
@@ -105,7 +109,7 @@ async function pullAndMerge({ throwOnError = false } = {}) {
   syncing = true;
   emitStatus({ state: "pulling", message: "正在同步云端进度…" });
   try {
-    const result = await pullSyncPayload(session.code);
+    const result = await pullSyncPayload(session.code, session.lastRemoteUpdatedAt);
     const changed = await applyRemotePayload(result);
 
     emitStatus({
@@ -143,7 +147,7 @@ async function pushNow() {
   emitStatus({ state: "pushing", message: "正在上传进度…" });
   try {
     try {
-      const result = await pullSyncPayload(session.code);
+      const result = await pullSyncPayload(session.code, session.lastRemoteUpdatedAt);
       const changed = await applyRemotePayload(result);
       if (changed) emitApplied();
     } catch {
@@ -177,6 +181,7 @@ async function pushNow() {
 function startPolling() {
   if (pollTimer) return;
   pollTimer = setInterval(async () => {
+    if (typeof document !== "undefined" && document.visibilityState === "hidden") return;
     await pullAndMerge();
     if (dirty) await pushNow();
   }, POLL_MS);
@@ -285,21 +290,6 @@ export const syncService = {
       startPolling();
       pullAndMerge();
     }
-
-    const onFocus = () => {
-      if (getSession()) pullAndMerge();
-    };
-    const onVisibility = () => {
-      if (document.visibilityState === "visible" && getSession()) pullAndMerge();
-    };
-
-    window.addEventListener("focus", onFocus);
-    document.addEventListener("visibilitychange", onVisibility);
-
-    return () => {
-      window.removeEventListener("focus", onFocus);
-      document.removeEventListener("visibilitychange", onVisibility);
-    };
   },
 
   stop() {

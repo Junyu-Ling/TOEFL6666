@@ -46,15 +46,6 @@ export function AccessProvider({ children, user }) {
     refresh();
   }, [refresh]);
 
-  useEffect(() => {
-    if (!user) return undefined;
-    function onFocus() {
-      refresh();
-    }
-    window.addEventListener("focus", onFocus);
-    return () => window.removeEventListener("focus", onFocus);
-  }, [user, refresh]);
-
   return (
     <AccessContext.Provider value={{ ...access, loading, refresh }}>
       {children}

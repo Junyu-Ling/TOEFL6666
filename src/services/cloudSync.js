@@ -8,6 +8,9 @@ const SYNC_KEYS = [
   "toefl666_streak",
 ];
 
+const lastPushedHash = new Map();
+const pushTimers = new Map();
+
 function localUpdatedAt(raw) {
   if (raw == null) return 0;
   try {
@@ -55,15 +58,31 @@ function applyCloudItem(key, item) {
   localStorage.setItem(key, item.value);
 }
 
-export async function pushAllProgress(userId) {
-  if (!userId) return;
+function collectItems() {
   const items = {};
   for (const key of SYNC_KEYS) {
     const raw = localStorage.getItem(key);
     if (raw === null) continue;
     items[key] = { value: raw, updatedAt: localUpdatedAt(raw) };
   }
+  return items;
+}
+
+function itemsHash(items) {
+  const raw = JSON.stringify(items);
+  let hash = 0;
+  for (let i = 0; i < raw.length; i++) {
+    hash = (hash * 31 + raw.charCodeAt(i)) | 0;
+  }
+  return String(hash);
+}
+
+export async function pushAllProgress(userId) {
+  if (!userId) return;
+  const items = collectItems();
   if (!Object.keys(items).length) return;
+  const hash = itemsHash(items);
+  if (lastPushedHash.get(userId) === hash) return;
   const res = await fetch("/api/sync/account", {
     method: "POST",
     credentials: "include",
@@ -73,7 +92,22 @@ export async function pushAllProgress(userId) {
   if (!res.ok) {
     const data = await res.json().catch(() => ({}));
     console.warn("[cloudSync] push all failed:", data.error || res.status);
+    return;
   }
+  lastPushedHash.set(userId, hash);
+}
+
+export function schedulePushAllProgress(userId, delay = 8000) {
+  if (!userId) return;
+  const prev = pushTimers.get(userId);
+  if (prev) window.clearTimeout(prev);
+  pushTimers.set(
+    userId,
+    window.setTimeout(() => {
+      pushTimers.delete(userId);
+      pushAllProgress(userId).catch(() => {});
+    }, delay)
+  );
 }
 
 export async function pullAllProgress(userId) {

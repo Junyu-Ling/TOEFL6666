@@ -262,6 +262,7 @@ function mergeStreakObject(local, remote) {
     loginDates,
     longestStreak: Math.max(local.longestStreak || 0, remote.longestStreak || 0),
     examMarks: [...marks.values()],
+    calendarSync: local.calendarSync?.token ? local.calendarSync : remote.calendarSync,
   };
 }
 

@@ -9,11 +9,11 @@ export async function pushSyncPayload(payload, code) {
   return data;
 }
 
-export async function pullSyncPayload(code) {
+export async function pullSyncPayload(code, since = 0) {
   const res = await fetch("/api/sync/pull", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ code }),
+    body: JSON.stringify({ code, since: Number(since) || 0 }),
   });
   const data = await res.json().catch(() => ({}));
   if (!res.ok) throw new Error(data.error || `拉取失败 (${res.status})`);

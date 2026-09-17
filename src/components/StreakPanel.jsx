@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { stopGameKeyBubble } from "../utils/appKeyboard";
+import { addExamsToDeviceCalendar } from "../utils/deviceCalendar";
 import {
   STREAK_MILESTONES,
   EXAM_TYPES,
@@ -12,14 +13,13 @@ import {
   formatCountdown,
   addExamMark,
   removeExamMark,
-  setCheckInDate,
 } from "../services/streak";
 
 const WEEKDAY_LABELS = ["日", "一", "二", "三", "四", "五", "六"];
 
 const NAV_ITEMS = [
-  { id: "calendar", label: "日历", hint: "点日期后可以把打卡同步到日历，登录后会跟着账号走。" },
-  { id: "exams", label: "考试", hint: "查看已标记的托福和 SAT 考试日期。" },
+  { id: "calendar", label: "日历", hint: "点日期标记考试，可以把考试加到电脑上的日历。" },
+  { id: "exams", label: "考试", hint: "查看已标记的托福和 SAT，也可以加到电脑日历。" },
   { id: "rewards", label: "奖励", hint: "连续打卡会解锁这些称号。" },
 ];
 
@@ -48,9 +48,6 @@ export default function StreakPanel({ open, onClose, streak, onStreakChange }) {
   const nextMilestone = getNextMilestone(streak.currentStreak ?? 0);
   const daysToNext = nextMilestone ? nextMilestone.days - (streak.currentStreak ?? 0) : 0;
   const selectedExams = selectedDate ? getExamsOnDate(examMarks, selectedDate) : [];
-  const checkInDate = selectedDate && selectedDate <= today ? selectedDate : today;
-  const checkInLogged = loginSet.has(checkInDate);
-  const checkInIsToday = checkInDate === today;
   const currentNav = NAV_ITEMS.find((item) => item.id === section) || NAV_ITEMS[0];
 
   useEffect(() => {
@@ -77,14 +74,10 @@ export default function StreakPanel({ open, onClose, streak, onStreakChange }) {
     setSelectedDate(null);
   }
 
-  function handleToggleCheckIn(dateKey = checkInDate) {
-    if (!dateKey || dateKey > today) return;
-    onStreakChange?.(setCheckInDate(dateKey, !loginSet.has(dateKey)));
-  }
-
   function handleMarkExam(type) {
     if (!selectedDate) return;
     onStreakChange?.(addExamMark(type, selectedDate));
+    addExamsToDeviceCalendar({ type, dateKey: selectedDate });
   }
 
   function handleRemoveExam(id) {
@@ -145,17 +138,22 @@ export default function StreakPanel({ open, onClose, streak, onStreakChange }) {
                     </button>
                   </div>
 
-                  <div className="streak-checkin">
-                    <div className="streak-checkin__copy">
-                      <strong>{checkInIsToday ? "今天" : checkInDate}</strong>
-                      <span>{checkInLogged ? "已经在日历上" : "还没记到日历"}</span>
+                  <div className="streak-device-cal">
+                    <div className="streak-device-cal__copy">
+                      <strong>同步到电脑日历</strong>
+                      <span>
+                        {upcomingExams.length
+                          ? `把已标记的 ${upcomingExams.length} 场考试加到 Windows / Mac 日历`
+                          : "先点日期标记考试，再加到电脑日历"}
+                      </span>
                     </div>
                     <button
                       type="button"
-                      className={`streak-checkin__btn${checkInLogged ? " streak-checkin__btn--on" : ""}`}
-                      onClick={() => handleToggleCheckIn(checkInDate)}
+                      className="streak-device-cal__btn"
+                      disabled={!upcomingExams.length}
+                      onClick={() => addExamsToDeviceCalendar(upcomingExams)}
                     >
-                      {checkInLogged ? "从日历去掉" : "同步到日历"}
+                      加到电脑日历
                     </button>
                   </div>
 
@@ -224,14 +222,6 @@ export default function StreakPanel({ open, onClose, streak, onStreakChange }) {
                         标记 <strong>{selectedDate}</strong>
                       </p>
                       <div className="streak-mark-menu__actions">
-                        <button
-                          type="button"
-                          className={`btn btn--sm${checkInLogged && selectedDate === checkInDate ? " btn--ghost" : " btn--primary"} streak-mark-btn`}
-                          disabled={Boolean(selectedDate && selectedDate > today)}
-                          onClick={() => handleToggleCheckIn(selectedDate || today)}
-                        >
-                          🔥 {loginSet.has(selectedDate) ? "去掉这天打卡" : "把这天同步到日历"}
-                        </button>
                         {Object.values(EXAM_TYPES).map((exam) => (
                           <button
                             key={exam.id}
@@ -250,13 +240,22 @@ export default function StreakPanel({ open, onClose, streak, onStreakChange }) {
                               <span>
                                 {exam.emoji} {exam.label}考试
                               </span>
-                              <button
-                                type="button"
-                                className="btn btn--ghost btn--sm"
-                                onClick={() => handleRemoveExam(exam.id)}
-                              >
-                                移除
-                              </button>
+                              <div className="streak-mark-menu__item-actions">
+                                <button
+                                  type="button"
+                                  className="btn btn--ghost btn--sm"
+                                  onClick={() => addExamsToDeviceCalendar(exam)}
+                                >
+                                  加到电脑日历
+                                </button>
+                                <button
+                                  type="button"
+                                  className="btn btn--ghost btn--sm"
+                                  onClick={() => handleRemoveExam(exam.id)}
+                                >
+                                  移除
+                                </button>
+                              </div>
                             </li>
                           ))}
                         </ul>
@@ -302,6 +301,19 @@ export default function StreakPanel({ open, onClose, streak, onStreakChange }) {
             {section === "exams" ? (
               upcomingExams.length ? (
                 <section className="streak-exams">
+                  <div className="streak-device-cal">
+                    <div className="streak-device-cal__copy">
+                      <strong>同步到电脑日历</strong>
+                      <span>把这些考试加到 Windows / Mac 日历</span>
+                    </div>
+                    <button
+                      type="button"
+                      className="streak-device-cal__btn"
+                      onClick={() => addExamsToDeviceCalendar(upcomingExams)}
+                    >
+                      全部加到电脑日历
+                    </button>
+                  </div>
                   <ul className="streak-exams__list">
                     {upcomingExams.map((exam) => (
                       <li
@@ -314,6 +326,13 @@ export default function StreakPanel({ open, onClose, streak, onStreakChange }) {
                           <span>{exam.dateKey}</span>
                         </div>
                         <span className="streak-exam__countdown">{formatCountdown(exam.dateKey)}</span>
+                        <button
+                          type="button"
+                          className="btn btn--ghost btn--sm"
+                          onClick={() => addExamsToDeviceCalendar(exam)}
+                        >
+                          加到电脑日历
+                        </button>
                         <button
                           type="button"
                           className="btn btn--ghost btn--sm"

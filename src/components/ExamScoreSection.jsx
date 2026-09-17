@@ -9,7 +9,7 @@ import {
 import { normalizeAppMode } from "../utils/appMode";
 import { getStudyPlanForExam } from "../services/settings";
 import { getSyncSummary } from "../shared/sync";
-import { loadStreak, daysUntil } from "../services/streak";
+import { loadStreak, getNearestExamOfType, formatCountdown } from "../services/streak";
 import { streamStudyPlan } from "../services/studyPlan";
 import { fetchWordBank } from "../services/wordlist";
 import RichAiContent from "./RichAiContent";
@@ -59,16 +59,7 @@ export default function ExamScoreSection({ embedded = false }) {
     }
   }, [savedPlan, planBusy]);
 
-  const examContext = useMemo(() => {
-    const streak = loadStreak();
-    const marks = (streak.examMarks || []).filter((m) => m.type === examType);
-    const sorted = [...marks].sort((a, b) => a.dateKey.localeCompare(b.dateKey));
-    const upcoming = sorted.find((m) => daysUntil(m.dateKey) >= 0);
-    return {
-      examDates: sorted.map((m) => m.dateKey),
-      daysUntilExam: upcoming ? daysUntil(upcoming.dateKey) : null,
-    };
-  }, [examType]);
+  const nearestExam = getNearestExamOfType(loadStreak().examMarks, examType);
 
   const canGenerate = isToefl
     ? settings.toeflScores?.total != null && settings.toeflTargetTotal != null
@@ -107,6 +98,12 @@ export default function ExamScoreSection({ embedded = false }) {
       const wordBank = await fetchWordBank(examType);
       const totalWords = Array.isArray(wordBank) ? wordBank.length : 0;
       
+      const streak = loadStreak();
+      const nearest = getNearestExamOfType(streak.examMarks, examType);
+      const examDates = (streak.examMarks || [])
+        .filter((mark) => mark.type === examType)
+        .map((mark) => mark.dateKey)
+        .sort();
       const syncSummary = getSyncSummary({ appMode: examType, totalWords });
       const payload = {
         examType,
@@ -118,8 +115,9 @@ export default function ExamScoreSection({ embedded = false }) {
           totalWords: syncSummary.totalWords,
           unstudied: syncSummary.unstudied,
         },
-        examDates: examContext.examDates,
-        daysUntilExam: examContext.daysUntilExam,
+        examDates,
+        nearestExamDate: nearest?.dateKey ?? null,
+        daysUntilExam: nearest ? nearest.daysLeft : null,
       };
 
       const plan = await streamStudyPlan({
@@ -256,6 +254,16 @@ export default function ExamScoreSection({ embedded = false }) {
             </button>
           ) : null}
         </div>
+
+        {nearestExam ? (
+          <p className="settings-hint settings-hint--compact">
+            AI 会按最近一场{isToefl ? "托福" : "SAT"}考试（{nearestExam.dateKey}，{formatCountdown(nearestExam.dateKey)}）安排计划节奏。
+          </p>
+        ) : (
+          <p className="settings-hint settings-hint--compact">
+            还没在学习日历标记{isToefl ? "托福" : "SAT"}考试。生成计划时会按通用周期安排；标记后会按倒计时调整。
+          </p>
+        )}
 
         {!canGenerate ? (
           <p className="settings-hint settings-hint--compact">请先填完整实考分数与目标总分。</p>

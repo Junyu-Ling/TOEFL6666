@@ -3,6 +3,7 @@ import { getEnv } from "./sync-store.js";
 
 export const SESSION_COOKIE = "toefl666_session";
 export const OAUTH_STATE_COOKIE = "toefl666_oauth_state";
+export const GOOGLE_CALENDAR_INTENT_COOKIE = "toefl666_gcal_intent";
 const SESSION_DAYS = 30;
 
 function createError(message, status) {
@@ -100,6 +101,14 @@ export function setOauthStateCookie(req, res, state) {
 
 export function clearOauthStateCookie(req, res) {
   appendCookie(res, `${OAUTH_STATE_COOKIE}=; ${cookieFlags(req, { maxAge: 0 })}`);
+}
+
+export function setGoogleCalendarIntentCookie(req, res) {
+  appendCookie(res, `${GOOGLE_CALENDAR_INTENT_COOKIE}=1; ${cookieFlags(req, { maxAge: 600 })}`);
+}
+
+export function clearGoogleCalendarIntentCookie(req, res) {
+  appendCookie(res, `${GOOGLE_CALENDAR_INTENT_COOKIE}=; ${cookieFlags(req, { maxAge: 0 })}`);
 }
 
 export function randomState() {

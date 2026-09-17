@@ -1,5 +1,9 @@
+const memoryCache = new Map();
+
 async function accessRequest(path, { method = "GET", body } = {}) {
   const headers = { "Content-Type": "application/json" };
+  const cacheable = (!method || method === "GET") && (path.includes("/reading-fill/") || path.includes("/reading-vocab/"));
+  if (cacheable && memoryCache.has(path)) return memoryCache.get(path);
   const res = await fetch(path, {
     method,
     headers,
@@ -12,6 +16,7 @@ async function accessRequest(path, { method = "GET", body } = {}) {
     error.status = res.status;
     throw error;
   }
+  if (cacheable) memoryCache.set(path, data);
   return data;
 }
 

@@ -2725,7 +2725,7 @@ body {
     min-height: 3rem;
   }
 
-  .streak-checkin {
+  .streak-device-cal {
     flex-wrap: wrap;
   }
 
@@ -3693,7 +3693,7 @@ body {
 
 .streak-exam {
   display: grid;
-  grid-template-columns: auto 1fr auto auto;
+  grid-template-columns: auto 1fr auto auto auto;
   align-items: center;
   gap: 0.625rem;
   padding: 0.75rem 0.875rem;
@@ -3774,6 +3774,14 @@ body {
   font-size: 0.8125rem;
 }
 
+.streak-mark-menu__item-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.25rem;
+}
+
 .streak-day__more {
   display: inline-flex;
   align-items: center;
@@ -3848,7 +3856,7 @@ body {
   border-color: var(--border-strong);
 }
 
-.streak-checkin {
+.streak-device-cal {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -3856,27 +3864,27 @@ body {
   margin: 0 0 0.85rem;
   padding: 0.7rem 0.8rem;
   border-radius: 10px;
-  border: 1px solid color-mix(in srgb, #f97316 28%, var(--border));
-  background: color-mix(in srgb, #f97316 8%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--accent) 28%, var(--border));
+  background: color-mix(in srgb, var(--accent) 8%, var(--surface));
 }
 
-.streak-checkin__copy {
+.streak-device-cal__copy {
   display: flex;
   flex-direction: column;
   gap: 0.15rem;
   min-width: 0;
 }
 
-.streak-checkin__copy strong {
+.streak-device-cal__copy strong {
   font-size: 0.875rem;
 }
 
-.streak-checkin__copy span {
+.streak-device-cal__copy span {
   font-size: 0.75rem;
   color: var(--text-muted);
 }
 
-.streak-checkin__btn {
+.streak-device-cal__btn {
   flex-shrink: 0;
   appearance: none;
   font-family: inherit;
@@ -3885,19 +3893,18 @@ body {
   padding: 0.45rem 0.75rem;
   border-radius: 8px;
   border: 1px solid transparent;
-  background: #f97316;
+  background: var(--accent);
   color: #fff;
   cursor: pointer;
 }
 
-.streak-checkin__btn:hover {
+.streak-device-cal__btn:hover:not(:disabled) {
   filter: brightness(1.05);
 }
 
-.streak-checkin__btn--on {
-  background: var(--surface);
-  color: var(--text);
-  border-color: var(--border);
+.streak-device-cal__btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
 }
 
 .streak-calendar__weekdays,

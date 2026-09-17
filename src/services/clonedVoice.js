@@ -27,11 +27,11 @@ export async function playClonedWord(word, voiceId) {
   const key = `${voiceId}:${String(word || "").trim().toLowerCase()}`;
   let url = speakCache.get(key);
   if (!url) {
-    const res = await fetch("/api/tts/speak", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ word, voiceId }),
+    const params = new URLSearchParams({
+      word: String(word || "").trim(),
+      voiceId: String(voiceId || "").trim(),
     });
+    const res = await fetch(`/api/tts/speak?${params}`);
     if (!res.ok) {
       const data = await res.json().catch(() => ({}));
       throw new Error(data.error || `朗读失败 (${res.status})`);

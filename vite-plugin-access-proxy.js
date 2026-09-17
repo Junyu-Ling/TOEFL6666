@@ -1,10 +1,18 @@
 import { loadEnv } from "vite";
 import { handleAccessGrant, handleAccessMe, handleAccessUsers } from "./server/access-api.js";
 import { handleAuthIdentity, handleAuthLink, handleAuthLogout, handleAuthMe, handleGithubCallback, handleGithubStart } from "./server/auth-github.js";
-import { handleGoogleCallback, handleGoogleStart } from "./server/auth-google.js";
+import { handleGoogleCallback, handleGoogleCalendarStart, handleGoogleStart } from "./server/auth-google.js";
 import { handleReadingFillArticles } from "./server/reading-fill-articles.js";
 import { handleReadingVocabCollections } from "./server/reading-vocab-collections.js";
 import { handleAccountProgressPull, handleAccountProgressPush } from "./server/account-progress.js";
+import { handleCalendarFeed, handleCalendarPublish } from "./server/calendar-feed.js";
+import {
+  handleGoogleCalendarDisconnect,
+  handleGoogleCalendarPull,
+  handleGoogleCalendarStatus,
+  handleGoogleCalendarSync,
+} from "./server/google-calendar-sync.js";
+import { requireAccessUser } from "./server/access-api.js";
 
 function readBody(req) {
   return new Promise((resolve, reject) => {
@@ -68,13 +76,20 @@ export function accessProxyPlugin() {
         const isGhStart = matchApiPath(req.url, "/api/auth/github/start");
         const isGhCallback = matchApiPath(req.url, "/api/auth/github/callback");
         const isGoogleStart = matchApiPath(req.url, "/api/auth/google/start");
+        const isGoogleCalendarStart = matchApiPath(req.url, "/api/auth/google/calendar");
         const isGoogleCallback = matchApiPath(req.url, "/api/auth/google/callback");
         const isAuthMe = matchApiPath(req.url, "/api/auth/me");
         const isAuthIdentity = matchApiPath(req.url, "/api/auth/identity");
         const isAuthLink = matchApiPath(req.url, "/api/auth/link");
         const isAccountSync = matchApiPath(req.url, "/api/sync/account");
         const isLogout = matchApiPath(req.url, "/api/auth/logout");
-        if (!isAccessMe && !isUsers && !isGrant && !isReadingFillArticles && !isReadingVocabCollections && !isGhStart && !isGhCallback && !isGoogleStart && !isGoogleCallback && !isAuthMe && !isAuthIdentity && !isAuthLink && !isAccountSync && !isLogout) {
+        const isCalendarPublish = matchApiPath(req.url, "/api/calendar/publish");
+        const isCalendarFeed = matchApiPath(req.url, "/api/calendar/feed.ics");
+        const isGoogleCalStatus = matchApiPath(req.url, "/api/calendar/google-status");
+        const isGoogleCalSync = matchApiPath(req.url, "/api/calendar/google-sync");
+        const isGoogleCalPull = matchApiPath(req.url, "/api/calendar/google-pull");
+        const isGoogleCalDisconnect = matchApiPath(req.url, "/api/calendar/google-disconnect");
+        if (!isAccessMe && !isUsers && !isGrant && !isReadingFillArticles && !isReadingVocabCollections && !isGhStart && !isGhCallback && !isGoogleStart && !isGoogleCalendarStart && !isGoogleCallback && !isAuthMe && !isAuthIdentity && !isAuthLink && !isAccountSync && !isLogout && !isCalendarPublish && !isCalendarFeed && !isGoogleCalStatus && !isGoogleCalSync && !isGoogleCalPull && !isGoogleCalDisconnect) {
           return next();
         }
 
@@ -91,8 +106,50 @@ export function accessProxyPlugin() {
             handleGoogleStart(req, res);
             return;
           }
+          if (isGoogleCalendarStart && req.method === "GET") {
+            handleGoogleCalendarStart(req, res);
+            return;
+          }
           if (isGoogleCallback && req.method === "GET") {
             await handleGoogleCallback(req, res);
+            return;
+          }
+          if (isCalendarPublish && req.method === "POST") {
+            const body = parseBody(await readBody(req));
+            sendJson(res, 200, await handleCalendarPublish(req, body));
+            return;
+          }
+          if (isCalendarFeed && (req.method === "GET" || req.method === "HEAD")) {
+            await handleCalendarFeed(req, res);
+            return;
+          }
+          if (isGoogleCalStatus && req.method === "GET") {
+            try {
+              const user = await requireAccessUser(req);
+              sendJson(res, 200, await handleGoogleCalendarStatus(user.id));
+            } catch (err) {
+              if (err.status === 401) {
+                sendJson(res, 200, { connected: false });
+                return;
+              }
+              throw err;
+            }
+            return;
+          }
+          if (isGoogleCalSync && req.method === "POST") {
+            const user = await requireAccessUser(req);
+            const body = parseBody(await readBody(req));
+            sendJson(res, 200, await handleGoogleCalendarSync(user.id, body));
+            return;
+          }
+          if (isGoogleCalPull && req.method === "GET") {
+            const user = await requireAccessUser(req);
+            sendJson(res, 200, await handleGoogleCalendarPull(user.id));
+            return;
+          }
+          if (isGoogleCalDisconnect && req.method === "POST") {
+            const user = await requireAccessUser(req);
+            sendJson(res, 200, await handleGoogleCalendarDisconnect(user.id));
             return;
           }
           if (isAuthMe && req.method === "GET") {

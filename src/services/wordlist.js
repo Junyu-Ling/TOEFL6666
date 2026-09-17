@@ -61,7 +61,7 @@ async function fetchJson(url) {
       const cached = await cache.match(url);
       if (cached) return cached.json();
 
-      const res = await fetch(url);
+      const res = await fetch(url, { cache: "force-cache" });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       await cache.put(url, res.clone());
       return res.json();
@@ -70,7 +70,7 @@ async function fetchJson(url) {
     }
   }
 
-  const res = await fetch(url);
+  const res = await fetch(url, { cache: "force-cache" });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 }

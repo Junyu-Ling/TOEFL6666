@@ -26,8 +26,9 @@ const SYSTEM_PROMPT_TOEFL = `你是专业的托福备考规划师，服务于 TO
 4. 按优先级给出 2–4 周可执行的提分计划（每日/每周任务要具体）。
 5. 结合本应用功能给建议：单词练习、生词本/熟词本、阅读填词、阅读词汇配对等。词格 LexGrid 和 Hangman 只是练填词手感的小游戏，不要写进正式计划，也不要当学习任务推荐。如果用户还有大量未背过的单词，建议优先完成词汇积累。
 6. 默认按 **2026 新托福（1–6 分制，四科平均为总分）** 解读；用户明确旧版 0–120 时再换算说明。
-7. 不要编造院校政策；数字与策略要合理、可执行。
-8. 不要输出 HTML；不要把整段包在 \`\`\`markdown 代码块里。`;
+7. **必须先看距离用户标记的最近一场托福考试还有多久**，再据此安排计划密度：不到一周以冲刺和模考为主；两到四周压缩节奏、每天覆盖薄弱科；一个月以上先打词汇与基础，再逐步加压。没有标记托福考试时，按通用 2–4 周规划，并提醒去学习日历标记考期。
+8. 不要编造院校政策；数字与策略要合理、可执行。
+9. 不要输出 HTML；不要把整段包在 \`\`\`markdown 代码块里。`;
 
 const SYSTEM_PROMPT_SAT = `你是专业的 SAT 备考规划师，服务于 SAT 800·800 背单词应用用户。
 
@@ -40,8 +41,9 @@ const SYSTEM_PROMPT_SAT = `你是专业的 SAT 备考规划师，服务于 SAT 8
 4. 按优先级给出 2–4 周可执行的提分计划（每日/每周任务要具体）。
 5. 结合本应用功能给建议：单词练习、生词本/熟词本、熟词僻义、SAT鸡精词汇等。词格 LexGrid 和 Hangman 只是练填词手感的小游戏，不要写进正式计划，也不要当学习任务推荐。如果用户还有大量未背过的单词，建议优先完成词汇积累。
 6. 按 **Digital SAT（阅读文法 + 数学，总分 400–1600）** 解读分数与策略。
-7. 不要编造院校政策；数字与策略要合理、可执行。
-8. 不要输出 HTML；不要把整段包在 \`\`\`markdown 代码块里。`;
+7. **必须先看距离用户标记的最近一场 SAT 考试还有多久**，再据此安排计划密度：不到一周以冲刺和模考为主；两到四周压缩节奏；一个月以上先打基础再加压。没有标记 SAT 考试时，按通用 2–4 周规划，并提醒去学习日历标记考期。
+8. 不要编造院校政策；数字与策略要合理、可执行。
+9. 不要输出 HTML；不要把整段包在 \`\`\`markdown 代码块里。`;
 
 function createConfigError(message, status = 500) {
   const err = new Error(message);
@@ -78,9 +80,11 @@ function buildUserPrompt(payload) {
     targetTotal,
     vocabProgress,
     examDates,
+    nearestExamDate,
     daysUntilExam,
   } = payload;
 
+  const examLabel = examType === "sat" ? "SAT" : "托福";
   const lines = [
     formatScoreBlock(examType, { currentScores, targetTotal }),
     "",
@@ -96,14 +100,19 @@ function buildUserPrompt(payload) {
     lines.push(`- 还未背过的单词：${unstudied} 词（总词库 ${totalWords} 词，已背 ${studiedPercent}%）`);
   }
 
-  if (examDates?.length) {
-    lines.push(`- 已标记考试日期：${examDates.join("、")}`);
+  lines.push("", "考期倒计时（制定计划时必须据此安排节奏）：");
+  if (typeof daysUntilExam === "number" && nearestExamDate) {
+    const countdown =
+      daysUntilExam === 0 ? "就是今天" : daysUntilExam === 1 ? "还有 1 天" : `还有 ${daysUntilExam} 天`;
+    lines.push(`- 最近一场${examLabel}考试：${nearestExamDate}，${countdown}`);
+  } else {
+    lines.push(`- 最近一场${examLabel}考试：尚未在学习日历上标记（请按通用周期规划，并提醒用户去日历标记）`);
   }
-  if (typeof daysUntilExam === "number") {
-    lines.push(`- 距最近一场考试：${daysUntilExam} 天`);
+  if (examDates?.length) {
+    lines.push(`- 已标记的${examLabel}考试日期：${examDates.join("、")}`);
   }
 
-  lines.push("", "请分析薄弱点并制定针对性提分计划。");
+  lines.push("", "请先根据考期倒计时确定节奏，再分析薄弱点并制定针对性提分计划。");
   return lines.join("\n");
 }
 

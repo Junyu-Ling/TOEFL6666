@@ -41,7 +41,22 @@ export function ttsProxyPlugin() {
 
         try {
           if (isStatus && req.method === "GET") {
+            res.setHeader("Cache-Control", "public, max-age=60, s-maxage=300");
             sendJson(res, 200, { available: isClonedVoiceConfigured() });
+            return;
+          }
+
+          if (isSpeak && (req.method === "GET" || req.method === "HEAD")) {
+            const url = new URL(req.url || "/", "http://n");
+            const audio = await synthesizeVocabWord({
+              word: url.searchParams.get("word"),
+              voiceId: url.searchParams.get("voiceId"),
+            });
+            res.statusCode = 200;
+            res.setHeader("Content-Type", "audio/mpeg");
+            res.setHeader("Cache-Control", "public, max-age=86400, s-maxage=604800, immutable");
+            res.setHeader("X-Content-Type-Options", "nosniff");
+            res.end(audio);
             return;
           }
 
@@ -61,7 +76,7 @@ export function ttsProxyPlugin() {
           const audio = await synthesizeVocabWord({ word: body.word, voiceId: body.voiceId });
           res.statusCode = 200;
           res.setHeader("Content-Type", "audio/mpeg");
-          res.setHeader("Cache-Control", "no-store");
+          res.setHeader("Cache-Control", "public, max-age=86400, s-maxage=604800, immutable");
           res.setHeader("X-Content-Type-Options", "nosniff");
           res.end(audio);
         } catch (err) {
