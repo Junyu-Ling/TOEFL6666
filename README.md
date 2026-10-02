@@ -78,16 +78,18 @@ GitHub 登录**不需要 Supabase**。点右上角登录后，练习进度按账
 - 本地：`http://localhost:5175/api/auth/github/callback`
 - 线上：`https://<你的域名>/api/auth/github/callback`
 
-要用 Gmail 直接登录时，再配 Google OAuth，Callback URL 为：
+要用 Google / Gmail 登录时，在 [Google Cloud Console](https://console.cloud.google.com/apis/credentials) 创建 **OAuth 客户端 ID**（应用类型选 **Web 应用**），Authorized redirect URIs 填：
 
 - 本地：`http://localhost:5175/api/auth/google/callback`
-- 线上：`https://<你的域名>/api/auth/google/callback`
+- 线上：`https://toefl-6666.vercel.app/api/auth/google/callback`（若有自定义域名再各加一条）
+
+然后把 Client ID / Secret 配进 Vercel（并重新部署）或本地 `.env`。登录页点「Google 邮箱」即可。
 
 环境变量：
 
 - `GITHUB_CLIENT_ID`
 - `GITHUB_CLIENT_SECRET`（只放 Vercel / `.env`，不要提交仓库）
-- `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET`（可选，用于 Google 登录）
+- `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET`（Google / Gmail 登录必填）
 
 管理员写进下面任一变量（逗号分隔；`jy.ling.cc@gmail.com` 即使不配也生效）：
 

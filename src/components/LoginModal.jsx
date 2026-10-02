@@ -12,7 +12,7 @@ import { LoginBrandIcon } from "./LoginBrandIcons";
 const RESEND_SECONDS = 60;
 
 const SOCIAL = [
-  { id: "google", label: "Google" },
+  { id: "google", label: "Google 邮箱" },
   { id: "github", label: "GitHub" },
 ];
 
