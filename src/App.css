@@ -1535,7 +1535,7 @@ body {
   background: var(--bg);
 }
 
-/* 芒聰聙芒聰聙 Vocab Loading Screen 芒聰聙芒聰聙 */
+/* Vocab Loading Screen */
 .vocab-loader {
   position: relative;
   width: 100%;
@@ -1546,15 +1546,6 @@ body {
   justify-content: center;
   overflow: hidden;
   background: var(--bg);
-  --accent: #4255ff;
-  --loader-shimmer: #f97316;
-  --loader-shimmer-alt: #ffd166;
-}
-
-[data-theme="dark"] .vocab-loader {
-  --accent: #7b8cff;
-  --loader-shimmer: #fdba74;
-  --loader-shimmer-alt: #fde68a;
 }
 
 .vocab-loader__bg {
@@ -1562,67 +1553,27 @@ body {
   inset: 0;
   z-index: 0;
   background:
-    radial-gradient(circle at 20% 20%, color-mix(in srgb, var(--accent) 20%, transparent), transparent 45%),
-    radial-gradient(circle at 80% 75%, color-mix(in srgb, var(--loader-shimmer, #f97316) 16%, transparent), transparent 40%),
-    radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 60%),
-    conic-gradient(
-      from 0deg at 50% 50%,
-      color-mix(in srgb, var(--accent) 10%, transparent),
-      transparent 25%,
-      color-mix(in srgb, var(--loader-shimmer, #f97316) 10%, transparent) 50%,
-      transparent 75%,
-      color-mix(in srgb, var(--accent) 10%, transparent) 100%
+    radial-gradient(
+      ellipse 70% 55% at 50% 42%,
+      color-mix(in srgb, var(--surface) 88%, var(--accent)),
+      transparent 72%
     );
-  animation: vocab-loader-glow 6s ease-in-out infinite alternate, vocab-loader-spin 40s linear infinite;
-}
-
-@keyframes vocab-loader-glow {
-  from { opacity: 0.7; transform: scale(1); }
-  to { opacity: 1; transform: scale(1.06); }
-}
-
-@keyframes vocab-loader-spin {
-  from { filter: hue-rotate(0deg); }
-  to { filter: hue-rotate(20deg); }
+  opacity: 0.55;
 }
 
 .vocab-loader__grain {
   position: absolute;
   inset: 0;
   z-index: 0;
-  opacity: 0.5;
+  opacity: 0.28;
   background-image:
-    radial-gradient(color-mix(in srgb, var(--text) 6%, transparent) 1px, transparent 1px);
-  background-size: 26px 26px;
-  mask-image: radial-gradient(circle at 50% 40%, black 0%, transparent 72%);
+    radial-gradient(color-mix(in srgb, var(--text) 8%, transparent) 1px, transparent 1px);
+  background-size: 28px 28px;
+  mask-image: radial-gradient(circle at 50% 42%, black 0%, transparent 78%);
 }
 
 .vocab-loader__ring {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  z-index: 0;
-  width: min(120vw, 640px);
-  height: min(120vw, 640px);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  background: conic-gradient(
-    from 0deg,
-    transparent 0deg,
-    color-mix(in srgb, var(--accent) 45%, transparent) 40deg,
-    transparent 90deg,
-    transparent 220deg,
-    color-mix(in srgb, var(--loader-shimmer, #f97316) 40%, transparent) 260deg,
-    transparent 320deg
-  );
-  filter: blur(48px);
-  animation: vocab-ring-spin 18s linear infinite;
-  opacity: 0.55;
-}
-
-@keyframes vocab-ring-spin {
-  from { transform: translate(-50%, -50%) rotate(0deg); }
-  to { transform: translate(-50%, -50%) rotate(360deg); }
+  display: none;
 }
 
 .vocab-loader__letters {
@@ -1636,7 +1587,7 @@ body {
   position: absolute;
   bottom: -10%;
   font-weight: 800;
-  color: color-mix(in srgb, var(--accent) 35%, transparent);
+  color: color-mix(in srgb, var(--text-muted) 42%, transparent);
   animation: vocab-letter-rise linear infinite;
   opacity: 0;
 }
@@ -1685,23 +1636,7 @@ body {
   font-size: 1rem;
   font-weight: 800;
   letter-spacing: -0.01em;
-  background: linear-gradient(
-    100deg,
-    var(--accent) 0%,
-    var(--loader-shimmer, #f97316) 35%,
-    var(--accent) 70%,
-    var(--loader-shimmer, #f97316) 100%
-  );
-  background-size: 220% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: vocab-brand-shimmer 5s linear infinite;
-}
-
-@keyframes vocab-brand-shimmer {
-  from { background-position: 0% 50%; }
-  to { background-position: 220% 50%; }
+  color: var(--text);
 }
 
 .vocab-loader__scene-wrap {
@@ -1715,22 +1650,17 @@ body {
 .vocab-loader__scene-wrap::before {
   content: "";
   position: absolute;
-  width: 85%;
-  height: 70%;
+  width: 78%;
+  height: 62%;
   border-radius: 50%;
   background: radial-gradient(
     circle,
-    color-mix(in srgb, var(--accent) 22%, transparent),
-    transparent 70%
+    color-mix(in srgb, var(--text) 6%, transparent),
+    transparent 72%
   );
-  filter: blur(28px);
+  filter: blur(24px);
   z-index: 0;
-  animation: vocab-card-glow 3.5s ease-in-out infinite;
-}
-
-@keyframes vocab-card-glow {
-  0%, 100% { opacity: 0.6; transform: scale(1); }
-  50% { opacity: 0.95; transform: scale(1.08); }
+  opacity: 0.7;
 }
 
 /* 氓聧隆莽聣聡氓颅聴氓聫路茫聙聛氓聠聟猫戮鹿猫路聺忙虏驴莽聰篓 .flashcard-scene / .flashcard__face 莽職聞茅禄聵猫庐陇氓聙录茂录聦
@@ -1785,25 +1715,15 @@ body {
   height: 100%;
   width: 40%;
   border-radius: inherit;
-  background: linear-gradient(
-    90deg,
-    var(--accent),
-    color-mix(in srgb, var(--loader-shimmer, #f97316) 80%, var(--accent)),
-    var(--accent)
-  );
+  background: var(--accent);
   animation: vocab-progress-slide 1.6s ease-in-out infinite;
 }
 
 .vocab-loader__progress-bar--ready {
   width: 100%;
   animation: none;
-  background: linear-gradient(
-    90deg,
-    var(--accent),
-    color-mix(in srgb, var(--accent) 70%, var(--loader-shimmer, #f97316)),
-    var(--accent)
-  );
-  opacity: 0.55;
+  background: var(--accent);
+  opacity: 0.45;
 }
 
 .vocab-loader__progress-bar--done {
