@@ -1546,6 +1546,23 @@ body {
   justify-content: center;
   overflow: hidden;
   background: var(--bg);
+  --loader-shimmer: #f97316;
+  --loader-shimmer-alt: #ffd166;
+}
+
+[data-theme="dark"] .vocab-loader {
+  --loader-shimmer: #fdba74;
+  --loader-shimmer-alt: #fde68a;
+}
+
+.vocab-loader--sat {
+  --loader-shimmer: #8b5cf6;
+  --loader-shimmer-alt: #ddd6fe;
+}
+
+[data-theme="dark"] .vocab-loader--sat {
+  --loader-shimmer: #a78bfa;
+  --loader-shimmer-alt: #e9d5ff;
 }
 
 .vocab-loader__bg {
@@ -1636,7 +1653,23 @@ body {
   font-size: 1rem;
   font-weight: 800;
   letter-spacing: -0.01em;
-  color: var(--text);
+  background: linear-gradient(
+    100deg,
+    var(--accent) 0%,
+    var(--loader-shimmer, #f97316) 32%,
+    var(--accent) 64%,
+    var(--loader-shimmer-alt, #ffd166) 100%
+  );
+  background-size: 220% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: vocab-brand-shimmer 5s linear infinite;
+}
+
+@keyframes vocab-brand-shimmer {
+  from { background-position: 0% 50%; }
+  to { background-position: 220% 50%; }
 }
 
 .vocab-loader__scene-wrap {
