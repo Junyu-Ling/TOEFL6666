@@ -1555,16 +1555,6 @@ body {
   --loader-shimmer-alt: #fde68a;
 }
 
-.vocab-loader--sat {
-  --loader-shimmer: #8b5cf6;
-  --loader-shimmer-alt: #ddd6fe;
-}
-
-[data-theme="dark"] .vocab-loader--sat {
-  --loader-shimmer: #a78bfa;
-  --loader-shimmer-alt: #e9d5ff;
-}
-
 .vocab-loader__bg {
   position: absolute;
   inset: 0;
@@ -1655,9 +1645,9 @@ body {
   letter-spacing: -0.01em;
   background: linear-gradient(
     100deg,
-    var(--accent) 0%,
+    #4255ff 0%,
     var(--loader-shimmer, #f97316) 32%,
-    var(--accent) 64%,
+    #4255ff 64%,
     var(--loader-shimmer-alt, #ffd166) 100%
   );
   background-size: 220% auto;
