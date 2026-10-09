@@ -567,14 +567,14 @@ function ReadingFillBlank() {
           ref={protectRootRef}
           className={`rfill__body rfill__body--protected${obscured || hardLock ? " rfill__body--obscured" : ""}`}
         >
-          {captureHint && !hardLock ? (
+          {captureHint && !obscured && !hardLock ? (
             <p className="rfill__protect-toast" role="status">
               {captureHint}
             </p>
           ) : null}
 
           <div className="rfill__watermark" aria-hidden>
-            {Array.from({ length: 24 }, (_, i) => (
+            {Array.from({ length: 18 }, (_, i) => (
               <span key={i}>{watermark}</span>
             ))}
           </div>
@@ -654,17 +654,24 @@ function ReadingFillBlank() {
 
           {hardLock ? (
             <div className="rfill__obscure rfill__obscure--lock" role="alertdialog" aria-modal="true" aria-label="内容锁定">
-              <p>{devtoolsLock ? "检测到开发者工具" : recordingLock ? "检测到屏幕录制中" : "题目已锁定"}</p>
-              <span>
+              <p>
                 {devtoolsLock
-                  ? "请关闭开发者工具，系统识别到关闭后会自动恢复看题。"
-                  : "请彻底关闭录屏，系统识别到录屏结束后会自动恢复看题。"}
+                  ? "因开发者工具已打开，题目已锁定"
+                  : recordingLock
+                    ? "因检测到录屏，题目已锁定"
+                    : "题目已锁定"}
+              </p>
+              <span>
+                {captureHint ||
+                  (devtoolsLock
+                    ? "请关闭开发者工具，识别到关闭后会自动恢复。"
+                    : "请彻底关闭录屏，识别到结束后会自动恢复。")}
               </span>
             </div>
           ) : obscured ? (
-            <div className="rfill__obscure" role="presentation">
+            <div className="rfill__obscure" role="status" aria-live="polite">
               <p>题目已暂时遮盖</p>
-              <span>请稍候…</span>
+              <span>{captureHint || "请稍候…"}</span>
             </div>
           ) : null}
         </div>

@@ -6016,32 +6016,23 @@ body {
 
 .rfill__watermark {
   position: absolute;
-  inset: -28% -12%;
+  inset: -20%;
   z-index: 1;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 5.25rem 3rem;
-  align-content: start;
-  justify-items: center;
-  transform: rotate(-22deg);
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3.5rem 2rem;
+  transform: rotate(-24deg);
   pointer-events: none;
   user-select: none;
-  opacity: 0.11;
+  opacity: 0.14;
 }
 
 .rfill__watermark span {
-  font-size: 0.78rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
+  font-size: 0.85rem;
+  font-weight: 700;
   color: var(--text);
   white-space: nowrap;
   text-align: center;
-  opacity: 0.95;
-}
-
-.rfill__watermark span:nth-child(4n + 2),
-.rfill__watermark span:nth-child(4n + 3) {
-  transform: translateX(1.75rem);
 }
 
 .rfill__captcha {

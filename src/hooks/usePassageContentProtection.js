@@ -149,20 +149,24 @@ export function usePassageContentProtection(
 
     const hardLocked = () => recordingLockRef.current || devtoolsLockRef.current;
 
-    const showHint = (text) => {
+    const showHint = (text, { sticky = false } = {}) => {
       setCaptureHint(text);
       window.clearTimeout(hintTimer);
+      if (sticky) return;
       hintTimer = window.setTimeout(() => {
-        if (!recordingLockRef.current && !devtoolsLockRef.current) setCaptureHint("");
-      }, 2200);
+        if (!recordingLockRef.current && !devtoolsLockRef.current && !chordCover) {
+          setCaptureHint("");
+        }
+      }, 2800);
     };
 
-    /** 同步遮盖：先改 class 再 setState，避免比系统截屏慢一帧 */
-    const coverNow = (hint, holdMs = 0) => {
+    /** 同步遮盖：先改 class 再 setState，避免比系统截屏慢一帧；必须带原因文案 */
+    const coverNow = (reason, holdMs = 0) => {
+      const hint = reason || "题目已临时遮盖";
       chordCover = true;
       root.classList.add("rfill__body--obscured");
       setTempObscured(true);
-      if (hint) showHint(hint);
+      showHint(hint, { sticky: true });
       window.clearTimeout(tempTimerRef.current);
       if (holdMs > 0) {
         tempTimerRef.current = window.setTimeout(() => {
@@ -171,6 +175,7 @@ export function usePassageContentProtection(
           chordCover = false;
           root.classList.remove("rfill__body--obscured");
           setTempObscured(false);
+          showHint(hint);
         }, holdMs);
       }
     };
@@ -182,6 +187,8 @@ export function usePassageContentProtection(
       window.clearTimeout(tempTimerRef.current);
       root.classList.remove("rfill__body--obscured");
       setTempObscured(false);
+      window.clearTimeout(hintTimer);
+      hintTimer = window.setTimeout(() => setCaptureHint(""), 1600);
     };
 
     const blockClipboard = (event) => {
@@ -222,15 +229,18 @@ export function usePassageContentProtection(
         ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "u");
 
       if (isScreenshotChord(event)) {
+        const isPrintScreen = event.key === "PrintScreen" || event.code === "PrintScreen";
         coverNow(
-          "已抢先遮盖题目",
-          event.key === "PrintScreen" || event.code === "PrintScreen" ? 700 : 0
+          isPrintScreen
+            ? "因检测到截屏（PrintScreen），题目已临时遮盖"
+            : "因检测到截屏快捷键（Win/Ctrl+Shift），题目已临时遮盖",
+          isPrintScreen ? 700 : 0
         );
-        if (event.key === "PrintScreen" || event.code === "PrintScreen") clearClipboardSoon();
+        if (isPrintScreen) clearClipboardSoon();
       }
 
       if (isDevtoolsChord) {
-        syncHardLock(recordingLockRef.current, true, "检测到开发者工具相关操作，题目已锁定");
+        syncHardLock(recordingLockRef.current, true, "因检测到开发者工具相关操作，题目已锁定");
       }
 
       const mod = event.ctrlKey || event.metaKey;
@@ -265,7 +275,11 @@ export function usePassageContentProtection(
 
     const applyCaptureSignal = (captured) => {
       if (captured === true) {
-        syncHardLock(true, devtoolsLockRef.current, "检测到屏幕录制，题目已锁定。关闭录屏后将自动恢复。");
+        syncHardLock(
+          true,
+          devtoolsLockRef.current,
+          "因检测到系统录屏，题目已锁定。请关闭录屏后自动恢复。"
+        );
         return;
       }
       if (captured === false && recordingLockRef.current) {
@@ -294,7 +308,7 @@ export function usePassageContentProtection(
     const pollDevtools = window.setInterval(() => {
       const open = detectDevtoolsOpen();
       if (open && !devtoolsLockRef.current) {
-        syncHardLock(recordingLockRef.current, true, "请关闭开发者工具后继续看题");
+        syncHardLock(recordingLockRef.current, true, "因检测到开发者工具已打开，题目已锁定");
       } else if (!open && devtoolsLockRef.current) {
         syncHardLock(recordingLockRef.current, false);
         if (!recordingLockRef.current) showHint("开发者工具已关闭，可以继续看题");
@@ -303,7 +317,9 @@ export function usePassageContentProtection(
 
     const onVisibility = () => {
       if (document.visibilityState === "hidden") {
-        if (!hardLocked()) coverNow();
+        if (!hardLocked()) {
+          coverNow("因页面切到后台/不可见，题目已临时遮盖（防截屏与录屏）");
+        }
         return;
       }
       if (hardLocked()) {
@@ -314,7 +330,9 @@ export function usePassageContentProtection(
     };
 
     const onBlur = () => {
-      if (!hardLocked()) coverNow();
+      if (!hardLocked()) {
+        coverNow("因窗口失焦，题目已临时遮盖（防截屏与录屏）");
+      }
     };
 
     const onFocus = () => {
