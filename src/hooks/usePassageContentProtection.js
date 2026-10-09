@@ -28,9 +28,22 @@ function watermarkLabel(user) {
   return "未登录访客";
 }
 
+function isScreenshotChord(event) {
+  const key = event.key;
+  const code = event.code;
+  if (key === "PrintScreen" || code === "PrintScreen") return true;
+  // Win+Shift / Ctrl+Shift：在按下 S 之前就遮盖，抢在截图工具前面
+  if (event.shiftKey && (event.metaKey || event.ctrlKey)) return true;
+  if ((key === "Shift" || code.startsWith("Shift")) && (event.metaKey || event.ctrlKey)) return true;
+  if ((key === "Meta" || key === "Control" || code === "MetaLeft" || code === "MetaRight" || code === "ControlLeft" || code === "ControlRight") && event.shiftKey) {
+    return true;
+  }
+  return false;
+}
+
 /**
- * 阅读填词防外泄：禁复制/选中、账号水印、失焦遮盖、PrintScreen 清剪贴板。
- * 说明：网页无法可靠拦截系统截屏、录屏或外置相机拍摄；水印用于追溯外泄。
+ * 阅读填词防外泄：禁复制/选中、账号水印、失焦遮盖。
+ * 截屏组合键在 keydown 捕获阶段立刻改 DOM class，不走 React 渲染延迟。
  */
 export function usePassageContentProtection(rootRef, { enabled = true, user = null } = {}) {
   const [obscured, setObscured] = useState(false);
@@ -48,10 +61,27 @@ export function usePassageContentProtection(rootRef, { enabled = true, user = nu
     if (!root) return undefined;
 
     let hintTimer = 0;
+    let chordCover = false;
+
     const showHint = (text) => {
       setCaptureHint(text);
       window.clearTimeout(hintTimer);
       hintTimer = window.setTimeout(() => setCaptureHint(""), 2800);
+    };
+
+    /** 同步遮盖：先改 class 再 setState，避免比系统截屏慢一帧 */
+    const coverNow = (hint) => {
+      chordCover = true;
+      root.classList.add("rfill__body--obscured");
+      setObscured(true);
+      if (hint) showHint(hint);
+    };
+
+    const uncoverIfSafe = () => {
+      if (document.visibilityState !== "visible" || !document.hasFocus()) return;
+      chordCover = false;
+      root.classList.remove("rfill__body--obscured");
+      setObscured(false);
     };
 
     const blockClipboard = (event) => {
@@ -89,9 +119,12 @@ export function usePassageContentProtection(rootRef, { enabled = true, user = nu
     };
 
     const onKeyDown = (event) => {
-      if (event.key === "PrintScreen") {
-        clearClipboardSoon();
-        return;
+      if (isScreenshotChord(event)) {
+        // 捕获阶段立刻遮盖，不等 React 重渲染
+        coverNow("已抢先遮盖题目");
+        if (event.key === "PrintScreen" || event.code === "PrintScreen") {
+          clearClipboardSoon();
+        }
       }
 
       const mod = event.ctrlKey || event.metaKey;
@@ -103,32 +136,33 @@ export function usePassageContentProtection(rootRef, { enabled = true, user = nu
       const active = document.activeElement;
       if (isBlankInput(active) && (key === "c" || key === "x" || key === "a")) return;
 
-      if (key === "p" || key === "s" || touchesRoot(root, active) || selectionTouchesRoot(root)) {
+      if (key === "p" || (key === "s" && !event.shiftKey) || touchesRoot(root, active) || selectionTouchesRoot(root)) {
         event.preventDefault();
         if (key === "c" || key === "x") showHint("题目内容禁止复制");
-        if (key === "p" || key === "s") showHint("本题禁止打印 / 另存");
+        if (key === "p" || (key === "s" && !event.shiftKey)) showHint("本题禁止打印 / 另存");
       }
     };
 
     const onKeyUp = (event) => {
-      if (event.key === "PrintScreen") {
+      if (event.key === "PrintScreen" || event.code === "PrintScreen") {
         clearClipboardSoon();
       }
-    };
-
-    const syncVisibility = () => {
-      const hidden = document.visibilityState === "hidden" || !document.hasFocus();
-      setObscured(hidden);
-      if (hidden) {
-        showHint("离开页面时题目已遮盖，防止录屏外泄");
+      // 组合键松开且窗口仍在前台时再揭开；截图工具抢焦点时继续遮着
+      if (chordCover && !event.shiftKey && !event.metaKey && !event.ctrlKey) {
+        uncoverIfSafe();
       }
     };
 
-    const onVisibility = () => syncVisibility();
-    const onBlur = () => setObscured(true);
-    const onFocus = () => {
-      if (document.visibilityState === "visible") setObscured(false);
+    const onVisibility = () => {
+      if (document.visibilityState === "hidden") {
+        coverNow("离开页面时题目已遮盖，防止录屏外泄");
+        return;
+      }
+      uncoverIfSafe();
     };
+
+    const onBlur = () => coverNow();
+    const onFocus = () => uncoverIfSafe();
 
     root.addEventListener("copy", blockClipboard);
     root.addEventListener("cut", blockClipboard);
@@ -143,6 +177,7 @@ export function usePassageContentProtection(rootRef, { enabled = true, user = nu
 
     return () => {
       window.clearTimeout(hintTimer);
+      root.classList.remove("rfill__body--obscured");
       root.removeEventListener("copy", blockClipboard);
       root.removeEventListener("cut", blockClipboard);
       root.removeEventListener("contextmenu", onContextMenu);

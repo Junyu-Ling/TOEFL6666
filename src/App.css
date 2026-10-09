@@ -6049,9 +6049,10 @@ body {
 }
 
 .rfill__body--obscured .rfill__protect-content {
-  filter: blur(10px);
-  opacity: 0.22;
+  filter: blur(14px) brightness(1.15);
+  opacity: 0.12;
   pointer-events: none;
+  transition: none;
 }
 
 .rfill__obscure {
