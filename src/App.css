@@ -6016,23 +6016,39 @@ body {
 
 .rfill__watermark {
   position: absolute;
-  inset: -20%;
+  inset: -18% -8%;
   z-index: 1;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 3.5rem 2rem;
-  transform: rotate(-24deg);
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 4.75rem 3.25rem;
+  align-content: start;
+  justify-items: center;
   pointer-events: none;
   user-select: none;
-  opacity: 0.14;
 }
 
 .rfill__watermark span {
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: var(--text);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #94a3b8;
   white-space: nowrap;
   text-align: center;
+  transform: rotate(-28deg);
+  opacity: 0.55;
+}
+
+/* 隔行错位，形成斜向铺满感 */
+.rfill__watermark span:nth-child(10n + 6),
+.rfill__watermark span:nth-child(10n + 7),
+.rfill__watermark span:nth-child(10n + 8),
+.rfill__watermark span:nth-child(10n + 9),
+.rfill__watermark span:nth-child(10n + 10) {
+  transform: translateX(2.75rem) rotate(-28deg);
+}
+
+[data-theme="dark"] .rfill__watermark span {
+  color: #64748b;
+  opacity: 0.5;
 }
 
 .rfill__captcha {

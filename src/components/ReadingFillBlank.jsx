@@ -587,7 +587,7 @@ function ReadingFillBlank() {
           ) : null}
 
           <div className="rfill__watermark" aria-hidden>
-            {Array.from({ length: 18 }, (_, i) => (
+            {Array.from({ length: 40 }, (_, i) => (
               <span key={i}>{watermark}</span>
             ))}
           </div>
