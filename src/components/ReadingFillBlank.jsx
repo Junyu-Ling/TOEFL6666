@@ -5,7 +5,7 @@ import {
   gradeArticle,
   hydrateReadingFillBlankArticles,
 } from "../utils/readingFillBlank";
-import { fetchReadingFillArticles } from "../services/access";
+import { fetchReadingFillArticles, solveReadingFillPow } from "../services/access";
 import {
   clearReadingFillBlankProgress,
   getArticleInputs,
@@ -23,6 +23,9 @@ import {
   latinLetterFromText,
   letterFromKeyboardEvent,
 } from "../utils/englishIme";
+import BlindWatermark from "./BlindWatermark";
+import SecurePassageText from "./SecurePassageText";
+import RateLimitCaptcha from "./RateLimitCaptcha";
 
 function ReviewBookmarkIcon() {
   return (
@@ -168,12 +171,15 @@ const BlankInput = forwardRef(function BlankInput(
 });
 
 function ReadingFillBlank() {
-  const { user } = useAuth();
+  const { user, loading: authLoading } = useAuth();
   const isTabActive = useIsActiveTab("reading-fill");
   useEnglishImeLock(isTabActive);
   const [articles, setArticles] = useState([]);
   const [articlesLoading, setArticlesLoading] = useState(true);
   const [articlesError, setArticlesError] = useState("");
+  const [serverWatermark, setServerWatermark] = useState(null);
+  const [captchaPow, setCaptchaPow] = useState(null);
+  const [captchaBusy, setCaptchaBusy] = useState(false);
   const [progress, setProgress] = useState(() => loadReadingFillBlankProgress());
   const [viewMode, setViewMode] = useState("practice");
   const [selectedReviewIndex, setSelectedReviewIndex] = useState(0);
@@ -201,28 +207,60 @@ function ReadingFillBlank() {
     [articles, progress]
   );
 
-  useEffect(() => {
-    let cancelled = false;
-    (async () => {
+  const loadArticles = useCallback(
+    async (extra = {}) => {
       setArticlesLoading(true);
       setArticlesError("");
       try {
-        const data = await fetchReadingFillArticles();
-        if (cancelled) return;
+        const data = await fetchReadingFillArticles(user?.id, extra);
         setArticles(hydrateReadingFillBlankArticles(data.articles || []));
+        setServerWatermark(data.watermark || null);
+        setCaptchaPow(null);
       } catch (err) {
-        if (!cancelled) {
-          setArticles([]);
+        setArticles([]);
+        if (err?.needCaptcha && err.pow) {
+          setCaptchaPow(err.pow);
+          setArticlesError(err.message || "请求过于频繁");
+        } else {
+          setCaptchaPow(null);
           setArticlesError(err.message || "题目加载失败");
         }
       } finally {
-        if (!cancelled) setArticlesLoading(false);
+        setArticlesLoading(false);
       }
+    },
+    [user?.id]
+  );
+
+  useEffect(() => {
+    if (authLoading) return undefined;
+    if (!user?.id) {
+      setArticlesLoading(false);
+      setArticlesError("请先登录后再加载题目");
+      return undefined;
+    }
+    let cancelled = false;
+    (async () => {
+      if (cancelled) return;
+      await loadArticles();
     })();
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [authLoading, loadArticles, user?.id]);
+
+  const handleCaptchaPass = useCallback(async () => {
+    if (!captchaPow || captchaBusy) return;
+    setCaptchaBusy(true);
+    try {
+      const solved = await solveReadingFillPow(captchaPow);
+      await loadArticles(solved);
+    } catch (err) {
+      setArticlesError(err.message || "校验失败");
+    } finally {
+      setCaptchaBusy(false);
+    }
+  }, [captchaBusy, captchaPow, loadArticles]);
 
   const handleBlankFilled = useCallback(
     (blankId) => {
@@ -236,11 +274,20 @@ function ReadingFillBlank() {
     [blankIds]
   );
 
-  const { obscured, recordingLock, captureHint, watermark, captureApiAvailable } =
-    usePassageContentProtection(protectRootRef, {
-      enabled: isTabActive && viewMode === "practice",
-      user,
-    });
+  const {
+    obscured,
+    recordingLock,
+    devtoolsLock,
+    hardLock,
+    captureHint,
+    watermark,
+    watermarkIp,
+    captureApiAvailable,
+  } = usePassageContentProtection(protectRootRef, {
+    enabled: isTabActive && viewMode === "practice",
+    user,
+    serverWatermark,
+  });
 
   useEffect(() => {
     const becameActive = isTabActive && !wasTabActiveRef.current;
@@ -354,7 +401,7 @@ function ReadingFillBlank() {
     setViewMode("practice");
   };
 
-  if (articlesLoading) {
+  if (authLoading || articlesLoading) {
     return (
       <div className="rfill" lang="zh-CN">
         <p className="rfill__empty">正在加载题目…</p>
@@ -366,6 +413,16 @@ function ReadingFillBlank() {
     return (
       <div className="rfill" lang="zh-CN">
         <p className="rfill__empty">{articlesError}</p>
+        {captchaPow ? (
+          <RateLimitCaptcha
+            hint={captchaBusy ? "正在校验，请稍候…" : "拖动滑块后将进行安全校验并重新拉取加密题库"}
+            onPass={handleCaptchaPass}
+          />
+        ) : (
+          <button type="button" className="rfill__check-btn" onClick={() => loadArticles()}>
+            重新加载
+          </button>
+        )}
       </div>
     );
   }
@@ -518,36 +575,28 @@ function ReadingFillBlank() {
       ) : (
         <div
           ref={protectRootRef}
-          className={`rfill__body rfill__body--protected${obscured || recordingLock ? " rfill__body--obscured" : ""}`}
+          className={`rfill__body rfill__body--protected${obscured || hardLock ? " rfill__body--obscured" : ""}`}
         >
           <p className="rfill__protect-note">
-            题目受保护：禁止复制与外传。截屏只会短暂遮盖；录屏须由浏览器识别到后才会锁定，关闭录屏后自动恢复。截图带账号水印。
-            {captureApiAvailable ? "" : "（当前浏览器暂不支持系统级录屏状态信号，OBS 等外部录屏无法被网页可靠识别。）"}
+            题目受保护：传输加密、禁止复制；截屏短暂遮盖；录屏/开发者工具由系统识别关闭后自动恢复。全屏盲水印可追溯泄露账号。
+            {captureApiAvailable ? "" : "（当前浏览器暂不支持系统级录屏信号。）"}
           </p>
 
-          {captureHint && !recordingLock ? (
+          {captureHint && !hardLock ? (
             <p className="rfill__protect-toast" role="status">
               {captureHint}
             </p>
           ) : null}
 
-          <div className="rfill__watermark" aria-hidden>
-            {Array.from({ length: 18 }, (_, i) => (
-              <span key={i}>{watermark}</span>
-            ))}
-          </div>
+          <BlindWatermark userLabel={watermark} ip={watermarkIp || serverWatermark?.ip || ""} />
 
           <div className="rfill__protect-content">
             <p className="rfill__instruction">Fill in the missing letters in the paragraph</p>
 
-            <p ref={passageRef} className="rfill__passage">
+            <div ref={passageRef} className="rfill__passage">
               {article.segments.map((segment, index) => {
                 if (segment.type === "text") {
-                  return (
-                    <span key={`text-${index}`} className="rfill__text">
-                      {segment.value}
-                    </span>
-                  );
+                  return <SecurePassageText key={`text-${index}`} text={segment.value} />;
                 }
 
                 const letters =
@@ -569,7 +618,7 @@ function ReadingFillBlank() {
                   />
                 );
               })}
-            </p>
+            </div>
 
             <div className="rfill__footer">
               <button type="button" className="rfill__check-btn" onClick={handleCheck}>
@@ -610,10 +659,14 @@ function ReadingFillBlank() {
             ) : null}
           </div>
 
-          {recordingLock ? (
-            <div className="rfill__obscure rfill__obscure--lock" role="alertdialog" aria-modal="true" aria-label="录屏锁定">
-              <p>检测到屏幕录制中</p>
-              <span>题目已锁定。请彻底关闭录屏，系统识别到录屏结束后会自动恢复看题。</span>
+          {hardLock ? (
+            <div className="rfill__obscure rfill__obscure--lock" role="alertdialog" aria-modal="true" aria-label="内容锁定">
+              <p>{devtoolsLock ? "检测到开发者工具" : recordingLock ? "检测到屏幕录制中" : "题目已锁定"}</p>
+              <span>
+                {devtoolsLock
+                  ? "请关闭开发者工具，系统识别到关闭后会自动恢复看题。"
+                  : "请彻底关闭录屏，系统识别到录屏结束后会自动恢复看题。"}
+              </span>
             </div>
           ) : obscured ? (
             <div className="rfill__obscure" role="presentation">

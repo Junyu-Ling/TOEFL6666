@@ -16,7 +16,8 @@ function isBlankInput(node) {
   return node instanceof HTMLInputElement && node.classList.contains("rfill-blank__box");
 }
 
-function watermarkLabel(user) {
+function watermarkLabel(user, serverMark) {
+  if (serverMark?.user) return String(serverMark.user);
   const email = String(user?.email || "").trim();
   if (email) return email;
   const phone = String(user?.phone || "").trim();
@@ -33,7 +34,6 @@ function isScreenshotOnlyChord(event) {
   const key = event.key;
   const code = event.code;
   if (key === "PrintScreen" || code === "PrintScreen") return true;
-  // Win+Shift+S / Ctrl+Shift+S：截图工具，不是持续录屏
   if (event.shiftKey && (event.metaKey || event.ctrlKey) && (key.toLowerCase() === "s" || code === "KeyS")) {
     return true;
   }
@@ -45,7 +45,6 @@ function readIsScreenCaptured() {
     const devices = navigator.mediaDevices;
     if (!devices) return null;
     if (typeof devices.isScreenCaptured === "boolean") return devices.isScreenCaptured;
-    // 部分实验实现可能挂在别处
     if (typeof navigator.isScreenCaptured === "boolean") return navigator.isScreenCaptured;
   } catch {
     // ignore
@@ -53,19 +52,38 @@ function readIsScreenCaptured() {
   return null;
 }
 
+/** 启发式检测 DevTools 是否打开（无法 100% 封死，仅作锁定威慑） */
+function detectDevtoolsOpen() {
+  const threshold = 160;
+  const widthGap = Math.abs((window.outerWidth || 0) - (window.innerWidth || 0)) > threshold;
+  const heightGap = Math.abs((window.outerHeight || 0) - (window.innerHeight || 0)) > threshold;
+  // Firebug / 部分环境
+  const firebug = Boolean(window.console && window.console.firebug);
+  return widthGap || heightGap || firebug;
+}
+
 /**
  * 阅读填词防外泄。
- * - 截屏：短暂遮盖，自动恢复，不进录屏锁定
- * - 录屏：仅在浏览器提供 isScreenCaptured 信号时锁定；信号变为 false 后自动解锁
- * - 不提供「我已关闭」按钮，避免用户口头确认欺骗
+ * - 截屏：短暂遮盖，不进录屏锁定
+ * - 录屏：仅 isScreenCaptured 信号
+ * - DevTools：检测到打开则锁定，关闭后自动恢复
  */
-export function usePassageContentProtection(rootRef, { enabled = true, user = null } = {}) {
+export function usePassageContentProtection(
+  rootRef,
+  { enabled = true, user = null, serverWatermark = null } = {}
+) {
   const [tempObscured, setTempObscured] = useState(false);
   const [recordingLock, setRecordingLock] = useState(false);
+  const [devtoolsLock, setDevtoolsLock] = useState(false);
   const [captureHint, setCaptureHint] = useState("");
   const [captureApiAvailable, setCaptureApiAvailable] = useState(false);
-  const mark = useMemo(() => watermarkLabel(user), [user]);
+  const mark = useMemo(
+    () => watermarkLabel(user, serverWatermark),
+    [user, serverWatermark]
+  );
+  const watermarkIp = serverWatermark?.ip || "";
   const recordingLockRef = useRef(false);
+  const devtoolsLockRef = useRef(false);
   const tempTimerRef = useRef(0);
 
   const applyCoverClass = useCallback(
@@ -77,24 +95,32 @@ export function usePassageContentProtection(rootRef, { enabled = true, user = nu
     [rootRef]
   );
 
-  const setRecording = useCallback((locked, hint) => {
-    recordingLockRef.current = locked;
-    setRecordingLock(locked);
-    if (locked) {
-      setTempObscured(true);
-      applyCoverClass(true);
-      if (hint) setCaptureHint(hint);
-    } else {
-      setTempObscured(false);
-      applyCoverClass(false);
-      setCaptureHint("");
-    }
-  }, [applyCoverClass]);
+  const syncHardLock = useCallback(
+    (recording, devtools, hint) => {
+      recordingLockRef.current = recording;
+      devtoolsLockRef.current = devtools;
+      setRecordingLock(recording);
+      setDevtoolsLock(devtools);
+      const locked = recording || devtools;
+      if (locked) {
+        setTempObscured(true);
+        applyCoverClass(true);
+        if (hint) setCaptureHint(hint);
+      } else {
+        setTempObscured(false);
+        applyCoverClass(false);
+        setCaptureHint("");
+      }
+    },
+    [applyCoverClass]
+  );
 
   useEffect(() => {
     if (!enabled) {
       recordingLockRef.current = false;
+      devtoolsLockRef.current = false;
       setRecordingLock(false);
+      setDevtoolsLock(false);
       setTempObscured(false);
       setCaptureHint("");
       setCaptureApiAvailable(false);
@@ -110,7 +136,7 @@ export function usePassageContentProtection(rootRef, { enabled = true, user = nu
       setCaptureHint(text);
       window.clearTimeout(hintTimer);
       hintTimer = window.setTimeout(() => {
-        if (!recordingLockRef.current) setCaptureHint("");
+        if (!recordingLockRef.current && !devtoolsLockRef.current) setCaptureHint("");
       }, 2200);
     };
 
@@ -120,9 +146,11 @@ export function usePassageContentProtection(rootRef, { enabled = true, user = nu
       applyCoverClass(true);
       tempTimerRef.current = window.setTimeout(() => {
         setTempObscured(false);
-        if (!recordingLockRef.current) applyCoverClass(false);
+        if (!recordingLockRef.current && !devtoolsLockRef.current) applyCoverClass(false);
       }, ms);
     };
+
+    const hardLocked = () => recordingLockRef.current || devtoolsLockRef.current;
 
     const blockClipboard = (event) => {
       if (isBlankInput(event.target)) return;
@@ -153,6 +181,15 @@ export function usePassageContentProtection(rootRef, { enabled = true, user = nu
     };
 
     const onKeyDown = (event) => {
+      // 常见打开 DevTools 快捷键：拦不下系统级，但可遮盖并提示
+      if (
+        event.key === "F12" ||
+        ((event.ctrlKey || event.metaKey) && event.shiftKey && ["i", "j", "c"].includes(event.key.toLowerCase())) ||
+        ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "u")
+      ) {
+        syncHardLock(recordingLockRef.current, true, "检测到开发者工具相关操作，题目已锁定");
+      }
+
       if (isScreenshotOnlyChord(event)) {
         coverTemp(event.key === "PrintScreen" || event.code === "PrintScreen" ? 700 : 1200);
         if (event.key === "PrintScreen" || event.code === "PrintScreen") clearClipboardSoon();
@@ -163,7 +200,7 @@ export function usePassageContentProtection(rootRef, { enabled = true, user = nu
       if (!mod) return;
       const key = event.key.toLowerCase();
       if (!["c", "x", "a", "p", "s"].includes(key)) return;
-      if (event.shiftKey && key === "s") return; // 截屏组合已处理，不拦成「另存」
+      if (event.shiftKey && key === "s") return;
 
       const active = document.activeElement;
       if (isBlankInput(active) && (key === "c" || key === "x" || key === "a")) return;
@@ -179,15 +216,14 @@ export function usePassageContentProtection(rootRef, { enabled = true, user = nu
       if (event.key === "PrintScreen" || event.code === "PrintScreen") clearClipboardSoon();
     };
 
-    // —— 录屏信号：仅使用浏览器提供的 isScreenCaptured（若存在）——
     const applyCaptureSignal = (captured) => {
       if (captured === true) {
-        setRecording(true, "检测到屏幕录制，题目已锁定。关闭录屏后将自动恢复。");
+        syncHardLock(true, devtoolsLockRef.current, "检测到屏幕录制，题目已锁定。关闭录屏后将自动恢复。");
         return;
       }
       if (captured === false && recordingLockRef.current) {
-        setRecording(false);
-        showHint("录屏已关闭，可以继续看题");
+        syncHardLock(false, devtoolsLockRef.current);
+        if (!devtoolsLockRef.current) showHint("录屏已关闭，可以继续看题");
       }
     };
 
@@ -204,21 +240,29 @@ export function usePassageContentProtection(rootRef, { enabled = true, user = nu
       devices.onisscreencapturedchange = onCaptureChange;
     }
 
-    // 轮询兜底：部分实现只更新属性不派发事件
     const poll = hasApi
       ? window.setInterval(() => applyCaptureSignal(readIsScreenCaptured()), 800)
       : 0;
 
-    // 离开页面时仅暂时遮盖（防肩窥），回页自动恢复——不冒充「录屏检测」
+    const pollDevtools = window.setInterval(() => {
+      const open = detectDevtoolsOpen();
+      if (open && !devtoolsLockRef.current) {
+        syncHardLock(recordingLockRef.current, true, "请关闭开发者工具后继续看题");
+      } else if (!open && devtoolsLockRef.current) {
+        syncHardLock(recordingLockRef.current, false);
+        if (!recordingLockRef.current) showHint("开发者工具已关闭，可以继续看题");
+      }
+    }, 1200);
+
     const onVisibility = () => {
       if (document.visibilityState === "hidden") {
-        if (!recordingLockRef.current) {
+        if (!hardLocked()) {
           setTempObscured(true);
           applyCoverClass(true);
         }
         return;
       }
-      if (!recordingLockRef.current) {
+      if (!hardLocked()) {
         setTempObscured(false);
         applyCoverClass(false);
       } else {
@@ -227,14 +271,14 @@ export function usePassageContentProtection(rootRef, { enabled = true, user = nu
     };
 
     const onBlur = () => {
-      if (!recordingLockRef.current) {
+      if (!hardLocked()) {
         setTempObscured(true);
         applyCoverClass(true);
       }
     };
 
     const onFocus = () => {
-      if (recordingLockRef.current) {
+      if (hardLocked()) {
         applyCaptureSignal(readIsScreenCaptured());
         return;
       }
@@ -257,6 +301,7 @@ export function usePassageContentProtection(rootRef, { enabled = true, user = nu
       window.clearTimeout(hintTimer);
       window.clearTimeout(tempTimerRef.current);
       window.clearInterval(poll);
+      window.clearInterval(pollDevtools);
       root.classList.remove("rfill__body--obscured");
       if (devices) {
         devices.removeEventListener?.("isscreencapturedchange", onCaptureChange);
@@ -275,13 +320,18 @@ export function usePassageContentProtection(rootRef, { enabled = true, user = nu
       window.removeEventListener("blur", onBlur);
       window.removeEventListener("focus", onFocus);
     };
-  }, [applyCoverClass, enabled, rootRef, setRecording]);
+  }, [applyCoverClass, enabled, rootRef, syncHardLock]);
+
+  const hardLock = recordingLock || devtoolsLock;
 
   return {
-    obscured: tempObscured || recordingLock,
+    obscured: tempObscured || hardLock,
     recordingLock,
+    devtoolsLock,
+    hardLock,
     captureHint,
     watermark: mark,
+    watermarkIp,
     captureApiAvailable,
   };
 }

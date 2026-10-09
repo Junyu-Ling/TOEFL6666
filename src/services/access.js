@@ -1,8 +1,14 @@
+import {
+  buildReadingFillRequest,
+  decryptReadingFillPacket,
+} from "../utils/readingFillSecure.js";
+
 const memoryCache = new Map();
 
 async function accessRequest(path, { method = "GET", body } = {}) {
   const headers = { "Content-Type": "application/json" };
-  const cacheable = (!method || method === "GET") && (path.includes("/reading-fill/") || path.includes("/reading-vocab/"));
+  const cacheable =
+    (!method || method === "GET") && path.includes("/reading-vocab/");
   if (cacheable && memoryCache.has(path)) return memoryCache.get(path);
   const res = await fetch(path, {
     method,
@@ -14,6 +20,9 @@ async function accessRequest(path, { method = "GET", body } = {}) {
   if (!res.ok) {
     const error = new Error(data.error || `请求失败 (${res.status})`);
     error.status = res.status;
+    error.payload = data;
+    error.needCaptcha = Boolean(data.needCaptcha);
+    error.pow = data.pow || null;
     throw error;
   }
   if (cacheable) memoryCache.set(path, data);
@@ -43,10 +52,31 @@ export async function grantReadingVocab(userId, enabled) {
   return grantFeature(userId, "reading-vocab", enabled);
 }
 
-export async function fetchReadingFillArticles() {
-  return accessRequest("/api/reading-fill/articles");
+export async function fetchReadingFillArticles(userId, extra = {}) {
+  const signed = await buildReadingFillRequest(userId);
+  const packet = await accessRequest("/api/reading-fill/articles", {
+    method: "POST",
+    body: { ...signed, ...extra },
+  });
+  return decryptReadingFillPacket(packet);
 }
 
 export async function fetchReadingVocabCollections() {
   return accessRequest("/api/reading-vocab/collections");
+}
+
+/** 客户端求解 PoW（频率限制后人机校验） */
+export async function solveReadingFillPow(pow) {
+  const seed = String(pow?.seed || "");
+  const difficulty = Number(pow?.difficulty) || 4;
+  const prefix = "0".repeat(difficulty);
+  const enc = new TextEncoder();
+  for (let i = 0; i < 5_000_000; i += 1) {
+    const solution = i.toString(16);
+    const dig = await crypto.subtle.digest("SHA-256", enc.encode(`${seed}:${solution}`));
+    const hex = [...new Uint8Array(dig)].map((b) => b.toString(16).padStart(2, "0")).join("");
+    if (hex.startsWith(prefix)) return { powSeed: seed, powSolution: solution };
+    if (i % 500 === 0) await new Promise((r) => setTimeout(r, 0));
+  }
+  throw new Error("人机校验超时，请稍后重试");
 }

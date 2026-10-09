@@ -191,9 +191,10 @@ export function accessProxyPlugin() {
             sendJson(res, 200, await handleAccessGrant(req, body));
             return;
           }
-          if (isReadingFillArticles && req.method === "GET") {
+          if (isReadingFillArticles && req.method === "POST") {
             res.setHeader("Cache-Control", "private, no-store");
-            sendJson(res, 200, await handleReadingFillArticles(req));
+            const body = parseBody(await readBody(req));
+            sendJson(res, 200, await handleReadingFillArticles(req, body));
             return;
           }
           if (isReadingVocabCollections && req.method === "GET") {
@@ -203,6 +204,10 @@ export function accessProxyPlugin() {
           }
           sendJson(res, 405, { error: "Method Not Allowed" });
         } catch (err) {
+          if (err?.payload && typeof err.payload === "object") {
+            sendJson(res, err.status || 500, err.payload);
+            return;
+          }
           sendJson(res, err.status || 500, { error: err.message || "服务器错误" });
         }
       });

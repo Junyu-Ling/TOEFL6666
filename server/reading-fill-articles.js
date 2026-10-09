@@ -5,6 +5,10 @@ import { requireAccessUser } from "./access-api.js";
 import { getAccessSnapshot } from "./access-store.js";
 import { getEnv } from "./sync-store.js";
 import { decryptReadingFillJsonWithEnv } from "./reading-fill-crypto.js";
+import {
+  encryptArticlesForClient,
+  prepareReadingFillDelivery,
+} from "./reading-fill-protect.js";
 
 const DIR = dirname(fileURLToPath(import.meta.url));
 const PLAIN_PATH = join(DIR, "data", "readingFillBlank.json");
@@ -39,11 +43,19 @@ export function loadReadingFillRawArticles() {
   }
 }
 
-export async function handleReadingFillArticles(req) {
+export async function handleReadingFillArticles(req, body = {}) {
   const user = await requireAccessUser(req);
   const snapshot = await getAccessSnapshot(user);
   if (!snapshot.features?.readingFill) {
     throw createError("没有阅读填词权限", 403);
   }
-  return { articles: loadReadingFillRawArticles() };
+
+  const delivery = await prepareReadingFillDelivery(req, user, body || {});
+  const articles = loadReadingFillRawArticles();
+  const packet = encryptArticlesForClient(articles, delivery.pubKey);
+
+  return {
+    ...packet,
+    watermark: delivery.watermark,
+  };
 }

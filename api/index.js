@@ -334,12 +334,12 @@ export default async function handler(req, res) {
     }
 
     if (pathname === "/api/reading-fill/articles") {
-      if (method !== "GET") {
+      if (method !== "POST") {
         sendJson(res, 405, { error: "Method Not Allowed" });
         return;
       }
       res.setHeader("Cache-Control", "private, no-store");
-      sendJson(res, 200, await handleReadingFillArticles(req));
+      sendJson(res, 200, await handleReadingFillArticles(req, parseBody(req)));
       return;
     }
 
@@ -445,6 +445,10 @@ export default async function handler(req, res) {
         : pathname.startsWith("/api/tts/")
           ? "朗读失败"
           : "服务器错误";
+    if (err?.payload && typeof err.payload === "object") {
+      sendJson(res, err.status || 500, err.payload);
+      return;
+    }
     sendJson(res, err.status || 500, { error: err.message || fallback });
   }
 }
