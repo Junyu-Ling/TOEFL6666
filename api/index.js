@@ -10,6 +10,7 @@ import { identifyProviderFromKey } from "../server/ai-detect-provider.js";
 import { handleSyncPush, handleSyncPull } from "../server/sync-api.js";
 import { cloneOwnVoice, isClonedVoiceConfigured, synthesizeVocabWord } from "../server/tts-minimax.js";
 import { handleAccessGrant, handleAccessMe, handleAccessUsers } from "../server/access-api.js";
+import { ensureAccessStoreMigratedFromLegacyKv } from "../server/access-store.js";
 import { handleAuthIdentity, handleAuthLink, handleAuthLogout, handleAuthMe, handleGithubCallback, handleGithubStart } from "../server/auth-github.js";
 import { handleGoogleCallback, handleGoogleCalendarStart, handleGoogleStart } from "../server/auth-google.js";
 import { handleReadingFillArticles } from "../server/reading-fill-articles.js";
@@ -124,6 +125,8 @@ async function handleStream(res, iterator) {
 export default async function handler(req, res) {
   const pathname = pathnameOf(req);
   const method = req.method || "GET";
+  // 新 Upstash 优先后，旧 KV 用户可能丢了；每个隔离环境冷启动时并回一次
+  void ensureAccessStoreMigratedFromLegacyKv();
 
   try {
     if (pathname === "/api/tts/status") {

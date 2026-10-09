@@ -2,6 +2,7 @@ import { createClient } from "@supabase/supabase-js";
 import { getEnv } from "./sync-store.js";
 import { readSessionUser } from "./auth-session.js";
 import {
+  ensureAccessStoreMigratedFromLegacyKv,
   getAccessSnapshot,
   isUserStoreReady,
   listAccessUsers,
@@ -48,6 +49,7 @@ export async function requireAccessUser(req) {
 }
 
 export async function handleAccessMe(req) {
+  await ensureAccessStoreMigratedFromLegacyKv();
   const user = await requireAccessUser(req);
   return getAccessSnapshot(user);
 }
@@ -56,7 +58,12 @@ export async function handleAccessUsers(req) {
   const user = await requireAccessUser(req);
   const snapshot = await getAccessSnapshot(user);
   if (!snapshot.isAdmin) throw createError("没有管理员权限", 403);
-  return { users: await listAccessUsers(), storageReady: isUserStoreReady() };
+  const migration = await ensureAccessStoreMigratedFromLegacyKv();
+  return {
+    users: await listAccessUsers(),
+    storageReady: isUserStoreReady(),
+    migration,
+  };
 }
 
 export async function handleAccessGrant(req, body) {

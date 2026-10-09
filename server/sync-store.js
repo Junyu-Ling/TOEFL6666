@@ -15,12 +15,29 @@ export function getEnv(env) {
   return {};
 }
 
-export function getRedis(env) {
-  const e = getEnv(env);
-  const url = e.UPSTASH_REDIS_REST_URL || e.KV_REST_API_URL;
-  const token = e.UPSTASH_REDIS_REST_TOKEN || e.KV_REST_API_TOKEN;
+function createRedisClient(url, token) {
   if (!url || !token) return null;
   return new Redis({ url, token });
+}
+
+export function getRedis(env) {
+  const e = getEnv(env);
+  // 优先 UPSTASH_*；未配时回退到 Vercel KV（KV_REST_API_*）
+  return createRedisClient(
+    e.UPSTASH_REDIS_REST_URL || e.KV_REST_API_URL,
+    e.UPSTASH_REDIS_REST_TOKEN || e.KV_REST_API_TOKEN
+  );
+}
+
+/** 仅连旧 KV。配置了 UPSTASH 后 getRedis 会忽略 KV，迁用户时要用这对。 */
+export function getLegacyKvRedis(env) {
+  const e = getEnv(env);
+  const upUrl = e.UPSTASH_REDIS_REST_URL;
+  const kvUrl = e.KV_REST_API_URL;
+  if (!kvUrl || !e.KV_REST_API_TOKEN) return null;
+  // 与当前主库同一地址时不必当「旧库」再扫一遍
+  if (upUrl && upUrl === kvUrl) return null;
+  return createRedisClient(kvUrl, e.KV_REST_API_TOKEN);
 }
 
 export function isDeployedRuntime(env) {

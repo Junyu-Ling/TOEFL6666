@@ -1,5 +1,5 @@
 import { HARDCODED_ADMIN_EMAILS } from "../src/shared/admin.js";
-import { getEnv, getRedis, isDeployedRuntime } from "./sync-store.js";
+import { getEnv, getLegacyKvRedis, getRedis, isDeployedRuntime } from "./sync-store.js";
 
 const USERS_KEY = "toefl666:access:users";
 const IDENTITY_KEY = "toefl666:access:identities";
@@ -384,7 +384,111 @@ export async function getAccessSnapshot(user, env) {
   };
 }
 
+function parseRedisHash(raw) {
+  const out = {};
+  for (const [id, value] of Object.entries(raw || {})) {
+    if (!value) continue;
+    out[id] = typeof value === "string" ? JSON.parse(value) : value;
+  }
+  return out;
+}
+
+let legacyKvMigratePromise = null;
+
+/**
+ * 配了新的 UPSTASH_* 后 getRedis 不再读旧 KV。把旧库里的用户/身份/开通记录并进当前主库。
+ * 幂等：已存在的用户只补邮箱/手机/渠道，不会覆盖更新的 lastSeen。
+ */
+export async function migrateAccessStoreFromLegacyKv(env) {
+  const primary = getRedis(env);
+  const legacy = getLegacyKvRedis(env);
+  if (!primary || !legacy) {
+    return { skipped: true, reason: !primary ? "no-primary" : "no-legacy-kv" };
+  }
+
+  const [legacyUsersRaw, legacyIdentRaw, legacyFill, legacyVocab, primaryUsersRaw] = await Promise.all([
+    legacy.hgetall(USERS_KEY),
+    legacy.hgetall(IDENTITY_KEY),
+    legacy.smembers(READING_FILL_KEY),
+    legacy.smembers(READING_VOCAB_KEY),
+    primary.hgetall(USERS_KEY),
+  ]);
+
+  const legacyUsers = parseRedisHash(legacyUsersRaw);
+  const primaryUsers = parseRedisHash(primaryUsersRaw);
+  const legacyIds = Object.keys(legacyUsers);
+  const primaryIdsBefore = Object.keys(primaryUsers);
+  let usersAdded = 0;
+  let usersMerged = 0;
+
+  for (const [id, legacyProfile] of Object.entries(legacyUsers)) {
+    const existing = primaryUsers[id];
+    if (!existing) {
+      await primary.hset(USERS_KEY, { [id]: legacyProfile });
+      primaryUsers[id] = legacyProfile;
+      usersAdded += 1;
+      continue;
+    }
+    const merged = mergeProfiles(existing, legacyProfile);
+    // 保留主库里更新的 lastSeen
+    if ((existing.lastSeen || 0) >= (legacyProfile.lastSeen || 0)) {
+      merged.lastSeen = existing.lastSeen || merged.lastSeen;
+    }
+    const changed =
+      JSON.stringify(collectEmails(merged)) !== JSON.stringify(collectEmails(existing)) ||
+      JSON.stringify(collectPhones(merged)) !== JSON.stringify(collectPhones(existing)) ||
+      JSON.stringify(unique(merged.providers || [])) !== JSON.stringify(unique(existing.providers || []));
+    if (changed) {
+      await primary.hset(USERS_KEY, { [id]: merged });
+      primaryUsers[id] = merged;
+      usersMerged += 1;
+    }
+  }
+
+  const legacyIdent = legacyIdentRaw || {};
+  const identEntries = {};
+  for (const [key, userId] of Object.entries(legacyIdent)) {
+    if (key && userId) identEntries[key] = String(userId);
+  }
+  if (Object.keys(identEntries).length) {
+    await primary.hset(IDENTITY_KEY, identEntries);
+  }
+
+  const fillMembers = (legacyFill || []).map(String).filter(Boolean);
+  const vocabMembers = (legacyVocab || []).map(String).filter(Boolean);
+  if (fillMembers.length) await primary.sadd(READING_FILL_KEY, ...fillMembers);
+  if (vocabMembers.length) await primary.sadd(READING_VOCAB_KEY, ...vocabMembers);
+
+  const result = {
+    skipped: false,
+    legacyUserCount: legacyIds.length,
+    primaryUserCountBefore: primaryIdsBefore.length,
+    primaryUserCountAfter: Object.keys(primaryUsers).length,
+    usersAdded,
+    usersMerged,
+    identitiesCopied: Object.keys(identEntries).length,
+    readingFillCopied: fillMembers.length,
+    readingVocabCopied: vocabMembers.length,
+    legacyOnlyIds: legacyIds.filter((id) => !primaryIdsBefore.includes(id)),
+  };
+  console.log("[access] legacy KV migrate", JSON.stringify(result));
+  return result;
+}
+
+/** 每个隔离环境只跑一次；失败可在下次冷启动重试。 */
+export function ensureAccessStoreMigratedFromLegacyKv(env) {
+  if (!legacyKvMigratePromise) {
+    legacyKvMigratePromise = migrateAccessStoreFromLegacyKv(env).catch((err) => {
+      legacyKvMigratePromise = null;
+      console.warn("[access] legacy KV migrate failed:", err?.message || err);
+      return { skipped: true, error: String(err?.message || err) };
+    });
+  }
+  return legacyKvMigratePromise;
+}
+
 export async function listAccessUsers(env) {
+  await ensureAccessStoreMigratedFromLegacyKv(env);
   const users = await readUsers();
   const readingFill = await readFeatureIds(FEATURE_READING_FILL);
   const readingVocab = await readFeatureIds(FEATURE_READING_VOCAB);
