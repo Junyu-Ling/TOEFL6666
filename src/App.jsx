@@ -52,7 +52,6 @@ import { normalizeAppMode, normalizeActiveTabForMode } from "./utils/appMode";
 import { useAccess } from "./context/AccessContext";
 import { useAuth } from "./context/AuthContext";
 import { useSessionMonitor } from "./hooks/useSessionMonitor";
-import SessionMonitorBadge from "./components/SessionMonitorBadge";
 import {
   UNCategorized_LIST_ID,
   inferSourceListId,
@@ -94,7 +93,7 @@ export default function App() {
   const [activeTab, setActiveTab] = useState(() =>
     normalizeActiveTabForMode(savedRef.current.activeTab, appMode)
   );
-  const { watching: sessionWatching } = useSessionMonitor({
+  useSessionMonitor({
     enabled: Boolean(user?.id),
     activeTab,
   });
@@ -1379,7 +1378,6 @@ export default function App() {
 
   return (
     <div className="app">
-      <SessionMonitorBadge visible={Boolean(user?.id)} watching={sessionWatching} />
       {wordsLoading ? (
         <div className="app-loading-overlay">
           <VocabLoadingScreen
