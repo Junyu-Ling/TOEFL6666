@@ -679,7 +679,7 @@ function ReadingFillBlank() {
                 {captureHint ||
                   (devtoolsLock
                     ? "请关闭开发者工具，识别到关闭后会自动恢复。"
-                    : "请彻底关闭录屏，识别到结束后会自动恢复。")}
+                    : "请彻底关闭录屏。系统会持续检测，确认已停止后才会自动恢复。")}
               </span>
             </div>
           ) : obscured ? (

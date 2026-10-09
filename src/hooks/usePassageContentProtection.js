@@ -75,10 +75,15 @@ function detectDevtoolsOpen() {
   return widthGap || heightGap || firebug;
 }
 
+/** 连续多少次读到「未录屏」才允许解锁，防止停一下又开钻空子 */
+const RECORDING_CLEAR_SAMPLES = 4;
+/** 录屏实时轮询间隔（毫秒） */
+const RECORDING_POLL_MS = 250;
+
 /**
  * 阅读填词防外泄。
  * - 截屏：短暂遮盖，不进录屏锁定
- * - 录屏：仅 isScreenCaptured 信号
+ * - 录屏：isScreenCaptured 实时轮询；录屏中任何揭开路径都不放行
  * - DevTools：检测到打开则锁定，关闭后自动恢复
  */
 export function usePassageContentProtection(
@@ -99,6 +104,7 @@ export function usePassageContentProtection(
   const devtoolsLockRef = useRef(false);
   const tempTimerRef = useRef(0);
   const blurSuppressUntilRef = useRef(0);
+  const recordingClearStreakRef = useRef(0);
 
   const applyCoverClass = useCallback(
     (on) => {
@@ -147,6 +153,7 @@ export function usePassageContentProtection(
     if (!enabled) {
       recordingLockRef.current = false;
       devtoolsLockRef.current = false;
+      recordingClearStreakRef.current = 0;
       setRecordingLock(false);
       setDevtoolsLock(false);
       setTempObscured(false);
@@ -161,6 +168,7 @@ export function usePassageContentProtection(
 
     let hintTimer = 0;
     let chordCover = false;
+    recordingClearStreakRef.current = 0;
 
     const hardLocked = () => recordingLockRef.current || devtoolsLockRef.current;
 
@@ -186,6 +194,10 @@ export function usePassageContentProtection(
       if (holdMs > 0) {
         tempTimerRef.current = window.setTimeout(() => {
           if (hardLocked()) return;
+          if (readIsScreenCaptured() === true) {
+            applyCaptureSignal(true);
+            return;
+          }
           if (document.visibilityState !== "visible" || !document.hasFocus()) return;
           chordCover = false;
           root.classList.remove("rfill__body--obscured");
@@ -195,7 +207,13 @@ export function usePassageContentProtection(
       }
     };
 
+    /** 任何揭开前先实时读录屏状态：正在录屏一律不给开 */
     const uncoverIfSafe = () => {
+      const captured = readIsScreenCaptured();
+      if (captured === true) {
+        applyCaptureSignal(true);
+        return;
+      }
       if (hardLocked()) return;
       if (document.visibilityState !== "visible" || !document.hasFocus()) return;
       chordCover = false;
@@ -301,6 +319,7 @@ export function usePassageContentProtection(
 
     const applyCaptureSignal = (captured) => {
       if (captured === true) {
+        recordingClearStreakRef.current = 0;
         syncHardLock(
           true,
           devtoolsLockRef.current,
@@ -308,11 +327,32 @@ export function usePassageContentProtection(
         );
         return;
       }
-      if (captured === false && recordingLockRef.current) {
+      if (captured === false) {
+        if (!recordingLockRef.current) {
+          recordingClearStreakRef.current = 0;
+          return;
+        }
+        // 必须连续多次确认未录屏才解锁，防止停一下又开钻空子
+        recordingClearStreakRef.current += 1;
+        if (recordingClearStreakRef.current < RECORDING_CLEAR_SAMPLES) {
+          showHint(
+            `录屏疑似已关闭，正在确认（${recordingClearStreakRef.current}/${RECORDING_CLEAR_SAMPLES}）…`,
+            { sticky: true }
+          );
+          return;
+        }
+        recordingClearStreakRef.current = 0;
         syncHardLock(false, devtoolsLockRef.current);
         if (!devtoolsLockRef.current) showHint("录屏已关闭，可以继续看题");
+        return;
+      }
+      // API 读不到时：已锁定则保持锁定，绝不因为 null 而放开
+      if (recordingLockRef.current) {
+        recordingClearStreakRef.current = 0;
       }
     };
+
+    const sampleCapture = () => applyCaptureSignal(readIsScreenCaptured());
 
     const initial = readIsScreenCaptured();
     const hasApi = initial !== null;
@@ -320,16 +360,15 @@ export function usePassageContentProtection(
     if (hasApi) applyCaptureSignal(initial);
 
     const devices = navigator.mediaDevices;
-    const onCaptureChange = () => applyCaptureSignal(readIsScreenCaptured());
+    const onCaptureChange = () => sampleCapture();
     if (devices && "onisscreencapturedchange" in devices) {
       devices.addEventListener?.("isscreencapturedchange", onCaptureChange);
     } else if (devices) {
       devices.onisscreencapturedchange = onCaptureChange;
     }
 
-    const poll = hasApi
-      ? window.setInterval(() => applyCaptureSignal(readIsScreenCaptured()), 800)
-      : 0;
+    // 有 API 时高频轮询；无 API 也短间隔重试（部分浏览器稍后才暴露该属性）
+    const poll = window.setInterval(sampleCapture, RECORDING_POLL_MS);
 
     const syncDevtoolsState = () => {
       const open = detectDevtoolsOpen();
@@ -348,6 +387,7 @@ export function usePassageContentProtection(
 
     let blurTimer = 0;
     const onVisibility = () => {
+      sampleCapture();
       if (document.visibilityState === "hidden") {
         if (hardLocked()) return;
         if (detectDevtoolsOpen()) {
@@ -358,7 +398,6 @@ export function usePassageContentProtection(
         return;
       }
       if (hardLocked()) {
-        applyCaptureSignal(readIsScreenCaptured());
         syncDevtoolsState();
         return;
       }
@@ -390,8 +429,8 @@ export function usePassageContentProtection(
 
     const onFocus = () => {
       window.clearTimeout(blurTimer);
+      sampleCapture();
       if (hardLocked()) {
-        applyCaptureSignal(readIsScreenCaptured());
         syncDevtoolsState();
         return;
       }
