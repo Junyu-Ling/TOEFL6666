@@ -50,6 +50,9 @@ import {
 } from "./services/storage";
 import { normalizeAppMode, normalizeActiveTabForMode } from "./utils/appMode";
 import { useAccess } from "./context/AccessContext";
+import { useAuth } from "./context/AuthContext";
+import { useSessionMonitor } from "./hooks/useSessionMonitor";
+import SessionMonitorBadge from "./components/SessionMonitorBadge";
 import {
   UNCategorized_LIST_ID,
   inferSourceListId,
@@ -74,6 +77,7 @@ function clampIndex(index, length) {
 
 export default function App() {
   const { settingsOpen, settings, setAppMode, setSettingsOpen } = useSettings();
+  const { user } = useAuth();
   const { canUseReadingFill, canUseReadingVocab, loading: accessLoading } = useAccess();
   const appMode = normalizeAppMode(settings.appMode);
   const savedRef = useRef(loadProgress(appMode));
@@ -90,6 +94,10 @@ export default function App() {
   const [activeTab, setActiveTab] = useState(() =>
     normalizeActiveTabForMode(savedRef.current.activeTab, appMode)
   );
+  const { watching: sessionWatching } = useSessionMonitor({
+    enabled: Boolean(user?.id),
+    activeTab,
+  });
 
   useEffect(() => {
     setActiveTab((tab) => normalizeActiveTabForMode(tab, appMode));
@@ -1371,6 +1379,7 @@ export default function App() {
 
   return (
     <div className="app">
+      <SessionMonitorBadge visible={Boolean(user?.id)} watching={sessionWatching} />
       {wordsLoading ? (
         <div className="app-loading-overlay">
           <VocabLoadingScreen

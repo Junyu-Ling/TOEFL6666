@@ -1,5 +1,11 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { fetchAccessUsers, grantFeature } from "../services/access";
+import {
+  fetchAccessUsers,
+  fetchMonitorFrame,
+  fetchMonitorOnline,
+  grantFeature,
+  postMonitorWatch,
+} from "../services/access";
 import { useAccess } from "../context/AccessContext";
 
 function userEmails(user) {
@@ -15,6 +21,18 @@ function userInitial(user) {
   return String(label || "?").slice(0, 1).toUpperCase();
 }
 
+function sessionLabel(session) {
+  const u = session?.user || {};
+  return u.name || u.login || u.email || session?.userId?.slice?.(0, 8) || "用户";
+}
+
+function formatAgo(ts) {
+  const delta = Math.max(0, Date.now() - Number(ts || 0));
+  if (delta < 5000) return "刚刚";
+  if (delta < 60000) return `${Math.floor(delta / 1000)} 秒前`;
+  return `${Math.floor(delta / 60000)} 分钟前`;
+}
+
 export default function AccessAdminSettings() {
   const { isAdmin, refresh } = useAccess();
   const [users, setUsers] = useState([]);
@@ -23,6 +41,12 @@ export default function AccessAdminSettings() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [busyKey, setBusyKey] = useState("");
+  const [online, setOnline] = useState([]);
+  const [onlineError, setOnlineError] = useState("");
+  const [watchingId, setWatchingId] = useState("");
+  const [frameUrl, setFrameUrl] = useState("");
+  const [frameMeta, setFrameMeta] = useState(null);
+  const [watchBusy, setWatchBusy] = useState(false);
 
   const loadUsers = useCallback(async () => {
     if (!isAdmin) return;
@@ -39,9 +63,54 @@ export default function AccessAdminSettings() {
     }
   }, [isAdmin]);
 
+  const loadOnline = useCallback(async () => {
+    if (!isAdmin) return;
+    try {
+      const data = await fetchMonitorOnline();
+      setOnline(data.sessions || []);
+      setOnlineError("");
+    } catch (err) {
+      setOnlineError(err.message || "无法加载在线用户");
+    }
+  }, [isAdmin]);
+
   useEffect(() => {
     loadUsers();
   }, [loadUsers]);
+
+  useEffect(() => {
+    if (!isAdmin) return undefined;
+    loadOnline();
+    const timer = window.setInterval(loadOnline, 4000);
+    return () => window.clearInterval(timer);
+  }, [isAdmin, loadOnline]);
+
+  useEffect(() => {
+    if (!isAdmin || !watchingId) {
+      setFrameUrl("");
+      setFrameMeta(null);
+      return undefined;
+    }
+    let cancelled = false;
+    const poll = async () => {
+      try {
+        const data = await fetchMonitorFrame(watchingId);
+        if (cancelled) return;
+        if (data.frame?.image) {
+          setFrameUrl(data.frame.image);
+          setFrameMeta(data.frame);
+        }
+      } catch {
+        // keep last frame
+      }
+    };
+    poll();
+    const timer = window.setInterval(poll, 1200);
+    return () => {
+      cancelled = true;
+      window.clearInterval(timer);
+    };
+  }, [isAdmin, watchingId]);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -57,8 +126,8 @@ export default function AccessAdminSettings() {
     const fill = users.filter((user) => user.isAdmin || user.features?.readingFill).length;
     const vocab = users.filter((user) => user.isAdmin || user.features?.readingVocab).length;
     const admins = users.filter((user) => user.isAdmin).length;
-    return { total: users.length, fill, vocab, admins };
-  }, [users]);
+    return { total: users.length, fill, vocab, admins, online: online.length };
+  }, [users, online]);
 
   async function toggleFeature(user, feature, enabled) {
     setBusyKey(`${user.id}:${feature}`);
@@ -81,6 +150,41 @@ export default function AccessAdminSettings() {
     }
   }
 
+  async function startWatch(session) {
+    const userId = session.userId;
+    setWatchBusy(true);
+    setOnlineError("");
+    try {
+      if (watchingId && watchingId !== userId) {
+        await postMonitorWatch(watchingId, false);
+      }
+      await postMonitorWatch(userId, true);
+      setWatchingId(userId);
+      setFrameUrl("");
+      await loadOnline();
+    } catch (err) {
+      setOnlineError(err.message || "无法开始观看");
+    } finally {
+      setWatchBusy(false);
+    }
+  }
+
+  async function stopWatch() {
+    if (!watchingId) return;
+    setWatchBusy(true);
+    try {
+      await postMonitorWatch(watchingId, false);
+      setWatchingId("");
+      setFrameUrl("");
+      setFrameMeta(null);
+      await loadOnline();
+    } catch (err) {
+      setOnlineError(err.message || "无法停止观看");
+    } finally {
+      setWatchBusy(false);
+    }
+  }
+
   if (!isAdmin) return null;
 
   return (
@@ -99,8 +203,8 @@ export default function AccessAdminSettings() {
           <span>已开通词汇配对</span>
         </div>
         <div className="admin-stat">
-          <strong>{stats.admins}</strong>
-          <span>管理员</span>
+          <strong>{stats.online}</strong>
+          <span>当前在线</span>
         </div>
       </div>
 
@@ -110,6 +214,69 @@ export default function AccessAdminSettings() {
           UPSTASH_REDIS_REST_TOKEN 后重新部署。
         </p>
       ) : null}
+
+      <section className="settings-card admin-monitor">
+        <div className="admin-toolbar">
+          <div>
+            <h3 className="admin-monitor__title">在线监看</h3>
+            <p className="settings-hint settings-hint--compact">
+              仅查看用户当前打开的本站页面，不抓取整机桌面。
+            </p>
+          </div>
+          <button type="button" className="settings-action-btn" onClick={loadOnline}>
+            刷新在线
+          </button>
+        </div>
+        {onlineError ? <p className="settings-status settings-status--error">{onlineError}</p> : null}
+
+        <div className="admin-monitor__layout">
+          <ul className="admin-monitor__list">
+            {online.map((session) => {
+              const active = watchingId === session.userId;
+              return (
+                <li key={session.userId} className={`admin-monitor__item${active ? " is-active" : ""}`}>
+                  <div className="admin-monitor__meta">
+                    <strong>{sessionLabel(session)}</strong>
+                    <span>
+                      {session.tab || "未知页"} · {formatAgo(session.ts)}
+                      {session.watching ? " · 共享中" : ""}
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    className={`settings-action-btn${active ? " settings-action-btn--primary" : ""}`}
+                    disabled={watchBusy}
+                    onClick={() => (active ? stopWatch() : startWatch(session))}
+                  >
+                    {active ? "停止" : "观看"}
+                  </button>
+                </li>
+              );
+            })}
+            {online.length === 0 ? (
+              <li className="admin-monitor__empty">当前没有在线用户。</li>
+            ) : null}
+          </ul>
+
+          <div className="admin-monitor__preview">
+            {watchingId ? (
+              <>
+                <div className="admin-monitor__preview-bar">
+                  <span>实时画面</span>
+                  {frameMeta?.ts ? <span>{formatAgo(frameMeta.ts)}</span> : <span>等待首帧…</span>}
+                </div>
+                {frameUrl ? (
+                  <img className="admin-monitor__frame" src={frameUrl} alt="用户当前页面" />
+                ) : (
+                  <p className="admin-monitor__empty">等待用户端上传页面截帧…</p>
+                )}
+              </>
+            ) : (
+              <p className="admin-monitor__empty">选择左侧在线用户开始观看应用内画面。</p>
+            )}
+          </div>
+        </div>
+      </section>
 
       <section className="settings-card">
         <div className="admin-toolbar">
