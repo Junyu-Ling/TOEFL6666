@@ -272,12 +272,19 @@ function ReadingFillBlank() {
     [blankIds]
   );
 
-  const { obscured, recordingLock, devtoolsLock, hardLock, captureHint, watermark } =
-    usePassageContentProtection(protectRootRef, {
-      enabled: isTabActive && viewMode === "practice",
-      user,
-      serverWatermark,
-    });
+  const {
+    obscured,
+    recordingLock,
+    devtoolsLock,
+    hardLock,
+    captureHint,
+    watermark,
+    suppressBlurCover,
+  } = usePassageContentProtection(protectRootRef, {
+    enabled: isTabActive && viewMode === "practice",
+    user,
+    serverWatermark,
+  });
 
   useEffect(() => {
     const becameActive = isTabActive && !wasTabActiveRef.current;
@@ -354,7 +361,12 @@ function ReadingFillBlank() {
   };
 
   const handleClearAll = () => {
-    if (!window.confirm("确定清除全部作答记录？此操作不可撤销。")) return;
+    // confirm 会抢焦点，先抑制失焦遮盖，避免误判为截屏/录屏防护
+    suppressBlurCover(3000);
+    if (!window.confirm("确定清除全部作答记录？此操作不可撤销。")) {
+      suppressBlurCover(800);
+      return;
+    }
     const currentIndex = articleIndex;
     const cleared = clearReadingFillBlankProgress();
     const withIndex = patchArticleIndex(cleared, currentIndex);
@@ -366,6 +378,7 @@ function ReadingFillBlank() {
     setInputs(getArticleInputs(currentArticle, withIndex.inputsByArticle));
     setChecked(false);
     setGrade(null);
+    suppressBlurCover(800);
   };
 
   const handlePrev = () => {

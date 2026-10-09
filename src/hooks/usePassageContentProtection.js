@@ -98,12 +98,27 @@ export function usePassageContentProtection(
   const recordingLockRef = useRef(false);
   const devtoolsLockRef = useRef(false);
   const tempTimerRef = useRef(0);
+  const blurSuppressUntilRef = useRef(0);
 
   const applyCoverClass = useCallback(
     (on) => {
       const root = rootRef.current;
       if (!root) return;
       root.classList.toggle("rfill__body--obscured", on);
+    },
+    [rootRef]
+  );
+
+  /** 原生 confirm 等会抢焦点：临时忽略失焦遮盖，避免误判 */
+  const suppressBlurCover = useCallback(
+    (ms = 2500) => {
+      blurSuppressUntilRef.current = Date.now() + ms;
+      if (!recordingLockRef.current && !devtoolsLockRef.current) {
+        const root = rootRef.current;
+        root?.classList.remove("rfill__body--obscured");
+        setTempObscured(false);
+        setCaptureHint("");
+      }
     },
     [rootRef]
   );
@@ -350,8 +365,11 @@ export function usePassageContentProtection(
       uncoverIfSafe();
     };
 
+    const blurSuppressed = () => Date.now() < blurSuppressUntilRef.current;
+
     const onBlur = () => {
       if (hardLocked()) return;
+      if (blurSuppressed()) return;
       // 打开 DevTools 常先触发 blur：先判开发者工具，避免闪「失焦」文案
       if (detectDevtoolsOpen()) {
         lockDevtools("因检测到开发者工具已打开，题目已锁定");
@@ -359,7 +377,7 @@ export function usePassageContentProtection(
       }
       window.clearTimeout(blurTimer);
       blurTimer = window.setTimeout(() => {
-        if (hardLocked()) return;
+        if (hardLocked() || blurSuppressed()) return;
         if (detectDevtoolsOpen()) {
           lockDevtools("因检测到开发者工具已打开，题目已锁定");
           return;
@@ -434,5 +452,6 @@ export function usePassageContentProtection(
     watermark: mark,
     watermarkIp,
     captureApiAvailable,
+    suppressBlurCover,
   };
 }
