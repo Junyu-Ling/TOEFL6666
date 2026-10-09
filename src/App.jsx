@@ -708,7 +708,7 @@ export default function App() {
   const handleReturnFromBookPractice = useCallback(
     (bookType) => {
       const save = window.confirm(
-        "是否保存当前练习进度？\n\n确定：保存并返回列表\n取消：不保存并返回列�?
+        "是否保存当前练习进度？\n\n确定：保存并返回列表\n取消：不保存并返回列表"
       );
       exitBookPractice(bookType, save);
     },
@@ -847,7 +847,7 @@ export default function App() {
 
   const handleClearRecognized = useCallback(() => {
     if (recognized.length === 0) return;
-    if (!window.confirm(`确定清空熟词本中�?${recognized.length} 个单词吗？`)) return;
+    if (!window.confirm(`确定清空熟词本中的 ${recognized.length} 个单词吗？`)) return;
     setRecognized([]);
     saveRecognized([]);
   }, [recognized.length]);
@@ -957,8 +957,10 @@ export default function App() {
     );
   }, [recognizedPastWrong.length, pastWrongCountByListId]);
 
-  // 每个标签页的内容都缓存为稳定的元素树：切�?activeTab 不在这些依赖列表中，
-  // 因此切换标签时不会重新渲�?/ 重新计算未激活标签页（尤其是词格、阅读词汇�?  // 生熟词本这类渲染量较大的页面），从根本上消除切换卡顿�?  const practicePanel = useMemo(
+  // 每个标签页的内容都缓存为稳定的元素树：切换 activeTab 不在这些依赖列表中，
+  // 因此切换标签时不会重新渲染 / 重新计算未激活标签页（尤其是词格、阅读词汇、
+  // 生熟词本这类渲染量较大的页面），从根本上消除切换卡顿。
+  const practicePanel = useMemo(
     () => (
       <PracticeSession
         tabId="practice"
@@ -1000,7 +1002,7 @@ export default function App() {
         stats={
           <>
             <span className="stat-pill stat-pill--ok">认识 {recognized.length}</span>
-            <span className="stat-pill stat-pill--fail">不认�?{unrecognized.length}</span>
+            <span className="stat-pill stat-pill--fail">不认识 {unrecognized.length}</span>
           </>
         }
         queueLength={wordList.length}
@@ -1171,14 +1173,14 @@ export default function App() {
         />
       ) : (
         <WordList
-          title="不认识的�?
+          title="不认识的词"
           subtitle={
             reviewShuffle
-              ? `${unrecognized.length} �?· �?Level · List 分组 · 乱序仅影响练习`
-              : `${unrecognized.length} �?· �?Level · List 分组 · 按错误次数排序`
+              ? `${unrecognized.length} 个 · 按 Level · List 分组 · 乱序仅影响练习`
+              : `${unrecognized.length} 个 · 按 Level · List 分组 · 按错误次数排序`
           }
           words={sortedUnrecognizedWords}
-          emptyText="太棒了！目前没有生词，继续保持�?
+          emptyText="太棒了！目前没有生词，继续保持。"
           showWrongCount
           groupByList
           availableLists={availableLists}
@@ -1186,8 +1188,8 @@ export default function App() {
           reviewBar={
             unrecognized.length > 0 ? (
               <BookReviewScopeBar
-                title="针对性强化练�?
-                description={`�?Level · List 多选复习范围（�?${unrecognized.length} 个生词）`}
+                title="针对性强化练习"
+                description={`按 Level · List 多选复习范围（共 ${unrecognized.length} 个生词）`}
                 levelNumbers={levelNumbersWithUnrecognized}
                 listsByLevel={listsByLevel}
                 countByListId={unrecognizedCountByListId}
@@ -1198,9 +1200,9 @@ export default function App() {
                 onToggleShuffle={toggleReviewShuffle}
                 primaryLabel={
                   unrecognizedSession && bookPracticePaused.unrecognized
-                    ? `继续强化�?{unrecognizedSession.index + 1}/${unrecognizedSession.queue.length}）`
+                    ? `继续强化（${unrecognizedSession.index + 1}/${unrecognizedSession.queue.length}）`
                     : unrecognizedReviewListIds.length === 0
-                      ? "开始强�?
+                      ? "开始强化"
                       : `开始强化（${selectedUnrecognizedCount}）`
                 }
                 onPrimary={resumeUnrecognizedPractice}
@@ -1269,17 +1271,17 @@ export default function App() {
         />
       ) : (
         <WordList
-          title="已认识的�?
+          title="已认识的词"
           subtitle={
             recognizedPastWrong.length > 0
-              ? `${recognized.length} �?· �?Level · List 分组 · 曾错 ${recognizedPastWrong.length} 个可巩固`
-              : `${recognized.length} �?· �?Level · List 分组 · 本地保存`
+              ? `${recognized.length} 个 · 按 Level · List 分组 · 曾错 ${recognizedPastWrong.length} 个可巩固`
+              : `${recognized.length} 个 · 按 Level · List 分组 · 本地保存`
           }
           words={recognized}
-          emptyText="还没有熟词，去卡片练习场开始吧�?
+          emptyText="还没有熟词，去卡片练习场开始吧！"
           onRemoveWord={handleRemoveRecognized}
           onClearAll={handleClearRecognized}
-          clearLabel="清空熟词�?
+          clearLabel="清空熟词本"
           showWrongCount
           wrongCountPast
           withToolbar
@@ -1289,11 +1291,11 @@ export default function App() {
           onMemoryTrickSaved={handleRecognizedMemoryTrick}
           reviewBar={
             <BookReviewScopeBar
-              title="曾错题巩�?
+              title="曾错题巩固"
               description={
                 recognizedPastWrong.length > 0
-                  ? `�?Level · List 多选巩固范围（�?${recognizedPastWrong.length} 个曾错题）`
-                  : "暂无曾错题。答错后进熟词本的词会带「曾�?N 次」标记，即可在此巩固"
+                  ? `按 Level · List 多选巩固范围（共 ${recognizedPastWrong.length} 个曾错题）`
+                  : "暂无曾错题。答错后进熟词本的词会带「曾错 N 次」标记，即可在此巩固"
               }
               levelNumbers={levelNumbersWithPastWrong}
               listsByLevel={listsByLevel}
@@ -1305,9 +1307,9 @@ export default function App() {
               onToggleShuffle={toggleReviewShuffle}
               primaryLabel={
                 recognizedSession && bookPracticePaused.recognized
-                  ? `继续巩固�?{recognizedSession.index + 1}/${recognizedSession.queue.length}）`
+                  ? `继续巩固（${recognizedSession.index + 1}/${recognizedSession.queue.length}）`
                   : recognizedReviewListIds.length === 0
-                    ? "开始巩�?
+                    ? "开始巩固"
                     : `开始巩固（${selectedPastWrongCount}）`
               }
               onPrimary={resumeRecognizedPractice}
