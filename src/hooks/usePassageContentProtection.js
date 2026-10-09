@@ -219,14 +219,29 @@ export function usePassageContentProtection(
       }, 0);
     };
 
+    const lockDevtools = (reason) => {
+      chordCover = false;
+      window.clearTimeout(tempTimerRef.current);
+      syncHardLock(
+        recordingLockRef.current,
+        true,
+        reason || "因检测到开发者工具已打开，题目已锁定"
+      );
+    };
+
     const onKeyDown = (event) => {
-      // DevTools：Ctrl+Shift+I/J/C 与截屏和弦重叠时，优先截屏抢先遮盖，再记锁定
+      // 开发者工具优先：直接锁定，不先走截屏/失焦临时遮盖
       const isDevtoolsChord =
         event.key === "F12" ||
         ((event.ctrlKey || event.metaKey) &&
           event.shiftKey &&
           ["i", "j", "c"].includes(event.key.toLowerCase())) ||
         ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "u");
+
+      if (isDevtoolsChord) {
+        lockDevtools("因检测到开发者工具快捷键，题目已锁定");
+        return;
+      }
 
       if (isScreenshotChord(event)) {
         const isPrintScreen = event.key === "PrintScreen" || event.code === "PrintScreen";
@@ -237,10 +252,6 @@ export function usePassageContentProtection(
           isPrintScreen ? 700 : 0
         );
         if (isPrintScreen) clearClipboardSoon();
-      }
-
-      if (isDevtoolsChord) {
-        syncHardLock(recordingLockRef.current, true, "因检测到开发者工具相关操作，题目已锁定");
       }
 
       const mod = event.ctrlKey || event.metaKey;
@@ -305,42 +316,72 @@ export function usePassageContentProtection(
       ? window.setInterval(() => applyCaptureSignal(readIsScreenCaptured()), 800)
       : 0;
 
-    const pollDevtools = window.setInterval(() => {
+    const syncDevtoolsState = () => {
       const open = detectDevtoolsOpen();
       if (open && !devtoolsLockRef.current) {
-        syncHardLock(recordingLockRef.current, true, "因检测到开发者工具已打开，题目已锁定");
-      } else if (!open && devtoolsLockRef.current) {
+        lockDevtools("因检测到开发者工具已打开，题目已锁定");
+        return true;
+      }
+      if (!open && devtoolsLockRef.current) {
         syncHardLock(recordingLockRef.current, false);
         if (!recordingLockRef.current) showHint("开发者工具已关闭，可以继续看题");
       }
-    }, 1200);
+      return open;
+    };
 
+    const pollDevtools = window.setInterval(syncDevtoolsState, 400);
+
+    let blurTimer = 0;
     const onVisibility = () => {
       if (document.visibilityState === "hidden") {
-        if (!hardLocked()) {
-          coverNow("因页面切到后台/不可见，题目已临时遮盖（防截屏与录屏）");
+        if (hardLocked()) return;
+        if (detectDevtoolsOpen()) {
+          lockDevtools("因检测到开发者工具已打开，题目已锁定");
+          return;
         }
+        coverNow("因页面切到后台/不可见，题目已临时遮盖（防截屏与录屏）");
         return;
       }
       if (hardLocked()) {
         applyCaptureSignal(readIsScreenCaptured());
+        syncDevtoolsState();
         return;
       }
       uncoverIfSafe();
     };
 
     const onBlur = () => {
-      if (!hardLocked()) {
-        coverNow("因窗口失焦，题目已临时遮盖（防截屏与录屏）");
+      if (hardLocked()) return;
+      // 打开 DevTools 常先触发 blur：先判开发者工具，避免闪「失焦」文案
+      if (detectDevtoolsOpen()) {
+        lockDevtools("因检测到开发者工具已打开，题目已锁定");
+        return;
       }
+      window.clearTimeout(blurTimer);
+      blurTimer = window.setTimeout(() => {
+        if (hardLocked()) return;
+        if (detectDevtoolsOpen()) {
+          lockDevtools("因检测到开发者工具已打开，题目已锁定");
+          return;
+        }
+        if (!document.hasFocus()) {
+          coverNow("因窗口失焦，题目已临时遮盖（防截屏与录屏）");
+        }
+      }, 80);
     };
 
     const onFocus = () => {
+      window.clearTimeout(blurTimer);
       if (hardLocked()) {
         applyCaptureSignal(readIsScreenCaptured());
+        syncDevtoolsState();
         return;
       }
       uncoverIfSafe();
+    };
+
+    const onResize = () => {
+      syncDevtoolsState();
     };
 
     root.addEventListener("copy", blockClipboard);
@@ -353,10 +394,12 @@ export function usePassageContentProtection(
     document.addEventListener("visibilitychange", onVisibility);
     window.addEventListener("blur", onBlur);
     window.addEventListener("focus", onFocus);
+    window.addEventListener("resize", onResize);
 
     return () => {
       window.clearTimeout(hintTimer);
       window.clearTimeout(tempTimerRef.current);
+      window.clearTimeout(blurTimer);
       window.clearInterval(poll);
       window.clearInterval(pollDevtools);
       root.classList.remove("rfill__body--obscured");
@@ -376,6 +419,7 @@ export function usePassageContentProtection(
       document.removeEventListener("visibilitychange", onVisibility);
       window.removeEventListener("blur", onBlur);
       window.removeEventListener("focus", onFocus);
+      window.removeEventListener("resize", onResize);
     };
   }, [applyCoverClass, enabled, rootRef, syncHardLock]);
 
