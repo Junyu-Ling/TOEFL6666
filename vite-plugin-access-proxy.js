@@ -12,14 +12,6 @@ import {
   handleGoogleCalendarStatus,
   handleGoogleCalendarSync,
 } from "./server/google-calendar-sync.js";
-import {
-  handleMonitorFrameGet,
-  handleMonitorFrameUpload,
-  handleMonitorHeartbeat,
-  handleMonitorOnline,
-  handleMonitorWatch,
-  handleMonitorWatchStatus,
-} from "./server/session-monitor.js";
 import { requireAccessUser } from "./server/access-api.js";
 
 function readBody(req) {
@@ -97,12 +89,7 @@ export function accessProxyPlugin() {
         const isGoogleCalSync = matchApiPath(req.url, "/api/calendar/google-sync");
         const isGoogleCalPull = matchApiPath(req.url, "/api/calendar/google-pull");
         const isGoogleCalDisconnect = matchApiPath(req.url, "/api/calendar/google-disconnect");
-        const isMonitorHeartbeat = matchApiPath(req.url, "/api/monitor/heartbeat");
-        const isMonitorWatchStatus = matchApiPath(req.url, "/api/monitor/watch-status");
-        const isMonitorFrame = matchApiPath(req.url, "/api/monitor/frame");
-        const isMonitorOnline = matchApiPath(req.url, "/api/monitor/online");
-        const isMonitorWatch = matchApiPath(req.url, "/api/monitor/watch");
-        if (!isAccessMe && !isUsers && !isGrant && !isReadingFillArticles && !isReadingVocabCollections && !isGhStart && !isGhCallback && !isGoogleStart && !isGoogleCalendarStart && !isGoogleCallback && !isAuthMe && !isAuthIdentity && !isAuthLink && !isAccountSync && !isLogout && !isCalendarPublish && !isCalendarFeed && !isGoogleCalStatus && !isGoogleCalSync && !isGoogleCalPull && !isGoogleCalDisconnect && !isMonitorHeartbeat && !isMonitorWatchStatus && !isMonitorFrame && !isMonitorOnline && !isMonitorWatch) {
+        if (!isAccessMe && !isUsers && !isGrant && !isReadingFillArticles && !isReadingVocabCollections && !isGhStart && !isGhCallback && !isGoogleStart && !isGoogleCalendarStart && !isGoogleCallback && !isAuthMe && !isAuthIdentity && !isAuthLink && !isAccountSync && !isLogout && !isCalendarPublish && !isCalendarFeed && !isGoogleCalStatus && !isGoogleCalSync && !isGoogleCalPull && !isGoogleCalDisconnect) {
           return next();
         }
 
@@ -213,40 +200,6 @@ export function accessProxyPlugin() {
           if (isReadingVocabCollections && req.method === "GET") {
             res.setHeader("Cache-Control", "private, no-store");
             sendJson(res, 200, await handleReadingVocabCollections(req));
-            return;
-          }
-          if (isMonitorHeartbeat && req.method === "POST") {
-            res.setHeader("Cache-Control", "private, no-store");
-            const body = parseBody(await readBody(req));
-            sendJson(res, 200, await handleMonitorHeartbeat(req, body));
-            return;
-          }
-          if (isMonitorWatchStatus && req.method === "GET") {
-            res.setHeader("Cache-Control", "private, no-store");
-            sendJson(res, 200, await handleMonitorWatchStatus(req));
-            return;
-          }
-          if (isMonitorFrame && req.method === "POST") {
-            res.setHeader("Cache-Control", "private, no-store");
-            const body = parseBody(await readBody(req));
-            sendJson(res, 200, await handleMonitorFrameUpload(req, body));
-            return;
-          }
-          if (isMonitorFrame && req.method === "GET") {
-            res.setHeader("Cache-Control", "private, no-store");
-            const userId = new URL(req.url || "/", "http://n").searchParams.get("userId") || "";
-            sendJson(res, 200, await handleMonitorFrameGet(req, userId));
-            return;
-          }
-          if (isMonitorOnline && req.method === "GET") {
-            res.setHeader("Cache-Control", "private, no-store");
-            sendJson(res, 200, await handleMonitorOnline(req));
-            return;
-          }
-          if (isMonitorWatch && req.method === "POST") {
-            res.setHeader("Cache-Control", "private, no-store");
-            const body = parseBody(await readBody(req));
-            sendJson(res, 200, await handleMonitorWatch(req, body));
             return;
           }
           sendJson(res, 405, { error: "Method Not Allowed" });

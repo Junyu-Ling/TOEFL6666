@@ -65,33 +65,6 @@ export async function fetchReadingVocabCollections() {
   return accessRequest("/api/reading-vocab/collections");
 }
 
-export async function postMonitorHeartbeat(body) {
-  return accessRequest("/api/monitor/heartbeat", { method: "POST", body });
-}
-
-export async function fetchMonitorWatchStatus() {
-  return accessRequest("/api/monitor/watch-status");
-}
-
-export async function postMonitorFrame(body) {
-  return accessRequest("/api/monitor/frame", { method: "POST", body });
-}
-
-export async function fetchMonitorOnline() {
-  return accessRequest("/api/monitor/online");
-}
-
-export async function postMonitorWatch(userId, enabled) {
-  return accessRequest("/api/monitor/watch", {
-    method: "POST",
-    body: { userId, enabled },
-  });
-}
-
-export async function fetchMonitorFrame(userId) {
-  return accessRequest(`/api/monitor/frame?userId=${encodeURIComponent(userId)}`);
-}
-
 /** 客户端求解 PoW（频率限制后人机校验） */
 export async function solveReadingFillPow(pow) {
   const seed = String(pow?.seed || "");

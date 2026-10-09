@@ -3488,7 +3488,7 @@ body {
   padding: 0 1rem 0.35rem;
 }
 
-.admin-monitor__title {
+.admin-wm__title {
   margin: 0 0 0.25rem;
   font-size: 1rem;
   font-weight: 700;
@@ -3523,100 +3523,6 @@ body {
   border-radius: 10px;
   border: 1px solid var(--border);
   background: #0b1220;
-}
-
-.admin-monitor__layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr);
-  gap: 0.85rem;
-  padding: 0 1rem 1rem;
-}
-
-.admin-monitor__list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.45rem;
-  max-height: 22rem;
-  overflow: auto;
-}
-
-.admin-monitor__item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.6rem;
-  padding: 0.65rem 0.7rem;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  background: var(--surface);
-}
-
-.admin-monitor__item.is-active {
-  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
-  background: color-mix(in srgb, var(--accent) 8%, var(--surface));
-}
-
-.admin-monitor__meta {
-  display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
-  min-width: 0;
-}
-
-.admin-monitor__meta strong {
-  font-size: 0.875rem;
-  color: var(--text);
-}
-
-.admin-monitor__meta span {
-  font-size: 0.75rem;
-  color: var(--text-muted);
-}
-
-.admin-monitor__preview {
-  min-height: 14rem;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  background: color-mix(in srgb, var(--bg) 70%, var(--surface));
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-
-.admin-monitor__preview-bar {
-  display: flex;
-  justify-content: space-between;
-  gap: 0.5rem;
-  padding: 0.55rem 0.75rem;
-  border-bottom: 1px solid var(--border);
-  font-size: 0.75rem;
-  color: var(--text-muted);
-}
-
-.admin-monitor__frame {
-  display: block;
-  width: 100%;
-  height: auto;
-  max-height: 22rem;
-  object-fit: contain;
-  background: #fff;
-}
-
-.admin-monitor__empty {
-  margin: 0;
-  padding: 1.25rem 0.85rem;
-  font-size: 0.8125rem;
-  color: var(--text-muted);
-  text-align: center;
-}
-
-@media (max-width: 720px) {
-  .admin-monitor__layout {
-    grid-template-columns: 1fr;
-  }
 }
 
 .settings-panel {

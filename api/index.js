@@ -23,14 +23,6 @@ import {
   handleGoogleCalendarSync,
 } from "../server/google-calendar-sync.js";
 import { requireAccessUser } from "../server/access-api.js";
-import {
-  handleMonitorFrameGet,
-  handleMonitorFrameUpload,
-  handleMonitorHeartbeat,
-  handleMonitorOnline,
-  handleMonitorWatch,
-  handleMonitorWatchStatus,
-} from "../server/session-monitor.js";
 
 export const config = {
   api: {
@@ -338,58 +330,6 @@ export default async function handler(req, res) {
         return;
       }
       sendJson(res, 200, await handleAccessGrant(req, parseBody(req)));
-      return;
-    }
-
-    if (pathname === "/api/monitor/heartbeat") {
-      if (method !== "POST") {
-        sendJson(res, 405, { error: "Method Not Allowed" });
-        return;
-      }
-      res.setHeader("Cache-Control", "private, no-store");
-      sendJson(res, 200, await handleMonitorHeartbeat(req, parseBody(req)));
-      return;
-    }
-
-    if (pathname === "/api/monitor/watch-status") {
-      if (method !== "GET") {
-        sendJson(res, 405, { error: "Method Not Allowed" });
-        return;
-      }
-      res.setHeader("Cache-Control", "private, no-store");
-      sendJson(res, 200, await handleMonitorWatchStatus(req));
-      return;
-    }
-
-    if (pathname === "/api/monitor/frame" && method === "POST") {
-      res.setHeader("Cache-Control", "private, no-store");
-      sendJson(res, 200, await handleMonitorFrameUpload(req, parseBody(req)));
-      return;
-    }
-
-    if (pathname === "/api/monitor/frame" && method === "GET") {
-      res.setHeader("Cache-Control", "private, no-store");
-      sendJson(res, 200, await handleMonitorFrameGet(req, queryParam(req, "userId")));
-      return;
-    }
-
-    if (pathname === "/api/monitor/online") {
-      if (method !== "GET") {
-        sendJson(res, 405, { error: "Method Not Allowed" });
-        return;
-      }
-      res.setHeader("Cache-Control", "private, no-store");
-      sendJson(res, 200, await handleMonitorOnline(req));
-      return;
-    }
-
-    if (pathname === "/api/monitor/watch") {
-      if (method !== "POST") {
-        sendJson(res, 405, { error: "Method Not Allowed" });
-        return;
-      }
-      res.setHeader("Cache-Control", "private, no-store");
-      sendJson(res, 200, await handleMonitorWatch(req, parseBody(req)));
       return;
     }
 

@@ -51,7 +51,6 @@ import {
 import { normalizeAppMode, normalizeActiveTabForMode } from "./utils/appMode";
 import { useAccess } from "./context/AccessContext";
 import { useAuth } from "./context/AuthContext";
-import { useSessionMonitor } from "./hooks/useSessionMonitor";
 import {
   UNCategorized_LIST_ID,
   inferSourceListId,
@@ -76,7 +75,6 @@ function clampIndex(index, length) {
 
 export default function App() {
   const { settingsOpen, settings, setAppMode, setSettingsOpen } = useSettings();
-  const { user } = useAuth();
   const { canUseReadingFill, canUseReadingVocab, loading: accessLoading } = useAccess();
   const appMode = normalizeAppMode(settings.appMode);
   const savedRef = useRef(loadProgress(appMode));
@@ -93,11 +91,6 @@ export default function App() {
   const [activeTab, setActiveTab] = useState(() =>
     normalizeActiveTabForMode(savedRef.current.activeTab, appMode)
   );
-  useSessionMonitor({
-    enabled: Boolean(user?.id),
-    activeTab,
-  });
-
   useEffect(() => {
     setActiveTab((tab) => normalizeActiveTabForMode(tab, appMode));
   }, [appMode]);
