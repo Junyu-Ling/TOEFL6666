@@ -5984,6 +5984,104 @@ body {
   color: var(--text);
 }
 
+.rfill__body--protected {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+.rfill__body--protected .rfill-blank__box {
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+.rfill__protect-note {
+  margin: 0 0 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  line-height: 1.45;
+}
+
+.rfill__protect-toast {
+  position: sticky;
+  top: 0.5rem;
+  z-index: 5;
+  margin: 0 0 0.75rem;
+  padding: 0.55rem 0.75rem;
+  border-radius: 8px;
+  border: 1px solid color-mix(in srgb, var(--wrong) 35%, var(--border));
+  background: color-mix(in srgb, var(--wrong-bg) 80%, var(--surface));
+  color: var(--wrong);
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.rfill__watermark {
+  position: absolute;
+  inset: -20%;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3.5rem 2rem;
+  transform: rotate(-24deg);
+  pointer-events: none;
+  user-select: none;
+  opacity: 0.14;
+}
+
+.rfill__watermark span {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text);
+  white-space: nowrap;
+  text-align: center;
+}
+
+.rfill__protect-content {
+  position: relative;
+  z-index: 2;
+}
+
+.rfill__body--obscured .rfill__protect-content {
+  filter: blur(10px);
+  opacity: 0.22;
+  pointer-events: none;
+}
+
+.rfill__obscure {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  background: color-mix(in srgb, var(--bg) 72%, transparent);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  text-align: center;
+  pointer-events: none;
+}
+
+.rfill__obscure p {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.rfill__obscure span {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+
 .rfill__passage {
   width: 100%;
   max-width: none;

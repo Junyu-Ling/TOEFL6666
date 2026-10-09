@@ -17,6 +17,7 @@ import {
 import { usePassageContentProtection } from "../hooks/usePassageContentProtection";
 import { useEnglishImeLock } from "../hooks/useEnglishImeLock";
 import { useIsActiveTab } from "../context/ActiveTabContext";
+import { useAuth } from "../context/AuthContext";
 import {
   dismissImeComposition,
   latinLetterFromText,
@@ -167,6 +168,7 @@ const BlankInput = forwardRef(function BlankInput(
 });
 
 function ReadingFillBlank() {
+  const { user } = useAuth();
   const isTabActive = useIsActiveTab("reading-fill");
   useEnglishImeLock(isTabActive);
   const [articles, setArticles] = useState([]);
@@ -185,6 +187,7 @@ function ReadingFillBlank() {
   const [grade, setGrade] = useState(null);
   const blankRefs = useRef({});
   const passageRef = useRef(null);
+  const protectRootRef = useRef(null);
   const inputsRef = useRef(inputs);
   const wasTabActiveRef = useRef(false);
   inputsRef.current = inputs;
@@ -233,7 +236,10 @@ function ReadingFillBlank() {
     [blankIds]
   );
 
-  usePassageContentProtection(passageRef);
+  const { obscured, captureHint, watermark } = usePassageContentProtection(protectRootRef, {
+    enabled: isTabActive && viewMode === "practice",
+    user,
+  });
 
   useEffect(() => {
     const becameActive = isTabActive && !wasTabActiveRef.current;
@@ -509,75 +515,99 @@ function ReadingFillBlank() {
           ) : null}
         </div>
       ) : (
-        <div className="rfill__body">
-          <p className="rfill__instruction">Fill in the missing letters in the paragraph</p>
-
-          <p ref={passageRef} className="rfill__passage">
-            {article.segments.map((segment, index) => {
-              if (segment.type === "text") {
-                return (
-                  <span key={`text-${index}`} className="rfill__text">
-                    {segment.value}
-                  </span>
-                );
-              }
-
-              const letters =
-                inputs[segment.id] ?? Array.from({ length: segment.fillLen }, () => "");
-
-              return (
-                <BlankInput
-                  key={segment.id}
-                  ref={(node) => {
-                    blankRefs.current[segment.id] = node;
-                  }}
-                  blank={segment}
-                  letters={letters}
-                  checked={checked}
-                  result={gradeMap.get(segment.id)}
-                  onChange={(nextLetters) => handleInputChange(segment.id, nextLetters)}
-                  onFilled={() => handleBlankFilled(segment.id)}
-                  onEnter={handleCheck}
-                />
-              );
-            })}
+        <div
+          ref={protectRootRef}
+          className={`rfill__body rfill__body--protected${obscured ? " rfill__body--obscured" : ""}`}
+        >
+          <p className="rfill__protect-note">
+            题目受保护：禁止复制、截屏与录屏外传。截图会带上你的账号水印。
           </p>
 
-          <div className="rfill__footer">
-            <button type="button" className="rfill__check-btn" onClick={handleCheck}>
-              核对答案
-            </button>
+          {captureHint ? <p className="rfill__protect-toast" role="status">{captureHint}</p> : null}
+
+          <div className="rfill__watermark" aria-hidden>
+            {Array.from({ length: 18 }, (_, i) => (
+              <span key={i}>{watermark}</span>
+            ))}
           </div>
 
-          {checked && grade ? (
-            <div className="rfill__result">
-              <p className="rfill__result-score">
-                本篇得分：<strong>{grade.correctCount}</strong> / {grade.total}
-              </p>
-              <ul className="rfill__result-list">
-                {grade.results.map((item, index) => (
-                  <li
-                    key={item.blank.id}
-                    className={item.isCorrect ? "rfill__result-item--ok" : "rfill__result-item--bad"}
-                  >
-                    <span className="rfill__result-index">{index + 1}.</span>
-                    <span className="rfill__result-word">
-                      {item.blank.prefix}
-                      <span className="rfill__result-fill">
-                        {item.userWord.slice(item.blank.prefix.length) || "—"}
-                      </span>
+          <div className="rfill__protect-content">
+            <p className="rfill__instruction">Fill in the missing letters in the paragraph</p>
+
+            <p ref={passageRef} className="rfill__passage">
+              {article.segments.map((segment, index) => {
+                if (segment.type === "text") {
+                  return (
+                    <span key={`text-${index}`} className="rfill__text">
+                      {segment.value}
                     </span>
-                    {item.isCorrect ? (
-                      <span className="rfill__result-tag rfill__result-tag--ok">正确</span>
-                    ) : (
-                      <>
-                        <span className="rfill__result-tag rfill__result-tag--bad">错误</span>
-                        <span className="rfill__result-answer">标准答案：{item.expected}</span>
-                      </>
-                    )}
-                  </li>
-                ))}
-              </ul>
+                  );
+                }
+
+                const letters =
+                  inputs[segment.id] ?? Array.from({ length: segment.fillLen }, () => "");
+
+                return (
+                  <BlankInput
+                    key={segment.id}
+                    ref={(node) => {
+                      blankRefs.current[segment.id] = node;
+                    }}
+                    blank={segment}
+                    letters={letters}
+                    checked={checked}
+                    result={gradeMap.get(segment.id)}
+                    onChange={(nextLetters) => handleInputChange(segment.id, nextLetters)}
+                    onFilled={() => handleBlankFilled(segment.id)}
+                    onEnter={handleCheck}
+                  />
+                );
+              })}
+            </p>
+
+            <div className="rfill__footer">
+              <button type="button" className="rfill__check-btn" onClick={handleCheck}>
+                核对答案
+              </button>
+            </div>
+
+            {checked && grade ? (
+              <div className="rfill__result">
+                <p className="rfill__result-score">
+                  本篇得分：<strong>{grade.correctCount}</strong> / {grade.total}
+                </p>
+                <ul className="rfill__result-list">
+                  {grade.results.map((item, index) => (
+                    <li
+                      key={item.blank.id}
+                      className={item.isCorrect ? "rfill__result-item--ok" : "rfill__result-item--bad"}
+                    >
+                      <span className="rfill__result-index">{index + 1}.</span>
+                      <span className="rfill__result-word">
+                        {item.blank.prefix}
+                        <span className="rfill__result-fill">
+                          {item.userWord.slice(item.blank.prefix.length) || "—"}
+                        </span>
+                      </span>
+                      {item.isCorrect ? (
+                        <span className="rfill__result-tag rfill__result-tag--ok">正确</span>
+                      ) : (
+                        <>
+                          <span className="rfill__result-tag rfill__result-tag--bad">错误</span>
+                          <span className="rfill__result-answer">标准答案：{item.expected}</span>
+                        </>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
+          </div>
+
+          {obscured ? (
+            <div className="rfill__obscure" role="presentation">
+              <p>题目已暂时遮盖</p>
+              <span>切回本页后可继续作答</span>
             </div>
           ) : null}
         </div>
