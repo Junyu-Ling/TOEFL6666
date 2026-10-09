@@ -25,6 +25,7 @@ import {
 } from "../utils/englishIme";
 import RateLimitCaptcha from "./RateLimitCaptcha";
 import BlindWatermarkLayer from "./BlindWatermarkLayer";
+import OcrShieldLayer from "./OcrShieldLayer";
 
 function ReviewBookmarkIcon() {
   return (
@@ -592,6 +593,8 @@ function ReadingFillBlank() {
             userLabel={watermark}
             ip={watermarkIp || serverWatermark?.ip || ""}
           />
+
+          <OcrShieldLayer userLabel={watermark} />
 
           <div className="rfill__protect-content">
             <p className="rfill__instruction">Fill in the missing letters in the paragraph</p>

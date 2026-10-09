@@ -6038,6 +6038,12 @@ body {
   -webkit-user-select: text;
 }
 
+/* 填空抬到抗 OCR 层之上，输入不受噪点影响；正文仍被罩住 */
+.rfill__body--protected .rfill-blank {
+  position: relative;
+  z-index: 4;
+}
+
 .rfill__protect-toast {
   position: sticky;
   top: 0.5rem;
@@ -6061,6 +6067,28 @@ body {
   pointer-events: none;
   user-select: none;
   opacity: 1;
+}
+
+/* 叠在正文上：截图 OCR 被噪点/斜纹/诱饵字干扰；不拦截点击 */
+.rfill__ocr-shield {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  user-select: none;
+  mix-blend-mode: multiply;
+  opacity: 0.85;
+}
+
+[data-theme="dark"] .rfill__ocr-shield {
+  mix-blend-mode: soft-light;
+  opacity: 0.75;
+}
+
+.rfill__body--obscured .rfill__ocr-shield {
+  opacity: 0;
 }
 
 .rfill__captcha {
@@ -6200,6 +6228,18 @@ body {
   -moz-user-select: none;
   -ms-user-select: none;
   -webkit-touch-callout: none;
+  /* 轻微软边：人眼仍清晰，OCR 边缘检测更吃力 */
+  text-shadow:
+    0 0 0.45px rgba(51, 65, 85, 0.35),
+    0 0 0.9px rgba(255, 255, 255, 0.4);
+  background-image:
+    repeating-linear-gradient(
+      -12deg,
+      transparent 0,
+      transparent 2px,
+      rgba(15, 23, 42, 0.015) 2px,
+      rgba(15, 23, 42, 0.015) 3px
+    );
 }
 
 .rfill__passage ::selection {
@@ -6220,6 +6260,17 @@ body {
 
 [data-theme="dark"] .rfill__passage {
   color: var(--text);
+  text-shadow:
+    0 0 0.45px rgba(226, 232, 240, 0.3),
+    0 0 0.9px rgba(15, 23, 42, 0.45);
+  background-image:
+    repeating-linear-gradient(
+      -12deg,
+      transparent 0,
+      transparent 2px,
+      rgba(226, 232, 240, 0.02) 2px,
+      rgba(226, 232, 240, 0.02) 3px
+    );
 }
 
 .rfill__text {
