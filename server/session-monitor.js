@@ -2,10 +2,10 @@ import { getRedis, isDeployedRuntime } from "./sync-store.js";
 import { requireAccessUser } from "./access-api.js";
 import { getAccessSnapshot } from "./access-store.js";
 
-const PRESENCE_TTL = 25;
-const WATCH_TTL = 60;
-const FRAME_TTL = 8;
-const MAX_FRAME_CHARS = 220_000;
+const PRESENCE_TTL = 40;
+const WATCH_TTL = 120;
+const FRAME_TTL = 25;
+const MAX_FRAME_CHARS = 280_000;
 const ONLINE_SET = "toefl666:monitor:online";
 
 const memory =
@@ -98,14 +98,31 @@ export async function handleMonitorHeartbeat(req, body = {}) {
   return { ok: true, backend: "memory" };
 }
 
+function asObject(value) {
+  if (!value) return null;
+  if (typeof value === "object") return value;
+  if (typeof value === "string") {
+    try {
+      return JSON.parse(value);
+    } catch {
+      return null;
+    }
+  }
+  return null;
+}
+
 export async function handleMonitorWatchStatus(req) {
   const user = await requireAccessUser(req);
   const userId = String(user.id || "").trim();
   const redis = getRedis();
 
   if (redis) {
-    const watch = await redis.get(watchKey(userId));
-    return { watching: Boolean(watch), watch: watch || null };
+    const watch = asObject(await redis.get(watchKey(userId))) || (await redis.get(watchKey(userId)));
+    if (watch) {
+      await redis.set(watchKey(userId), watch, { ex: WATCH_TTL });
+      return { watching: true, watch };
+    }
+    return { watching: false, watch: null };
   }
 
   pruneMemory();
@@ -114,6 +131,7 @@ export async function handleMonitorWatchStatus(req) {
     memory.watch.delete(userId);
     return { watching: false, watch: null };
   }
+  entry.expiresAt = Date.now() + WATCH_TTL * 1000;
   return { watching: true, watch: entry.value };
 }
 
@@ -124,8 +142,21 @@ export async function handleMonitorFrameUpload(req, body = {}) {
   if (!image.startsWith("data:image/")) throw createError("截帧格式无效", 400);
   if (image.length > MAX_FRAME_CHARS) throw createError("截帧过大", 413);
 
-  const status = await handleMonitorWatchStatus(req);
-  if (!status.watching) throw createError("当前未被观看", 409);
+  const redis = getRedis();
+  let watching = false;
+  if (redis) {
+    const watch = await redis.get(watchKey(userId));
+    watching = Boolean(watch);
+    if (watching) {
+      await redis.set(watchKey(userId), watch, { ex: WATCH_TTL });
+    }
+  } else {
+    pruneMemory();
+    const entry = memory.watch.get(userId);
+    watching = Boolean(entry && entry.expiresAt > Date.now());
+    if (watching) entry.expiresAt = Date.now() + WATCH_TTL * 1000;
+  }
+  if (!watching) throw createError("当前未被观看", 409);
 
   const payload = {
     userId,
@@ -135,13 +166,15 @@ export async function handleMonitorFrameUpload(req, body = {}) {
     height: Number(body.height) || 0,
   };
 
-  const redis = getRedis();
   if (redis) {
     await redis.set(frameKey(userId), payload, { ex: FRAME_TTL });
     return { ok: true };
   }
 
-  pruneMemory();
+  if (isDeployedRuntime()) {
+    throw createError("服务端未配置 Redis，无法上传截帧", 503);
+  }
+
   memory.frame.set(userId, { value: payload, expiresAt: Date.now() + FRAME_TTL * 1000 });
   return { ok: true };
 }
@@ -155,7 +188,7 @@ export async function handleMonitorOnline(req) {
     const ids = (await redis.smembers(ONLINE_SET)) || [];
     const sessions = [];
     for (const id of ids) {
-      const presence = await redis.get(presenceKey(id));
+      const presence = asObject(await redis.get(presenceKey(id)));
       if (!presence) {
         await redis.srem(ONLINE_SET, id);
         continue;
@@ -163,6 +196,7 @@ export async function handleMonitorOnline(req) {
       const watch = await redis.get(watchKey(id));
       sessions.push({
         ...presence,
+        userId: presence.userId || id,
         watching: Boolean(watch),
       });
     }
@@ -238,11 +272,11 @@ export async function handleMonitorFrameGet(req, userIdParam = "") {
 
   const redis = getRedis();
   if (redis) {
-    const watch = await redis.get(watchKey(userId));
+    const watch = asObject(await redis.get(watchKey(userId))) || (await redis.get(watchKey(userId)));
     if (watch) {
       await redis.set(watchKey(userId), watch, { ex: WATCH_TTL });
     }
-    const frame = await redis.get(frameKey(userId));
+    const frame = asObject(await redis.get(frameKey(userId)));
     return {
       watching: Boolean(watch),
       frame: frame || null,

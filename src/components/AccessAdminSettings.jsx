@@ -320,7 +320,9 @@ export default function AccessAdminSettings() {
                 {frameUrl ? (
                   <img className="admin-monitor__frame" src={frameUrl} alt="用户当前页面" />
                 ) : (
-                  <p className="admin-monitor__empty">等待用户端上传页面截帧…</p>
+                  <p className="admin-monitor__empty">
+                    等待用户端上传页面截帧…请确认对方已登录并停留在本站任意页面（不要只开管理端）。
+                  </p>
                 )}
               </>
             ) : (
