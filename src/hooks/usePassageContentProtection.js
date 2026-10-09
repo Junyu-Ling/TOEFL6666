@@ -28,70 +28,76 @@ function watermarkLabel(user) {
   return "未登录访客";
 }
 
-function isScreenshotChord(event) {
+/** 仅截屏，不视为录屏 */
+function isScreenshotOnlyChord(event) {
   const key = event.key;
   const code = event.code;
   if (key === "PrintScreen" || code === "PrintScreen") return true;
-  if (event.shiftKey && (event.metaKey || event.ctrlKey)) return true;
-  if ((key === "Shift" || code.startsWith("Shift")) && (event.metaKey || event.ctrlKey)) return true;
-  if (
-    (key === "Meta" ||
-      key === "Control" ||
-      code === "MetaLeft" ||
-      code === "MetaRight" ||
-      code === "ControlLeft" ||
-      code === "ControlRight") &&
-    event.shiftKey
-  ) {
+  // Win+Shift+S / Ctrl+Shift+S：截图工具，不是持续录屏
+  if (event.shiftKey && (event.metaKey || event.ctrlKey) && (key.toLowerCase() === "s" || code === "KeyS")) {
     return true;
   }
   return false;
 }
 
+function readIsScreenCaptured() {
+  try {
+    const devices = navigator.mediaDevices;
+    if (!devices) return null;
+    if (typeof devices.isScreenCaptured === "boolean") return devices.isScreenCaptured;
+    // 部分实验实现可能挂在别处
+    if (typeof navigator.isScreenCaptured === "boolean") return navigator.isScreenCaptured;
+  } catch {
+    // ignore
+  }
+  return null;
+}
+
 /**
  * 阅读填词防外泄。
- * 离开页面 / 失焦视为可能正在录屏：回来后仍锁定，需确认已关闭录屏才能继续看题。
- * 网页无法 100% 识别 OBS 等外部录屏，只能用失焦锁定 + 人工确认。
+ * - 截屏：短暂遮盖，自动恢复，不进录屏锁定
+ * - 录屏：仅在浏览器提供 isScreenCaptured 信号时锁定；信号变为 false 后自动解锁
+ * - 不提供「我已关闭」按钮，避免用户口头确认欺骗
  */
 export function usePassageContentProtection(rootRef, { enabled = true, user = null } = {}) {
-  const [obscured, setObscured] = useState(false);
+  const [tempObscured, setTempObscured] = useState(false);
   const [recordingLock, setRecordingLock] = useState(false);
   const [captureHint, setCaptureHint] = useState("");
+  const [captureApiAvailable, setCaptureApiAvailable] = useState(false);
   const mark = useMemo(() => watermarkLabel(user), [user]);
   const recordingLockRef = useRef(false);
+  const tempTimerRef = useRef(0);
 
-  const applyCoverClass = useCallback((on) => {
-    const root = rootRef.current;
-    if (!root) return;
-    root.classList.toggle("rfill__body--obscured", on);
-  }, [rootRef]);
-
-  const lockForRecording = useCallback(
-    (hint) => {
-      recordingLockRef.current = true;
-      setRecordingLock(true);
-      setObscured(true);
-      applyCoverClass(true);
-      if (hint) setCaptureHint(hint);
+  const applyCoverClass = useCallback(
+    (on) => {
+      const root = rootRef.current;
+      if (!root) return;
+      root.classList.toggle("rfill__body--obscured", on);
     },
-    [applyCoverClass]
+    [rootRef]
   );
 
-  const acknowledgeRecordingOff = useCallback(() => {
-    if (document.visibilityState !== "visible" || !document.hasFocus()) return;
-    recordingLockRef.current = false;
-    setRecordingLock(false);
-    setObscured(false);
-    setCaptureHint("");
-    applyCoverClass(false);
+  const setRecording = useCallback((locked, hint) => {
+    recordingLockRef.current = locked;
+    setRecordingLock(locked);
+    if (locked) {
+      setTempObscured(true);
+      applyCoverClass(true);
+      if (hint) setCaptureHint(hint);
+    } else {
+      setTempObscured(false);
+      applyCoverClass(false);
+      setCaptureHint("");
+    }
   }, [applyCoverClass]);
 
   useEffect(() => {
     if (!enabled) {
       recordingLockRef.current = false;
       setRecordingLock(false);
-      setObscured(false);
+      setTempObscured(false);
       setCaptureHint("");
+      setCaptureApiAvailable(false);
       applyCoverClass(false);
       return undefined;
     }
@@ -100,29 +106,22 @@ export function usePassageContentProtection(rootRef, { enabled = true, user = nu
     if (!root) return undefined;
 
     let hintTimer = 0;
-    let chordCover = false;
-
     const showHint = (text) => {
       setCaptureHint(text);
       window.clearTimeout(hintTimer);
       hintTimer = window.setTimeout(() => {
         if (!recordingLockRef.current) setCaptureHint("");
-      }, 2800);
+      }, 2200);
     };
 
-    const coverTemp = (hint) => {
-      chordCover = true;
-      setObscured(true);
+    const coverTemp = (ms = 900) => {
+      window.clearTimeout(tempTimerRef.current);
+      setTempObscured(true);
       applyCoverClass(true);
-      if (hint) showHint(hint);
-    };
-
-    const uncoverTempIfSafe = () => {
-      if (recordingLockRef.current) return;
-      if (document.visibilityState !== "visible" || !document.hasFocus()) return;
-      chordCover = false;
-      setObscured(false);
-      applyCoverClass(false);
+      tempTimerRef.current = window.setTimeout(() => {
+        setTempObscured(false);
+        if (!recordingLockRef.current) applyCoverClass(false);
+      }, ms);
     };
 
     const blockClipboard = (event) => {
@@ -154,65 +153,93 @@ export function usePassageContentProtection(rootRef, { enabled = true, user = nu
     };
 
     const onKeyDown = (event) => {
-      if (isScreenshotChord(event)) {
-        // 截屏组合键：直接按录屏锁定处理，回来也要确认
-        lockForRecording("检测到截屏 / 录屏操作，请关闭后再继续看题");
-        if (event.key === "PrintScreen" || event.code === "PrintScreen") {
-          clearClipboardSoon();
-        }
+      if (isScreenshotOnlyChord(event)) {
+        coverTemp(event.key === "PrintScreen" || event.code === "PrintScreen" ? 700 : 1200);
+        if (event.key === "PrintScreen" || event.code === "PrintScreen") clearClipboardSoon();
+        showHint("已拦截截屏快捷键");
       }
 
       const mod = event.ctrlKey || event.metaKey;
       if (!mod) return;
-
       const key = event.key.toLowerCase();
       if (!["c", "x", "a", "p", "s"].includes(key)) return;
+      if (event.shiftKey && key === "s") return; // 截屏组合已处理，不拦成「另存」
 
       const active = document.activeElement;
       if (isBlankInput(active) && (key === "c" || key === "x" || key === "a")) return;
 
-      if (key === "p" || (key === "s" && !event.shiftKey) || touchesRoot(root, active) || selectionTouchesRoot(root)) {
+      if (key === "p" || key === "s" || touchesRoot(root, active) || selectionTouchesRoot(root)) {
         event.preventDefault();
         if (key === "c" || key === "x") showHint("题目内容禁止复制");
-        if (key === "p" || (key === "s" && !event.shiftKey)) showHint("本题禁止打印 / 另存");
+        if (key === "p" || key === "s") showHint("本题禁止打印 / 另存");
       }
     };
 
     const onKeyUp = (event) => {
-      if (event.key === "PrintScreen" || event.code === "PrintScreen") {
-        clearClipboardSoon();
+      if (event.key === "PrintScreen" || event.code === "PrintScreen") clearClipboardSoon();
+    };
+
+    // —— 录屏信号：仅使用浏览器提供的 isScreenCaptured（若存在）——
+    const applyCaptureSignal = (captured) => {
+      if (captured === true) {
+        setRecording(true, "检测到屏幕录制，题目已锁定。关闭录屏后将自动恢复。");
+        return;
       }
-      if (recordingLockRef.current) return;
-      if (chordCover && !event.shiftKey && !event.metaKey && !event.ctrlKey) {
-        uncoverTempIfSafe();
+      if (captured === false && recordingLockRef.current) {
+        setRecording(false);
+        showHint("录屏已关闭，可以继续看题");
       }
     };
 
+    const initial = readIsScreenCaptured();
+    const hasApi = initial !== null;
+    setCaptureApiAvailable(hasApi);
+    if (hasApi) applyCaptureSignal(initial);
+
+    const devices = navigator.mediaDevices;
+    const onCaptureChange = () => applyCaptureSignal(readIsScreenCaptured());
+    if (devices && "onisscreencapturedchange" in devices) {
+      devices.addEventListener?.("isscreencapturedchange", onCaptureChange);
+    } else if (devices) {
+      devices.onisscreencapturedchange = onCaptureChange;
+    }
+
+    // 轮询兜底：部分实现只更新属性不派发事件
+    const poll = hasApi
+      ? window.setInterval(() => applyCaptureSignal(readIsScreenCaptured()), 800)
+      : 0;
+
+    // 离开页面时仅暂时遮盖（防肩窥），回页自动恢复——不冒充「录屏检测」
     const onVisibility = () => {
       if (document.visibilityState === "hidden") {
-        lockForRecording("检测到离开本页，可能正在录屏");
+        if (!recordingLockRef.current) {
+          setTempObscured(true);
+          applyCoverClass(true);
+        }
         return;
       }
-      // 回到前台：保持锁定，需手动确认已关录屏
-      if (recordingLockRef.current) {
-        setObscured(true);
-        applyCoverClass(true);
-        setCaptureHint("请先关闭录屏，再继续看题");
+      if (!recordingLockRef.current) {
+        setTempObscured(false);
+        applyCoverClass(false);
+      } else {
+        applyCaptureSignal(readIsScreenCaptured());
       }
     };
 
     const onBlur = () => {
-      lockForRecording("检测到窗口失焦，可能正在录屏");
+      if (!recordingLockRef.current) {
+        setTempObscured(true);
+        applyCoverClass(true);
+      }
     };
 
     const onFocus = () => {
       if (recordingLockRef.current) {
-        setObscured(true);
-        applyCoverClass(true);
-        setCaptureHint("请先关闭录屏，再继续看题");
+        applyCaptureSignal(readIsScreenCaptured());
         return;
       }
-      uncoverTempIfSafe();
+      setTempObscured(false);
+      applyCoverClass(false);
     };
 
     root.addEventListener("copy", blockClipboard);
@@ -228,7 +255,15 @@ export function usePassageContentProtection(rootRef, { enabled = true, user = nu
 
     return () => {
       window.clearTimeout(hintTimer);
+      window.clearTimeout(tempTimerRef.current);
+      window.clearInterval(poll);
       root.classList.remove("rfill__body--obscured");
+      if (devices) {
+        devices.removeEventListener?.("isscreencapturedchange", onCaptureChange);
+        if (devices.onisscreencapturedchange === onCaptureChange) {
+          devices.onisscreencapturedchange = null;
+        }
+      }
       root.removeEventListener("copy", blockClipboard);
       root.removeEventListener("cut", blockClipboard);
       root.removeEventListener("contextmenu", onContextMenu);
@@ -240,13 +275,13 @@ export function usePassageContentProtection(rootRef, { enabled = true, user = nu
       window.removeEventListener("blur", onBlur);
       window.removeEventListener("focus", onFocus);
     };
-  }, [applyCoverClass, enabled, lockForRecording, rootRef]);
+  }, [applyCoverClass, enabled, rootRef, setRecording]);
 
   return {
-    obscured: obscured || recordingLock,
+    obscured: tempObscured || recordingLock,
     recordingLock,
     captureHint,
     watermark: mark,
-    acknowledgeRecordingOff,
+    captureApiAvailable,
   };
 }

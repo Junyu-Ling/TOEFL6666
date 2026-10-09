@@ -236,7 +236,7 @@ function ReadingFillBlank() {
     [blankIds]
   );
 
-  const { obscured, recordingLock, captureHint, watermark, acknowledgeRecordingOff } =
+  const { obscured, recordingLock, captureHint, watermark, captureApiAvailable } =
     usePassageContentProtection(protectRootRef, {
       enabled: isTabActive && viewMode === "practice",
       user,
@@ -521,7 +521,8 @@ function ReadingFillBlank() {
           className={`rfill__body rfill__body--protected${obscured || recordingLock ? " rfill__body--obscured" : ""}`}
         >
           <p className="rfill__protect-note">
-            题目受保护：禁止复制、截屏与录屏外传。离开本页或检测到截屏后需确认已关闭录屏才能继续。截图会带上你的账号水印。
+            题目受保护：禁止复制与外传。截屏只会短暂遮盖；录屏须由浏览器识别到后才会锁定，关闭录屏后自动恢复。截图带账号水印。
+            {captureApiAvailable ? "" : "（当前浏览器暂不支持系统级录屏状态信号，OBS 等外部录屏无法被网页可靠识别。）"}
           </p>
 
           {captureHint && !recordingLock ? (
@@ -611,11 +612,8 @@ function ReadingFillBlank() {
 
           {recordingLock ? (
             <div className="rfill__obscure rfill__obscure--lock" role="alertdialog" aria-modal="true" aria-label="录屏锁定">
-              <p>检测到可能正在录屏</p>
-              <span>请先关闭录屏软件 / 截图工具，再继续看题。</span>
-              <button type="button" className="rfill__unlock-btn" onClick={acknowledgeRecordingOff}>
-                我已关闭录屏，继续看题
-              </button>
+              <p>检测到屏幕录制中</p>
+              <span>题目已锁定。请彻底关闭录屏，系统识别到录屏结束后会自动恢复看题。</span>
             </div>
           ) : obscured ? (
             <div className="rfill__obscure" role="presentation">

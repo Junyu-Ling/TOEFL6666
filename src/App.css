@@ -6091,24 +6091,6 @@ body {
   color: var(--text-muted);
 }
 
-.rfill__unlock-btn {
-  margin-top: 0.35rem;
-  appearance: none;
-  font-family: inherit;
-  font-size: 0.875rem;
-  font-weight: 700;
-  padding: 0.65rem 1.1rem;
-  border-radius: 10px;
-  border: none;
-  background: var(--accent);
-  color: #fff;
-  cursor: pointer;
-}
-
-.rfill__unlock-btn:hover {
-  background: var(--accent-hover);
-}
-
 .rfill__passage {
   width: 100%;
   max-width: none;
