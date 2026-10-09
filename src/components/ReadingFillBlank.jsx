@@ -24,6 +24,7 @@ import {
   letterFromKeyboardEvent,
 } from "../utils/englishIme";
 import RateLimitCaptcha from "./RateLimitCaptcha";
+import BlindWatermarkLayer from "./BlindWatermarkLayer";
 
 function ReviewBookmarkIcon() {
   return (
@@ -279,6 +280,7 @@ function ReadingFillBlank() {
     hardLock,
     captureHint,
     watermark,
+    watermarkIp,
     suppressBlurCover,
   } = usePassageContentProtection(protectRootRef, {
     enabled: isTabActive && viewMode === "practice",
@@ -586,11 +588,10 @@ function ReadingFillBlank() {
             </p>
           ) : null}
 
-          <div className="rfill__watermark" aria-hidden>
-            {Array.from({ length: 40 }, (_, i) => (
-              <span key={i}>{watermark}</span>
-            ))}
-          </div>
+          <BlindWatermarkLayer
+            userLabel={watermark}
+            ip={watermarkIp || serverWatermark?.ip || ""}
+          />
 
           <div className="rfill__protect-content">
             <p className="rfill__instruction">Fill in the missing letters in the paragraph</p>

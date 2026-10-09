@@ -7,6 +7,7 @@ import {
   postMonitorWatch,
 } from "../services/access";
 import { useAccess } from "../context/AccessContext";
+import { analyzeWatermarkFromFile } from "../utils/blindWatermark";
 
 function userEmails(user) {
   return [...new Set([user.email, ...(user.emails || [])].map((item) => String(item || "").trim()).filter(Boolean))];
@@ -47,6 +48,9 @@ export default function AccessAdminSettings() {
   const [frameUrl, setFrameUrl] = useState("");
   const [frameMeta, setFrameMeta] = useState(null);
   const [watchBusy, setWatchBusy] = useState(false);
+  const [wmBusy, setWmBusy] = useState(false);
+  const [wmError, setWmError] = useState("");
+  const [wmResult, setWmResult] = useState(null);
 
   const loadUsers = useCallback(async () => {
     if (!isAdmin) return;
@@ -185,6 +189,23 @@ export default function AccessAdminSettings() {
     }
   }
 
+  async function handleWatermarkFile(event) {
+    const file = event.target.files?.[0];
+    event.target.value = "";
+    if (!file) return;
+    setWmBusy(true);
+    setWmError("");
+    setWmResult(null);
+    try {
+      const result = await analyzeWatermarkFromFile(file);
+      setWmResult(result);
+    } catch (err) {
+      setWmError(err.message || "无法分析截图");
+    } finally {
+      setWmBusy(false);
+    }
+  }
+
   if (!isAdmin) return null;
 
   return (
@@ -214,6 +235,37 @@ export default function AccessAdminSettings() {
           UPSTASH_REDIS_REST_TOKEN 后重新部署。
         </p>
       ) : null}
+
+      <section className="settings-card admin-wm">
+        <div className="admin-toolbar">
+          <div>
+            <h3 className="admin-monitor__title">盲水印检测</h3>
+            <p className="settings-hint settings-hint--compact">
+              上传填词页截图（尽量 PNG）。工具会放大不可见层，并尝试解码账号载荷。
+            </p>
+          </div>
+          <label className="settings-action-btn admin-wm__upload">
+            {wmBusy ? "分析中…" : "上传截图"}
+            <input type="file" accept="image/*" hidden disabled={wmBusy} onChange={handleWatermarkFile} />
+          </label>
+        </div>
+        {wmError ? <p className="settings-status settings-status--error">{wmError}</p> : null}
+        {wmResult ? (
+          <div className="admin-wm__result">
+            <p className="admin-wm__payload">
+              {wmResult.payload ? (
+                <>
+                  <strong>解码结果：</strong>
+                  {wmResult.payload}
+                </>
+              ) : (
+                "未能直接解码 LSB（可能被裁切或 JPEG 压缩），请看下方放大图中的淡纹。"
+              )}
+            </p>
+            <img className="admin-wm__preview" src={wmResult.previewUrl} alt="水印放大预览" />
+          </div>
+        ) : null}
+      </section>
 
       <section className="settings-card admin-monitor">
         <div className="admin-toolbar">

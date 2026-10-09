@@ -3495,6 +3495,36 @@ body {
   color: var(--text);
 }
 
+.admin-wm__upload {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+}
+
+.admin-wm__result {
+  padding: 0 1rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.admin-wm__payload {
+  margin: 0;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--text);
+  word-break: break-all;
+}
+
+.admin-wm__preview {
+  width: 100%;
+  max-height: 28rem;
+  object-fit: contain;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: #0b1220;
+}
+
 .admin-monitor__layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr);
@@ -6116,41 +6146,15 @@ body {
   font-weight: 600;
 }
 
-.rfill__watermark {
+.rfill__blind-wm {
   position: absolute;
-  inset: -18% -8%;
+  inset: 0;
   z-index: 1;
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 4.75rem 3.25rem;
-  align-content: start;
-  justify-items: center;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
   user-select: none;
-}
-
-.rfill__watermark span {
-  font-size: 0.8125rem;
-  font-weight: 500;
-  color: #94a3b8;
-  white-space: nowrap;
-  text-align: center;
-  transform: rotate(-28deg);
-  opacity: 0.55;
-}
-
-/* 隔行错位，形成斜向铺满感 */
-.rfill__watermark span:nth-child(10n + 6),
-.rfill__watermark span:nth-child(10n + 7),
-.rfill__watermark span:nth-child(10n + 8),
-.rfill__watermark span:nth-child(10n + 9),
-.rfill__watermark span:nth-child(10n + 10) {
-  transform: translateX(2.75rem) rotate(-28deg);
-}
-
-[data-theme="dark"] .rfill__watermark span {
-  color: #64748b;
-  opacity: 0.5;
+  opacity: 1;
 }
 
 .rfill__captcha {
