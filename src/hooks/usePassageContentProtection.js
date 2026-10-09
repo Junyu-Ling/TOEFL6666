@@ -90,15 +90,7 @@ export function usePassageContentProtection(rootRef, { enabled = true, user = nu
 
     const onKeyDown = (event) => {
       if (event.key === "PrintScreen") {
-        event.preventDefault();
         clearClipboardSoon();
-        setObscured(true);
-        showHint("检测到截屏快捷键，已暂时遮盖题目");
-        window.setTimeout(() => {
-          if (document.visibilityState === "visible" && document.hasFocus()) {
-            setObscured(false);
-          }
-        }, 1600);
         return;
       }
 
