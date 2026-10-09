@@ -24,7 +24,6 @@ import {
   letterFromKeyboardEvent,
 } from "../utils/englishIme";
 import BlindWatermark from "./BlindWatermark";
-import SecurePassageText from "./SecurePassageText";
 import RateLimitCaptcha from "./RateLimitCaptcha";
 
 function ReviewBookmarkIcon() {
@@ -593,10 +592,14 @@ function ReadingFillBlank() {
           <div className="rfill__protect-content">
             <p className="rfill__instruction">Fill in the missing letters in the paragraph</p>
 
-            <div ref={passageRef} className="rfill__passage">
+            <p ref={passageRef} className="rfill__passage">
               {article.segments.map((segment, index) => {
                 if (segment.type === "text") {
-                  return <SecurePassageText key={`text-${index}`} text={segment.value} />;
+                  return (
+                    <span key={`text-${index}`} className="rfill__text">
+                      {segment.value}
+                    </span>
+                  );
                 }
 
                 const letters =
@@ -618,7 +621,7 @@ function ReadingFillBlank() {
                   />
                 );
               })}
-            </div>
+            </p>
 
             <div className="rfill__footer">
               <button type="button" className="rfill__check-btn" onClick={handleCheck}>

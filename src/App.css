@@ -6032,25 +6032,6 @@ body {
   user-select: none;
 }
 
-.rfill__text-canvas {
-  display: inline-block;
-  vertical-align: baseline;
-  max-width: 100%;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  pointer-events: none;
-  user-select: none;
-  font-size: inherit;
-  line-height: inherit;
-  font-family: Georgia, "Times New Roman", serif;
-  color: #334155;
-}
-
-[data-theme="dark"] .rfill__text-canvas {
-  color: #e2e8f0;
-}
-
 .rfill__captcha {
   margin: 1rem auto 0;
   max-width: 22rem;
