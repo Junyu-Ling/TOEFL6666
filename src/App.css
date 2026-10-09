@@ -5963,7 +5963,7 @@ body {
 .rfill__body {
   flex: 1;
   overflow-y: auto;
-  padding: 1.5rem clamp(1.25rem, 6vw, 4.5rem) 2.5rem;
+  padding: 1.35rem clamp(1rem, 3vw, 2rem) 2rem;
   background: #fff;
 }
 
@@ -5972,8 +5972,8 @@ body {
 }
 
 .rfill__instruction {
-  margin: 0 auto 1.5rem;
-  max-width: 46rem;
+  margin: 0 auto 1.35rem;
+  max-width: 52rem;
   text-align: center;
   font-size: 1.2rem;
   font-weight: 600;
@@ -6176,7 +6176,7 @@ body {
 
 .rfill__passage {
   width: 100%;
-  max-width: 46rem;
+  max-width: 52rem;
   margin: 0 auto;
   font-size: 1.125rem;
   line-height: 2.2;
