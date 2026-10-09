@@ -6000,14 +6000,6 @@ body {
   -webkit-user-select: text;
 }
 
-.rfill__protect-note {
-  margin: 0 0 0.75rem;
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: var(--text-muted);
-  line-height: 1.45;
-}
-
 .rfill__protect-toast {
   position: sticky;
   top: 0.5rem;
@@ -6022,14 +6014,25 @@ body {
   font-weight: 600;
 }
 
-.rfill__blind-wm {
+.rfill__watermark {
   position: absolute;
-  inset: 0;
+  inset: -20%;
   z-index: 1;
-  width: 100%;
-  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3.5rem 2rem;
+  transform: rotate(-24deg);
   pointer-events: none;
   user-select: none;
+  opacity: 0.14;
+}
+
+.rfill__watermark span {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text);
+  white-space: nowrap;
+  text-align: center;
 }
 
 .rfill__captcha {

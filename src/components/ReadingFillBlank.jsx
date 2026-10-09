@@ -23,7 +23,6 @@ import {
   latinLetterFromText,
   letterFromKeyboardEvent,
 } from "../utils/englishIme";
-import BlindWatermark from "./BlindWatermark";
 import RateLimitCaptcha from "./RateLimitCaptcha";
 
 function ReviewBookmarkIcon() {
@@ -273,20 +272,12 @@ function ReadingFillBlank() {
     [blankIds]
   );
 
-  const {
-    obscured,
-    recordingLock,
-    devtoolsLock,
-    hardLock,
-    captureHint,
-    watermark,
-    watermarkIp,
-    captureApiAvailable,
-  } = usePassageContentProtection(protectRootRef, {
-    enabled: isTabActive && viewMode === "practice",
-    user,
-    serverWatermark,
-  });
+  const { obscured, recordingLock, devtoolsLock, hardLock, captureHint, watermark } =
+    usePassageContentProtection(protectRootRef, {
+      enabled: isTabActive && viewMode === "practice",
+      user,
+      serverWatermark,
+    });
 
   useEffect(() => {
     const becameActive = isTabActive && !wasTabActiveRef.current;
@@ -576,18 +567,17 @@ function ReadingFillBlank() {
           ref={protectRootRef}
           className={`rfill__body rfill__body--protected${obscured || hardLock ? " rfill__body--obscured" : ""}`}
         >
-          <p className="rfill__protect-note">
-            题目受保护：传输加密、禁止复制；截屏短暂遮盖；录屏/开发者工具由系统识别关闭后自动恢复。全屏盲水印可追溯泄露账号。
-            {captureApiAvailable ? "" : "（当前浏览器暂不支持系统级录屏信号。）"}
-          </p>
-
           {captureHint && !hardLock ? (
             <p className="rfill__protect-toast" role="status">
               {captureHint}
             </p>
           ) : null}
 
-          <BlindWatermark userLabel={watermark} ip={watermarkIp || serverWatermark?.ip || ""} />
+          <div className="rfill__watermark" aria-hidden>
+            {Array.from({ length: 18 }, (_, i) => (
+              <span key={i}>{watermark}</span>
+            ))}
+          </div>
 
           <div className="rfill__protect-content">
             <p className="rfill__instruction">Fill in the missing letters in the paragraph</p>
