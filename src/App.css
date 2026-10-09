@@ -6064,23 +6064,49 @@ body {
   align-items: center;
   justify-content: center;
   gap: 0.35rem;
-  background: color-mix(in srgb, var(--bg) 72%, transparent);
+  padding: 1.25rem;
+  background: color-mix(in srgb, var(--bg) 78%, transparent);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
   text-align: center;
   pointer-events: none;
 }
 
+.rfill__obscure--lock {
+  pointer-events: auto;
+  gap: 0.65rem;
+}
+
 .rfill__obscure p {
   margin: 0;
-  font-size: 1rem;
+  font-size: 1.05rem;
   font-weight: 700;
   color: var(--text);
 }
 
 .rfill__obscure span {
+  max-width: 22rem;
   font-size: 0.8125rem;
+  line-height: 1.5;
   color: var(--text-muted);
+}
+
+.rfill__unlock-btn {
+  margin-top: 0.35rem;
+  appearance: none;
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 700;
+  padding: 0.65rem 1.1rem;
+  border-radius: 10px;
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+}
+
+.rfill__unlock-btn:hover {
+  background: var(--accent-hover);
 }
 
 .rfill__passage {

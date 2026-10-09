@@ -236,10 +236,11 @@ function ReadingFillBlank() {
     [blankIds]
   );
 
-  const { obscured, captureHint, watermark } = usePassageContentProtection(protectRootRef, {
-    enabled: isTabActive && viewMode === "practice",
-    user,
-  });
+  const { obscured, recordingLock, captureHint, watermark, acknowledgeRecordingOff } =
+    usePassageContentProtection(protectRootRef, {
+      enabled: isTabActive && viewMode === "practice",
+      user,
+    });
 
   useEffect(() => {
     const becameActive = isTabActive && !wasTabActiveRef.current;
@@ -517,13 +518,17 @@ function ReadingFillBlank() {
       ) : (
         <div
           ref={protectRootRef}
-          className={`rfill__body rfill__body--protected${obscured ? " rfill__body--obscured" : ""}`}
+          className={`rfill__body rfill__body--protected${obscured || recordingLock ? " rfill__body--obscured" : ""}`}
         >
           <p className="rfill__protect-note">
-            题目受保护：禁止复制、截屏与录屏外传。截图会带上你的账号水印。
+            题目受保护：禁止复制、截屏与录屏外传。离开本页或检测到截屏后需确认已关闭录屏才能继续。截图会带上你的账号水印。
           </p>
 
-          {captureHint ? <p className="rfill__protect-toast" role="status">{captureHint}</p> : null}
+          {captureHint && !recordingLock ? (
+            <p className="rfill__protect-toast" role="status">
+              {captureHint}
+            </p>
+          ) : null}
 
           <div className="rfill__watermark" aria-hidden>
             {Array.from({ length: 18 }, (_, i) => (
@@ -604,10 +609,18 @@ function ReadingFillBlank() {
             ) : null}
           </div>
 
-          {obscured ? (
+          {recordingLock ? (
+            <div className="rfill__obscure rfill__obscure--lock" role="alertdialog" aria-modal="true" aria-label="录屏锁定">
+              <p>检测到可能正在录屏</p>
+              <span>请先关闭录屏软件 / 截图工具，再继续看题。</span>
+              <button type="button" className="rfill__unlock-btn" onClick={acknowledgeRecordingOff}>
+                我已关闭录屏，继续看题
+              </button>
+            </div>
+          ) : obscured ? (
             <div className="rfill__obscure" role="presentation">
               <p>题目已暂时遮盖</p>
-              <span>切回本页后可继续作答</span>
+              <span>请稍候…</span>
             </div>
           ) : null}
         </div>
