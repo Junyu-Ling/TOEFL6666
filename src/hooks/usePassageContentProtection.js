@@ -29,12 +29,25 @@ function watermarkLabel(user, serverMark) {
   return "未登录访客";
 }
 
-/** 仅截屏，不视为录屏 */
-function isScreenshotOnlyChord(event) {
+/**
+ * 截屏组合键：在按下 S 之前（Win/Ctrl+Shift）就识别，抢在系统截图前。
+ * 不视为持续录屏。
+ */
+function isScreenshotChord(event) {
   const key = event.key;
   const code = event.code;
   if (key === "PrintScreen" || code === "PrintScreen") return true;
-  if (event.shiftKey && (event.metaKey || event.ctrlKey) && (key.toLowerCase() === "s" || code === "KeyS")) {
+  if (event.shiftKey && (event.metaKey || event.ctrlKey)) return true;
+  if ((key === "Shift" || code.startsWith("Shift")) && (event.metaKey || event.ctrlKey)) return true;
+  if (
+    (key === "Meta" ||
+      key === "Control" ||
+      code === "MetaLeft" ||
+      code === "MetaRight" ||
+      code === "ControlLeft" ||
+      code === "ControlRight") &&
+    event.shiftKey
+  ) {
     return true;
   }
   return false;
@@ -132,6 +145,10 @@ export function usePassageContentProtection(
     if (!root) return undefined;
 
     let hintTimer = 0;
+    let chordCover = false;
+
+    const hardLocked = () => recordingLockRef.current || devtoolsLockRef.current;
+
     const showHint = (text) => {
       setCaptureHint(text);
       window.clearTimeout(hintTimer);
@@ -140,17 +157,32 @@ export function usePassageContentProtection(
       }, 2200);
     };
 
-    const coverTemp = (ms = 900) => {
-      window.clearTimeout(tempTimerRef.current);
+    /** 同步遮盖：先改 class 再 setState，避免比系统截屏慢一帧 */
+    const coverNow = (hint, holdMs = 0) => {
+      chordCover = true;
+      root.classList.add("rfill__body--obscured");
       setTempObscured(true);
-      applyCoverClass(true);
-      tempTimerRef.current = window.setTimeout(() => {
-        setTempObscured(false);
-        if (!recordingLockRef.current && !devtoolsLockRef.current) applyCoverClass(false);
-      }, ms);
+      if (hint) showHint(hint);
+      window.clearTimeout(tempTimerRef.current);
+      if (holdMs > 0) {
+        tempTimerRef.current = window.setTimeout(() => {
+          if (hardLocked()) return;
+          if (document.visibilityState !== "visible" || !document.hasFocus()) return;
+          chordCover = false;
+          root.classList.remove("rfill__body--obscured");
+          setTempObscured(false);
+        }, holdMs);
+      }
     };
 
-    const hardLocked = () => recordingLockRef.current || devtoolsLockRef.current;
+    const uncoverIfSafe = () => {
+      if (hardLocked()) return;
+      if (document.visibilityState !== "visible" || !document.hasFocus()) return;
+      chordCover = false;
+      window.clearTimeout(tempTimerRef.current);
+      root.classList.remove("rfill__body--obscured");
+      setTempObscured(false);
+    };
 
     const blockClipboard = (event) => {
       if (isBlankInput(event.target)) return;
@@ -181,39 +213,54 @@ export function usePassageContentProtection(
     };
 
     const onKeyDown = (event) => {
-      // 常见打开 DevTools 快捷键：拦不下系统级，但可遮盖并提示
-      if (
+      // DevTools：Ctrl+Shift+I/J/C 与截屏和弦重叠时，优先截屏抢先遮盖，再记锁定
+      const isDevtoolsChord =
         event.key === "F12" ||
-        ((event.ctrlKey || event.metaKey) && event.shiftKey && ["i", "j", "c"].includes(event.key.toLowerCase())) ||
-        ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "u")
-      ) {
-        syncHardLock(recordingLockRef.current, true, "检测到开发者工具相关操作，题目已锁定");
+        ((event.ctrlKey || event.metaKey) &&
+          event.shiftKey &&
+          ["i", "j", "c"].includes(event.key.toLowerCase())) ||
+        ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "u");
+
+      if (isScreenshotChord(event)) {
+        coverNow(
+          "已抢先遮盖题目",
+          event.key === "PrintScreen" || event.code === "PrintScreen" ? 700 : 0
+        );
+        if (event.key === "PrintScreen" || event.code === "PrintScreen") clearClipboardSoon();
       }
 
-      if (isScreenshotOnlyChord(event)) {
-        coverTemp(event.key === "PrintScreen" || event.code === "PrintScreen" ? 700 : 1200);
-        if (event.key === "PrintScreen" || event.code === "PrintScreen") clearClipboardSoon();
-        showHint("已拦截截屏快捷键");
+      if (isDevtoolsChord) {
+        syncHardLock(recordingLockRef.current, true, "检测到开发者工具相关操作，题目已锁定");
       }
 
       const mod = event.ctrlKey || event.metaKey;
       if (!mod) return;
       const key = event.key.toLowerCase();
       if (!["c", "x", "a", "p", "s"].includes(key)) return;
+      // Win/Ctrl+Shift+S 交给截屏抢先遮盖，不拦成「另存」
       if (event.shiftKey && key === "s") return;
 
       const active = document.activeElement;
       if (isBlankInput(active) && (key === "c" || key === "x" || key === "a")) return;
 
-      if (key === "p" || key === "s" || touchesRoot(root, active) || selectionTouchesRoot(root)) {
+      if (
+        key === "p" ||
+        (key === "s" && !event.shiftKey) ||
+        touchesRoot(root, active) ||
+        selectionTouchesRoot(root)
+      ) {
         event.preventDefault();
         if (key === "c" || key === "x") showHint("题目内容禁止复制");
-        if (key === "p" || key === "s") showHint("本题禁止打印 / 另存");
+        if (key === "p" || (key === "s" && !event.shiftKey)) showHint("本题禁止打印 / 另存");
       }
     };
 
     const onKeyUp = (event) => {
       if (event.key === "PrintScreen" || event.code === "PrintScreen") clearClipboardSoon();
+      // 组合键松开且仍在前台时揭开；截图工具抢焦点则继续遮着
+      if (chordCover && !event.shiftKey && !event.metaKey && !event.ctrlKey) {
+        uncoverIfSafe();
+      }
     };
 
     const applyCaptureSignal = (captured) => {
@@ -256,25 +303,18 @@ export function usePassageContentProtection(
 
     const onVisibility = () => {
       if (document.visibilityState === "hidden") {
-        if (!hardLocked()) {
-          setTempObscured(true);
-          applyCoverClass(true);
-        }
+        if (!hardLocked()) coverNow();
         return;
       }
-      if (!hardLocked()) {
-        setTempObscured(false);
-        applyCoverClass(false);
-      } else {
+      if (hardLocked()) {
         applyCaptureSignal(readIsScreenCaptured());
+        return;
       }
+      uncoverIfSafe();
     };
 
     const onBlur = () => {
-      if (!hardLocked()) {
-        setTempObscured(true);
-        applyCoverClass(true);
-      }
+      if (!hardLocked()) coverNow();
     };
 
     const onFocus = () => {
@@ -282,8 +322,7 @@ export function usePassageContentProtection(
         applyCaptureSignal(readIsScreenCaptured());
         return;
       }
-      setTempObscured(false);
-      applyCoverClass(false);
+      uncoverIfSafe();
     };
 
     root.addEventListener("copy", blockClipboard);
