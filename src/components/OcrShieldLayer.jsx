@@ -1,4 +1,4 @@
-import { memo, useEffect, useRef } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import { paintOcrShield } from "../utils/ocrShield";
 
 /**
@@ -7,11 +7,12 @@ import { paintOcrShield } from "../utils/ocrShield";
  */
 function OcrShieldLayer({ userLabel = "", className = "" }) {
   const canvasRef = useRef(null);
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return undefined;
-    const ctx = canvas.getContext("2d", { willReadFrequently: true });
+    const ctx = canvas.getContext("2d", { alpha: true, willReadFrequently: true });
     if (!ctx) return undefined;
 
     let alive = true;
@@ -24,17 +25,21 @@ function OcrShieldLayer({ userLabel = "", className = "" }) {
     const paint = () => {
       if (!alive) return;
       const parent = canvas.parentElement;
-      const w = Math.max(parent?.clientWidth || 0, 320);
-      const h = Math.max(parent?.clientHeight || 0, 240);
+      const w = Math.max(parent?.clientWidth || 0, 1);
+      const h = Math.max(parent?.clientHeight || 0, 1);
       if (canvas.width !== w || canvas.height !== h) {
         canvas.width = w;
         canvas.height = h;
-        canvas.style.width = `${w}px`;
-        canvas.style.height = `${h}px`;
       }
+      canvas.style.width = "100%";
+      canvas.style.height = "100%";
+      // 先清空，避免默认 300×150 黑底被拉伸
+      ctx.clearRect(0, 0, w, h);
       paintOcrShield(ctx, w, h, { label: userLabel, dark: isDark() });
+      if (alive) setReady(true);
     };
 
+    setReady(false);
     paint();
     const onResize = () => {
       cancelAnimationFrame(raf);
@@ -58,7 +63,9 @@ function OcrShieldLayer({ userLabel = "", className = "" }) {
   return (
     <canvas
       ref={canvasRef}
-      className={`rfill__ocr-shield ${className}`.trim()}
+      className={`rfill__ocr-shield${ready ? " rfill__ocr-shield--ready" : ""} ${className}`.trim()}
+      width={1}
+      height={1}
       aria-hidden
     />
   );

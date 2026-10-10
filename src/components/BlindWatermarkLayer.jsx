@@ -24,15 +24,16 @@ function BlindWatermarkLayer({ userLabel = "", ip = "", className = "" }) {
     const paint = () => {
       if (!alive) return;
       const parent = canvas.parentElement;
-      const w = Math.max(parent?.clientWidth || 0, 320);
-      const h = Math.max(parent?.clientHeight || 0, 240);
-      const dpr = 1; // 固定 1x，保证截图像素与载荷网格一致
+      const w = Math.max(parent?.clientWidth || 0, 1);
+      const h = Math.max(parent?.clientHeight || 0, 1);
+      // 固定 1x，保证截图像素与载荷网格一致；先对齐尺寸再绘，避免默认 300×150 黑底
       if (canvas.width !== w || canvas.height !== h) {
         canvas.width = w;
         canvas.height = h;
-        canvas.style.width = `${w}px`;
-        canvas.style.height = `${h}px`;
       }
+      canvas.style.width = "100%";
+      canvas.style.height = "100%";
+      ctx.clearRect(0, 0, w, h);
 
       const label = [userLabel, ip].filter(Boolean).join(" · ") || "TOEFL666";
       paintFaintTextWatermark(ctx, w, h, label);
@@ -44,7 +45,6 @@ function BlindWatermarkLayer({ userLabel = "", ip = "", className = "" }) {
       });
       embedBlindWatermark(imageData, payload);
       ctx.putImageData(imageData, 0, 0);
-      void dpr;
     };
 
     paint();
@@ -67,6 +67,8 @@ function BlindWatermarkLayer({ userLabel = "", ip = "", className = "" }) {
     <canvas
       ref={canvasRef}
       className={`rfill__blind-wm ${className}`.trim()}
+      width={1}
+      height={1}
       aria-hidden
     />
   );

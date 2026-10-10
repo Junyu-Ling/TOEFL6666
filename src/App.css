@@ -6067,6 +6067,7 @@ body {
   pointer-events: none;
   user-select: none;
   opacity: 1;
+  background: transparent;
 }
 
 /* 叠在正文上：截图 OCR 被噪点/斜纹/诱饵字干扰；不拦截点击 */
@@ -6078,17 +6079,22 @@ body {
   height: 100%;
   pointer-events: none;
   user-select: none;
-  mix-blend-mode: multiply;
-  opacity: 0.85;
+  /* 不用 multiply：透明黑像素叠乘会在左上角显出黑块 */
+  background: transparent;
+  opacity: 0;
+  transition: opacity 0.15s ease;
 }
 
-[data-theme="dark"] .rfill__ocr-shield {
-  mix-blend-mode: soft-light;
-  opacity: 0.75;
+.rfill__ocr-shield--ready {
+  opacity: 0.55;
+}
+
+[data-theme="dark"] .rfill__ocr-shield--ready {
+  opacity: 0.45;
 }
 
 .rfill__body--obscured .rfill__ocr-shield {
-  opacity: 0;
+  opacity: 0 !important;
 }
 
 .rfill__captcha {
