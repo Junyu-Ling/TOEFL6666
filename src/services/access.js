@@ -61,6 +61,10 @@ export async function fetchReadingFillArticles(userId, extra = {}) {
   return decryptReadingFillPacket(packet);
 }
 
+export async function fetchReadingFillDrill() {
+  return accessRequest("/api/reading-fill/drill");
+}
+
 export async function fetchReadingVocabCollections() {
   return accessRequest("/api/reading-vocab/collections");
 }

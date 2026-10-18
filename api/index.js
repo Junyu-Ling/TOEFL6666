@@ -14,6 +14,7 @@ import { ensureAccessStoreMigratedFromLegacyKv } from "../server/access-store.js
 import { handleAuthIdentity, handleAuthLink, handleAuthLogout, handleAuthMe, handleGithubCallback, handleGithubStart } from "../server/auth-github.js";
 import { handleGoogleCallback, handleGoogleCalendarStart, handleGoogleStart } from "../server/auth-google.js";
 import { handleReadingFillArticles } from "../server/reading-fill-articles.js";
+import { handleReadingFillDrill } from "../server/reading-fill-drill.js";
 import { handleReadingVocabCollections } from "../server/reading-vocab-collections.js";
 import { handleAccountProgressPull, handleAccountProgressPush } from "../server/account-progress.js";
 import { handleCalendarFeed, handleCalendarPublish } from "../server/calendar-feed.js";
@@ -343,6 +344,16 @@ export default async function handler(req, res) {
       }
       res.setHeader("Cache-Control", "private, no-store");
       sendJson(res, 200, await handleReadingFillArticles(req, parseBody(req)));
+      return;
+    }
+
+    if (pathname === "/api/reading-fill/drill") {
+      if (method !== "GET") {
+        sendJson(res, 405, { error: "Method Not Allowed" });
+        return;
+      }
+      res.setHeader("Cache-Control", "private, no-store");
+      sendJson(res, 200, await handleReadingFillDrill(req));
       return;
     }
 

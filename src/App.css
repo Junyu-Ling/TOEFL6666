@@ -5820,7 +5820,7 @@ body {
   line-height: 1.5;
 }
 
-/* 芒聰聙芒聰聙 Reading Fill Blank 脗路 茅聵聟猫炉禄氓隆芦猫炉聧 芒聰聙芒聰聙 */
+/* ─── Reading Fill Blank ─── */
 .rfill {
   flex: 1;
   display: flex;
@@ -5828,6 +5828,90 @@ body {
   width: 100%;
   min-height: 0;
   background: #fff;
+}
+
+.rfill__modes {
+  display: flex;
+  gap: 0.35rem;
+  padding: 0.55rem 0.85rem 0;
+  background: #1f6666;
+  flex-shrink: 0;
+}
+
+.rfill__mode-btn {
+  appearance: none;
+  border: 0;
+  border-radius: 8px 8px 0 0;
+  padding: 0.45rem 0.9rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.78);
+  background: transparent;
+  cursor: pointer;
+}
+
+.rfill__mode-btn:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.rfill__mode-btn.is-active {
+  color: #1f6666;
+  background: #fff;
+}
+
+.rfill__subbar--drill {
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.rfill__drill-order {
+  display: inline-flex;
+  gap: 0.35rem;
+  margin-left: auto;
+}
+
+.rfill__drill-order-btn {
+  appearance: none;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.25rem 0.7rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: var(--surface);
+  cursor: pointer;
+}
+
+.rfill__drill-order-btn.is-active {
+  color: #fff;
+  border-color: #1f6666;
+  background: #1f6666;
+}
+
+.rfill__drill-hint {
+  margin: 0 0 1rem;
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.rfill__passage--drill {
+  font-size: 1.2rem;
+}
+
+.rfill__drill-gloss {
+  margin: 0.35rem 0 0;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.rfill__drill-next-inline {
+  color: #1f6666;
+  background: transparent;
+  border: 1px solid color-mix(in srgb, #1f6666 35%, var(--border));
 }
 
 [data-theme="dark"] .rfill {
@@ -6313,6 +6397,9 @@ body {
 .rfill__footer {
   display: flex;
   justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
   margin-top: 1.75rem;
 }
 

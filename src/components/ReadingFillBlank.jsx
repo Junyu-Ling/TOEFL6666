@@ -25,6 +25,9 @@ import {
 } from "../utils/englishIme";
 import RateLimitCaptcha from "./RateLimitCaptcha";
 import BlindWatermarkLayer from "./BlindWatermarkLayer";
+import ReadingFillDrill from "./ReadingFillDrill";
+
+const SECTION_KEY = "toefl666_rfill_section";
 
 function ReviewBookmarkIcon() {
   return (
@@ -169,10 +172,42 @@ const BlankInput = forwardRef(function BlankInput(
   );
 });
 
+function ModeTabs({ section, onChange }) {
+  return (
+    <div className="rfill__modes" role="tablist" aria-label="阅读填词模式">
+      <button
+        type="button"
+        role="tab"
+        aria-selected={section === "passage"}
+        className={`rfill__mode-btn${section === "passage" ? " is-active" : ""}`}
+        onClick={() => onChange("passage")}
+      >
+        篇章填词
+      </button>
+      <button
+        type="button"
+        role="tab"
+        aria-selected={section === "drill"}
+        className={`rfill__mode-btn${section === "drill" ? " is-active" : ""}`}
+        onClick={() => onChange("drill")}
+      >
+        专项强化
+      </button>
+    </div>
+  );
+}
+
 function ReadingFillBlank() {
   const { user, loading: authLoading } = useAuth();
   const isTabActive = useIsActiveTab("reading-fill");
   useEnglishImeLock(isTabActive);
+  const [section, setSection] = useState(() => {
+    try {
+      return localStorage.getItem(SECTION_KEY) === "drill" ? "drill" : "passage";
+    } catch {
+      return "passage";
+    }
+  });
   const [articles, setArticles] = useState([]);
   const [articlesLoading, setArticlesLoading] = useState(true);
   const [articlesError, setArticlesError] = useState("");
@@ -182,6 +217,15 @@ function ReadingFillBlank() {
   const [progress, setProgress] = useState(() => loadReadingFillBlankProgress());
   const [viewMode, setViewMode] = useState("practice");
   const [selectedReviewIndex, setSelectedReviewIndex] = useState(0);
+
+  const handleSectionChange = useCallback((next) => {
+    setSection(next);
+    try {
+      localStorage.setItem(SECTION_KEY, next);
+    } catch {
+      // ignore
+    }
+  }, []);
   const articleIndex = Math.min(progress.articleIndex, Math.max(articles.length - 1, 0));
   const article = articles[articleIndex];
 
@@ -232,6 +276,7 @@ function ReadingFillBlank() {
   );
 
   useEffect(() => {
+    if (section !== "passage") return undefined;
     if (authLoading) return undefined;
     if (!user?.id) {
       setArticlesLoading(false);
@@ -246,7 +291,7 @@ function ReadingFillBlank() {
     return () => {
       cancelled = true;
     };
-  }, [authLoading, loadArticles, user?.id]);
+  }, [authLoading, loadArticles, section, user?.id]);
 
   const handleCaptchaPass = useCallback(async () => {
     if (!captchaPow || captchaBusy) return;
@@ -283,7 +328,7 @@ function ReadingFillBlank() {
     watermarkIp,
     suppressBlurCover,
   } = usePassageContentProtection(protectRootRef, {
-    enabled: isTabActive && viewMode === "practice",
+    enabled: section === "passage" && isTabActive && viewMode === "practice",
     user,
     serverWatermark,
   });
@@ -406,9 +451,19 @@ function ReadingFillBlank() {
     setViewMode("practice");
   };
 
+  if (section === "drill") {
+    return (
+      <div className="rfill" lang="en">
+        <ModeTabs section={section} onChange={handleSectionChange} />
+        <ReadingFillDrill />
+      </div>
+    );
+  }
+
   if (authLoading || articlesLoading) {
     return (
       <div className="rfill" lang="zh-CN">
+        <ModeTabs section={section} onChange={handleSectionChange} />
         <p className="rfill__empty">正在加载题目…</p>
       </div>
     );
@@ -417,6 +472,7 @@ function ReadingFillBlank() {
   if (articlesError) {
     return (
       <div className="rfill" lang="zh-CN">
+        <ModeTabs section={section} onChange={handleSectionChange} />
         <p className="rfill__empty">{articlesError}</p>
         {captchaPow ? (
           <RateLimitCaptcha
@@ -435,6 +491,7 @@ function ReadingFillBlank() {
   if (!article) {
     return (
       <div className="rfill" lang="en">
+        <ModeTabs section={section} onChange={handleSectionChange} />
         <p className="rfill__empty">暂无题目</p>
       </div>
     );
@@ -447,6 +504,7 @@ function ReadingFillBlank() {
 
   return (
     <div className="rfill" lang="en">
+      <ModeTabs section={section} onChange={handleSectionChange} />
       <header className="rfill__header">
         <div className="rfill__header-left">
           <h1 className="rfill__title">

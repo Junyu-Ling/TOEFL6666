@@ -3,6 +3,7 @@ import { handleAccessGrant, handleAccessMe, handleAccessUsers } from "./server/a
 import { handleAuthIdentity, handleAuthLink, handleAuthLogout, handleAuthMe, handleGithubCallback, handleGithubStart } from "./server/auth-github.js";
 import { handleGoogleCallback, handleGoogleCalendarStart, handleGoogleStart } from "./server/auth-google.js";
 import { handleReadingFillArticles } from "./server/reading-fill-articles.js";
+import { handleReadingFillDrill } from "./server/reading-fill-drill.js";
 import { handleReadingVocabCollections } from "./server/reading-vocab-collections.js";
 import { handleAccountProgressPull, handleAccountProgressPush } from "./server/account-progress.js";
 import { handleCalendarFeed, handleCalendarPublish } from "./server/calendar-feed.js";
@@ -72,6 +73,7 @@ export function accessProxyPlugin() {
         const isUsers = matchApiPath(req.url, "/api/access/users");
         const isGrant = matchApiPath(req.url, "/api/access/grant");
         const isReadingFillArticles = matchApiPath(req.url, "/api/reading-fill/articles");
+        const isReadingFillDrill = matchApiPath(req.url, "/api/reading-fill/drill");
         const isReadingVocabCollections = matchApiPath(req.url, "/api/reading-vocab/collections");
         const isGhStart = matchApiPath(req.url, "/api/auth/github/start");
         const isGhCallback = matchApiPath(req.url, "/api/auth/github/callback");
@@ -89,7 +91,7 @@ export function accessProxyPlugin() {
         const isGoogleCalSync = matchApiPath(req.url, "/api/calendar/google-sync");
         const isGoogleCalPull = matchApiPath(req.url, "/api/calendar/google-pull");
         const isGoogleCalDisconnect = matchApiPath(req.url, "/api/calendar/google-disconnect");
-        if (!isAccessMe && !isUsers && !isGrant && !isReadingFillArticles && !isReadingVocabCollections && !isGhStart && !isGhCallback && !isGoogleStart && !isGoogleCalendarStart && !isGoogleCallback && !isAuthMe && !isAuthIdentity && !isAuthLink && !isAccountSync && !isLogout && !isCalendarPublish && !isCalendarFeed && !isGoogleCalStatus && !isGoogleCalSync && !isGoogleCalPull && !isGoogleCalDisconnect) {
+        if (!isAccessMe && !isUsers && !isGrant && !isReadingFillArticles && !isReadingFillDrill && !isReadingVocabCollections && !isGhStart && !isGhCallback && !isGoogleStart && !isGoogleCalendarStart && !isGoogleCallback && !isAuthMe && !isAuthIdentity && !isAuthLink && !isAccountSync && !isLogout && !isCalendarPublish && !isCalendarFeed && !isGoogleCalStatus && !isGoogleCalSync && !isGoogleCalPull && !isGoogleCalDisconnect) {
           return next();
         }
 
@@ -195,6 +197,11 @@ export function accessProxyPlugin() {
             res.setHeader("Cache-Control", "private, no-store");
             const body = parseBody(await readBody(req));
             sendJson(res, 200, await handleReadingFillArticles(req, body));
+            return;
+          }
+          if (isReadingFillDrill && req.method === "GET") {
+            res.setHeader("Cache-Control", "private, no-store");
+            sendJson(res, 200, await handleReadingFillDrill(req));
             return;
           }
           if (isReadingVocabCollections && req.method === "GET") {
