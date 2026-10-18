@@ -5901,6 +5901,10 @@ body {
   font-size: 1.2rem;
 }
 
+.rfill__passage--drill .rfill-blank__prefix {
+  font-weight: 700;
+}
+
 .rfill__drill-gloss {
   margin: 0.35rem 0 0;
   font-size: 0.9rem;
