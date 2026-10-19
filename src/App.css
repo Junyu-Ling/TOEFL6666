@@ -5867,6 +5867,7 @@ body {
 
 .rfill__drill-order {
   display: inline-flex;
+  flex-wrap: wrap;
   gap: 0.35rem;
   margin-left: auto;
 }

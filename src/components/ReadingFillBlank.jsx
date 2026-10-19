@@ -6,6 +6,7 @@ import {
   hydrateReadingFillBlankArticles,
 } from "../utils/readingFillBlank";
 import { fetchReadingFillArticles, solveReadingFillPow } from "../services/access";
+import { prefetchReadingFillDrill } from "../services/readingFillDrillCache";
 import {
   clearReadingFillBlankProgress,
   getArticleInputs,
@@ -274,6 +275,12 @@ function ReadingFillBlank() {
     },
     [user?.id]
   );
+
+  useEffect(() => {
+    if (authLoading || !user?.id) return undefined;
+    prefetchReadingFillDrill().catch(() => {});
+    return undefined;
+  }, [authLoading, user?.id]);
 
   useEffect(() => {
     if (section !== "passage") return undefined;

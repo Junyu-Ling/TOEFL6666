@@ -1,5 +1,5 @@
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { fetchReadingFillDrill } from "../services/access";
+import { peekReadingFillDrillItems, prefetchReadingFillDrill } from "../services/readingFillDrillCache";
 import { usePassageContentProtection } from "../hooks/usePassageContentProtection";
 import { useEnglishImeLock } from "../hooks/useEnglishImeLock";
 import { useIsActiveTab } from "../context/ActiveTabContext";
@@ -12,6 +12,7 @@ import {
 import BlindWatermarkLayer from "./BlindWatermarkLayer";
 
 const ORDER_ALPHA = "alpha";
+const ORDER_FREQ = "freq";
 const ORDER_RANDOM = "random";
 const STORAGE_KEY = "toefl666_rfill_drill_v1";
 
@@ -45,6 +46,22 @@ function compareAlpha(a, b) {
   const wb = String(b.answer || "").toLowerCase();
   if (wa !== wb) return wa.localeCompare(wb);
   return String(a.id).localeCompare(String(b.id));
+}
+
+function compareFreq(a, b) {
+  const fa = Number(a.freq) || 0;
+  const fb = Number(b.freq) || 0;
+  if (fb !== fa) return fb - fa;
+  const ra = Number(a.rank) || 0;
+  const rb = Number(b.rank) || 0;
+  if (ra !== rb) return ra - rb;
+  return String(a.id).localeCompare(String(b.id));
+}
+
+function sortQueue(list, mode) {
+  if (mode === ORDER_RANDOM) return shuffleList(list);
+  if (mode === ORDER_FREQ) return [...list].sort(compareFreq);
+  return [...list].sort(compareAlpha);
 }
 
 function shuffleList(list) {
@@ -177,12 +194,21 @@ function ReadingFillDrill() {
   const isTabActive = useIsActiveTab("reading-fill");
   useEnglishImeLock(isTabActive);
 
-  const [items, setItems] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [items, setItems] = useState(() => peekReadingFillDrillItems() || []);
   const [error, setError] = useState("");
   const [orderMode, setOrderMode] = useState(() => loadSaved()?.orderMode || ORDER_ALPHA);
-  const [queue, setQueue] = useState([]);
-  const [index, setIndex] = useState(0);
+  const [queue, setQueue] = useState(() => {
+    const cached = peekReadingFillDrillItems();
+    if (!cached?.length) return [];
+    const mode = loadSaved()?.orderMode || ORDER_ALPHA;
+    return sortQueue(cached, mode);
+  });
+  const [index, setIndex] = useState(() => {
+    const saved = loadSaved();
+    const cached = peekReadingFillDrillItems();
+    if (!cached?.length || !Number.isFinite(saved?.index)) return 0;
+    return Math.min(Math.max(0, saved.index), cached.length - 1);
+  });
   const [letters, setLetters] = useState([]);
   const [checked, setChecked] = useState(false);
   const [shuffleSeed, setShuffleSeed] = useState(0);
@@ -202,32 +228,26 @@ function ReadingFillDrill() {
   });
 
   useEffect(() => {
+    if (items.length) return undefined;
     let cancelled = false;
-    (async () => {
-      setLoading(true);
-      setError("");
-      try {
-        const data = await fetchReadingFillDrill();
-        if (cancelled) return;
-        setItems(Array.isArray(data?.items) ? data.items : []);
-      } catch (err) {
-        if (!cancelled) setError(err?.message || "加载专项强化失败");
-      } finally {
-        if (!cancelled) setLoading(false);
-      }
-    })();
+    prefetchReadingFillDrill()
+      .then((nextItems) => {
+        if (!cancelled) setItems(nextItems);
+      })
+      .catch((err) => {
+        if (!cancelled) setError(err?.message || "专项强化暂时不可用");
+      });
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [items.length]);
 
   useEffect(() => {
     if (!items.length) {
       setQueue([]);
       return;
     }
-    const next =
-      orderMode === ORDER_RANDOM ? shuffleList(items) : [...items].sort(compareAlpha);
+    const next = sortQueue(items, orderMode);
     setQueue(next);
     const saved = loadSaved();
     const start =
@@ -280,14 +300,8 @@ function ReadingFillDrill() {
     [queue.length]
   );
 
-  if (loading) {
-    return <p className="rfill__empty">专项强化加载中…</p>;
-  }
-  if (error) {
+  if (error && !current) {
     return <p className="rfill__empty">{error}</p>;
-  }
-  if (!current) {
-    return <p className="rfill__empty">暂无专项强化题目</p>;
   }
 
   return (
@@ -320,7 +334,7 @@ function ReadingFillDrill() {
         <div className="rfill__subbar-left">
           <strong>Drill</strong>
           <span>
-            {index + 1} / {queue.length}
+            {queue.length ? index + 1 : 0} / {queue.length}
           </span>
         </div>
         <div className="rfill__drill-order" role="group" aria-label="排序方式">
@@ -330,6 +344,13 @@ function ReadingFillDrill() {
             onClick={() => setOrderMode(ORDER_ALPHA)}
           >
             按首字母
+          </button>
+          <button
+            type="button"
+            className={`rfill__drill-order-btn${orderMode === ORDER_FREQ ? " is-active" : ""}`}
+            onClick={() => setOrderMode(ORDER_FREQ)}
+          >
+            按考频
           </button>
           <button
             type="button"
@@ -363,7 +384,7 @@ function ReadingFillDrill() {
           </p>
 
           <p className="rfill__passage rfill__passage--drill">
-            {parts?.matched ? (
+            {current && parts?.matched ? (
               <>
                 <span className="rfill__text">{parts.before}</span>
                 <DrillBlank
@@ -377,7 +398,7 @@ function ReadingFillDrill() {
                 />
                 <span className="rfill__text">{parts.after}</span>
               </>
-            ) : (
+            ) : current ? (
               <>
                 <span className="rfill__text">{current.sentence}</span>
                 <span className="rfill__drill-inline-blank">
@@ -395,7 +416,7 @@ function ReadingFillDrill() {
                   )
                 </span>
               </>
-            )}
+            ) : null}
           </p>
 
           <div className="rfill__footer">
