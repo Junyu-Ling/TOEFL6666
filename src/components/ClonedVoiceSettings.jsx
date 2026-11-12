@@ -162,7 +162,7 @@ export default function ClonedVoiceSettings({ clonedVoiceId, setClonedVoiceId, s
   if (available === false) {
     return (
       <p className="settings-hint settings-hint--compact">
-        尚未配置声音克隆。请先在本机打开 VoiceStudio，并在 .env / Vercel 填 VOICESTUDIO_API_URL。
+        尚未配置声音克隆。线上全站请在 Vercel 填写 MINIMAX_API_KEY 和 MINIMAX_GROUP_ID。本机 VoiceStudio 访问不到线上访客。
       </p>
     );
   }
@@ -170,8 +170,7 @@ export default function ClonedVoiceSettings({ clonedVoiceId, setClonedVoiceId, s
   return (
     <div className="cloned-voice-settings">
       <p className="settings-hint settings-hint--compact">
-        上传或录制一段你本人的声音，起名后克隆。之后朗读单词会调用 VoiceStudio 的
-        /v1/audio/speech。只用于本站读单词。
+        上传或录制一段你本人的声音，起名后克隆，只用于本站读单词。线上走 MiniMax 云端；本机开发才可用 VoiceStudio。
       </p>
       {status?.voicestudio ? (
         <p className="settings-hint settings-hint--compact">当前引擎：VoiceStudio</p>

@@ -12,8 +12,20 @@ function rawBase() {
   return String(process.env.VOICESTUDIO_API_URL || "").trim().replace(/\/$/, "");
 }
 
+function isLoopbackHost(hostname) {
+  return /^(localhost|127\.0\.0\.1|0\.0\.0\.0|::1)$/i.test(hostname || "");
+}
+
 export function isVoiceStudioConfigured() {
-  return Boolean(rawBase());
+  const origin = rawBase();
+  if (!origin) return false;
+  try {
+    const host = new URL(origin).hostname;
+    if (process.env.VERCEL && isLoopbackHost(host)) return false;
+  } catch {
+    return false;
+  }
+  return true;
 }
 
 /** http://127.0.0.1:3900 */
