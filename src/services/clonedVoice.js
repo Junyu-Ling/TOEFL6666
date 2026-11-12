@@ -11,18 +11,19 @@ export async function fetchCloneStatus() {
   const data = await res.json().catch(() => ({}));
   statusCache = {
     available: Boolean(data.available),
+    voicestudio: Boolean(data.voicestudio),
     minimax: Boolean(data.minimax),
     gptsovits: Boolean(data.gptsovits),
   };
   return statusCache;
 }
 
-export async function cloneOwnVoiceSample(wavBlob) {
+export async function cloneOwnVoiceSample(wavBlob, { name = "", promptText = "" } = {}) {
   const audioBase64 = await blobToBase64(wavBlob);
   const res = await fetch("/api/tts/clone", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ audioBase64, consent: true }),
+    body: JSON.stringify({ audioBase64, consent: true, name, promptText }),
   });
   const data = await res.json().catch(() => ({}));
   if (!res.ok || !data.voiceId) {
@@ -63,9 +64,13 @@ export async function playClonedWord(word, voiceId) {
   }
 
   const record = await getClonedVoice(id).catch(() => null);
-  const status = await fetchCloneStatus().catch(() => ({ gptsovits: false, minimax: false }));
+  const status = await fetchCloneStatus().catch(() => ({
+    voicestudio: false,
+    gptsovits: false,
+    minimax: false,
+  }));
   const wav = record?.wav;
-  const useSovits = Boolean(status.gptsovits && wav);
+  const useSovits = Boolean(!status.voicestudio && status.gptsovits && wav);
 
   let res;
   if (useSovits) {

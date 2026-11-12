@@ -58,6 +58,7 @@ npm run dev
 
 可选（本人声音克隆，仅用于站内读单词，不提供下载/导出）：
 
+- `VOICESTUDIO_API_URL`：[VoiceStudio](https://github.com/debpalash/VoiceStudio) 本机 API，默认 `http://127.0.0.1:3900`。朗读走 `POST /v1/audio/speech`。
 - `MINIMAX_API_KEY`
 - `MINIMAX_GROUP_ID`（若控制台要求）
 - `GPT_SOVITS_API_URL`：[GPT-SoVITS](https://github.com/RVC-Boss/GPT-SoVITS) 不能跑在 Vercel 上。GPU 机器先启动官方 `api_v2.py`，再 `npm run gptsovits:bridge`，把桥接 URL 填到这个变量。

@@ -27,6 +27,9 @@ function applyEnv(env) {
     "MINIMAX_GROUP_ID",
     "MINIMAX_TTS_MODEL",
     "GPT_SOVITS_API_URL",
+    "VOICESTUDIO_API_URL",
+    "VOICESTUDIO_API_KEY",
+    "VOICESTUDIO_TTS_MODEL",
   ]) {
     if (env[key] && !process.env[key]) process.env[key] = env[key];
   }

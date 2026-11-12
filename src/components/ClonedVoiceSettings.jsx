@@ -29,7 +29,7 @@ export default function ClonedVoiceSettings({ clonedVoiceId, setClonedVoiceId, s
         if (!cancelled) setStatus(next);
       })
       .catch(() => {
-        if (!cancelled) setStatus({ available: false, minimax: false, gptsovits: false });
+        if (!cancelled) setStatus({ available: false, voicestudio: false, minimax: false, gptsovits: false });
       });
     listClonedVoices()
       .then((rows) => {
@@ -130,7 +130,7 @@ export default function ClonedVoiceSettings({ clonedVoiceId, setClonedVoiceId, s
     setBusy(true);
     setError("");
     try {
-      const cloned = await cloneOwnVoiceSample(sample);
+      const cloned = await cloneOwnVoiceSample(sample, { name, promptText: promptText.trim() });
       const id = cloned.voiceId;
       await saveClonedVoice({
         id,
@@ -162,7 +162,7 @@ export default function ClonedVoiceSettings({ clonedVoiceId, setClonedVoiceId, s
   if (available === false) {
     return (
       <p className="settings-hint settings-hint--compact">
-        尚未配置声音克隆。可在服务器填 GPT_SOVITS_API_URL（GPT-SoVITS 桥接）或 MiniMax 密钥。
+        尚未配置声音克隆。请先在本机打开 VoiceStudio，并在 .env / Vercel 填 VOICESTUDIO_API_URL。
       </p>
     );
   }
@@ -170,10 +170,12 @@ export default function ClonedVoiceSettings({ clonedVoiceId, setClonedVoiceId, s
   return (
     <div className="cloned-voice-settings">
       <p className="settings-hint settings-hint--compact">
-        上传或录制一段你本人的声音，克隆成功后起名，之后可用这个音色朗读单词。基于
-        GPT-SoVITS 少样本克隆，只用于本站读单词。
+        上传或录制一段你本人的声音，起名后克隆。之后朗读单词会调用 VoiceStudio 的
+        /v1/audio/speech。只用于本站读单词。
       </p>
-      {status?.gptsovits ? (
+      {status?.voicestudio ? (
+        <p className="settings-hint settings-hint--compact">当前引擎：VoiceStudio</p>
+      ) : status?.gptsovits ? (
         <p className="settings-hint settings-hint--compact">当前引擎：GPT-SoVITS</p>
       ) : status?.minimax ? (
         <p className="settings-hint settings-hint--compact">当前引擎：云端克隆（MiniMax）</p>

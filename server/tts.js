@@ -10,6 +10,11 @@ import {
   isGptSovitsConfigured,
   synthesizeGptSovits,
 } from "./tts-gptsovits.js";
+import {
+  cloneVoiceStudioVoice,
+  isVoiceStudioConfigured,
+  synthesizeVoiceStudioWord,
+} from "./tts-voicestudio.js";
 
 function createError(message, status = 400) {
   const err = new Error(message);
@@ -18,12 +23,13 @@ function createError(message, status = 400) {
 }
 
 export function isClonedVoiceConfigured() {
-  return isMinimaxConfigured() || isGptSovitsConfigured();
+  return isVoiceStudioConfigured() || isMinimaxConfigured() || isGptSovitsConfigured();
 }
 
 export function clonedVoiceStatus() {
   return {
     available: isClonedVoiceConfigured(),
+    voicestudio: isVoiceStudioConfigured(),
     minimax: isMinimaxConfigured(),
     gptsovits: isGptSovitsConfigured(),
   };
@@ -32,6 +38,13 @@ export function clonedVoiceStatus() {
 export async function cloneOwnVoice(body) {
   if (body?.consent !== true) {
     throw createError("请确认这是你本人的声音，且仅用于本站读单词");
+  }
+  if (isVoiceStudioConfigured()) {
+    return cloneVoiceStudioVoice({
+      audioBase64: body?.audioBase64,
+      name: body?.name,
+      promptText: body?.promptText,
+    });
   }
   if (isMinimaxConfigured()) {
     const result = await cloneMinimaxVoice(body);
@@ -45,6 +58,9 @@ export async function cloneOwnVoice(body) {
 }
 
 export async function synthesizeVocabWord({ word, voiceId, audioBase64, promptText }) {
+  if (isVoiceStudioConfigured() && voiceId) {
+    return synthesizeVoiceStudioWord({ word, voiceId });
+  }
   if (audioBase64 && isGptSovitsConfigured()) {
     return synthesizeGptSovits({ word, audioBase64, promptText });
   }
@@ -57,4 +73,4 @@ export async function synthesizeVocabWord({ word, voiceId, audioBase64, promptTe
   throw createError("服务器未配置克隆朗读", 503);
 }
 
-export { isMinimaxConfigured, isGptSovitsConfigured };
+export { isMinimaxConfigured, isGptSovitsConfigured, isVoiceStudioConfigured };
