@@ -8,7 +8,7 @@ import { validateWordWithDeepSeek } from "../server/ai-word-validate.js";
 import { generateStudyPlan, streamStudyPlan } from "../server/ai-study-plan.js";
 import { identifyProviderFromKey } from "../server/ai-detect-provider.js";
 import { handleSyncPush, handleSyncPull } from "../server/sync-api.js";
-import { cloneOwnVoice, isClonedVoiceConfigured, synthesizeVocabWord } from "../server/tts-minimax.js";
+import { cloneOwnVoice, clonedVoiceStatus, synthesizeVocabWord } from "../server/tts.js";
 import { handleAccessGrant, handleAccessMe, handleAccessUsers } from "../server/access-api.js";
 import { ensureAccessStoreMigratedFromLegacyKv } from "../server/access-store.js";
 import { handleAuthIdentity, handleAuthLink, handleAuthLogout, handleAuthMe, handleGithubCallback, handleGithubStart } from "../server/auth-github.js";
@@ -45,9 +45,15 @@ function queryParam(req, key) {
   }
 }
 
+function audioContentType(audio) {
+  const head = Buffer.isBuffer(audio) ? audio.subarray(0, 12).toString("latin1") : "";
+  if (head.startsWith("RIFF") && head.includes("WAVE")) return "audio/wav";
+  return "audio/mpeg";
+}
+
 function sendAudio(res, audio) {
   res.statusCode = 200;
-  res.setHeader("Content-Type", "audio/mpeg");
+  res.setHeader("Content-Type", audioContentType(audio));
   res.setHeader("Cache-Control", "public, max-age=86400, s-maxage=604800, immutable");
   res.setHeader("X-Content-Type-Options", "nosniff");
   if (audio?.length) res.setHeader("Content-Length", String(audio.length));
@@ -136,7 +142,7 @@ export default async function handler(req, res) {
         return;
       }
       res.setHeader("Cache-Control", "public, max-age=60, s-maxage=300");
-      sendJson(res, 200, { available: isClonedVoiceConfigured() });
+      sendJson(res, 200, clonedVoiceStatus());
       return;
     }
 
@@ -400,7 +406,12 @@ export default async function handler(req, res) {
     }
 
     if (pathname === "/api/tts/speak") {
-      const audio = await synthesizeVocabWord({ word: body.word, voiceId: body.voiceId });
+      const audio = await synthesizeVocabWord({
+        word: body.word,
+        voiceId: body.voiceId,
+        audioBase64: body.audioBase64,
+        promptText: body.promptText,
+      });
       sendAudio(res, audio);
       return;
     }

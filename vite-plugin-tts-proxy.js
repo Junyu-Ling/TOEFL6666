@@ -1,5 +1,5 @@
 import { loadEnv } from "vite";
-import { cloneOwnVoice, isClonedVoiceConfigured, synthesizeVocabWord } from "./server/tts-minimax.js";
+import { cloneOwnVoice, clonedVoiceStatus, synthesizeVocabWord } from "./server/tts.js";
 
 function readBody(req) {
   return new Promise((resolve, reject) => {
@@ -21,7 +21,13 @@ function matchApiPath(url, path) {
 }
 
 function applyEnv(env) {
-  for (const key of ["MINIMAX_API_KEY", "MINIMAX_API_BASE", "MINIMAX_GROUP_ID", "MINIMAX_TTS_MODEL"]) {
+  for (const key of [
+    "MINIMAX_API_KEY",
+    "MINIMAX_API_BASE",
+    "MINIMAX_GROUP_ID",
+    "MINIMAX_TTS_MODEL",
+    "GPT_SOVITS_API_URL",
+  ]) {
     if (env[key] && !process.env[key]) process.env[key] = env[key];
   }
 }
@@ -42,7 +48,7 @@ export function ttsProxyPlugin() {
         try {
           if (isStatus && req.method === "GET") {
             res.setHeader("Cache-Control", "public, max-age=60, s-maxage=300");
-            sendJson(res, 200, { available: isClonedVoiceConfigured() });
+            sendJson(res, 200, clonedVoiceStatus());
             return;
           }
 
@@ -53,7 +59,12 @@ export function ttsProxyPlugin() {
               voiceId: url.searchParams.get("voiceId"),
             });
             res.statusCode = 200;
-            res.setHeader("Content-Type", "audio/mpeg");
+            res.setHeader(
+              "Content-Type",
+              Buffer.isBuffer(audio) && audio.subarray(0, 4).toString("latin1") === "RIFF"
+                ? "audio/wav"
+                : "audio/mpeg"
+            );
             res.setHeader("Cache-Control", "public, max-age=86400, s-maxage=604800, immutable");
             res.setHeader("X-Content-Type-Options", "nosniff");
             res.end(audio);
@@ -73,9 +84,19 @@ export function ttsProxyPlugin() {
             return;
           }
 
-          const audio = await synthesizeVocabWord({ word: body.word, voiceId: body.voiceId });
+          const audio = await synthesizeVocabWord({
+            word: body.word,
+            voiceId: body.voiceId,
+            audioBase64: body.audioBase64,
+            promptText: body.promptText,
+          });
           res.statusCode = 200;
-          res.setHeader("Content-Type", "audio/mpeg");
+          res.setHeader(
+            "Content-Type",
+            Buffer.isBuffer(audio) && audio.subarray(0, 4).toString("latin1") === "RIFF"
+              ? "audio/wav"
+              : "audio/mpeg"
+          );
           res.setHeader("Cache-Control", "public, max-age=86400, s-maxage=604800, immutable");
           res.setHeader("X-Content-Type-Options", "nosniff");
           res.end(audio);

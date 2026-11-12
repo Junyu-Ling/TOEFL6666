@@ -1,31 +1,41 @@
 import { useEffect, useRef, useState } from "react";
 import { cloneOwnVoiceSample, fetchCloneStatus } from "../services/clonedVoice";
+import { deleteClonedVoice, listClonedVoices, saveClonedVoice } from "../services/clonedVoiceStore";
 import { blobToMonoWav } from "../utils/audioWav";
 
 export default function ClonedVoiceSettings({ clonedVoiceId, setClonedVoiceId, speakWord }) {
-  const [available, setAvailable] = useState(null);
+  const [status, setStatus] = useState(null);
   const [consent, setConsent] = useState(false);
   const [busy, setBusy] = useState(false);
   const [recording, setRecording] = useState(false);
   const [seconds, setSeconds] = useState(0);
   const [error, setError] = useState("");
   const [sample, setSample] = useState(null);
+  const [voiceName, setVoiceName] = useState("");
+  const [promptText, setPromptText] = useState("");
+  const [voices, setVoices] = useState([]);
   const mediaRef = useRef(null);
   const chunksRef = useRef([]);
   const timerRef = useRef(null);
   const fileRef = useRef(null);
 
-  const ready = Boolean(clonedVoiceId);
+  const available = status ? status.available : null;
+  const selected = voices.find((item) => item.id === clonedVoiceId);
 
   useEffect(() => {
     let cancelled = false;
     fetchCloneStatus()
-      .then((ok) => {
-        if (!cancelled) setAvailable(ok);
+      .then((next) => {
+        if (!cancelled) setStatus(next);
       })
       .catch(() => {
-        if (!cancelled) setAvailable(false);
+        if (!cancelled) setStatus({ available: false, minimax: false, gptsovits: false });
       });
+    listClonedVoices()
+      .then((rows) => {
+        if (!cancelled) setVoices(rows);
+      })
+      .catch(() => {});
     return () => {
       cancelled = true;
       stopRecording(true);
@@ -99,21 +109,43 @@ export default function ClonedVoiceSettings({ clonedVoiceId, setClonedVoiceId, s
     }
   }
 
+  async function refreshVoices() {
+    setVoices(await listClonedVoices());
+  }
+
   async function submitClone() {
+    const name = voiceName.trim();
     if (!consent) {
       setError("请先确认这是你本人的声音");
       return;
     }
     if (!sample) {
-      setError("请先录音或上传 10 秒以上的音频");
+      setError("请先录音或上传一段音频");
+      return;
+    }
+    if (!name) {
+      setError("请给这个声音样本起个名字");
       return;
     }
     setBusy(true);
     setError("");
     try {
-      const voiceId = await cloneOwnVoiceSample(sample);
-      setClonedVoiceId(voiceId);
+      const cloned = await cloneOwnVoiceSample(sample);
+      const id = cloned.voiceId;
+      await saveClonedVoice({
+        id,
+        name,
+        wav: sample,
+        promptText: promptText.trim(),
+        engine: cloned.engine,
+        minimaxVoiceId: cloned.engine === "minimax" ? id : "",
+        createdAt: Date.now(),
+      });
+      setClonedVoiceId(id);
       setSample(null);
+      setVoiceName("");
+      setPromptText("");
+      await refreshVoices();
     } catch (err) {
       setError(err.message || "克隆失败");
     } finally {
@@ -121,10 +153,16 @@ export default function ClonedVoiceSettings({ clonedVoiceId, setClonedVoiceId, s
     }
   }
 
+  async function removeVoice(id) {
+    await deleteClonedVoice(id);
+    if (clonedVoiceId === id) setClonedVoiceId("");
+    await refreshVoices();
+  }
+
   if (available === false) {
     return (
       <p className="settings-hint settings-hint--compact">
-        服务器尚未配置本人声音克隆，朗读仍使用系统音色。
+        尚未配置声音克隆。可在服务器填 GPT_SOVITS_API_URL（GPT-SoVITS 桥接）或 MiniMax 密钥。
       </p>
     );
   }
@@ -132,29 +170,85 @@ export default function ClonedVoiceSettings({ clonedVoiceId, setClonedVoiceId, s
   return (
     <div className="cloned-voice-settings">
       <p className="settings-hint settings-hint--compact">
-        只接受你本人的录音，克隆后仅用于本站读单词，不能下载、不能拿去站外用。请朗读约 15 秒英文。
+        上传或录制一段你本人的声音，克隆成功后起名，之后可用这个音色朗读单词。基于
+        GPT-SoVITS 少样本克隆，只用于本站读单词。
       </p>
+      {status?.gptsovits ? (
+        <p className="settings-hint settings-hint--compact">当前引擎：GPT-SoVITS</p>
+      ) : status?.minimax ? (
+        <p className="settings-hint settings-hint--compact">当前引擎：云端克隆（MiniMax）</p>
+      ) : null}
       <p className="settings-hint settings-hint--compact">
-        {ready ? "已启用：用我的声音读单词" : "未配置"}
+        {selected ? `正在使用：${selected.name}` : "未选择克隆音色，朗读使用系统声音"}
       </p>
+
+      {voices.length ? (
+        <ul className="cloned-voice-list">
+          {voices.map((voice) => (
+            <li key={voice.id} className={`cloned-voice-item${voice.id === clonedVoiceId ? " is-active" : ""}`}>
+              <button
+                type="button"
+                className="cloned-voice-item__pick"
+                onClick={() => setClonedVoiceId(voice.id)}
+              >
+                <strong>{voice.name}</strong>
+                <small>{voice.id === clonedVoiceId ? "使用中" : "点击使用"}</small>
+              </button>
+              <button type="button" className="settings-action-btn" onClick={() => removeVoice(voice.id)}>
+                删除
+              </button>
+            </li>
+          ))}
+        </ul>
+      ) : null}
+
       {recording ? (
         <p className="settings-hint settings-hint--compact">录音中 {seconds}s（至少 10 秒）</p>
       ) : null}
       {sample && !recording ? (
-        <p className="settings-hint settings-hint--compact">已选中一段本人音频，可以开始克隆</p>
+        <p className="settings-hint settings-hint--compact">已选中一段音频，起名后即可克隆</p>
       ) : null}
+
+      <label className="settings-field cloned-voice-name">
+        <span>音色名称</span>
+        <input
+          className="settings-inline-input"
+          value={voiceName}
+          onChange={(e) => setVoiceName(e.target.value)}
+          placeholder="例如：我的声音"
+          maxLength={32}
+          disabled={busy || recording}
+        />
+      </label>
+      <label className="settings-field cloned-voice-name">
+        <span>录音文本（可选，GPT-SoVITS 更准）</span>
+        <input
+          className="settings-inline-input"
+          value={promptText}
+          onChange={(e) => setPromptText(e.target.value)}
+          placeholder="这段录音大概在说什么"
+          maxLength={200}
+          disabled={busy || recording}
+        />
+      </label>
+
       <div className="settings-actions">
         {recording ? (
           <button type="button" className="settings-action-btn" onClick={() => stopRecording()} disabled={seconds < 10}>
             停止录音
           </button>
         ) : (
-          <button type="button" className="settings-action-btn" onClick={() => startRecording().catch((err) => setError(err.message || "无法录音"))} disabled={busy}>
-            录制我的声音
+          <button
+            type="button"
+            className="settings-action-btn"
+            onClick={() => startRecording().catch((err) => setError(err.message || "无法录音"))}
+            disabled={busy}
+          >
+            录制声音
           </button>
         )}
         <button type="button" className="settings-action-btn" onClick={() => fileRef.current?.click()} disabled={busy || recording}>
-          上传我的音频
+          上传音频
         </button>
         <input
           ref={fileRef}
@@ -179,22 +273,22 @@ export default function ClonedVoiceSettings({ clonedVoiceId, setClonedVoiceId, s
         </span>
       </label>
       <div className="settings-actions">
-        <button type="button" className="settings-action-btn settings-action-btn--primary" onClick={submitClone} disabled={busy || recording || !consent || !sample}>
-          {busy ? "克隆中…" : "用这段声音读单词"}
+        <button
+          type="button"
+          className="settings-action-btn settings-action-btn--primary"
+          onClick={submitClone}
+          disabled={busy || recording || !consent || !sample || !voiceName.trim()}
+        >
+          {busy ? "克隆中…" : "克隆并保存"}
         </button>
-        {ready ? (
-          <button
-            type="button"
-            className="settings-action-btn"
-            onClick={() => speakWord("example")}
-            disabled={busy}
-          >
+        {clonedVoiceId ? (
+          <button type="button" className="settings-action-btn" onClick={() => speakWord("example")} disabled={busy}>
             试听单词
           </button>
         ) : null}
-        {ready ? (
+        {clonedVoiceId ? (
           <button type="button" className="settings-action-btn" onClick={() => setClonedVoiceId("")} disabled={busy}>
-            停用我的声音
+            改用系统音色
           </button>
         ) : null}
       </div>

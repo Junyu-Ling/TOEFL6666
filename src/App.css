@@ -4712,6 +4712,62 @@ body {
   border-bottom: 1px solid var(--border);
 }
 
+.cloned-voice-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.cloned-voice-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 0.55rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--input-bg);
+}
+
+.cloned-voice-item.is-active {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.cloned-voice-item__pick {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.1rem;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+}
+
+.cloned-voice-item__pick small {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+.cloned-voice-name {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+
+.cloned-voice-name .settings-inline-input {
+  width: 100%;
+}
+
 .settings-action-btn--inline {
   margin-left: 0.5rem;
   padding: 0.15rem 0.5rem;

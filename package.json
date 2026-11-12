@@ -18,7 +18,8 @@
     "encrypt:reading-vocab": "node scripts/encrypt-reading-vocab.mjs",
     "build": "npm run build:pronunciation && npm run build:families && npm run build:loading-words && npm run build:wordlists && vite build",
     "lint": "oxlint",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "gptsovits:bridge": "node scripts/gptsovits-bridge.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.112.3",
